@@ -9,6 +9,9 @@
 - Metrics.
 - #### [<span style='color:#333'>Callbacks](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/4_8_Callbacks.html)
 ***
+
+- [<b style='color:#333'>Keras Cheat Sheet</b>](chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Keras_Cheat_Sheet_Python.pdf) 
+
 - #### [<span style='color:#333'>Nerual Networks</span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/5_DL_Neural_Networks.html) 
 - #### [<font color='#333'>CNN</font>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/6_DL_CNN.html) 
 - RNN.
