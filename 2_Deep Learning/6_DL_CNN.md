@@ -95,7 +95,13 @@ width = ceil(float(W_in - F + 1) / float(S))
 </p>
 </details>
 
-
+<details><summary><b>Practical Notes</b> when building <b>An Architecture</b></summary>
+<p>
+1. Use <b>activation = 'relu'</b> at each convolutional layer.<br>
+2. Use <b>padding = 'Same'</b>, most likely to get better results. This is not the default in Keras.<br>
+3. The number of filters increases over each convolution layer. Ex: 16, 32, 64, and so on.
+</p>
+</details>
 
 
 </div>
