@@ -4,7 +4,16 @@
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Batch-Normalization"><b style='color:#333'>2. Batch Normalization</b></a> </p>
 
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Weight-Regularization-&amp;-Dropout"><b style='color:#333'>3. Dropout &amp; Weight Regularization</b></a> </p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Weight-Regularization-&amp;-Dropout"><b style='color:#333'>3. Dropout</b></a> </p>
+
+<details><summary><b>4. Weight Regularization</b></summary>
+<p>
+<li><a href="https://keras.io/initializers/"><b style='color:#333'>1. Available initializers in Keras</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Deep%20Learning%20Nanodegree/0_Data/deep-learning-master/weight-initialization/weight_initialization.html#Weight-Initialization"><b style='color:#333'>2. Which one is better (Experiment)</b></a> </p>
+
+</p>
+</details>
 
 <details><summary><b>4. Data Augmentation</b></summary>
 <p>
