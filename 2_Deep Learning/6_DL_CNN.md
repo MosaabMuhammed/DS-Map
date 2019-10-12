@@ -56,7 +56,30 @@ assert num_classes * (128 + 1) == 1290
 - Since there is one bias term per filter, the conv layer has <span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>K</span> biases. We can generate the formula above.
 </p>
 
+<h4>4. Shape of the Convolution layer (formula):</h4>
+<p>
+<ol>
+<li><span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>K</span> - the number of <b>filters</b> in the convolutional layer</li>
+<li><span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>F</span> - the <b>height</b> and <b>width</b> of the convolutional filters</li>
+<li><span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>S</span> - the <b>stride</b> of the convolution</li>
+<li><span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>H_in</span> - the <b>height</b> of the <b>previous</b> layer</li>
+<li><span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>W_in</span> - the <b>width</b> of the <b>previous</b> layer</li>
+</ol>
+</p>
 
+The depth of the convolutional layer will always equal the number of filters <span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>K</span>.<br><br>
+
+If <b>padding = 'same'</b>, then the spatial dimensions of the convolutional layer are the following:
+~~~python
+height = ceil(float(H_in) / float(S))
+width = ceil(float(W_in) / float(S))
+~~~
+
+If <b>padding = 'valid'</b>, then the spatial dimensions of the convolutional layer are the following:
+~~~python
+height = ceil(float(H_in - F + 1) / float(S))
+width = ceil(float(W_in - F + 1) / float(S))
+~~~
 </p>
 </details>
 
