@@ -23,7 +23,7 @@
 
 <details><summary><b>2. Large Dataset:</b></summary>
 <p>
-<details><summary>From<b>CSV</b> To <b>HDF5</b></summary>
+<details><summary>Using <b>Chunksize</b> in pd.read_csv()</summary>
 <p>
 ~~~python
 df = pd.read_csv('/kaggle/input/train.csv', chunksize=1000)
@@ -38,6 +38,14 @@ df = pd.read_csv('/kaggle/input/train.csv', chunksize=1000)
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/7_From%20Large%20CSV%20to%20small%20HDF5/__notebook__.html"><b>When we can't read the csv</b></a> </li>
 </ul>
 
+</p>
+</details>
+
+<details><summary>From<b>CSV</b> To <b>npz</b></summary>
+<p>
+<ul>
+<li><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.savez_compressed.html#numpy.savez_compressed"><b>np.savez_compressed</b></a> </li>
+</ul>
 </p>
 </details>
 
