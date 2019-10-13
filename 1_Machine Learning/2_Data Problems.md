@@ -473,6 +473,7 @@ def encode_target_smooth(data, target, categ_variables, smooth):
         default_map[col] = prior
     return train_target, code_map, default_map
 ~~~
+<<<<<<< HEAD
 
 ~~~python
 # additive smoothing
@@ -485,6 +486,8 @@ for col in hc_nom_columns:
     
 df_train.filter(regex='nom_[5-9]_mean_enc').head()
 ~~~
+=======
+>>>>>>> b81d04277683614ee144107a15b1dc9eded6cb1b
 </p>
 </details>
 
