@@ -8,7 +8,7 @@
 - Losses. 
 - Metrics.
 - #### [<span style='color:#333'>Callbacks](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/4_8_Callbacks.html)
-***
+*** 
 
 - [<b style='color:#333'>Keras Cheat Sheet</b>](chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Keras_Cheat_Sheet_Python.pdf) 
 
@@ -19,6 +19,7 @@
 - LSTM.
 - GAN.
 - GRU.
+- #### [<font color='#333'>AutoEncoder</font>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/10_0_DL_AutoEncoder.html) 
 
 <hr>
 
