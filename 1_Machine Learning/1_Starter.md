@@ -22,6 +22,14 @@
 </p>
 </details>
 
+<details><summary> <b>Shapes in python Comments</b> </summary>
+<p>
+~~~python
+# had to drop a pythonic line ¯\_(ツ)_/¯
+~~~
+</p>
+</details>
+
 <details><summary>Show<b> Table</b> using <b>Qgrid</b></summary>
 <p>
 ~~~python
