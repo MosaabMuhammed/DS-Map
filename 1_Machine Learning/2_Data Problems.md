@@ -433,6 +433,11 @@ for col in X_target.columns:
 
 <h4>2. Another way of doing so</h4>
 ~~~python
+'''
+     Differently to `.target.mean()` function `transform` 
+   will return a dataframe with an index like in `all_data`.
+   Basically this single line of code is equivalent to the first two lines from of Method 1.
+'''
 all_data['item_target_enc'] = all_data.groupby('item_id')['target'].transform('mean')
 ~~~
 </p>
