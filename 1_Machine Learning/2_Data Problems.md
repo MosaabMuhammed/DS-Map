@@ -337,6 +337,35 @@ for col in ["ord_1", "ord_2", "ord_3", "ord_4", "ord_5a", "day", "month"]:
     enc=ThermometerEncoder(sort_key=sort_key)
     thermos.append(enc.fit_transform(X[col]))
 ~~~
+
+~~~python
+# convert all coo_matrix to csr matrix in order to make the models be able to train
+ohc=scipy.sparse.hstack([ohc1] + thermos).tocsr()
+~~~
+
+<h4>3. Another trial: Returns dataframe</h4>
+<p><a href="https://stackoverflow.com/questions/49080613/numpy-thermometer-encoding/49081131#49081131"><b>Credits</b></a> </p>
+~~~python
+def ThemometerEncoder(df, ord_cols):
+    enc_cols = []
+    df_enc   = pd.DataFrame()
+
+    for col in tqdm(ord_cols):
+        enc_cols = []
+
+        # Thermometer Encoder Step ~> 5 == [1, 1, 1, 1, 1, 0, 0, 0]
+        result = ((sorted(df[col].unique()) < np.array(df[col])\
+                               .reshape(-1, 1))\
+                               .astype('int8'))
+
+        for val in sorted(df[col].unique()):
+            enc_cols.append(f'thermo_{col}_{val}')
+
+        df_enc = pd.concat([df_enc, 
+                            pd.DataFrame(result, columns=enc_cols)],
+                            axis=1)
+    return df_enc
+~~~
 </p>
 </details>
 
