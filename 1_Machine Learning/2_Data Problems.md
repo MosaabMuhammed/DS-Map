@@ -4,24 +4,18 @@
 <div style='width:1000px;margin:auto'>
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_%20A%20Data%20Science%20Framework%20to%20achieve%2099%20Accuracy/a-data-science-framework-to-achieve-99-accuracy.html#3.21-The-4-C's-of-Data-Cleaning:-Correcting,-Completing,-Creating,-and-Converting">Explanation of the 4'C of <b>Data Cleaning</b>.</a> </p>
-
-
+ 
+ 
 <details><summary><span style='color:#333;font-size:25px;font-weight:bold;text-decoration:underline'>1. Related to Dataset:</span></summary>
 <p>
-
 <details><summary><b>1. Imbalanced Data set:</b></summary>
 <p>
-
 <ul>
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/11_Classification%20Algorithms%20in%20Real-World%20problems/1_Dealing%20with%20Imbalanced%20Datasets.html"><span style='color:#333333'><b>1. Imbalanced Data set:</b></span></a> </p></li>
-
 <li><p><a href="https://imbalanced-learn.org/en/stable/over_sampling.html"><span style='color:#333333'><b>2. Another way</b> (better)</span></a> </p></li>
 </ul>
-
 </p>
-</details>
-
-<details><summary><b>2. Large Dataset:</b></summary>
+</details><details><summary><b>2. Large Dataset:</b></summary>
 <p>
 <details><summary>Using <b>Chunksize</b> in pd.read_csv()</summary>
 <p>
@@ -34,13 +28,10 @@ df = pd.read_csv('/kaggle/input/train.csv', chunksize=1000)
 <p>
 <ul>
 <li><a href="https://stackoverflow.com/questions/27203161/convert-large-csv-to-hdf5"><b>After reading csv</b></a> </li>
-
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/7_From%20Large%20CSV%20to%20small%20HDF5/__notebook__.html"><b>When we can't read the csv</b></a> </li>
 </ul>
-
 </p>
 </details>
-
 <details><summary>From<b>CSV</b> To <b>npz</b></summary>
 <p>
 <ul>
@@ -48,8 +39,6 @@ df = pd.read_csv('/kaggle/input/train.csv', chunksize=1000)
 </ul>
 </p>
 </details>
-
-
 <details><summary><b>Reduced size of dataset</b></summary>
 <p>
 ~~~python
@@ -100,11 +89,8 @@ def reduce_mem_usage(df):
 ~~~
 </p>
 </details>
-
-
 </p>
 </details>
-
 </p>
 </details>
 
@@ -288,6 +274,7 @@ for col in tqdm_notebook(cat_columns):
 
 <details><summary> <b>4. Thermometer Encoding [Ordinal]</b></summary>
 <p>
+<p><a href="https://www.kaggle.com/superant/oh-my-cat"><b>Credits</b></a> </p>
 <h4>Note:</h4>
 <p class='alert alert-info'>&nbsp;&nbsp;&nbsp;&nbsp;You can encode ordinal data using the thermometer trick. If there are 𝑁 possible values for the variable, then you map each value to a 𝑁-vector, where you put a 1 in the position that matches the value of the variable and all subsequent position.
 <br><br>
