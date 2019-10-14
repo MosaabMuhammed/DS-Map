@@ -430,6 +430,11 @@ for col in X_target.columns:
         target= dict ( X_target.groupby(col)['target'].agg('sum')/X_target.groupby(col)['target'].agg('count'))
         X_target[col]=X_target[col].replace(target).values
 ~~~
+
+<h4>2. Another way of doing so</h4>
+~~~python
+all_data['item_target_enc'] = all_data.groupby('item_id')['target'].transform('mean')
+~~~
 </p>
 </details>
 
@@ -473,7 +478,6 @@ def encode_target_smooth(data, target, categ_variables, smooth):
         default_map[col] = prior
     return train_target, code_map, default_map
 ~~~
-<<<<<<< HEAD
 
 ~~~python
 # additive smoothing
@@ -486,8 +490,6 @@ for col in hc_nom_columns:
     
 df_train.filter(regex='nom_[5-9]_mean_enc').head()
 ~~~
-=======
->>>>>>> b81d04277683614ee144107a15b1dc9eded6cb1b
 </p>
 </details>
 
