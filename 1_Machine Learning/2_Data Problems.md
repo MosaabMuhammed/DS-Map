@@ -413,10 +413,21 @@ X_train_cyclic=X_train_cyclic.drop(columns,axis=1)
 </p>
 </details>
 
-<details><summary> <b>8. Target Encoding</b></summary>
+<details><summary> <b>8. Target</b> Encoding</summary>
 <p>
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#Mean-encodings-without-regularization"><b>1. Mean Encoding Without Regularization</b></a> </p></li>
 
-<details><summary> <b>8. Target Encoding (similar to Response Coding)</b></summary>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#1.-KFold-scheme"><b>2. Using KFold Scheme</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#2.-Leave-one-out-scheme"><b>3. Leave-One-Out Scheme</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#3.-Smoothing"><b>4. With Smoothing</b></a> </p></li>
+
+<li><p><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#4.-Expanding-mean-scheme"><b>5. Expanding Mean Scheme</b></a> </p></p></li>
+</ul>
+
+<details><summary> <b>8.1 Target Encoding (similar to Response Coding)</b></summary>
 <p>
 <blockquote>
   <p><b>NOTE</b>: Target-based encoding is numerization of categorical variables via target. In this method, we replace the categorical variable with just one new numerical variable and replace each category of the categorical variable with its corresponding probability of the target (if categorical) or average of the target (if numerical). The main drawbacks of this method are its dependency to the distribution of the target, and its lower predictability power compare to the binary encoding method.</p>
@@ -446,7 +457,7 @@ all_data['item_target_enc'] = all_data.groupby('item_id')['target'].transform('m
 </p>
 </details>
 
-<details><summary> <b>Target Encoding with smoothing</b></summary>
+<details><summary> <b>8.2 Target Encoding with smoothing</b></summary>
 <p>
 
 <p><a href="https://www.kaggle.com/delafields/a-thorough-guide-on-categorical-feature-encoding"><b>Credits</b></a> </p>
