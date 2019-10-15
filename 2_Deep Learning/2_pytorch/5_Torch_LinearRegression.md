@@ -30,6 +30,13 @@ output_dim = 1
 
 model = LinearRegressionModel2(input_dim, output_dim)
 
+######################
+# Use GPU for Model if available #
+######################
+if torch.cuda.is_available():
+	model.cuda()
+######################
+
 criterian = nn.MSELoss()
 
 optimizer = torch.optim.SGD(model.parameters(), lr=.01)
@@ -40,8 +47,17 @@ optimizer = torch.optim.SGD(model.parameters(), lr=.01)
 epochs = 100
 
 for epoch in range(1, epochs):
+
+################
+# Use GPU if Available #
+################
+if torch.cuda.is_available():
+    inputs = Variable(torch.from_numpy(x_values).cuda()).float()
+    labels = Variable(torch.from_numpy(y_values).cuda()).float()
+else:
     inputs = Variable(torch.from_numpy(x_values)).float()
     labels = Variable(torch.from_numpy(y_values)).float()
+##################
     
     optimizer.zero_grad()
     
