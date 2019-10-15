@@ -1,10 +1,22 @@
-# ==4. Exploratory Data Analysis (EDA)==
+# 4. Exploratory Data Analysis (EDA)
 
 
-<details><summary><b>Tips & Tricks<b></summary>
+<div style='width:1000px;margin:auto'>
+<details><summary><b>Tips & Tricks</b></summary>
 <p>
 
-<details><summary><b>Greatter Matrix by mean<b> for <b>Feature Engineering<b></summary>
+<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary>
+<p>
+~~~python
+with plt.xkcd():
+    plt.plot(roc_curve[0], roc_curve[1]);
+    plt.plot([0,1], [0,1])
+    plt.xlabel('FPR'); plt.ylabel('TPR'); plt.title('test AUC = %f' % (auc)); plt.axis([-0.05,1.05,-0.05,1.05]);
+~~~
+</p>
+</details>
+
+<details><summary><b>CDF</b> Plotting</summary>
 <p>
 ~~~python
 df['height'].plot.hist(bins=200,
@@ -17,9 +29,9 @@ df['height'].plot.hist(bins=200,
 </p>
 </details>
 
-<details><summary><b>Greatter Matrix by mean<b> for <b>Feature Engineering<b></summary>
+<details><summary><b>Greatter Matrix by mean</b> for <b>Feature Engineering</b></summary>
 <p>
-[<b>Notebook<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through) 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through"><b>Notebook</b></a> </p>
 ~~~python
 def autolabel(arrayA):
     '''
@@ -54,11 +66,11 @@ def gt_matrix(df,feats,sz=16):
 </p>
 </details>
 
-<details><summary> <b>Better Correlation heatmap<b></summary>
+<details><summary> <b>Better Correlation heatmap</b></summary>
 <p>
 ~~~python
 
-def heatmap(x, y, <b>kwargs):
+def heatmap(x, y, **kwargs):
     if 'color' in kwargs:
         color = kwargs['color']
     else:
@@ -189,11 +201,11 @@ def corrplot(data, size_scale=500, marker='s'):
 ~~~
 </p>
 </details>
-<details><summary> <b>Distrubtion of feature vs. row index<b></summary>
+<details><summary> <b>Distrubtion of feature vs. row index</b></summary>
 <p>
-[<b>Example<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&%20Visualization.html#Distribution-of-X8-along-with-row-index:) 
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Distribution-of-X8-along-with-row-index:"><b>Example</b></a> </p> 
 
-<h4> 1. Without Class labeling
+<h4> 1. Without Class labeling</h4>
 ~~~python
 plt.figure(figsize=(16, 10))
 plt.plot(train.x8, '.')
@@ -202,8 +214,8 @@ plt.ylabel('X8 Values')
 plt.title('Distribution of X8 around row index')
 ~~~
 
-<h4> 2. With class labeling
-[<b>Labeling example<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&%20Visualization.html#Hue-with-Class-labels:)
+<h4> 2. With class labeling</h4>
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Hue-with-Class-labels:"><b>Labeling example</b></a></p>
 ~~~python
 plt.figure(figsize=(16, 10))
 plt.scatter(range(len(train.x8)), train.sort_values('y')['x8'], c=train.sort_values('y')['y'], cmap='viridis')
@@ -211,10 +223,10 @@ plt.scatter(range(len(train.x8)), train.sort_values('y')['x8'], c=train.sort_val
 </p>
 </details>
 
-<details><summary> <b>Features Grouping<b> for <b>Feature Engineering<b></summary>
+<details><summary> <b>Features Grouping</b> for <b>Feature Engineering</b></summary>
 <p>
-<h4> 1. Clustering by KMeans
-[<b>Notebook<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&%20Visualization.html#With-Clustering:)
+<h4> 1. Clustering by KMeans</h4>
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#With-Clustering:"><b>Notebook</b></a></p>
 ~~~python
 from sklearn.cluster import KMeans
 
@@ -238,8 +250,8 @@ plt.figure(figsize=(16, 10))
 sns.heatmap(X.corr(), cmap='viridis');
 ~~~
 
-<h4> 2. Clustering by Statistics
-[<b>Notebook<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&%20Visualization.html#Clustering-Using-Statistics:)
+<h4> 2. Clustering by Statistics</h4>
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Clustering-Using-Statistics:"><b>Notebook</b></a></p>
 
 ~~~python
 plt.figure(figsize=(16, 8))
@@ -249,17 +261,17 @@ train.mean().sort_values().plot(style='.');
 </details>
 
 
-<details><summary>From <b>Power Law Dist<b> to <b>Normal Disb.<b></summary>
+<details><summary>From <b>Power Law Dist</b> to <b>Normal Disb.</b></summary>
 <p>
 
-<h4> Convert
+<h4> Convert</h4>
 ~~~python
 #converting the values to log-values to chec for log-normal
 import math
 frame_with_durations_modified['log_times']=[math.log(i+1) for i in frame_with_durations_modified['trip_times'].values]
 ~~~
 
-<h4> Show the distribution
+<h4> Show the distribution</h4>
 ~~~python
 #pdf of log-values
 sns.FacetGrid(frame_with_durations_modified,size=6) \
@@ -268,7 +280,7 @@ sns.FacetGrid(frame_with_durations_modified,size=6) \
 plt.show();
 ~~~
 
-<h4> Check the Q-Q plot.
+<h4> Check the Q-Q plot.</h4>
 ~~~python
 import scipy
 #Q-Q plot for checking if trip-times is log-normal
@@ -278,7 +290,7 @@ plt.show()
 </p>
 </details>
 
-<details><summary>Plot <b>Two Categorical Features<b> with sizes</summary>
+<details><summary>Plot <b>Two Categorical Features</b> with sizes</summary>
 <p>
 ~~~python
 def plot_categoricals(x, y, data, annotate=True):
@@ -352,7 +364,7 @@ def plot_categoricals(x, y, data, annotate=True):
     plt.xlabel(f"{x}"); plt.ylabel(f"{y}"); plt.title(f"{y} vs {x}");
 ~~~
 
-<h4> 2. Example.
+<h4> 2. Example.</h4>
 ~~~python
 plot_categoricals('rez_esc', 'Target', data)
 ~~~
@@ -360,7 +372,7 @@ plot_categoricals('rez_esc', 'Target', data)
 </details>
 
 
-<details><summary>Plot <b>How many Unique Values<b> In each column</summary>
+<details><summary>Plot <b>How many Unique Values</b> In each column</summary>
 <p>
 ~~~python
 color = sns.color_palette()[0]
@@ -374,7 +386,7 @@ show_annotation(ax)
 </p>
 </details>
 
-<details><summary>Plot <b>Quantiles<b> on line chart</summary>
+<details><summary>Plot <b>Quantiles</b> on line chart</summary>
 <p>
 ~~~python
 plt.plot(tag_counts[:100], c='b')
@@ -387,7 +399,7 @@ for x, y in zip(list(range(0, 100, 25)), tag_counts[0:100:25]):
 </p>
 </details>
 
-<details><summary><b>Histogram<b> For all Numerical Values</summary>
+<details><summary><b>Histogram</b> For all Numerical Values</summary>
 <p>
 ~~~python
 train_df.hist(bins='auto', figsize=(18, 22), layout=(5, 2));
@@ -395,7 +407,7 @@ train_df.hist(bins='auto', figsize=(18, 22), layout=(5, 2));
 </p>
 </details>
 
-<details><summary> Add <b>Spaces<b> b/w <b>height<b> and <b>width<b> for subplots</summary>
+<details><summary> Add <b>Spaces</b> b/w <b>height</b> and <b>width</b> for subplots</summary>
 <p>
 ~~~python
 plt.subplots_adjust(wspace=.5, hspace=.5)
@@ -403,7 +415,7 @@ plt.subplots_adjust(wspace=.5, hspace=.5)
 </p>
 </details>
 
-<details><summary> Plot <b>3D<b> figures </summary>
+<details><summary> Plot <b>3D</b> figures </summary>
 <p style="margin: 0">
 ~~~python
 from mpl_toolkits.mplot3d import Axes3D
@@ -435,7 +447,7 @@ plot_3d('learning_rate', 'n_estimators', 'score', opt_hyp)
 </details>
 
 
-<details><summary> Show <b>Annotations<b> on <b>bar chart<b> </summary>
+<details><summary> Show <b>Annotations</b> on <b>bar chart</b> </summary>
 <p style="margin: 0">
 <h4> Better Version
 ~~~python
@@ -451,7 +463,7 @@ def show_annotation(dist, n=5, total=None):
                ha='center', fontsize=14) 
     dist.set_ylim(0, max(sizes) * 1.15); # set y limit based on highest heights
 ~~~
-<h4> Example:
+<h4> Example:</h4>
 ~~~python
 total = len(train)
 plt.figure(figsize=(12, 6))
@@ -465,7 +477,7 @@ g.set_ylabel('Count', fontsize=15)
 show_annotation(g)
 ~~~
 
-<h4> Another Version
+<h4> Another Version</h4>
 ~~~python
 # <b><b><b><b><b><b><b><b>SHOW ANNOTATIONS<b><b><b><b><b>
 def show_annotation(df, colName, n=10):
@@ -484,7 +496,7 @@ def show_annotation(df, colName, n=10):
 </p>
 </details>
 
-<details><summary> <b>Increase Size of (plt.title)<b> </summary>
+<details><summary> <b>Increase Size of (plt.title)</b> </summary>
 <p>
 
 ~~~python
@@ -494,7 +506,7 @@ plt.title('Title here', size=20, y=1.06)
 plt.suptitle('Title here', fontsize=20)
 ~~~
 
-<h4> OOP Version
+<h4> OOP Version</h4>
 ~~~python
 color = sns.color_palette()[0]
 g = sns.countplot(x='target', data=train, color=color)
@@ -505,7 +517,7 @@ g.set_ylabel('Count', fontsize=15)
 </p>
 </details>
 
-<details><summary> <b>Change Font Size of all plots<b> </summary>
+<details><summary> <b>Change Font Size of all plots</b> </summary>
 <p>
 
 ~~~python
@@ -516,7 +528,7 @@ plt.rcParams['font.size'] = 22
 
 
 
-<details><summary> <b>Color the edge of bar chart<b> </summary>
+<details><summary> <b>Color the edge of bar chart</b> </summary>
 <p>
 ~~~python
 (app_train['DAYS_BIRTH']/-365).plot.hist(edgecolor='k', bins=30);
@@ -528,7 +540,7 @@ plt.rcParams['patch.edgecolor'] = 'k'
 </p>
 </details>
 
-<details><summary> Make <b>grid behind bar charts<b> </summary>
+<details><summary> Make <b>grid behind bar charts</b> </summary>
 <p>
 
 ~~~python
@@ -538,7 +550,7 @@ ax.bar(range(len(y)), y, width=0.3, align='center', color='skyblue', zorder=3)
 </p>
 </details>
 
-<details><summary><b>KDE<b> plot b/w <b>feature<b> and <b>TARGET<b></summary>
+<details><summary><b>KDE</b> plot b/w <b>feature</b> and <b>TARGET</b></summary>
 <p>
 ~~~python
 # Modify it to be sutable for your needs.
@@ -568,7 +580,7 @@ def kde_target(var_name, df):
 </p>
 </details>
 
-<details><summary>Show the <b>Legend<b> outside of the plot</summary>
+<details><summary>Show the <b>Legend</b> outside of the plot</summary>
 <p>
 ~~~python
 # To relocate the legend
@@ -579,126 +591,179 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 </p>
 </details>
-<b>*
 
-<details><summary><b>Pandas<b></summary>
+<hr>
+
+<details><summary><b>Pandas</b></summary>
 <p>
-- <b>df.plot.hist()<b>     histogram
-- <b>df.plot.bar()<b>      bar chart
-- <b>df.plot.barh()<b>     horizontal bar chart
-- <b>df.plot.line()<b>     line chart
-- <b>df.plot.area()<b>     area chart
-- <b>df.plot.scatter()<b>  scatter plot
-- <b>df.plot.box()<b>      box plot
-- <b>df.plot.kde()<b>      kde plot
-- <b>df.plot.hexbin()<b>   hexagonal bin plot
-- <b>df.plot.pie()<b>      pie chart
+<ul>
+<li><b>df.plot.hist()</b>     histogram</li>
 
-[<b>Built-in Visualization<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types) 
+<li><b>df.plot.bar()</b>      bar chart</li>
+
+<li><b>df.plot.barh()</b>     horizontal bar chart</li>
+
+<li><b>df.plot.line()</b>     line chart</li>
+
+<li><b>df.plot.area()</b>     area chart</li>
+
+<li><b>df.plot.scatter()</b>  scatter plot</li>
+
+<li><b>df.plot.box()</b>      box plot</li>
+
+<li><b>df.plot.kde()</b>      kde plot</li>
+
+<li><b>df.plot.hexbin()</b>   hexagonal bin plot</li>
+
+<li><b>df.plot.pie()</b>      pie chart</li>
+</ul>
+
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types"><b>Built-in Visualization<b></a> </p>
 </p>
 </details>
 
-<details><summary><b>Matplotlib<b></summary>
+<details><summary><b>Matplotlib</b></summary>
 <p>
 
-- [<b>1. Matplotlib Concepts<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture)
-- [<b>2. Advanced Concepts<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture)
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture"><b>1. Matplotlib Concepts<b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture"><b>2. Advanced Concepts<b></a></li>
+</ul>
 
 </p>
 </details>
 
-<details><summary><b>Seaborn<b></summary>
+<details><summary><b>Seaborn</b></summary>
 <p>
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/1_Distribution%20Plots.html#Distribution-Plots"><b>1. Distrubtion Plots<b></a></li>
 
-- [<b>1. Distrubtion Plots<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/1_Distribution%20Plots.html#Distribution-Plots)
-- [<b>2. Categorical Data Plots<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/2_Categorical%20Plots.html#Categorical-Data-Plots)
-- [<b>3. Matrix Plots<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/3_Matrix%20Plots.html#Matrix-Plots)
-- [<b>4. Regression Plots<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/4_Regression%20Plots.html#Regression-Plots) 
-- [<b>5. Grids<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/5_Grids.html#Grids) 
-- [<b>6. Styles & Coloring<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/6_Style%20and%20Color.html#Style-and-Color)
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/2_Categorical%20Plots.html#Categorical-Data-Plots"><b>2. Categorical Data Plots<b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/3_Matrix%20Plots.html#Matrix-Plots"><b>3. Matrix Plots<b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/4_Regression%20Plots.html#Regression-Plots"><b>4. Regression Plots<b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/5_Grids.html#Grids"><b>5. Grids<b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/6_Style%20and%20Color.html#Style-and-Color"><b>6. Styles &amp; Coloring<b></a></li>
+</ul>
 
 </p>
 </details>
 
-<details><summary><b>Plotly<b></summary>
+<details><summary><b>Plotly</b></summary>
 <p>
-[<b>Plotly & Cufflinks<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks) 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks"><b>Plotly &amp; Cufflinks</b></a> </p> 
 </p>
 </details>
-<b>*
+<hr>
 
-<details><summary><b>Data Scientist ND<b></summary>
+<details><summary><b>Data Scientist ND</b></summary>
 <p>
-<h4>1. Uni-Variate Visualization:
-> [<b>Bar<b> Chart](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart) 
-[<b>Pie<b> Chart](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/2_Pie%20Chart.html#Pie-Chart) 
-[<b>Histograms<b> Using Matplotlib](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/3_Histograms.html#Histograms-Using-Matplotlib) 
-[<b>Kernal Density Estimation (KDE)<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/16.%20Extra%20Kernel%20Density%20Estimation.html) 
-[<b>Waffle<b> Plots](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/17.%20Extra%20Waffle%20Plots.html) 
+<h4>1. Uni-Variate Visualization:</h4>
 
-<h4>2. Bi-Variate Visualization:
-> [<b>Scatter<b> Plot.](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/1_Scatter%20Plot.html#Scatter-Plot-using-Matplotlib) 
-[<b>Heat Map<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/2_HeatMap.html#Heat-Map-using-Matplotlib) 
->> - A zoomed-in heatmap for best features have best correlation with the output.
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart"><b>Bar</b> Chart</a> </li>
 
-> [<b>Violin<b> Plot](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/3_Violin%20Plot.html#Violin-Plot-using-Seaborn) 
-[<b>Box<b> Plot](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/4_Box%20Plot.html#Box-Plot-vs.-Violin-Plot) 
-[<b>Clustered Bar<b> Chart](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/5_Clustered%20Bar%20Chart.html#Clustered-Bar-+-Heatmap) 
-[<b>Facet Grid<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/6_Facet%20Grid.html#Faced-Grid) 
-[<b>Sweet Pair Grid<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Pairs-Plot) 
-[<b>Adapted Bar<b> Chart,  <b>Point<b> Chart](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/7_Adapted%20Bar%20Chart.html#Adapted-Bar-Chart) 
-[<b>Q-Q<b> Plot: Used to check normal distribution.](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/16.%20Extra%20Q-Q%20Plots.html) 
-[<b>Swarm<b> Plot](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html) 
-[<b>Rug<b> and <b>Strip<b> Plot](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html) 
-[<b>Stacked<b> Plots](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html) 
-[<b>Ridgeline<b> Plot](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html) 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/2_Pie%20Chart.html#Pie-Chart"><b>Pie</b> Chart</a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/3_Histograms.html#Histograms-Using-Matplotlib"><b>Histograms</b> Using Matplotlib</a> </li>
 
-<h4>3. Multi-Variate Visualization:
-> [<b>Shape<b>, <b>Size<b>, and <b>Color<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/1_Shape-Size-Color.html#1.-Shape) 
-[<b>Facet 2d<b> Chart](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/2_Facet%202d.html#Faceting-in-col) 
-[<b>Adaption Bi-variante<b> Charts](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/3_Adaption%20of%20Bivariate.html#Adaption-of-Bi-Variate-Plots) 
-[<b>Plot Metrices<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/4_Plot%20Matices.html#Pair-Grid) 
-</p>
-</details>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/16.%20Extra%20Kernel%20Density%20Estimation.html"><b>Kernal Density Estimation (KDE)</b></a> </li>
 
-<b>*
-<details><summary><b>Time-Series Analysis Course<b></summary>
-<p>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/17.%20Extra%20Waffle%20Plots.html"><b>Waffle</b> Plots</a> </li>
+</ul>
 
-<details><summary><b>Time-Series with Pandas<b></summary>
-<p>
+<h4>2. Bi-Variate Visualization:</h4>
 
-- [<b>1. Datetime Index<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review) 
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/1_Scatter%20Plot.html#Scatter-Plot-using-Matplotlib"><b>Scatter</b> Plot.</a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/2_HeatMap.html#Heat-Map-using-Matplotlib"><b>Heat Map</b></a> </p></li>
 
-- [<b>2. Making Datetime as index and parse it as datetime64<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#Import-the-data) 
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/3_Violin%20Plot.html#Violin-Plot-using-Seaborn"><b>Violin</b> Plot</a> </p></li>
 
-- [<b>3. Resample<b> (making aggregation over time)](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#resample())
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/4_Box%20Plot.html#Box-Plot-vs.-Violin-Plot"><b>Box</b> Plot</a> </p></li>
 
-- [<b>4. Time Shifting<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/02-Time-Shifting.html#Time-Shifting) 
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/5_Clustered%20Bar%20Chart.html#Clustered-Bar-+-Heatmap"><b>Clustered Bar</b> Chart</a> </p></li>
 
-- [<b>5. Rolling & Expanding<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/03-Rolling-and-Expanding.html#Rolling-and-Expanding)
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/6_Facet%20Grid.html#Faced-Grid"><b>Facet Grid</b></a> </p></li>
 
-- [<b>6. Visualizing Time-Series Data<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/04-Visualizing-Time-Series-Data.html#Visualizing-Time-Series-Data) 
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Pairs-Plot"><b>Sweet Pair Grid</b></a> </p></li>
 
-- [<b>From month as number to String<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/06-Pandas-Time-Series-Exercises-SET-ONE-Solutions.html) 
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/7_Adapted%20Bar%20Chart.html#Adapted-Bar-Chart"><b>Adapted Bar</b> Chart,  <b>Point</b> Chart</a> </p></li>
 
-- [<b>Extensive Time-Series EDA<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/08-Time-Series-with-Pandas-Project-Exercise-SET-TWO-Solutions.html) 
-</p>
-</details>
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/16.%20Extra%20Q-Q%20Plots.html"><b>Q-Q</b> Plot: Used to check normal distribution.</a> </p></li>
 
-<details><summary><b>Statsmodel for Time-Series Analysis<b></summary> 
-<p>
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html"><b>Swarm</b> Plot</a> </p></li>
 
-- [<b>1. Hodrick-Prescott filter<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/00-Introduction-to-Statsmodels.html) 
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html"><b>Rug</b> and <b>Strip<b> Plot</a> </p></li>
 
-- [<b>2. ETS Decomposition<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/01-ETS-Decomposition.html) 
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html"><b>Stacked</b> Plots</a> </p></li>
 
-- [<b>3. EWMA (Exponantially Weighted Moving Average)<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/02-EWMA-Exponentially-Weighted-Moving-Average.html) 
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html"><b>Ridgeline</b> Plot</a> </p></li>
+</ul>
 
-- [<b>4. Holt-Winters Smoothing (Simple, Double, Triple)<b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/03-Holt-Winters-Methods.html#Holt-Winters-Methods) 
+<h4>3. Multi-Variate Visualization:</h4>
+
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/1_Shape-Size-Color.html#1.-Shape"><b>Shape</b>, <b>Size</b>, and <b>Color</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/2_Facet%202d.html#Faceting-in-col"><b>Facet 2d</b> Chart</a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/3_Adaption%20of%20Bivariate.html#Adaption-of-Bi-Variate-Plots"><b>Adaption Bi-variante</b> Charts</a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/4_Plot%20Matices.html#Pair-Grid"><b>Plot Metrices</b></a> </li>
+</ul>
 </p>
 </details>
 
+<hr>
+
+<details><summary><b>Time-Series Analysis Course</b></summary>
+<p>
+
+<details><summary><b>Time-Series with Pandas</b></summary>
+<p>
+
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review"><b>1. Datetime Index</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#Import-the-data"><b>2. Making Datetime as index and parse it as datetime64</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#resample()"><b>3. Resample</b> (making aggregation over time)</a></p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/02-Time-Shifting.html#Time-Shifting"><b>4. Time Shifting</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/03-Rolling-and-Expanding.html#Rolling-and-Expanding"><b>5. Rolling &amp; Expanding</b></a></p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/04-Visualizing-Time-Series-Data.html#Visualizing-Time-Series-Data"><b>6. Visualizing Time-Series Data</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/06-Pandas-Time-Series-Exercises-SET-ONE-Solutions.html"><b>From month as number to String</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/08-Time-Series-with-Pandas-Project-Exercise-SET-TWO-Solutions.html"><b>Extensive Time-Series EDA</b></a> 
+</p></p></li>
+</ul>
 </p>
 </details>
+
+<details><summary><b>Statsmodel for Time-Series Analysis</b></summary> 
+<p>
+
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/00-Introduction-to-Statsmodels.html"><b>1. Hodrick-Prescott filter</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/01-ETS-Decomposition.html"><b>2. ETS Decomposition</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/02-EWMA-Exponentially-Weighted-Moving-Average.html"><b>3. EWMA (Exponantially Weighted Moving Average)</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/03-Holt-Winters-Methods.html#Holt-Winters-Methods"><b>4. Holt-Winters Smoothing (Simple, Double, Triple)</b></a> </p></li>
+</ul>
+</p>
+</details>
+
+</p>
+</details>
+
+</div>
