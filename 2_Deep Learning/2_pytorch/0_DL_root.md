@@ -11,6 +11,9 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/4_Torch_CNN.html"><font color='#333'><b style='font-size:20px'>CNN</b></font></a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/5_Torch_RNN.html"><font color='#333'><b style='font-size:20px'>RNN</b></font></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/6_Torch_LSTM.html"><font color='#333'><b style='font-size:20px'>LSTM</b></font></a> </li>
 
 </ul>
 </div>
