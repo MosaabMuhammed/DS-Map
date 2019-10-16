@@ -108,10 +108,10 @@ for e in range(epochs):
     running_loss = 0
     for images, labels in trainloader:
         # Flatten MNIST images into a 784 long vector
-        images = images.view(images.shape[0], -1)
+        images = images.view(images.shape[0], -1)  # We can do this step in the Network class .forward  (instead of doing it here).
     
         # TODO: Training pass
-        outputs = model.forward(images)
+        outputs = model(images)
         loss    = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
