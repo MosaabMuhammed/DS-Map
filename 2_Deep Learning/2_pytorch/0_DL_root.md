@@ -98,13 +98,41 @@ def view_classify(img, ps, version="MNIST"):
     plt.tight_layout()
 ~~~
 
-<h4>4. Forward pass through the network and display out</h4>
+<h4>4. Start Optimizing</h4>
 ~~~python
-# Forward pass through the network and display output.
+criterion = nn.NLLLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.003)
+
+epochs = 5
+for e in range(epochs):
+    running_loss = 0
+    for images, labels in trainloader:
+        # Flatten MNIST images into a 784 long vector
+        images = images.view(images.shape[0], -1)
+    
+        # TODO: Training pass
+        outputs = model.forward(images)
+        loss    = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+        
+        running_loss += loss.item()
+    else:
+        print(f"Training loss: {running_loss/len(trainloader)}")
+~~~
+
+<h4>5. Test on a new data</h4>
+~~~python
 images, labels = next(iter(trainloader))
-images.resize_(images.shape[0], 1, 28*28)
-ps = model.forward(images[0, :])  # Must to do .forward()
-helper.view_classify(images[0].view(1, 28, 28), ps)
+
+img = images[0].view(1, 784)
+# Turn off gradients to speed up this part
+with torch.no_grad():
+    logps = model(img)
+
+# Output of the network are log-probabilities, need to take exponential for probabilities
+ps = torch.exp(logps)
+helper.view_classify(img.view(1, 28, 28), ps)
 ~~~
 </p>
 </details>
