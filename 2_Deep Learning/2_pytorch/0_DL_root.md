@@ -103,7 +103,7 @@ def view_classify(img, ps, version="MNIST"):
 # Forward pass through the network and display output.
 images, labels = next(iter(trainloader))
 images.resize_(images.shape[0], 1, 28*28)
-ps = model.forward(images[0, :])
+ps = model.forward(images[0, :])  # Must to do .forward()
 helper.view_classify(images[0].view(1, 28, 28), ps)
 ~~~
 </p>

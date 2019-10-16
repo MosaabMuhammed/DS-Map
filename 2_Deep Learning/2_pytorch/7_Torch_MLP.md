@@ -164,6 +164,39 @@ for epoch in range(num_epochs):
             # Print Loss
             print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.data, accuracy))
 ~~~
+
+<h4>Note:</h4>
+<ul>
+<li>In my experience it's more convenient to build the model with a log-softmax output using<code>nn.LogSoftmax</code> or <code>F.log_softmax</code> (<a href="https://pytorch.org/docs/stable/nn.html#torch.nn.LogSoftmax">documentation</a>).</li>
+<li>Then you can get the actual probabilities by taking the exponential <code>torch.exp(output)</code>.</li>
+<li>With a log-softmax output, you want to use the negative log likelihood loss, <code>nn.NLLLoss</code> (<a href="https://pytorch.org/docs/stable/nn.html#torch.nn.NLLLoss">documentation</a>).</li>
+</ul>
+
+~~~python
+# Build a feed-forward network
+model = nn.Sequential(nn.Linear(28*28, 128),
+                      nn.ReLU(),
+                      nn.Linear(128, 64),
+                      nn.ReLU(),
+                      nn.Linear(64, 10),
+                      nn.LogSoftmax(dim=1)) # <-----
+
+# TODO: Define the loss
+criterion = nn.NLLLoss() # <-----
+
+### Run this to check your work
+# Get our data
+images, labels = next(iter(trainloader))
+# Flatten images
+images = images.view(images.shape[0], -1)
+
+# Forward pass, get our logits
+logps = model(images)
+# Calculate the loss with the logits and the labels
+loss = criterion(logps, labels)
+
+print(loss)
+~~~
 </p>
 </details>
 
