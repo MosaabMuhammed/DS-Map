@@ -70,16 +70,17 @@ assert num_classes * (128 + 1) == 1290
 The depth of the convolutional layer will always equal the number of filters <span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>K</span>.<br><br>
 
 If <b>padding = 'same'</b>, then the spatial dimensions of the convolutional layer are the following:
-~~~python
-height = ceil(float(H_in) / float(S))
-width = ceil(float(W_in) / float(S))
-~~~
+
+$$Height = ceil(\frac{float(H_{in})}{float(S)})$$
+
+$$Weight = ceil(\frac{float(W_{in})}{float(S)})$$
 
 If <b>padding = 'valid'</b>, then the spatial dimensions of the convolutional layer are the following:
-~~~python
-height = ceil(float(H_in - F + 1) / float(S))
-width = ceil(float(W_in - F + 1) / float(S))
-~~~
+
+$$Height = ceil(\frac{float(H_{in} - F + 1)}{float(S)})$$
+
+$$Weight = ceil(\frac{float(W_{in} - F + 1)}{float(S)})$$
+
 </p>
 </details>
 
