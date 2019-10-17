@@ -167,6 +167,8 @@ helper.view_classify(img.view(1, 28, 28), ps)
 <ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/7_Torch_Validation.html"><font color='#333'><b style='font-size:18px'>Validation & Inference</b></font></a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/deep-learning-v2-pytorch/convolutional-neural-networks/mnist-mlp/mnist_mlp_solution_with_validation.html#Load-and-Visualize-the-Data"><font color='#333'><b style='font-size:18px'>train_test_split [PyTorch] Version</b></font></a></li>
+
 </ul>
 
 <details style='padding-left:8px'><summary>Save <b>Weights</b> [The Right Way]</summary>

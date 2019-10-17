@@ -85,7 +85,7 @@ for epoch in range(epochs):
                   f"Test accuracy: {accuracy/len(testloader):.3f}")
             running_loss = 0
             model.train()
-~~~
+~~~ 
 
 </details>
 </div>
