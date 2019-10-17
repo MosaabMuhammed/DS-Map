@@ -141,7 +141,7 @@ helper.view_classify(img.view(1, 28, 28), ps)
 <ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/1_Torch_LinReg.html"><font color='#333'><b style='font-size:20px'>Linear Regression</b></font></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/2_Torch_LogReg.html"><font color='#333'><b style='font-size:20px'>Logistic Regression</b></font></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/2_Torch_LogReg.html"><font color='#333'><b style='font-size:20px'>Logistic Regression</b></font></a> </li> 
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/3_Torch_MLP.html"><font color='#333'><b style='font-size:20px'>MLP</b></font></a> </li>
 
@@ -161,7 +161,30 @@ helper.view_classify(img.view(1, 28, 28), ps)
 </ul>
 <details><summary>Save <b>Weights</b> [The Right Way]</summary>
 <p>
+<h4>NOTE:</h4>When loading the weights, it has to be assigend to the same architecture.<br>
+~~~python
+checkpoint = {'input_size': 784,
+		       'output_size': 10,
+		       'hidden_layers': [each.out_features for each in model.hidden_layers],
+		       'state_dict': model.state_dict()}
+		       
+torch.save(checkpoint, 'checkpoint.pth')
+~~~
 
+<h4>2. Load the weights</h4>
+~~~python
+def load_checkpoint(filepath):
+	checkpoint = torch.load(filepath)
+	
+	model = Network(checkpoint['input_size'],
+	 			    checkpoint['output_size'],
+	 			    checkpoint['hidden_layers'])
+	 			 
+	 return model
+	 
+model = load_checkpoint('checkpoint.pth')
+print(model)
+~~~
 </p>
 </details>
 
