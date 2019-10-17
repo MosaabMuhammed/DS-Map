@@ -26,7 +26,7 @@ $$O = \frac{W}{K}$$
 </p>
 </details>
 
-<details><summary>Core Model</summary>
+<details><summary>Example on MNIST</summary>
 <p>
 
 <h4>1. Import Libraries</h4>
@@ -212,6 +212,8 @@ for epoch in range(num_epochs):
 ~~~
 </p>
 </details>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/deep-learning-v2-pytorch/convolutional-neural-networks/cifar-cnn/cifar10_cnn_solution.html#Convolutional-Neural-Networks"><b style='color:#333'>Example on CIFAR</b></a></p></li>
 
 <details><summary><b>Save</b> & <b>Load</b> weights</summary>
 <p>
