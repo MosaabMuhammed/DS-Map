@@ -1,5 +1,10 @@
 # Inference & Validation
 
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/deep-learning-v2-pytorch/convolutional-neural-networks/mnist-mlp/mnist_mlp_solution_with_validation.html#Load-and-Visualize-the-Data"><font color='#333'><b style='font-size:18px'>train_test_split [PyTorch] Version</b></font></a></li>
+ 
+<hr>
+
 <details><summary><b>Without</b> Dropout [Normal Case]</summary>
 <p>
 
