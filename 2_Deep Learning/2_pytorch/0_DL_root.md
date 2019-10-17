@@ -2,7 +2,9 @@
 
 <div style='width:1000px;margin:auto'>
 
-<details><summary><b>Functional</b> API</summary>
+<details><summary><b>Types of API</b></summary>
+
+<details style='padding-left:15px'><summary><b>Functional</b> API</summary>
 <p>
 ~~~python
 import torch.nn.functional as F
@@ -22,7 +24,7 @@ class Network(nn.Module):
 </p>
 </details>
 
-<details><summary><b>Sequential</b> API</summary>
+<details style='padding-left:15px'><summary><b>Sequential</b> API</summary>
 <p>
 <h4>1. Upload MNIST data</h4>
 ~~~python
@@ -136,8 +138,12 @@ helper.view_classify(img.view(1, 28, 28), ps)
 ~~~
 </p>
 </details>
+</details>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/8_Torch_Images.html"><font color='#333' style='font-size:18px'>Dealing with <b>Images</b></font></a> </li>
 
 <hr>
+<details><summary><b>Types of Architectures</b></summary>
 <ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/1_Torch_LinReg.html"><font color='#333'><b style='font-size:20px'>Linear Regression</b></font></a> </li>
 
@@ -147,11 +153,14 @@ helper.view_classify(img.view(1, 28, 28), ps)
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/4_Torch_CNN.html"><font color='#333'><b style='font-size:20px'>CNN</b></font></a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/9_Torch_TransferLearning.html"><font color='#333'><b style='font-size:20px'>Transfer Learning</b></font></a> </li>
+
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/5_Torch_RNN.html"><font color='#333'><b style='font-size:20px'>RNN</b></font></a> </li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/6_Torch_LSTM.html"><font color='#333'><b style='font-size:20px'>LSTM</b></font></a> </li>
 
 </ul>
+</details>
 
 <hr>
 
@@ -159,7 +168,8 @@ helper.view_classify(img.view(1, 28, 28), ps)
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/7_Torch_Validation.html"><font color='#333'><b style='font-size:18px'>Validation & Inference</b></font></a> </li>
 
 </ul>
-<details><summary>Save <b>Weights</b> [The Right Way]</summary>
+
+<details style='padding-left:8px'><summary>Save <b>Weights</b> [The Right Way]</summary>
 <p>
 <h4>NOTE:</h4>When loading the weights, it has to be assigend to the same architecture.<br>
 ~~~python
