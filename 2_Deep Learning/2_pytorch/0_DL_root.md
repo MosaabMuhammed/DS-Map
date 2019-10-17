@@ -152,4 +152,17 @@ helper.view_classify(img.view(1, 28, 28), ps)
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/6_Torch_LSTM.html"><font color='#333'><b style='font-size:20px'>LSTM</b></font></a> </li>
 
 </ul>
+
+<hr>
+
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/7_Torch_Validation.html"><font color='#333'><b style='font-size:18px'>Validation & Inference</b></font></a> </li>
+
+</ul>
+<details><summary>Save <b>Weights</b> [The Right Way]</summary>
+<p>
+
+</p>
+</details>
+
 </div>
