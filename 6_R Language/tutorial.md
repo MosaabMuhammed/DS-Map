@@ -204,6 +204,8 @@ mtcars$drat
 # Select by numbers of columns
 head(statesInfo[, c(1, 2, 3)])
 
+# Select a bunch of columns by number
+head(df[, 1:5])  # select from first column to the fifth.
 ~~~
 </p>
 </details>
@@ -218,6 +220,18 @@ stateSubset <- subset(df, state.region == 1)
 stateSubset <- df[df$state.region == 1, ]   # Select all columns for that condition
 
 ## Note: "state.region" is the name of the columns
+~~~
+</p>
+</details>
+
+<details><summary>Remove <b>Missing Values</b></summary>
+<p>
+~~~
+# Extract missing data (in thise case, returns empty)
+df_without_na <- na.omit(df)
+
+# NOTE:
+# In this case, you get an empty data frame, because every state has at least one missing value amongst the 153 fields. In contrast, if you ran the function with income_total, you’d just get the same data frame, because no values are missing for the first seven columns.
 ~~~
 </p>
 </details>
