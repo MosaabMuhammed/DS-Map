@@ -241,6 +241,17 @@ df_without_na <- na.omit(df)
 ~~~
 # Combine
 income0813 <- merge(df1, df2, by="Id")
+~~~
+</p>
+</details>
+
+
+<details><summary><b>Save</b> dataframe as csv file [.to_csv]</summary>
+<p>
+~~~
+# Save df in a csv file
+write.table(income_total, "data/income-totals.csv",
+    row.names=FALSE, sep=",")
 
 ~~~
 </p>
@@ -248,6 +259,7 @@ income0813 <- merge(df1, df2, by="Id")
 
 </p>
 </details>
+
 
 <details><summary><b>Statistics</b></summary>
 <p>
