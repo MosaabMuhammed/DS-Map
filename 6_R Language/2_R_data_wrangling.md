@@ -1,9 +1,5 @@
-# R Language
-
+# Data Wrangling [R]
 <div style='width:1000px;margin:auto'>
-
-<details><summary><b>Tutorials</b></summary>
-<p>
 
 <details><summary><b>DataTypes</b></summary>
 <p>
@@ -485,9 +481,6 @@ str(cars)
 plot(cars)
 ```
 ~~~
-</p>
-</details>
-
 </p>
 </details>
 
