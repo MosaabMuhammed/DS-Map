@@ -236,6 +236,16 @@ df_without_na <- na.omit(df)
 </p>
 </details>
 
+<details><summary><b>Merge</b> 2 dataframes together [.merge]</summary>
+<p>
+~~~
+# Combine
+income0813 <- merge(df1, df2, by="Id")
+
+~~~
+</p>
+</details>
+
 </p>
 </details>
 
