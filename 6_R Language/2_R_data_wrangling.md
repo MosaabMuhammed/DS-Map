@@ -219,6 +219,10 @@ data(mtcars)
 # we use stringsAsFactors=FALSE to treat strings as strings not factors
 # Note: Factor means a categorical variable that has different flavors or levels.
 statesInfo <- read.csv('stateData.csv', stringsAsFactors=FALSE)
+
+## Load from tsv
+df <- read.delim('pseudo_facebook.tsv')
+df <- read.csv('pseudo_facebook.tsv', sep='\t')
 ~~~
 </p>
 </details>
@@ -441,6 +445,15 @@ getwd()
 
 # change the working directory
 setwd('link/to/path')
+~~~
+</p>
+</details>
+
+<details><summary>See files in the current directory</summary>
+<p>
+~~~
+# see files in the current directory
+list.files()
 ~~~
 </p>
 </details>
