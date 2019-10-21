@@ -195,6 +195,20 @@ mtcars$drat
 </p>
 </details>
 
+<details><summary><b>Select based on Condition</b></summary>
+<p>
+~~~
+# 1. using "subset(dataframe, condition on columns)" 
+stateSubset <- subset(df, state.region == 1)
+
+# 2. using "df[Rows Condition, Columns Condition]
+stateSubset <- df[df$state.region == 1, ]   # Select all columns for that condition
+
+## Note: "state.region" is the name of the columns
+~~~
+</p>
+</details>
+
 </p>
 </details>
 
