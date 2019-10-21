@@ -178,10 +178,14 @@ summary(gender)
 </blockquote>
 ~~~
 # variable rating coded as "large", "medium", "small'
-rating <- ordered(rating)
+rating <- ordered(rating, levels=c("small", "medium", "large")
 # recodes rating to 1,2,3 and associates
 # 1=large, 2=medium, 3=small internally
 # R now treats rating as ordinal
+
+# Alternative way
+# T means True
+rating <- factor(rating, levels=c("small", "medium", "large"), ordered=T)
 ~~~
 
 </p>
@@ -310,6 +314,14 @@ table(df$cat_col)
 ######### output ################ age
       18-24       25-34       35-44       45-54       55-64 65 or Above    Under 18 
       15802       11575        2257         502         140          60        2330 
+~~~
+
+<h4>2. Show only the levels of the categorical variable</h4>
+~~~
+levels(df$cat_col)
+
+####### Output ##########
+
 ~~~
 </p>
 </details>
