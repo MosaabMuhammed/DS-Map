@@ -99,8 +99,8 @@ udacious[mystery == 11]
 data(mtcars)
 
 ## Load from csv file
-df <- read.csv('stateData.csv')
-
+# we use stringsAsFactors=FALSE to treat strings as strings not factors
+statesInfo <- read.csv('stateData.csv', stringsAsFactors=FALSE)
 ~~~
 </p>
 </details>
@@ -178,6 +178,15 @@ tail(mtcars, 3)
 </p>
 </details>
 
+<details><summary><b>summary</b> [.describe()]</summary>
+<p>
+~~~
+# like df.descibe in python to show some descriptive statistics about the columns in the data frame.
+summary(df)
+~~~
+</p>
+</details>
+
 <details><summary><b>Select specific Column</b></summary>
 <p>
 ~~~
@@ -191,6 +200,10 @@ mtcars$mpg
 # Print out any two other variables to the console.
 mtcars$cyl
 mtcars$drat
+
+# Select by numbers of columns
+head(statesInfo[, c(1, 2, 3)])
+
 ~~~
 </p>
 </details>
