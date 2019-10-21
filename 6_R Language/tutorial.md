@@ -309,6 +309,33 @@ setwd('link/to/path')
 </p>
 </details>
 
+<details><summary><b>Rmd</b></summary>
+<p>
+<h4>markdown for R in Rstudio</h4>
+<h4>Note:</h4> After you finish, press <b>knit</b>in Rstudio to convert Rmd to HTML.
+~~~
+# Example
+Speed and Stopping Distances of Cars
+========================================================
+
+This is an R Markdown document or RMD. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+<details><summary>Code</summary>
+<p>
+```{r}
+?cars
+str(cars)
+```
+</p>
+</details>
+
+
+```{r fig.height=10, fig.width=10}
+plot(cars)
+```
+~~~
+</p>
+</details>
+
 </p>
 </details>
 
