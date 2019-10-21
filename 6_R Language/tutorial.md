@@ -100,6 +100,7 @@ data(mtcars)
 
 ## Load from csv file
 # we use stringsAsFactors=FALSE to treat strings as strings not factors
+# Note: Factor means a categorical variable that has different flavors or levels.
 statesInfo <- read.csv('stateData.csv', stringsAsFactors=FALSE)
 ~~~
 </p>
@@ -183,6 +184,19 @@ tail(mtcars, 3)
 ~~~
 # like df.descibe in python to show some descriptive statistics about the columns in the data frame.
 summary(df)
+~~~
+</p>
+</details>
+
+<details><summary>How many <b>unique</b> values in <b>a Categorical (factor)</b> Variable</summary>
+<p>
+~~~
+# like df.descibe in python to show some descriptive statistics about the columns in the data frame.
+table(df$cat_col)
+
+######### output ################ age
+      18-24       25-34       35-44       45-54       55-64 65 or Above    Under 18 
+      15802       11575        2257         502         140          60        2330 
 ~~~
 </p>
 </details>
