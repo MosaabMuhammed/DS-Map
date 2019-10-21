@@ -77,8 +77,6 @@ udacious[mystery == 11]
 </p>
 </details>
 
-
-
 <details><summary><b>DataFrame</b></summary>
 <p>
 
@@ -97,7 +95,12 @@ udacious[mystery == 11]
 # object in R. You should see <Promise> disappear when you
 # run the next line of code.
 
+# Load from existing R dataframes.
 data(mtcars)
+
+## Load from csv file
+df <- read.csv('stateData.csv')
+
 ~~~
 </p>
 </details>
@@ -206,12 +209,40 @@ mean(mtcars$mpg)
 </p>
 </details>
 
+<details><summary><b>Misc</b></summary>
+<p>
+
 <details><summary>Needs <b>Help</b></summary>
 <p>
 ~~~
 # Add '?' before any command to get some describtion
 ?names(mtcars)
 ~~~
+</p>
+</details>
+
+<details><summary><b>Key Bindings</b></summary>
+<p>
+<ol>
+<li><b>[Ctrl + Enter]</b>: Perform the current command, and move the cursor to the following command.</li>
+
+<li><b>[Alt + Enter]</b>: Perform <i>only</i> the current command.</li>
+</ol>
+</p>
+</details>
+
+<details><summary>See or Change <b>Location</b></summary>
+<p>
+~~~
+# see the working directory
+getwd()
+
+# change the working directory
+setwd('link/to/path')
+~~~
+</p>
+</details>
+
 </p>
 </details>
 
