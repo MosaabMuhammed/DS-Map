@@ -5,7 +5,11 @@
 <details><summary><b>Tutorials</b></summary>
 <p>
 
-<details><summary><b>Vector [Array]</b></summary>
+<details><summary><b>DataTypes</b></summary>
+<p>
+<p><a href="https://www.statmethods.net/input/datatypes.html">See the whole <b> Datatypes </b> from here</a> </p>
+
+<details><summary><b>1. Vector</b> [Array in python]</summary>
 <p>
 
 <details><summary>Vector of <b>Strings</b></summary>
@@ -70,6 +74,115 @@ udacious[mystery == 11]
 </p>
 </details>
 
+</p>
+</details> 
+
+</p>
+</details>
+
+<details><summary><b>2. Matrices</b></summary>
+<p>
+~~~
+# All columns in a matrix must have the same mode(numeric, character, etc.) and the same length. The general format is
+
+# mymatrix <- matrix(vector, nrow=r, ncol=c, byrow=FALSE,
+#   dimnames=list(char_vector_rownames, char_vector_colnames))
+
+# byrow=TRUE indicates that the matrix should be filled by rows. byrow=FALSE indicates that the matrix should be filled by columns (the default). dimnames provides optional labels for the columns and rows.\
+
+# generates 5 x 4 numeric matrix
+y<-matrix(1:20, nrow=5,ncol=4)
+
+# another example
+cells <- c(1,26,24,68)
+rnames <- c("R1", "R2")
+cnames <- c("C1", "C2")
+mymatrix <- matrix(cells, nrow=2, ncol=2, byrow=TRUE,
+  dimnames=list(rnames, cnames))
+  
+# Identify rows, columns or elements using subscripts.
+x[,4] # 4th column of matrix
+x[3,] # 3rd row of matrix
+x[2:4,1:3] # rows 2,3,4 of columns 1,2,3
+~~~
+</p>
+</details>
+
+<details><summary><b>3. Arrays</b></summary>
+<p>
+<blockquote>
+  <p>Note: Arrays are similar to matrices but can have more than two dimensions. See help(array) for details. </p>
+</blockquote>
+
+</p>
+</details>
+
+<details><summary><b>4. DataFrames</b></summary>
+<p>
+<blockquote>
+  <p>A data frame is more general than a matrix, in that different columns can have different modes (numeric, character, factor, etc.). This is similar to SAS and SPSS datasets.</p>
+</blockquote>
+~~~
+d <- c(1,2,3,4)
+e <- c("red", "white", "red", NA)
+f <- c(TRUE,TRUE,TRUE,FALSE)
+mydata <- data.frame(d,e,f)
+names(mydata) <- c("ID","Color","Passed") # variable names
+~~~
+</p>
+</details>
+
+<details><summary><b>5. Lists</b> [dict in python]</summary>
+<p>
+<blockquote>
+  <p>An ordered collection of objects (components). A list allows you to gather a variety of (possibly unrelated) objects under one name.</p>
+</blockquote>
+~~~
+# example of a list with 4 components -
+# a string, a numeric vector, a matrix, and a scaler
+w <- list(name="Fred", mynumbers=a, mymatrix=y, age=5.3)
+
+# example of a list containing two lists
+v <- c(list1,list2)
+~~~
+
+<blockquote>
+  <p>Identify elements of a list using the [[]] convention.</p>
+</blockquote>
+~~~
+mylist[[2]] # 2nd component of the list
+mylist[["mynumbers"]] # component named mynumbers in list
+~~~
+
+</p>
+</details>
+
+<details><summary><b>6. Factors</b> [cat variables]</summary>
+<p>
+<blockquote>
+  <p>1. Tell R that a variable is nominal by making it a factor. The factor stores the nominal values as a vector of integers in the range [ 1... k ] (where k is the number of unique values in the nominal variable), and an internal vector of character strings (the original values) mapped to these integers.</p>
+</blockquote>
+~~~
+# variable gender with 20 "male" entries and
+# 30 "female" entries
+gender <- c(rep("male",20), rep("female", 30))
+gender <- factor(gender)
+# stores gender as 20 1s and 30 2s and associates
+# 1=female, 2=male internally (alphabetically)
+# R now treats gender as a nominal variable
+summary(gender)
+~~~
+
+<blockquote>
+  <p>2. An ordered factor is used to represent an ordinal variable.</p>
+</blockquote>
+~~~
+# variable rating coded as "large", "medium", "small'
+rating <- ordered(rating)
+# recodes rating to 1,2,3 and associates
+# 1=large, 2=medium, 3=small internally
+# R now treats rating as ordinal
+~~~
 
 </p>
 </details>
