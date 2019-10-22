@@ -1,12 +1,22 @@
 # Data Visualization
 
 <div sytle='width:1000px;margin:auto'>
+<details><summary><b>Installation</b></summary><p>
 
 <details><summary>Install <b>ggplot2</b></summary><p>
 ~~~
 install.packages('ggplot2')
 library(ggplot2)
 ~~~
+</p></details>
+
+<details><summary>Install <b>gridExtra</b></summary><p>
+~~~
+install.packages('gridExtra')
+library(gridExtra)
+~~~
+</p></details>
+
 </p></details>
 
 <details><summary>1. Explore <b>One</b> Variable</b></summary><p>
@@ -28,6 +38,7 @@ ggplot(aes(x = dob_day), data = pf) +
   scale_x_continuous(breaks = 1:31)
 ~~~
 </p></details>
+
 
 <details><summary><b>1.2. using facet_wrap()</b></summary><p>
 <blockquote>
@@ -123,6 +134,32 @@ ggplot(aes(x = tenure/365), data = pf) +
 ~~~
 <p><img src="imgs/20191022-102314.png" alt="" /></p>
 <p><img src="imgs/20191022-102828.png" alt="" /></p>
+</p></details>
+
+<details><summary><b>1.7. Multiple Plots in one image</b></summary><p>
+~~~
+library(gridExtra)
+
+# Using 1. qplot:
+p1 <- qplot(data=df, x=friend_count)
+p2 <- qplot(data=df, x=sqrt(friend_count))
+p3 <- qplot(data=df, x=log1p(friend_count))
+
+# NOTE: the x axis here, we have log scale not the actual counts.
+
+grid.arrange(p1, p2, p3, ncol=1)
+~~~
+
+~~~
+# Using 2. ggplot
+p1 <- ggplot(data=df, aes(x=friend_count)) + geom_histogram()
+p2 <- p1 + scale_x_log10()
+p3 <- p1 + scale_x_sqrt()
+
+# NOTE: the x axis here, will have the actual counts not the log counts.
+
+grid.arrange(p1, p2, p3, ncol=1)
+~~~
 </p></details>
 
 </p></details>
