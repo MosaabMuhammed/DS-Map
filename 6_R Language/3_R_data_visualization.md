@@ -102,6 +102,29 @@ ggplot(aes(x = friend_count), data = subset(pf, !is.na(gender))) +
 ~~~
 </p></details>
 
+<details><summary><b>1.6. Color & Fill bars</b></summary><p>
+<p><a href="https://ggplot2.tidyverse.org/reference/theme.html"><b>Doc about Themes</b></a> </p>
+
+~~~R
+#### Using qplot
+# Note: The I() functions stand for 'as is' and tells qplot to use them as colors.
+
+qplot(data=df, x=tenure, color=I('black'), fill=I('#099DD9'), binwidth=50)
+
+qplot(data=df, x=tenure/365, binwidth=.25,
+      color=I('black'), fill=I('#F79420')) +
+  scale_x_continuous(breaks=seq(1, 7, 1), limits=c(0, 7))
+~~~
+
+~~~
+#### Using ggplot
+ggplot(aes(x = tenure/365), data = pf) +
+  geom_histogram(binwidth = .25, color = 'black', fill = '#F79420')
+~~~
+<p><img src="imgs/20191022-102314.png" alt="" /></p>
+<p><img src="imgs/20191022-102828.png" alt="" /></p>
+</p></details>
+
 </p></details>
 </div>
 
