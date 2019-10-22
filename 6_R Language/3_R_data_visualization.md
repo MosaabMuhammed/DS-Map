@@ -65,6 +65,18 @@ ggplot(aes(x = friend_count), data = pf) +
 ~~~
 </p></details>
 
+<details><summary><b>1.4. using binwidth</b></summary><p>
+~~~
+# 1. using qplot
+qplot(x = friend_count, data = pf, binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
+  
+# 2. using ggplot
+ggplot(aes(x = friend_count), data = pf) +
+  geom_histogram(binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
+~~~
+<p><img src="imgs/20191022-094839.png" alt="" /></p>
 </p></details>
 
 </p></details>
