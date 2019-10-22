@@ -1,6 +1,9 @@
 # Data Visualization
 
 <div sytle='width:1000px;margin:auto'>
+
+<details><summary><b>Tips & Tricks</b></summary><p>
+
 <details><summary><b>Installation</b></summary><p>
 
 <details><summary>Install <b>ggplot2</b></summary><p>
@@ -14,6 +17,18 @@ library(ggplot2)
 ~~~
 install.packages('gridExtra')
 library(gridExtra)
+~~~
+</p></details>
+
+</p></details>
+
+<details><summary><b>Add title for axises</b></summary><p>
+~~~
+qplot(data=subset(df, !is.na(www_likes)), x=www_likes,
+      geom='freqpoly', color=gender,
+      xlab='WWW LIKES (TITLE)',
+      ylab='Y TITLE')+
+  scale_x_log10()
 ~~~
 </p></details>
 
@@ -163,6 +178,38 @@ grid.arrange(p1, p2, p3, ncol=1)
 </p></details>
 
 </p></details>
+
+<details><summary><b>2. Frequency Ploygon [KDE]</b></summary><p>
+
+<details><summary><b>2.1 Normal one</b></summary><p>
+~~~
+# using qplot
+qplot(data=subset(df, !is.na(gender)), x=friend_count,
+      binwidth=10, geom='freqpoly', color=gender) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50))
+~~~
+</p></details>
+
+<details><summary><b>2.2 Showing proportion instead of counts</b></summary><p>
+~~~
+# using qplot
+qplot(data=subset(df, !is.na(gender)), x=friend_count, y= ..count../sum(..count..),
+      binwidth=10, geom='freqpoly', color=gender) + 
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50))
+~~~
+
+~~~
+# Using ggplot
+ggplot(aes(x = www_likes), data = subset(pf, !is.na(gender))) +
+  geom_freqpoly(aes(color = gender)) +
+  scale_x_log10()
+~~~
+<p><img src="imgs/20191022-143205.png" alt="" /></p>
+</p></details>
+
+</p></details>
+
+
 </div>
 
 
