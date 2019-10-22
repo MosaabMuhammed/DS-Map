@@ -111,12 +111,10 @@ SELECT <col_name>, <col_name> FROM <table_name> LIMIT 20 OFFSET 20
 ~~~
 </p></details>
 
-<details><summary>2. Create <b>Database</b></summary><p>
-<h4>Database can have multiple tables</h4>
+<details><summary>9. <b>ORDER BY:</b> to order the selected rows</summary><p>
 ~~~sql
-CREATE DATABASE name_of_database;
-
-# Add semi-colon at the end to finish your command.
+# NOTE: the default ordering is Ascending (from low to high)
+SELECT <col_name>, <col_name> FROM <table_name> ORDER BY <col_name> DESC/ASC LIMIT 20;
 ~~~
 </p></details>
 
