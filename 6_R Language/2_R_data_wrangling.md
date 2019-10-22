@@ -21,7 +21,6 @@ udacious <- c("Chris Saden", "Lauren Castellano",
               "Andy Brown", "Moira Burke",
               "Kunal Chawla")
 ~~~
-
 </p>
 </details>
 
@@ -321,10 +320,26 @@ table(df$cat_col)
 levels(df$cat_col)
 
 ####### Output ##########
-
+[1] "female" "male"  
 ~~~
 </p>
 </details>
+
+<details><summary><b>By</b> statistic [.groupby in Python]</summary><p>
+~~~
+# (numeric variable, cat variable, statistic)
+by(df$friend_count, df$gender, summary)
+
+##### Output #####
+df$gender: female
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0      37      96     242     244    4923 
+------------------------------------------------------------------- 
+df$gender: male
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0      27      74     165     182    4917 
+~~~
+</p></details>
 
 <details><summary><b>Select specific Column</b></summary>
 <p>
