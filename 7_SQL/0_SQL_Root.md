@@ -37,7 +37,7 @@ Database Changed.
 
 SOURCE path/to/database.sql;
 ~~~
-</p></details>
+</p></details><br>
 
 <details><summary>5. <b>Show All Available Tables</b> in Database</summary><p>
 ~~~
@@ -82,7 +82,7 @@ DESCRIBE <table_name>;
 # Default: means default value of no value is assigned.
 # Extra:
 ~~~
-</p></details>
+</p></details><br>
 
 <details><summary>7. <b>SELECT</b>: to see values of columns</summary><p>
 ```sql
@@ -114,25 +114,63 @@ SELECT <col_name>, <col_name> FROM <table_name> LIMIT 20 OFFSET 20
 <details><summary>9. <b>ORDER BY:</b> to order the selected rows</summary><p>
 ~~~sql
 # NOTE: the default ordering is Ascending (from low to high)
-SELECT <col_name>, <col_name> FROM <table_name> ORDER BY <col_name> DESC/ASC LIMIT 20;
+SELECT <col_name>, <col_name> FROM <table_name> ORDER BY <col_name> DESC/ASC LIMIT 5;
+
+# Output
++---------------------+-----------+------+
+| name                | rankscore | year |
++---------------------+-----------+------+
+| Horse Shoeing       |      NULL | 1893 |
+| Blacksmith Scene    |       6.8 | 1893 |
+| Carnival Dance, The |      NULL | 1894 |
+| Armand D'Ary        |      NULL | 1894 |
+| Caicedo (with Pole) |      NULL | 1894 |
++---------------------+-----------+------+
+5 rows in set (0.13 sec)
+
 ~~~
 </p></details>
 
-<details><summary>2. Create <b>Database</b></summary><p>
-<h4>Database can have multiple tables</h4>
-~~~sql
-CREATE DATABASE name_of_database;
+<details><summary>10. <b>DISTINCT</b>: to show unique values in a column</summary><p>
+~~~
+# Show Unique values in a column
+SELECT DISTINCT <col_name> FROM <table_name>;
 
-# Add semi-colon at the end to finish your command.
+# Select Unique combination between multiple columns
+SELECT DISTINCT <col_name>, <col_name> FROM <table_name>;
 ~~~
 </p></details>
 
-<details><summary>2. Create <b>Database</b></summary><p>
-<h4>Database can have multiple tables</h4>
-~~~sql
-CREATE DATABASE name_of_database;
+<details><summary>11. <b>WHERE</b>: to apply condition/filter on the selected data</summary><p>
+~~~
+# list all movies with rankscore>9
+SELECT <col_name>, <col_name>, <col_name> FROM <table_name> WHERE <col_name> > 9 ;
 
-# Add semi-colon at the end to finish your command.
+# Condition's outputs: TRUE, FALSE, NULL
+
+# Comparison Operators:
+# =: equals
+# <> or !=: Not Equals
+#  <: Less than
+# <=: Less than or equal
+# >: Greater than
+# >= : Greater than or equal
+
+SELECT * FROM <table_name> WHERE <col_name> = 'Comedy';
+
+SELECT * FROM <table_name> WHERE <col_name> <> 'Horror';
+
+#### BIG NOTE #####
+# NULL => doesnot-exist/unknown/missing
+
+# "=" doesnot work with NULL, will give you an empty result-set.
+# Instead we use "IS NULL" or "IS NOT NULL"
+SELECT <col_name>,<col_name>,<col_name> FROM <table_name> WHERE <col_name> = NULL;
+
+
+SELECT <col_name>,<col_name>,<col_name> FROM <table_name> WHERE <col_name> IS NULL LIMIT 20;
+
+SELECT name,year,rankscore FROM <table_name> WHERE rankscore IS NOT NULL LIMIT 20;
 ~~~
 </p></details>
 
