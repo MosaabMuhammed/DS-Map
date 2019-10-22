@@ -79,6 +79,63 @@ ggplot(aes(x = friend_count), data = pf) +
 <p><img src="imgs/20191022-094839.png" alt="" /></p>
 </p></details>
 
+<details><summary><b>1.5. Omiting NA (Not Applicable)</b></summary><p>
+~~~
+#### Using qplot
+# First Trial
+qplot(data=na.omit(df), x=friend_count, binwidth=10) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50)) +
+  facet_wrap(~gender)
+
+# Second Trial
+qplot(data=subset(df, !is.na(gender)), x=friend_count, binwidth=25) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50)) +
+  facet_wrap(~gender)
+~~~
+
+~~~
+#### Using ggplot
+ggplot(aes(x = friend_count), data = subset(pf, !is.na(gender))) +
+  geom_histogram() +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50)) +
+  facet_wrap(~gender)
+~~~
 </p></details>
 
+</p></details>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
