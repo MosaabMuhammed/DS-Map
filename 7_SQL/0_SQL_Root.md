@@ -1,5 +1,7 @@
 <h1 style='text-decoration:underline'>SQL</h1>
+<h2 style='width:440px;margin:auto'>Declarative Programming Language</h2><br>
 
+<div style='width:1000px;margin:auto'>
 <details><summary>1. Start <b>MySQL</b> in the <b>Command Line</b></summary><p>
 ~~~
 mysql -u root -p
@@ -59,8 +61,7 @@ SHOW TABLES;
 </p></details>
 
 <details><summary>6. Show <b>Description & Columns</b> in a Table</summary><p>
-<h4>Database can have multiple tables</h4>
-~~~sql
+~~~
 DESCRIBE <table_name>;
 
 ##### Output ######
@@ -74,6 +75,39 @@ DESCRIBE <table_name>;
 +------------+--------------+------+-----+---------+-------+
 4 rows in set (0.04 sec)
 
+# Field: has the name of the column.
+# Type: has the type of the values in that column.
+# Null: means that column can have Null values.
+# Key: whether it's Primary or MULtiple (means one value can occur many times)
+# Default: means default value of no value is assigned.
+# Extra:
+~~~
+</p></details>
+
+<details><summary>7. <b>SELECT</b>: to see values of columns</summary><p>
+```sql
+# Show all row for all columns, since "*" means all columns
+SELECT * FROM <table_name>;
+
+# Select specific columns from table.
+SELECT <col_name>, <col_name> FROM <table_name>; 
+
+# The output is called "Result-set" and it's actually a table contains a set of rows with column names.
+# NOTE: Always use specific columns to select because it will be much faster than collecting all the data.
+#result-set: a set of rows that form the result of a query along with column-names and meta-data.
+# SELECT will select the rows with the same order in the table.
+```
+</p></details>
+
+<details><summary>8. <b>LIMIT/OFFSET</b>: to make selecting rows flexiable</summary><p>
+~~~sql
+# 1. Using Limit: will limit the number of rows to the number assigned in the command.
+# In this example, select only the first 20 rows
+SELECT <col_name>, <col_name> FROM <table_name> LIMIT 20
+
+# 2. Using OFFSET: will make MySQL start selecting from row numbered that offset.
+# In this example, select 20 rows starting from offset 20
+SELECT <col_name>, <col_name> FROM <table_name> LIMIT 20 OFFSET 20
 ~~~
 </p></details>
 
@@ -104,20 +138,4 @@ CREATE DATABASE name_of_database;
 ~~~
 </p></details>
 
-<details><summary>2. Create <b>Database</b></summary><p>
-<h4>Database can have multiple tables</h4>
-~~~sql
-CREATE DATABASE name_of_database;
-
-# Add semi-colon at the end to finish your command.
-~~~
-</p></details>
-
-<details><summary>2. Create <b>Database</b></summary><p>
-<h4>Database can have multiple tables</h4>
-~~~sql
-CREATE DATABASE name_of_database;
-
-# Add semi-colon at the end to finish your command.
-~~~
-</p></details>
+</div>
