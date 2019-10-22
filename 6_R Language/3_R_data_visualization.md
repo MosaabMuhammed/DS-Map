@@ -206,9 +206,32 @@ ggplot(aes(x = www_likes), data = subset(pf, !is.na(gender))) +
 ~~~
 <p><img src="imgs/20191022-143205.png" alt="" /></p>
 </p></details>
-
 </p></details>
 
+<details><summary><b>3. Box Plot</b> [cat vs. num]</summary><p>
+
+<details><summary><b>3.1 Regular</b></summary><p>
+~~~
+# using qplot
+qplot(data=subset(df, !is.na(gender)), x=friend_count,
+      binwidth=10, geom='boxplot', color=gender) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50))
+~~~
+<p><img src="imgs/20191022-145756.png" alt="" /></p>
+</p></details>
+
+<details><summary><b>3.2 Using coord_cartesian()</b></summary><p>
+~~~
+# using coord_cartesian doesn't change the values of median and quantiles unlike scale_y_continuous()
+qplot(data=subset(df, !is.na(gender)), y=friend_count, x=gender,
+      geom='boxplot')+
+  coord_cartesian(ylim=c(0, 1000))
+~~~
+<p><img src="imgs/20191022-145809.png" alt="" /></p>
+</p></details>
+
+
+</p></details>
 
 </div>
 
