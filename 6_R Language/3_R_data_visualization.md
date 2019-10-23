@@ -293,6 +293,16 @@ ggplot(aes(x=age, y=friend_count), data=df) +
 <p><img src="imgs/20191023-123839.png" alt="" /></p>
 </p></details>
 
+<details><summary>5. using <b>coord_trans()</b></summary><p>
+~~~
+# Using coord_trans() to change the axis range
+ggplot(aes(x=age, y=friend_count), data=df) +
+  geom_jitter(alpha = 1/10, position=position_jitter(h = 0) +
+  coord_trans(y='sqrt')
+~~~
+<p><img src="imgs/20191023-123839.png" alt="" /></p>
+</p></details>
+
 </p></details>
 
 </p></details>
