@@ -221,28 +221,33 @@ SELECT first_name, last_name FROM actors WHERE first_name LIKE 'Agn_s';
 
 
 SELECT first_name, last_name FROM actors WHERE first_name LIKE 'L%' AND first_name NOT LIKE 'Li%';
-
-
 ~~~
-</p></details>
+</p></details> 
 
-<details><summary>10. <b>DISTINCT</b>: to show unique values in a column</summary><p>
+<details><summary>13. <b>Aggregate Functions</b></summary><p>
+<h4>1. COUNT</h4>
 ~~~
-# Show Unique values in a column
-SELECT DISTINCT <col_name> FROM <table_name>;
+SELECT COUNT(*) FROM movies;
 
-# Select Unique combination between multiple columns
-SELECT DISTINCT <col_name>, <col_name> FROM <table_name>;
+SELECT COUNT(*) FROM movies where year>2000;
+
+SELECT COUNT(year) FROM movies;
 ~~~
-</p></details>
 
-<details><summary>10. <b>DISTINCT</b>: to show unique values in a column</summary><p>
+<h4>2. MIN & MAX</h4>
 ~~~
-# Show Unique values in a column
-SELECT DISTINCT <col_name> FROM <table_name>;
+SELECT MIN(year) FROM movies;
 
-# Select Unique combination between multiple columns
-SELECT DISTINCT <col_name>, <col_name> FROM <table_name>;
+
+SELECT MAX(year) FROM movies;
+~~~
+
+<h4>3. SUM & AVG</h4>
+~~~
+SELECT SUM(price) FROM movies;
+
+
+SELECT AVG(price) FROM movies;
 ~~~
 </p></details>
 
