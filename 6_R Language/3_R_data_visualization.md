@@ -338,6 +338,17 @@ ggplot(aes(x=age, y=friend_count), data=df) +
 <p><img src="imgs/20191023-145711.png" alt="" /></p>
 </p></details>
 
+<details><summary>8. Removing <b>Outliers</b> on Scatter plot & Drawing the <b>fit line</b></summary><p>
+~~~
+ggplot(aes(www_likes_received, likes_received), data=df)+
+  geom_point()+
+  xlim(0, quantile(df$www_likes_received, .95))+
+  ylim(0, quantile(df$likes_received, .95))+
+  geom_smooth(method='lm', color='red')
+~~~
+<p><img src="imgs/20191023-163034.png" alt="" /></p>
+</p></details>
+
 </p></details>
 
 </p></details>

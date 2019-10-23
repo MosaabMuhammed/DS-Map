@@ -540,8 +540,12 @@ df.fc_by_age <- df %>%
 ~~~
 # you can choose between pearson or spearman and kendall.
 cor.test(df$age, df$friend_count, method='pearson')
+
+# Correlation with subset of the data
+with(subset(df, age<=70), cor.test(age, friend_count, method='pearson'))
 ~~~
 </p></details>
+
 
 
 </div>
