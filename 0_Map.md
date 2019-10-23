@@ -18,6 +18,8 @@
 
 <ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/6_R%20Language/0_html/0_R_Root.html"><font color='#333'><h2>R Language</h2></font></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/7_SQL/0_html/0_SQL_Root.html"><font color='#333'><h2>SQL</h2></font></a></li>
 </ul>
 
 </div>
