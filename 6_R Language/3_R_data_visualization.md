@@ -34,6 +34,8 @@ qplot(data=subset(df, !is.na(www_likes)), x=www_likes,
 
 </p></details>
 
+<p><a href="https://ggplot2.tidyverse.org/reference/"><b>ggplot Reference</b></a> </p>
+
 <details><summary>1. Explore <b>One</b> Variable</b></summary><p>
 
 <details><summary><b>1. Histograms</b></summary><p>
@@ -245,6 +247,7 @@ qplot(data=subset(df, !is.na(gender)), y=friend_count, x=gender,
 <details><summary>2. Explore <b>Two</b> Variables:</summary><p>
 
 <details><summary>1. <b>Scatter Plot</b> [num vs. num]</summary><p>
+<details><summary>1. <b>Regular</b></summary><p>
 ~~~
 # The default is scatter plot when using qplot.
 qplot(x=age, y=friend_count, data=df)
@@ -254,6 +257,42 @@ ggplot(aes(x = age, y = friend_count), data = df) +
   geom_point()
 
 ~~~
+</p></details>
+
+<details><summary>2. using <b>xlim()</b></summary><p>
+~~~
+# Using ggplot
+ggplot(aes(x = age, y = friend_count), data = df) +
+  geom_point() + xlim(13, 90)
+~~~
+<p><img src="imgs/20191023-115527.png" alt="" /></p>
+</p></details>
+
+
+<details><summary>3. using <b>alpha</b></summary><p>
+~~~
+# Using ggplot
+ggplot(aes(x=age, y=friend_count), data=df) +
+  geom_point(alpha = 1/20)
+~~~
+</p></details>
+
+<details><summary>4. using <b>jitter()</b></summary><p>
+~~~
+# Using ggplot
+ggplot(aes(x=age, y=friend_count), data=df) +
+  geom_jitter(alpha = 1/20) +
+  xlim(13, 90)
+  
+  
+# Another way
+ggplot(aes(x=age, y=friend_count), data=df) +
+  geom_point(alpha = 1/20, position='jitter') +
+  xlim(13, 90)
+~~~
+<p><img src="imgs/20191023-123839.png" alt="" /></p>
+</p></details>
+
 </p></details>
 
 </p></details>
