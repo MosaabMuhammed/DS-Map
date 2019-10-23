@@ -174,4 +174,76 @@ SELECT name,year,rankscore FROM <table_name> WHERE rankscore IS NOT NULL LIMIT 2
 ~~~
 </p></details>
 
+<details><summary>12. <b>Logical Operators</b></summary><p>
+<h4>1. Using AND:</h4>
+~~~
+SELECT name,year,rankscore FROM movies WHERE rankscore>9 AND year>2000;
+~~~
+<h4>2. Using OR:</h4>
+~~~mysql
+SELECT name,year,rankscore FROM movies WHERE rankscore>9 OR year>2007;
+~~~
+<h4>3. Using NOT:</h4>
+~~~
+SELECT name,year,rankscore FROM movies WHERE NOT year<=2000 LIMIT 20;
+~~~
+<h4>4. Using BETWEEN:</h4>
+~~~
+SELECT name,year,rankscore FROM movies WHERE year BETWEEN 1999 AND 2000;
+#inclusive: year>=1999 and year<=2000
+# Both 1999 and 2000 are included.
+#### BIG NOTE: if the first number is larger than the second number, this command won't work.
+~~~
+<h4>5. Using IN:</h4>
+~~~
+SELECT director_id, genre FROM directors_genres WHERE genre IN ('Comedy','Horror');
+# same as genre='Comedy' OR genre='Horror'
+~~~
+<h4>6. Using LIKE:</h4>
+~~~
+SELECT name,year,rankscore FROM movies WHERE name LIKE 'Tis%';
+# % => wildcard character to imply zero or more characters
+
+
+SELECT first_name, last_name FROM actors WHERE first_name LIKE '%es';
+# first name ending in 'es'
+
+
+SELECT first_name, last_name FROM actors WHERE first_name LIKE '%es%';
+#first name contains 'es'
+
+
+SELECT first_name, last_name FROM actors WHERE first_name LIKE 'Agn_s';
+# '_' implies exactly one character.
+
+
+# If we want to macth % or _, we should use the backslash as the escape character: \% and \_
+
+
+SELECT first_name, last_name FROM actors WHERE first_name LIKE 'L%' AND first_name NOT LIKE 'Li%';
+
+
+~~~
+</p></details>
+
+<details><summary>10. <b>DISTINCT</b>: to show unique values in a column</summary><p>
+~~~
+# Show Unique values in a column
+SELECT DISTINCT <col_name> FROM <table_name>;
+
+# Select Unique combination between multiple columns
+SELECT DISTINCT <col_name>, <col_name> FROM <table_name>;
+~~~
+</p></details>
+
+<details><summary>10. <b>DISTINCT</b>: to show unique values in a column</summary><p>
+~~~
+# Show Unique values in a column
+SELECT DISTINCT <col_name> FROM <table_name>;
+
+# Select Unique combination between multiple columns
+SELECT DISTINCT <col_name>, <col_name> FROM <table_name>;
+~~~
+</p></details>
+
 </div>
