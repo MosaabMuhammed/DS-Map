@@ -327,4 +327,28 @@ SELECT
 ~~~
 </p></details>
 
+<details><summary>17. <b>JOIN...ON</b>: combine data from multiple tables</summary><p>
+<h4>1. Natural Join</h4>
+~~~
+# natural join: a join where we have the same column-names across two tables.
+#T1: C1, C2
+#T2: C1, C3, C4
+
+SELECT * FROM T1 JOIN T2;
+
+SELECT * FROM T1 JOIN T2 USING (C1);
+
+# returns C1,C2,C3,C4
+# no need to use the keyword "ON"
+~~~
+
+<h4>2. Inner Join</h4>
+~~~
+# For each movie, print name and the genres
+SELECT m.name, g.genre from movies m  JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
+
+# table aliases: m and g
+~~~
+</p></details>
+
 </div>
