@@ -177,6 +177,15 @@ grid.arrange(p1, p2, p3, ncol=1)
 ~~~
 </p></details>
 
+<details><summary><b>1.8. Scale each plot freely, when having multiple plots</b></summary><p>
+~~~
+qplot(data=diamonds, x=price, binwidth=200,
+      color=I('black'), fill=I('#099DD9'))+
+  facet_wrap(~cut, scales = 'free')
+~~~
+<p><img src="imgs/20191023-105111.png" alt="" /></p>
+</p></details>
+
 </p></details>
 
 <details><summary><b>2. Frequency Ploygon [KDE]</b></summary><p>
@@ -230,6 +239,22 @@ qplot(data=subset(df, !is.na(gender)), y=friend_count, x=gender,
 <p><img src="imgs/20191022-145809.png" alt="" /></p>
 </p></details>
 
+</p></details>
+</p></details>
+
+<details><summary>2. Explore <b>Two</b> Variables:</summary><p>
+
+<details><summary>1. <b>Scatter Plot</b> [num vs. num]</summary><p>
+~~~
+# The default is scatter plot when using qplot.
+qplot(x=age, y=friend_count, data=df)
+
+# Using ggplot
+ggplot(aes(x = age, y = friend_count), data = df) +
+  geom_point()
+
+~~~
+</p></details>
 
 </p></details>
 
