@@ -537,7 +537,10 @@ df.fc_by_age <- df %>%
 </p></details>
 
 <details><summary>Find <b>Correlation</b></summary><p>
-
+~~~
+# you can choose between pearson or spearman and kendall.
+cor.test(df$age, df$friend_count, method='pearson')
+~~~
 </p></details>
 
 
