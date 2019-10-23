@@ -300,7 +300,42 @@ ggplot(aes(x=age, y=friend_count), data=df) +
   geom_jitter(alpha = 1/10, position=position_jitter(h = 0) +
   coord_trans(y='sqrt')
 ~~~
-<p><img src="imgs/20191023-123839.png" alt="" /></p>
+<p><img src="imgs/20191023-142114.png" alt="" /></p>
+</p></details>
+
+<details><summary>6. using <b>condition means</b></summary><p>
+~~~
+# Using coord_trans() to change the axis range
+df.fc_by_age <- df %>%
+  group_by(age) %>%
+  summarise(friend_count_mean = mean(friend_count),
+            friend_count_median = median(friend_count),
+            n = n()) %>%
+  arrange(age)
+  
+ggplot(aes(age, friend_count_mean), data=df) +
+	geom_line()
+~~~
+<p><img src="imgs/20191023-144111.png" alt="" /></p>
+</p></details>
+
+<details><summary>7. Plotting <b>means & quantiles</b> on Scatter plot</summary><p>
+~~~
+ggplot(aes(x=age, y=friend_count), data=df) +
+  xlim = c(13, 90) +
+  geom_point(alpha=0.05,
+             position=position_jitter(h=0),
+             color='orange') +
+  coord_trans(y='sqrt') +
+  geom_line(stat = 'summary', fun.y = mean)+
+  geom_line(stat = 'summary', fun.y = quantile,
+            fun.args = list(probs = .1),
+            linetype=2, color='blue') +
+  geom_line(stat='summary', fun.y = quantile, 
+            fun.args = list(probs = .9),
+            color='blue')
+~~~
+<p><img src="imgs/20191023-145711.png" alt="" /></p>
 </p></details>
 
 </p></details>

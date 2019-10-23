@@ -499,4 +499,46 @@ plot(cars)
 </p>
 </details>
 
+<details><summary>Condition statistic for column using <b>group_by() & summarise()</b></summary><p>
+~~~
+# 1. First Trial
+install.packages('dplyr')
+library(dplyr)
+
+age_groups <- group_by(df, age)
+df.fc_by_age <- summarise(age_groups,
+                          friend_count_mean = mean(friend_count),
+                          friend_count_median = median(friend_count),
+                          n = n())
+df.fc_by_age <- arrange(df.fc_by_age, age)
+
+head(df.fc_by_age)
+
+#### Output ####
+    age friend_count_mean friend_count_median     n
+  <int>             <dbl>               <dbl> <int>
+1    13              165.                 74    484
+2    14              251.                132   1925
+3    15              348.                161   2618
+4    16              352.                172.  3086
+5    17              350.                156   3283
+6    18              331.                162   5196
+~~~
+
+~~~
+# Second Trial
+df.fc_by_age <- df %>%
+  group_by(age) %>%
+  summarise(friend_count_mean = mean(friend_count),
+            friend_count_median = median(friend_count),
+            n = n()) %>%
+  arrange(age)
+~~~
+</p></details>
+
+<details><summary>Find <b>Correlation</b></summary><p>
+
+</p></details>
+
+
 </div>
