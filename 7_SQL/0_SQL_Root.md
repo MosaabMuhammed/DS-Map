@@ -251,4 +251,21 @@ SELECT AVG(price) FROM movies;
 ~~~
 </p></details>
 
+<details><summary>14. <b>GROUP BY</b></summary><p>
+~~~
+# find number of movies released per year
+
+SELECT year, COUNT(year) FROM movies GROUP BY year;
+
+SELECT year, COUNT(year) FROM movies GROUP BY year ORDER BY year;
+
+########## Using Aliases #######
+SELECT year, COUNT(year) year_count FROM movies GROUP BY year ORDER BY year_count;
+# year_count is an alias.
+
+# often used with COUNT, MIN, MAX or SUM.
+# if grouping columns contain NULL values, all null values are grouped together.
+~~~
+</p></details>
+
 </div>
