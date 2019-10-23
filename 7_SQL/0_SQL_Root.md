@@ -268,4 +268,63 @@ SELECT year, COUNT(year) year_count FROM movies GROUP BY year ORDER BY year_coun
 ~~~
 </p></details>
 
+<details><summary>15. <b>HAVING</b></summary><p>
+~~~
+# Print years which have >1000 movies in our DB [Data Scientist for Analysis]
+
+SELECT year, COUNT(year) year_count FROM movies GROUP BY year HAVING year_count>1000;
+# specify a condition on groups using HAVING.
+
+
+Order of execution:
+1. GROUP BY to create groups
+2. apply the AGGREGATE FUNCTION
+3. Apply HAVING condition.
+
+
+# often used along with GROUP BY. Not Mandatory.
+
+SELECT name, year  FROM movies HAVING year>2000;
+# HAVING without GROUP BY is same as WHERE
+
+
+
+SELECT year, COUNT(year) year_count FROM movies WHERE rankscore>9 GROUP BY year HAVING year_count>20;
+
+# HAVING vs WHERE
+## WHERE is applied on individual rows while HAVING is applied on groups.
+## HAVING is applied after grouping while WHERE is used before grouping.
+~~~
+</p></details>
+
+<details><summary>16. <b>Keyword Order</b></summary><p>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/select.html"><b>Ref</b></a> </p>
+~~~
+SELECT
+    [ALL | DISTINCT | DISTINCTROW ]
+      [HIGH_PRIORITY]
+      [STRAIGHT_JOIN]
+      [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]
+      [SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]
+    select_expr [, select_expr ...]
+    [FROM table_references
+      [PARTITION partition_list]
+    [WHERE where_condition]
+    [GROUP BY {col_name | expr | position}, ... [WITH ROLLUP]]
+    [HAVING where_condition]
+    [WINDOW window_name AS (window_spec)
+        [, window_name AS (window_spec)] ...]
+    [ORDER BY {col_name | expr | position}
+      [ASC | DESC], ... [WITH ROLLUP]]
+    [LIMIT {[offset,] row_count | row_count OFFSET offset}]
+    [INTO OUTFILE 'file_name'
+        [CHARACTER SET charset_name]
+        export_options
+      | INTO DUMPFILE 'file_name'
+      | INTO var_name [, var_name]]
+    [FOR {UPDATE | SHARE} [OF tbl_name [, tbl_name] ...] [NOWAIT | SKIP LOCKED] 
+      | LOCK IN SHARE MODE]]
+~~~
+</p></details>
+
 </div>
