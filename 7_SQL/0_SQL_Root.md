@@ -497,6 +497,30 @@ ALTER TABLE langauge DROP country;
 ~~~
 </p></details>
 
+<details><summary>22. <b>DROP:</b> to drop tables</summary><p>
+~~~
+# Removes both the table and all of the data permanently.
+DROP TABLE Tablename;
+
+DROP TABLE TableName IF EXISTS;
+
+#https://dev.mysql.com/doc/refman/8.0/en/drop-table.html
+
+TRUNCATE TABLE TableName;
+
+# as discussed earlier same as DELETE FROM TableName;
+~~~
+</p></details><br>
+
+<details><summary>24. <b>Data Control Language</b> for DB Admins.
+</summary><p>
+~~~
+https://en.wikipedia.org/wiki/Data_control_language
+https://dev.mysql.com/doc/refman/8.0/en/grant.html
+https://dev.mysql.com/doc/refman/8.0/en/revoke.html
+~~~
+</p></details>
+
 </div>
 
 
