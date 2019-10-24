@@ -245,6 +245,20 @@ rating <- factor(rating, levels=c("small", "medium", "large"), ordered=T)
 </p>
 </details>
 
+<details><summary><b>Loops</b></summary><p>
+
+<details><summary><b>1. While Loop</b></summary><p>
+~~~
+counter <- 1
+
+while(counter < 10){
+	print(counter)
+	counter <- counter + 1
+}
+~~~
+</p></details>
+</p></details>
+
 <details><summary><b>Misc</b></summary>
 <p>
 
