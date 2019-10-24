@@ -257,7 +257,42 @@ while(counter < 10){
 }
 ~~~
 </p></details>
+
+<details><summary><b>2. For Loop</b></summary><p>
+~~~
+for(i in 2:10) {
+	print(paste('Hello R', i))
+}
+~~~
 </p></details>
+
+</p></details>
+
+<details><summary><b>If/else Condition</b></summary><p>
+
+<details><summary><b>1. While Loop</b></summary><p>
+~~~
+
+rm(answer) # remove that variables
+x <- rnorm(1) # choose random number from normal distribution
+
+if(x > 1){
+  answer <- 'Greater than 1'
+  print(answer)
+  
+} else if(x >= -1){
+  answer <- "between -1 and 1"
+} else {
+  answer <- 'Less than -1'
+  print(answer)
+}
+
+~~~
+</p></details>
+
+
+</p></details>
+
 
 <details><summary><b>Misc</b></summary>
 <p>
