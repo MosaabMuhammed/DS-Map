@@ -13,12 +13,16 @@ typeof(x)
 # "integer"
 class(x)
 mode(x)
+
+is.integer(x)  # TRUE
 ~~~
 </p></details>
 
 <details><summary><b>2. Double</b></summary><p>
 ~~~
 x <- 5.3321
+
+is.double(x)  # TRUE
 ~~~
 </p></details>
 
@@ -28,6 +32,8 @@ z <- 2 + 4i
 
 typeof(z)
 # "complex"
+
+is.complex(z) # True
 ~~~
 </p></details>
 
@@ -37,6 +43,8 @@ s <- "h"
 
 typeof(s)
 # "character"
+
+is.character(x)  # TRUE
 ~~~
 </p></details>
 
@@ -50,6 +58,8 @@ s <- FALSE
 
 typeof(s)
 # "logical"
+
+is.logical(x)  # TRUE
 ~~~
 </p></details>
 
@@ -269,8 +279,6 @@ for(i in 2:10) {
 </p></details>
 
 <details><summary><b>If/else Condition</b></summary><p>
-
-<details><summary><b>1. While Loop</b></summary><p>
 ~~~
 
 rm(answer) # remove that variables
@@ -286,10 +294,28 @@ if(x > 1){
   answer <- 'Less than -1'
   print(answer)
 }
-
 ~~~
 </p></details>
 
+
+<details><summary><b>General Functions</b></summary><p>
+
+<details><summary><b>seq()</b>: Generate a sequence [range()]</summary><p>
+~~~
+# (start, stop, step)
+seq(1, 15, 2)
+
+# 1, 5, 9, 13
+~~~
+</p></details>
+
+<details><summary><b>rep()</b>: repeat a value n times</summary><p>
+~~~
+# (value, n)
+# repeat 3, 50 times
+rep(3, 50)
+~~~
+</p></details>
 
 </p></details>
 
