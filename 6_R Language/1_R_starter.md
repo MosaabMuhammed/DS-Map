@@ -86,6 +86,8 @@ udacious <- c("Chris Saden", "Lauren Castellano",
               "Sarah Spikes","Dean Eckles",
               "Andy Brown", "Moira Burke",
               "Kunal Chawla")
+              
+udacious[-1] # will return a vector except the first value, unlike python.
 ~~~
 </p>
 </details>
@@ -165,6 +167,20 @@ mymatrix <- matrix(cells, nrow=2, ncol=2, byrow=TRUE,
 x[,4] # 4th column of matrix
 x[3,] # 3rd row of matrix
 x[2:4,1:3] # rows 2,3,4 of columns 1,2,3
+
+
+# Another way of creating matrices using rbind() & cbind()
+# rbind()
+r1 <- c('I', 'am', 'happy')
+r2 <- c('What', 'a', 'day')
+r3 <- c(1, 2, 3)
+
+c <-rbind(r1, r2, r3)
+c
+
+# cbind
+r <- cbind(r1, r2, r3)
+r
 ~~~
 </p>
 </details>
