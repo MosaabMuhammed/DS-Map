@@ -1,6 +1,8 @@
 # Data Wrangling [R]
 <div style='width:1000px;margin:auto'>
 
+<details><summary><b>DataFrame</b></summary><p>
+
 <details><summary><b>Load DataFrame</b></summary><p>
 ~~~
 # You should see mtcars appear in the 'Environment' tab with
@@ -23,7 +25,7 @@ data(mtcars)
 # Note: Factor means a categorical variable that has different flavors or levels.
 statesInfo <- read.csv('stateData.csv', stringsAsFactors=FALSE)
 
-# TO open a window and choose a csv file by mouse.
+# TO open a window and choose a csv file by a mouse.
 df <- read.csv(file.choose())
 
 ## Load from tsv
@@ -219,7 +221,8 @@ write.table(income_total, "data/income-totals.csv",
     row.names=FALSE, sep=",")
 
 ~~~
-</p></details><br>
+</p></details>
+</p></details>
 
 <details><summary><b>Statistics</b></summary>
 <p>
@@ -327,5 +330,11 @@ with(subset(df, age<=70), cor.test(age, friend_count, method='pearson'))
 </p></details>
 
 
+<details><summary>Add & Print  <b>2 Strings</b> together</summary><p>
+~~~
+name <- "mosaab"
+paste('Hello', name)
+~~~
+</p></details>
 
 </div>

@@ -4,6 +4,55 @@
 
 <details><summary><b>Basic DataTypes</b></summary><p>
 
+<details><summary><b>1. Int</b></summary><p>
+~~~
+# you must add L at the end to tell R that your variables is integer or it will be double by default
+x <- 2L
+
+typeof(x)
+# "integer"
+class(x)
+mode(x)
+~~~
+</p></details>
+
+<details><summary><b>2. Double</b></summary><p>
+~~~
+x <- 5.3321
+~~~
+</p></details>
+
+<details><summary><b>3. Complex</b></summary><p>
+~~~
+z <- 2 + 4i
+
+typeof(z)
+# "complex"
+~~~
+</p></details>
+
+<details><summary><b>4. Character</b></summary><p>
+~~~
+s <- "h"
+
+typeof(s)
+# "character"
+~~~
+</p></details>
+
+<details><summary><b>5. Logical</b></summary><p>
+~~~
+s <- T
+s <- TRUE
+
+s <- F
+s <- FALSE
+
+typeof(s)
+# "logical"
+~~~
+</p></details>
+
 </p></details>
 
 
