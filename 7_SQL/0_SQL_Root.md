@@ -468,6 +468,23 @@ DELETE FROM movies WHERE id=412321;
 </p></details>
 
 <details><summary>20. <b>Data Definition Language:</b> to define/modify tables.</summary><p>
+<ul>
+<li><a href="https://www.journaldev.com/16774/sql-data-types"><b>DataTypes</b></a></li>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Web/www.w3schools.com/www.w3schools.com/sql/sql_constraints.html"><b>Constraints</b></a></li></ul>
+~~~
+CREATE TABLE language  ( id INT PRIMARY, lang VARCHAR(50) NOT NULL);
+
+
+# NOT NULL - Ensures that a column cannot have a NULL value
+# UNIQUE - Ensures that all values in a column are different
+# PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+# FOREIGN KEY - Uniquely identifies a row/record in another table
+# CHECK - Ensures that all values in a column satisfies a specific condition
+# DEFAULT - Sets a default value for a column when no value is specified
+# INDEX - Used to create and retrieve data from the database very quickly
+
+~~~
+</p></details>
 </div>
 
 
