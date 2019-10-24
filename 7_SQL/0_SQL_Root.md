@@ -389,9 +389,114 @@ SELECT m.name, g.genre from movies m  FULL JOIN movies_genres g ON m.id=g.movie_
 SELECT a.first_name, a.last_name FROM actors a JOIN roles r ON a.id=r.actor_id JOIN movies m on m.id=r.movie_id AND m.name='Officer 444';
 
 #Practical note about joins: Joins can be expensive computationally when we have large tables.
-
 ~~~
 </p></details>
 
+<details><summary>18. <b>Nested Queries</b></summary><p>
+~~~
+# Sub-Queries or Nested Queries or Inner Queries
 
+# Examble:
+
+# List all actors in the movie Schindler's List
+#https://www.imdb.com/title/tt0108052/fullcredits/?ref_=tt_ov_st_sm
+
+
+SELECT first_name, last_name from actors WHERE id IN 
+	( SELECT actor_id from roles WHERE movie_id IN 
+			(SELECT id FROM movies where name='Schindler's List)
+	);
+
+
+
+# Syntax:
+SELECT column_name [, column_name ]
+FROM   table1 [, table2 ]
+WHERE  column_name OPERATOR
+   (SELECT column_name [, column_name ]
+   FROM table1 [, table2 ]
+   [WHERE])
+
+# first the inner query is executed and then the outer query is executed using the output values in the inner query
+
+
+# IN, NOT IN, EXISTS, NOT EXISTS, ANY, ALL, Comparison operators
+
+#EXISTS returns true if the subquery returns one or more records or NULL
+# ANY operator returns TRUE if any of the subquery values meet the condition.
+# ALL operator returns TRUE if all of the subquery values meet the condition.
+
+
+
+SELECT * FROM movies where rankscore >= ALL (SELECT MAX(rankscore) from movies);
+# get all movies whose rankscore is same as the maximum rankscore.
+
+# e.g: rankscore <> ALL(...)
+~~~
+</p></details><br>
+
+<details><summary>19. <b>Data Manipulation</b>: SELECT, INSERT, UPDATE, DELETE</summary><p>
+<h4>2. INSERT</h4>
+~~~
+# Data Manupulation Language: SELECT, INSERT, UPDATE, DELETE
+
+INSERT INTO movies(id, name, year, rankscore) VALUES (412321, 'Thor', 2011, 7);
+
+INSERT INTO movies(id, name, year, rankscore) VALUES (412321, 'Thor', 2011, 7), (412322, 'Iron Man', 2008, 7.9), (412323, 'Iron Man 2', 2010, 7);
+
+
+# INSERT FROM one table to annother using nnested sub query: https://en.wikipedia.org/wiki/Insert_(SQL)#Copying_rows_from_other_tables
+~~~
+
+<h4>3. UPDATE</h4>
+~~~
+UPDATE <TableName> SET col1=val1, col2=val2 WHERE condition
+
+UPDATE movies SET rankscore=9 where id=412321;
+
+# Update multiple rows also.
+# Can be used along with Sub-queries.
+~~~
+
+<h4>4. DELETE</h4>
+~~~
+DELETE FROM movies WHERE id=412321;
+
+# Remove all rows: TRUNCATE TABLE TableName; 
+# Same as selete without a WHERE Clause.
+~~~
+</p></details>
+
+<details><summary>20. <b>Data Definition Language:</b> to define/modify tables.</summary><p>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
