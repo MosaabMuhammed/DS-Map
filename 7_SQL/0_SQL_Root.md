@@ -328,7 +328,8 @@ SELECT
 </p></details>
 
 <details><summary>17. <b>JOIN...ON</b>: combine data from multiple tables</summary><p>
-<h4>1. Natural Join</h4>
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Web/www.w3schools.com/www.w3schools.com/sql/sql_join.html"><b>W3School on JOIN</b></a> </p>
+<h4>1. Natural Join</h4> 
 ~~~
 # natural join: a join where we have the same column-names across two tables.
 #T1: C1, C2
@@ -349,6 +350,48 @@ SELECT m.name, g.genre from movies m  JOIN movies_genres g ON m.id=g.movie_id LI
 
 # table aliases: m and g
 ~~~
+
+<h4>3. Left Outer Join</h4>
+~~~
+SELECT m.name, g.genre from movies m  LEFT JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
+
+#LEFT JOIN or LEFT OUTER JOIN
+#RIGHT JOIN or RIGHT OUTER JOIN
+#FULL JOIN or FULL OUTER JOIN
+#JOIN or INNER JOIN
+~~~
+
+<h4>4. Right Outer Join</h4>
+~~~
+SELECT m.name, g.genre from movies m  RIGHT JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
+
+#LEFT JOIN or LEFT OUTER JOIN
+#RIGHT JOIN or RIGHT OUTER JOIN
+#FULL JOIN or FULL OUTER JOIN
+#JOIN or INNER JOIN
+~~~
+
+<h4>5. Full Outer Join</h4>
+~~~
+SELECT m.name, g.genre from movies m  FULL JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
+
+#LEFT JOIN or LEFT OUTER JOIN
+#RIGHT JOIN or RIGHT OUTER JOIN
+#FULL JOIN or FULL OUTER JOIN
+#JOIN or INNER JOIN
+~~~
+
+<h4>6. K-ways Join</h4>
+~~~
+# NULL for missing counterpart rows.
+
+# 3-way joins and k-way joins
+SELECT a.first_name, a.last_name FROM actors a JOIN roles r ON a.id=r.actor_id JOIN movies m on m.id=r.movie_id AND m.name='Officer 444';
+
+#Practical note about joins: Joins can be expensive computationally when we have large tables.
+
+~~~
 </p></details>
+
 
 </div>
