@@ -482,9 +482,21 @@ CREATE TABLE language  ( id INT PRIMARY, lang VARCHAR(50) NOT NULL);
 # CHECK - Ensures that all values in a column satisfies a specific condition
 # DEFAULT - Sets a default value for a column when no value is specified
 # INDEX - Used to create and retrieve data from the database very quickly
-
 ~~~
 </p></details>
+
+<details><summary>21. <b>ALTER:</b> ADD, MODIFY, DROP columns in a table</summary><p>
+~~~
+# ALTER: ADD, MODIFY, DROP
+
+ALTER TABLE language ADD country VARCHAR(50);
+
+ALTER TABLE language MODIFY country VARCHAR(60);
+
+ALTER TABLE langauge DROP country;
+~~~
+</p></details>
+
 </div>
 
 
