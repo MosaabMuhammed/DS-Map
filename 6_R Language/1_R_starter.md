@@ -296,7 +296,6 @@ for(i in 2:10) {
 
 <details><summary><b>If/else Condition</b></summary><p>
 ~~~
-
 rm(answer) # remove that variables
 x <- rnorm(1) # choose random number from normal distribution
 
@@ -313,6 +312,13 @@ if(x > 1){
 ~~~
 </p></details>
 
+<details><summary><b>Function</b></summary><p>
+~~~
+myfunc <- function() {
+	# put your code here.	
+}
+~~~
+</p></details>
 
 <details><summary><b>General Functions</b></summary><p>
 
