@@ -115,6 +115,9 @@ tail(mtcars, 3)
 ~~~
 # like df.descibe in python to show some descriptive statistics about the columns in the data frame.
 summary(df)
+
+# Print only min and max
+range(df$age)
 ~~~
 </p>
 </details>
