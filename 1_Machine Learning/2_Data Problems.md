@@ -734,8 +734,11 @@ np.sqrt(1+x)
 
 <hr>
 
-<details><summary style='font-size:23px;text-decoration:underline'><b>5. Missing Values</b></summary>
-<p>
+<details><summary style='font-size:23px;text-decoration:underline'><b>5. Missing Values</b></summary><p>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.1-Missing-Data.html#Missing-Data-Mechanisms"><b style='color:#333'>Missing Data Mechanisms</b></a> </p></li>
+
+<details><summary><b>Missing Data Imputing</b></summary><p>
 
 <details><summary><b>Table contains # of Missing values & its percentage</b></summary>
 <p>
@@ -877,6 +880,11 @@ poly_features_test = imputer.transform(poly_features_test)
 
 </p>
 </details>
+
+</p></details>
+
+
+
 
 <hr>
 
