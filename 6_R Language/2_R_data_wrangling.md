@@ -354,4 +354,12 @@ paste('Hello', name)
 ~~~
 </p></details>
 
+<details><summary><b>Data Binning</b></summary><p>
+~~~
+breaks <- c(0, 23000, 52000, 82000, 250000, 999999)
+labels <- c('Poverty', 'LowerMid', 'UpperMid', 'Wealthy', 'Rich')
+wealth <- cut(df$income, breaks, labels)
+~~~
+</p></details>
+
 </div>
