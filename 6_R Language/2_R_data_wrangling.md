@@ -122,6 +122,18 @@ range(df$age)
 </p>
 </details>
 
+<details><summary><b>Variance & Standard Deviation</b></summary>
+<p>
+~~~
+# STD
+sd(df$area)
+
+# Variance
+var(df$area)
+~~~
+</p>
+</details>
+
 <details><summary>How many <b>unique</b> values in <b>a Categorical (factor)</b> Variable</summary>
 <p>
 ~~~
