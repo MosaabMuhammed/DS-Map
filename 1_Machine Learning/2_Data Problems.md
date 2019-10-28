@@ -770,6 +770,15 @@ def missing_values_table(df):
 missing_values = missing_values_table(app_train)
 missing_values.head(20)
 ~~~
+
+<h4>Simple way</h4>
+~~~
+# alternatively, we can use the mean method after isnull
+# to visualise the percentage of
+# missing values for each variable
+
+data.isnull().mean()
+~~~
 </p>
 </details>
 <details><summary><b>Finding</b> NaN values</summary>
@@ -797,7 +806,7 @@ data.Column_name.replace(-1, None, inplace=True)
 </p>
 </details>
 
-<details><summary><b>Drop</b> the *missing* data <b>(skewness)</b></summary>
+<details><summary><b>Drop</b> the missing data <b>(skewness)</b></summary>
 <p style="margin: 0">
 
 ~~~python
