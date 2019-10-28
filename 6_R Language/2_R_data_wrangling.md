@@ -44,9 +44,11 @@ mtcars
 
 # Print the name of the columns
 names(mtcars)
+colnames(df)
 
 # Print the name of the rows
 row.names(mtcars)
+rownames(df)
 
 # Run this code to change the row names of the cars to numbers.
 row.names(mtcars) <- c(1:32)
