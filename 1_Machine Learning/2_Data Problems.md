@@ -131,6 +131,8 @@ def reduce_mem_usage(df):
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.2-Cardinality.html#Cardinality"><b>Cardinality, How affects Model Performance</b></a> </p>
 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.3-Rare-Labels.html#Rare-Labels"><b>Rare Labels</b></a> </p>
+
 <details><summary> <b>1. Response Coding</b> </summary>
 <p>
 ~~~python
