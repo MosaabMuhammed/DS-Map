@@ -9,9 +9,10 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/5_Time%20Series/0_html/0_TS_root.html"><font color='#333'><b style='font-size:27px'>Time Series</b></font></a> </li>
 
+<li>Computer Vision</li>
 <li>NLP</li>
 
-<li>Computer Vision</li>
+
 </ul>
 
 <hr>

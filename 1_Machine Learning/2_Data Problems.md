@@ -129,6 +129,8 @@ def reduce_mem_usage(df):
 <details><summary style='font-size:23px;text-decoration:underline'><b>2. Categorical ~> Numerical:</b></summary>
 <p>
 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.2-Cardinality.html#Cardinality"><b>Cardinality, How affects Model Performance</b></a> </p>
+
 <details><summary> <b>1. Response Coding</b> </summary>
 <p>
 ~~~python
