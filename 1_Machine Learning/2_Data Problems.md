@@ -673,7 +673,10 @@ from category_encoders.one_hot import OneHotEncoder
 <details><summary style='font-size:23px;text-decoration:underline'><b>3. Outliers</b></summary>
 <p>
 
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html">1. Local Outlier Factor</a></p>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html"><b>1. Local Outlier Factor</b></a></p>
+
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.6-Outliers.html#Outliers" style='font-weight:bold'>2. Detecting Outliers for [Normal, Skewed, Extremely Skewed]</a></p>
+
 
 <details><summary><b>Winsorization</b></summary>
 <p>
