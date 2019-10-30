@@ -10,9 +10,41 @@
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/1_Python/21_debugging.html"><b><span style='color:#333'>Debugger</span></b></a> </li>
 </ul>
 
+<details><summary> <b>Macros</b> </summary><p>
 <ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Macros.html#Macros"><b><span style='color:#333'>Macros</span></b></a> </li>
-</ul> 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Macros.html#Macros"><b><span style='color:#333'>How to build a macro</span></b></a> </li>
+</ul>
+
+<details><summary> <b>__basic</b> </summary><p>
+~~~python
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from tqdm import tqdm_notebook as tqdm
+import os
+import gc
+import sys
+import os.path
+
+import warnings
+warnings.filterwarnings('ignore')
+
+import matplotlib.pyplot as plt
+from matplotlib import rc
+plt.style.use('fivethirtyeight')
+%matplotlib inline
+ 
+rc('font', size=16)
+rc('font',**{'family':'serif','serif':['Computer Modern']})
+rc('text', usetex=False)
+rc('figure', figsize=(12, 10))
+
+
+print('Basic libraries have been loaded!')
+~~~
+</p></details>
+
+</p></details>
 
 <details><summary> <b>Make the header at the center</b> </summary>
 <p>
