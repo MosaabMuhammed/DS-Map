@@ -694,9 +694,13 @@ pd.Series(y).hist(bins=30);
 
 <hr>
 
-<details><summary style='font-size:23px;text-decoration:underline'><b>4. Data Preprocessing:</b></summary>
+<details><summary style='font-size:23px;text-decoration:underline'><b>4. Data Scaling:</b></summary>
 <p>
  <b>NOTE:</b> Review <b>Numeric Features</b> from how to win kaggle competition course.
+ <details><summary><b>How Scaling Affects Models Performance</b></summary><p>
+<p><img src="imgs/20191030-134414.png" alt="" /></p>
+</p></details><br>
+ 
 <details><summary><b>1. Normalization</b></summary>
 <p>
 ~~~python
