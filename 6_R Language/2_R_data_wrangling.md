@@ -362,4 +362,12 @@ wealth <- cut(df$income, breaks, labels)
 ~~~
 </p></details>
 
+<details><summary><b>Aggregation</b></summary><p>
+~~~
+aggregate(x=offertest$purchase_amt,
+          by=list(offertest$offer), FUN="mean")
+~~~
+</p></details>
+
+
 </div>
