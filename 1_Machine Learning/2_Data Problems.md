@@ -1044,8 +1044,47 @@ correlations = train_df[features].corr().abs().unstack().sort_values(kind="quick
 correlations = correlations[correlations['level_0'] != correlations['level_1']]
 correlations.head(10)
 ~~~
-</p>
-</details>
+</p></details>
+</p></details>
+</p></details>
 
-</p>
-</details>
+<hr>
+
+<details><summary style='font-size:23px;text-decoration:underline'><b>7. Linear Model Assumptions</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.4-Linear-Model-Assumptions.html#Linear-Model-Assumptions"><b>Notebook [MUST READ]</b></a> </p>
+<ul>
+<li>There is a <b>linear</b> relationship between X and the outcome Y</li>
+<li>The independent variables X are <b>normally</b> distributed</li>
+<li>There is no or little <b>co-linearity</b> among the independent variables</li>
+<li><b>Homoscedasticity</b> (homogeneity of variance)</li>
+</ul>
+</p></details>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
