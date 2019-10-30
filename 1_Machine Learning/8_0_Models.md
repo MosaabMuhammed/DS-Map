@@ -113,6 +113,9 @@ feature_importance_sorted = plot_feature_importance(feature_importance)
 </p>
 </details> 
 
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.8-Bonus-Machine-Learning-Algorithms-Overview.html" style='font-weight:bold'>Models Comparsion</a> </p></li>
+
+
 <hr>
 <h2 id="binaryclassification">Binary Classification:</h2>
 
