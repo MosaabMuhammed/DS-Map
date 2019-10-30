@@ -21,6 +21,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from tqdm import tqdm_notebook as tqdm
+from termcolor import colored
 import os
 import gc
 import sys
@@ -33,12 +34,17 @@ import matplotlib.pyplot as plt
 from matplotlib import rc
 plt.style.use('fivethirtyeight')
 %matplotlib inline
- 
+
 rc('font', size=16)
 rc('font',**{'family':'serif','serif':['Computer Modern']})
 rc('text', usetex=False)
 rc('figure', figsize=(12, 10))
 
+pd.set_option('display.max_columns', None)
+pd.set_option('display.float_format', lambda x: '{:.3f}'.format(x)) #Limiting floats output to 3 decimal points
+
+from IPython.core.interactiveshell import InteractiveShell
+InteractiveShell.ast_node_interactivity = "all"
 
 print('Basic libraries have been loaded!')
 ~~~
