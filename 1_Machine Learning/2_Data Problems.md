@@ -694,10 +694,12 @@ pd.Series(y).hist(bins=30);
 
 <hr>
 
-<details><summary style='font-size:23px;text-decoration:underline'><b>4. Data Scaling:</b></summary>
-<p>
- <b>NOTE:</b> Review <b>Numeric Features</b> from how to win kaggle competition course.
+<details><summary style='font-size:23px;text-decoration:underline'><b>4. Data Scaling:</b></summary><p>
+
+
+
  <details><summary><b>How Scaling Affects Models Performance</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.7-Variable-magnitude.html#Variable-magnitude" style='font-weight:bold'>Check this</a> </p>
 <p><img src="imgs/20191030-134414.png" alt="" /></p>
 </p></details><br>
  
