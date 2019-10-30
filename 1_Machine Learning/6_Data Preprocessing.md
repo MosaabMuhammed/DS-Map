@@ -1,16 +1,23 @@
 # Data Preprocessing
 
 
-<details><summary> <b>Functions Data Processing<b> </summary>
+<details><summary> <b>Functions Data Processing</b> </summary>
 <p>
-[<b>Notebook<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/2_Featuretools%20for%20Good.html) 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/2_Featuretools%20for%20Good.html"><b>Notebook</b></a> </p>
 
-1. Remove any <b>duplicated<b> columns.
-2. Replace <b>infinite<b> values with <b>np.nan<b>
-3. Remove columns with a <b>missing percentage <b>above the *missing_threshold*
-4. Remove columns with only a <b>single unique value.<b>
-5. Remove one out of every pair of columns with a <b>correlation<b> threshold above the correlation_threshold
-6. Extract the <b>training<b> and <b>testing<b> data along with <b>labels<b> and <b>ids<b> (needed for making submissions)
+<ol>
+<li>Remove any <b>duplicated</b> columns.</li>
+
+<li>Replace <b>infinite</b> values with <b>np.nan</b></li>
+
+<li>Remove columns with a <b>missing percentage </b>above the <em>missing_threshold</em></li>
+
+<li>Remove columns with only a <b>single unique value.</b></li>
+
+<li>Remove one out of every pair of columns with a <b>correlation</b> threshold above the correlation_threshold</li>
+
+<li>Extract the <b>training</b> and <b>testing</b> data along with <b>labels</b> and <b>ids</b> (needed for making submissions)</li>
+</ol>
 
 ~~~python
 def post_process(feature_matrix, missing_threshold=.95, correlation_threshold=.95):
@@ -104,20 +111,21 @@ def post_process(feature_matrix, missing_threshold=.95, correlation_threshold=.9
 </p>
 </details>
 
+<hr>
 
-<b>*
-<details><summary> <b>Train Test Split<b> </summary>
+<details><summary> <b>Train Test Split</b> </summary>
 <p style="margin: 0">
-1) [Explanation for <b>Train_Test_Split<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods) 
-2) [Train Test Split notebook](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Train-Test-Split)
-
-	from sklearn.model_selection import train_test_split
-	X_train, X_test, y_train, y_test = train_test_split(
-	    df_feat, y, test_size=0.4, random_state=42)
+<p>1) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">Explanation for <b>Train<em>Test</em>Split</b></a> <br>
+2) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Train-Test-Split">Train Test Split notebook</a></p>
+~~~
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    df_feat, y, test_size=0.4, random_state=42)
+~~~
 </p>
 </details>
 
-<details><summary> <b>Temporal Splitting (Time Based  Splitting)<b> </summary>
+<details><summary> <b>Temporal Splitting (Time Based  Splitting)</b> </summary>
 <p>
 ~~~python
 split_train = int(len(data) * .8)
@@ -132,9 +140,9 @@ y_test = data[-split_test:]['Target']
 </p>
 </details>
 
-<details><summary> <b>Make Scorer<b> </summary>
+<details><summary> <b>Make Scorer</b> </summary>
 <p>
-[<b>Sklearn Docs<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer) 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer"><b>Sklearn Docs</b></a> </p>
 ~~~python
 from sklearn.metrics import f1_score, make_scorer
 
@@ -144,9 +152,9 @@ scorer = make_scorer(f1_score, greater_is_better=True, average='macro')
 </p>
 </details>
 
-<details><summary> Create a <b>Pipeline<b> </summary>
+<details><summary> Create a <b>Pipeline</b> </summary>
 <p>
-[<b>Notebook<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html) 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a> </p>
 ~~~python
 from sklearn.preprocessing import Imputer, MinMaxScaler
 from sklearn.pipeline import Pipeline
@@ -161,13 +169,13 @@ test_st   = pipeline.transform(test_set)
 </p>
 </details>
 
-<details><summary> <b>K-Fold CV<b> </summary>
+<details><summary> <b>K-Fold CV</b> </summary>
 <p>
 
 </p>
 </details>
 
-<details><summary> <b>Cross_val_score<b> </summary>
+<details><summary> <b>Cross_val_score</b> </summary>
 <p>
 ~~~python
 model = RF(n_estimators=100, n_jobs=-1)
@@ -180,43 +188,42 @@ print(f'~> 10 Fold Cross Validation F1 Score = {bg(round(cv_results.mean(), 4), 
 </p>
 </details>
 
-<details><summary><b>Cross Validation<b></summary>
+<details><summary><b>Cross Validation</b></summary>
 <p style="margin: 0">
-1) [Explanation for <b>Cross Validation<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods) 
+<p>1) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">Explanation for <b>Cross Validation</b></a> </p>
 </p>
 </details>
 
-<details><summary> <b>GridSearchCV<b> </summary>
+<details><summary> <b>GridSearchCV</b> </summary>
 <p style="margin: 0">
-1) [Explanation of <b>GridSearch<b>.](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Hyper-Parameter-optimization) 
-1) [Hyperparameter Tunning & Cross validation](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Hyperparameter-Tunning-&-Cross-Validation) 
+<p>1) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Hyper-Parameter-optimization">Explanation of <b>GridSearch</b>.</a> <br>
+2) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Hyperparameter-Tunning-&amp;-Cross-Validation">Hyperparameter Tunning &amp; Cross validation</a> </p>
+~~~
+# Load the model
+from sklearn.model_selection import GridSearchCV
 
-	# Load the model
-	from sklearn.model_selection import GridSearchCV
-	
-	# Select the range of parameters
-	param_grid = {'n_neighbors': np.arange(1, 50)}
-	
-	# Activate the GridSearchCV
-	knn = KNeighborsClassifier()
-	knn_cv = GridSearchCV(knn, param_grid, cv=5)
-	knn_cv.fit(X, y)
+# Select the range of parameters
+param_grid = {'n_neighbors': np.arange(1, 50)}
 
-	# Calculate the Training score
-	print('The Best Score for training =', knn_cv.best_score_*100,'%')
-	
-	# See the Best K value
-	print('The Best parameters (K) =', knn_cv.best_params_['n_neighbors'])
+# Activate the GridSearchCV
+knn = KNeighborsClassifier()
+knn_cv = GridSearchCV(knn, param_grid, cv=5)
+knn_cv.fit(X, y)
 
+# Calculate the Training score
+print('The Best Score for training =', knn_cv.best_score_*100,'%')
+
+# See the Best K value
+print('The Best parameters (K) =', knn_cv.best_params_['n_neighbors'])
+~~~
 </p>
 </details>
 
-<details><summary> <b>Randomized Search<b> </summary>
+<details><summary> <b>Randomized Search</b> </summary>
 <p>
 
 </p>
 </details>
 
-<b>*
 
 
