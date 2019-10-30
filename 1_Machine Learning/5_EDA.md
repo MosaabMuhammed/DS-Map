@@ -388,6 +388,7 @@ show_annotation(ax)
 
 <details><summary>Plot <b>Quantiles</b> on line chart</summary>
 <p>
+<p><img src="imgs/20191030-123738.png" width="1000" height='500' /></p>
 ~~~python
 plt.plot(tag_counts[:100], c='b')
 plt.scatter(x=list(range(0, 100, 5)), y=tag_counts[0:100:5], c='orange', label='Quantiles with .05 intervals.')
