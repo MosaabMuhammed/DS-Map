@@ -755,27 +755,42 @@ np.sqrt(1+x)
 
 
 <details><summary><b>Categorical Variables</b></summary><p>
-<ul>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>1. Complete Case Analysis [CCA]</b></a> </p></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.03-Arbitrary-Value-Imputation.html#Arbitrary-value-imputation"><b style='color:#333'>2. Arbitrary Value Imputation</b> [999/-1 => num]</a> </p></li>
+<details><summary><b>1. Complete Case Analysis [CCA]</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>Manual</b></a> </p></li>
+</p></details>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.05-Frequent-Category-Imputation.html#Frequent-category-imputation-|-Mode-imputation"><b style='color:#333'>3. Frequent category imputation | Mode imputation</b></a> </p></li>
+<details><summary><b>2. Arbitrary Value Imputation</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.03-Arbitrary-Value-Imputation.html#Arbitrary-value-imputation"><b style='color:#333'>Manual</b> ['Missing']</a> </p></li>
+</p></details>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>4. Random sample imputation</b></a> </p></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>5. Missing Binary Indicator</b></a> </p></li>
 
-</ul>
+<details><summary><b>3. Frequent category imputation | Mode imputation</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.05-Frequent-Category-Imputation.html#Frequent-category-imputation-|-Mode-imputation"><b style='color:#333'>Manual</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.11-Frequent-Category-Imputation-Sklearn.html#Frequent-category-imputation-with-Scikit-learn-==%3E-SimpleImputer"><b style='color:#333'>Sklearn</b></a> </p></li>
+</p></details>
+
+<details><summary><b>4. Random sample imputation</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
+</p></details>
+
+<details><summary><b>5. Missing Binary Indicator</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
+</p></details>
+
 </p></details>
 
 <details><summary><b>Numerical Variables</b></summary><p>
-<ul>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>1. Complete Case Analysis [CCA]</b></a> </p></li>
+
+<details><summary><b>1. Complete Case Analysis [CCA]</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>1. Manual</b></a> </p></li>
+</p></details>
 
 <details><summary><b>2. Arbitrary Value Imputation</b></summary><p>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.06-Missing-Category-Imputation.html#Arbitrary-value-imputation-for-categorical-variables"><b style='color:#333'>1. Manual</b> ['Missing' => cat]</a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.06-Missing-Category-Imputation.html#Arbitrary-value-imputation-for-categorical-variables"><b style='color:#333'>1. Manual</b> [999/-1]</a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.10-Arbitrary-Value-Imputation-Sklearn.html#Arbitrary-value-imputation-with-Scikit-learn-==%3E-SimpleImputer"><b style='color:#333'>2. Sklearn</b></a> </p></li>
 
@@ -789,15 +804,23 @@ np.sqrt(1+x)
 
 </p></details>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.04-End-Distribution-Imputation.html#End-of-distribution-imputation"><b style='color:#333'>4. End of Distribution Imputation</b></a> </p></li>
+<details><summary><b>4. End of Distribution Imputation</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.04-End-Distribution-Imputation.html#End-of-distribution-imputation"><b style='color:#333'>1. Manual</b></a> </p></li>
+</p></details>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.05-Frequent-Category-Imputation.html#Frequent-category-imputation-|-Mode-imputation"><b style='color:#333'>5. Frequent category imputation | Mode imputation</b></a> </p></li>
+<details><summary><b>5. Frequent category imputation | Mode imputation</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.05-Frequent-Category-Imputation.html#Frequent-category-imputation-|-Mode-imputation"><b style='color:#333'>Manual</b></a> </p></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-sample-imputation"><b style='color:#333'>6. Random sample imputation</b></a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.11-Frequent-Category-Imputation-Sklearn.html#Frequent-category-imputation-with-Scikit-learn-==%3E-SimpleImputer"><b style='color:#333'>Sklearn</b></a> </p></li>
+</p></details>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>7. Missing Binary Indicator</b></a> </p></li>
+<details><summary><b>6. Random sample imputation</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-sample-imputation"><b style='color:#333'></b>Manual</a></p></li>
+</p></details>
 
-</ul>
+<details><summary><b>7. Missing Binary Indicator</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
+</p></details>
 
 </p></details><br>
 
