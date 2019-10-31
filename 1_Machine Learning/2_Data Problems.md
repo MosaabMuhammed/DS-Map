@@ -753,6 +753,20 @@ np.sqrt(1+x)
 
 <details><summary><b>Missing Data Imputing</b></summary><p>
 
+<details><summary><b>General [Cat & Num]</b></summary><p>
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>Complete Case Analysis [CCA]</b></a> </p></li>
+</ul>
+</p></details>
+
+<details><summary><b>Categorical Variables</b></summary><p>
+
+</p></details>
+
+<details><summary><b>Numerical Variables</b></summary><p>
+
+</p></details>
+
 <details><summary><b>Table contains # of Missing values & its percentage</b></summary>
 <p>
 ~~~python
