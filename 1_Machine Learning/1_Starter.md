@@ -17,6 +17,7 @@
 
 <details><summary> <b>__basic</b> </summary><p>
 ~~~python
+# Version 1.3
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -25,26 +26,23 @@ from termcolor import colored
 import os
 import gc
 import sys
-import os.path
 
 import warnings
 warnings.filterwarnings('ignore')
 
 import matplotlib.pyplot as plt
-from matplotlib import rc
-plt.style.use('fivethirtyeight')
-%matplotlib inline
 
-rc('font', size=16)
-rc('font',**{'family':'serif','serif':['Computer Modern']})
-rc('text', usetex=False)
-rc('figure', figsize=(12, 10))
+%matplotlib inline
+%precision 4
 
 pd.set_option('display.max_columns', None)
-pd.set_option('display.float_format', lambda x: '{:.3f}'.format(x)) #Limiting floats output to 3 decimal points
+pd.set_option('display.float_format', lambda x: '{:.4f}'.format(x)) #Limiting floats output to 3 decimal points
 
 from IPython.core.interactiveshell import InteractiveShell
 InteractiveShell.ast_node_interactivity = "all"
+
+plt.style.use('fivethirtyeight')
+sns.set_style('white')
 
 print('Basic libraries have been loaded!')
 ~~~
