@@ -5,6 +5,14 @@
 <details><summary><b>Tips & Tricks</b></summary>
 <p>
 
+<details><summary>Make <b>ylabel</b> Horizontal</summary>
+<p>
+~~~python
+plt.ylabel('Count', rotation=0, labelpad=30)
+~~~
+</p>
+</details>
+
 <details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary>
 <p>
 ~~~python
