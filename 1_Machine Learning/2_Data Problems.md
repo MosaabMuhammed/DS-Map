@@ -764,8 +764,12 @@ np.sqrt(1+x)
 </p></details>
 
 <details><summary><b>Numerical Variables</b></summary><p>
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.02-Mean-Median-Imputation.html#Mean-/-Median-imputation"><b style='color:#333'>1. Mean / Median Imputation</b></a> </p></li>
+</ul>
+</p></details><br>
 
-</p></details>
+<details><summary><b>Misc Techniques</b></summary><p>
 
 <details><summary><b>Table contains # of Missing values & its percentage</b></summary>
 <p>
@@ -913,6 +917,7 @@ poly_features_test = imputer.transform(poly_features_test)
 ~~~
 </p>
 </details>
+</p></details>
 
 </p>
 </details>
