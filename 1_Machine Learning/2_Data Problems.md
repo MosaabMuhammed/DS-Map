@@ -775,7 +775,15 @@ np.sqrt(1+x)
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.06-Missing-Category-Imputation.html#Arbitrary-value-imputation-for-categorical-variables"><b style='color:#333'>2. Arbitrary Value Imputation</b> ['Missing' => cat]</a> </p></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.02-Mean-Median-Imputation.html#Mean-/-Median-imputation"><b style='color:#333'>3. Mean / Median Imputation</b></a> </p></li>
+
+
+<details><summary><b>3. Mean / Median Imputation</b></summary><p>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.02-Mean-Median-Imputation.html#Mean-/-Median-imputation"><b style='color:#333'>1. Manual</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.09-Mean-Median-Imputation-Sklearn.html#Mean-/-median-imputation-with-Scikit-learn-==%3E-SimpleImputer"><b style='color:#333'>2. Using Sklearn</b></a> </p></li>
+
+</p></details>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.04-End-Distribution-Imputation.html#End-of-distribution-imputation"><b style='color:#333'>4. End of Distribution Imputation</b></a> </p></li>
 
