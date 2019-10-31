@@ -759,6 +759,9 @@ np.sqrt(1+x)
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>1. Complete Case Analysis [CCA]</b></a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.03-Arbitrary-Value-Imputation.html#Arbitrary-value-imputation"><b style='color:#333'>2. Arbitrary Value Imputation</b> [999/-1 => num, 'Missing' => cat]</a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.05-Frequent-Category-Imputation.html#Frequent-category-imputation-|-Mode-imputation"><b style='color:#333'>3. Frequent category imputation | Mode imputation</b></a> </p></li>
+
 </ul>
 </p></details>
 
@@ -771,6 +774,8 @@ np.sqrt(1+x)
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.02-Mean-Median-Imputation.html#Mean-/-Median-imputation"><b style='color:#333'>3. Mean / Median Imputation</b></a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.04-End-Distribution-Imputation.html#End-of-distribution-imputation"><b style='color:#333'>4. End of Distribution Imputation</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.05-Frequent-Category-Imputation.html#Frequent-category-imputation-|-Mode-imputation"><b style='color:#333'>5. Frequent category imputation | Mode imputation</b></a> </p></li>
 
 </ul>
 
