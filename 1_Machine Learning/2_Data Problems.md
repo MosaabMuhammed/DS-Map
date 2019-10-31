@@ -755,7 +755,9 @@ np.sqrt(1+x)
 
 <details><summary><b>General [Cat & Num]</b></summary><p>
 <ul>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>Complete Case Analysis [CCA]</b></a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.01-Complete-Case-Analysis.html#Complete-Case-Analysis"><b style='color:#333'>1. Complete Case Analysis [CCA]</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.03-Arbitrary-Value-Imputation.html#Arbitrary-value-imputation"><b style='color:#333'>2. Arbitrary Value Imputation</b> [999/-1 => num, 'Missing' => cat]</a> </p></li>
 </ul>
 </p></details>
 
