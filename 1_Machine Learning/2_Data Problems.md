@@ -751,8 +751,11 @@ np.sqrt(1+x)
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.1-Missing-Data.html#Missing-Data-Mechanisms"><b style='color:#333'>Missing Data Mechanisms</b></a> </p></li>
 
-<details><summary><b>Missing Data Imputing</b></summary><p>
 
+
+<details><summary><b>Missing Data Imputing</b></summary><p>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/24.%20Overview%20of%20missing%20value%20imputation%20methods.html"><b style='color:#333'>Filling Missing Data Comparsion</b></a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/25.%20Conclusion%20when%20to%20use%20each%20missing%20data%20imputation%20method.html"><b style='color:#333'>Guidelines</b></a> </p></li>
 
 <details><summary><b>Categorical Variables</b></summary><p>
 
@@ -788,6 +791,8 @@ np.sqrt(1+x)
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.13-MissingIndicator-Sklearn.html#Adding-a-Missing-Indicator-variable-with-Scikit-learn-==%3E-MissingIndicator"><b style='color:#333'>Sklearn</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.22-Missing-Indicator-Feature-Engine.html#Missing-Indicator-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b></a> </p></li>
 </p></details>
 
 <details><summary><b>6. Automatic Imputing [GridSearch]</b></summary><p>
@@ -845,6 +850,8 @@ np.sqrt(1+x)
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.13-MissingIndicator-Sklearn.html#Adding-a-Missing-Indicator-variable-with-Scikit-learn-==%3E-MissingIndicator"><b style='color:#333'>Sklearn</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.22-Missing-Indicator-Feature-Engine.html#Missing-Indicator-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b></a> </p></li>
 </p></details>
 
 <details><summary><b>8. Automatic Imputing [GridSearch]</b></summary><p>
