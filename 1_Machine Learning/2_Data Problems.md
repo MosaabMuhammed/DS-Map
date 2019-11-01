@@ -762,6 +762,8 @@ np.sqrt(1+x)
 
 <details><summary><b>2. Arbitrary Value Imputation</b></summary><p>
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.03-Arbitrary-Value-Imputation.html#Arbitrary-value-imputation"><b style='color:#333'>Manual</b> ['Missing']</a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.12-Missing-Category-Imputation-Sklearn.html#Missing-Category-imputation-with-Scikit-learn:-SimpleImputer"><b style='color:#333'>Sklearn</b> ['Missing']</a> </p></li>
 </p></details>
 
 
