@@ -780,6 +780,8 @@ np.sqrt(1+x)
 
 <details><summary><b>5. Missing Binary Indicator</b></summary><p>
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.13-MissingIndicator-Sklearn.html#Adding-a-Missing-Indicator-variable-with-Scikit-learn-==%3E-MissingIndicator"><b style='color:#333'>Sklearn</b></a> </p></li>
 </p></details>
 
 </p></details>
@@ -822,6 +824,8 @@ np.sqrt(1+x)
 
 <details><summary><b>7. Missing Binary Indicator</b></summary><p>
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.13-MissingIndicator-Sklearn.html#Adding-a-Missing-Indicator-variable-with-Scikit-learn-==%3E-MissingIndicator"><b style='color:#333'>Sklearn</b></a> </p></li>
 </p></details>
 
 </p></details><br>
