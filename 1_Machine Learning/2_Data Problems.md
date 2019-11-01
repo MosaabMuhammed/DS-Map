@@ -764,6 +764,8 @@ np.sqrt(1+x)
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.03-Arbitrary-Value-Imputation.html#Arbitrary-value-imputation"><b style='color:#333'>Manual</b> ['Missing']</a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.12-Missing-Category-Imputation-Sklearn.html#Missing-Category-imputation-with-Scikit-learn:-SimpleImputer"><b style='color:#333'>Sklearn</b> ['Missing']</a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.20-Missing-Category-Imputation-Feature-Engine.html#Missing-Category-Imputation-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b> ['Missing']</a> </p></li>
 </p></details>
 
 
@@ -772,6 +774,8 @@ np.sqrt(1+x)
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.05-Frequent-Category-Imputation.html#Frequent-category-imputation-|-Mode-imputation"><b style='color:#333'>Manual</b></a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.11-Frequent-Category-Imputation-Sklearn.html#Frequent-category-imputation-with-Scikit-learn-==%3E-SimpleImputer"><b style='color:#333'>Sklearn</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.19-Frequent-Category-Imputation-Feature-Engine.html#Frequent-Category-Imputation-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b></a> </p></li>
 </p></details>
 
 <details><summary><b>4. Random sample imputation</b></summary><p>
