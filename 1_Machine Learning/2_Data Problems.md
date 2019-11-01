@@ -133,8 +133,59 @@ def reduce_mem_usage(df):
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.3-Rare-Labels.html#Rare-Labels"><b>Rare Labels</b></a> </p>
 
-<details><summary> <b>1. Response Coding</b> </summary>
+
+<details><summary> <b>temp</b> </summary><p>
+</p></details>
+
+<details><summary> <b>1. OneHotEncoding [Nominal]</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.01-One-hot-encoding.html#One-Hot-Encoding"><b>Pandas - Sklearn - Feature-Engine</b></a> </p>
+
+<details><summary> <b>Heuristics</b> </summary><p>
+<details><summary><b>Dummy</b> Variables</summary>
+<p style="margin: 0">
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/11_Decision%20Tree,%20Random%20Forest/2_Decision%20Trees%20and%20Random%20Forest%20Project-Mosaab.html#Get-Dummy-Variable">Dummy Variable in Action</a> </p>
+
+~~~python
+# Always remove one column of the dummy variables.
+cat_feats = ['Categorical Column name']
+
+final_data = pd.get_dummies(whole_dataset, columns=cat_feats, drop_first=True)
+~~~
+
+~~~python
+# Select all the categorical variables then get the dummy variables out of them
+cat_vars = df.select_dtypes(include=['object']).copy().columns
+for var in cat_vars:
+	# For each cat add dummy var, drop original column
+	df = pd.concat([df.drop(var, axis=1), pd.get_dummies(df[var], prefix=var, prefix_sep='_', drop_first=True, dummy_na=dummy_na)], axis=1)
+~~~
+
+<h4>We can make the dummy variables sparse in order to make it fit into memory, then convert it back to form which suitable for models to handle.</h4>
+<h4>Note: (.sparse.to_coo().tocsr()) is responsible to make it suitable for models to handle.</h4>
+~~~python
+X_comb_onehot = pd.get_dummies(pd.concat([X_train, X_test]), sparse=True, columns=X_train.columns)
+X_train_sparse = X_comb_onehot.loc[y_train.index].sparse.to_coo().tocsr()
+X_test_sparse = X_comb_onehot.drop(index=y_train.index).sparse.to_coo().tocsr()
+
+lr_params = dict(solver="lbfgs", C=0.2, max_iter=5000, random_state=0)
+models = [LogisticRegression(**lr_params).fit(X_train_sparse[t], y_train[t])
+          for t, _ in KFold(5, random_state=0).split(X_train_sparse)]
+~~~
+</p>
+</details>
+
+<details><summary>From <b>One-Hot Encoding</b> To <b>Ordinal</b></summary>
 <p>
+~~~
+ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]]), axis = 1)
+~~~ 
+</p>
+</details>
+</p></details>
+
+
+</p></details>
+<details><summary> <b>1. Response Coding</b> </summary><p>
 ~~~python
 ## Note: Modify [X_train] to fit your code
 ## NOTE: Modify the dataframe at the end.
@@ -193,7 +244,7 @@ for col in features:
 </p>
 </details>
 
-<details><summary><b>2.1 One-Hot Encoding (Nominal)</b> </summary>
+<details><summary><b>2.1 LabelEncoding (Nominal)</b> </summary>
 <p>
 ~~~
 
@@ -206,7 +257,7 @@ for col in df_copy.columns:
 </details>
 
 
-<details><summary><b>2.2 One-Hot Encoding (Ordinal)</b></summary>
+<details><summary><b>2.2 LabelEncoding (Ordinal)</b></summary>
 <p style="margin: 0">
 <p><a href="https://www.kaggle.com/jemseow/machine-learning-to-predict-app-ratings">See <b>Code</b> in Kaggle</a> </p>
 
@@ -225,46 +276,7 @@ df['Content Rating'] = df['Content Rating'].map(RatingDict).astype(int)
 
 
 
-<details><summary><b>2.3 Dummy</b> Variables</summary>
-<p style="margin: 0">
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/11_Decision%20Tree,%20Random%20Forest/2_Decision%20Trees%20and%20Random%20Forest%20Project-Mosaab.html#Get-Dummy-Variable">Dummy Variable in Action</a> </p>
 
-~~~python
-# Always remove one column of the dummy variables.
-cat_feats = ['Categorical Column name']
-
-final_data = pd.get_dummies(whole_dataset, columns=cat_feats, drop_first=True)
-~~~
-
-~~~python
-# Select all the categorical variables then get the dummy variables out of them
-cat_vars = df.select_dtypes(include=['object']).copy().columns
-for var in cat_vars:
-	# For each cat add dummy var, drop original column
-	df = pd.concat([df.drop(var, axis=1), pd.get_dummies(df[var], prefix=var, prefix_sep='_', drop_first=True, dummy_na=dummy_na)], axis=1)
-~~~
-
-<h4>We can make the dummy variables sparse in order to make it fit into memory, then convert it back to form which suitable for models to handle.</h4>
-<h4>Note: (.sparse.to_coo().tocsr()) is responsible to make it suitable for models to handle.</h4>
-~~~python
-X_comb_onehot = pd.get_dummies(pd.concat([X_train, X_test]), sparse=True, columns=X_train.columns)
-X_train_sparse = X_comb_onehot.loc[y_train.index].sparse.to_coo().tocsr()
-X_test_sparse = X_comb_onehot.drop(index=y_train.index).sparse.to_coo().tocsr()
-
-lr_params = dict(solver="lbfgs", C=0.2, max_iter=5000, random_state=0)
-models = [LogisticRegression(**lr_params).fit(X_train_sparse[t], y_train[t])
-          for t, _ in KFold(5, random_state=0).split(X_train_sparse)]
-~~~
-</p>
-</details>
-
-<details><summary>From <b>One-Hot Encoding</b> To <b>Ordinal</b></summary>
-<p>
-~~~
-ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]]), axis = 1)
-~~~ 
-</p>
-</details>
 
 <details><summary><b>3. Label Encoder</b></summary>
 <p style="margin: 0">
