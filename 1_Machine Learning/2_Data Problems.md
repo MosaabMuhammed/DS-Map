@@ -780,6 +780,8 @@ np.sqrt(1+x)
 
 <details><summary><b>4. Random sample imputation</b></summary><p>
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-Sampling-for-Categorical-Variables"><b style='color:#333'>Manual</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.20-Missing-Category-Imputation-Feature-Engine.html#Missing-Category-Imputation-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b></a> </p></li>
 </p></details>
 
 <details><summary><b>5. Missing Binary Indicator</b></summary><p>
@@ -835,6 +837,8 @@ np.sqrt(1+x)
 
 <details><summary><b>6. Random sample imputation</b></summary><p>
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.07-Random-Sample-Imputation.html#Random-sample-imputation"><b style='color:#333'></b>Manual</a></p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.20-Missing-Category-Imputation-Feature-Engine.html#Missing-Category-Imputation-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b></a> </p></li>
 </p></details>
 
 <details><summary><b>7. Missing Binary Indicator</b></summary><p>
