@@ -811,6 +811,8 @@ np.sqrt(1+x)
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.09-Mean-Median-Imputation-Sklearn.html#Mean-/-median-imputation-with-Scikit-learn-==%3E-SimpleImputer"><b style='color:#333'>2. Sklearn</b></a> </p></li>
 
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.16-Mean-Median-Imputation-Feature-Engine.html#What-is-Feature-Engine"><b style='color:#333'>Featuer-Engine</b></a> </p></li>
+
 </p></details>
 
 <details><summary><b>4. End of Distribution Imputation</b></summary><p>
