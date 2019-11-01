@@ -137,7 +137,7 @@ def reduce_mem_usage(df):
 <details><summary> <b>temp</b> </summary><p>
 </p></details>
 
-<details><summary> <b>1. OneHotEncoding [Nominal]</b> </summary><p>
+<details><summary> <b>OneHotEncoding [Nominal]</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.01-One-hot-encoding.html#One-Hot-Encoding"><b>Pandas - Sklearn - Feature-Engine</b></a> </p>
 
 <details><summary> <b>Heuristics</b> </summary><p>
@@ -184,13 +184,13 @@ ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]])
 </p></details>
 </p></details>
 
-<details><summary> <b>2. OneHotEncoding for Top Categories</b> </summary><p>
+<details><summary> <b> OneHotEncoding for Top Categories</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.02-One-hot-encoding-frequent_categories.html#One-Hot-Encoding-of-Frequent-Categories">Using Manual & Feature-Engine</a> </p>
 </p></details>
 
 
 
-<details><summary><b> 3. Label Encoder</b></summary>
+<details><summary><b>  Label Encoder</b></summary>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.03-Integer-Encoding.html#Integer-Encoding">Using Manual & Sklearn & Feature-Engine</a> </p>
 
 <p style="margin: 0">
@@ -232,8 +232,8 @@ for col in tqdm_notebook(cat_columns):
 </p>
 </details>
 
-<details><summary> <b>4. Frequency Encoding</b></summary><p>
-<p><a href=file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.04_Count_or_frequency_encoding.html#Count-or-frequency-encoding"><b>Manual & Feature-Engine</b></a> </p>
+<details><summary> <b> Frequency Encoding</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.04_Count_or_frequency_encoding.html#Count-or-frequency-encoding"><b>Manual & Feature-Engine</b></a> </p>
 
 ~~~python
 for col in high_card_feats:
@@ -247,8 +247,12 @@ df[col]      = df[col].map(encoding)
 ~~~
 </p></details>
 
+<details><summary> <b>Ordered Label Encoder</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.05-Ordered-Integer-Encoding.html#Target-guided-encodings"><b>Manual & Feature-Engine</b></a> </p>
+</p></details>
 
-<details><summary> <b>4. Thermometer Encoding [Ordinal]</b></summary>
+
+<details><summary> <b> Thermometer Encoding [Ordinal]</b></summary>
 <p>
 <p><a href="https://www.kaggle.com/superant/oh-my-cat"><b>Credits</b></a> </p>
 <h4>Note:</h4>
