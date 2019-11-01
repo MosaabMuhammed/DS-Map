@@ -818,7 +818,9 @@ np.sqrt(1+x)
 </p></details>
 
 <details><summary><b>4. End of Distribution Imputation</b></summary><p>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.04-End-Distribution-Imputation.html#End-of-distribution-imputation"><b style='color:#333'>1. Manual</b></a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.04-End-Distribution-Imputation.html#End-of-distribution-imputation"><b style='color:#333'>Manual</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.18-End-Tail-Imputation-Feature-Engine.html#End-of-distribution-Imputation-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b></a> </p></li>
 </p></details>
 
 <details><summary><b>5. Frequent category imputation | Mode imputation</b></summary><p>
