@@ -184,6 +184,10 @@ ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]])
 </p></details>
 
 
+<details><summary> <b>2. OneHotEncoding for Top Categories</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.02-One-hot-encoding-frequent_categories.html#One-Hot-Encoding-of-Frequent-Categories">Using Manual & Feature-Engine</a> </p>
+</p></details>
+
 </p></details>
 <details><summary> <b>1. Response Coding</b> </summary><p>
 ~~~python
