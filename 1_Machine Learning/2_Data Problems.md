@@ -182,107 +182,17 @@ ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]])
 </p>
 </details>
 </p></details>
-
+</p></details>
 
 <details><summary> <b>2. OneHotEncoding for Top Categories</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.02-One-hot-encoding-frequent_categories.html#One-Hot-Encoding-of-Frequent-Categories">Using Manual & Feature-Engine</a> </p>
 </p></details>
 
-</p></details>
-<details><summary> <b>1. Response Coding</b> </summary><p>
-~~~python
-## Note: Modify [X_train] to fit your code
-## NOTE: Modify the dataframe at the end.
-def ResponseCoding(train_df, feature, target, alpha=10):
-    feature_count = train_df[feature].value_counts()
-    n_classes     = train_df[target].nunique()
-    feature_dict  = dict()
-
-    # Compute the Response Coding / Mean Replacement.
-    for i, denominator in feature_count.items():
-        vec = []
-        for k in range(0, n_classes):
-            nominator         = len(train_df.loc[(train_df[target]==k) & (train_df[feature]==i)])
-            laplace_smoothing = (nominator + alpha)/(denominator+(n_classes*alpha))
-            vec.append(laplace_smoothing)
-        feature_dict[i] = vec
-    return feature_dict, feature_count, n_classes
 
 
-def assignResponseCoding(df, col_id, feature, feature_dict, feature_count, n_classes):
-    feature_final = [[] for i in range(n_classes)]
-    for idx, row in df.iterrows():
-        for i in range(n_classes):
-            if row[feature] in dict(feature_count).keys():
-                feature_final[i].append(feature_dict[row[feature]][i])
-            else:
-                feature_final[i].append(1/n_classes)
+<details><summary><b> 3. Label Encoder</b></summary>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.03-Integer-Encoding.html#Integer-Encoding">Using Manual & Sklearn & Feature-Engine</a> </p>
 
-    return pd.DataFrame({str(col_id): df[col_id],
-                         str(feature)+'_responseCoding_0': feature_final[0],
-                         str(feature)+'_responseCoding_1': feature_final[1]})
-~~~
-~~~python
-def add_df(df, df_encoding):
-    return df.merge(df_encoding, on='id', how='left')
-~~~
-~~~python
-## Response Coding for [Train] & [Test] dataset
-# Note: Specify the features here below to be encoded.
-features = ['nom_5', 'nom_6', 'nom_7', 'nom_8', 'nom_9']
-nom_responseCoding_train = pd.DataFrame({'id': train.id})
-nom_responseCoding_test = pd.DataFrame({'id': test.id})
-
-for col in features:
-    print(f'~> ResponseCoding for {bg(col+str("..."), "s", "green")}')
-    feature_dict, feature_count, n_classes = ResponseCoding(train, 'nom_5', 'target')
-   
-    print(f'- Assigning {bg("Train", "s")}')
-    temp_train = assignResponseCoding(train, 'id', col, feature_dict, feature_count, n_classes)
-    nom_responseCoding_train = add_df(nom_responseCoding_train, temp_train)
-    
-    print(f'- Assigning {bg("Test", "s")}')
-    temp_test = assignResponseCoding(test, 'id', col, feature_dict, feature_count, n_classes)
-    nom_responseCoding_test = add_df(nom_responseCoding_test, temp_test)
-~~~
-</p>
-</details>
-
-<details><summary><b>2.1 LabelEncoding (Nominal)</b> </summary>
-<p>
-~~~
-
-from sklearn.preprocessing import LabelEncoder
-le = LabelEncoder()
-for col in df_copy.columns:
-    df_copy[col] = le.fit_transform(df_copy[col])
-~~~ 
-</p>
-</details>
-
-
-<details><summary><b>2.2 LabelEncoding (Ordinal)</b></summary>
-<p style="margin: 0">
-<p><a href="https://www.kaggle.com/jemseow/machine-learning-to-predict-app-ratings">See <b>Code</b> in Kaggle</a> </p>
-
-~~~python
-#Cleaning of content rating classification
-RatingL = df['Content Rating'].unique()
-RatingDict = {}
-
-for i in range(len(RatingL)):
-    RatingDict[RatingL[i]] = i
-   
-df['Content Rating'] = df['Content Rating'].map(RatingDict).astype(int)
-~~~
-</p>
-</details>
-
-
-
-
-
-<details><summary><b>3. Label Encoder</b></summary>
 <p style="margin: 0">
 ~~~python
 df[col] = df[col].factorize()[0]
@@ -321,6 +231,22 @@ for col in tqdm_notebook(cat_columns):
 ~~~
 </p>
 </details>
+
+<details><summary> <b>4. Frequency Encoding</b></summary><p>
+<p><a href=file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.04_Count_or_frequency_encoding.html#Count-or-frequency-encoding"><b>Manual & Feature-Engine</b></a> </p>
+
+~~~python
+for col in high_card_feats:
+    enc_nom_1 = train[col].value_counts(normalize=True)
+    train[f'freq_{col}'] = train[col].apply(lambda x: enc_nom_1[x])
+~~~
+~~~python
+encoding  = df.groupby(col).size()
+encoding /= len(df)
+df[col]      = df[col].map(encoding)
+~~~
+</p></details>
+
 
 <details><summary> <b>4. Thermometer Encoding [Ordinal]</b></summary>
 <p>
@@ -647,20 +573,6 @@ train[['ord_5', 'ord_5_oe_add', 'ord_5_oe_join', 'ord_5_oe1', 'ord_5_oe2']].head
 </p>
 </details>
 
-<details><summary> <b>12. Frequency Encoding</b></summary>
-<p>
-~~~python
-for col in high_card_feats:
-    enc_nom_1 = train[col].value_counts(normalize=True)
-    train[f'freq_{col}'] = train[col].apply(lambda x: enc_nom_1[x])
-~~~
-~~~python
-encoding  = df.groupby(col).size()
-encoding /= len(df)
-df[col]      = df[col].map(encoding)
-~~~
-</p>
-</details>
 
 <details><summary><b>13. Encoding Librariy</b></summary>
 <p>
