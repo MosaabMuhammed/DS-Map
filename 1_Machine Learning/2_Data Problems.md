@@ -803,6 +803,8 @@ np.sqrt(1+x)
 
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.10-Arbitrary-Value-Imputation-Sklearn.html#Arbitrary-value-imputation-with-Scikit-learn-==%3E-SimpleImputer"><b style='color:#333'>2. Sklearn</b></a> </p></li>
 
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.17-Arbitrary-Value-Imputation-Feature-Engine.html#Arbitrary-Imputation-==%3E-Feature-Engine"><b style='color:#333'>Feature-Engine</b></a> </p></li>
+
 </p></details>
 
 <details><summary><b>3. Mean / Median Imputation</b></summary><p>
