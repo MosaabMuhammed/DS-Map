@@ -349,6 +349,101 @@ def ThemometerEncoder(df, ord_cols):
 </p>
 </details>
 
+<details><summary> <b>Mean/Target Encoding</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.06-Mean-Encoding.html#Target-guided-encodings"><b>Manual & Feature-Engine</b></a> </p>
+<hr>
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#Mean-encodings-without-regularization"><b>1. Mean Encoding Without Regularization</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#1.-KFold-scheme"><b>2. Using KFold Scheme</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#2.-Leave-one-out-scheme"><b>3. Leave-One-Out Scheme</b></a> </p></li>
+
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#3.-Smoothing"><b>4. With Smoothing</b></a> </p></li>
+
+<li><p><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#4.-Expanding-mean-scheme"><b>5. Expanding Mean Scheme</b></a> </p></p></li>
+</ul>
+
+<details><summary> <b>1 Target Encoding (similar to Response Coding)</b></summary>
+<p>
+<blockquote>
+  <p><b>NOTE</b>: Target-based encoding is numerization of categorical variables via target. In this method, we replace the categorical variable with just one new numerical variable and replace each category of the categorical variable with its corresponding probability of the target (if categorical) or average of the target (if numerical). The main drawbacks of this method are its dependency to the distribution of the target, and its lower predictability power compare to the binary encoding method.</p>
+</blockquote>
+~~~python
+X_target=df_train.copy()
+X_target['day']=X_target['day'].astype('object')
+X_target['month']=X_target['month'].astype('object')
+for col in X_target.columns:
+    if (X_target[col].dtype=='object'):
+        target= dict ( X_target.groupby(col)['target'].agg('sum')/X_target.groupby(col)['target'].agg('count'))
+        X_target[col]=X_target[col].replace(target).values
+~~~
+
+<h4>2. Another way of doing so</h4>
+~~~python
+'''
+     Differently to `.target.mean()` function `transform` 
+   will return a dataframe with an index like in `all_data`.
+   Basically this single line of code is equivalent to the first two lines from of Method 1.
+'''
+all_data['item_target_enc'] = all_data.groupby('item_id')['target'].transform('mean')
+~~~
+</p></details>
+
+<details><summary> <b>2 Target Encoding with smoothing</b></summary>
+<p>
+
+<p><a href="https://www.kaggle.com/delafields/a-thorough-guide-on-categorical-feature-encoding"><b>Credits</b></a> </p>
+~~~python
+def encode_target_smooth(data, target, categ_variables, smooth):
+    """    
+    Apply target encoding with smoothing.
+    
+    Parameters
+    ----------
+    data: pd.DataFrame
+    target: str, dependent variable
+    categ_variables: list of str, variables to encode
+    smooth: int, number of observations to weigh global average with
+    
+    Returns
+    --------
+    encoded_dataset: pd.DataFrame
+    code_map: dict, mapping to be used on validation/test datasets 
+    defaul_map: dict, mapping to replace previously unseen values with
+    """
+    train_target = data.copy()
+    code_map = dict()    # stores mapping between original and encoded values
+    default_map = dict() # stores global average of each variable
+    
+    for col in categ_variables:
+        prior = data[target].mean()
+        n = data.groupby(col).size()
+        mu = data.groupby(col)[target].mean()
+        mu_smoothed = (n * mu + smooth + prior) / (n + smooth)
+        
+        train_target.loc[:, col] = train_target[col].map(mu_smoothed)
+        code_map[col] = mu_smoothed
+        default_map[col] = prior
+    return train_target, code_map, default_map
+~~~
+
+~~~python
+# additive smoothing
+train_target_smooth, target_map, default_map = encode_target_smooth(df_train, 'target', hc_nom_columns, 500)
+test_target_smooth = df_train.copy()
+for col in hc_nom_columns:
+    encoded_col = test_target_smooth[col].map(target_map[col])
+    mean_encoded = pd.DataFrame({f'{col}_mean_enc': encoded_col})
+    df_train = pd.concat([df_train, mean_encoded], axis=1)
+    
+df_train.filter(regex='nom_[5-9]_mean_enc').head()
+~~~
+</p>
+</details>
+
+</p></details>
+
 <details><summary> <b>5. Feature Hashing</b></summary>
 <p>
 <h4> Using FeatureHasher (Multiple Columns)</h4>
@@ -409,101 +504,8 @@ X_train_cyclic=X_train_cyclic.drop(columns,axis=1)
 </p>
 </details>
 
-<details><summary> <b>8. Target</b> Encoding</summary>
-<p>
-<ul>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#Mean-encodings-without-regularization"><b>1. Mean Encoding Without Regularization</b></a> </p></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#1.-KFold-scheme"><b>2. Using KFold Scheme</b></a> </p></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#2.-Leave-one-out-scheme"><b>3. Leave-One-Out Scheme</b></a> </p></li>
-
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#3.-Smoothing"><b>4. With Smoothing</b></a> </p></li>
-
-<li><p><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Week%203/mean_encoding_week_3.html#4.-Expanding-mean-scheme"><b>5. Expanding Mean Scheme</b></a> </p></p></li>
-</ul>
-
-<details><summary> <b>8.1 Target Encoding (similar to Response Coding)</b></summary>
-<p>
-<blockquote>
-  <p><b>NOTE</b>: Target-based encoding is numerization of categorical variables via target. In this method, we replace the categorical variable with just one new numerical variable and replace each category of the categorical variable with its corresponding probability of the target (if categorical) or average of the target (if numerical). The main drawbacks of this method are its dependency to the distribution of the target, and its lower predictability power compare to the binary encoding method.</p>
-</blockquote>
-~~~python
-X_target=df_train.copy()
-X_target['day']=X_target['day'].astype('object')
-X_target['month']=X_target['month'].astype('object')
-for col in X_target.columns:
-    if (X_target[col].dtype=='object'):
-        target= dict ( X_target.groupby(col)['target'].agg('sum')/X_target.groupby(col)['target'].agg('count'))
-        X_target[col]=X_target[col].replace(target).values
-~~~
-
-<h4>2. Another way of doing so</h4>
-~~~python
-'''
-     Differently to `.target.mean()` function `transform` 
-   will return a dataframe with an index like in `all_data`.
-   Basically this single line of code is equivalent to the first two lines from of Method 1.
-'''
-all_data['item_target_enc'] = all_data.groupby('item_id')['target'].transform('mean')
-~~~
-</p>
-</details>
-
-</p>
-</details>
-
-<details><summary> <b>8.2 Target Encoding with smoothing</b></summary>
-<p>
-
-<p><a href="https://www.kaggle.com/delafields/a-thorough-guide-on-categorical-feature-encoding"><b>Credits</b></a> </p>
-~~~python
-def encode_target_smooth(data, target, categ_variables, smooth):
-    """    
-    Apply target encoding with smoothing.
-    
-    Parameters
-    ----------
-    data: pd.DataFrame
-    target: str, dependent variable
-    categ_variables: list of str, variables to encode
-    smooth: int, number of observations to weigh global average with
-    
-    Returns
-    --------
-    encoded_dataset: pd.DataFrame
-    code_map: dict, mapping to be used on validation/test datasets 
-    defaul_map: dict, mapping to replace previously unseen values with
-    """
-    train_target = data.copy()
-    code_map = dict()    # stores mapping between original and encoded values
-    default_map = dict() # stores global average of each variable
-    
-    for col in categ_variables:
-        prior = data[target].mean()
-        n = data.groupby(col).size()
-        mu = data.groupby(col)[target].mean()
-        mu_smoothed = (n * mu + smooth + prior) / (n + smooth)
-        
-        train_target.loc[:, col] = train_target[col].map(mu_smoothed)
-        code_map[col] = mu_smoothed
-        default_map[col] = prior
-    return train_target, code_map, default_map
-~~~
-
-~~~python
-# additive smoothing
-train_target_smooth, target_map, default_map = encode_target_smooth(df_train, 'target', hc_nom_columns, 500)
-test_target_smooth = df_train.copy()
-for col in hc_nom_columns:
-    encoded_col = test_target_smooth[col].map(target_map[col])
-    mean_encoded = pd.DataFrame({f'{col}_mean_enc': encoded_col})
-    df_train = pd.concat([df_train, mean_encoded], axis=1)
-    
-df_train.filter(regex='nom_[5-9]_mean_enc').head()
-~~~
-</p>
-</details>
 
 <details><summary><b>10. Encoding [Ordinal] Features</b></summary>
 <p>
