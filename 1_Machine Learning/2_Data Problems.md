@@ -133,6 +133,7 @@ def reduce_mem_usage(df):
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.3-Rare-Labels.html#Rare-Labels"><b>Rare Labels</b></a> </p>
 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.09-Comparison-categorical-encoding-techniques.html#Comparison-of-Categorical-Variable-Encodings"><b> Comparsion b/w different Encodings</b></a> </p>
 
 <details><summary> <b>temp</b> </summary><p>
 </p></details>
@@ -452,6 +453,7 @@ df_train.filter(regex='nom_[5-9]_mean_enc').head()
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.08-Weight-of-Evidence.html#Weight--of-evidence"><b>Manual & Feature-Engine</b></a> </p>
 </p></details>
 
+<br>
 <details><summary> <b>Feature Hashing</b></summary>
 <p>
 <h4> Using FeatureHasher (Multiple Columns)</h4>
@@ -480,26 +482,7 @@ for col in high_card_feats:
 </details>
 
 
-<details><summary> <b>6. Encoding with dataset statistics</b></summary>
-<p>
-~~~python
-## The easiest way to do it is replace every category with the number of times that we saw it in the dataset. 
-
-X_train_stat=X.copy()
-for c in X_train_stat.columns:
-    if(X_train_stat[c].dtype=='object'):
-        X_train_stat[c]=X_train_stat[c].astype('category')
-        counts=X_train_stat[c].value_counts()
-        counts=counts.sort_index()
-        counts=counts.fillna(0)
-        counts += np.random.rand(len(counts))/1000
-        X_train_stat[c].cat.categories=counts
-~~~
-</p>
-</details>
-
-
-<details><summary> <b>7. Encoding Cyclic Features (Day, Month, ...)</b></summary>
+<details><summary> <b>Encoding Cyclic Features (Day, Month, ...)</b></summary>
 <p>
 ~~~python
 X_train_cyclic=X.copy()
@@ -513,44 +496,7 @@ X_train_cyclic=X_train_cyclic.drop(columns,axis=1)
 </details>
 
 
-
-
-<details><summary><b>10. Encoding [Ordinal] Features</b></summary>
-<p>
-
-~~~python
-# Importing categorical options of pandas
-from pandas.api.types import CategoricalDtype 
-
-# seting the orders of our ordinal features
-ord_1 = CategoricalDtype(categories=['Novice', 'Contributor','Expert', 
-                                     'Master', 'Grandmaster'], ordered=True)
-ord_2 = CategoricalDtype(categories=['Freezing', 'Cold', 'Warm', 'Hot',
-                                     'Boiling Hot', 'Lava Hot'], ordered=True)
-ord_3 = CategoricalDtype(categories=['a', 'b', 'c', 'd', 'e', 'f', 'g',
-                                     'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'], ordered=True)
-ord_4 = CategoricalDtype(categories=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-                                     'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-                                     'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], ordered=True)
-~~~
-
-~~~python
-# Transforming ordinal Features
-df_train.ord_1 = df_train.ord_1.astype(ord_1)
-df_train.ord_2 = df_train.ord_2.astype(ord_2)
-df_train.ord_3 = df_train.ord_3.astype(ord_3)
-df_train.ord_4 = df_train.ord_4.astype(ord_4)
-
-# test dataset
-df_test.ord_1 = df_test.ord_1.astype(ord_1)
-df_test.ord_2 = df_test.ord_2.astype(ord_2)
-df_test.ord_3 = df_test.ord_3.astype(ord_3)
-df_test.ord_4 = df_test.ord_4.astype(ord_4)
-~~~
-</p>
-</details>
-
-<details><summary><b>11. Encoding</b> using <b>ASCII Code</b> (Ordinal Features)</summary>
+<details><summary><b>Encoding</b> using <b>ASCII Code</b> (Ordinal Features)</summary>
 <p>
 
 ~~~python
@@ -588,7 +534,7 @@ train[['ord_5', 'ord_5_oe_add', 'ord_5_oe_join', 'ord_5_oe1', 'ord_5_oe2']].head
 </details>
 
 
-<details><summary><b>13. Encoding Librariy</b></summary>
+<details><summary><b>Encoding Librariy</b></summary>
 <p>
 ~~~python
 from category_encoders.ordinal import OrdinalEncoder
