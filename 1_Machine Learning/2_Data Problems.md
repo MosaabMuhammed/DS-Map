@@ -444,8 +444,12 @@ df_train.filter(regex='nom_[5-9]_mean_enc').head()
 
 </p></details>
 
-<details><summary> <b>Probability Ration Encoding</b> </summary><p>
+<details><summary> <b>Probability Ratio Encoding</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.07-Probability-Ratio-Encoding.html#Target-guided-encodings"><b>Manual & Feature-Engine</b></a> </p>
+</p></details>
+
+<details><summary> <b>Weight of Evidence Ratio Encoding</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.08-Weight-of-Evidence.html#Weight--of-evidence"><b>Manual & Feature-Engine</b></a> </p>
 </p></details>
 
 <details><summary> <b>Feature Hashing</b></summary>
