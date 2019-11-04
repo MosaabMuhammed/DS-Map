@@ -444,7 +444,11 @@ df_train.filter(regex='nom_[5-9]_mean_enc').head()
 
 </p></details>
 
-<details><summary> <b>5. Feature Hashing</b></summary>
+<details><summary> <b>Probability Ration Encoding</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.07-Probability-Ratio-Encoding.html#Target-guided-encodings"><b>Manual & Feature-Engine</b></a> </p>
+</p></details>
+
+<details><summary> <b>Feature Hashing</b></summary>
 <p>
 <h4> Using FeatureHasher (Multiple Columns)</h4>
 ~~~python
