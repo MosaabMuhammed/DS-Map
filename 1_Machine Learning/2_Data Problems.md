@@ -1075,8 +1075,13 @@ correlations.head(10)
 <li>There is no or little <b>co-linearity</b> among the independent variables</li>
 <li><b>Homoscedasticity</b> (homogeneity of variance)</li>
 </ul>
-</p></details>
+<hr>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-07-Variable-Transformation/07.01-Gaussian-transformation.html#Gaussian-Transformation"><b>Gaussian Transformation [Numpy]</b></a> </p>
 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-07-Variable-Transformation/07.01-Gaussian-transformation.html#Gaussian-Transformation"><b>Gaussian Transformation [Sklearn]</b></a> </p>
+
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-07-Variable-Transformation/07.03-Gaussian-transformation-feature-engine.html#Gaussian-Transformation-with-Feature-Engine"><b>Gaussian Transformation [Feature-Engine]</b></a> </p>
+</p></details>
 </div>
 
 
