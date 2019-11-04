@@ -135,9 +135,6 @@ def reduce_mem_usage(df):
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.09-Comparison-categorical-encoding-techniques.html#Comparison-of-Categorical-Variable-Encodings"><b> Comparsion b/w different Encodings</b></a> </p>
 
-<details><summary> <b>temp</b> </summary><p>
-</p></details>
-
 <details><summary> <b>OneHotEncoding [Nominal]</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.01-One-hot-encoding.html#One-Hot-Encoding"><b>Pandas - Sklearn - Feature-Engine</b></a> </p>
 
@@ -189,7 +186,9 @@ ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]])
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.02-One-hot-encoding-frequent_categories.html#One-Hot-Encoding-of-Frequent-Categories">Using Manual & Feature-Engine</a> </p>
 </p></details>
 
-
+<details><summary> <b>Binary Encoder</b> </summary><p>
+<p><a href="https://contrib.scikit-learn.org/categorical-encoding/binary.html"><b>category_encodors</b></a> </p>
+</p></details>
 
 <details><summary><b>  Label Encoder</b></summary>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.03-Integer-Encoding.html#Integer-Encoding">Using Manual & Sklearn & Feature-Engine</a> </p>
@@ -459,8 +458,12 @@ df_train.filter(regex='nom_[5-9]_mean_enc').head()
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.10-Engineering-Rare-Categories.html#Engineering-Rare-Categories"><b>Manual & Feature-Engine</b></a> </p>
 </p></details>
 
+
+
 <details><summary> <b>Feature Hashing</b></summary>
 <p>
+<p><a href="https://contrib.scikit-learn.org/categorical-encoding/hashing.html#hashing"><b>Manual & Feature-Engine</b></a> </p>
+</p>
 <h4> Using FeatureHasher (Multiple Columns)</h4>
 ~~~python
 from sklearn.feature_extraction import FeatureHasher
