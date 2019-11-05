@@ -10,6 +10,26 @@ print(os.listdir("../input"))
 </p>
 </details>
 
+<details><summary> <b>Save & Remove label at the same time</b> </summary>
+<p>
+~~~python
+label = iris.pop('species')
+~~~
+</p>
+</details>
+
+<details><summary> <b>Add Prefix or Suffix to all columns name</b> </summary>
+<p>
+~~~python
+# Add Prefix
+df.add_prefix('X_')
+
+# Add Suffix
+df.add_suffix('_Y')
+~~~
+</p>
+</details>
+
 <details><summary> <b>Select Multiple Slices of Columns from a DataFrame</b> </summary>
 <p>
 ~~~python
