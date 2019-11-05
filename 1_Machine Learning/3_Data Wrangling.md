@@ -30,6 +30,25 @@ df.add_suffix('_Y')
 </p>
 </details>
 
+<details><summary> <b>Add Prefix or Suffix to all columns name</b> </summary>
+<p>
+~~~python
+# See the value counts for each category
+genre.value_counts()
+
+# Select the top n categories
+top_four = genre.value_counts().nlargest(4).index
+top_four
+
+# Add Rare category
+genre_updated = genre.where(genre.isin(top_four), other='Rare')
+
+# See the changes
+genre_updated.value_counts()
+~~~
+</p>
+</details>
+
 <details><summary> <b>Select Multiple Slices of Columns from a DataFrame</b> </summary>
 <p>
 ~~~python
