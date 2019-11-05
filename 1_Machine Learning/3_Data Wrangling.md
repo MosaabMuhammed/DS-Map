@@ -10,6 +10,25 @@ print(os.listdir("../input"))
 </p>
 </details>
 
+<details><summary> <b>Select Multiple Slices of Columns from a DataFrame</b> </summary>
+<p>
+~~~python
+# DataFrame
+df = pd.DataFrame(np.random.rand(3, 11), columns=list('ABCDEFGHIJk'))
+
+# Option 1
+pd.concat([df.loc[:, 'A', 'C'], df.loc[:, 'F'], df.loc[:, 'J':'K']], axis='columns')
+
+# Option 2
+df[list(df.columns[0:3]) + list(df.columns[5]) + list(df.columns[9:11])]
+
+# Option 3
+df.iloc[:, np.r_[0:3, 5, 9:11]]
+
+~~~
+</p>
+</details>
+
 <details><summary> <b>Remove Duplicated cat/num features</b> </summary>
 <p>
 ~~~python
