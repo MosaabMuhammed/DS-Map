@@ -617,13 +617,9 @@ sklearn.preprocessing.MinMaxScaler
 </details>
 
  
-<details><summary><b>2. Standardization</b></summary>
-<p>
-~~~python
-sklearn.preprocessing.StandardScaler
-~~~
-</p>
-</details>
+<details><summary><b>2. Standardization</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.01-Standardisation.html#Feature-Scaling" style='font-weight:bold'>Check this</a> </p>
+</p></details>
 
  
 <details><summary><b>3. Rank</b></summary>
