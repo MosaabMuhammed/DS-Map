@@ -1,7 +1,7 @@
-# ==4. Feature Engineering==
+# 4. Feature Engineering
+ 
 
-
-<details><summary style='color:#72A;'><b>Merge<b> to <b>Original Data<b></summary>
+<details><summary style='color:#72A;'><b>Merge</b> to <b>Original Data</b></summary>
 <p>
 ~~~python
 # Bin the age data
@@ -11,27 +11,41 @@ test = test.merge(cash_by_client, on = 'SK_ID_CURR', how = 'left')
 </p>
 </details>
 
-- [<b><span style='color:#333'>Implement Features, based on Nearest Neighbours</span><b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/compute_KNN_features.html#The-task) 
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/compute_KNN_features.html#The-task"><b><span style='color:#333'>Implement Features, based on Nearest Neighbours</span></b></a> </li>
+</ul>
 
-<details><summary><b>Feature transformations with ensembles of trees<b></summary>
+<details><summary><b>Feature transformations with ensembles of trees</b></summary>
 <p>
-[<b>Example Sklearn<b> (Important)](https://scikit-learn.org/stable/auto_examples/ensemble/plot_feature_transformation.html) 
+<p><a href="https://scikit-learn.org/stable/auto_examples/ensemble/plot_feature_transformation.html"><b>Example Sklearn</b> (Important)</a> </p>
 </p>
 </details>
 
-<details><summary><b>Feature Binning<b></summary>
-<p>
-~~~python
-# Bin the age data
-age_data['YEARS_BINNED'] = pd.cut(age_data['YEARS_BIRTH'], bins = np.linspace(20, 70, num = 11))
-~~~
-</p>
-</details>
+<details><summary><b>Discretisation</b></summary><p>
 
-<details><summary><b>Polynomial Features<b></summary>
+<details><summary><b>Unsupervised</b></summary><p>
+<details><summary><b>Equal-Width</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-08-Discretisation/08.01-Equal-width-discretisation.html#Discretisation"><b>Pandas & Sklearn & Feature-Engine</b></a> </p>
+
+<blockquote><p>
+Equal width discretisation divides the scope of possible values into N bins of the same width.
+$$Width = \frac{max - min}{N}$$
+</p></blockquote>
+</p></details>
+- Equal-Frequency
+- K-means
+</p></details>
+
+<details><summary><b>Supervised</b></summary><p>
+- Decision Trees
+</p></details>
+
+</p></details>
+
+<details><summary><b>Polynomial Features</b></summary>
 <p>
 
-<details><summary><b>Core Code<b></summary>
+<details><summary><b>Core Code</b></summary>
 <p>
 ~~~python
 from sklearn.preprocessing import PolynomialFeatures
@@ -57,13 +71,13 @@ Polynomial Features shape:  (307511, 35)
 </details>
 
 
-<details><summary>See <b>Features name<b></summary>
+<details><summary>See <b>Features name</b></summary>
 <p>
 ~~~python
 ## Get the name of the features
 poly_transformer.get_feature_names(input_features = ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3', 'DAYS_BIRTH'])[:15]
 
-<h4><h4><h4># Result <h4><h4><h4>
+####### Result
 ['1',
  'EXT_SOURCE_1',
  'EXT_SOURCE_2',
@@ -83,8 +97,7 @@ poly_transformer.get_feature_names(input_features = ['EXT_SOURCE_1', 'EXT_SOURCE
 </p>
 </details>
 
-<details><summary><b>See if the NEW features are corrleated with TARGET or not<b></summary>
-<p>
+<details><summary><b>See if the NEW features are corrleated with TARGET or not</b></summary><p>
 ~~~python
 # Create a dataframe of the features 
 poly_features = pd.DataFrame(poly_features, 
@@ -121,12 +134,10 @@ TARGET          1.000000
 1                    NaN
 Name: TARGET, dtype: float64
 ~~~
-</p>
-</details>
+</p></details>
 
 
-<details><summary>Add the <b>new<b> features to the <b>main<b> dataframe</summary>
-<p>
+<details><summary>Add the <b>new</b> features to the <b>main</b> dataframe</summary><p>
 ~~~python
 # Put test features into dataframe
 poly_features_test = pd.DataFrame(poly_features_test, 
@@ -147,18 +158,15 @@ app_train_poly, app_test_poly = app_train_poly.align(app_test_poly, join = 'inne
 print('Training data with polynomial features shape: ', app_train_poly.shape)
 print('Testing data with polynomial features shape:  ', app_test_poly.shape)
 
-<h4><h4><h4># Result <h4><h4><h4>
+###### Result
 Training data with polynomial features shape:  (307511, 275)
 Testing data with polynomial features shape:   (48744, 275)
 ~~~
-</p>
-</details>
-</p>
-</details>
+</p></details>
+</p></details>
 
 
-<details><summary><b>Numeric Aggregation<b> [count, min, max, mean, sum]</summary>
-<p>
+<details><summary><b>Numeric Aggregation</b> [count, min, max, mean, sum]</summary><p>
 ~~~python
 def agg_numeric(df, group_var, df_name):
     """Aggregates the numeric values in a dataframe. This can
@@ -214,15 +222,13 @@ def agg_numeric(df, group_var, df_name):
     
     return agg
     
- <h4> To use it <h4>###
+###### To use it
 bureau_agg_new = agg_numeric(bureau.drop(columns = ['SK_ID_BUREAU']), group_var = 'SK_ID_CURR', df_name = 'bureau')
 bureau_agg_new.head()
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>Categorical Aggregation<b> [_count_, _norm_count_]</summary>
-<p>
+<details><summary><b>Categorical Aggregation</b> [_count_, _norm_count_]</summary><p>
 ~~~python
 def count_categorical(df, group_var, df_name):
     """Computes counts and normalized counts for each observation
@@ -280,8 +286,7 @@ bureau_counts.head()
 </p>
 </details>
 
-<details><summary><b>Aggregation<b> b/w 2 datasets having 2 <b>Different IDs<b></summary>
-<p>
+<details><summary><b>Aggregation</b> b/w 2 datasets having 2 <b>Different IDs</b></summary><p>
 ~~~python
 def aggregate_client(df, group_vars, df_names):
     """Aggregate a dataframe with data at the loan level 
@@ -350,14 +355,12 @@ def aggregate_client(df, group_vars, df_names):
 <h4>## Calling the Function <h4><h4>#
 cash_by_client = aggregate_client(cash, group_vars = ['SK_ID_PREV', 'SK_ID_CURR'], df_names = ['cash', 'client'])
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>Automated<b> Feature Engineering <b>(Featuretools)<b></summary>
+<details><summary><b>Automated</b> Feature Engineering <b>(Featuretools)</b></summary>
 <p>
 
-<details><summary>Convert limited <b>discrete nums<b> into <b>Booleans<b> using <b>FeatureTools<b></summary>
-<p>
+<details><summary>Convert limited <b>discrete nums</b> into <b>Booleans</b> using <b>FeatureTools</b></summary><p>
 ~~~python
 app_types = {}
 
@@ -372,8 +375,7 @@ print('Number of boolean variables: ', len(app_types))
 </p>
 </details>
 
-<details><summary><b>1. Entities & EntitySet<b></summary>
-<p>
+<details><summary><b>1. Entities & EntitySet</b></summary><p>
 ~~~python
 import featuretools as tf
 
@@ -392,11 +394,9 @@ es = es.entity_from_dataframe(entity_id = 'app', dataframe = app, index = 'SK_ID
 es = es.entity_from_dataframe(entity_id = 'bureau_balance', dataframe = bureau_balance, 
                               make_index = True, index = 'bureaubalance_index')
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>2. Table Relationships<b></summary>
-<p>
+<details><summary><b>2. Table Relationships</b></summary><p>
 ~~~python
 # Relationship between app and bureau
 r_app_bureau = ft.Relationship(es['app']['SK_ID_CURR'], es['bureau']['SK_ID_CURR'])
@@ -410,7 +410,7 @@ es = es.add_relationships([r_app_bureau, r_bureau_balance, r_app_previous,
 # Print out the EntitySet
 es
 
-<h4><h4>## RESULT <h4><h4><h4><h4>###
+####### RESULT ###
 Entityset: clients
   Entities:
     app [Rows: 2002, Columns: 123]
@@ -428,11 +428,9 @@ Entityset: clients
     installments.SK_ID_PREV -> previous.SK_ID_PREV
     credit.SK_ID_PREV -> previous.SK_ID_PREV
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>3. Feature Primitives<b></summary>
-<p>
+<details><summary><b>3. Feature Primitives</b></summary><p>
 ~~~python
 # List the primitives in a dataframe
 primitives = ft.list_primitives()
@@ -441,11 +439,9 @@ primitives[primitives['type'] == 'aggregation'].head(10)
 primitives[primitives['type'] == 'transform'].head(10)
 
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>4. Deep Feature Synthesis<b></summary>
-<p>
+<details><summary><b>4. Deep Feature Synthesis</b></summary><p>
 ~~~python
 ### Know the features names before performing them ##
 # Default primitives from featuretools
@@ -475,12 +471,10 @@ feature_matrix.head(10)
 features, feature_names = ft.dfs(entityset=es, target_entity='clients', 
                                  max_depth = 2)
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>4.1 DFS<b> using <b>chunk_size<b></summary>
-<p>
-[<b>Know More<b>](https://docs.featuretools.com/guides/performance.html#adjust-chunk-size) 
+<details><summary><b>4.1 DFS</b> using <b>chunk_size</b></summary><p>
+<p><a href="https://docs.featuretools.com/guides/performance.html#adjust-chunk-size"><b>Know More</b></a> </p>
 ~~~python
 time_features, time_feature_names = ft.dfs(entityset = es, target_entity = 'app_train', 
                                            trans_primitives = ['cum_sum', 'time_since_previous'], max_depth = 2,
@@ -492,9 +486,8 @@ time_features, time_feature_names = ft.dfs(entityset = es, target_entity = 'app_
 </p>
 </details>
 
-<details><summary><b>4.2<b> Using <b>Interesting Values<b></summary>
-<p>
-[<b>Know More<b>](https://docs.featuretools.com/guides/tuning_dfs.html#add-interesting-values-to-variables) 
+<details><summary><b>4.2</b> Using <b>Interesting Values</b></summary><p>
+<p><a href="https://docs.featuretools.com/guides/tuning_dfs.html#add-interesting-values-to-variables"><b>Know More</b></a> </p>
 ~~~python
 time_features, time_feature_names = ft.dfs(entityset = es, target_entity = 'app_train', 
                                            trans_primitives = ['cum_sum', 'time_since_previous'], max_depth = 2,
@@ -507,9 +500,9 @@ time_features, time_feature_names = ft.dfs(entityset = es, target_entity = 'app_
 </details>
 
 
-<details><summary><b>4.3<b> Using <b>Seed Features<b></summary>
+<details><summary><b>4.3</b> Using <b>Seed Features</b></summary>
 <p>
-[<b>Know More<b>](https://docs.featuretools.com/guides/tuning_dfs.html#using-seed-features) 
+<p><a href="https://docs.featuretools.com/guides/tuning_dfs.html#using-seed-features"><b>Know More</b></a> </p>
 ~~~python
 # Late Payment seed feature
 late_payment = ft.Feature(es['installments']['installments_due_date']) < ft.Feature(es['installments']['installments_paid_date'])
@@ -546,9 +539,9 @@ seed_features, seed_feature_names = ft.dfs(entityset = es,
 </p>
 </details>
 
-<details><summary><b>4.4<b> Using <b>Custom Feature Primitive<b></summary>
+<details><summary><b>4.4</b> Using </b>Custom Feature Primitive</b></summary>
 <p>
-[<b>Know More<b>](https://docs.featuretools.com/automated_feature_engineering/primitives.html#defining-custom-primitives) 
+<p><a href="https://docs.featuretools.com/automated_feature_engineering/primitives.html#defining-custom-primitives"><b>Know More</b></a> </p>
 ~~~python
 from featuretools.variable_types import (
     Boolean, Datetime,
@@ -668,9 +661,8 @@ custom_features.iloc[:, -40:].head()
 </p>
 </details>
 
-<details><summary><b>5. Remove Low Inforamtion Features<b></summary>
-<p>
-[<b>Know More<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/4_Tuning%20Automated%20Feature%20Engineering%20(Explo%2099027d.html#Remove-Features) 
+<details><summary><b>5. Remove Low Inforamtion Features</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/4_Tuning%20Automated%20Feature%20Engineering%20(Explo%2099027d.html#Remove-Features"><b>Know More</b></a></p>
 ~~~python
 from featuretools import selection
 

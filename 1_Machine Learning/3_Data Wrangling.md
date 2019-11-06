@@ -30,7 +30,7 @@ df.add_suffix('_Y')
 </p>
 </details>
 
-<details><summary> <b>Add Prefix or Suffix to all columns name</b> </summary>
+<details><summary> <b>Create Rare Category</b> </summary>
 <p>
 ~~~python
 # See the value counts for each category
