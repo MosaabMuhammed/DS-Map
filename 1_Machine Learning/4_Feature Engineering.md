@@ -39,13 +39,18 @@ $$Width = \frac{max - min}{N}$$
 Divides the range based on quantiles.
 </p></blockquote>
 </p></details>
-- K-means
+<details><summary><b>K-means</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-08-Discretisation/08.03-Discretisation-with-kmeans.html#Discretisation-with-k-means-clustering"><b>Sklearn</b></a> </p>
+
+<blockquote><p>
+This method consists in applying k-means clustering to the continuous variable.
+</p></blockquote>
+</p></details>
 </p></details>
 
 <details><summary><b>Supervised</b></summary><p>
 - Decision Trees
 </p></details>
-
 </p></details>
 
 <details><summary><b>Polynomial Features</b></summary>
