@@ -32,7 +32,13 @@ Equal width discretisation divides the scope of possible values into N bins of t
 $$Width = \frac{max - min}{N}$$
 </p></blockquote>
 </p></details>
-- Equal-Frequency
+<details><summary><b>Equal-Frequency</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-08-Discretisation/08.02-Equal-frequency-discretisation.html#Equal-frequency-discretisation"><b>Pandas & Sklearn & Feature-Engine</b></a> </p>
+
+<blockquote><p>
+Divides the range based on quantiles.
+</p></blockquote>
+</p></details>
 - K-means
 </p></details>
 
