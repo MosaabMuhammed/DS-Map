@@ -46,15 +46,13 @@ Divides the range based on quantiles.
 This method consists in applying k-means clustering to the continuous variable.
 </p></blockquote>
 </p></details>
+<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-08-Discretisation/08.04-Discretisation-plus-Encoding.html#Discretisation-plus-Encoding"><b>Applying Cat Encoders on Discretised Features</b></a>
 </p></details>
 
 <details><summary><b>Supervised</b></summary><p>
 - Decision Trees
 </p></details>
-</p></details>
-
-<details><summary><b>Polynomial Features</b></summary>
-<p>
+</p></details><details><summary><b>Polynomial Features</b></summary><p>
 
 <details><summary><b>Core Code</b></summary>
 <p>
@@ -174,10 +172,7 @@ Training data with polynomial features shape:  (307511, 275)
 Testing data with polynomial features shape:   (48744, 275)
 ~~~
 </p></details>
-</p></details>
-
-
-<details><summary><b>Numeric Aggregation</b> [count, min, max, mean, sum]</summary><p>
+</p></details><details><summary><b>Numeric Aggregation</b> [count, min, max, mean, sum]</summary><p>
 ~~~python
 def agg_numeric(df, group_var, df_name):
     """Aggregates the numeric values in a dataframe. This can
@@ -237,9 +232,7 @@ def agg_numeric(df, group_var, df_name):
 bureau_agg_new = agg_numeric(bureau.drop(columns = ['SK_ID_BUREAU']), group_var = 'SK_ID_CURR', df_name = 'bureau')
 bureau_agg_new.head()
 ~~~
-</p></details>
-
-<details><summary><b>Categorical Aggregation</b> [_count_, _norm_count_]</summary><p>
+</p></details><details><summary><b>Categorical Aggregation</b> [_count_, _norm_count_]</summary><p>
 ~~~python
 def count_categorical(df, group_var, df_name):
     """Computes counts and normalized counts for each observation
@@ -295,9 +288,7 @@ bureau_counts = count_categorical(bureau, group_var = 'SK_ID_CURR', df_name = 'b
 bureau_counts.head()
 ~~~
 </p>
-</details>
-
-<details><summary><b>Aggregation</b> b/w 2 datasets having 2 <b>Different IDs</b></summary><p>
+</details><details><summary><b>Aggregation</b> b/w 2 datasets having 2 <b>Different IDs</b></summary><p>
 ~~~python
 def aggregate_client(df, group_vars, df_names):
     """Aggregate a dataframe with data at the loan level 
@@ -366,9 +357,7 @@ def aggregate_client(df, group_vars, df_names):
 <h4>## Calling the Function <h4><h4>#
 cash_by_client = aggregate_client(cash, group_vars = ['SK_ID_PREV', 'SK_ID_CURR'], df_names = ['cash', 'client'])
 ~~~
-</p></details>
-
-<details><summary><b>Automated</b> Feature Engineering <b>(Featuretools)</b></summary>
+</p></details><details><summary><b>Automated</b> Feature Engineering <b>(Featuretools)</b></summary>
 <p>
 
 <details><summary>Convert limited <b>discrete nums</b> into <b>Booleans</b> using <b>FeatureTools</b></summary><p>
