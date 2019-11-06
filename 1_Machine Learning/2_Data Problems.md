@@ -568,21 +568,30 @@ from category_encoders.one_hot import OneHotEncoder
 
 <details><summary style='font-size:23px;text-decoration:underline'><b>3. Outliers</b></summary>
 <p>
-
+<p><img src="imgs/20191106-124543.png" alt="" /></p>
 <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html"><b>1. Local Outlier Factor</b></a></p>
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.6-Outliers.html#Outliers" style='font-weight:bold'>2. Detecting Outliers for [Normal, Skewed, Extremely Skewed]</a></p>
 
+<details><summary><b>Trimming</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-09-Outlier-Engineering/09.01-Outlier-Trimming.html#Outlier-Engineering" style='font-weight:bold'>Trimming Outliers</a></p>
+</p></details>
 
-<details><summary><b>Winsorization</b></summary>
-<p>
+<details><summary><b>Clipping</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-09-Outlier-Engineering/09.02-Capping-IQR-proximity-rule.html#Outlier-Engineering" style='font-weight:bold'>Capping IQR Proximity Rule</a></p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.6-Outliers.html#Outliers" style='font-weight:bold'>Capping Gaussian Approximiation</a></p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-09-Outlier-Engineering/09.04-Capping-Quantiles.html#Outlier-Engineering" style='font-weight:bold'>Capping Quantiles</a></p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-09-Outlier-Engineering/09.05-Capping-Arbitrary.html#Outlier-Engineering" style='font-weight:bold'>Capping Aribrary</a></p>
+</p></details>
+
+ 
+<details><summary><b>Winsorization</b></summary><p>
 ~~~python
 UPPERBOUND, LOWERBOUND = np.percentile(x, [1, 99])
 y = np.clip(x, UPPERBOUND, LOWERBOUND)
 pd.Series(y).hist(bins=30);
 ~~~
-</p>
-</details>
+</p></details>
 
 </p>
 </details>
