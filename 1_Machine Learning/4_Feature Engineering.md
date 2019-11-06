@@ -50,8 +50,24 @@ This method consists in applying k-means clustering to the continuous variable.
 </p></details>
 
 <details><summary><b>Supervised</b></summary><p>
-- Decision Trees
+
+<details><summary><b>Decision Tree</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-08-Discretisation/08.05-Discretisation-using-Decision-Trees.html#Discretisation-with-Decision-Trees"><b>Sklearn</b></a> </p>
+
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-08-Discretisation/08.06-Discretisation-using-Decision-Trees-and-Feature-Engine.html#Discretisation-with-Decision-Trees-using-Feature-Engine"><b>Feature-Engine</b></a> </p>
+
+<blockquote><p>
+Decision tree creates a discrete output, which values are the predictions at each of its n leaves, and which it's monotonic to the target variable.
+</p></blockquote>
 </p></details>
+
+</p></details>
+
+<details><summary><b>Domain-Knowledge</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-08-Discretisation/08.07-Domain-knowledge-discretisation.html#Domain-knowledge-discretisation"><b>Notebook</b></a> </p>
+
+</p></details>
+
 </p></details><details><summary><b>Polynomial Features</b></summary><p>
 
 <details><summary><b>Core Code</b></summary>
