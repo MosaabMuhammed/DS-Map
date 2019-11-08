@@ -66,6 +66,17 @@ print('Basic libraries have been loaded!')
 </p>
 </details>
 
+<details><summary> <b>Save the last output value</b> in a <b>Variable</b> </summary>
+<p>
+~~~python
+np.random.choice(students, 21) # performing this will output something to the console
+
+# Apply the following to save it to a variable
+sample = _
+~~~
+</p>
+</details>
+
 
 <details><summary> <b>Shapes in python Comments</b> </summary>
 <p>
