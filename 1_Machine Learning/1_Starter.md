@@ -58,6 +58,15 @@ print('Basic libraries have been loaded!')
 </p>
 </details>
 
+<details><summary> <b>Show Plots</b> in the <b>Terminal</b> </summary>
+<p>
+~~~python
+%pylab
+~~~
+</p>
+</details>
+
+
 <details><summary> <b>Shapes in python Comments</b> </summary>
 <p>
 
