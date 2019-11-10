@@ -624,27 +624,14 @@ pd.Series(y).hist(bins=30);
 
  
  <details><summary><b>4. Max Absolute Scaling</b></summary><p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.04-Maximum-Absolute-Scaling.html#Scaling-to-maximum-value---MaxAbsScaling" style='font-weight:bold'>Pandas - Sklearn</a> </p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.04-Maximum-Absolute-Scaling.html#Scaling-to-maximum-value---MaxAbsScaling" style='font-weight:bold'>Sklearn</a> </p>
 </p></details>
  
-<details><summary><b>3. Rank</b></summary>
-<p>
-~~~python
-scipy.stats.rankdata
-~~~
-</p>
-</details>
-
  
-<details><summary><b>1. Logrithmic & Square Root</b></summary>
-<p>
-~~~python
-np.log(1+x)
+  <details><summary><b>5. Robust Scaler</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.05-Robust-Scaling.html#Scaling-to-quantiles-and-median---RobustScaling" style='font-weight:bold'>Sklearn</a> </p>
+</p></details>
 
-np.sqrt(1+x)
-~~~
-</p>
-</details>
 
 
 
