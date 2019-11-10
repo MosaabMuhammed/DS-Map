@@ -623,6 +623,10 @@ pd.Series(y).hist(bins=30);
 </p></details>
 
  
+ <details><summary><b>4. Max Absolute Scaling</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.04-Maximum-Absolute-Scaling.html#Scaling-to-maximum-value---MaxAbsScaling" style='font-weight:bold'>Pandas - Sklearn</a> </p>
+</p></details>
+ 
 <details><summary><b>3. Rank</b></summary>
 <p>
 ~~~python
