@@ -608,11 +608,8 @@ pd.Series(y).hist(bins=30);
 <p><img src="imgs/20191030-134414.png" alt="" /></p>
 </p></details><br>
  
-<details><summary><b>1. Normalization</b></summary>
-<p>
-~~~python
-sklearn.preprocessing.MinMaxScaler
-~~~
+<details><summary><b>1. Normalization</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.03-MinMaxScaling.html#Scaling-to-Minimum-and-Maximum-values---MinMaxScaling" style='font-weight:bold'>Pandas - Sklearn</a> </p>
 </p>
 </details>
 
