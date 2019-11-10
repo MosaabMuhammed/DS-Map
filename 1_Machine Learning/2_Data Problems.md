@@ -1081,6 +1081,13 @@ correlations.head(10)
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-07-Variable-Transformation/07.03-Gaussian-transformation-feature-engine.html#Gaussian-Transformation-with-Feature-Engine"><b>Gaussian Transformation [Feature-Engine]</b></a> </p>
 </p></details>
+<hr>
+<details><summary style='font-size:23px;text-decoration:underline'><b>8. Mixed Variables</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-11-Mixed-Variables/11.01-Engineering-mixed-variables.html#Engineering-mixed-variables"><b>The observations of the variable contain either numbers or strings</b></a> </p>
+
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-11-Mixed-Variables/11.01-Engineering-mixed-variables.html#Example-1:-the-observations-of-the-variable-contain-numbers-and-strings"><b>The observations of the variable contain numbers and strings</b></a> </p>
+
+</p></details>
 </div>
 
 
