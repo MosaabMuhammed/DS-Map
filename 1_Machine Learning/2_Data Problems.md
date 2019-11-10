@@ -621,6 +621,10 @@ sklearn.preprocessing.MinMaxScaler
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.01-Standardisation.html#Feature-Scaling" style='font-weight:bold'>Check this</a> </p>
 </p></details>
 
+<details><summary><b>3. Mean Normalization</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.02-Mean-normalisation.html#Mean-Normalisation" style='font-weight:bold'>Pandas - Sklearn</a> </p>
+</p></details>
+
  
 <details><summary><b>3. Rank</b></summary>
 <p>
