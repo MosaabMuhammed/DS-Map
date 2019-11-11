@@ -1,22 +1,31 @@
-# ==7. Feature Reduction==
+# 7. Feature Reduction
 
 <details><summary style='font-size:23px;text-decoration:underline'><b>Dimensionality Reduction:</b></summary>
 <p>
 
- - [<b>Linear Methods for Dimensionality Reduction<b>](https://scikit-learn.org/stable/modules/decomposition.html)
- - [<b>Non-Linear Methods for Dimensionality Reduction<b>](https://scikit-learn.org/stable/auto_examples/manifold/plot_compare_methods.html) 
- <br>
- -  [PCA vs. t-SNE](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/8_Dimensionality%20Reduction/mnist_loadData_pca_tsne.html)
- 
- <details><summary><b>PCA<b> & <b>ICA<b> & <b>t-SNE<b> & <b>UMAP<b></summary>
-<p>
-[<b>Notebook<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html)
-> - <b>PCA:<b> Principal Components Analysis. Finds the dimensions of greatest variation in the data
-- <b>ICA:<b> Independent Components Analysis. Attempts to separate a mutltivariate signal into independent signals.
-- <b>TSNE:<b> T-distributed Stochastic Neighbor Embedding. Maps high-dimensional data to a low-dimensional manifold attempting to maintain the local structure within the data. It is a non-linear technique and generally only used for visualization.
-- <b>UMAP:<b> Uniform Manifold Approximation and Projection: A relatively new technique that also maps data to a low-dimensional manifold but tries to preserve more global structure than TSNE.
+<ul>
+<li><a href="https://scikit-learn.org/stable/modules/decomposition.html"><b>Linear Methods for Dimensionality Reduction</b></a></li>
 
-<h4> 1. Importing Libraries
+<li><a href="https://scikit-learn.org/stable/auto_examples/manifold/plot_compare_methods.html"><b>Non-Linear Methods for Dimensionality Reduction</b></a> 
+<br></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/8_Dimensionality%20Reduction/mnist_loadData_pca_tsne.html">PCA vs. t-SNE</a></li>
+</ul>
+ 
+ <details><summary><b>PCA</b> & <b>ICA</b> & <b>t-SNE</b> & <b>UMAP</b></summary>
+<p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a></p>
+<ul>
+<li><b>PCA:</b> Principal Components Analysis. Finds the dimensions of greatest variation in the data</li>
+
+<li><b>ICA:</b> Independent Components Analysis. Attempts to separate a mutltivariate signal into independent signals.</li>
+
+<li><b>TSNE:</b> T-distributed Stochastic Neighbor Embedding. Maps high-dimensional data to a low-dimensional manifold attempting to maintain the local structure within the data. It is a non-linear technique and generally only used for visualization.</li>
+
+<li><b>UMAP:</b> Uniform Manifold Approximation and Projection: A relatively new technique that also maps data to a low-dimensional manifold but tries to preserve more global structure than TSNE.</li>
+</ul>
+
+<h4>1. Importing Libraries</h4>
 ~~~python
 from umap import UMAP
 from sklearn.decomposition import PCA, FastICA
@@ -30,7 +39,7 @@ ica = FastICA(n_components=n_components)
 tsne = TSNE(n_components=n_components)
 ~~~
 
-<h4> 2. Fitting and Transforming
+<h4> 2. Fitting and Transforming</h4>
 ~~~python
 train_df = train_selected.copy()
 test_df = test_selected.copy()
@@ -64,7 +73,7 @@ for method, name in zip([umap, pca, ica, tsne],
     print(f'Method: {name} {round(end - start, 2)} seconds elapsed.')
 ~~~
 
-<h4> 3. Plot it 3D
+<h4> 3. Plot it 3D</h4>
 ~~~python
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -99,12 +108,12 @@ for method, name in zip([umap, pca, ica, tsne],
 </p>
 </details>
  
-<details><summary><b>PCA<b></summary>
+<details><summary><b>PCA</b></summary>
 <p>
 
- [<b>Docs<b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.decomposition.PCA.html#sklearn-decomposition-pca) 
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.decomposition.PCA.html#sklearn-decomposition-pca"><b>Docs</b></a> </p>
  
-<h4> PCA inside a pipeline
+<h4> PCA inside a pipeline</h4>
 ~~~python
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import Imputer
@@ -125,7 +134,7 @@ train_pca = pipeline.fit_transform(train)
 test_pca = pipeline.transform(test)
 ~~~
 
-<h4> CDF for # of principle componets
+<h4> CDF for # of principle componets</h4>
 ~~~python
 # Extract the pca object
 pca = pipeline.named_steps['pca']
@@ -138,7 +147,7 @@ plt.xlabel('Number of PC'); plt.ylabel('Cumulative Variance Explained');
 plt.title('Cumulative Variance Explained with PCA');
 ~~~
 
-<h4> Visualizing the 2 components
+<h4> Visualizing the 2 components</h4>
 ~~~python
 # Dataframe of pca results
 pca_df = pd.DataFrame({'pc_1': train_pca[:, 0], 'pc_2': train_pca[:, 1], 'target': train_labels})
@@ -148,7 +157,7 @@ sns.lmplot('pc_1', 'pc_2', data = pca_df, hue = 'target', fit_reg=False, size = 
 plt.title('PC2 vs PC1 by Target');
 ~~~
 
-<h4> How much those components preserve from the data
+<h4> How much those components preserve from the data</h4>
 ~~~python
 print('2 principal components account for {:.4f}% of the variance.'.format(100 * np.sum(pca.explained_variance_ratio_[:2])))
 ~~~
@@ -156,13 +165,13 @@ print('2 principal components account for {:.4f}% of the variance.'.format(100 *
  </p>
  </details>
  
-<details><summary><b>Random Projection<b></summary>
+<details><summary><b>Random Projection</b></summary>
 <p>
-[<b>SparseRandomProjection<b>](https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection) 
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection"><b>SparseRandomProjection</b></a> </p>
+
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection"><b>Gaussian Random Projection</b></a> </p>
  
-[<b>Gaussian Random Projection<b>](https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection) 
- 
-<h4> Sparse Random Projection.
+<h4> Sparse Random Projection.</h4>
 ~~~python
 import numpy as np
 from sklearn.random_projection import SparseRandomProjection
@@ -176,7 +185,7 @@ X_new.shape
 np.mean(transformer.components_ != 0) 
 ~~~
 
-<h4> Gaussian Random Projection.
+<h4> Gaussian Random Projection.</h4>
 ~~~python
 import numpy as np
 from sklearn.random_projection import GaussianRandomProjection
@@ -199,12 +208,21 @@ X_new.shape
 </details>
 
 
-<details><summary style='font-size:23px;text-decoration:underline'><b>Feature Selection:</b></summary>
-<p>
+<details><summary style='font-size:23px;text-decoration:underline'><b>Feature Selection:</b></summary><p>
 
-<details><summary>1. Remove <b>Highly Correlated<b> Features</summary>
+<details><summary><b>Filter Methods</b></summary><p>
+</p></details>
+
+<details><summary><b>Wrapper Methods</b></summary><p>
+</p></details>
+
+<details><summary><b>Embedded Methods</b></summary><p>
+</p></details>
+
+<hr>
+<details><summary>1. Remove <b>Highly Correlated</b> Features</summary>
 <p>
-<h4> Identify Highly Correlated Features
+<h4> Identify Highly Correlated Features</h4>
 ~~~python
 # Threshold for removing correlated variables
 threshold = 0.9
@@ -213,7 +231,7 @@ threshold = 0.9
 corr_matrix = train.corr().abs()
 corr_matrix.head()
 ~~~
-<h4> Drop the columns
+<h4> Drop the columns</h4>
 ~~~python
 # Create correlation matrix
 corr_matrix = df.corr().abs()
@@ -234,11 +252,9 @@ df.drop(df[to_drop], axis=1)
 </details>
 
 
-<details><summary><b>Recursive Feature Elimination CV<b></summary>
+<details><summary><b>Recursive Feature Elimination CV</b></summary>
 <p>
-
-[<span style='color:#333'><b> 2. Recursive Feature Elimination method<b></span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.feature_selection.RFECV.html#sklearn-feature-selection-rfecv)
-
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.feature_selection.RFECV.html#sklearn-feature-selection-rfecv"><span style='color:#333'><b> 2. Recursive Feature Elimination method</b></span></a></p>
 
 ~~~python
 from sklearn.feature_selection import RFECV
@@ -277,9 +293,11 @@ test_selected = pd.DataFrame(test_selected, columns = selected_features)
 </p>
 </details>
 
-- [<span style='color:#333'><b>3. Forward Feature  Selection<b></span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Step%20Forward%20Feature%20Selection_%20A%20Practical%20Example%20in%20Python.html) 
+<ul>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Step%20Forward%20Feature%20Selection_%20A%20Practical%20Example%20in%20Python.html"><span style='color:#333'><b>3. Forward Feature  Selection<b></span></a> </p></li>
 
-- [<span style='color:#333'><b>4. Nearest Neighbors for Feature Extraction<b></span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/compute_KNN_features.html#Load-data)
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/compute_KNN_features.html#Load-data"><span style='color:#333'><b>4. Nearest Neighbors for Feature Extraction<b></span></a></p></li>
+</ul>
 
 
 </p>
