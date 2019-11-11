@@ -373,8 +373,13 @@ def aggregate_client(df, group_vars, df_names):
 <h4>## Calling the Function <h4><h4>#
 cash_by_client = aggregate_client(cash, group_vars = ['SK_ID_PREV', 'SK_ID_CURR'], df_names = ['cash', 'client'])
 ~~~
-</p></details><details><summary><b>Automated</b> Feature Engineering <b>(Featuretools)</b></summary>
-<p>
+
+</p></details><details><summary><b>Date Features</b></summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.01_Engineering_dates.html#Engineering-Dates"><b>Date Features</b></a> </p>
+
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.02_Engineering_time.html#Engineering-Time"><b>Time Features</b></a> </p>
+
+</p></details><details><summary><b>Automated</b> Feature Engineering <b>(Featuretools)</b></summary><p>
 
 <details><summary>Convert limited <b>discrete nums</b> into <b>Booleans</b> using <b>FeatureTools</b></summary><p>
 ~~~python
