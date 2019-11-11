@@ -219,6 +219,14 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.2_Information_gain.html#Information-gain---mutual-information"><b>Mutual Information</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
+
 
 </ul></p></details>
 
