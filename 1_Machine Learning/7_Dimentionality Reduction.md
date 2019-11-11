@@ -217,6 +217,9 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.4_Duplicated_features.html#Duplicated-features"><b>Duplicated Features</b></a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
+
+
 </ul></p></details>
 
 <details><summary><b>Wrapper Methods</b></summary><p>
