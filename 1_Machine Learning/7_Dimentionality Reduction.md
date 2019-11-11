@@ -210,11 +210,14 @@ X_new.shape
 
 <details><summary style='font-size:23px;text-decoration:underline'><b>Feature Selection:</b></summary><p>
 
-<details><summary><b>Filter Methods</b></summary><p>
+<details><summary><b>Filter Methods</b></summary><p><ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.2_Constant_features.html#Constant-features"><b>Constant Features</b></a> </li>
 
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.2_Constant_features.html#Constant-features"><b>Constant Features</b></a> </p>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.3_Quasi-constant_features.html#Quasi-constant-features"><b>Quasi-Constant Features</b></a> </li>
 
-</p></details>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.4_Duplicated_features.html#Duplicated-features"><b>Duplicated Features</b></a> </li>
+
+</ul></p></details>
 
 <details><summary><b>Wrapper Methods</b></summary><p>
 </p></details>
