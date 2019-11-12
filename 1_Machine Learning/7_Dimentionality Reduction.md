@@ -266,14 +266,8 @@ X_new.shape
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
 </ul></p></details>
 
-</p></details>
-
-<details><summary><b>Hybrid Methods</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.01_Feature_shuffling.html#Feature-selection-by-random-shuffling"><b>Feature selection by random shuffling</b></a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
+</p></details><details><summary><b>Hybrid Methods</b></summary><p><ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.01_Feature_shuffling.html#Feature-selection-by-random-shuffling"><b>Random Shuffling</b></a> </li><li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.02_Hybrid_Recursive_feature_elimination.html#Hybrid-method:-Recursive-feature-elimination"><b>Recursive Feature Elimination</b></a> </li><li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.03_Hybrid_Recursive_feature_addition.html#Hybrid-method:-Recursive-feature-addition"><b>Recursive Feature Addition</b></a> </li>
 </ul></p></details>
 
 <hr>
