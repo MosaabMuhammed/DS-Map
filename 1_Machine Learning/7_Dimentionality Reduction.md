@@ -230,8 +230,15 @@ X_new.shape
 
 </ul></p></details>
 
-<details><summary><b>Wrapper Methods</b></summary><p>
-</p></details>
+<details><summary><b>Wrapper Methods</b></summary><p><ul>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a> </li>
+
+</ul></p></details>
 
 <details><summary><b>Embedded Methods</b></summary><p>
 </p></details>
