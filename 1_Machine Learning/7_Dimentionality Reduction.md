@@ -1,5 +1,7 @@
 # 7. Feature Reduction
 
+<div style='width:1000px;margin:auto'>
+
 <details><summary style='font-size:23px;text-decoration:underline'><b>Dimensionality Reduction:</b></summary>
 <p>
 
@@ -217,7 +219,12 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.4_Duplicated_features.html#Duplicated-features"><b>Duplicated Features</b></a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.5_Basic_methods_review.html#Filter-Methods---Basics"><b>Basic Methods Pipeline</b></a> </li>
+
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.3_Basic_methods_plus_correlation_pipeline.html#Basic-methods-plus-correlation-pipeline"><b>Basic Methods + Correlation Pipeline</b></a> </li>
+
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.2_Information_gain.html#Information-gain---mutual-information"><b>Mutual Information</b></a> </li>
 
@@ -227,6 +234,9 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.5_Univariate_roc_auc.html#Univariate-roc-auc-or-mse"><b>Univariate ROC-AUC or MSE</b></a> </li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.6_Basic_methods_correlation_univariate_rocauc_review.html#Filter-Methods---Basics---Correlations---Univariate-ROC-AUC"><b>Basic Methods + Correlation + others Pipeline</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.7_Bonus_method_used_in_KDD_competition.html#Bonus:-Method-used-in-KDD-2009-competition"><b>Method used in KDD 2009 competition</b></a> </li>
 
 </ul></p></details>
 
@@ -353,3 +363,5 @@ test_selected = pd.DataFrame(test_selected, columns = selected_features)
 
 </p>
 </details>
+
+</div>
