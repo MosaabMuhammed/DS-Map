@@ -240,8 +240,9 @@ X_new.shape
 
 </ul></p></details>
 
-<details><summary><b>Embedded Methods</b></summary><p><ul>
+<details><summary><b>Embedded Methods</b></summary><p>
 
+<details><summary><b>Linear Models</b></summary><p><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/07.3_Lasso.html#Lasso-regularisation"><b>LASSO Regularization</b></a> </li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.2_Logistic_regression_coefficients.html#Logistic-Regression-Coefficients"><b>Logistic Regression Coefficients</b></a> </li>
@@ -250,8 +251,29 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.4_Linear_Regression_coefficients.html#Linear-Regression-Coefficients"><b>Linear Regression Coefficients</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.5_Feature_selection_with_linear_models_review.html#Feature-selection-with-linear-models,-review"><b>Pipeline</b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.5_Feature_selection_with_linear_models_review.html#Feature-selection-with-linear-models,-review"><b>Linear Model Pipeline</b></a> </li>
+</ul></p></details>
 
+<details><summary><b>Tree-based Models</b></summary><p><ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.2_Random_forest_importance.html#Random-Forest-importance"><b>Random Forest importance</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.4_GradientBoosting_importance.html#Gradient-Boosted-trees-importance"><b>Gradient Boosted trees importance</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.5_Feature_selection_with_decision_trees_review.html#Feature-selection-with-decision-trees,-review"><b>Tree Models - Pipeline/b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
+</ul></p></details>
+
+</p></details>
+
+<details><summary><b>Hybrid Methods</b></summary><p><ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.01_Feature_shuffling.html#Feature-selection-by-random-shuffling"><b>Feature selection by random shuffling</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
 </ul></p></details>
 
 <hr>
