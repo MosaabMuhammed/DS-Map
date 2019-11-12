@@ -244,7 +244,7 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/07.3_Lasso.html#Lasso-regularisation"><b>LASSO Regularization</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.3_Exhaustive_feature_selection.html#Exhaustive-feature-selection"><b>Exhaustive Feature Selection</b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.2_Logistic_regression_coefficients.html#Logistic-Regression-Coefficients"><b>Logistic Regression Coefficients</b></a> </li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.3_Exhaustive_feature_selection.html#Exhaustive-feature-selection"><b>Exhaustive Feature Selection</b></a> </li>
 
