@@ -9,7 +9,8 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/5_Time%20Series/0_html/0_TS_root.html"><font color='#333'><b style='font-size:27px'>Time Series</b></font></a> </li>
 
-<li>Computer Vision</li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/4_Computer%20Vision/0_html/0_CV_Root.html"><font color='#333'><b style='font-size:27px'>Computer Vision</b></font></a> </li>
+
 <li>NLP</li>
 
 
