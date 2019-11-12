@@ -240,8 +240,15 @@ X_new.shape
 
 </ul></p></details>
 
-<details><summary><b>Embedded Methods</b></summary><p>
-</p></details>
+<details><summary><b>Embedded Methods</b></summary><p><ul>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/07.3_Lasso.html#Lasso-regularisation"><b>LASSO Regularization</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.3_Exhaustive_feature_selection.html#Exhaustive-feature-selection"><b>Exhaustive Feature Selection</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.3_Exhaustive_feature_selection.html#Exhaustive-feature-selection"><b>Exhaustive Feature Selection</b></a> </li>
+
+</ul></p></details>
 
 <hr>
 <details><summary>1. Remove <b>Highly Correlated</b> Features</summary>
