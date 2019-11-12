@@ -26,7 +26,7 @@ img = cv2.imread('path/to/image')
 # the channel in cv2 is BGR, so you need to convert it to RGB, using the following code
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 ~~~
-</p></details>
+</p></details> 
 
 
 <details><summary>Convert to <b>Gray</b> colormap</summary><p>
@@ -37,4 +37,11 @@ plt.matshow(gray_img)
 plt.gray()
 ~~~
 </p></details>
+<details><summary><b>Mask Out</b> Image</summary><p></ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_1_Image_Representation/3.%20Blue%20Screen.html#Color-Threshold,-Blue-Screen" style='font-weight:bold'>Blue Channel [RGB]</a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_1_Image_Representation/5_1.%20HSV%20Color%20Space,%20Balloons.html" style='font-weight:bold'>Hue Channel [HSV]</a></li>
+
+</ul></p></details>
+
 </div>
