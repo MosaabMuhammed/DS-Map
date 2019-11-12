@@ -246,7 +246,11 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.2_Logistic_regression_coefficients.html#Logistic-Regression-Coefficients"><b>Logistic Regression Coefficients</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.3_Exhaustive_feature_selection.html#Exhaustive-feature-selection"><b>Exhaustive Feature Selection</b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.3_Regression_coefficients_and_regularisation.html#Regression-Coefficients-are-affected-by-regularisation"><b>Regression Coefficients are affected by regularisation</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.4_Linear_Regression_coefficients.html#Linear-Regression-Coefficients"><b>Linear Regression Coefficients</b></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.5_Feature_selection_with_linear_models_review.html#Feature-selection-with-linear-models,-review"><b>Pipeline</b></a> </li>
 
 </ul></p></details>
 
