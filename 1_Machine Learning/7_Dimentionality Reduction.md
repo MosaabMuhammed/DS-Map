@@ -234,7 +234,7 @@ X_new.shape
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.2_Step_backward.html#Step-backward-feature-selection"><b>Step Backward Feature Selection</b></a> </li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a> </li>
 
