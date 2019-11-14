@@ -102,7 +102,7 @@ plt.gray()
 
 <details><summary><b>Image  Contours</b></summary><p>
 <li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Computer%20Vision%20Nanodegree%20v1.0.0/Part%2001-Module%2001-Lesson%2004_Types%20of%20Features%20%20Image%20Segmentation/06.%20Image%20Contours.html" style='font-weight:bold'>Video tutorial</a></li>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_3_Types_of_Features_Image_Segmentation/1.%20Harris%20Corner%20Detection.html#Harris-Corner-Detection" style='font-weight:bold'>Code</a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_3_Types_of_Features_Image_Segmentation/2.%20Contour%20detection%20and%20features.html#Finding-Contours" style='font-weight:bold'>Code</a></li>
 </p></details>
 
 </div>
