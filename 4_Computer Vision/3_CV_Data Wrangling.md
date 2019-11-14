@@ -79,4 +79,12 @@ plt.gray()
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_2_Convolutional_Filters_Edge_Detection/5.%20Canny%20Edge%20Detection.html#TODO:-Try-to-find-the-edges-of-this-flower" style='font-weight:bold'>Code</a></li>
 </p></details>
 
+<details><summary><b>Hough</b> Space</summary><p>
+<blockquote>
+
+</blockquote>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Computer%20Vision%20Nanodegree%20v1.0.0/Part%2001-Module%2001-Lesson%2003_Convolutional%20Filters%20and%20Edge%20Detection/18.%20Hough%20Transform.html" style='font-weight:bold'>Video tutorial</a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_2_Convolutional_Filters_Edge_Detection/6_1.%20Hough%20lines.html#Hough-Lines" style='font-weight:bold'>Code</a></li>
+</p></details>
+
 </div>
