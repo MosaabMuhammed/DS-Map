@@ -56,5 +56,27 @@ plt.gray()
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_2_Convolutional_Filters_Edge_Detection/2.%20Finding%20Edges%20and%20Custom%20Kernels.html#Creating-a-Filter,-Edge-Detection" style='font-weight:bold'>Code</a></li>
 </p></details>
 
+<details><summary><b>Low-Pass Filters</b> [Gaussian Blur]</summary><p>
+<blockquote>
+- <b>Low-Pass filters</b> used to <b>blur/smooth</b> an image,<br> and block <b>high-frequency</b> parts of an image.
+</blockquote>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Computer%20Vision%20Nanodegree%20v1.0.0/Part%2001-Module%2001-Lesson%2003_Convolutional%20Filters%20and%20Edge%20Detection/08.%20Gradients%20and%20Sobel%20Filters.html" style='font-weight:bold'>Gaussian Blur</a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_2_Convolutional_Filters_Edge_Detection/3.%20Gaussian%20Blur.html#Gaussian-Blur,-Medical-Images" style='font-weight:bold'>Gaussian Blur <b>Code</b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_2_Convolutional_Filters_Edge_Detection/4.%20Fourier%20Transform%20of%20Filters.html#High-and-Low-Pass-Filters" style='font-weight:bold'>High and Low Pass Filters</a></li>
+</p></details>
+
+<details><summary><b>Canny</b> Detector</summary><p>
+<blockquote>
+<ol> 
+<li><b>Filters out noise</b> using a Gaussian blur.</li>
+<li><b>Finds the strength and direction of edges</b> using Sobel filters.</li>
+<li><b>Applies non-maximum suppression</b> to isolate the strongest edges and thin them to one-pixel wide lines.</li>
+<li>Uses <b>hysteresis to isolate the best edges</b></li>
+</ol>
+</blockquote>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Computer%20Vision%20Nanodegree%20v1.0.0/Part%2001-Module%2001-Lesson%2003_Convolutional%20Filters%20and%20Edge%20Detection/15.%20Canny%20Edge%20Detector.html" style='font-weight:bold'>Video tutorial</a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_2_Convolutional_Filters_Edge_Detection/5.%20Canny%20Edge%20Detection.html#TODO:-Try-to-find-the-edges-of-this-flower" style='font-weight:bold'>Code</a></li>
+</p></details>
 
 </div>
