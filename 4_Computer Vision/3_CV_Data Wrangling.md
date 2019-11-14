@@ -43,5 +43,9 @@ plt.gray()
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_1_Image_Representation/5_1.%20HSV%20Color%20Space,%20Balloons.html" style='font-weight:bold'>Hue Channel [HSV]</a></li>
 
 </ul></p></details>
+<details><summary><b>Fourier</b> Transform</summary><p>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Computer%20Vision%20Nanodegree%20v1.0.0/Part%2001-Module%2001-Lesson%2003_Convolutional%20Filters%20and%20Edge%20Detection/02.%20Frequency%20in%20Images.html" style='font-weight:bold'>Understanding the Concept</a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_2_Convolutional_Filters_Edge_Detection/1.%20Fourier%20Transform.html#Fourier-Transforms" style='font-weight:bold'>Code</a></li>
+</p></details>
 
 </div>
