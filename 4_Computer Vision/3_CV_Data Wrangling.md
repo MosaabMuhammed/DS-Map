@@ -125,5 +125,11 @@ BRIEF: trys to create binary feature vectors from a set of key points.
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_4_Feature_Vectors/2.%20ORB.html#Oriented-FAST-and-Rotated-BRIEF-(ORB)" style='font-weight:bold'>Code</a></li>
 </p></details>
 
+<details><summary><b>HOG</b> [<b>H</b>istogram of <b>O</b>riented <b>G</b>radient]</summary><p>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Computer%20Vision%20Nanodegree%20v1.0.0/Part%2001-Module%2001-Lesson%2005_Feature%20Vectors/13.%20HOG.html" style='font-weight:bold'>Video tutorial</a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_4_Feature_Vectors/3_1.%20HOG.html" style='font-weight:bold'>Code</a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/CVND_Exercises-master/1_4_Feature_Vectors/3_2.%20HOG%20Examples.html#Examples" style='font-weight:bold'>Examples</a></li>
+</p></details>
 
 </div>
