@@ -34,6 +34,24 @@ hadoop fs -tail /file.txt
 ~~~
 </p></details>
 
+<details><summary><b>Rename file</b></summary><p>
+~~~
+hadoop fs -mv file.txt newname.txt
+~~~
+</p></details>
+
+<details><summary><b>Delete file</b></summary><p>
+~~~
+hadoop fs -rm file.txt
+~~~
+</p></details>
+
+<details><summary><b>Create Folder</b></summary><p>
+~~~
+hadoop fs -mkdir myfolder
+~~~
+</p></details>
+
 </div>
 
 
