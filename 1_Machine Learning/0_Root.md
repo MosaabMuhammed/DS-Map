@@ -1,9 +1,8 @@
 <h1 style='color:darkcyan;text-decoration:underline'>Data Science Process</h1>
 <div style='width:1000px;margin:auto'>
 <ul>
-    <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Chris%20Albon%20Data%20Science/notes-master/docs/index.html">Chris Albon</a> </p></li>
-
-​	<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/To-Do.html">To-Do List</a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Chris%20Albon%20Data%20Science/notes-master/docs/index.html">Chris Albon</a> </p></li>
+    <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/To-Do.html">To-Do List</a> </p></li>
 </ul>
 
 <h2 id=""><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/1_starter.html"><span style='color:#333333'>1. Starter Code:</span></a></h2>

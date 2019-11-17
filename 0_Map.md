@@ -22,6 +22,7 @@
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/6_R%20Language/0_html/0_R_Root.html"><font color='#333'><b style='font-size:27px'>R Language</b></font></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/7_SQL/0_html/0_SQL_Root.html"><font color='#333'><b style='font-size:27px'>SQL</b></font></a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/8_Hadoop%20&%20MapReduce/0_html/0_Hadoop_Root.html"><font color='#333'><b style='font-size:27px'>Hadoop & MapReduce</b></font></a></li>
 </ul>
 
 </div>
