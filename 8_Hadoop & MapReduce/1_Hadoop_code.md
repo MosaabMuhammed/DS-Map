@@ -2,7 +2,7 @@
 
 
 <div style='width:1000px;margin:auto'>
-
+<p><a href="https://docs.google.com/document/d/1MZ_rNxJhR4HCU1qJ2-w7xlk2MTHVqa9lnl_uj-zRkzk/pub" style="font-weight:bold">Transfer Files back and forth to the VM</a> </p>
 <details><summary><b>To Run Hadoop</b></summary><p>
 ~~~
 ssh localhost
