@@ -132,6 +132,10 @@ if oldKey != None:
 ~~~
 </p></details>
 
+<details><summary><b>Test Mapper() & Reducer</b></summary><p>
+<p><a href="https://www.youtube.com/watch?v=MYo8EZwDRUA">Video</a> </p>
+</p></details>
+
 </div>
 
 
