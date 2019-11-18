@@ -28,6 +28,14 @@ hadoop fs -put file.txt /
 ~~~
 </p></details>
 
+<details><summary><b>Get a file From HDFS</b></summary><p>
+~~~
+# Get file.txt to /
+hadoop fs -get file.txt /
+~~~
+</p></details>
+
+
 <details><summary><b>head & tail</b></summary><p>
 ~~~
 hadoop fs -tail /file.txt
