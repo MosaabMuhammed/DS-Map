@@ -12,7 +12,7 @@ Each **block** is pretty big. The default is **64 megabytes**. Each block is giv
 
 You can see the last **block** has the remaining megabytes and not necessarily 64 megabytes. 
 
-As the file is uploaded to **HDFS**, each block will get stored on one node in the cluster.
+![image-20191118094457634](/home/mosaab/.config/Typora/typora-user-images/image-20191118094457634.png)As the file is uploaded to **HDFS**, each block will get stored on one node in the cluster.
 
 There's a **Damon**, or piece of software, running on each of the machines in the cluster, called the **DataNode**.
 
