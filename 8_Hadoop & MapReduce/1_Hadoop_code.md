@@ -61,8 +61,8 @@ hadoop fs -mkdir myfolder
 </p></details>
 
 <hr>
-<details><summary><b>mapper() [Python]</b></summary><p>
-<h2>Hadoop Streaming allows you to write your code for mapper and reducer in any language. The default is Java</h2>
+<details><summary><b>Mapper() [Python]</b></summary><p>
+<h4>Hadoop Streaming allows you to write your code for mapper and reducer in any language. The default is Java</h4>
 ~~~
 # Your task is to make sure that this mapper code does not fail on corrupt data lines,
 # but instead just ignores them and continues working
@@ -102,6 +102,33 @@ def main():
 	sys.stdin = StringIO.StringIO(test_text)
 	mapper()
 	sys.stdin = sys.__stdin__
+~~~
+</p></details>
+
+<details><summary><b>Reducer() [Python]</b></summary><p>
+<h4>Hadoop Streaming allows you to write your code for mapper and reducer in any language. The default is Java</h4>
+~~~
+import sys
+
+salesTotal = 0
+oldKey      = None
+
+for line in sys.stdin:
+	data = line.strip().split("\t")
+	if len(data) != 2:
+		continue
+		
+	thisKey, thisSale = data
+	if oldKey and oldKey != thisKey:
+		print(oldKey, "\t", salesTotal)
+		oldKey = thisKey
+		salesTotal = 0
+		
+		oldKey = thisKey
+		salesTotal += float(thisSale)
+		
+if oldKey != None:
+	print(oldKey, "\t", salesTotal)
 ~~~
 </p></details>
 
