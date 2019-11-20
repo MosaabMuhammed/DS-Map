@@ -15,6 +15,21 @@ jps
 ~~~
 </p></details>
 
+<details><summary><b>Get Version of Hadoop</b></summary><p>
+~~~
+hadoop version
+
+# OR
+hdfs version
+~~~
+</p></details>
+
+<details><summary><b>Get  Default file path</b></summary><p>
+~~~
+hdfs getconf -confkey fs.defaultFS
+~~~
+</p></details>
+
 <details><summary><b>See files in current directory</b></summary><p>
 ~~~
 hadoop fs -ls / 
