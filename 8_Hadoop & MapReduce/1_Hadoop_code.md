@@ -18,6 +18,9 @@ jps
 <details><summary><b>See files in current directory</b></summary><p>
 ~~~
 hadoop fs -ls / 
+
+# OR
+hdfs dfs -ls /
 ~~~
 </p></details>
 
@@ -135,8 +138,9 @@ if oldKey != None:
 <details><summary><b>Test Mapper() & Reducer</b></summary><p>
 <p><a href="https://www.youtube.com/watch?v=MYo8EZwDRUA">Video</a> </p>
 </p></details>
+
 <hr>
-<h4>Filters</h4>
+<h4>Filtering Patterns</h4>
 <details><summary><b>Top N numbers</b></summary><p>
 ~~~python
 #!/usr/bin/python
@@ -183,7 +187,6 @@ def main():
     sys.stdin = sys.__stdin__
 
 main()
-
 ~~~
 </p></details>
 
