@@ -351,6 +351,10 @@ with(subset(df, age<=70), cor.test(age, friend_count, method='pearson'))
 ~~~
 name <- "mosaab"
 paste('Hello', name)
+
+# Better one
+cat("OLS gave slope of ", summary(d1)$coefficients[2, 1],
+    "and an R-sqr of ", summary(d1)$r.squared,"\n")
 ~~~
 </p></details>
 
