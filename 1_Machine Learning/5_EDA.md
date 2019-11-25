@@ -664,7 +664,8 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 <details><summary><b>Plotly</b></summary>
 <p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks"><b>Plotly &amp; Cufflinks</b></a> </p> 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks"><b>Plotly &amp; Cufflinks</b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/10_Plotly_tutorials/Notebook.html#INTRODUCTION"><b>Plotly Tutorials</b></a> </li> 
 </p>
 </details>
 <hr>
