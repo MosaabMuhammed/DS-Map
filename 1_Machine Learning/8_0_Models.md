@@ -169,6 +169,9 @@ feature_importance_sorted = plot_feature_importance(feature_importance)
 
 <details><summary style='font-size:27px;font-weight:bold'>Auto ML</summary><p><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/auto-sklearn.html#auto-sklearn"><b><span style='color:#333'>Auto-Sklearn</span></b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Titanic_Kaggle.html#Data-Analysis-using-TPOT"><b><span style='color:#333'>TPOT</span></b></a></li>
+
 </ul></p></details>
 
 
