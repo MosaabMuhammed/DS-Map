@@ -167,4 +167,9 @@ feature_importance_sorted = plot_feature_importance(feature_importance)
 
 <p><a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/"><b><span style='font-size:28px;color:#333'>Multi-Label Classification</span></b></a> </p>
 
+<details><summary style='font-size:27px;font-weight:bold'>Auto ML</summary><p><ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/auto-sklearn.html#auto-sklearn"><b><span style='color:#333'>Auto-Sklearn</span></b></a></li>
+</ul></p></details>
+
+
 </div>
