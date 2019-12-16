@@ -82,11 +82,8 @@ def var2str(var):
 
 
 def shape(*args):
-    max_len = 0
     for df in args:
-        max_len = max(len(var2str(df)), max_len)
-    for df in args:
-        print(f'~> [{var2str(df).ljust(max_len)}] has {bg(df.shape[0])} rows, and {bg(df.shape[1])} columns.')
+        print(f'~> {colored(var2str(df), attrs=["blink"]):{15}} has {bg(df.shape[0]):>{10}} rows, and {bg(df.shape[1]):>{10}} columns.')
 
 
 ############### Summary Table #####################
@@ -120,14 +117,11 @@ def summary(df, sort_col=0):
     return summary.style.background_gradient(cmap='summer_r')
 
 
-from tqdm import tqdm_notebook as tqdm
-
-
 def reduce_mem_usage(df):
     start_mem = df.memory_usage().sum() / 1024**3
     print('~> Memory usage of dataframe is {:.3f} GB'.format(start_mem))
 
-    for col in tqdm_notebook(df.columns):
+    for col in df.columns:
         col_type = df[col].dtype
         if col_type != object:
             c_min = df[col].min()
@@ -157,16 +151,30 @@ def reduce_mem_usage(df):
                 else:
                     df[col] = df[col].astype(np.float64)
         # Comment this if you have NaN value in this column.
-        # else:
-            # df[col] = df[col].astype('category')
+        else:
+            df[col] = df[col].astype('category')
 
     end_mem = df.memory_usage().sum() / 1024 ** 3
     print('~> Memory usage after optimization is: {:.3f} GB'.format(end_mem))
     print('~> Decreased by {:.1f}%'.format(100 * (start_mem - end_mem) / start_mem))
     print('---' * 20)
     return df
-              
-print(f'~> The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}')
+
+
+def show_annotation(dist, n=5, size=14, total=None):
+    sizes = [] # Get highest value in y
+    for p in dist.patches:
+        height = p.get_height()
+        sizes.append(height)
+
+        dist.text(p.get_x()+p.get_width()/2.,          # At the center of each bar. (x-axis)
+               height+n,                            # Set the (y-axis)
+               '{:1.2f}%'.format(height*100/total) if total else '{}'.format(height), # Set the text to be written
+               ha='center', fontsize=size) 
+    dist.set_ylim(0, max(sizes) * 1.15); # set y limit based on highest heights
+
+print(f'~> The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}, {bg("show_annotation", "s")}')
+
 
 ~~~
 </p></details>
