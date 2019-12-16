@@ -10,6 +10,10 @@ print(os.listdir("../input"))
 </p>
 </details>
 
+<details><summary> <b>f-Literal</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">Formatted String Literal</a> </p>
+</p></details>
+
 <details><summary> <b>Save & Remove label at the same time</b> </summary>
 <p>
 ~~~python
