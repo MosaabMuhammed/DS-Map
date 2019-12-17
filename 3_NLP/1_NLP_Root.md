@@ -14,7 +14,7 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/01-NLP-Python-Basics/01-Tokenization.html#Tokenization"><b>Tokenization</b></a></li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/01-NLP-Python-Basics/00-Spacy-Basics.html#spaCy-Basics"><b>SpaCy Basics</b></a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/01-NLP-Python-Basics/02-Stemming.html#Stemming"><b>Stemming</b></a></li>
 
 
 </ul></p></details>
