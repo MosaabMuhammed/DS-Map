@@ -8,4 +8,8 @@
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/02-Regular-Expressions.html#Regular-Expressions"><b>Regular Expressions</b></a> </p>
 </p></details>
+
+<details><summary><b style='font-size:23px'>NLP Basics</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/01-NLP-Python-Basics/00-Spacy-Basics.html#spaCy-Basics"><b>SpaCy Basics</b></a> </p>
+</p></details>
 </div>
