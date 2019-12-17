@@ -27,5 +27,7 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/00-POS-Basics.html#Part-of-Speech-Basics"><b>POS Basics</b></a></li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/01-Visualizing-POS.html#Visualizing-Parts-of-Speech"><b>Visulaizing POS</b></a></li>
+
 </ul></p></details>
 </div>
