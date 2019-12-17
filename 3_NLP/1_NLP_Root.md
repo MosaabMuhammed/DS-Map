@@ -24,10 +24,14 @@
 </ul></p></details>
 
 <details><summary><b style='font-size:23px'>Parts of Speech Tagging</b> </summary><p><ul>
-
+ 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/00-POS-Basics.html#Part-of-Speech-Basics"><b>POS Basics</b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/01-Visualizing-POS.html#Visualizing-Parts-of-Speech"><b>Visulaizing POS</b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/02-NER-Named-Entity-Recognition.html#Named-Entity-Recognition-(NER)"><b>Named Entity Recognition (NER)</b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/03-Visualizing-NER.html#Visualizing-Named-Entities"><b>Visualizing Named Entities</b></a></li>
 
 </ul></p></details>
 </div>
