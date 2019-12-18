@@ -51,6 +51,8 @@
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/04-Semantics-and-Sentiment-Analysis/00-Semantics-and-Word-Vectors.html#Semantics-and-Word-Vectors"><b>Semantics & Word Vectors [SpaCy]</b></a></li>
  
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/04-Semantics-and-Sentiment-Analysis/01-Sentiment-Analysis.html#Sentiment-Analysis"><b>Sentiment Analysis [NLTK]</b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/04-Semantics-and-Sentiment-Analysis/02-Sentiment-Analysis-Project.html#Sentiment-Analysis-Project"><b>Sentiment Analysis Project</b></a></li>
  
  </ul></p></details>
  
