@@ -11,7 +11,7 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/4_Computer%20Vision/0_html/0_CV_Root.html"><font color='#333'><b style='font-size:27px'>Computer Vision</b></font></a> </li>
 
-<li>NLP</li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/3_NLP/0_html/1_NLP_Root.html"><font color='#333'><b style='font-size:27px'>NLP</b></font></a> </li>
 
 
 </ul>

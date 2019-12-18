@@ -33,5 +33,7 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/03-Visualizing-NER.html#Visualizing-Named-Entities"><b>Visualizing Named Entities</b></a></li>
 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/04-Sentence-Segmentation.html#Sentence-Segmentation"><b>Sentence Segmentation</b></a></li>
+
 </ul></p></details>
 </div>
