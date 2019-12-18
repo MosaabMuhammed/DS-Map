@@ -36,4 +36,13 @@
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/02-Parts-of-Speech-Tagging/04-Sentence-Segmentation.html#Sentence-Segmentation"><b>Sentence Segmentation</b></a></li>
 
 </ul></p></details>
+
+<details><summary><b style='font-size:23px'>Text Classification</b> </summary><p><ul>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/03-Text-Classification/01-Feature-Extraction-from-Text.html#Building-a-Natural-Language-Processor-From-Scratch"><b>Building a Natural Language Processor From Scratch</b></a></li>
+ 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/03-Text-Classification/02-Text-Classification-Project.html#Text-Classification-Project"><b>Text Classification Project</b></a></li>
+ 
+ </ul></p></details>
+ 
 </div>
