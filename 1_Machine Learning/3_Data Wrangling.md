@@ -10,6 +10,27 @@ print(os.listdir("../input"))
 </p>
 </details>
 
+<details><summary> <b>Select All Columns EXCEPT specific columns</b> </summary>
+<p>
+~~~python
+# Option 1
+df.loc[:, df.columns != 'b']
+
+# Option 2
+df.drop('b', axis=1)
+
+# Option 3
+df[df.columns.difference(['b'])]
+
+# Option 4
+df.loc[:, ~df.columns.isin(['col1', 'col2'])]
+
+# Option 5
+df[map(lambda x :x not in ['b'], list(df.columns))]
+~~~
+</p>
+</details>
+
 <details><summary> <b>f-Literal</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">Formatted String Literal</a> </p>
 </p></details>
