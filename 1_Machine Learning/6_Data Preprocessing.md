@@ -224,10 +224,13 @@ print('The Best parameters (K) =', knn_cv.best_params_['n_neighbors'])
 
 </p></details>
 
-<details><summary> <b>Bayesian Optimization</b> </summary><p>
+<details><summary> <b>Bayesian Optimization</b> </summary><p><ul>
 
-<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">Bayesian Optimization with <b>Sklearn</b></a>
-</p></details>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">For <b>Sklearn Models</b></a></li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/2_Bayesian%20Optimization%20for%20LightGBM.html">For <b> LightGBM</b></a></li>
+
+</ul></p></details>
 
 </div>
 
