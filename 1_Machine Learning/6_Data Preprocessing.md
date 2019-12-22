@@ -222,7 +222,7 @@ print('The Best parameters (K) =', knn_cv.best_params_['n_neighbors'])
 
 <details><summary> <b>Randomized Search</b> </summary><p>
 
-</p></details>
+</p></details> 
 
 <details><summary> <b>Bayesian Optimization</b> </summary><p><ul>
 

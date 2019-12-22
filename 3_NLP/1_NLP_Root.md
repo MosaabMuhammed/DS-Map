@@ -56,4 +56,13 @@
  
  </ul></p></details>
  
+ <details><summary><b style='font-size:23px'>Topic Modeling</b> </summary><p><ul>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/05-Topic-Modeling/00-Latent-Dirichlet-Allocation.html#Latent-Dirichlet-Allocation"><b>Latent Dirichlet Allocation (LDA)</b></a></li>
+ 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/04-Semantics-and-Sentiment-Analysis/01-Sentiment-Analysis.html#Sentiment-Analysis"><b>Sentiment Analysis [NLTK]</b></a></li>
+ 
+ </ul></p></details>
+ 
+ 
 </div>
