@@ -64,5 +64,13 @@
  
  </ul></p></details>
  
+  <details><summary><b style='font-size:23px'>Deep Learning</b> </summary><p><ul>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/06-Deep-Learning/01-Text-Generation-with-Neural-Networks.html#Text-Generation-with-Neural-Networks"><b>Text Generation with Neural Networks</b></a></li>
+ 
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/05-Topic-Modeling/01-Non-Negative-Matrix-Factorization.html#Non-Negative-Matric-Factorization"><b>Non-Negative Matric Factorization (NMF)</b></a></li>
+ 
+ </ul></p></details>
+ 
  
 </div>
