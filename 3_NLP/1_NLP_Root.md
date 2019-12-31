@@ -64,9 +64,15 @@
  
  </ul></p></details>
  
-  <details><summary><b style='font-size:23px'>Deep Learning</b> </summary><p><ul>
+<details><summary><b style='font-size:23px'>Deep Learning</b> </summary><p><ul>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/06-Deep-Learning/01-Text-Generation-with-Neural-Networks.html#Text-Generation-with-Neural-Networks"><b>Text Generation with Neural Networks</b></a></li>
+
+</ul></p></details>
+<hr>
+<details><summary><b style='font-size:23px'>Pipelines</b> </summary><p><ul>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/15_NLP/1_NLP%20(Natural%20Language%20Processing)%20with%20Python.html#NLP-(Natural-Language-Processing)-with-Python"><b>Basic Starter</b></a></li>
 
 </ul></p></details>
  
