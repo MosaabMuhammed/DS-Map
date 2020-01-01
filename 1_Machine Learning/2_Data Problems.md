@@ -1067,8 +1067,7 @@ print('Testing Corrs Removed Shape: ', test_corrs_removed.shape)
 </p>
 </details>
 
- <details><summary><b>2.2 Spearman Correlation</b></summary>
-<p>
+<details><summary><b>2.2 Spearman Correlation</b></summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a> </p>
 
 <h4> 1. Compute Spearman & P-value</h4>
@@ -1116,6 +1115,76 @@ correlations = correlations[correlations['level_0'] != correlations['level_1']]
 correlations.head(10)
 ~~~
 </p></details>
+</p></details>
+
+<details><summary>3. Correlation b/w <b>Nominal</b> features using [<b>Cramer’s V</b>]</summary><p>
+Cramer’s V is a measure of association between two nominal variables, giving a value between 0 and +1 (inclusive). It is based on Pearson's chi-squared statistic and was published by Harald Cramér in 1946.<br>
+
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/Misc/1_Cat%20Features%20Encoding%20Challenge.html"><b>Credits</b></a> </p>
+
+~~~python
+from scipy.stats import chi2_contingency, kruskal, ks_2samp
+
+def coef_vcramer(contingency_df):
+    chi2 = chi2_contingency(contingency_df)[0]
+    n = contingency_df.sum().sum()
+    r, k = contingency_df.shape
+    return np.sqrt(chi2 / (n * min((r-1), (k-1))))
+~~~
+
+~~~python
+def fit_describe_infos(train, test, __featToExcl = [], target_for_vcramer = None):
+    '''Describe data and difference between train and test datasets.'''
+    
+    stats = []
+    __featToAnalyze = [v for v in list(train.columns) if v not in __featToExcl]
+    
+    for col in tqdm_notebook(__featToAnalyze):
+            
+        dtrain = dict(train[col].value_counts())
+        dtest = dict(test[col].value_counts())
+
+        set_train_not_in_test = set(dtest.keys()) - set(dtrain.keys())
+        set_test_not_in_train = set(dtrain.keys()) - set(dtest.keys())
+        
+        dict_train_not_in_test = {key:value for key, value in dtest.items() if key in set_train_not_in_test}
+        dict_test_not_in_train = {key:value for key, value in dtrain.items() if key in set_test_not_in_train}
+            
+        nb_moda_test, nb_var_test = len(dtest), pd.Series(dtest).sum()
+        nb_moda_abs, nb_var_abs = len(dict_train_not_in_test), pd.Series(dict_train_not_in_test).sum()
+        nb_moda_train, nb_var_train = len(dtrain), pd.Series(dtrain).sum()
+        nb_moda_abs_2, nb_var_abs_2 = len(dict_test_not_in_train), pd.Series(dict_test_not_in_train).sum()
+        
+        if not target_for_vcramer is None:
+            vc = coef_vcramer(pd.crosstab(train[target_for_vcramer], train[col].fillna(-1)))       
+        else:
+            vc = 0
+            
+        stats.append((col, round(vc, 3), train[col].nunique()
+            , str(nb_moda_abs) + '   (' + str(round(100 * nb_moda_abs / nb_moda_test, 1))+'%)'
+            , str(nb_moda_abs_2) +'   (' + str(round(100 * nb_moda_abs_2 / nb_moda_train, 1))+'%)'
+            , str(train[col].isnull().sum()) +'   (' + str(round(100 * train[col].isnull().sum() / train.shape[0], 1))+'%)'
+            , str(test[col].isnull().sum()) +'   (' + str(round(100 * test[col].isnull().sum() / test.shape[0], 1))+'%)'
+            , str(round(100 * train[col].value_counts(normalize = True, dropna = False).values[0], 1))
+            , train[col].dtype))
+            
+    df_stats = pd.DataFrame(stats, columns=['Feature', "Target Cramer's V"
+        , 'Unique values (train)', "Unique values in test not in train (and %)"
+        , "Unique values in train not in test (and %)"
+        , 'NaN in train (and %)', 'NaN in test (and %)', '% in the biggest cat. (train)'
+        , 'dtype'])
+    
+    if target_for_vcramer is None:
+        df_stats.drop("Target Cramer's V", axis=1, inplace=True)
+            
+    return df_stats, dict_train_not_in_test, dict_test_not_in_train
+~~~
+
+<h4>3. How to use</h4>
+~~~python
+dfi, _, _ = fit_describe_infos(train, test, __featToExcl=['target'], target_for_vcramer='target')
+dfi
+~~~
 </p></details>
 </p></details>
 
