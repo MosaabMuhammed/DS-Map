@@ -1185,6 +1185,19 @@ def fit_describe_infos(train, test, __featToExcl = [], target_for_vcramer = None
 dfi, _, _ = fit_describe_infos(train, test, __featToExcl=['target'], target_for_vcramer='target')
 dfi
 ~~~
+
+<h4>4. Get Correlation b/w every 2 features</h4>
+~~~python
+print("Biggest Cramer'V in train\n-------------------------")
+lfeat = [v for v in list(train.columns) if v not in ["target"]]
+done=[]
+for v1 in lfeat:
+    done.append(v1)
+    for v2 in [v for v in lfeat if v not in done]:
+        c = coef_vcramer(pd.crosstab(train[v1], train[v2]))
+        if c > 0.08:
+            print("{}, {}, {:.5f}".format(v1, v2, c))
+~~~
 </p></details>
 </p></details>
 
