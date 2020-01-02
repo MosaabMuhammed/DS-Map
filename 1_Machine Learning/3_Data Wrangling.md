@@ -10,6 +10,17 @@ print(os.listdir("../input"))
 </p>
 </details>
 
+<details><summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary>
+<p>
+~~~python
+from tqdm import tqdm
+tqdm.pandas()
+
+temp = tweet.text.progress_apply(len)
+~~~
+</p>
+</details>
+
 <details><summary> <b>Select All Columns EXCEPT specific columns</b> </summary>
 <p>
 ~~~python
