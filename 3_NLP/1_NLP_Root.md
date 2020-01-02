@@ -1,6 +1,8 @@
 # Natural Language Processing
 
 <div style='width:1000px;margin:auto'>
+<details><summary><b style='font-size:23px'>NLP Topics</b> </summary><p><ul>
+
 <details><summary><b style='font-size:23px'>Python Text Handling</b> </summary><p><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Working-with-Text-Files"><b>Working with Text Files</b></a> </li> 
 
@@ -68,6 +70,7 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/06-Deep-Learning/01-Text-Generation-with-Neural-Networks.html#Text-Generation-with-Neural-Networks"><b>Text Generation with Neural Networks</b></a></li>
 
+</ul></p></details>
 </ul></p></details>
 <hr>
 
@@ -208,23 +211,103 @@ def stem_text(text):
     stemmer = SnowballStemmer('english')
     tokens = tokenizer.tokenize(text)
     tokens = [token.strip() for token in tokens]
-    tokens = [stemmer.stem(token) for token in tokens]
+    tokens = [stemmer.stem(token.lower()) for token in tokens]
     return ' '.join(tokens)
 ~~~
 </p></details>
 
 <details><summary><b style='font-size:20px'>10. Lemmatization</b></summary><p>
 ~~~
+import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize.toktok import ToktokTokenizer
+nltk.download('wordnet')
+
+
 def lemma_text(text):
-    tokenizer = ToktokTokenizer()
-    tokens = tokenizer.tokenize(text)
-    tokens = [token.strip() for token in tokens]
-    tokens = [wordnet_lemmatizer.lemmatize(token) for token in tokens]
+    lemmatizer = WordNetLemmatizer()
+    tokenizer  = ToktokTokenizer()
+    tokens     = tokenizer.tokenize(text)
+    tokens     = [token.strip() for token in tokens]
+    tokens     = [lemmatizer.lemmatize(token.lower()) for token in tokens]
     return ' '.join(tokens)
 ~~~
 </p></details>
+
+<details><summary><b style='font-size:20px'>12. Remove Stopwords</b></summary><p>
+```
+import nltk
+from nltk.corpus import stopwords
+nltk.download('stopwords')
+
+stop = stopwords.words('english')
+
+def remove_stopwords(text):
+    return ' '.join([word.lower() for word in text.split() if word not in stop])
+    
+#### Usage 
+tweet['text'] = tweet.text.progress_apply(remove_stopwords)
+```
+</p></details>
+</ul></p></details>
+
+<details><summary><b style='font-size:23px'>Feature Engineering</b> </summary><p><ul>
+
+<details><summary><b style='font-size:20px'>1. Text Length</b></summary><p>
+```
+from tqdm import tqdm
+tqdm.pandas()
+
+df['total_length'] = df['text'].progress_apply(len)
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>2. Words Length</b></summary><p>
+```
+# Count the number of words.
+from tqdm import tqdm
+tqdm.pandas()
+
+df['num_words'] = df.text.str.count('\S+')
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>3. Capitals Length</b></summary><p>
+```
+# Count the number of capital characters.
+from tqdm import tqdm
+tqdm.pandas()
+
+df['capitals'] = df['text'].progress_apply(lambda comment: sum(1 for c in comment if c.isupper()))
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>4. Unique Words Length</b></summary><p>
+```
+# Count the number of unique words.
+from tqdm import tqdm
+tqdm.pandas()
+
+df['num_unique_words'] = df['text'].progress_apply(lambda comment: len(set(w for w in comment.split())))
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>5. Unique vs. Words</b></summary><p>
+```
+df['words_vs_unique'] = df['num_unique_words'] / df['num_words']
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>6. Caps vs. Length</b></summary><p>
+```
+# Count the number of unique words.
+from tqdm import tqdm
+tqdm.pandas()
+
+df['caps_vs_length'] = df.progress_apply(lambda row: float(row['capitals'])/float(row['total_length']), axis=1)
+```
+</p></details>
+
 </ul></p></details>
 
 <details><summary><b style='font-size:23px'>Sequence Creation</b> </summary><p><ul>
