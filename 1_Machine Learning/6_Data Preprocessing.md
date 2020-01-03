@@ -170,11 +170,47 @@ test_st   = pipeline.transform(test_set)
 </p>
 </details>
 
-<details><summary> <b>K-Fold CV</b> </summary>
-<p>
+<details><summary> <b>K-Fold CV</b> </summary><p>
+```
+# Using Custom Stratified K-folds
+def Stratified_kfolds(alg, X, y):
+    score_valid = 0
+    skf = StratifiedKFold(n_splits=2, shuffle=True, random_state=33)
+    
+    for train_idx, valid_idx in skf.split(X, y):
+        X_train, X_valid = X.iloc[train_idx], X.iloc[valid_idx]
+        y_train, y_valid = y.iloc[train_idx], y.iloc[valid_idx]
 
-</p>
-</details>
+        # One-Hot Encoding
+        ohe_enc_keyword  = CountVectorizer()
+#         ohe_enc_location = CountVectorizer()
+        ohe_enc_text     = CountVectorizer(max_df=.9, min_df=3)
+
+        # Transform Train data
+        keyword_train    = ohe_enc_keyword.fit_transform(X_train['keyword'])
+#         location_train   = ohe_enc_location.fit_transform(X_train['location'])
+        text_train       = ohe_enc_text.fit_transform(X_train['text'])
+
+        # Transform Validation data.
+        keyword_valid    = ohe_enc_keyword.transform(X_valid['keyword'])
+#         location_valid   = ohe_enc_location.transform(X_valid['location'])
+        text_valid       = ohe_enc_text.transform(X_valid['text'])
+
+        ## Merge Training data.
+        X_train = hstack((keyword_train, text_train)).tocsr()
+
+        ## Merge Validation data
+        X_valid = hstack((keyword_valid, text_valid)).tocsr()
+
+        # ML Models.
+        alg.fit(X_train.todense(), y_train)
+        y_pred_valid = alg.predict(X_valid.todense())
+        score_valid  += f1_score(y_valid, y_pred_valid)
+        
+    return score_valid/skf.n_splits
+```
+
+</p></details>
 
 <details><summary> <b>Cross_val_score</b> </summary>
 <p>
@@ -224,7 +260,211 @@ print('The Best parameters (K) =', knn_cv.best_params_['n_neighbors'])
 
 </p></details> 
 
-<details><summary> <b>Bayesian Optimization</b> </summary><p><ul>
+<hr>
+
+<details><summary><b style='font-size:20px'>Bayesian Optimization</b> </summary><p><ul>
+
+<details><summary> <b>LinearSVC</b> </summary><p>
+```
+def svc_cv(C, data, targets):
+    alg   = LinearSVC(C=C, random_state=33, penalty='l2')
+    score = Stratified_kfolds(alg, data, targets)
+    return score
+
+def optimize_svc(data, targets):
+    def svc_crossval(expC):
+        C = 10 ** expC
+        return svc_cv(C=C, data=data, targets=targets)
+    
+    optimizer = BayesianOptimization(
+        f=svc_crossval,
+        pbounds={'expC': (-6, 5)},
+        random_state=33,
+        verbose=2,
+
+    )
+    optimizer.maximize(n_iter=30, init_points=5)
+    
+    print(f"~> Final Result: {optimizer.max}")
+    
+# Optimize
+optimize_svc(X, y)
+```
+</p></details>
+
+<details><summary> <b>RidgeClassifier</b> </summary><p>
+```
+# Define Ridge CV
+def ridge_cv(alpha, data, targets):
+    alg = RidgeClassifier(alpha=alpha, random_state=33)
+    score = Stratified_kfolds(alg, data, targets)
+    return score
+    
+# Optimization Strategy
+def optimize_ridge(data, targets):
+    def ridge_crossval(expAlpha):
+        alpha = 10 ** expAlpha
+        return ridge_cv(alpha=alpha, data=data, targets=targets)
+    
+    optimizer = BayesianOptimization(
+        f=ridge_crossval,
+        pbounds={'expAlpha': (-7, 5)},
+        random_state=33,
+        verbose=2
+    )
+    optimizer.maximize(n_iter=20, init_points=5)
+    
+    print(f"~> Best parameters: {optimizer.max}")
+    
+# Run the optimization
+optimize_ridge(X, y)
+```
+</p></details>
+
+<details><summary> <b>Multi-nomial Naive Bayes</b> </summary><p>
+```
+# CV Strategy
+def nb_cv(alpha, data, targets):
+    alg = MultinomialNB(alpha=alpha)
+    return Stratified_kfolds(alg, data, targets)
+    
+def nb_crossval(expAlpha):
+    alpha = 10**expAlpha
+    return nb_cv(alpha=alpha, data=X, targets=y)
+
+optimizer = BayesianOptimization(
+    f=nb_crossval,
+    pbounds={'expAlpha': (-6, 5)},
+    random_state=33,
+    verbose=2
+)
+
+# Optimize
+optimizer.maximize(
+    n_iter=30,
+    init_points=5
+)
+
+print(f"~> Best Result: {optimizer.max}")
+```
+</p></details>
+
+<details><summary> <b>Gaussian Naive Bayes</b> </summary><p>
+```
+# CV Strategy
+def nb2_cv(alpha, data, targets):
+    alg = GaussianNB(var_smoothing=alpha)
+    return Stratified_kfolds(alg, data, targets)
+
+def nb2_crossval(expAlpha):
+    alpha = 10**expAlpha
+    return nb2_cv(alpha=alpha, data=X, targets=y)
+
+optimizer = BayesianOptimization(
+    f=nb2_crossval,
+    pbounds={'expAlpha': (-9, 5)},
+    random_state=33,
+    verbose=2
+)
+# Optimize
+optimizer.maximize(
+    n_iter=30,
+    init_points=5
+)
+
+print(f"~> Best Result: {optimizer.max}")
+```
+</p></details>
+
+<details><summary> <b>XGBoostClassifier</b> </summary><p>
+```
+# Importing
+from sklearn.model_selection import cross_val_score
+from bayes_opt import BayesianOptimization
+
+def xgboost_cv(max_depth,
+               learning_rate,
+               n_estimators,
+               gamma,
+               min_child_weight,
+               max_delta_step,
+               subsample,
+               colsample_bytree,
+               silent=True,
+               nthread=-1):
+    return cross_val_score(xgb.XGBClassifier(max_depth=int(max_depth),
+                                             learning_rate=learning_rate,
+                                             n_estimators=int(n_estimators),
+                                             silent=silent,
+                                             nthread=nthread,
+                                             gamma=gamma,
+                                             min_child_weight=min_child_weight,
+                                             max_delta_step=max_delta_step,
+                                             subsample=subsample,
+                                             colsample_bytree=colsample_bytree),
+                          X_train,
+                          y_train,
+                          scoring="f1",
+                          cv=3).mean()
+
+# Define Bayesian Optimization
+optimizer = BayesianOptimization(xgboost_cv,
+                                 {'max_depth': (5, 10),
+                                  'learning_rate': (0.01, 0.3),
+                                  'n_estimators': (50, 1000),
+                                  'gamma': (1., 0.01),
+                                  'min_child_weight': (2, 10),
+                                  'max_delta_step': (0, 0.1),
+                                  'subsample': (0.7, 0.8),
+                                  'colsample_bytree' :(0.5, 0.99)
+                                  })
+# Run the optimization
+optimizer.maximize(n_iter=20,
+                   init_points=5)
+
+print(optimizer.max)
+
+# Check the score of the tunned model
+params                 = optimizer.max['params']
+params['max_depth']    = int(params['max_depth'])
+params['n_estimators'] = int(params['n_estimators'])
+
+alg = xgb.XGBClassifier(**params)
+alg.fit(X_train, y_train)
+
+y_pred_train = alg.predict(X_train)
+y_pred_valid = alg.predict(X_valid)
+
+print(f"F1_score on train data: {bg(f1_score(y_train, y_pred_train))}")
+print(f"F1_score on Valid data: {bg(f1_score(y_valid, y_pred_valid))}")
+```
+</p></details>
+
+<details><summary> <b>Stacking</b> </summary><p>
+```
+from mlxtend.classifier import StackingClassifier
+
+def stacking1_cv(C, data, targets):
+    lr    = LogisticRegression(C=C, penalty='l2', n_jobs=-1)
+    sclf  = StackingClassifier(classifiers=[alg1, alg2, alg3], meta_classifier=lr)
+    return  Stratified_kfolds(sclf, data, targets)
+    
+def stacking1_crossval(expC):
+    C = 10 ** expC
+    return stacking1_cv(C=C, data=X, targets=y)
+
+optimizer = BayesianOptimization(
+    f=stacking1_crossval,
+    pbounds={'expC': (-9, 5)},
+    random_state=33,
+    verbose=2,
+
+)
+optimizer.maximize(n_iter=10, init_points=10)
+
+print(f"~> Final Result: {optimizer.max}")
+```
+</p></details>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">For <b>Sklearn Models</b></a></li>
 
