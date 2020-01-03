@@ -173,7 +173,17 @@ def show_annotation(dist, n=5, size=14, total=None):
                ha='center', fontsize=size) 
     dist.set_ylim(0, max(sizes) * 1.15); # set y limit based on highest heights
 
-print(f'~> The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}, {bg("show_annotation", "s")}')
+
+def dd(*args):
+    print('--'*20)
+    for x in args:
+        varName = colored(var2str(x), attrs=['blink'])
+        print(f"~> Type  of {varName}: {colored(type(x), 'green')}")
+        print(f"~> Shape of {varName}: {colored(str(x.shape), 'blue')}")
+        print('--'*20)
+        
+        
+print(f'~> The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}, {bg("show_annotation", "s")}, {bg("dd", "s")}')
 
 
 ~~~
