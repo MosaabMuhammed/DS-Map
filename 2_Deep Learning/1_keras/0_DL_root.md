@@ -6,7 +6,7 @@
 - #### [<span style='color:#333'>Optimizers.</span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/4_DL_Optimizers.html)
 - Activations.
 - Losses. 
-- Metrics.
+- #### [<span style='color:#333'>Metrics</span>](4_2_DL_Metrics.html)
 - #### [<span style='color:#333'>Callbacks](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/4_8_Callbacks.html)
 *** 
 
