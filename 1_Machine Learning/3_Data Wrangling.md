@@ -10,6 +10,14 @@ print(os.listdir("../input"))
 </p>
 </details>
 
+<details><summary><b>A series of arrays</b> to <b>DataFrame</b> </summary>
+<p>
+~~~python
+X_train = X_train.apply(pd.Series)
+~~~
+</p>
+</details>
+
 <details><summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary>
 <p>
 ~~~python
