@@ -2,6 +2,8 @@
 
 <div style='width:1000px;margin:auto'>
 <details><summary><b style='font-size:20px'>1. GloVe</b></summary><p>
+
+<details><summary><b style='font-size:20px'>Read Glove</b></summary><p>
 <h4>1. Read GloVe Vectors</h4>
 ```
 embedding_dict = {}
@@ -27,6 +29,10 @@ def create_corpus(df):
 
 corpus = create_corpus(tweet)
 ```
+</p></details>
+
+<details><summary><b style='font-size:20px'>Deep Learning for GloVe</b></summary><p>
+
 ```
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -97,5 +103,44 @@ history = model.fit(X_train, y_train,
                     validation_data=(X_test, y_test),
                     verbose=2)
 ```
+</p></details>
+
+<details><summary><b style='font-size:20px'>ML Models for GloVe</b></summary><p>
+
+<h4>5. Make GloVe suitable for ML Models</h4>
+```
+# Convert each text in a row to a vector.
+def sent2vec(s):
+    words = str(s).lower()
+    words = word_tokenize(words)
+    words = [w for w in words if not w in stop and w.isalpha()]
+    
+    M = []
+    for w in words:
+        try:
+            M.append(embedding_dict[w])
+        except:
+            continue
+            
+    M = np.array(M)
+    v = M.sum(axis=0)
+    if type(v) != np.ndarray: return np.zeros(100)
+    return v / np.sqrt((v**2).sum())
+
+# Apply the function
+df['text'] = [sent2vec(x) for x in tqdm(df['text'], position=0)]
+```
+```
+# Train Test Split the data
+X_train, X_valid, y_train, y_valid = train_test_split(df[df.target.notnull()]['text'],
+                                                      df[df.target.notnull()]['target'],
+                                                      test_size=.2,
+                                                      random_state=33)
+```
+```
+# Convert the data into arrays
+X_train, X_valid = X_train.apply(pd.Series), X_valid.apply(pd.Series)
+```
+</p></details>
 </p></details>
 </div>
