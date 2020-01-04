@@ -483,4 +483,14 @@ timer(start_time) # timing ends here for "start_time" variable
 </p>
 </details> 
 
+<details><summary> <b>Profile Reporting</b> </summary>
+<p>
+```
+import pandas_profiling as pp
+
+pp.ProfileReport(train)
+```
+</p>
+</details>
+
 </div>
