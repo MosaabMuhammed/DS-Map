@@ -143,4 +143,24 @@ X_train, X_valid = X_train.apply(pd.Series), X_valid.apply(pd.Series)
 ```
 </p></details>
 </p></details>
+
+<details><summary><b style='font-size:20px'>2. Universal Sentence Encoding</b></summary><p>
+<h4>1. Load the embeddings</h4>
+```
+# Import the hubber
+import tensorflow_hub as hub
+
+# Load the embbedding
+embed = hub.load('../../../Personal/Development/Courses Docs/Word Embeddings/Universal Sentence Encoder')
+X_train_embedding = embed(train.text.values)
+X_test_embedding  = embed(test.text.values)
+```
+
+<h4>2. Concatenate with other features</h4>
+```
+# Merge with TF-IDF
+train_df    = np.concatenate([X_train_embedding['outputs'], tf_train], axis=1)
+test_df     = np.concatenate([X_test_embedding['outputs'], tf_test], axis=1)
+```
+</p></details>
 </div>
