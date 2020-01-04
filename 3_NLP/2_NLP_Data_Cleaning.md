@@ -86,13 +86,22 @@ def correct_spellings(text):
 </p></details>
 
 <details><summary><b style='font-size:20px'>6. Find Hashtags</b></summary><p>
-~~~python
+```
+import re
+from tqdm import tqdm
+tqdm.pandas(tqdm())
+
+# Extracting hastags using simple regex
+train['hastags'] = train['text'].progress_apply(lambda x: re.findall('#\w*', x))
+```
+
+```
 #Finding the hashtags in a tweet
 def hashtag(tweet):
     with_hashtag = " ".join([word for word in tweet.split() if word.startswith('#')])
     with_hashtag = with_hashtag.lower().split()
     return with_hashtag
-~~~
+```
 </p></details>
 
 <details><summary><b style='font-size:20px'>7. Clean Numbers</b></summary><p>
