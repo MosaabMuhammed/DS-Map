@@ -504,6 +504,31 @@ pp.ProfileReport(train)
     <a class="list-group-item list-group-item-action" data-toggle="list" href="#model" role="tab" aria-controls="settings"> Creating the Model<span class="badge badge-primary badge-pill">7</span></a>
     <a class="list-group-item list-group-item-action" data-toggle="list" href="#eval" role="tab" aria-controls="settings">Model Evaluation<span class="badge badge-primary badge-pill">8</span></a>  
 ```
+<h4>Then at each cell, do the following</h4>
+```
+# header one
+<a id='libraries'></a>
+
+# Header two
+<a id='load'></a>
+
+# and so on.
+
+```
+</p>
+</details>
+
+<details><summary> <b>List & Labels - Bootstrap way</b> </summary>
+<p>
+```
+<ul style="list-style-type:square;">
+  <li><span class="label label-default">id</span> a unique identifier for each tweet</li>
+  <li><span class="label label-primary">text </span> the text of the tweet</li>
+  <li><span class="label label-success">location</span>  the location the tweet was sent from (may be blank)</li>
+    <li><span class="label label-danger">keyword</span>  a particular keyword from the tweet (may be blank)</li>
+</ul>
+
+```
 </p>
 </details>
 

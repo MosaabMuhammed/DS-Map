@@ -439,9 +439,11 @@ pd.crosstab(data.Parch,data.Pclass).style.background_gradient(cmap='summer_r')
 <details><summary> <b>Word Cloud</b></summary>
 <p style="margin: 0">
 ~~~python
+from wordcloud import WordCloud, STOPWORDS
+
 # textn_w is your list of words.
 wc = WordCloud(width=1440, height=1080, background_color='black',
-               max_words=len(textn_w), stopwords=stopwords)
+               max_words=len(textn_w), stopwords=set(STOPWORDS)
 wc.generate(textn_w)
 print(bg('Word Cloud for non_duplicate Questions Pairs:', 'str', 'green'))
 plt.figure(figsize=(20, 15))
@@ -458,6 +460,7 @@ tup = dict(result.items())
 wordcloud = WordCloud(    background_color='black',
                           width=1600,
                           height=800,
+                          stopwords=set(STOPWORDS),
                     ).generate_from_frequencies(tup)
 
 fig = plt.figure(figsize=(30,20))
@@ -469,9 +472,6 @@ plt.show()
 ~~~
 </p>
 </details>
-
-
-- Calculate the skewness & Kurtios. <span style='color:white;background-color:red;padding:3px'>Not Complete</span>
 
 
 <details><summary>From <b>String</b> to <b>Date</b></summary>
