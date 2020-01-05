@@ -2,13 +2,26 @@
 
 <div style='width:1000px;margin:auto'>
 <details><summary><b style='font-size:20px'>1. Remove URL</b></summary><p>
-~~~python
+<h4>1. Find text contains URL</h4>
+```
+df.loc[df['text'].str.contains('http')]
+```
+<h4>2. Remove text contains URL</h4>
+```
+# First code
 import re
 
 def remove_URL(text):
     url = re.compile(r'https?://\S+|www\.\S+')
     return url.sub(r'',text)
-~~~
+    
+# Second Code
+pattern = re.compile('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+
+def remove_html(text):
+    no_html= pattern.sub('',text)
+    return no_html
+```
 </p></details>
 
 <details><summary><b style='font-size:20px'>2. Remove HTML</b></summary><p>
