@@ -2,13 +2,10 @@
 
 <div style='width:1000px;margin:auto;'>
 
-<ul>
-<li><a href="https://www.browserling.com/tools/line-length-sort"><b><span style='color:#333'>Reorder your imports based on length</span></b></a> </li>
-</ul>
 
-<ul>
+<li><a href="https://www.browserling.com/tools/line-length-sort"><b><span style='color:#333'>Reorder your imports based on length</span></b></a> </li>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/1_Python/21_debugging.html"><b><span style='color:#333'>Debugger</span></b></a> </li>
-</ul>
+
 
 <details><summary> <b>Macros</b> </summary><p>
 <ul>
@@ -489,6 +486,23 @@ timer(start_time) # timing ends here for "start_time" variable
 import pandas_profiling as pp
 
 pp.ProfileReport(train)
+```
+</p>
+</details>
+
+<details><summary> <b>Table of Content - Bootstrap way</b> </summary>
+<p>
+```
+<div class="list-group" id="list-tab" role="tablist">
+  <h3 class="list-group-item list-group-item-action active" data-toggle="list"  role="tab" aria-controls="home">Notebook Content!</h3>
+  <a class="list-group-item list-group-item-action" data-toggle="list" href="#libraries" role="tab" aria-controls="profile">Import Libraries<span class="badge badge-primary badge-pill">1</span></a>
+  <a class="list-group-item list-group-item-action" data-toggle="list" href="#load" role="tab" aria-controls="messages">Load Data<span class="badge badge-primary badge-pill">2</span></a>
+  <a class="list-group-item list-group-item-action"  data-toggle="list" href="#visual" role="tab" aria-controls="settings">Visualization of data<span class="badge badge-primary badge-pill">3</span></a>
+  <a class="list-group-item list-group-item-action" data-toggle="list" href="#word" role="tab" aria-controls="settings">WordCloud<span class="badge badge-primary badge-pill">4</span></a> 
+  <a class="list-group-item list-group-item-action" data-toggle="list" href="#clean" role="tab" aria-controls="settings">Cleaning the text<span class="badge badge-primary badge-pill">5</span></a>
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#split" role="tab" aria-controls="settings">Train and test Split<span class="badge badge-primary badge-pill">6</span></a>
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#model" role="tab" aria-controls="settings"> Creating the Model<span class="badge badge-primary badge-pill">7</span></a>
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#eval" role="tab" aria-controls="settings">Model Evaluation<span class="badge badge-primary badge-pill">8</span></a>  
 ```
 </p>
 </details>
