@@ -6,4 +6,8 @@
 <li><a href='./0_notebooks/CNN.html'>CNN with Text</a></li>
 </p></details>
 
+<details><summary><b>LSTM with GloVe</b></summary><p>
+<li><a href='./0_notebooks/LSTM_Toxic.html'>LSTM with Text</a></li>
+</p></details>
+
 </div>
