@@ -10,6 +10,9 @@
 <li><a href='./0_notebooks/LSTM_Toxic.html'>LSTM with Text</a></li>
 <h4>Note: For Bi-Directional, do the following:</h4>
 ```
+# you have 2 options:
+# 1. return a sequence, then select the max features among them.
+# 2. Don't return a sequence, just return the last value, and here there's no neet for GlobalMaxPool1D
 x = Bidirectional(LSTM(15, return_sequences=True))(x)
 x = GlobalMaxPool1D()(x)
 ```
