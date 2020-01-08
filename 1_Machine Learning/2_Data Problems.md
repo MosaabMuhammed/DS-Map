@@ -3,7 +3,7 @@
 
 <div style='width:1000px;margin:auto'>
 
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_%20A%20Data%20Science%20Framework%20to%20achieve%2099%20Accuracy/a-data-science-framework-to-achieve-99-accuracy.html#3.21-The-4-C's-of-Data-Cleaning:-Correcting,-Completing,-Creating,-and-Converting">Explanation of the 4'C of <b>Data Cleaning</b>.</a> </p>
+<p><a href="./1_starter/a-data-science-framework-to-achieve-99-accuracy.html#3.21-The-4-C's-of-Data-Cleaning:-Correcting,-Completing,-Creating,-and-Converting">Explanation of the 4'C of <b>Data Cleaning</b>.</a> </p>
  
  
 <details><summary><span style='color:#333;font-size:25px;font-weight:bold;text-decoration:underline'>1. Related to Dataset:</span></summary>
@@ -11,7 +11,7 @@
 <details><summary><b>1. Imbalanced Data set:</b></summary>
 <p>
 <ul>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/11_Classification%20Algorithms%20in%20Real-World%20problems/1_Dealing%20with%20Imbalanced%20Datasets.html"><span style='color:#333333'><b>1. Imbalanced Data set:</b></span></a> </p></li>
+<li><p><a href="./2_data_problems/1_Dealing%20with%20Imbalanced%20Datasets.html"><span style='color:#333333'><b>1. Imbalanced Data set:</b></span></a> </p></li>
 <li><p><a href="https://imbalanced-learn.org/en/stable/over_sampling.html"><span style='color:#333333'><b>2. Another way</b> (better)</span></a> </p></li>
 </ul>
 </p>
@@ -28,7 +28,7 @@ df = pd.read_csv('/kaggle/input/train.csv', chunksize=1000)
 <p>
 <ul>
 <li><a href="https://stackoverflow.com/questions/27203161/convert-large-csv-to-hdf5"><b>After reading csv</b></a> </li>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/7_From%20Large%20CSV%20to%20small%20HDF5/__notebook__.html"><b>When we can't read the csv</b></a> </li>
+<li><a href="./2_data_problems/from_large_csv_to_small_HDFS.html"><b>When we can't read the csv</b></a> </li>
 </ul>
 </p>
 </details>
