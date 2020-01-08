@@ -1,0 +1,211 @@
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1 style='color:#1E3D7F'>Deep Learning [PyTorch]</h1>
+
+<div style='width:1000px;margin:auto'>
+
+<details><summary><b>Types of API</b></summary>
+
+<details style='padding-left:15px'><summary><b>Functional</b> API</summary>
+<p>
+
+<pre><code class="python">import torch.nn.functional as F
+
+class Network(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.hidden = nn.Linear(28*28, 256)
+        self.output = nn.Linear(256, 10)
+
+    def forward(self, x):
+        x = F.sigmoid(self.hidden(x))
+        x = F.softmax(self.output(x), dim=1)
+
+        return x
+</code></pre>
+
+</p>
+</details>
+
+<details style='padding-left:15px'><summary><b>Sequential</b> API</summary>
+<p>
+<h4>1. Upload MNIST data</h4>
+
+<pre><code class="python">from torchvision import datasets, transforms
+
+# Define a transform to normalize the data
+transform = transforms.Compose([transforms.ToTensor(),
+                              transforms.Normalize((0.5,), (0.5,)),
+                              ])
+
+# Download and load the training data
+trainset = datasets.MNIST('~/.pytorch/MNIST_data/', download=True, train=True, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
+</code></pre>
+
+
+<h4>2. Design the model</h4>
+
+<pre><code class="python">input_size   = 784
+hidden_sizes = [128, 64]
+output_size  = 10
+
+# Build a feed-forward network
+model = nn.Sequential(nn.Linear(input_size, hidden_sizes[0]),
+                      nn.ReLU(),
+                      nn.Linear(hidden_sizes[0], hidden_sizes[1]),
+                      nn.ReLU(),
+                      nn.Linear(hidden_sizes[1], output_size),
+                      nn.Softmax(dim=1))
+print(model)
+
+# We can also put it into OrderedDict to give a name to each layer.
+from collections import OrderedDict
+model = nn.Sequential(OrderedDict([
+                      ('fc1', nn.Linear(input_size, hidden_sizes[0])),
+                      ('relu1', nn.ReLU()),
+                      ('fc2', nn.Linear(hidden_sizes[0], hidden_sizes[1])),
+                      ('relu2', nn.ReLU()),
+                      ('output', nn.Linear(hidden_sizes[1], output_size)),
+                      ('softmax', nn.Softmax(dim=1))]))
+# Now we can access like than
+print(model.fc1) # Instead of model[0]
+</code></pre>
+
+
+<h4>3. Utitlity Function</h4>
+
+<pre><code class="python">def view_classify(img, ps, version=&quot;MNIST&quot;):
+    ''' Function for viewing an image and it's predicted classes.
+    '''
+    ps = ps.data.numpy().squeeze()
+
+    fig, (ax1, ax2) = plt.subplots(figsize=(6, 9), ncols=2)
+    ax1.imshow(img.resize_(1, 28, 28).numpy().squeeze())
+    ax1.axis('off')
+    ax2.barh(np.arange(10), ps)
+    ax2.set_aspect(0.1)
+    ax2.set_yticks(np.arange(10))
+    if version == &quot;MNIST&quot;:
+        ax2.set_yticklabels(np.arange(10))
+    elif version == &quot;Fashion&quot;:
+        ax2.set_yticklabels(['T-shirt/top',
+                             'Trouser',
+                             'Pullover',
+                             'Dress',
+                             'Coat',
+                             'Sandal',
+                             'Shirt',
+                             'Sneaker',
+                             'Bag',
+                             'Ankle Boot'], size='small')
+    ax2.set_title('Class Probability')
+    ax2.set_xlim(0, 1.1)
+
+    plt.tight_layout()
+</code></pre>
+
+
+<h4>4. Start Optimizing</h4>
+
+<pre><code class="python">criterion = nn.NLLLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.003)
+
+epochs = 5
+for e in range(epochs):
+    running_loss = 0
+    for images, labels in trainloader:
+        # Flatten MNIST images into a 784 long vector
+        images = images.view(images.shape[0], -1)  # We can do this step in the Network class .forward  (instead of doing it here).
+
+        # TODO: Training pass
+        outputs = model(images)
+        loss    = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+    else:
+        print(f&quot;Training loss: {running_loss/len(trainloader)}&quot;)
+</code></pre>
+
+
+<h4>5. Test on a new data</h4>
+
+<pre><code class="python">images, labels = next(iter(trainloader))
+
+img = images[0].view(1, 784)
+# Turn off gradients to speed up this part
+with torch.no_grad():
+    logps = model(img)
+
+# Output of the network are log-probabilities, need to take exponential for probabilities
+ps = torch.exp(logps)
+helper.view_classify(img.view(1, 28, 28), ps)
+</code></pre>
+
+</p>
+</details>
+</details>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/8_Torch_Images.html"><font color='#333' style='font-size:18px'>Dealing with <b>Images</b></font></a> </li>
+
+<hr>
+<details><summary><b>Types of Architectures</b></summary>
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/1_Torch_LinReg.html"><font color='#333'><b style='font-size:20px'>Linear Regression</b></font></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/2_Torch_LogReg.html"><font color='#333'><b style='font-size:20px'>Logistic Regression</b></font></a> </li> 
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/3_Torch_MLP.html"><font color='#333'><b style='font-size:20px'>MLP</b></font></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/4_Torch_CNN.html"><font color='#333'><b style='font-size:20px'>CNN</b></font></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/9_Torch_TransferLearning.html"><font color='#333'><b style='font-size:20px'>Transfer Learning</b></font></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/5_Torch_RNN.html"><font color='#333'><b style='font-size:20px'>RNN</b></font></a> </li>
+
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/6_Torch_LSTM.html"><font color='#333'><b style='font-size:20px'>LSTM</b></font></a> </li>
+
+</ul>
+</details>
+
+<hr>
+
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/2_Deep%20Learning/0_html/pytorch/7_Torch_Validation.html"><font color='#333'><b style='font-size:18px'>Validation & Inference</b></font></a> </li>
+
+</ul>
+
+<details style='padding-left:8px'><summary>Save <b>Weights</b> [The Right Way]</summary>
+<p>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/deep-learning-v2-pytorch/convolutional-neural-networks/mnist-mlp/mnist_mlp_solution_with_validation.html#Train-the-Network"><b style='font-size:18px'>Have-Write Example</b></a></li>
+
+<h4>NOTE:</h4>When loading the weights, it has to be assigend to the same architecture.<br>
+
+<pre><code class="python">checkpoint = {'input_size': 784,
+               'output_size': 10,
+               'hidden_layers': [each.out_features for each in model.hidden_layers],
+               'state_dict': model.state_dict()}
+
+torch.save(checkpoint, 'checkpoint.pth')
+</code></pre>
+
+
+<h4>2. Load the weights</h4>
+
+<pre><code class="python">def load_checkpoint(filepath):
+    checkpoint = torch.load(filepath)
+
+    model = Network(checkpoint['input_size'],
+                    checkpoint['output_size'],
+                    checkpoint['hidden_layers'])
+
+     return model
+
+model = load_checkpoint('checkpoint.pth')
+print(model)
+</code></pre>
+
+</p>
+</details>
+
+</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

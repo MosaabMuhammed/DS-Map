@@ -1,0 +1,256 @@
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Data Visualization</h1>
+<div sytle='width:1000px;margin:auto'>
+
+<details><summary><b>Tips & Tricks</b></summary><p>
+
+<details><summary><b>Installation</b></summary><p>
+
+<details><summary>Install <b>ggplot2</b></summary><p>
+
+<pre><code>install.packages('ggplot2')
+library(ggplot2)
+</code></pre>
+
+</p></details>
+
+<details><summary>Install <b>gridExtra</b></summary><p>
+
+<pre><code>install.packages('gridExtra')
+library(gridExtra)
+</code></pre>
+
+</p></details>
+
+</p></details>
+
+<details><summary><b>Add title for axises</b></summary><p>
+
+<pre><code>qplot(data=subset(df, !is.na(www_likes)), x=www_likes,
+      geom='freqpoly', color=gender,
+      xlab='WWW LIKES (TITLE)',
+      ylab='Y TITLE')+
+  scale_x_log10()
+</code></pre>
+
+</p></details>
+
+</p></details>
+
+<details><summary>1. Explore <b>One</b> Variable</b></summary><p>
+
+<details><summary><b>1. Histograms</b></summary><p>
+
+<details><summary><b>1.1. using scale_x_continuous()</b></summary><p>
+<h4>1. using qplot()</h4>
+
+<pre><code>qplot(x=dob_day, data=df) +
+  scale_x_continuous(breaks=1:31) +
+  geom_histogram(binwidth = 1)
+</code></pre>
+
+
+<h4>2. using ggplot()</h4>
+
+<pre><code>ggplot(aes(x = dob_day), data = pf) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = 1:31)
+</code></pre>
+
+</p></details>
+
+
+<details><summary><b>1.2. using facet_wrap()</b></summary><p>
+<blockquote>
+we use it, to make interaction between 2 variables.
+</blockquote>
+
+<pre><code>qplot(x=dob_day, data=df) + 
+    scale_x_continuous(breaks=1:31) + # scale x axis to that limit
+    facet_wrap(~dob_month, ncol=3)
+</code></pre>
+
+
+<pre><code>ggplot(data=df, aes(x=dob_day)) + 
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = 1:31) + 
+  facet_wrap(~dob_month)
+</code></pre>
+
+<p><img src="imgs/20191021-194824.png" alt="" /></p>
+</p></details>
+
+<details><summary><b>1.3. using xlim</b></summary><p>
+
+<pre><code># this
+qplot(data=df, x=friend_count, xlim=c(0, 1000))
+
+# or this
+qplot(data=df, x=friend_count) + 
+  scale_x_continuous(limits = c(1, 1000))
+</code></pre>
+
+
+
+<pre><code># Using ggplot
+ggplot(aes(x = friend_count), data = pf) +
+  geom_histogram() +
+  scale_x_continuous(limits = c(0, 1000))
+</code></pre>
+
+</p></details>
+
+<details><summary><b>1.4. using binwidth</b></summary><p>
+
+<pre><code># 1. using qplot
+qplot(x = friend_count, data = pf, binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
+
+# 2. using ggplot
+ggplot(aes(x = friend_count), data = pf) +
+  geom_histogram(binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
+</code></pre>
+
+<p><img src="imgs/20191022-094839.png" alt="" /></p>
+</p></details>
+
+<details><summary><b>1.5. Omiting NA (Not Applicable)</b></summary><p>
+
+<pre><code>#### Using qplot
+# First Trial
+qplot(data=na.omit(df), x=friend_count, binwidth=10) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50)) +
+  facet_wrap(~gender)
+
+# Second Trial
+qplot(data=subset(df, !is.na(gender)), x=friend_count, binwidth=25) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50)) +
+  facet_wrap(~gender)
+</code></pre>
+
+
+
+<pre><code>#### Using ggplot
+ggplot(aes(x = friend_count), data = subset(pf, !is.na(gender))) +
+  geom_histogram() +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50)) +
+  facet_wrap(~gender)
+</code></pre>
+
+</p></details>
+
+<details><summary><b>1.6. Color & Fill bars</b></summary><p>
+<p><a href="https://ggplot2.tidyverse.org/reference/theme.html"><b>Doc about Themes</b></a> </p>
+
+
+<pre><code class="R">#### Using qplot
+# Note: The I() functions stand for 'as is' and tells qplot to use them as colors.
+
+qplot(data=df, x=tenure, color=I('black'), fill=I('#099DD9'), binwidth=50)
+
+qplot(data=df, x=tenure/365, binwidth=.25,
+      color=I('black'), fill=I('#F79420')) +
+  scale_x_continuous(breaks=seq(1, 7, 1), limits=c(0, 7))
+</code></pre>
+
+
+
+<pre><code>#### Using ggplot
+ggplot(aes(x = tenure/365), data = pf) +
+  geom_histogram(binwidth = .25, color = 'black', fill = '#F79420')
+</code></pre>
+
+<p><img src="imgs/20191022-102314.png" alt="" /></p>
+<p><img src="imgs/20191022-102828.png" alt="" /></p>
+</p></details>
+
+<details><summary><b>1.7. Multiple Plots in one image</b></summary><p>
+
+<pre><code>library(gridExtra)
+
+# Using 1. qplot:
+p1 &lt;- qplot(data=df, x=friend_count)
+p2 &lt;- qplot(data=df, x=sqrt(friend_count))
+p3 &lt;- qplot(data=df, x=log1p(friend_count))
+
+# NOTE: the x axis here, we have log scale not the actual counts.
+
+grid.arrange(p1, p2, p3, ncol=1)
+</code></pre>
+
+
+
+<pre><code># Using 2. ggplot
+p1 &lt;- ggplot(data=df, aes(x=friend_count)) + geom_histogram()
+p2 &lt;- p1 + scale_x_log10()
+p3 &lt;- p1 + scale_x_sqrt()
+
+# NOTE: the x axis here, will have the actual counts not the log counts.
+
+grid.arrange(p1, p2, p3, ncol=1)
+</code></pre>
+
+</p></details>
+
+</p></details>
+
+<details><summary><b>2. Frequency Ploygon [KDE]</b></summary><p>
+
+<details><summary><b>2.1 Normal one</b></summary><p>
+
+<pre><code># using qplot
+qplot(data=subset(df, !is.na(gender)), x=friend_count,
+      binwidth=10, geom='freqpoly', color=gender) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50))
+</code></pre>
+
+</p></details>
+
+<details><summary><b>2.2 Showing proportion instead of counts</b></summary><p>
+
+<pre><code># using qplot
+qplot(data=subset(df, !is.na(gender)), x=friend_count, y= ..count../sum(..count..),
+      binwidth=10, geom='freqpoly', color=gender) + 
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50))
+</code></pre>
+
+
+
+<pre><code># Using ggplot
+ggplot(aes(x = www_likes), data = subset(pf, !is.na(gender))) +
+  geom_freqpoly(aes(color = gender)) +
+  scale_x_log10()
+</code></pre>
+
+<p><img src="imgs/20191022-143205.png" alt="" /></p>
+</p></details>
+</p></details>
+
+<details><summary><b>3. Box Plot</b> [cat vs. num]</summary><p>
+
+<details><summary><b>3.1 Regular</b></summary><p>
+
+<pre><code># using qplot
+qplot(data=subset(df, !is.na(gender)), x=friend_count,
+      binwidth=10, geom='boxplot', color=gender) +
+  scale_x_continuous(lim=c(0, 1000), breaks=seq(0, 1000, 50))
+</code></pre>
+
+<p><img src="imgs/20191022-145756.png" alt="" /></p>
+</p></details>
+
+<details><summary><b>3.2 Using coord_cartesian()</b></summary><p>
+
+<pre><code># using coord_cartesian doesn't change the values of median and quantiles unlike scale_y_continuous()
+qplot(data=subset(df, !is.na(gender)), y=friend_count, x=gender,
+      geom='boxplot')+
+  coord_cartesian(ylim=c(0, 1000))
+</code></pre>
+
+<p><img src="imgs/20191022-145809.png" alt="" /></p>
+</p></details>
+
+
+</p></details>
+
+</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

@@ -1,0 +1,1142 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="4-exploratory-data-analysis-eda">
+   <mark>
+    4. Exploratory Data Analysis (EDA)
+   </mark>
+  </h1>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Tips &amp; Tricks
+     </strong>
+    </summary>
+    <br/>
+    <p>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        Individual Feature
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <p>
+       <details>
+        <summary>
+         <strong>
+          Distrubtion of feature vs. row index
+         </strong>
+        </summary>
+        <br/>
+        <p>
+         <br/>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Distribution-of-X8-along-with-row-index:">
+          <strong>
+           Example
+          </strong>
+         </a>
+        </p>
+        <h4 id="1-without-class-labeling">
+         1. Without Class labeling
+        </h4>
+        <pre><code class="python">plt.figure(figsize=(16, 10))
+plt.plot(train.x8, '.')
+plt.xlabel('Row Index')
+plt.ylabel('X8 Values')
+plt.title('Distribution of X8 around row index')
+</code></pre>
+        <h4 id="2-with-class-labeling">
+         2. With class labeling
+        </h4>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Hue-with-Class-labels:">
+          <strong>
+           Labeling example
+          </strong>
+         </a>
+        </p>
+        <pre><code class="python">plt.figure(figsize=(16, 10))
+plt.scatter(range(len(train.x8)), train.sort_values('y')['x8'], c=train.sort_values('y')['y'], cmap='viridis')
+</code></pre>
+        <p>
+        </p>
+        <br/>
+       </details>
+      </p>
+      <p>
+       <details>
+        <summary>
+         <strong>
+          Features Grouping
+         </strong>
+         for
+         <strong>
+          Feature Engineering
+         </strong>
+        </summary>
+        <br/>
+        <p>
+        </p>
+        <h4 id="1-clustering-by-kmeans">
+         1. Clustering by KMeans
+        </h4>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#With-Clustering:">
+          <strong>
+           Notebook
+          </strong>
+         </a>
+        </p>
+        <pre><code class="python">from sklearn.cluster import KMeans
+
+X = train.copy()
+
+y = X['y']
+X = X.drop('y', axis=1)
+
+X = X.fillna(-999)
+
+for col in train.columns[train.dtypes == 'object']:
+    X[col] = X[col].factorize()[0]
+
+
+kmeans = KMeans(n_clusters=7)
+y_pred = kmeans.fit_predict(X)
+</code></pre>
+        <pre><code class="python">plt.figure(figsize=(16, 10))
+sns.heatmap(X.corr(), cmap='viridis');
+</code></pre>
+        <h4 id="2-clustering-by-statistics">
+         2. Clustering by Statistics
+        </h4>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Clustering-Using-Statistics:">
+          <strong>
+           Notebook
+          </strong>
+         </a>
+        </p>
+        <pre><code class="python">plt.figure(figsize=(16, 8))
+train.mean().sort_values().plot(style='.');
+</code></pre>
+        <p>
+        </p>
+        <br/>
+       </details>
+      </p>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       From
+       <strong>
+        Power Law Dist
+       </strong>
+       to
+       <strong>
+        Normal Disb.
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <h4 id="convert">
+       Convert
+      </h4>
+      <pre><code class="python">#converting the values to log-values to chec for log-normal
+import math
+frame_with_durations_modified['log_times']=[math.log(i+1) for i in frame_with_durations_modified['trip_times'].values]
+</code></pre>
+      <h4 id="show-the-distribution">
+       Show the distribution
+      </h4>
+      <pre><code class="python">#pdf of log-values
+sns.FacetGrid(frame_with_durations_modified,size=6) \
+      .map(sns.kdeplot,"log_times") \
+      .add_legend();
+plt.show();
+</code></pre>
+      <h4 id="check-the-q-q-plot">
+       Check the Q-Q plot.
+      </h4>
+      <pre><code class="python">import scipy
+#Q-Q plot for checking if trip-times is log-normal
+scipy.stats.probplot(frame_with_durations_modified['log_times'].values, plot=plt)
+plt.show()
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Plot
+       <strong>
+        Two Categorical Features
+       </strong>
+       with sizes
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">def plot_categoricals(x, y, data, annotate=True):
+    '''
+    Plot counts of 2 categorical.
+    Size is raw count for each grouping.
+    Percentages are for a given value of y.
+    '''
+
+    # Raw counts.
+    raw_counts = pd.DataFrame(data.groupby(y)[x].value_counts(normalize=False))
+    raw_counts = raw_counts.rename(columns={x: 'raw_count'})
+
+    # Calculate counts for each group of x and y.
+    counts = pd.DataFrame(data.groupby(y)[x].value_counts(normalize=True))
+
+    # Rename the column and reset the index.
+    counts = counts.rename(columns={x: 'normalized_count'}).reset_index()
+    counts['percent'] = 100 * counts['normalized_count']
+
+    # Add the raw count
+    counts['raw_count'] = list(raw_counts['raw_count'])
+
+    plt.figure(figsize=(14, 10))
+    # Scatter plot sized by percent.
+    plt.scatter(counts[x], counts[y], edgecolor='k', color='lightgreen',
+                s=100*np.sqrt(counts.raw_count), marker='o',
+                alpha=.6, linewidth=1.5)
+
+    # Annotate:
+    if annotate:
+        # Annotate the plot with text.
+        for i, row in counts.iterrows():
+            # Put text with appropriate offsets
+            plt.annotate(xy=(row[x] - (1/counts[x].nunique()),
+                             row[y] - (.15/counts[y].nunique())),
+                         color='navy', s=f"{round(row['percent'], 1)}%")
+    # Set tick marks
+    plt.yticks(counts[y].unique())
+    plt.xticks(counts[x].unique())
+
+    # Transform min and max to evenly space in square root domain.
+    sqr_min = int(np.sqrt(raw_counts.raw_count.min()))
+    sqr_max = int(np.sqrt(raw_counts.raw_count.max()))
+
+    # 5 sizes for legend
+    msizes = list(range(sqr_min, sqr_max,
+                        int((sqr_max - sqr_min)/5)))
+    markers = []
+
+    # Markers for legend
+    for size in msizes:
+        markers.append(plt.scatter([], [], s=100*size,
+                                   label=f'{int(round(np.square(size)/100)*100)}',
+                                   color='lightgreen',
+                                   alpha=.6, edgecolor='k', linewidth=1.5))
+
+    # Legend and formatting
+    plt.legend(handles=markers, title='Counts',
+               labelspacing=3, handletextpad=2,
+               fontsize=16, loc=(1.10, .19))
+    plt.annotate(f'* Size represents raw count while % for a given y value.',
+                 xy=(0,1), xycoords='figure points', size=10)
+
+    # Adjust axes limits.
+    plt.xlim((counts[x].min() - (6 / counts[x].nunique()),
+              counts[x].max() + (6 / counts[x].nunique())))
+    plt.ylim((counts[y].min() - (4 / counts[y].nunique()), 
+              counts[y].max() + (4 / counts[y].nunique())))
+    plt.grid(None)
+    plt.xlabel(f"{x}"); plt.ylabel(f"{y}"); plt.title(f"{y} vs {x}");
+</code></pre>
+      <h4 id="2-example">
+       2. Example.
+      </h4>
+      <pre><code class="python">plot_categoricals('rez_esc', 'Target', data)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Plot
+       <strong>
+        How many Unique Values
+       </strong>
+       In each column
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">color = sns.color_palette()[0]
+ax = train.select_dtypes(np.int64)\
+     .nunique()\
+     .value_counts()\
+     .sort_index()\
+     .plot.bar(color=color, figsize=(8, 6), edgecolor='black', linewidth=2)
+show_annotation(ax)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Plot
+       <strong>
+        Quantiles
+       </strong>
+       on line chart
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">plt.plot(tag_counts[:100], c='b')
+plt.scatter(x=list(range(0, 100, 5)), y=tag_counts[0:100:5], c='orange', label='Quantiles with .05 intervals.')
+plt.scatter(x=list(range(0,100,25)), y=tag_counts[0:100:25], c='m', label='Quantiles with .25 intevals.')
+
+for x, y in zip(list(range(0, 100, 25)), tag_counts[0:100:25]):
+    plt.annotate(s="{}, {})".format(x, y), xy=(x, y), xytext=(x-.05, y+500))
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        Histogram
+       </strong>
+       For all Numerical Values
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">train_df.hist(bins='auto', figsize=(18, 22), layout=(5, 2));
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Add
+       <strong>
+        Spaces
+       </strong>
+       b/w
+       <strong>
+        height
+       </strong>
+       and
+       <strong>
+        width
+       </strong>
+       for subplots
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">plt.subplots_adjust(wspace=.5, hspace=.5)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Plot
+       <strong>
+        3D
+       </strong>
+       figures
+      </summary>
+      <br/>
+      <p style="margin: 0">
+      </p>
+      <pre><code class="python">from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+
+def plot_3d(x, y, z, df, cmap = plt.cm.seismic_r):
+    """3D scatterplot of data in df"""
+
+    fig = plt.figure(figsize = (10, 10))
+
+    ax = fig.add_subplot(111, projection='3d')
+
+    # 3d scatterplot
+    ax.scatter(df[x], df[y],
+               df[z], c = df[z], 
+               cmap = cmap, s = 40)
+
+    # Plot labeling
+    ax.set_xlabel(x)
+    ax.set_ylabel(y)
+    ax.set_zlabel(z)
+
+    plt.title('{} as function of {} and {}'.format(
+               z, x, y), size = 18);
+
+plot_3d('learning_rate', 'n_estimators', 'score', opt_hyp)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Show
+       <strong>
+        Annotations
+       </strong>
+       on
+       <strong>
+        bar chart
+       </strong>
+      </summary>
+      <br/>
+      <p style="margin: 0">
+      </p>
+      <h4 id="better-version">
+       Better Version
+      </h4>
+      <pre><code class="python">def show_annotation(dist, n=5, total=None):
+    sizes = [] # Get highest value in y
+    for p in dist.patches:
+        height = p.get_height()
+        sizes.append(height)
+
+        dist.text(p.get_x()+p.get_width()/2.,          # At the center of each bar. (x-axis)
+               height+n,                            # Set the (y-axis)
+               '{:1.2f}%'.format(height*100/total) if total else '{}'.format(height), # Set the text to be written
+               ha='center', fontsize=14) 
+    dist.set_ylim(0, max(sizes) * 1.15); # set y limit based on highest heights
+</code></pre>
+      <h4 id="example">
+       Example:
+      </h4>
+      <pre><code class="python">total = len(train)
+plt.figure(figsize=(12, 6))
+
+color = sns.color_palette()[0]
+g = sns.countplot(x='target', data=train, color=color)
+g.set_title('Target Distribution', fontsize=20)
+g.set_xlabel('Target Values', fontsize=15)
+g.set_ylabel('Count', fontsize=15)
+
+show_annotation(g)
+</code></pre>
+      <h4 id="another-version">
+       Another Version
+      </h4>
+      <pre><code class="python"># ****************SHOW ANNOTATIONS**********
+def show_annotation(df, colName, n=10):
+    # Add Anootations
+    n_points = df.shape[0]
+    col_count = df[colName].value_counts()
+    locs, labels = plt.xticks() # Get the current tick locations and labels
+    # Loop for through each pair of locations and labels.
+    for loc, label in zip(locs, labels):
+        label_text = label.get_text()
+        label_text = int(label_text) if label_text.isdigit() else label_text
+        count = col_count[label_text]
+        text  = '{:.2f}%'.format(100*count/n_points)
+        plt.text(loc, count-n, text, ha='center', color='darkblue', size=14) 
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        Increase Size of (plt.title)
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">plt.title('Title here', size=20, y=1.06)
+</code></pre>
+      <pre><code class="python">plt.suptitle('Title here', fontsize=20)
+</code></pre>
+      <h4 id="oop-version">
+       OOP Version
+      </h4>
+      <pre><code class="python">color = sns.color_palette()[0]
+g = sns.countplot(x='target', data=train, color=color)
+g.set_title('Target Distribution', fontsize=20)
+g.set_xlabel('Target Values', fontsize=15)
+g.set_ylabel('Count', fontsize=15)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        Change Font Size of all plots
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">plt.rcParams['font.size'] = 22
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        Color the edge of bar chart
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">(app_train['DAYS_BIRTH']/-365).plot.hist(edgecolor='k', bins=30);
+</code></pre>
+      <pre><code class="python">plt.rcParams['font.size'] = 18
+plt.rcParams['patch.edgecolor'] = 'k'
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Make
+       <strong>
+        grid behind bar charts
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python">ax.grid(zorder=0)
+ax.bar(range(len(y)), y, width=0.3, align='center', color='skyblue', zorder=3)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        KDE
+       </strong>
+       plot b/w
+       <strong>
+        feature
+       </strong>
+       and
+       <strong>
+        TARGET
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python"># Modify it to be sutable for your needs.
+def kde_target(var_name, df):
+
+    # Calculate the correlation coefficient between the new variable and the target
+    corr = df['TARGET'].corr(df[var_name])
+
+    avg_repaid     = df.ix[df['TARGET']==0, var_name].median()
+    avg_not_repaid = df.ix[df['TARGET']==1, var_name].median()
+
+    plt.figure(figsize=(12, 6))
+
+    sns.kdeplot(df.ix[df['TARGET']==0, var_name], label='target == 0', shade=True)
+    sns.kdeplot(df[df['TARGET']==1][var_name], label='target == 1', shade=True)
+
+    # LABEL THE PLOT
+    plt.xlabel(var_name)
+    plt.ylabel('Density')
+    plt.title('%s Distribution' % var_name)
+    plt.legend();
+
+    print('~&gt; The correlation between %s and the TARGET is %.4f' % (var_name, corr))
+    print('~&gt; The median value for loan that was not repaid = %.4f' % avg_not_repaid)
+    print('~&gt; The median value for loan that was repaid = %.4f' % avg_repaid)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       Show the
+       <strong>
+        Legend
+       </strong>
+       outside of the plot
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <pre><code class="python"># To relocate the legend
+plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+</code></pre>
+      <p>
+      </p>
+      <br/>
+     </details>
+    </p>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <hr/>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Pandas
+     </strong>
+    </summary>
+    <br/>
+    <p>
+     <br/>
+     -
+     <strong>
+      df.plot.hist()
+     </strong>
+     histogram
+     <br/>
+     -
+     <strong>
+      df.plot.bar()
+     </strong>
+     bar chart
+     <br/>
+     -
+     <strong>
+      df.plot.barh()
+     </strong>
+     horizontal bar chart
+     <br/>
+     -
+     <strong>
+      df.plot.line()
+     </strong>
+     line chart
+     <br/>
+     -
+     <strong>
+      df.plot.area()
+     </strong>
+     area chart
+     <br/>
+     -
+     <strong>
+      df.plot.scatter()
+     </strong>
+     scatter plot
+     <br/>
+     -
+     <strong>
+      df.plot.box()
+     </strong>
+     box plot
+     <br/>
+     -
+     <strong>
+      df.plot.kde()
+     </strong>
+     kde plot
+     <br/>
+     -
+     <strong>
+      df.plot.hexbin()
+     </strong>
+     hexagonal bin plot
+     <br/>
+     -
+     <strong>
+      df.plot.pie()
+     </strong>
+     pie chart
+    </p>
+    <p>
+     <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types">
+      <strong>
+       Built-in Visualization
+      </strong>
+     </a>
+     <br/>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Matplotlib
+     </strong>
+    </summary>
+    <br/>
+    <p>
+    </p>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Seaborn
+     </strong>
+    </summary>
+    <br/>
+    <p>
+    </p>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Plotly
+     </strong>
+    </summary>
+    <br/>
+    <p>
+    </p>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <hr/>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Data Scientist ND
+     </strong>
+    </summary>
+    <br/>
+    <p>
+    </p>
+    <h4 id="1-uni-variate-visualization">
+     1. Uni-Variate Visualization:
+    </h4>
+    <blockquote>
+     <p>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart">
+       <strong>
+        Bar
+       </strong>
+       Chart
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/2_Pie%20Chart.html#Pie-Chart">
+       <strong>
+        Pie
+       </strong>
+       Chart
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/3_Histograms.html#Histograms-Using-Matplotlib">
+       <strong>
+        Histograms
+       </strong>
+       Using Matplotlib
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/16.%20Extra%20Kernel%20Density%20Estimation.html">
+       <strong>
+        Kernal Density Estimation (KDE)
+       </strong>
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/17.%20Extra%20Waffle%20Plots.html">
+       <strong>
+        Waffle
+       </strong>
+       Plots
+      </a>
+     </p>
+    </blockquote>
+    <h4 id="2-bi-variate-visualization">
+     2. Bi-Variate Visualization:
+    </h4>
+    <blockquote>
+     <p>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/1_Scatter%20Plot.html#Scatter-Plot-using-Matplotlib">
+       <strong>
+        Scatter
+       </strong>
+       Plot.
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/2_HeatMap.html#Heat-Map-using-Matplotlib">
+       <strong>
+        Heat Map
+       </strong>
+      </a>
+     </p>
+     <blockquote>
+      <ul>
+       <li>
+        A zoomed-in heatmap for best features have best correlation with the output.
+       </li>
+      </ul>
+     </blockquote>
+     <p>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/3_Violin%20Plot.html#Violin-Plot-using-Seaborn">
+       <strong>
+        Violin
+       </strong>
+       Plot
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/4_Box%20Plot.html#Box-Plot-vs.-Violin-Plot">
+       <strong>
+        Box
+       </strong>
+       Plot
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/5_Clustered%20Bar%20Chart.html#Clustered-Bar-+-Heatmap">
+       <strong>
+        Clustered Bar
+       </strong>
+       Chart
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/6_Facet%20Grid.html#Faced-Grid">
+       <strong>
+        Facet Grid
+       </strong>
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Pairs-Plot">
+       <strong>
+        Sweet Pair Grid
+       </strong>
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/7_Adapted%20Bar%20Chart.html#Adapted-Bar-Chart">
+       <strong>
+        Adapted Bar
+       </strong>
+       Chart,
+       <strong>
+        Point
+       </strong>
+       Chart
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/16.%20Extra%20Q-Q%20Plots.html">
+       <strong>
+        Q-Q
+       </strong>
+       Plot: Used to check normal distribution.
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html">
+       <strong>
+        Swarm
+       </strong>
+       Plot
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html">
+       <strong>
+        Rug
+       </strong>
+       and
+       <strong>
+        Strip
+       </strong>
+       Plot
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html">
+       <strong>
+        Stacked
+       </strong>
+       Plots
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html">
+       <strong>
+        Ridgeline
+       </strong>
+       Plot
+      </a>
+     </p>
+    </blockquote>
+    <h4 id="3-multi-variate-visualization">
+     3. Multi-Variate Visualization:
+    </h4>
+    <blockquote>
+     <p>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/1_Shape-Size-Color.html#1.-Shape">
+       <strong>
+        Shape
+       </strong>
+       ,
+       <strong>
+        Size
+       </strong>
+       , and
+       <strong>
+        Color
+       </strong>
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/2_Facet%202d.html#Faceting-in-col">
+       <strong>
+        Facet 2d
+       </strong>
+       Chart
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/3_Adaption%20of%20Bivariate.html#Adaption-of-Bi-Variate-Plots">
+       <strong>
+        Adaption Bi-variante
+       </strong>
+       Charts
+      </a>
+      <br/>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/4_Plot%20Matices.html#Pair-Grid">
+       <strong>
+        Plot Metrices
+       </strong>
+      </a>
+      <br/>
+     </p>
+     <br/>
+    </blockquote>
+   </details>
+  </p>
+  <hr/>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Time-Series Analysis Course
+     </strong>
+    </summary>
+    <br/>
+    <p>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        Time-Series with Pandas
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <ul>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review">
+          <strong>
+           1. Datetime Index
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#Import-the-data">
+          <strong>
+           2. Making Datetime as index and parse it as datetime64
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#resample()">
+          <strong>
+           3. Resample
+          </strong>
+          (making aggregation over time)
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/02-Time-Shifting.html#Time-Shifting">
+          <strong>
+           4. Time Shifting
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/03-Rolling-and-Expanding.html#Rolling-and-Expanding">
+          <strong>
+           5. Rolling &amp; Expanding
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/04-Visualizing-Time-Series-Data.html#Visualizing-Time-Series-Data">
+          <strong>
+           6. Visualizing Time-Series Data
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/06-Pandas-Time-Series-Exercises-SET-ONE-Solutions.html">
+          <strong>
+           From month as number to String
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/08-Time-Series-with-Pandas-Project-Exercise-SET-TWO-Solutions.html">
+          <strong>
+           Extensive Time-Series EDA
+          </strong>
+         </a>
+         <br/>
+        </p>
+        <br/>
+       </li>
+      </ul>
+     </details>
+    </p>
+    <p>
+     <details>
+      <summary>
+       <strong>
+        Statsmodel for Time-Series Analysis
+       </strong>
+      </summary>
+      <br/>
+      <p>
+      </p>
+      <ul>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/00-Introduction-to-Statsmodels.html">
+          <strong>
+           1. Hodrick-Prescott filter
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/01-ETS-Decomposition.html">
+          <strong>
+           2. ETS Decomposition
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/02-EWMA-Exponentially-Weighted-Moving-Average.html">
+          <strong>
+           3. EWMA (Exponantially Weighted Moving Average)
+          </strong>
+         </a>
+        </p>
+       </li>
+       <li>
+        <p>
+         <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/03-Holt-Winters-Methods.html#Holt-Winters-Methods">
+          <strong>
+           4. Holt-Winters Smoothing (Simple, Double, Triple)
+          </strong>
+         </a>
+         <br/>
+        </p>
+        <br/>
+       </li>
+      </ul>
+     </details>
+    </p>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

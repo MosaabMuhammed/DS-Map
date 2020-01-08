@@ -1,0 +1,93 @@
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Transfer Learning</h1>
+<div style='width:1000px;margin:auto'>
+
+<details><summary><b style='font-size:18px'>Template</b></summary>
+
+<p><a href="https://pytorch.org/docs/0.3.0/torchvision/models.html"><b>1. Choose Mode from here</b></a></p>
+
+<h4>1. Install the Model</h4>
+
+<pre><code class="python">from torchvision import datasets, transforms, models
+
+model = models.densenet121(pretrained=True)
+model
+</code></pre>
+
+
+
+<pre><code class="python"># Use GPU if it's available
+device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+
+# Freeze parameters so we don't backprop through them
+for param in model.parameters():
+    param.requires_grad = False
+
+from collections import OrderedDict
+classifier = nn.Sequential(OrderedDict([
+                          ('fc1', nn.Linear(1024, 500)),
+                          ('relu', nn.ReLU()),
+                          ('fc2', nn.Linear(500, 2)),
+                          ('output', nn.LogSoftmax(dim=1))
+                          ]))
+
+# See the name of the last layer, in this case 'classifier'
+model.classifier = classifier
+model.to(device);
+
+criterion = nn.NLLLoss()
+
+# Only train the classifier parameters, feature parameters are frozen
+optimizer = optim.Adam(model.classifier.parameters(), lr=0.003)
+</code></pre>
+
+
+<h4>2. Train the classifier weights</h4>
+
+<pre><code class="python">epochs = 1
+steps = 0
+running_loss = 0
+print_every = 5
+for epoch in range(epochs):
+    for inputs, labels in trainloader:
+        steps += 1
+        # Move input and label tensors to the default device
+        inputs, labels = inputs.to(device), labels.to(device)
+
+        optimizer.zero_grad()
+
+        logps = model.forward(inputs)
+        loss = criterion(logps, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+
+        if steps % print_every == 0:
+            test_loss = 0
+            accuracy = 0
+            model.eval()
+            with torch.no_grad():
+                for inputs, labels in testloader:
+                    inputs, labels = inputs.to(device), labels.to(device)
+                    logps = model.forward(inputs)
+                    batch_loss = criterion(logps, labels)
+
+                    test_loss += batch_loss.item()
+
+                    # Calculate accuracy
+                    ps = torch.exp(logps)
+                    top_p, top_class = ps.topk(1, dim=1)
+                    equals = top_class == labels.view(*top_class.shape)
+                    accuracy += torch.mean(equals.type(torch.FloatTensor)).item()
+
+            print(f&quot;Epoch {epoch+1}/{epochs}.. &quot;
+                  f&quot;Train loss: {running_loss/print_every:.3f}.. &quot;
+                  f&quot;Test loss: {test_loss/len(testloader):.3f}.. &quot;
+                  f&quot;Test accuracy: {accuracy/len(testloader):.3f}&quot;)
+            running_loss = 0
+            model.train()
+</code></pre>
+
+
+</details>
+</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

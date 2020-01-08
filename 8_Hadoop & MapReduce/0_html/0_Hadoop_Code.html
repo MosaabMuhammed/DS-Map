@@ -1,0 +1,220 @@
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1 style='text-decoration:underline'>Hadoop & MapReduce Code</h1>
+
+<div style='width:1000px;margin:auto'>
+<p><a href="https://docs.google.com/document/d/1MZ_rNxJhR4HCU1qJ2-w7xlk2MTHVqa9lnl_uj-zRkzk/pub" style="font-weight:bold">Transfer Files back and forth to the VM</a> </p>
+<details><summary><b>To Run Hadoop</b></summary><p>
+
+<pre><code>ssh localhost
+ssh 0.0.0.0
+source /usr/local/hadoop-working/hadoop-evn
+
+start-dfs.sh
+start-yarn.sh
+jps
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Get Version of Hadoop</b></summary><p>
+
+<pre><code>hadoop version
+
+# OR
+hdfs version
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Get  Default file path</b></summary><p>
+
+<pre><code>hdfs getconf -confkey fs.defaultFS
+</code></pre>
+
+</p></details>
+
+<details><summary><b>See files in current directory</b></summary><p>
+
+<pre><code>hadoop fs -ls / 
+
+# OR
+hdfs dfs -ls /
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Add a file to HDFS</b></summary><p>
+
+<pre><code># Add file.txt to /
+hadoop fs -put file.txt /
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Get a file From HDFS</b></summary><p>
+
+<pre><code># Get file.txt to /
+hadoop fs -get file.txt /
+</code></pre>
+
+</p></details>
+
+
+<details><summary><b>head & tail</b></summary><p>
+
+<pre><code>hadoop fs -tail /file.txt
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Rename file</b></summary><p>
+
+<pre><code>hadoop fs -mv file.txt newname.txt
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Delete file</b></summary><p>
+
+<pre><code>hadoop fs -rm file.txt
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Create Folder</b></summary><p>
+
+<pre><code>hadoop fs -mkdir myfolder
+</code></pre>
+
+</p></details>
+
+<hr>
+<details><summary><b>Mapper() [Python]</b></summary><p>
+<h4>Hadoop Streaming allows you to write your code for mapper and reducer in any language. The default is Java</h4>
+
+<pre><code># Your task is to make sure that this mapper code does not fail on corrupt data lines,
+# but instead just ignores them and continues working
+import sys
+
+def mapper():
+    # read standard input line by line
+    for line in sys.stdin:
+        # strip off extra whitespace, split on tab and put the data in an array
+        data = line.strip().split(&quot;\t&quot;)
+
+        # This is the place you need to do some defensive programming
+        # what if there are not exactly 6 fields in that line?
+        # YOUR CODE HERE
+        if len(data) == 6:
+            date, time, store, item, cost, payment = data
+        else:
+            continue
+        # this next line is called 'multiple assignment' in Python
+        # this is not really necessary, we could access the data
+        # with data[2] and data[5], but we do this for conveniency
+        # and to make the code easier to read
+        # date, time, store, item, cost, payment = data
+
+        # Now print out the data that will be passed to the reducer
+        print &quot;{0}\t{1}&quot;.format(store, cost)
+
+test_text = &quot;&quot;&quot;2013-10-09\t13:22\tMiami\tBoots\t99.95\tVisa
+2013-10-09\t13:22\tNew York\tDVD\t9.50\tMasterCard
+2013-10-09 13:22:59 I/O Error
+^d8x28orz28zoijzu1z1zp1OHH3du3ixwcz114&lt;f
+1\t2\t3&quot;&quot;&quot;
+
+# This function allows you to test the mapper with the provided test string
+def main():
+    import StringIO
+    sys.stdin = StringIO.StringIO(test_text)
+    mapper()
+    sys.stdin = sys.__stdin__
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Reducer() [Python]</b></summary><p>
+<h4>Hadoop Streaming allows you to write your code for mapper and reducer in any language. The default is Java</h4>
+
+<pre><code>import sys
+
+salesTotal = 0
+oldKey      = None
+
+for line in sys.stdin:
+    data = line.strip().split(&quot;\t&quot;)
+    if len(data) != 2:
+        continue
+
+    thisKey, thisSale = data
+    if oldKey and oldKey != thisKey:
+        print(oldKey, &quot;\t&quot;, salesTotal)
+        oldKey = thisKey
+        salesTotal = 0
+
+        oldKey = thisKey
+        salesTotal += float(thisSale)
+
+if oldKey != None:
+    print(oldKey, &quot;\t&quot;, salesTotal)
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Test Mapper() & Reducer</b></summary><p>
+<p><a href="https://www.youtube.com/watch?v=MYo8EZwDRUA">Video</a> </p>
+</p></details>
+
+<hr>
+<h4>Filtering Patterns</h4>
+<details><summary><b>Top N numbers</b></summary><p>
+
+<pre><code class="python">#!/usr/bin/python
+&quot;&quot;&quot;
+Your mapper function should print out 10 lines containing longest posts, sorted in
+ascending order from shortest to longest.
+Please do not use global variables and do not change the &quot;main&quot; function.
+&quot;&quot;&quot;
+import sys
+import csv
+
+
+def mapper():
+    reader = csv.reader(sys.stdin, delimiter='\t')
+    writer = csv.writer(sys.stdout, delimiter='\t', quotechar='&quot;', quoting=csv.QUOTE_ALL)
+
+    reader = list(reader)
+    reader.sort(key=lambda x: (-len(x[4]), x[4]), reverse=True)
+
+    for line in reader[1:]:
+        # YOUR CODE HERE
+        writer.writerow(line)
+
+
+
+test_text = &quot;&quot;&quot;\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;333\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;88888888\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;1\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;11111111111\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;1000000000\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;22\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;4444\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;666666\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;55555\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;999999999\&quot;\t\&quot;\&quot;
+\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;\&quot;\t\&quot;7777777\&quot;\t\&quot;\&quot;
+&quot;&quot;&quot;
+
+# This function allows you to test the mapper with the provided test string
+def main():
+    import StringIO
+    sys.stdin = StringIO.StringIO(test_text)
+    mapper()
+    sys.stdin = sys.__stdin__
+
+main()
+</code></pre>
+
+</p></details>
+
+</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="8-metrices">
+   <mark>
+    8. Metrices
+   </mark>
+  </h1>
+  <p>
+   <details>
+    <summary style="font-size:18px;color:red">
+     <strong>
+      1. Important Functions
+     </strong>
+    </summary>
+    <br/>
+    <p>
+    </p>
+    <pre><code class="python"># This function plots the confusion matrices given y_i, y_i_hat.
+# NOTE: make sure the predicted labels are NOT probabilities.
+# predicted_y =np.argmax(test_predicted_y, axis=1)
+# plot_confusion_matrix(y_test, predicted_y+1)
+def plot_confusion_matrix(y_test, y_pred):
+  C = confusion_matrix(y_test, y_pred)
+  A = (((C.T)/(C.sum(axis=1))).T)
+  B = (C/C.sum(axis=0))
+
+  liOfMat    = [C, B, A]
+  liOfTitles = ['Confusion Matrix', 'Precision Matrix (Column Sum = 1)', 'Recall Matrix (Row sum = 1)']
+  labels = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # Change this based on problem.
+
+  # Representing matrices in heatmap format.  
+  for i, mat in enumerate(liOfMat):
+    plt.figure(figsize=(20, 7))
+    sns.heatmap(mat, annot=True, cmap='viridis', fmt='.3f', xticklabels=labels, yticklabels=labels)
+    plt.xlabel('Predicted Class')
+    plt.ylabel('Original Class')
+    plt.title(liOfTitles[i])
+    plt.show(
+</code></pre>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Accuracy Score
+     </strong>
+    </summary>
+    <br/>
+    <p style="margin: 0">
+    </p>
+    <pre><code>accuracy = model.score(y_test, y_pred)
+</code></pre>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Confusion Matrix
+     </strong>
+    </summary>
+    <br/>
+    <p style="margin: 0">
+     <br/>
+     1)
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#1.-Confusion-Matrix">
+      Explanation for
+      <strong>
+       Confusion Matrix
+      </strong>
+     </a>
+     <br/>
+     2)
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Confusion-Matrix">
+      Confusion Matrix Result
+     </a>
+    </p>
+    <pre><code>pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True)
+
+# Another way with Background
+pd.crosstab(data.Pclass,data.Survived,margins=True).style.background_gradient(cmap='summer_r')
+</code></pre>
+    <pre><code>from sklearn.metrics import confusion_matrix
+sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
+</code></pre>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Classification Report
+     </strong>
+    </summary>
+    <br/>
+    <p style="margin: 0">
+     <br/>
+     1)
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#2.-Classification-Report">
+      Explanation of
+      <strong>
+       Classification Report
+      </strong>
+      ,
+      <strong>
+       Precision
+      </strong>
+      ,
+      <strong>
+       Recall
+      </strong>
+      , and
+      <strong>
+       F1_score
+      </strong>
+      .
+     </a>
+     <br/>
+     2)
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Classification-Report">
+      Classification Report (Result)
+     </a>
+    </p>
+    <pre><code>from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))
+</code></pre>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      Ploting the ROC Curve
+     </strong>
+    </summary>
+    <br/>
+    <p style="margin: 0">
+     <br/>
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#ROC-(Reciever-Operating-Characteristic)-Curve">
+      See the ploting
+     </a>
+    </p>
+    <pre><code># Extract the prediction probabilities
+y_pred_proba = knn.predict_proba(X_test)[:, 1]
+
+# Calculate the roc_curve
+from sklearn.metrics import roc_curve
+fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)
+
+# Generate the plot
+plt.plot([0, 1], [0, 1], 'k--')
+plt.plot(fpr, tpr, label='knn')
+plt.xlabel('fpr')
+plt.ylabel('tpr')
+plt.title('KNN (n_neighbors = 16) ROC Curve')
+</code></pre>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <p>
+   <details>
+    <summary>
+     <strong>
+      ROC Area Under Curve (AUC)
+     </strong>
+    </summary>
+    <br/>
+    <p style="margin: 0">
+     <br/>
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Area-Under-ROC-Curve">
+      See the notebook
+     </a>
+    </p>
+    <pre><code>from sklearn.metrics import roc_auc_score
+print('{:.2f}'.format(roc_auc_score(y_test, y_pred_proba)*100))
+</code></pre>
+    <p>
+    </p>
+    <br/>
+   </details>
+  </p>
+  <ul>
+   <li>
+    Mean Absolute Error (Regression).
+   </li>
+   <li>
+    Mean Squared Error (Regression).
+   </li>
+   <li>
+    Square Root Mean Square Error (Regression).
+   </li>
+  </ul>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

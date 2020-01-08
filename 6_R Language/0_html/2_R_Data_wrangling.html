@@ -1,0 +1,397 @@
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Data Wrangling [R]</h1>
+<div style='width:1000px;margin:auto'>
+
+<details><summary><b>DataFrame</b></summary><p>
+
+<details><summary><b>Load DataFrame</b></summary><p>
+
+<pre><code># You should see mtcars appear in the 'Environment' tab with
+# &lt;Promise&gt; listed next to it. 
+
+# The object (mtcars) appears as a 'Promise' object in the
+# workspace until we run some code that uses the object.
+
+# R has stored the mtcars data into a spreadsheet-like object
+# called a data frame. Run the next command to see what variables
+# are in the data set and to fully load the data set as an
+# object in R. You should see &lt;Promise&gt; disappear when you
+# run the next line of code.
+
+# Load from existing R dataframes.
+data(mtcars)
+
+## Load from csv file
+# we use stringsAsFactors=FALSE to treat strings as strings not factors
+# Note: Factor means a categorical variable that has different flavors or levels.
+statesInfo &lt;- read.csv('stateData.csv', stringsAsFactors=FALSE)
+
+# TO open a window and choose a csv file by a mouse.
+df &lt;- read.csv(file.choose())
+
+## Load from tsv
+df &lt;- read.delim('pseudo_facebook.tsv')
+df &lt;- read.csv('pseudo_facebook.tsv', sep='\t')
+</code></pre>
+
+</p>
+</details>
+
+
+<details><summary>Print <b>Column names</b> and <b>Row names</b></summary>
+<p>
+
+<pre><code># Print out all the data frame
+mtcars
+
+# Print the name of the columns
+names(mtcars)
+colnames(df)
+
+# Print the name of the rows
+row.names(mtcars)
+rownames(df)
+
+# Run this code to change the row names of the cars to numbers.
+row.names(mtcars) &lt;- c(1:32)
+</code></pre>
+
+</p>
+</details>
+
+<details><summary>Print <b>Structure</b> of <b>DataFrame</b> [.info]</summary>
+<p>
+
+<pre><code># str = structure
+str(mtcars)
+
+########## output ##########
+'data.frame':   32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
+</code></pre>
+
+</p>
+</details>
+
+<details><summary>Print <b>Shape</b> of <b>DataFrame</b> [.shape]</summary>
+<p>
+
+<pre><code># print out the dimensions
+dim(mtcars)
+
+########## output ##########
+[1] 32 11       # 32 rows, 11 columns
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>Head</b> & <b>Tail</b> [.head(), .tail()]</summary>
+<p>
+
+<pre><code># It's tedious to relabel our data frame with the right car names
+# so let's reload the data set and print out the first ten rows.
+
+data(mtcars)
+head(mtcars, 10)
+
+# The head() function prints out the first six rows of a data frame
+# by default. Run the code below to see.
+head(mtcars)
+
+# I think you'll know what this does.
+tail(mtcars, 3)
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>summary</b> [.describe()]</summary>
+<p>
+
+<pre><code># like df.descibe in python to show some descriptive statistics about the columns in the data frame.
+summary(df)
+
+# Print only min and max
+range(df$age)
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>Variance & Standard Deviation</b></summary>
+<p>
+
+<pre><code># STD
+sd(df$area)
+
+# Variance
+var(df$area)
+</code></pre>
+
+</p>
+</details>
+
+<details><summary>How many <b>unique</b> values in <b>a Categorical (factor)</b> Variable</summary>
+<p>
+
+<pre><code># like df.descibe in python to show some descriptive statistics about the columns in the data frame.
+table(df$cat_col)
+
+######### output ################ age
+      18-24       25-34       35-44       45-54       55-64 65 or Above    Under 18 
+      15802       11575        2257         502         140          60        2330 
+</code></pre>
+
+
+<h4>2. Show only the levels of the categorical variable</h4>
+
+<pre><code>levels(df$cat_col)
+
+####### Output ##########
+[1] &quot;female&quot; &quot;male&quot;  
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>By</b> statistic [.groupby in Python]</summary><p>
+
+<pre><code># (numeric variable, cat variable, statistic)
+by(df$friend_count, df$gender, summary)
+
+##### Output #####
+df$gender: female
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0      37      96     242     244    4923 
+------------------------------------------------------------------- 
+df$gender: male
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0      27      74     165     182    4917 
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Select specific Column</b></summary>
+<p>
+
+<pre><code># 12. Let's examine our car data more closely. We can access an
+# an individual variable (or column) from the data frame using
+# the '$' sign. Run the code below to print out the variable
+# miles per gallon. This is the mpg column in the data frame.
+
+mtcars$mpg
+
+# Print out any two other variables to the console.
+mtcars$cyl
+mtcars$drat
+
+# Select by numbers of columns
+head(statesInfo[, c(1, 2, 3)])
+
+# Select a bunch of columns by number
+head(df[, 1:5])  # select from first column to the fifth.
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>Select based on Condition</b></summary>
+<p>
+
+<pre><code># 1. using &quot;subset(dataframe, condition on columns)&quot; 
+stateSubset &lt;- subset(df, state.region == 1)
+
+# 2. using &quot;df[Rows Condition, Columns Condition]
+stateSubset &lt;- df[df$state.region == 1, ]   # Select all columns for that condition
+
+## Note: &quot;state.region&quot; is the name of the columns
+</code></pre>
+
+</p>
+</details>
+
+<details><summary>Remove <b>Missing Values</b></summary>
+<p>
+
+<pre><code># Extract missing data (in thise case, returns empty)
+df_without_na &lt;- na.omit(df)
+
+# NOTE:
+# In this case, you get an empty data frame, because every state has at least one missing value amongst the 153 fields. In contrast, if you ran the function with income_total, you’d just get the same data frame, because no values are missing for the first seven columns.
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>Merge</b> 2 dataframes together [.merge]</summary>
+<p>
+
+<pre><code># Combine
+income0813 &lt;- merge(df1, df2, by=&quot;Id&quot;)
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>Save</b> dataframe as csv file [.to_csv]</summary>
+<p>
+
+<pre><code># Save df in a csv file
+write.table(income_total, &quot;data/income-totals.csv&quot;,
+    row.names=FALSE, sep=&quot;,&quot;)
+
+</code></pre>
+
+</p></details>
+
+<p></p></details></p>
+<details><summary><b>Statistics</b></summary>
+<p>
+
+<pre><code># This is a vector containing the mpg (miles per gallon) of
+# the 32 cars. Run this next line of code to get the average mpg for
+# for all the cars. What is it?
+mean(mtcars$mpg)
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>Misc</b></summary>
+<p>
+
+<details><summary>Needs <b>Help</b></summary>
+<p>
+
+<pre><code># Add '?' before any command to get some describtion
+?names(mtcars)
+</code></pre>
+
+</p>
+</details>
+
+<details><summary><b>Key Bindings</b></summary>
+<p>
+<ol>
+<li><b>[Ctrl + Enter]</b>: Perform the current command, and move the cursor to the following command.</li>
+
+<li><b>[Alt + Enter]</b>: Perform <i>only</i> the current command.</li>
+</ol>
+</p>
+</details>
+
+<details><summary>See or Change <b>Location</b></summary>
+<p>
+
+<pre><code># see the working directory
+getwd()
+
+# change the working directory
+setwd('link/to/path')
+</code></pre>
+
+</p>
+</details>
+
+<details><summary>See files in the current directory</summary>
+<p>
+
+<pre><code># see files in the current directory
+list.files()
+</code></pre>
+
+</p>
+</details>
+
+<p></p><br />
+</details></p>
+<details><summary>Condition statistic for column using <b>group_by() & summarise()</b></summary><p>
+
+<pre><code># 1. First Trial
+install.packages('dplyr')
+library(dplyr)
+
+age_groups &lt;- group_by(df, age)
+df.fc_by_age &lt;- summarise(age_groups,
+                          friend_count_mean = mean(friend_count),
+                          friend_count_median = median(friend_count),
+                          n = n())
+df.fc_by_age &lt;- arrange(df.fc_by_age, age)
+
+head(df.fc_by_age)
+
+#### Output ####
+    age friend_count_mean friend_count_median     n
+  &lt;int&gt;             &lt;dbl&gt;               &lt;dbl&gt; &lt;int&gt;
+1    13              165.                 74    484
+2    14              251.                132   1925
+3    15              348.                161   2618
+4    16              352.                172.  3086
+5    17              350.                156   3283
+6    18              331.                162   5196
+</code></pre>
+
+
+
+<pre><code># Second Trial
+df.fc_by_age &lt;- df %&gt;%
+  group_by(age) %&gt;%
+  summarise(friend_count_mean = mean(friend_count),
+            friend_count_median = median(friend_count),
+            n = n()) %&gt;%
+  arrange(age)
+</code></pre>
+
+</p></details>
+
+<details><summary>Find <b>Correlation</b></summary><p>
+
+<pre><code># you can choose between pearson or spearman and kendall.
+cor.test(df$age, df$friend_count, method='pearson')
+
+# Correlation with subset of the data
+with(subset(df, age&lt;=70), cor.test(age, friend_count, method='pearson'))
+</code></pre>
+
+</p></details>
+
+<details><summary>Add & Print  <b>2 Strings</b> together</summary><p>
+
+<pre><code>name &lt;- &quot;mosaab&quot;
+paste('Hello', name)
+
+# Better one
+cat(&quot;OLS gave slope of &quot;, summary(d1)$coefficients[2, 1],
+    &quot;and an R-sqr of &quot;, summary(d1)$r.squared,&quot;\n&quot;)
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Data Binning</b></summary><p>
+
+<pre><code>breaks &lt;- c(0, 23000, 52000, 82000, 250000, 999999)
+labels &lt;- c('Poverty', 'LowerMid', 'UpperMid', 'Wealthy', 'Rich')
+wealth &lt;- cut(df$income, breaks, labels)
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Aggregation</b></summary><p>
+
+<pre><code>aggregate(x=offertest$purchase_amt,
+          by=list(offertest$offer), FUN=&quot;mean&quot;)
+</code></pre>
+
+</p></details>
+
+</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 style="color:darkcyan">
+   8. Post-Modeling
+  </h1>
+  <div style="width:1000px;margin:auto">
+   <details>
+    <summary style="font-size:18px;">
+     <b>
+      ML Explainability
+     </b>
+    </summary>
+    <p>
+    </p>
+    <blockquote>
+     <p>
+      <b>
+       ML Explainability helps in:
+      </b>
+      <br/>
+     </p>
+     <ul>
+      <li>
+       Debugging
+      </li>
+      <li>
+       Informing feature engineering
+      </li>
+      <li>
+       Directing future data collection
+      </li>
+      <li>
+       Informing human decision-making
+      </li>
+      <li>
+       Building Trust
+      </li>
+     </ul>
+    </blockquote>
+    <details>
+     <summary>
+      <b>
+       Permutation Importance
+      </b>
+     </summary>
+     <p>
+     </p>
+     <h4>
+      Fit a model
+     </h4>
+     <pre><code class="python">import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+data = pd.read_csv('../input/fifa-2018-match-statistics/FIFA 2018 Statistics.csv')
+y = (data['Man of the Match'] == "Yes")  # Convert from string "Yes"/"No" to binary
+feature_names = [i for i in data.columns if data[i].dtype in [np.int64]]
+X = data[feature_names]
+train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+my_model = RandomForestClassifier(n_estimators=100,
+                                  random_state=0).fit(train_X, train_y)
+</code></pre>
+     <h4>
+      Apply Permuation Importance
+     </h4>
+     <pre><code class="python"># Credits: https://www.kaggle.com/dansbecker/permutation-importance
+import eli5
+from eli5.sklearn import PermutationImportance
+
+perm = PermutationImportance(my_model, random_state=1).fit(val_X, val_y)
+eli5.show_weights(perm, feature_names = val_X.columns.tolist())
+
+### NOTE:
+# First Number: shows how much model performance decreased with a random shuffling 
+# Second Number: The number after the ± measures how performance varied from one-reshuffling to the next.
+# You'll occasionally see negative values for permutation importances. In those cases, the predictions on the shuffled (or noisy) data happened to be more accurate than the real data. This happens when the feature didn't matter (should have had an importance close to 0), but random chance caused the predictions on shuffled data to be more accurate. This is more common with small datasets, like the one in this example, because there is more room for luck/chance.
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      <b>
+       Partial Dependance Plots
+      </b>
+     </summary>
+     <p>
+     </p>
+     <p>
+      <a href="https://www.kaggle.com/dansbecker/partial-plots">
+       <b>
+        Notebook
+       </b>
+      </a>
+     </p>
+     <h4>
+      1. Building a model.
+     </h4>
+     <pre><code class="python">import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+data = pd.read_csv('../input/fifa-2018-match-statistics/FIFA 2018 Statistics.csv')
+y = (data['Man of the Match'] == "Yes")  # Convert from string "Yes"/"No" to binary
+feature_names = [i for i in data.columns if data[i].dtype in [np.int64]]
+X = data[feature_names]
+train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+tree_model = DecisionTreeClassifier(random_state=0, max_depth=5, min_samples_split=5).fit(train_X, train_y)
+</code></pre>
+     <h4>
+      PDP for one feature
+     </h4>
+     <pre><code class="python">from matplotlib import pyplot as plt
+from pdpbox import pdp, get_dataset, info_plots
+
+# Create the data that we will plot
+pdp_goals = pdp.pdp_isolate(model=tree_model, dataset=val_X, model_features=feature_names, feature='Goal Scored')
+
+# plot it
+pdp.pdp_plot(pdp_goals, 'Goal Scored')
+plt.show()
+</code></pre>
+     <h4>
+      PDP for 2 features
+     </h4>
+     <pre><code class="python"># Similar to previous PDP plot except we use pdp_interact instead of pdp_isolate and pdp_interact_plot instead of pdp_isolate_plot
+features_to_plot = ['Goal Scored', 'Distance Covered (Kms)']
+inter1  =  pdp.pdp_interact(model=tree_model, dataset=val_X, model_features=feature_names, features=features_to_plot)
+
+pdp.pdp_interact_plot(pdp_interact_out=inter1, feature_names=features_to_plot, plot_type='contour', plot_pdp=True)
+plt.show()
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      <b>
+       SHAP
+      </b>
+      Values (One Row &amp; All Features)
+     </summary>
+     <p>
+     </p>
+     <p>
+      <a href="https://www.kaggle.com/dansbecker/shap-values">
+       <b>
+        Notebook
+       </b>
+      </a>
+     </p>
+     <pre><code class="python"># Your Code Here
+import shap  # package used to calculate Shap values
+
+data_for_prediction = val_X.iloc[0,:]  # use 1 row of data here. Could use multiple rows if desired
+
+def patient_risk_factors(my_model, row):
+    # Create object that can calculate shap values
+    explainer = shap.TreeExplainer(my_model)
+    shap_values = explainer.shap_values(row)
+    shap.initjs()
+    return shap.force_plot(explainer.expected_value[0], shap_values[0], row)
+
+patient_risk_factors(my_model, data_for_prediction) 
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      SHAP
+      <b>
+       Summary Plot
+      </b>
+      (All Rows &amp; All Features)
+     </summary>
+     <p>
+     </p>
+     <p>
+      <a href="https://www.kaggle.com/dansbecker/advanced-uses-of-shap-values">
+       <b>
+        Notebook
+       </b>
+      </a>
+     </p>
+     <pre><code class="python">import shap  # package used to calculate Shap values
+
+# Create object that can calculate shap values
+explainer = shap.TreeExplainer(my_model)
+
+# calculate shap values. This is what we will plot.
+# Calculate shap_values for all of val_X rather than a single row, to have more data for plot.
+shap_values = explainer.shap_values(val_X)
+
+# Make plot. Index of [1] is explained in text below.
+shap.summary_plot(shap_values[1], val_X)
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      SHAP
+      <b>
+       Dependence Contribution Plot
+      </b>
+      (All Rows &amp; One Feature)
+     </summary>
+     <p>
+     </p>
+     <p>
+      <a href="https://www.kaggle.com/dansbecker/advanced-uses-of-shap-values">
+       <b>
+        Notebook
+       </b>
+      </a>
+     </p>
+     <pre><code class="python">import shap  # package used to calculate Shap values
+
+# Create object that can calculate shap values
+explainer = shap.TreeExplainer(my_model)
+
+# calculate shap values. This is what we will plot.
+shap_values = explainer.shap_values(X)
+
+# make plot.
+shap.dependence_plot('Ball Possession %', shap_values[1], X, interaction_index="Goal Scored")
+</code></pre>
+    </details>
+   </details>
+   <details>
+    <summary style="font-size:18px;">
+     <b>
+      Learning Curves
+     </b>
+    </summary>
+    <p>
+     <b>
+      NOTE: Things to change:
+     </b>
+     <br/>
+     - Model.
+     <br/>
+     - Hyperparameter.
+     <br/>
+     - Metric.
+     <br/>
+    </p>
+    <p>
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Machine%20Learning%20Engineer%20Nano-degree/1_Model%20Selection/home/boston_housing.html#Learning-Curves">
+      <b>
+       Credits
+      </b>
+     </a>
+    </p>
+    <pre><code class="python">def ModelLearning(X, y):
+    """ Calculates the performance of several models with varying sizes of training data.
+        The learning and testing scores for each model are then plotted. """
+
+    # Create 10 cross-validation sets for training and testing
+    cv = ShuffleSplit(X.shape[0], n_iter = 10, test_size = 0.2, random_state = 0)
+
+    # Generate the training set sizes increasing by 50
+    train_sizes = np.rint(np.linspace(1, X.shape[0]*0.8 - 1, 9)).astype(int)
+
+    # Create the figure window
+    fig = plt.figure(figsize=(10,7))
+
+    # Create three different models based on max_depth
+    for k, depth in enumerate([1,3,6,10]):
+
+        # Create a Decision tree regressor at max_depth = depth
+        regressor = DecisionTreeRegressor(max_depth = depth)
+
+        # Calculate the training and testing scores
+        sizes, train_scores, test_scores = curves.learning_curve(regressor, X, y, \
+            cv = cv, train_sizes = train_sizes, scoring = 'r2')
+
+        # Find the mean and standard deviation for smoothing
+        train_std = np.std(train_scores, axis = 1)
+        train_mean = np.mean(train_scores, axis = 1)
+        test_std = np.std(test_scores, axis = 1)
+        test_mean = np.mean(test_scores, axis = 1)
+
+        # Subplot the learning curve 
+        ax = fig.add_subplot(2, 2, k+1)
+        ax.plot(sizes, train_mean, 'o-', color = 'r', label = 'Training Score')
+        ax.plot(sizes, test_mean, 'o-', color = 'g', label = 'Testing Score')
+        ax.fill_between(sizes, train_mean - train_std, \
+            train_mean + train_std, alpha = 0.15, color = 'r')
+        ax.fill_between(sizes, test_mean - test_std, \
+            test_mean + test_std, alpha = 0.15, color = 'g')
+
+        # Labels
+        ax.set_title('max_depth = %s'%(depth))
+        ax.set_xlabel('Number of Training Points')
+        ax.set_ylabel('Score')
+        ax.set_xlim([0, X.shape[0]*0.8])
+        ax.set_ylim([-0.05, 1.05])
+
+    # Visual aesthetics
+    ax.legend(bbox_to_anchor=(1.05, 2.05), loc='lower left', borderaxespad = 0.)
+    fig.suptitle('Decision Tree Regressor Learning Performances', fontsize = 16, y = 1.03)
+    fig.tight_layout()
+    fig.show() 
+</code></pre>
+    <h4>
+     2. More General Function from
+     <a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html#sphx-glr-auto-examples-model-selection-plot-learning-curve-py">
+      Sklearn
+     </a>
+    </h4>
+    <pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn.datasets import load_digits
+from sklearn.model_selection import learning_curve
+from sklearn.model_selection import ShuffleSplit
+
+
+def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
+                        n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
+    """
+    Generate a simple plot of the test and training learning curve.
+
+    Parameters
+    ----------
+    estimator : object type that implements the "fit" and "predict" methods
+        An object of that type which is cloned for each validation.
+
+    title : string
+        Title for the chart.
+
+    X : array-like, shape (n_samples, n_features)
+        Training vector, where n_samples is the number of samples and
+        n_features is the number of features.
+
+    y : array-like, shape (n_samples) or (n_samples, n_features), optional
+        Target relative to X for classification or regression;
+        None for unsupervised learning.
+
+    ylim : tuple, shape (ymin, ymax), optional
+        Defines minimum and maximum yvalues plotted.
+
+    cv : int, cross-validation generator or an iterable, optional
+        Determines the cross-validation splitting strategy.
+        Possible inputs for cv are:
+          - None, to use the default 3-fold cross-validation,
+          - integer, to specify the number of folds.
+          - :term:`CV splitter`,
+          - An iterable yielding (train, test) splits as arrays of indices.
+
+        For integer/None inputs, if ``y`` is binary or multiclass,
+        :class:`StratifiedKFold` used. If the estimator is not a classifier
+        or if ``y`` is neither binary nor multiclass, :class:`KFold` is used.
+
+        Refer :ref:`User Guide &lt;cross_validation&gt;` for the various
+        cross-validators that can be used here.
+
+    n_jobs : int or None, optional (default=None)
+        Number of jobs to run in parallel.
+        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
+        ``-1`` means using all processors. See :term:`Glossary &lt;n_jobs&gt;`
+        for more details.
+
+    train_sizes : array-like, shape (n_ticks,), dtype float or int
+        Relative or absolute numbers of training examples that will be used to
+        generate the learning curve. If the dtype is float, it is regarded as a
+        fraction of the maximum size of the training set (that is determined
+        by the selected validation method), i.e. it has to be within (0, 1].
+        Otherwise it is interpreted as absolute sizes of the training sets.
+        Note that for classification the number of samples usually have to
+        be big enough to contain at least one sample from each class.
+        (default: np.linspace(0.1, 1.0, 5))
+    """
+    plt.figure()
+    plt.title(title)
+    if ylim is not None:
+        plt.ylim(*ylim)
+    plt.xlabel("Training examples")
+    plt.ylabel("Score")
+    train_sizes, train_scores, test_scores = learning_curve(
+        estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(test_scores, axis=1)
+    test_scores_std = np.std(test_scores, axis=1)
+    plt.grid()
+
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                     train_scores_mean + train_scores_std, alpha=0.1,
+                     color="r")
+    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
+                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
+             label="Training score")
+    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
+             label="Cross-validation score")
+
+    plt.legend(loc="best")
+    return plt
+
+
+digits = load_digits()
+X, y = digits.data, digits.target
+
+
+title = "Learning Curves (Naive Bayes)"
+# Cross validation with 100 iterations to get smoother mean test and train
+# score curves, each time with 20% data randomly selected as a validation set.
+cv = ShuffleSplit(n_splits=100, test_size=0.2, random_state=0)
+
+estimator = GaussianNB()
+plot_learning_curve(estimator, title, X, y, ylim=(0.7, 1.01), cv=cv, n_jobs=4)
+
+title = r"Learning Curves (SVM, RBF kernel, $\gamma=0.001$)"
+# SVC is more expensive so we do a lower number of CV iterations:
+cv = ShuffleSplit(n_splits=10, test_size=0.2, random_state=0)
+estimator = SVC(gamma=0.001)
+plot_learning_curve(estimator, title, X, y, (0.7, 1.01), cv=cv, n_jobs=4)
+
+plt.show()
+</code></pre>
+   </details>
+  </div>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>
