@@ -4,12 +4,12 @@
 
 
 <li><a href="https://www.browserling.com/tools/line-length-sort"><b><span style='color:#333'>Reorder your imports based on length</span></b></a> </li>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/1_Python/21_debugging.html"><b><span style='color:#333'>Debugger</span></b></a> </li>
+<li><a href="./1_starter//21_debugging.html"><b><span style='color:#333'>Debugger</span></b></a> </li>
 
 
 <details><summary> <b>Macros</b> </summary><p>
 <ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/Macros.html#Macros"><b><span style='color:#333'>How to build a macro</span></b></a> </li>
+<li><a href="./1_starter/Macros.html#Macros"><b><span style='color:#333'>How to build a macro</span></b></a> </li>
 </ul>
 
 <details><summary> <b>__basic</b> </summary><p>
@@ -331,7 +331,7 @@ def shape(*args):
 
 <details><summary> <b>List of Libraries</b> </summary>
 
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_%20A%20Data%20Science%20Framework%20to%20achieve%2099%20Accuracy/a-data-science-framework-to-achieve-99-accuracy.html#3.1-Import-Libraries">Import Libraries</a></p>
+<p><a href="./1_starter/a-data-science-framework-to-achieve-99-accuracy.html#3.1-Import-Libraries">Import Libraries</a></p>
 
 <p style="margin: 0">
 ~~~python
@@ -502,7 +502,8 @@ pp.ProfileReport(train)
   <a class="list-group-item list-group-item-action" data-toggle="list" href="#clean" role="tab" aria-controls="settings">Cleaning the text<span class="badge badge-primary badge-pill">5</span></a>
     <a class="list-group-item list-group-item-action" data-toggle="list" href="#split" role="tab" aria-controls="settings">Train and test Split<span class="badge badge-primary badge-pill">6</span></a>
     <a class="list-group-item list-group-item-action" data-toggle="list" href="#model" role="tab" aria-controls="settings"> Creating the Model<span class="badge badge-primary badge-pill">7</span></a>
-    <a class="list-group-item list-group-item-action" data-toggle="list" href="#eval" role="tab" aria-controls="settings">Model Evaluation<span class="badge badge-primary badge-pill">8</span></a>  
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#eval" role="tab" aria-controls="settings">Model Evaluation<span class="badge badge-primary badge-pill">8</span></a>
+</div>
 ```
 <h4>Then at each cell, do the following</h4>
 ```
