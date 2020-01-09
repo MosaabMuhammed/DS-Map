@@ -14,15 +14,17 @@
 
 <details><summary> <b>__basic</b> </summary><p>
 ~~~python
-# Version 1.3
+# Version 1.4
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from tqdm import tqdm_notebook as tqdm
+from tqdm import tqdm
 from termcolor import colored
 import os
 import gc
 import sys
+import pdb
+
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -32,11 +34,10 @@ import matplotlib.pyplot as plt
 %matplotlib inline
 %precision 4
 
+tqdm.pandas(tqdm())
+
 pd.set_option('display.max_columns', None)
 pd.set_option('display.float_format', lambda x: '{:.4f}'.format(x)) #Limiting floats output to 3 decimal points
-
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
 
 plt.style.use('fivethirtyeight')
 sns.set_style('white')
@@ -175,13 +176,30 @@ def dd(*args):
     print('--'*20)
     for x in args:
         varName = colored(var2str(x), attrs=['blink'])
-        print(f"~> Type  of {varName}: {colored(type(x), 'green')}")
-        print(f"~> Shape of {varName}: {colored(str(x.shape), 'blue')}")
+        # Get the type of the variable.
+        try:
+            print(f"~> Type  of {varName}: {colored(type(x), 'green')}")
+        except:
+            print(f"~> Can't get the {colored('type', 'green')} of {varName}")
+        
+        # Get the shape of the variable.
+        try:
+            print(f"~> Shape of {varName}: {colored(str(x.shape), 'blue')}")
+        except:
+            print(f"~> Length of {varName}: {colored(str(len(x)), 'blue')}")
+                
+        # Get the first value of the variable.
+        try:
+            print(f"~> First Value of {varName}: {x[0]}")
+        except:
+            if type(x) is type(pd.DataFrame()) or type(x) is type(pd.Series):
+                print(f"~> First Row of {varName}: \n\n{x.iloc[0]}")
+            elif type(x) is type(dict()):
+                print(f"~> Can't show the first value of a {colored('dictionary', 'red')}.")
         print('--'*20)
-        
-        
-print(f'~> The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}, {bg("show_annotation", "s")}, {bg("dd", "s")}')
 
+
+print(f'~> The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}, {bg("show_annotation", "s")}, {bg("dd", "s")}')
 
 ~~~
 </p></details>
