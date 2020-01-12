@@ -466,9 +466,16 @@ print(f"~> Final Result: {optimizer.max}")
 ```
 </p></details>
 
+<details><summary> <b>LightGBM</b> </summary><p>
+<ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/2_Bayesian%20Optimization%20for%20LightGBM.html">Using<b> Bayesian Optimization</b> library</a></li>
+
+<li><a href="./6_data_processing/hyperopt_for_lightgbm_with_f1_score.html">Using<b> hyperopt</b> library</a></li>
+</ul>
+</p></details>
+
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">For <b>Sklearn Models</b></a></li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/2_Bayesian%20Optimization%20for%20LightGBM.html">For <b> LightGBM</b></a></li>
 
 </ul></p></details>
 
