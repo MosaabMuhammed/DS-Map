@@ -19,4 +19,9 @@ x = GlobalMaxPool1D()(x)
 
 </p></details>
 
+<details><summary><b>BERT</b></summary><p>
+<li><a href='./0_notebooks/BERT for Humans.html#Comprehensive-BERT-Tutorial'>Tutorials on BERT</a></li>
+<li><a href='./0_notebooks/BERT Keras.html#This-is-the-very-first-time-I-would-be-implementing-BERT.'>BERT in Keras</a></li>
+</p></details>
+
 </div>
