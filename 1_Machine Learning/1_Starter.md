@@ -551,4 +551,25 @@ pp.ProfileReport(train)
 </p>
 </details>
 
+<details><summary> <b>Interactive Pandas Plotting</b> </summary>
+<p>
+```
+pd.options.plotting.backend = 'hvplot'
+
+df.plot()
+```
+</p>
+</details>
+
+<details><summary> <b>Import Kaggle dataset into Google Colab</b> </summary>
+<p>
+```
+import os
+os.environ['KAGGLE_USERNAME'] = "xxxxxx" # username from the json file
+os.environ['KAGGLE_KEY'] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx" # key from the json file
+!kaggle datasets download -d iarunava/happy-house-dataset # api copied from kaggle
+```
+</p>
+</details>
+
 </div>
