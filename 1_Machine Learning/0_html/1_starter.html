@@ -589,4 +589,16 @@ df.plot()
 </p>
 </details>
 
+<details><summary> <b>Import Kaggle dataset into Google Colab</b> </summary>
+<p>
+
+<pre><code>import os
+os.environ['KAGGLE_USERNAME'] = &quot;mosaabmuhammed&quot; # username from the json file
+os.environ['KAGGLE_KEY'] = &quot;bb6e0cba518df4df2fca479e86c7903a&quot; # key from the json file
+!kaggle competitions download -c FacebookRecruiting # api copied from kaggle
+</code></pre>
+
+</p>
+</details>
+
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

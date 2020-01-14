@@ -565,9 +565,9 @@ df.plot()
 <p>
 ```
 import os
-os.environ['KAGGLE_USERNAME'] = "xxxxxx" # username from the json file
-os.environ['KAGGLE_KEY'] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx" # key from the json file
-!kaggle datasets download -d iarunava/happy-house-dataset # api copied from kaggle
+os.environ['KAGGLE_USERNAME'] = "mosaabmuhammed" # username from the json file
+os.environ['KAGGLE_KEY'] = "bb6e0cba518df4df2fca479e86c7903a" # key from the json file
+!kaggle competitions download -c FacebookRecruiting # api copied from kaggle
 ```
 </p>
 </details>
