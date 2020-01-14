@@ -574,6 +574,12 @@ else:
 </p>
 </details>
 
+<details><summary><b>Add a record to a DataFrame</b></summary><p>
+```
+df = train.append(test, ignore_index=True)
+```
+</p></details>
+
  </div>
 
 
