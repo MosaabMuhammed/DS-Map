@@ -1,6 +1,6 @@
 # 4. Feature Engineering
  
-
+<div style='width:1000px;margin:auto'>
 <details><summary style='color:#72A;'><b>Merge</b> to <b>Original Data</b></summary>
 <p>
 ~~~python
@@ -694,6 +694,12 @@ print('Removed %d features from training features'  % (feature_matrix.shape[1] -
 </p>
 </details>
 
-
 </p>
 </details>
+
+
+<details><summary><b>Graph-based Featuers</b></summary><p>
+<a href="./4_feature_engineering/Social network Graph Link Prediction - Facebook Challenge.html"><b>notebook</b></a>
+</p></details>
+
+</div>
