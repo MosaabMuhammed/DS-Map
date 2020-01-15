@@ -526,7 +526,12 @@ timer(start_time) # timing ends here for &quot;start_time&quot; variable
 
 <pre><code>import pandas_profiling as pp
 
-pp.ProfileReport(train)
+# Generate a report in HTML
+profile = pp.ProfileReport(train, title='Pandas Profiling Report', style={'full_width':True})
+profile.to_file(&quot;output.html&quot;)
+
+# For command line.
+!pandas_profiling train.csv output.html
 </code></pre>
 
 </p>
