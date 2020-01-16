@@ -577,4 +577,14 @@ os.environ['KAGGLE_KEY'] = "bb6e0cba518df4df2fca479e86c7903a" # key from the jso
 </p>
 </details>
 
+<details><summary> <b>Monitor Loop Progress</b> </summary>
+<p>
+```
+for i in range(0, len(train.columns)):
+    # if i % 10 == 0:
+    print(f"\r{i*100/train.shape[1]:0.4f}%", end='')
+```
+</p>
+</details>
+
 </div>
