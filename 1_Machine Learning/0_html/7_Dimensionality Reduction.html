@@ -174,6 +174,51 @@ plt.title('PC2 vs PC1 by Target');
  </p>
  </details>
 
+<details><summary><b>t-SNE</b></summary><p>
+<h4>1. Faster Wrapper for t-SNE</h4>
+
+<pre><code># !pip install tsne
+from tsne import bh_sne
+
+X_2d = bh_sne(train.drop(['subject', 'Activity', 'ActivityName'], axis=1))
+
+# Plot the 2D reduced data
+plt.figure(figsize=(12, 8))
+sns.scatterplot(x=X_2d[:, 0], y=X_2d[:, 1], hue=train['ActivityName'], alpha=0.5)
+plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0);
+</code></pre>
+
+
+<h4>2. Sklearn Wrapper</h4>
+
+<pre><code># Performing t-SNE with sklearn-wrapper
+from sklearn.manifold import TSNE
+
+def perform_tsne(X_data, y_data, perplexities, n_iter=1000, img_name_prefix='t-sne'):
+    for idx, perplexity in enumerate(perplexities):
+        print(f'\nPerforming t-SNE with perplexity {perplexity} and with {n_iter} iterations.')
+        X_reduced = TSNE(verbose=2, perplexity=perplexity, n_iter=n_iter, n_jobs=-1).fit_transform(X_data)
+        print('Done...')
+
+        # Prepare the data for seaborn
+        print('Plot the reduced data...')
+        df = pd.DataFrame({'x': X_reduced[:, 0], 'y': X_reduced[:, 1], 'label': y_data})
+
+        # Draw the plot in appropriate place in the grid
+        sns.lmplot(data=df, x='x', y='y', hue='label', fit_reg=False, size=8, palette='Set1')
+        plt.title(f'Perplexity: {perplexity} and max_iterations: {n_iter}')
+        plt.show()
+</code></pre>
+
+
+<pre><code># Perform the t-SNE function
+X_pre_tsne = train.drop(['subject', 'Activity', 'ActivityName'], axis=1)
+y_pre_tsne = train['ActivityName']
+perform_tsne(X_pre_tsne, y_pre_tsne, perplexities=[2, 5, 10, 10, 50])
+</code></pre>
+
+</p></details>
+
 <details><summary><b>Random Projection</b></summary>
 <p>
 <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection"><b>SparseRandomProjection</b></a> </p>
