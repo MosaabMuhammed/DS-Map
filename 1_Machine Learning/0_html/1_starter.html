@@ -606,4 +606,15 @@ os.environ['KAGGLE_KEY'] = &quot;bb6e0cba518df4df2fca479e86c7903a&quot; # key fr
 </p>
 </details>
 
+<details><summary> <b>Monitor Loop Progress</b> </summary>
+<p>
+
+<pre><code>for i in range(0, len(train.columns)):
+    # if i % 10 == 0:
+    print(f&quot;\r{i*100/train.shape[1]:0.4f}%&quot;, end='')
+</code></pre>
+
+</p>
+</details>
+
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
