@@ -5,6 +5,16 @@
 <details><summary><b>Tips & Tricks</b></summary>
 <p>
 
+<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary>
+<p>
+```
+plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
+             va='center', ha='left', arrowprops=dict(arrowstyle='simple',
+                                                     connectionstyle='arc3, rad=0.1'))
+```
+</p>
+</details>
+
 <details><summary>Make <b>ylabel</b> Horizontal</summary>
 <p>
 ~~~python
