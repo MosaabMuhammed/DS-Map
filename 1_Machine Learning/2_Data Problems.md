@@ -117,12 +117,21 @@ def reduce_mem_usage(df):
     print('---'*20)
     return df
 ~~~
-</p>
-</details>
-</p>
-</details>
-</p>
-</details>
+</p></details>
+<details><summary>Best Type for <b>Save & Read [Feather]</b></summary><p>
+```
+## Save
+# Make a directory first
+os.makedirs('tmp', exist_ok=True)
+df_raw.to_feather('tmp/bulldozers-raw')
+
+
+## Read 
+df_raw = pd.read_feather('tmp/bulldozers-raw')
+```
+</p></details>
+</p></details>
+</p></details>
 
 <hr>
 
