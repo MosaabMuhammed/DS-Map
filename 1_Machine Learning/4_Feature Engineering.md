@@ -375,9 +375,17 @@ cash_by_client = aggregate_client(cash, group_vars = ['SK_ID_PREV', 'SK_ID_CURR'
 ~~~
 
 </p></details><details><summary><b>Date Features</b></summary><p>
-<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.01_Engineering_dates.html#Engineering-Dates"><b>Date Features</b></a>
+<ul><li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.01_Engineering_dates.html#Engineering-Dates"><b>Date Features</b></a></li>
 
-<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.02_Engineering_time.html#Engineering-Time"><b>Time Features</b></a>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.02_Engineering_time.html#Engineering-Time"><b>Time Features</b></a></li></ul>
+
+```
+# Import add_datepart function
+from fastai.tabular import add_datepart
+
+# Put in the dataframe and name of date column
+add_datepart(df_raw, 'saledate')
+```
 
 </p></details><details><summary><b>Automated</b> Feature Engineering <b>(Featuretools)</b></summary><p>
 
