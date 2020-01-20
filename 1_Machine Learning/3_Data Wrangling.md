@@ -2,10 +2,28 @@
 
 <div style='width:1000px;margin:auto'>
 <details><summary> <b>See Files in Current Directory</b> </summary><p>
-~~~python
+```
 import os
 print(os.listdir("../input"))
-~~~
+```
+</p></details>
+
+<details><summary><b>Settings for Plotting</b> </summary><p>
+```
+import matplotlib.pyplot as plt
+
+def set_plot_sizes(sml, med, big):
+    plt.rc('font', size=sml)          # controls default text sizes
+    plt.rc('axes', titlesize=sml)     # fontsize of the axes title
+    plt.rc('axes', labelsize=med)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=sml)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=sml)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=sml)    # legend fontsize
+    plt.rc('figure', titlesize=big)  # fontsize of the figure title
+    
+# Usage
+set_plot_sizes(12, 14, 16)
+```
 </p></details>
 
 <details><summary> <b>[Profiling]</b> See which command takes the most in a function </summary><p>
