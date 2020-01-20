@@ -1,33 +1,39 @@
 # 3. Data Wrangling
 
 <div style='width:1000px;margin:auto'>
-<details><summary> <b>See Files in Current Directory</b> </summary>
-<p>
+<details><summary> <b>See Files in Current Directory</b> </summary><p>
 ~~~python
 import os
 print(os.listdir("../input"))
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>A series of arrays</b> to <b>DataFrame</b> </summary>
-<p>
+<details><summary> <b>[Profiling]</b> See which command takes the most in a function </summary><p>
+```
+# Let's run it in RandomForest.
+m = RandomForestRegressor(n_jobs=-1)
+%prun m.fit(X, y)
+
+# After that you can notice that the following command takes the most time in running m.fit()
+# So we make once and use it multiple times.
+%time X = np.array(X, dtype=np.float32)
+```
+</p></details>
+
+<details><summary><b>A series of arrays</b> to <b>DataFrame</b> </summary><p>
 ~~~python
 X_train = X_train.apply(pd.Series)
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary>
-<p>
+<details><summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary><p>
 ~~~python
 from tqdm import tqdm
 tqdm.pandas()
 
 temp = tweet.text.progress_apply(len)
 ~~~
-</p>
-</details>
+</p></details>
 
 <details><summary> <b>Select All Columns EXCEPT specific columns</b> </summary>
 <p>
