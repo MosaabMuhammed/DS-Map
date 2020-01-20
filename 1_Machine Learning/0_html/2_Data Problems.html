@@ -119,23 +119,32 @@ def reduce_mem_usage(df):
     return df
 </code></pre>
 
-</p>
-</details>
-</p>
-</details>
-</p>
-</details>
+</p></details>
+<details><summary>Best Type for <b>Save & Read [Feather]</b></summary><p>
+
+<pre><code>## Save
+# Make a directory first
+os.makedirs('tmp', exist_ok=True)
+df_raw.to_feather('tmp/bulldozers-raw')
+
+
+## Read 
+df_raw = pd.read_feather('tmp/bulldozers-raw')
+</code></pre>
+
+</p></details>
+</p></details>
+</p></details>
 
 <hr>
 
-<details><summary style='font-size:23px;text-decoration:underline'><b>2. Categorical ~> Numerical:</b></summary>
-<p>
+<details><summary style='font-size:23px;text-decoration:underline'><b>2. Categorical ~> Numerical:</b></summary><p>
 
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.2-Cardinality.html#Cardinality"><b>Cardinality, How affects Model Performance</b></a> </p>
+<ul><li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.2-Cardinality.html#Cardinality"><b>Cardinality, How affects Model Performance</b></a></li>
 
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.3-Rare-Labels.html#Rare-Labels"><b>Rare Labels</b></a> </p>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.3-Rare-Labels.html#Rare-Labels"><b>Rare Labels</b></a> </li>
 
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.09-Comparison-categorical-encoding-techniques.html#Comparison-of-Categorical-Variable-Encodings"><b> Comparsion b/w different Encodings</b></a> </p>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.09-Comparison-categorical-encoding-techniques.html#Comparison-of-Categorical-Variable-Encodings"><b> Comparsion b/w different Encodings</b></a> </li></ul>
 
 <details><summary> <b>OneHotEncoding [Nominal]</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.01-One-hot-encoding.html#One-Hot-Encoding"><b>Pandas - Sklearn - Feature-Engine</b></a> </p>
@@ -183,12 +192,11 @@ models = [LogisticRegression(**lr_params).fit(X_train_sparse[t], y_train[t])
 <pre><code>ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]]), axis = 1)
 </code></pre>
 
-</p>
-</details>
+</p></details>
 </p></details>
 </p></details>
 
-<details><summary> <b> OneHotEncoding for Top Categories</b> </summary><p>
+<details><summary><b>OneHotEncoding for Top Categories</b></summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.02-One-hot-encoding-frequent_categories.html#One-Hot-Encoding-of-Frequent-Categories">Using Manual & Feature-Engine</a> </p>
 </p></details>
 
@@ -200,6 +208,22 @@ models = [LogisticRegression(**lr_params).fit(X_train_sparse[t], y_train[t])
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-06-Categorical-Encoding/06.03-Integer-Encoding.html#Integer-Encoding">Using Manual & Sklearn & Feature-Engine</a> </p>
 
 <p style="margin: 0">
+<h4>1. Convert each object feature to category feature</h4>
+
+<pre><code>from pandas.api.types import is_string_dtype, is_numeric_dtype, is_categorical_dtype
+
+def train_cats(df):
+    for n,c in df.items():
+        if is_string_dtype(c): df[n] = c.astype('category').cat.as_ordered()
+
+
+## Usage
+train_cats(df_raw)
+
+## If you have ordinal variable, you can do the following.
+df_raw.col_name.cat.set_categories(['High', 'Medium', 'Low'], ordered=True, inplace=True)
+</code></pre>
+
 
 <pre><code class="python">df[col] = df[col].factorize()[0]
 </code></pre>
@@ -235,7 +259,7 @@ for col in tqdm_notebook(cat_columns):
     le = LabelEncoder()
     le.fit(list(train[col].astype(str).values) + list(test[col].astype(str).values))
     train[col] = le.transform(list(train[col].astype(str).values))
-    test[col] = le.transform(list(test[col].astype(str).values))   
+    test[col] = le.transform(list(test[col].astype(str).values))
 </code></pre>
 
 </p>

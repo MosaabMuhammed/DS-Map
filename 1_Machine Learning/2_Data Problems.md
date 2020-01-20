@@ -15,10 +15,30 @@
 <li><p><a href="https://imbalanced-learn.org/en/stable/over_sampling.html"><span style='color:#333333'><b>2. Another way</b> (better)</span></a> </p></li>
 </ul>
 </p>
-</details><details><summary><b>2. Large Dataset:</b></summary>
-<p>
-<details><summary>Using <b>Chunksize</b> in pd.read_csv()</summary>
-<p>
+</details><details><summary><b>2. Large Dataset:</b></summary><p>
+
+<details><summary>See the data before <b>READING</b> it</summary><p>
+```
+# Take a look at samples of the data
+# Run it multiple times, to get the intution of each column.
+!shuf -n 5 {PATH}train.csv
+
+# Define a type for each column.
+types = {'id': 'int64',
+         'item_nbr': 'int32',
+         'store_nbr': 'int8',
+         'unit_sales': 'float32',
+         'onpromotion': 'object'}
+         
+# Then read the data.
+df = pd.read_csv(f'{PATH}train.csv', dtypes=types)
+
+# Convert it to feather dataset.
+df.to_feather('new_df')
+```
+</p></details>
+
+<details><summary>Using <b>Chunksize</b> in pd.read_csv()</summary><p>
 ~~~python
 df = pd.read_csv('/kaggle/input/train.csv', chunksize=1000)
 ~~~
@@ -66,11 +86,22 @@ def csv_to_pyarray(csv_in, file_out=None, array_name=None, enquote_elements=True
     with open(file_out, "w") as text_file:
         text_file.write("{0}".format(pyarray))
 ~~~
-</p>
-</details>
+</p></details>
 
-<details><summary><b>Reduced size of dataset</b></summary>
-<p>
+<details><summary>Best Type for <b>Save & Read [Feather]</b></summary><p>
+```
+## Save
+# Make a directory first
+os.makedirs('tmp', exist_ok=True)
+df_raw.to_feather('tmp/bulldozers-raw')
+
+
+## Read 
+df_raw = pd.read_feather('tmp/bulldozers-raw')
+```
+</p></details>
+
+<details><summary><b>Reduced size of dataset</b></summary><p>
 ~~~python
 from tqdm import tqdm_notebook
 
@@ -118,18 +149,7 @@ def reduce_mem_usage(df):
     return df
 ~~~
 </p></details>
-<details><summary>Best Type for <b>Save & Read [Feather]</b></summary><p>
-```
-## Save
-# Make a directory first
-os.makedirs('tmp', exist_ok=True)
-df_raw.to_feather('tmp/bulldozers-raw')
 
-
-## Read 
-df_raw = pd.read_feather('tmp/bulldozers-raw')
-```
-</p></details>
 </p></details>
 </p></details>
 
