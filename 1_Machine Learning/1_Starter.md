@@ -53,6 +53,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import inspect
 
 ############### Show colored text #############
 
@@ -64,8 +65,6 @@ def bg(value, type='num', color='blue'):
 
 ############ Print the variable name ##############
 # Credits: https://stackoverflow.com/questions/18425225/getting-the-name-of-a-variable-as-a-string
-import inspect
-
 
 def var2str(var):
     """
@@ -81,7 +80,10 @@ def var2str(var):
 
 def shape(*args):
     for df in args:
-        print(f'~> {colored(var2str(df), attrs=["blink"]):{15}} has {bg(df.shape[0]):>{10}} rows, and {bg(df.shape[1]):>{10}} columns.')
+        if len(df.shape) <= 1:
+            print(f'~> {colored(var2str(df), attrs=["blink"]):{15}} has {bg(df[..., None].shape[0]):<{27}} rows, and {bg(df[..., None].shape[1]):<{22}} columns.')
+        else:
+            print(f'~> {colored(var2str(df), attrs=["blink"]):{15}} has {bg(df.shape[0]):<{27}} rows, and {bg(df.shape[1]):<{22}} columns.')
 
 
 ############### Summary Table #####################
@@ -181,13 +183,13 @@ def dd(*args):
             print(f"~> Type  of {varName}: {colored(type(x), 'green')}")
         except:
             print(f"~> Can't get the {colored('type', 'green')} of {varName}")
-        
+
         # Get the shape of the variable.
         try:
             print(f"~> Shape of {varName}: {colored(str(x.shape), 'blue')}")
         except:
             print(f"~> Length of {varName}: {colored(str(len(x)), 'blue')}")
-                
+
         # Get the first value of the variable.
         try:
             print(f"~> First Value of {varName}: {x[0]}")
