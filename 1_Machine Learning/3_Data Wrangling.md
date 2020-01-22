@@ -8,6 +8,20 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary>Add <b>new dimension</b> to vector/matrix [np.array] </summary><p>
+```
+#### Trick number #1:
+# Add a second dimension
+# This is like x[:, np.newaxis] == x[:, None]
+x[np.newaxis].shape, x[None].shape
+
+#### Trick number #2:
+# Add a new dimension at last.
+# This is much better/safe approch
+x[..., None].shape, x[..., np.newaxis].shape
+```
+</p></details>
+
 <details><summary><b>Settings for Plotting</b> </summary><p>
 ```
 import matplotlib.pyplot as plt
