@@ -19,6 +19,16 @@ x[np.newaxis].shape, x[None].shape
 # Add a new dimension at last.
 # This is much better/safe approch
 x[..., None].shape, x[..., np.newaxis].shape
+
+
+#### Trick number #3:
+# First parameter is the array/tensor
+# Second parameter is the position where you want to add.
+# ex:  BEFORE: x.shape --&gt; (4,)
+#        AFTER:    x.shape --&gt; (1, 4)
+np.expand_dims(x, 0)
+
+
 </code></pre>
 
 </p></details>
