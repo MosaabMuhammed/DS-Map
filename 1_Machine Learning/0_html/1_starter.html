@@ -80,7 +80,7 @@ def var2str(var):
 def shape(*args):
     for df in args:
         if len(df.shape) &lt;= 1:
-            print(f'~&gt; {colored(var2str(df), attrs=[&quot;blink&quot;]):{15}} has {bg(df[..., None].shape[0]):&lt;{27}} rows, and {bg(df[..., None].shape[1]):&lt;{22}} columns.')
+            print(f'~&gt; {colored(var2str(df), attrs=[&quot;blink&quot;]):{15}} has {bg(np.array(df)[..., None].shape[0]):&lt;{27}} rows, and {bg(np.array(df)[..., None].shape[1]):&lt;{22}} columns.')
         else:
             print(f'~&gt; {colored(var2str(df), attrs=[&quot;blink&quot;]):{15}} has {bg(df.shape[0]):&lt;{27}} rows, and {bg(df.shape[1]):&lt;{22}} columns.')
 
