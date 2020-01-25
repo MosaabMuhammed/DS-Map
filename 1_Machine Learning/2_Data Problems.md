@@ -95,6 +95,10 @@ def csv_to_pyarray(csv_in, file_out=None, array_name=None, enquote_elements=True
 os.makedirs('tmp', exist_ok=True)
 df_raw.to_feather('tmp/bulldozers-raw')
 
+### NOTE: Feather format requires the columns to be in float32 or int32, so
+df_raw.astype('float32', errors='ignore').to_feather('tmp/bulldozers-raw')
+
+
 
 ## Read 
 df_raw = pd.read_feather('tmp/bulldozers-raw')
