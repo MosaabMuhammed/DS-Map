@@ -48,11 +48,6 @@ print('Basic libraries have been loaded!')
 
 <details><summary> <b>__basic_funcs</b> </summary><p>
 ~~~python
-from termcolor import colored
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import inspect
 
 ############### Show colored text #############
@@ -80,15 +75,16 @@ def var2str(var):
 
 def shape(*args):
     for df in args:
-        print(f'~> {colored(var2str(df), attrs=["blink"]):{15}} has {bg(np.array(df)[..., None].shape[0]):<{27}} rows, and {bg(np.array(df)[..., None].shape[1]):<{22}} columns.')
-
+        if len(df.shape) <= 1:
+            print(f'~> {colored(var2str(df), attrs=["blink"]):{15}} has {bg(np.array(df)[..., None].shape[0]):<{27}} rows, and {bg(np.array(df)[..., None].shape[1]):<{22}} columns.')
+        else:
+            print(f'~> {colored(var2str(df), attrs=["blink"]):{15}} has {bg(df.shape[0]):<{27}} rows, and {bg(df.shape[1]):<{22}} columns.')
 
 
 ############### Summary Table #####################
 from scipy import stats
 
 # Summary dataframe
-
 
 def summary(df, sort_col=0):
     summary = pd.DataFrame({'dtypes': df.dtypes}).reset_index()
@@ -100,9 +96,6 @@ def summary(df, sort_col=0):
     summary['Second Value'] = df.loc[1].values
     summary['Third Value'] = df.loc[2].values
 
-    for name in summary['Name'].value_counts().index:
-        summary.loc[summary['Name'] == name, 'Entropy'] = round(stats.entropy(df[name].value_counts(normalize=True), base=2), 2)
-
     summary = summary.sort_values(by=[sort_col], ascending=False) if sort_col else summary
 
     # Print some smmaries.
@@ -112,6 +105,7 @@ def summary(df, sort_col=0):
     for type_name in np.unique(df.dtypes):
         print(f'~> There are {bg(df.select_dtypes(type_name).shape[1])}\t Columns that have [Type] = {bg(type_name, "s", "green")}')
 
+    print('---'*20)
     return summary.style.background_gradient(cmap='summer_r')
 
 
@@ -124,8 +118,11 @@ def reduce_mem_usage(df):
         if col_type != object:
             c_min = df[col].min()
             c_max = df[col].max()
-            if str(col_type)[:3] == 'int':
-                if c_min > np.iinfo(np.int8).min and c_max < np.iinfo(np.int8).max:
+
+            if str(col_type)[:3] == 'int' or (float(df[col][0]).is_integer() and np.isfinite(df[col]).sum() == df.shape[0]):
+                if len(df[col].unique()) <= 2:
+                    df[col] = df[col].astype(np.bool)
+                elif c_min > np.iinfo(np.int8).min and c_max < np.iinfo(np.int8).max:
                     df[col] = df[col].astype(np.int8)
                 elif c_min > np.iinfo(np.uint8).min and c_max < np.iinfo(np.uint8).max:
                     df[col] = df[col].astype(np.uint8)
@@ -149,8 +146,8 @@ def reduce_mem_usage(df):
                 else:
                     df[col] = df[col].astype(np.float64)
         # Comment this if you have NaN value in this column.
-        else:
-            df[col] = df[col].astype('category')
+        # else:
+        #     df[col] = df[col].astype('category')
 
     end_mem = df.memory_usage().sum() / 1024 ** 3
     print('~> Memory usage after optimization is: {:.3f} GB'.format(end_mem))
@@ -200,6 +197,7 @@ def dd(*args):
 
 
 print(f'~> The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}, {bg("show_annotation", "s")}, {bg("dd", "s")}')
+
 
 ~~~
 </p></details>
