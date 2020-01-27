@@ -15,7 +15,7 @@
 <h2 id=""><a href="./8_Models.html"><span style='color:#333333'>8. ML Models</span></a></h2>
 <h2 id=""><a href="./8_0_Models%20Pipelines.html"><span style='color:#333333'>9. Pipelines</span></a></h2>
 <h2 id=""><a href="./9_Metrices.html"><span style='color:#333333'>10. Metrices</span></a></h2>
-<h2 id=""><a href="./9_0_Post_Models.html"><span style='color:#333333'>11. Post-Modeling</span></a></h2>
+<h2 id=""><a href="./9_0_Post_Models.html"><span style='color:#333333'>11. Interpretability</span></a></h2>
 
 </div>
 

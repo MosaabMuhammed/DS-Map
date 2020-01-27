@@ -1,8 +1,6 @@
-<h1 style='color:darkcyan'>8. Post-Modeling</h1>
+<h1 style='color:darkcyan'>8. Interpretability</h1>
 
 <div style='width:1000px;margin:auto'>
-<details><summary style='font-size:18px;'> <b>ML Explainability</b> </summary>
-<p>
 <blockquote>
   <p><b>ML Explainability helps in:</b><br></p>
   <ul>
@@ -154,16 +152,13 @@ shap_values = explainer.shap_values(X)
 # make plot.
 shap.dependence_plot('Ball Possession %', shap_values[1], X, interaction_index="Goal Scored")
 ~~~
-</p>
-</details>
-</p>
-</details>
+</p></details>
 
-</p>
-</details>
+<details><summary> <b>Different Interpretability techs.</b> using <b>RF</b> </summary><p>
+<li><a href="./9_pipelines/lesson2-rf_interpretation.html"><b>notebook</b></a></li>
+</p></details>
 
-<details><summary style='font-size:18px;'> <b>Learning Curves</b> </summary>
-<p>
+<details><summary> <b>Learning Curves</b> </summary><p>
 <b>NOTE: Things to change:</b> <br>
 - Model.<br>
 - Hyperparameter.<br>
