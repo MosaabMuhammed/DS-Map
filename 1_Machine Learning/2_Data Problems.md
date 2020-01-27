@@ -93,15 +93,19 @@ def csv_to_pyarray(csv_in, file_out=None, array_name=None, enquote_elements=True
 ## Save
 # Make a directory first
 os.makedirs('tmp', exist_ok=True)
-df_raw.to_feather('tmp/bulldozers-raw')
 
 ### NOTE: Feather format requires the columns to be in float32 or int32, so
-df_raw.astype('float32', errors='ignore').to_feather('tmp/bulldozers-raw')
+X_train.reset_index().astype('float32', errors='ignore').to_feather(f"{path}/X_train_encoded")
 
 
 
 ## Read 
 df_raw = pd.read_feather('tmp/bulldozers-raw')
+
+# Remove the redundant columns. [index]
+for df in [df_raw, df_raw2]:
+    df.drop('index', axis=1, inplace=True)
+    df = reduce_mem_usage(df)
 ```
 </p></details>
 
