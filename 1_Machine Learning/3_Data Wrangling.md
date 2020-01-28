@@ -8,6 +8,20 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary> <b>Partial Function</b> [python 3] </summary><p>
+```
+# A normal function 
+def add(a, b, c): 
+    return 100 * a + 10 * b + c 
+  
+# A partial function with b = 1 and c = 2 
+add_part = partial(add, c = 2, b = 1) 
+  
+# Calling partial function 
+print(add_part(3)) 
+```
+</p></details>
+
 <details><summary>Add <b>new dimension</b> to vector/matrix [np.array] </summary><p>
 ```
 #### Trick number #1:
