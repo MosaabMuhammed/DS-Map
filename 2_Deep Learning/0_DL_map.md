@@ -11,5 +11,6 @@
 
 <li>TensorFlow 2.0</li>
 
+<li><p><a href="./0_html/fastai/0_fast_root.html"><b style='font-size:20px;color:#333'>FastAI v1.0</b></a> </p></li>
 </ul>
 </div>
