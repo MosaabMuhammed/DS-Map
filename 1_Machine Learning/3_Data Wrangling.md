@@ -8,6 +8,16 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary> Return columns have <b>NaNs or Infinite</b> values</summary><p>
+```
+def return_cols_have_inf(df):
+    return [col for col in df if np.isfinite(df[col]).sum() != df.shape[0]]
+
+def return_cols_have_nan(df):
+    return [col for col in df if np.isnan(df[col]).sum()]
+```
+</p></details>
+
 <details><summary> <b>Partial Function</b> [python 3] </summary><p>
 ```
 # A normal function 
