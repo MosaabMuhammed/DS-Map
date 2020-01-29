@@ -209,8 +209,7 @@ perform_tsne(X_pre_tsne, y_pre_tsne, perplexities=[2, 5, 10, 10, 50])
 ```
 </p></details>
  
-<details><summary><b>Random Projection</b></summary>
-<p>
+<details><summary><b>Random Projection</b></summary><p>
 <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection"><b>SparseRandomProjection</b></a> </p>
 
 <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection"><b>Gaussian Random Projection</b></a> </p>
@@ -239,17 +238,48 @@ transformer = GaussianRandomProjection(random_state=rng)
 X_new = transformer.fit_transform(X)
 X_new.shape
 ~~~
-</p>
-</details>
+</p></details>
 
+<details><summary><b>Multiple Correspondence Analysis (MCA)</b></summary><p>
+<h4>It's like PCA for categorical features</h4>
+```
+!pip install prince
+import prince
+
+# Let's try drawing first by extracting only 2 components
+mca = prince.MCA(n_components=2)
+mca.fit(X_train_org[:1000])
+
+# Transform the data
+X_train_mca = mca.transform(X_train_org[:1000])
+```
+```
+# Let's plot the generated data
+ax = mca.plot_coordinates(
+    X=X_train_org[:100],
+    ax=None,
+    figsize=(6, 6),
+    show_row_points=True,
+    row_points_size=10,
+    show_row_labels=False,
+    show_column_points=True,
+    column_points_size=30,
+    show_column_labels=False,
+    legend_n_cols=1
+)
+
+# To relocate the legend
+plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.);
+
+```
+</p></details>
 
 - ICA
 - t-SNE
 - LLE
 - UMAP
 - SVD
-</p>
-</details>
+</p></details>
 
 
 <details><summary style='font-size:23px;text-decoration:underline'><b>Feature Selection:</b></summary><p>
