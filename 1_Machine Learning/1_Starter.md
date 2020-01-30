@@ -585,4 +585,17 @@ for i in range(0, len(train.columns)):
 </p>
 </details>
 
+<details><summary> <b>Unzip zipped file</b> [command line] </summary>
+<p>
+```
+# If file ends with .zip
+!unzip -q -n {path}/train_v2.csv.zip -d {path}
+
+# if file ends with .7z
+!sudo apt install p7zip-full
+!7za -bd -y -so x {path}/train-jpg.tar.7z | tar xf - -C {path.as_posix()}
+```
+</p>
+</details>
+
 </div>

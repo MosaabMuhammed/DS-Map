@@ -615,4 +615,18 @@ os.environ['KAGGLE_KEY'] = &quot;bb6e0cba518df4df2fca479e86c7903a&quot; # key fr
 </p>
 </details>
 
+<details><summary> <b>Unzip zipped file</b> [command line] </summary>
+<p>
+
+<pre><code># If file ends with .zip
+!unzip -q -n {path}/train_v2.csv.zip -d {path}
+
+# if file ends with .7z
+!sudo apt install p7zip-full
+!7za -bd -y -so x {path}/train-jpg.tar.7z | tar xf - -C {path.as_posix()}
+</code></pre>
+
+</p>
+</details>
+
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
