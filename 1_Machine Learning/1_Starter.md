@@ -564,13 +564,17 @@ df.plot()
 </p>
 </details>
 
-<details><summary> <b>Import Kaggle dataset into Google Colab</b> </summary>
+<details><summary> <b>Import Kaggle dataset into Google Colab</b> and <b>Submit back</b></summary>
 <p>
 ```
 import os
 os.environ['KAGGLE_USERNAME'] = "mosaabmuhammed" # username from the json file
 os.environ['KAGGLE_KEY'] = "bb6e0cba518df4df2fca479e86c7903a" # key from the json file
 !kaggle competitions download -c FacebookRecruiting # api copied from kaggle
+```
+
+```
+!kaggle competitions submit planet-understanding-the-amazon-from-space -f {path/'submission.csv'} -m "My submission"
 ```
 </p>
 </details>
