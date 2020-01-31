@@ -5,15 +5,25 @@
 <details><summary><b>Tips & Tricks</b></summary>
 <p>
 
-<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary>
-<p>
+<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><p>
 ```
 plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
              va='center', ha='left', arrowprops=dict(arrowstyle='simple',
                                                      connectionstyle='arc3, rad=0.1'))
 ```
-</p>
-</details>
+</p></details>
+
+<details><summary><b>Date Formatter</b> when plotting date feature</summary><p>
+```
+fig, ax = plt.subplots(figsize=(20, 10));
+fig = sns.countplot(df.timestamp, ax=ax, edgecolor='k', hue=df.label);
+X_dates = df['timestamp'].dt.strftime('%I:%M').sort_values().unique();
+ax.xaxis.set_major_formatter(plt.FixedFormatter(X_dates));
+plt.title('How many records per minute?', y=1.05);
+plt.grid();
+plt.xticks(rotation=70);
+```
+</p></details>
 
 <details><summary>Make <b>ylabel</b> Horizontal</summary>
 <p>
