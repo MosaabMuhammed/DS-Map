@@ -8,6 +8,12 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary> <b>Relationship Table</b> b/w <b> 2 categorical features</summary><p>
+```
+table = pd.crosstab(df.label, df.flow_id, normalize='columns'); table
+```
+</p></details>
+
 <details><summary> Return columns have <b>NaNs or Infinite</b> values</summary><p>
 ```
 def return_cols_have_inf(df):
