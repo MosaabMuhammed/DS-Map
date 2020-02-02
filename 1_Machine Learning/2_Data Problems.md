@@ -1275,6 +1275,18 @@ for v1 in lfeat:
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-11-Mixed-Variables/11.01-Engineering-mixed-variables.html#Example-1:-the-observations-of-the-variable-contain-numbers-and-strings"><b>The observations of the variable contain numbers and strings</b></a> </p>
 
 </p></details>
+<hr>
+<details><summary style='font-size:23px;text-decoration:underline'><b>9. Cold-Start Problem</b></summary><p>
+<h4>1. Check the cold-start problem</h4>
+```
+result = pd.DataFrame(columns=['col', 'Train', 'Test'])
+
+for col in X_train:
+    trY_teN = set(X_train[col].unique()) - set(X_test[col].unique())
+    trN_teY = set(X_test[col].unique()) - set(X_train[col].unique())
+    result = result.append({'col': col, 'Train': len(trY_teN), 'Test': len(trN_teY)}, ignore_index=True)
+```
+</p></details>
 </div>
 
 
