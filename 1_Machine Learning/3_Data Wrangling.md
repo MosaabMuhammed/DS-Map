@@ -26,6 +26,8 @@ def return_cols_have_nan(df):
 
 <details><summary> <b>Partial Function</b> [python 3] </summary><p>
 ```
+from functools import partial 
+
 # A normal function 
 def add(a, b, c): 
     return 100 * a + 10 * b + c 

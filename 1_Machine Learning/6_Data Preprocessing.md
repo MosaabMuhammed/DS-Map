@@ -474,7 +474,15 @@ print(f"~> Final Result: {optimizer.max}")
 </ul>
 </p></details>
 
+<details><summary> <b>Catboost</b> </summary><p>
+<ul>
+
+<li><a href="./6_data_processing/hyperopt_for_catboost.html">Using<b> hyperopt</b> library</a></li>
+</ul>
+</p></details>
+
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">For <b>Sklearn Models</b></a></li>
+
 
 
 </ul></p></details>
