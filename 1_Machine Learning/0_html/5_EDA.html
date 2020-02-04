@@ -496,9 +496,8 @@ plot_3d('learning_rate', 'n_estimators', 'score', opt_hyp)
 </details>
 
 
-<details><summary> Show <b>Annotations</b> on <b>bar chart</b> </summary>
-<p style="margin: 0">
-<h4> Better Version
+<details><summary> Show <b>Annotations</b> on <b>bar chart [Horizontal, Vertical]</b> </summary><p>
+<h4> Vertical Bar</h4>
 
 <pre><code class="python">def show_annotation(dist, n=5, total=None):
     sizes = [] # Get highest value in y
@@ -528,21 +527,18 @@ show_annotation(g)
 </code></pre>
 
 
-<h4> Another Version</h4>
+<h4> Horizontal Bar</h4>
 
-<pre><code class="python"># &lt;b&gt;&lt;b&gt;&lt;b&gt;&lt;b&gt;&lt;b&gt;&lt;b&gt;&lt;b&gt;&lt;b&gt;SHOW ANNOTATIONS&lt;b&gt;&lt;b&gt;&lt;b&gt;&lt;b&gt;&lt;b&gt;
-def show_annotation(df, colName, n=10):
-    # Add Anootations
-    n_points = df.shape[0]
-    col_count = df[colName].value_counts()
-    locs, labels = plt.xticks() # Get the current tick locations and labels
-    # Loop for through each pair of locations and labels.
-    for loc, label in zip(locs, labels):
-        label_text = label.get_text()
-        label_text = int(label_text) if label_text.isdigit() else label_text
-        count = col_count[label_text]
-        text  = '{:.2f}%'.format(100*count/n_points)
-        plt.text(loc, count-n, text, ha='center', color='darkblue', size=14) 
+<pre><code>def show_annotations_horizontal(ax):
+    sizes = []
+    for p in ax.patches:
+        width = p.get_width()
+        sizes.append(width)
+        percentage = f'{width:.2f}'
+        x = p.get_x() + p.get_width() + 0.02
+        y = p.get_y() + p.get_height()/2
+        ax.annotate(percentage, (x, y))
+        ax.set_xlim(0, max(sizes) * 1.15); # set x limit based on highest width
 </code></pre>
 
 </p>
