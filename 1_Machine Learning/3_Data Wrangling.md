@@ -8,6 +8,20 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary> Create <b>DataFrame for Testing</b> </summary><p>
+```
+# Import pandas
+import pandas as pd
+
+# Create the testing dataframe.
+test_df = pd.util.testing.makeMixedDataFrame()
+test_df = pd.util.testing.makeDataFrame()
+test_df = pd.util.testing.makeMissingDataframe()
+test_df = pd.util.testing.makeTimeDataFrame()
+test_df = pd.util.testing.makePeriodFrame()
+```
+</p></details>
+
 <details><summary> <b>Relationship Table</b> b/w <b> 2 categorical features</summary><p>
 ```
 table = pd.crosstab(df.label, df.flow_id, normalize='columns'); table
