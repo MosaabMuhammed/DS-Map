@@ -13,6 +13,8 @@
 
 <li><a href="./3_NLP/0_html/1_NLP_Root.html"><font color='#333'><b style='font-size:27px'>NLP</b></font></a> </li>
 
+<li><a href="./10_Deployment/0_html/0_deployment_root.html"><font color='#333'><b style='font-size:27px'>Deployment</b></font></a> </li>
+
 
 </ul>
 
