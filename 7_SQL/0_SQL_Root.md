@@ -1,7 +1,10 @@
 <h1 style='text-decoration:underline'>SQL</h1>
-<h2 style='width:440px;margin:auto'>Declarative Programming Language</h2><br>
+<h2 style='width:500px;margin:auto'>Declarative Programming Language</h2><br>
 
 <div style='width:1000px;margin:auto'>
+
+<a href="1_SQL_Interview_Questions.html" style="font-weight:bold;font-size:17px">SQL Interview Questions</a>
+<hr>
 <details><summary>1. Start <b>MySQL</b> in the <b>Command Line</b></summary><p>
 ~~~
 mysql -u root -p
