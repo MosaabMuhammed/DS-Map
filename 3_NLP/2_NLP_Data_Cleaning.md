@@ -18,7 +18,7 @@ def remove_URL(text):
 # Second Code
 pattern = re.compile('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
 
-def remove_html(text):
+def remove_URL(text):
     no_html= pattern.sub('',text)
     return no_html
 ```
@@ -57,18 +57,20 @@ def remove_punct(text):
     return text.translate(table)
 ~~~
 ~~~
-puncts = [',', '.', '"', ':', ')', '(', '-', '!', '?', '|', ';', "'", '$', '&', '/', '[', ']', '>', '%', '=', '#', '*', '+', '\\', '•',  '~', '@', '£', 
+general_punctuations = [',', '.', '"', ':', ')', '(', '-', '!', '?', '|', ';', "'", '$', '&', '/', '[', ']', '>', '%', '=', '#', '*', '+', '\\', '•',  '~', '@', '£', 
  '·', '_', '{', '}', '©', '^', '®', '`',  '<', '→', '°', '€', '™', '›',  '♥', '←', '×', '§', '″', '′', 'Â', '█', '½', 'à', '…', 
  '“', '★', '”', '–', '●', 'â', '►', '−', '¢', '²', '¬', '░', '¶', '↑', '±', '¿', '▾', '═', '¦', '║', '―', '¥', '▓', '—', '‹', '─', 
  '▒', '：', '¼', '⊕', '▼', '▪', '†', '■', '’', '▀', '¨', '▄', '♫', '☆', 'é', '¯', '♦', '¤', '▲', 'è', '¸', '¾', 'Ã', '⋅', '‘', '∞', 
- '∙', '）', '↓', '、', '│', '（', '»', '，', '♪', '╩', '╚', '³', '・', '╦', '╣', '╔', '╗', '▬', '❤', 'ï', 'Ø', '¹', '≤', '‡', '√', ]
+ '∙', '）', '↓', '、', '│', '（', '»', '，', '♪', '╩', '╚', '³', '・', '╦', '╣', '╔', '╗', '▬', '❤', 'ï', 'Ø', '¹', '≤', '‡', '√']
 
-def clean_text(x):
-    x = str(x)
-    for punct in puncts:
-        if punct in x:
-            x = x.replace(punct, f' {punct} ')
-    return x
+arabic_punctuations = '''`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
+
+punctuations_list = arabic_punctuations + ''.join(general_punctuations)
+
+
+def remove_punctuations(text):
+    translator = str.maketrans('', '', punctuations_list)
+    return text.translate(translator)
 ~~~
 ~~~
 def clean_text(x):
@@ -118,7 +120,7 @@ def hashtag(tweet):
 </p></details>
 
 <details><summary><b style='font-size:20px'>7. Clean Numbers</b></summary><p>
-~~~
+```
 ## Why do we want to replace numbers with #s? Because most embeddings have preprocessed their text like this.
 def clean_numbers(x):
     if bool(re.search(r'\d', x)):
@@ -127,7 +129,15 @@ def clean_numbers(x):
         x = re.sub('[0-9]{3}', '###', x)
         x = re.sub('[0-9]{2}', '##', x)
     return x
-~~~
+```
+```
+# Remove the numbers
+from string import digits
+
+def remove_numbers(text):
+    remove_digits = str.maketrans('', '', digits)
+    return text.translate(remove_digits)
+```
 </p></details>
 
 <details><summary><b style='font-size:20px'>8. Remove Contractions</b></summary><p>

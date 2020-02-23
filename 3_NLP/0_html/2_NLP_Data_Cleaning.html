@@ -18,7 +18,7 @@ def remove_URL(text):
 # Second Code
 pattern = re.compile('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&amp;+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
 
-def remove_html(text):
+def remove_URL(text):
     no_html= pattern.sub('',text)
     return no_html
 </code></pre>
@@ -61,18 +61,20 @@ def remove_punct(text):
 </code></pre>
 
 
-<pre><code>puncts = [',', '.', '&quot;', ':', ')', '(', '-', '!', '?', '|', ';', &quot;'&quot;, '$', '&amp;', '/', '[', ']', '&gt;', '%', '=', '#', '*', '+', '\\', '•',  '~', '@', '£', 
+<pre><code>general_punctuations = [',', '.', '&quot;', ':', ')', '(', '-', '!', '?', '|', ';', &quot;'&quot;, '$', '&amp;', '/', '[', ']', '&gt;', '%', '=', '#', '*', '+', '\\', '•',  '~', '@', '£', 
  '·', '_', '{', '}', '©', '^', '®', '`',  '&lt;', '→', '°', '€', '™', '›',  '♥', '←', '×', '§', '″', '′', 'Â', '█', '½', 'à', '…', 
  '“', '★', '”', '–', '●', 'â', '►', '−', '¢', '²', '¬', '░', '¶', '↑', '±', '¿', '▾', '═', '¦', '║', '―', '¥', '▓', '—', '‹', '─', 
  '▒', '：', '¼', '⊕', '▼', '▪', '†', '■', '’', '▀', '¨', '▄', '♫', '☆', 'é', '¯', '♦', '¤', '▲', 'è', '¸', '¾', 'Ã', '⋅', '‘', '∞', 
- '∙', '）', '↓', '、', '│', '（', '»', '，', '♪', '╩', '╚', '³', '・', '╦', '╣', '╔', '╗', '▬', '❤', 'ï', 'Ø', '¹', '≤', '‡', '√', ]
+ '∙', '）', '↓', '、', '│', '（', '»', '，', '♪', '╩', '╚', '³', '・', '╦', '╣', '╔', '╗', '▬', '❤', 'ï', 'Ø', '¹', '≤', '‡', '√']
 
-def clean_text(x):
-    x = str(x)
-    for punct in puncts:
-        if punct in x:
-            x = x.replace(punct, f' {punct} ')
-    return x
+arabic_punctuations = '''`÷×؛&lt;&gt;_()*&amp;^%][ـ،/:&quot;؟.,'{}~¦+|!”…“–ـ'''
+
+punctuations_list = arabic_punctuations + ''.join(general_punctuations)
+
+
+def remove_punctuations(text):
+    translator = str.maketrans('', '', punctuations_list)
+    return text.translate(translator)
 </code></pre>
 
 
@@ -136,6 +138,15 @@ def clean_numbers(x):
         x = re.sub('[0-9]{3}', '###', x)
         x = re.sub('[0-9]{2}', '##', x)
     return x
+</code></pre>
+
+
+<pre><code># Remove the numbers
+from string import digits
+
+def remove_numbers(text):
+    remove_digits = str.maketrans('', '', digits)
+    return text.translate(remove_digits)
 </code></pre>
 
 </p></details>
