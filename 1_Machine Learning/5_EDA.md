@@ -5,6 +5,15 @@
 <details><summary><b>Tips & Tricks</b></summary>
 <p>
 
+<details><summary>Plot a <b>Sparse</b> Matrix</summary><p>
+```
+fig = plt.figure()
+plt.spy(A, markersize=0.10, aspect = 'auto')
+fig.set_size_inches(8,6)
+fig.savefig('doc_term_matrix.png', dpi=800)
+```
+</p></details>
+
 <details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><p>
 ```
 plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 

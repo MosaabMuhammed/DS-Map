@@ -63,7 +63,7 @@ general_punctuations = [',', '.', '"', ':', ')', '(', '-', '!', '?', '|', ';', "
  '▒', '：', '¼', '⊕', '▼', '▪', '†', '■', '’', '▀', '¨', '▄', '♫', '☆', 'é', '¯', '♦', '¤', '▲', 'è', '¸', '¾', 'Ã', '⋅', '‘', '∞', 
  '∙', '）', '↓', '、', '│', '（', '»', '，', '♪', '╩', '╚', '³', '・', '╦', '╣', '╔', '╗', '▬', '❤', 'ï', 'Ø', '¹', '≤', '‡', '√']
 
-arabic_punctuations = '''`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
+arabic_punctuations = '''٠١٢٣٤٥٦٧٨٩`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
 
 punctuations_list = arabic_punctuations + ''.join(general_punctuations)
 
@@ -207,4 +207,46 @@ def remove_stopwords(text):
 tweet['text'] = tweet.text.progress_apply(remove_stopwords)
 ```
 </p></details>
+
+<details><summary><b style='font-size:20px'>13. Remove Repeating Characters</b></summary><p>
+```
+# Credits: https://github.com/motazsaad/process-arabic-text/blob/master/clean_arabic_text.py
+def remove_repeating_char(text):
+    return re.sub(r'(.)\1+', r'\1', text)
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>14. Remove Diacritics (Arabic)</b></summary><p>
+```
+# Credits: https://github.com/motazsaad/process-arabic-text/blob/master/clean_arabic_text.py
+arabic_diacritics = re.compile("""
+                             ّ    | # Tashdid
+                             َ    | # Fatha
+                             ً    | # Tanwin Fath
+                             ُ    | # Damma
+                             ٌ    | # Tanwin Damm
+                             ِ    | # Kasra
+                             ٍ    | # Tanwin Kasr
+                             ْ    | # Sukun
+                             ـ     # Tatwil/Kashida
+                         """, re.VERBOSE)
+
+def remove_diacritics(text):
+    return re.sub(arabic_diacritics, '', text)
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>15. Normalize Arabic Characters</b></summary><p>
+```
+def normalize_arabic(text):
+    text = re.sub("[إأآا]", "ا", text)
+    text = re.sub("ى", "ي", text)
+    text = re.sub("ؤ", "ء", text)
+    text = re.sub("ئ", "ء", text)
+    text = re.sub("ة", "ه", text)
+    text = re.sub("گ", "ك", text)
+    return text
+```
+</p></details>
+
 </div>
