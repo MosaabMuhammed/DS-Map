@@ -1,6 +1,11 @@
 #  Data Cleaning
 
 <div style='width:1000px;margin:auto'>
+
+<details><summary><b style='font-size:20px'>Regex</b></summary><p><ul>
+<li><a href="./0_notebooks/4-regex.html">FastAI tutorial on Regex</a></li>
+</ul></p></details><hr>
+
 <details><summary><b style='font-size:20px'>1. Remove URL</b></summary><p>
 <h4>1. Find text contains URL</h4>
 ```
