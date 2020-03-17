@@ -6,6 +6,9 @@
 // Reading input from user.
 string name = Console.ReadLine();
 int num = int.Parse(Console.ReadLine());   // parse the string into integer.
+# Handle if user doesn't provide an integer
+int x = 0;
+int.TryParse(Console.ReadLine(), out x);
 
 // Printing the output
 Console.WriteLine("Hello " + name);
@@ -94,6 +97,12 @@ else
 {
 	Console.WriteLine ("Num1 equals Num2");
 }
+```
+</details>
+
+<details><summary><b>Constants</b></summary>
+```csharp
+const double gravity = 9.8d;
 ```
 </details>
 </div>
