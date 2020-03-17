@@ -127,6 +127,41 @@ Console.WriteLine (movieName.Length);
 
 // Replace
 Console.WriteLine (movieName.Replace ('l', 'L').Trim ());
+
+// Index of 
+Console.WriteLine (movieName.IndexOf ('o'));
+
+// Last Index of
+Console.WriteLine (movieName.LastIndexOf ('o')); 
+
+// Substring
+Console.WriteLine (movieName.Trim().Substring (5, 2));
+
+// Remove after Index
+Console.WriteLine (movieName.Trim().Remove (4));
+
+// Insert
+Console.WriteLine (movieName.Trim().Insert (0, "Added "));
+```
+</details>
+
+<details><summary><b>Escape Characters</b></summary>
+```csharp
+// Ignore the special characters.
+string path = @"C:\nami\tark";
+
+// Don't ignore the special characters.
+string path = "C:\\nami\\tark"
+```
+</details>
+
+<details><summary><b>String Interpolation</b></summary>
+```csharp
+string name = "Mosaab";
+
+Console.WriteLine("Welcome " + name);
+Console.WriteLine("Welcome {0}", name);
+Console.WriteLine($"Welcome {name}");
 ```
 </details>
 </div>
