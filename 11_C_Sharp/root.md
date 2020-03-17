@@ -210,13 +210,18 @@ Console.WriteLine($"Pow: {Math.Pow(2, 2)}");
 ```
 </details>
 
-<details><summary><b>String sdf</b></summary>
+<details><summary><b>Random</b></summary>
 ```csharp
-string name = "Mosaab";
+// Random Integer.
+Random rand = new Random();
+int x = 0;
+x = rand.Next(1, 13);
+Console.WriteLine("Month: " + x);
 
-Console.WriteLine("Welcome " + name);
-Console.WriteLine("Welcome {0}", name);
-Console.WriteLine($"Welcome {name}");
+// Random Float
+double y = 0;
+y = rand.NextDouble() * 10;
+Console.WriteLine("Random Double: " + y);
 ```
 </details>
 
