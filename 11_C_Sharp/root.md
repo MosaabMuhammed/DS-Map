@@ -225,5 +225,23 @@ Console.WriteLine("Random Double: " + y);
 ```
 </details>
 
+<details><summary><b>Data Structures</b></summary>
+<h4>Arrays</h4>
+```csharp
+// Instansiate an array
+int[] nums = new int[5] { 1, 2, 3, 4, 5 };
+string[] days = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
+
+// Loop over the arrays. using FOR
+for (int i=0; i < nums.Length; i++) {
+	Console.WriteLine (nums [i]);
+}
+
+// Loop Over the array. using FOREACH.
+foreach(var day in days) {
+	Console.WriteLine (day);
+}
+```
+</details>
 
 </div>
