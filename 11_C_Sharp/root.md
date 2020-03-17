@@ -105,4 +105,28 @@ else
 const double gravity = 9.8d;
 ```
 </details>
+
+<details><summary><b>String Manipulations</b></summary>
+```csharp
+string movieName = "       Lord of the RingS      ";
+
+// Indexing
+Console.WriteLine (movieName[12]);
+
+// Trim
+Console.WriteLine (movieName.Trim());
+
+// Upper Case
+Console.WriteLine (movieName.ToUpper ().Trim ());
+
+// Lower Case
+Console.WriteLine (movieName.Trim ().ToLower ());
+
+// Length
+Console.WriteLine (movieName.Length);
+
+// Replace
+Console.WriteLine (movieName.Replace ('l', 'L').Trim ());
+```
+</details>
 </div>
