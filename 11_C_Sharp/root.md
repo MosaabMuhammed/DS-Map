@@ -164,4 +164,61 @@ Console.WriteLine("Welcome {0}", name);
 Console.WriteLine($"Welcome {name}");
 ```
 </details>
+
+<details><summary><b>Loops</b></summary>
+```csharp
+// For Loop
+for(int i = 0; i <= 10; i++) {
+	Console.WriteLine (i);
+}
+
+// While Loop
+int x = 5;
+while (x <= 10) {
+	Console.WriteLine (x++);
+}
+```
+</details>
+
+<details><summary><b>Math</b></summary>
+```csharp
+double x = 4.226d;
+
+// Ceiling
+Console.WriteLine($"Ceiling: {Math.Ceiling(x)}");
+
+// Floor
+Console.WriteLine($"Floor: {Math.Floor(x)}");
+
+// Round
+Console.WriteLine($"Round: {Math.Round(x, 2)}");
+
+// Truncate
+Console.WriteLine($"Truncate: {Math.Truncate(x)}");
+
+// Max
+Console.WriteLine($"Max: {Math.Max(x, y)}");
+
+// Min
+Console.WriteLine($"Min: {Math.Min(x, y)}");
+
+// Sqrt
+Console.WriteLine($"Sqrt: {Math.Sqrt(y)}");
+
+// POW
+Console.WriteLine($"Pow: {Math.Pow(2, 2)}");
+```
+</details>
+
+<details><summary><b>String sdf</b></summary>
+```csharp
+string name = "Mosaab";
+
+Console.WriteLine("Welcome " + name);
+Console.WriteLine("Welcome {0}", name);
+Console.WriteLine($"Welcome {name}");
+```
+</details>
+
+
 </div>
