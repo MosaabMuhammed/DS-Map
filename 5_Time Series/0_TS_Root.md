@@ -1,13 +1,13 @@
-# Time Series Analysis
+<h1 style='color:darkcyan;text-decoration:underline'>Time-Series</h1>
+<div style='width:1000px;margin:auto'>
 
 
-## [<span style='color:#333333'>1. EDA:</span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/5_EDA.html) 
+<h2 id=""><a href="./5_TS_EDA.html"><span style='color:#333333'>1. EDA:</span></a></h2>
+
+<h2 id=""><a href="./8_TS_Models.html"><span style='color:#333333'>2. Modeling:</span></a></h2>
 
 
-## [<span style='color:#333333'>2. Forecasting</span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/8_Models.html) 
-
-
-
+</div>
 
 
 

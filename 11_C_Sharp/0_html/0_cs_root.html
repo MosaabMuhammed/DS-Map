@@ -4,6 +4,10 @@
 
 <pre><code class="csharp">// Reading input from user.
 string name = Console.ReadLine();
+int num = int.Parse(Console.ReadLine());   // parse the string into integer.
+# Handle if user doesn't provide an integer
+int x = 0;
+int.TryParse(Console.ReadLine(), out x);
 
 // Printing the output
 Console.WriteLine(&quot;Hello &quot; + name);
@@ -14,10 +18,22 @@ Console.Write(&quot;Hello {0}&quot;, name);
 
 <details><summary><b>Data Types</b></summary>
 
-<pre><code class="csharp">int intNumber = 10;
-float floatNumber = 10.123f;
-double douNumber = 121.234d;
-decimal decNumber = 123m;
+<pre><code class="csharp">byte ByteNumber = 123;   // 1 byte (0 --&gt; 255)
+sbyte SByteNum  = -12;    // 1 byte (-128 --&gt; 127)
+
+
+short shortNumber = 2;    // 2 bytes (-32,768 --&gt; 32,768)
+ushort UshortNum = 12;   // 2 bytes (0 --&gt; 65,535)
+
+int intNumber = 10;          // 4 bytes (-2,147,483,648 --&gt; 2,147,483,648)
+uint UintNum =  120;        // 4 bytes (0 --&gt; 4,294,967,295)
+
+long LongNum = 213;       // 8 bytes (-9,223,372,036,854,775,808 --&gt; +9,223,...)
+ulong ULongNum = 12;     // 8 bytes (0 --&gt; 18,446,744,073,709,551,615)
+
+float floatNumber = 10.123f;       // 4 bytes.
+double douNumber = 121.234d;    // 8 bytes.
+decimal decNumber = 123m;       // 16 bytes.
 
 string name = &quot;Mosaab&quot;;
 char character = 'M';
@@ -49,4 +65,195 @@ searialNo = (int)anyNo;
 </code></pre>
 
 </details>
+
+<details><summary><b>DateTime</b></summary>
+
+<pre><code class="csharp"># DateTime
+DateTime myDate = new DateTime(2020, 5, 25);
+DateTime myDate = DateTime.Today;
+DateTime myDate = DateTime.Now;
+
+# Show DateTime 
+Console.WriteLine(myDate.ToShortDateString());  // show only the date (short format).
+Console.WriteLine(myDate.ToShortTimeString());  // show only the time (short format).
+Console.WriteLine(myDate.ToLongDateString());   // (long format)
+Console.WriteLine(myDate.ToLongTimeString());   // (long format)
+
+# Formatted datetime.
+string formattedDate = string.Format(&quot;Date is {0: yyyy MMMM dddd HH mm ss tt}&quot;, myDate);
+Console.WriteLine(formattedDate);
+</code></pre>
+
+</details>
+
+<details><summary><b>If Condition</b></summary>
+
+<pre><code class="csharp">if (num1 &gt; num2)
+{
+    Console.WriteLine (&quot;Num1 is larger than Num2&quot;);
+}
+else if (num1 &lt; num2)
+{
+    Console.WriteLine (&quot;Num1 is less than Num2&quot;);
+}
+else
+{
+    Console.WriteLine (&quot;Num1 equals Num2&quot;);
+}
+</code></pre>
+
+</details>
+
+<details><summary><b>Constants</b></summary>
+
+<pre><code class="csharp">const double gravity = 9.8d;
+</code></pre>
+
+</details>
+
+<details><summary><b>String Manipulations</b></summary>
+
+<pre><code class="csharp">string movieName = &quot;       Lord of the RingS      &quot;;
+
+// Indexing
+Console.WriteLine (movieName[12]);
+
+// Trim
+Console.WriteLine (movieName.Trim());
+
+// Upper Case
+Console.WriteLine (movieName.ToUpper ().Trim ());
+
+// Lower Case
+Console.WriteLine (movieName.Trim ().ToLower ());
+
+// Length
+Console.WriteLine (movieName.Length);
+
+// Replace
+Console.WriteLine (movieName.Replace ('l', 'L').Trim ());
+
+// Index of 
+Console.WriteLine (movieName.IndexOf ('o'));
+
+// Last Index of
+Console.WriteLine (movieName.LastIndexOf ('o')); 
+
+// Substring
+Console.WriteLine (movieName.Trim().Substring (5, 2));
+
+// Remove after Index
+Console.WriteLine (movieName.Trim().Remove (4));
+
+// Insert
+Console.WriteLine (movieName.Trim().Insert (0, &quot;Added &quot;));
+</code></pre>
+
+</details>
+
+<details><summary><b>Escape Characters</b></summary>
+
+<pre><code class="csharp">// Ignore the special characters.
+string path = @&quot;C:\nami\tark&quot;;
+
+// Don't ignore the special characters.
+string path = &quot;C:\\nami\\tark&quot;
+</code></pre>
+
+</details>
+
+<details><summary><b>String Interpolation</b></summary>
+
+<pre><code class="csharp">string name = &quot;Mosaab&quot;;
+
+Console.WriteLine(&quot;Welcome &quot; + name);
+Console.WriteLine(&quot;Welcome {0}&quot;, name);
+Console.WriteLine($&quot;Welcome {name}&quot;);
+</code></pre>
+
+</details>
+
+<details><summary><b>Loops</b></summary>
+
+<pre><code class="csharp">// For Loop
+for(int i = 0; i &lt;= 10; i++) {
+    Console.WriteLine (i);
+}
+
+// While Loop
+int x = 5;
+while (x &lt;= 10) {
+    Console.WriteLine (x++);
+}
+</code></pre>
+
+</details>
+
+<details><summary><b>Math</b></summary>
+
+<pre><code class="csharp">double x = 4.226d;
+
+// Ceiling
+Console.WriteLine($&quot;Ceiling: {Math.Ceiling(x)}&quot;);
+
+// Floor
+Console.WriteLine($&quot;Floor: {Math.Floor(x)}&quot;);
+
+// Round
+Console.WriteLine($&quot;Round: {Math.Round(x, 2)}&quot;);
+
+// Truncate
+Console.WriteLine($&quot;Truncate: {Math.Truncate(x)}&quot;);
+
+// Max
+Console.WriteLine($&quot;Max: {Math.Max(x, y)}&quot;);
+
+// Min
+Console.WriteLine($&quot;Min: {Math.Min(x, y)}&quot;);
+
+// Sqrt
+Console.WriteLine($&quot;Sqrt: {Math.Sqrt(y)}&quot;);
+
+// POW
+Console.WriteLine($&quot;Pow: {Math.Pow(2, 2)}&quot;);
+</code></pre>
+
+</details>
+
+<details><summary><b>Random</b></summary>
+
+<pre><code class="csharp">// Random Integer.
+Random rand = new Random();
+int x = 0;
+x = rand.Next(1, 13);
+Console.WriteLine(&quot;Month: &quot; + x);
+
+// Random Float
+double y = 0;
+y = rand.NextDouble() * 10;
+Console.WriteLine(&quot;Random Double: &quot; + y);
+</code></pre>
+
+</details>
+
+<details><summary><b>Data Structures</b></summary>
+<h4>Arrays</h4>
+
+<pre><code class="csharp">// Instansiate an array
+int[] nums = new int[5] { 1, 2, 3, 4, 5 };
+string[] days = { &quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thur&quot;, &quot;Fri&quot;, &quot;Sat&quot; };
+
+// Loop over the arrays. using FOR
+for (int i=0; i &lt; nums.Length; i++) {
+    Console.WriteLine (nums [i]);
+}
+
+// Loop Over the array. using FOREACH.
+foreach(var day in days) {
+    Console.WriteLine (day);
+}
+</code></pre>
+
+</details>
+
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
