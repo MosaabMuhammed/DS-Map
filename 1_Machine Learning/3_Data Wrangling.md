@@ -8,6 +8,13 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary> <b>Chain</b> of <b>Functions [pipe()]</b></summary><p>
+```python
+# using pipe, we can chain functions on dataframe or series.
+prices = pd.read_csv(f"{INPUT_DIR}/sell_prices.csv").pipe(reduce_mem_usage)
+```
+</p></details>
+
 <details><summary> <b>Sparse Matrix</b> </summary><p>
 <p><a href="./3_data_wrangling/3-logreg-nb-imdb.html#5.-Sparse-Matrix-Representation">FastAI tutorials on Sparse Matrix</a> </p>
 </p></details>
