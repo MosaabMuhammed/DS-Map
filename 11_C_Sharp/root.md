@@ -297,6 +297,51 @@ static void WelcomeGuest(string name) {
 	Console.WriteLine($"Welcome {name}");
 }
 ```
+</details><hr>
+<details><summary><b>Class</b> & <b>Getter & Setter</b></summary>
+```csharp
+// everthing is by default private
+class Person {
+	string firstName;
+	public string lastName;
+	DateTime birthDate;
+	string country;
+	
+	// Getter & Setter
+	public string FirstName {
+		get { return firstName; }
+		set { firstName = value; }
+	}
+	
+	// Another way of Getter & Setter
+	public DateTime BirthDate { get; set; }
+}
+
+// instatiating the class in the main method
+Person perOne = new Person();
+perOne.FirstName = "Mosaab";
+perOne.BirthDate = new DateTime(12, 1, 1996);
+```
 </details>
 
+<details><summary><b>Constructor</b></summary>
+```csharp
+// everthing is by default private
+class Person {
+	string firstName;
+	public string lastName;
+	DateTime birthDate;
+	string country;
+	
+	// Constructor
+	public Person (string first, string last) {
+		firstName = first;
+		lastName  = last;
+	}
+}
+
+// instatiating the class in the main method
+Person perOne = new Person("Mosaab", "Muhammad");
+```
+</details>
 </div>
