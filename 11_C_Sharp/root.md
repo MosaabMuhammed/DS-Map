@@ -344,4 +344,42 @@ class Person {
 Person perOne = new Person("Mosaab", "Muhammad");
 ```
 </details>
+
+<details><summary><b>Static Methods</b></summary>
+<h4>Used without the need to instantiate the class.</h4>
+```csharp
+static void Main() {
+	Person person = new Person();
+	person.SayHi(); // called from the static method.
+}
+
+static void SayHi() {
+	Console.WriteLine("Hi!, from static method");
+}
+
+
+class Person {
+	public void SayHi() {
+		// print something.
+	}
+}
+```
+</details>
+<details><summary><b>Inheritance</b></summary>
+
+```csharp
+class Dog : Animal {
+
+}
+```
+</details>
+
+<details><summary><b>Access Modifiers</b></summary><p><ul>
+<li><b>Public:</b> Access is not restricted.</li>
+<li><b>Protected:</b> Access is limited to the containing class or types derived from the containing class.</li>
+<li><b>Private:</b> Access is limited to the containing type.</li>
+<li><b>Internal:</b> Access is limited to the current assembly.</li>
+<li><b>Protected Internal:</b> Access is limited to the current assembly or types derived from the containing class.</li>
+</ul></p></details>
+
 </div>
