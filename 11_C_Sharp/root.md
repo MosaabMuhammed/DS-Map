@@ -286,6 +286,17 @@ static void Change(out int x) {
 // use it like this.
 Change(out x);
 ```
+
+<h4>4. Overloaded Methods</h4>
+```csharp
+static void WelcomeGuest() {
+	Console.WriteLine("Something");
+}
+
+static void WelcomeGuest(string name) {
+	Console.WriteLine($"Welcome {name}");
+}
+```
 </details>
 
 </div>
