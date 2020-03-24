@@ -8,6 +8,16 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary> <b>Display</b> Multiple dataframes</summary><p>
+```
+import IPython
+
+def display(*dfs, head=True):
+    for df in dfs:
+        IPython.display.display(df.head() if head else df)
+```
+</p></details>
+
 <details><summary> <b>Chain</b> of <b>Functions [pipe()]</b></summary><p>
 ```python
 # using pipe, we can chain functions on dataframe or series.
