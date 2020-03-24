@@ -244,4 +244,48 @@ foreach(var day in days) {
 ```
 </details>
 
+<details><summary><b>Method/Function</b></summary>
+<h4>1. Basic Structure</h4>
+```csharp
+// Define the method outside of the Main method.
+static void DisplayMessage() {
+	Console.WriteLine("Process is done");
+}
+```
+
+<h4>2. Parameters</h4>
+```csharp
+// Define the method outside of the Main method.
+static int Add(int x, int y) {
+	return x + y
+}
+```
+
+<h4>3. value Vs. reference</h4>
+```csharp
+// variable has to be initialized.
+int x = 10;
+
+// outside of the main method
+static void ChangeX(ref int x) {
+	x = 200;
+}
+
+// to call the function as follows:
+ChangeX(ref x)
+```
+```csharp
+// if variable is not instialized, we can use "out" keyword.
+int x;
+
+// outside of the main method.
+static void Change(out int x) {
+	x = 200;
+}
+
+// use it like this.
+Change(out x);
+```
+</details>
+
 </div>
