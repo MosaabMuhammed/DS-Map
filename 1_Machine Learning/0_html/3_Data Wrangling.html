@@ -7,6 +7,34 @@ print(os.listdir(&quot;../input&quot;))
 </code></pre>
 
 </p></details>
+<details><summary> Rename<b> Repeated</b> columns </summary>
+
+<pre><code class="python">cols = []
+col_name = &quot;Grill&quot;
+count = 1
+for column in X.columns:
+    if column == col_name:
+        cols.append(f'{col_name}_{count}')
+        count+=1
+        continue
+    cols.append(column)
+X.columns = cols
+</code></pre>
+
+</details>
+
+<details><summary> Upload <b> files</b> into colab </summary>
+
+<pre><code class="python">from google.colab import files
+
+uploaded = files.upload()
+
+for fn in uploaded.keys():
+  print('User uploaded file &quot;{name}&quot; with length {length} bytes'.format(
+      name=fn, length=len(uploaded[fn])))
+</code></pre>
+
+</details>
 
 <details><summary> <b>Display</b> Multiple dataframes</summary><p>
 

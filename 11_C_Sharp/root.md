@@ -225,7 +225,7 @@ Console.WriteLine("Random Double: " + y);
 ```
 </details>
 
-<details><summary><b>Data Structures</b></summary>
+<details><summary><b>Array</b></summary>
 <h4>Arrays</h4>
 ```csharp
 // Instansiate an array
@@ -368,9 +368,9 @@ class Person {
 <details><summary><b>Inheritance</b></summary>
 
 ```csharp
-class Dog : Animal {
+	class Dog : Animal {
 
-}
+	}
 ```
 </details>
 
@@ -382,4 +382,212 @@ class Dog : Animal {
 <li><b>Protected Internal:</b> Access is limited to the current assembly or types derived from the containing class.</li>
 </ul></p></details>
 
+<details><summary><b>Polymorphism</b></summary>
+<h5>use `virtual` in the parent class, and `override` in the child class.</h5>
+```csharp
+class MainClass
+{
+	public static void Main (string[] args)
+	{
+		Shape[] shapes = new Shape[3];
+		shapes [0] = new Line ();
+		shapes [1] = new Circle ();
+		shapes [2] = new Triangle ();
+
+		foreach (var shape in shapes) {
+			shape.Draw ();
+		}
+	}
+}
+
+class Shape {
+	public virtual void Draw() {
+		Console.WriteLine ("I am a simple shape");
+	}
+}
+
+class Circle : Shape {
+	public override void Draw() {
+		Console.WriteLine ("I am a Circle");
+	}
+}
+
+class Triangle : Shape {
+	public override void Draw() {
+		Console.WriteLine ("I am a Triangel");
+	}
+}
+
+class Line : Shape {
+	public override void Draw() {
+		Console.WriteLine ("I am a Line");
+	}
+}
+```
+</details>
+<details><summary><b>Abstraction</b></summary>
+<p><b>Abstract Class</b> is a concept or an idea not associated with any specific instance. "Can't be instantiated"</p>
+```csharp
+class MainClass
+{
+	static void Main()
+	{
+		Line line = new Line ();
+		line.SayHi();
+	}
+
+}
+
+abstract class Shape
+{
+	public void SayHi()
+	{
+		Console.WriteLine ("Hi from the abstract class.");
+	}
+
+	abstract public void Draw();
+}
+
+class Line : Shape
+{
+	public override  void Draw()
+	{
+		Console.WriteLine ("Hi Im a line");
+	}
+}
+```
+</details>
+<details><summary><b>#region</b> & <b>#endregion</b></summary>
+```csharp
+// region is used to fold the code.
+class Program {
+	public static void Main() {
+		Mercedes car = new Mercedes ();
+		car.DisplayInfo ();
+	}
+}
+
+#region Car = This is the solution for the car exercies
+class Car {
+
+	#region Properties
+	private decimal price;
+	protected int maxSpeed;
+	public string color;
+	#endregion
+
+	protected decimal Price {
+		get { return price; }
+		set { price = value; }
+	}
+
+	public virtual void DisplayInfo() {
+		price = 10000;
+		maxSpeed = 300;
+		color = "Black";
+
+		Console.WriteLine ($"Default values: price is {Price}, max speed = {maxSpeed}, color = {color}");
+	}
+}
+
+class Mercedes : Car {
+	public override void DisplayInfo() {
+		base.DisplayInfo ();
+
+		base.Price = 15000;
+		base.color = "blue";
+		base.maxSpeed = 200;
+
+		Console.WriteLine ($"Overriden values: price = {Price}, speed = {maxSpeed}, color = {color}");
+	}
+}
+#endregion
+
+```
+</details>
+<details><summary><b>Sealed Class</b> can't be inherted </summary>
+```csharp
+// Animal class CAN'T be inherted.
+sealed class Animal {
+	public int number = 200;
+}
+```
+</details>
+<details><summary><b>Static Class</b></summary>
+<p><ul>
+<li>You can only have static members</li>
+<li>You can't create an instance of it</li>
+<li>They are implicitly sealed</li>
+</ul></p>
+```csharp
+class Program {
+	public static void Main() {
+		// There's no need to instantiate a class.
+		Animal.GetAge ();
+	}
+}
+
+static class Animal {
+	// members must be static
+	static public string name;
+
+	// methods must be static
+	static public void GetAge() {
+		Console.WriteLine (DateTime.Now.Year - DateTime.Now.AddYears (-2).Year);
+	}
+	
+}
+```
+</details>
+<details><summary><b>Nested Class</b></summary>
+```csharp
+class Program {
+	public static void Main() {
+		Animal animal = new Animal ();
+
+		// instantiate a dog nested class.
+		Animal.Dog dog = new Animal.Dog ();
+
+		// instantiate a cat nested class.
+		Animal.Cat cat = new Animal.Cat ();
+	}
+}
+
+class Animal {
+	public string name;
+	public string country;
+
+	public class Dog {
+		public string breed;
+		public string nickName;
+	}
+
+	public class Cat {
+		public string CatName;
+	}
+}
+```
+</details>
+
+<details><summary><b>Partial Class</b></summary>
+when you write parts of the same class in different places.
+```csharp
+class Program {
+	public static void Main() {
+		Animal animal = new Animal ();
+		Console.WriteLine (animal.age + " " + animal.name);
+	}
+}
+
+partial class Animal {
+	public int age = 13;
+	
+}
+
+partial class Animal {
+	public string name = "Max";
+}
+
+```
+</details>
 </div>

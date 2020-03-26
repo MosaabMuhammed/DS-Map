@@ -236,7 +236,7 @@ Console.WriteLine(&quot;Random Double: &quot; + y);
 
 </details>
 
-<details><summary><b>Data Structures</b></summary>
+<details><summary><b>Array</b></summary>
 <h4>Arrays</h4>
 
 <pre><code class="csharp">// Instansiate an array
@@ -274,6 +274,348 @@ static int Add(int x, int y) {
 }
 </code></pre>
 
+
+<h4>3. value Vs. reference</h4>
+
+<pre><code class="csharp">// variable has to be initialized.
+int x = 10;
+
+// outside of the main method
+static void ChangeX(ref int x) {
+    x = 200;
+}
+
+// to call the function as follows:
+ChangeX(ref x)
+</code></pre>
+
+
+<pre><code class="csharp">// if variable is not instialized, we can use &quot;out&quot; keyword.
+int x;
+
+// outside of the main method.
+static void Change(out int x) {
+    x = 200;
+}
+
+// use it like this.
+Change(out x);
+</code></pre>
+
+
+<h4>4. Overloaded Methods</h4>
+
+<pre><code class="csharp">static void WelcomeGuest() {
+    Console.WriteLine(&quot;Something&quot;);
+}
+
+static void WelcomeGuest(string name) {
+    Console.WriteLine($&quot;Welcome {name}&quot;);
+}
+</code></pre>
+
+</details><hr>
+<details><summary><b>Class</b> & <b>Getter & Setter</b></summary>
+
+<pre><code class="csharp">// everthing is by default private
+class Person {
+    string firstName;
+    public string lastName;
+    DateTime birthDate;
+    string country;
+
+    // Getter &amp; Setter
+    public string FirstName {
+        get { return firstName; }
+        set { firstName = value; }
+    }
+
+    // Another way of Getter &amp; Setter
+    public DateTime BirthDate { get; set; }
+}
+
+// instatiating the class in the main method
+Person perOne = new Person();
+perOne.FirstName = &quot;Mosaab&quot;;
+perOne.BirthDate = new DateTime(12, 1, 1996);
+</code></pre>
+
 </details>
 
+<details><summary><b>Constructor</b></summary>
+
+<pre><code class="csharp">// everthing is by default private
+class Person {
+    string firstName;
+    public string lastName;
+    DateTime birthDate;
+    string country;
+
+    // Constructor
+    public Person (string first, string last) {
+        firstName = first;
+        lastName  = last;
+    }
+}
+
+// instatiating the class in the main method
+Person perOne = new Person(&quot;Mosaab&quot;, &quot;Muhammad&quot;);
+</code></pre>
+
+</details>
+
+<details><summary><b>Static Methods</b></summary>
+<h4>Used without the need to instantiate the class.</h4>
+
+<pre><code class="csharp">static void Main() {
+    Person person = new Person();
+    person.SayHi(); // called from the static method.
+}
+
+static void SayHi() {
+    Console.WriteLine(&quot;Hi!, from static method&quot;);
+}
+
+
+class Person {
+    public void SayHi() {
+        // print something.
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Inheritance</b></summary>
+
+
+<pre><code class="csharp">    class Dog : Animal {
+
+    }
+</code></pre>
+
+</details>
+
+<details><summary><b>Access Modifiers</b></summary><p><ul>
+<li><b>Public:</b> Access is not restricted.</li>
+<li><b>Protected:</b> Access is limited to the containing class or types derived from the containing class.</li>
+<li><b>Private:</b> Access is limited to the containing type.</li>
+<li><b>Internal:</b> Access is limited to the current assembly.</li>
+<li><b>Protected Internal:</b> Access is limited to the current assembly or types derived from the containing class.</li>
+</ul></p></details>
+
+<details><summary><b>Polymorphism</b></summary>
+<h5>use `virtual` in the parent class, and `override` in the child class.</h5>
+
+<pre><code class="csharp">class MainClass
+{
+    public static void Main (string[] args)
+    {
+        Shape[] shapes = new Shape[3];
+        shapes [0] = new Line ();
+        shapes [1] = new Circle ();
+        shapes [2] = new Triangle ();
+
+        foreach (var shape in shapes) {
+            shape.Draw ();
+        }
+    }
+}
+
+class Shape {
+    public virtual void Draw() {
+        Console.WriteLine (&quot;I am a simple shape&quot;);
+    }
+}
+
+class Circle : Shape {
+    public override void Draw() {
+        Console.WriteLine (&quot;I am a Circle&quot;);
+    }
+}
+
+class Triangle : Shape {
+    public override void Draw() {
+        Console.WriteLine (&quot;I am a Triangel&quot;);
+    }
+}
+
+class Line : Shape {
+    public override void Draw() {
+        Console.WriteLine (&quot;I am a Line&quot;);
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Abstraction</b></summary>
+<p><b>Abstract Class</b> is a concept or an idea not associated with any specific instance. "Can't be instantiated"</p>
+
+<pre><code class="csharp">class MainClass
+{
+    static void Main()
+    {
+        Line line = new Line ();
+        line.SayHi();
+    }
+
+}
+
+abstract class Shape
+{
+    public void SayHi()
+    {
+        Console.WriteLine (&quot;Hi from the abstract class.&quot;);
+    }
+
+    abstract public void Draw();
+}
+
+class Line : Shape
+{
+    public override  void Draw()
+    {
+        Console.WriteLine (&quot;Hi Im a line&quot;);
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>#region</b> & <b>#endregion</b></summary>
+
+<pre><code class="csharp">// region is used to fold the code.
+class Program {
+    public static void Main() {
+        Mercedes car = new Mercedes ();
+        car.DisplayInfo ();
+    }
+}
+
+#region Car = This is the solution for the car exercies
+class Car {
+
+    #region Properties
+    private decimal price;
+    protected int maxSpeed;
+    public string color;
+    #endregion
+
+    protected decimal Price {
+        get { return price; }
+        set { price = value; }
+    }
+
+    public virtual void DisplayInfo() {
+        price = 10000;
+        maxSpeed = 300;
+        color = &quot;Black&quot;;
+
+        Console.WriteLine ($&quot;Default values: price is {Price}, max speed = {maxSpeed}, color = {color}&quot;);
+    }
+}
+
+class Mercedes : Car {
+    public override void DisplayInfo() {
+        base.DisplayInfo ();
+
+        base.Price = 15000;
+        base.color = &quot;blue&quot;;
+        base.maxSpeed = 200;
+
+        Console.WriteLine ($&quot;Overriden values: price = {Price}, speed = {maxSpeed}, color = {color}&quot;);
+    }
+}
+#endregion
+
+</code></pre>
+
+</details>
+<details><summary><b>Sealed Class</b> can't be inherted </summary>
+
+<pre><code class="csharp">// Animal class CAN'T be inherted.
+sealed class Animal {
+    public int number = 200;
+}
+</code></pre>
+
+</details>
+<details><summary><b>Static Class</b></summary>
+<p><ul>
+<li>You can only have static members</li>
+<li>You can't create an instance of it</li>
+<li>They are implicitly sealed</li>
+</ul></p>
+
+<pre><code class="csharp">class Program {
+    public static void Main() {
+        // There's no need to instantiate a class.
+        Animal.GetAge ();
+    }
+}
+
+static class Animal {
+    // members must be static
+    static public string name;
+
+    // methods must be static
+    static public void GetAge() {
+        Console.WriteLine (DateTime.Now.Year - DateTime.Now.AddYears (-2).Year);
+    }
+
+}
+</code></pre>
+
+</details>
+<details><summary><b>Nested Class</b></summary>
+
+<pre><code class="csharp">class Program {
+    public static void Main() {
+        Animal animal = new Animal ();
+
+        // instantiate a dog nested class.
+        Animal.Dog dog = new Animal.Dog ();
+
+        // instantiate a cat nested class.
+        Animal.Cat cat = new Animal.Cat ();
+    }
+}
+
+class Animal {
+    public string name;
+    public string country;
+
+    public class Dog {
+        public string breed;
+        public string nickName;
+    }
+
+    public class Cat {
+        public string CatName;
+    }
+}
+</code></pre>
+
+</details>
+
+<details><summary><b>Partial Class</b></summary>
+when you write parts of the same class in different places.
+
+<pre><code class="csharp">class Program {
+    public static void Main() {
+        Animal animal = new Animal ();
+        Console.WriteLine (animal.age + &quot; &quot; + animal.name);
+    }
+}
+
+partial class Animal {
+    public int age = 13;
+
+}
+
+partial class Animal {
+    public string name = &quot;Max&quot;;
+}
+
+</code></pre>
+
+</details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
