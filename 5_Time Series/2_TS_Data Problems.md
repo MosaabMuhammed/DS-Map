@@ -49,7 +49,7 @@ def test_stationarity(df, ts):
 </details>
 
 <details><summary><b>Transformation</b> to make it <b>Stationary</b></summary>
-<a href='./2_Data_Problems/PyData_LA_2018_Tutorial.html#Correct-for-stationarity'></a>
+<a href='./2_Data_Problems/PyData_LA_2018_Tutorial.html#Correct-for-stationarity'><b>Notebook (important)</b></a>
 ```python
 # Transformation - log ts
 df_example['ts_log'] = df_example['ts'].apply(lambda x: np.log(x))
@@ -88,9 +88,57 @@ df_example_transform['ts_log_ewma_diff'] = df_example_transform['ts_log'] - df_e
 
 </details>
 
-<details><summary>Let <b>Matplotlib</b> understand dates</summary>
+<details><summary><b style="font-size:25px;text-decoration:underline">Decomposition</b></summary>
+<a href='./2_Data_Problems/PyData_LA_2018_Tutorial.html#Decomposition:-trend,-seasonality,-residuals'><b>Notebook</b></a>
 ```python
-from pandas.plotting import register_matplotlib_converters
-register_matplotlib_converters()
+// Code for plotting
+def plot_decomposition(df, ts, trend, seasonal, residual):
+  """
+  Plot time series data
+  """
+  f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2, figsize = (15, 5), sharex = True)
+
+  ax1.plot(df[ts], label = 'Original')
+  ax1.legend(loc = 'best')
+  ax1.tick_params(axis = 'x', rotation = 45)
+
+  ax2.plot(df[trend], label = 'Trend')
+  ax2.legend(loc = 'best')
+  ax2.tick_params(axis = 'x', rotation = 45)
+
+  ax3.plot(df[seasonal],label = 'Seasonality')
+  ax3.legend(loc = 'best')
+  ax3.tick_params(axis = 'x', rotation = 45)
+
+  ax4.plot(df[residual], label = 'Residuals')
+  ax4.legend(loc = 'best')
+  ax4.tick_params(axis = 'x', rotation = 45)
+  plt.tight_layout()
+
+  # Show graph
+  plt.suptitle('Trend, Seasonal, and Residual Decomposition of %s' %(ts), 
+               x = 0.5, 
+               y = 1.05, 
+               fontsize = 18)
+  plt.show()
+  plt.close()
+  
+  return
+```
+```python
+from statsmodels.tsa.seasonal import seasonal_decompose
+decomposition = seasonal_decompose(df_example_transform['ts_log'], freq = 365)
+
+df_example_transform.loc[:,'trend'] = decomposition.trend
+df_example_transform.loc[:,'seasonal'] = decomposition.seasonal
+df_example_transform.loc[:,'residual'] = decomposition.resid
+
+plot_decomposition(df = df_example_transform, 
+                   ts = 'ts_log', 
+                   trend = 'trend',
+                   seasonal = 'seasonal', 
+                   residual = 'residual')
+
+test_stationarity(df = df_example_transform.dropna(), ts = 'residual')
 ```
 </details>
