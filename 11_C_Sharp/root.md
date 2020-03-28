@@ -1,6 +1,7 @@
 # C# 
 
 <div style="width:1000px;margin:auto">
+<details><summary><b>Basic</b></summary>
 <details><summary><b>Input / Output</b></summary>
 ```csharp
 // Reading input from user.
@@ -297,7 +298,9 @@ static void WelcomeGuest(string name) {
 	Console.WriteLine($"Welcome {name}");
 }
 ```
+</details>
 </details><hr>
+<details><summary><b>OOP</b></summary>
 <details><summary><b>Class</b> & <b>Getter & Setter</b></summary>
 ```csharp
 // everthing is by default private
@@ -766,4 +769,27 @@ namespace Learning_C_Sharp {
 <p><img src="./imgs/20200328-155201.png" alt="" /></p>
 <p><img src="./imgs/20200328-155340.png" alt="" /></p>
 </details>
+</details><hr>
+<details><summary><b>.NET</b></summary>
+<p><b>.NET</b> is a component of Windows that includes a virtual execution system called the <b>(CLR)</b> Common Language Runtime and a unified set of class libraries.</p>
+</details>
+<details><summary><b>Debug.WriteLine()</b></summary>
+```
+using System.Diagnostics;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			int x = 0;
+			int y = 2;
+
+			Debug.WriteLine($"x = {x}");
+			Debug.WriteLineIf(y > 0, $"y = {y}");
+
+		}
+	}
+}
+```
+</details>
+
 </div>
