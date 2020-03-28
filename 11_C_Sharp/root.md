@@ -785,11 +785,45 @@ namespace Learning_C_Sharp {
 
 			Debug.WriteLine($"x = {x}");
 			Debug.WriteLineIf(y > 0, $"y = {y}");
-
 		}
 	}
 }
 ```
 </details>
 
+<details><summary><b>Documentation</b></summary>
+Write /// then it will show like this:
+```
+/// <summary>
+/// Class Animal will be a base class for the child classes like Dogs.
+/// </summary>
+class Program {
+
+}
+```
+</details>
+<details><summary><b>Files</b></summary>
+```
+using System.IO;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// WRITING
+			string file = @"path/to/your/file";
+			StreamWriter sw = new StreamWriter(file, true);
+			sw.WriteLine ("John");
+			sw.WriteLine ("Ahmed");
+			sw.Close ();
+			
+			// READING
+			string file = @"path/to/your/file";
+			StreamReader sr = new StreamReader(file);
+			Console.WriteLine(sr.ReadToEnd());
+			Console.WriteLine("File Ended");
+			sr.Close();
+		}
+	}
+}
+```
 </div>
