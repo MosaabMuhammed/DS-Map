@@ -615,7 +615,6 @@ namespace NameSpace {
 ```
 </details>
 <details><summary><b>Struct</b></summary>
-
 <p><img src="imgs/struct.png" alt="" /></p>
 
 ```csharp
@@ -644,6 +643,29 @@ namespace Learning_C_Sharp
 		public void SayHi() {
 			Console.WriteLine ("Hi from the method in struct");
 		}
+	}
+}
+```
+</details>
+<details><summary><b>Enum</b></summary>
+```
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			string weekDayName = WeekDay.Monday.ToString ();
+			WeekDay day = WeekDay.Sunday;
+
+			Console.WriteLine ((int)day+" "+weekDayName);
+		}
+	}
+	enum WeekDay {
+		Monday,
+		Tuesday,
+		Wednesday,
+		Thursday,
+		Friday = 40,
+		Saturday = 50,
+		Sunday = 60
 	}
 }
 ```
