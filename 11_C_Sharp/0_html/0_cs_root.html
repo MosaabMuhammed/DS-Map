@@ -386,7 +386,7 @@ class Person {
 
 </details>
 <details><summary><b>Inheritance</b></summary>
-
+<p><img src="./imgs/inheritance.png" alt="" /></p>
 
 <pre><code class="csharp">    class Dog : Animal {
 
@@ -644,7 +644,6 @@ namespace NameSpace {
 
 </details>
 <details><summary><b>Struct</b></summary>
-
 <p><img src="imgs/struct.png" alt="" /></p>
 
 
@@ -677,5 +676,127 @@ namespace NameSpace {
 }
 </code></pre>
 
+</details>
+<details><summary><b>Enum</b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            string weekDayName = WeekDay.Monday.ToString ();
+            WeekDay day = WeekDay.Sunday;
+
+            Console.WriteLine ((int)day+&quot; &quot;+weekDayName);
+        }
+    }
+    enum WeekDay {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday = 40,
+        Saturday = 50,
+        Sunday = 60
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>this</b> Keyword</summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            Animal ani = new Animal(&quot;Mosaab&quot;);
+
+            Console.WriteLine ($&quot;Hello {ani.Name}&quot;);
+        }
+    }
+
+    class Animal {
+        string name;
+
+        public Animal (string name) {
+            this.name = name;
+        }
+
+        public string Name {
+            get { return name; }
+            set { name = value; }
+        }
+    }
+}
+
+</code></pre>
+
+</details>
+
+<details><summary><b>Interface</b></summary>
+<details><summary>Interface Vs Abstract</summary>
+<p><img src="./imgs/interface.png" alt="" /></p>
+<p><img src="./imgs/interfaceVsAbstract.png" alt="" /></p>
+</details>
+
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            Dog dog = new Dog ();
+            dog.Attack (); 
+            dog.Run ();
+        }
+    }
+
+    public interface IAnimal {
+        void Run();
+    }
+
+    public interface IDogCommands : IAnimal{
+        void Stay();
+        void Sit();
+        void Attack();
+
+        string DogName { get; set; }
+    }
+
+    class Dog : IDogCommands, IAnimal {
+        private string DogBreed;
+
+        public void Stay() {
+            Console.WriteLine (&quot;Do is staying&quot;);
+        }
+        public void Sit() {
+            Console.WriteLine (&quot;Dog is sitting.&quot;);
+        }
+        public void Attack() {
+            Console.WriteLine (&quot;Attack&quot;);
+        }
+        public void Run() {
+            Console.WriteLine (&quot;Run&quot;);
+        }
+
+        public string DogName { get; set; }
+    }
+
+}
+</code></pre>
+
+</details>
+
+<details><summary><b>Composition</b></summary>
+<ul>
+<li><b>Composition</b> is defined as <i>"part-of"</i> relationship between objects, i.e. Engine is part of Car.</li>
+<li>The lifetime of the child instance is denpendant on the owner or the parent class instance. Child objects doesn't have their lifecycle without parent object.</li>
+<li>If a parent object is deleted, all its child objects will also be deleted</li>
+</ul>
+</details>
+
+<details><summary><b>Aggregation</b></summary>
+<p><img src="./imgs/20200328-154806.png" alt="" /></p>
+<p><img src="./imgs/20200328-154942.png" alt="" /></p>
+</details>
+
+<details><summary><b>Association</b></summary>
+<p><img src="./imgs/20200328-155201.png" alt="" /></p>
+<p><img src="./imgs/20200328-155340.png" alt="" /></p>
 </details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

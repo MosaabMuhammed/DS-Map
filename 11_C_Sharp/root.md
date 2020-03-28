@@ -366,7 +366,7 @@ class Person {
 ```
 </details>
 <details><summary><b>Inheritance</b></summary>
-
+<p><img src="./imgs/inheritance.png" alt="" /></p>
 ```csharp
 	class Dog : Animal {
 
@@ -699,7 +699,11 @@ namespace Learning_C_Sharp {
 </details>
 
 <details><summary><b>Interface</b></summary>
+<details><summary>Interface Vs Abstract</summary>
 <p><img src="./imgs/interface.png" alt="" /></p>
+<p><img src="./imgs/interfaceVsAbstract.png" alt="" /></p>
+</details>
+
 ```
 namespace Learning_C_Sharp {
 	class Program {
@@ -743,5 +747,23 @@ namespace Learning_C_Sharp {
 
 }
 ```
+</details>
+
+<details><summary><b>Composition</b></summary>
+<ul>
+<li><b>Composition</b> is defined as <i>"part-of"</i> relationship between objects, i.e. Engine is part of Car.</li>
+<li>The lifetime of the child instance is denpendant on the owner or the parent class instance. Child objects doesn't have their lifecycle without parent object.</li>
+<li>If a parent object is deleted, all its child objects will also be deleted</li>
+</ul>
+</details>
+
+<details><summary><b>Aggregation</b></summary>
+<p><img src="./imgs/20200328-154806.png" alt="" /></p>
+<p><img src="./imgs/20200328-154942.png" alt="" /></p>
+</details>
+
+<details><summary><b>Association</b></summary>
+<p><img src="./imgs/20200328-155201.png" alt="" /></p>
+<p><img src="./imgs/20200328-155340.png" alt="" /></p>
 </details>
 </div>
