@@ -89,6 +89,7 @@ df_example_transform['ts_log_ewma_diff'] = df_example_transform['ts_log'] - df_e
 </details>
 
 <details><summary><b style="font-size:25px;text-decoration:underline">Decomposition</b></summary>
+We try to de-treding and de-seasonalizing the given data, take only the residuals to predict.
 <a href='./2_Data_Problems/PyData_LA_2018_Tutorial.html#Decomposition:-trend,-seasonality,-residuals'><b>Notebook</b></a>
 ```python
 // Code for plotting

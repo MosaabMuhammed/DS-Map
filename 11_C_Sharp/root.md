@@ -590,4 +590,28 @@ partial class Animal {
 
 ```
 </details>
+<details><summary><b>Namespace</b></summary>
+```csharp
+namespace Learning_C_Sharp
+{
+	class Program {
+		public static void Main() {
+			System.Console.WriteLine ();
+			NameSpace.Animal animal = new NameSpace.Animal ();
+			animal.SayHi ();
+		}
+	}
+}
+
+namespace NameSpace {
+	class Animal {
+		public string animalColor;
+
+		public void SayHi() {
+			Console.WriteLine ("Hi from my own namespace");
+		}
+	}
+}
+```
+</details>
 </div>
