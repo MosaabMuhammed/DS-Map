@@ -670,4 +670,78 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>this</b> Keyword</summary>
+```
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			Animal ani = new Animal("Mosaab");
+
+			Console.WriteLine ($"Hello {ani.Name}");
+		}
+	}
+
+	class Animal {
+	 	string name;
+
+		public Animal (string name) {
+			this.name = name;
+		}
+
+		public string Name {
+			get { return name; }
+			set { name = value; }
+		}
+	}
+}
+
+```
+</details>
+
+<details><summary><b>Interface</b></summary>
+<p><img src="./imgs/interface.png" alt="" /></p>
+```
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			Dog dog = new Dog ();
+			dog.Attack (); 
+			dog.Run ();
+		}
+	}
+
+	public interface IAnimal {
+		void Run();
+	}
+
+	public interface IDogCommands : IAnimal{
+		void Stay();
+		void Sit();
+		void Attack();
+
+		string DogName { get; set; }
+	}
+
+	class Dog : IDogCommands, IAnimal {
+		private string DogBreed;
+
+		public void Stay() {
+			Console.WriteLine ("Do is staying");
+		}
+		public void Sit() {
+			Console.WriteLine ("Dog is sitting.");
+		}
+		public void Attack() {
+			Console.WriteLine ("Attack");
+		}
+		public void Run() {
+			Console.WriteLine ("Run");
+		}
+
+		public string DogName { get; set; }
+	}
+
+}
+```
+</details>
 </div>
