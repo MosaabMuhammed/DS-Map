@@ -618,4 +618,64 @@ partial class Animal {
 </code></pre>
 
 </details>
+<details><summary><b>Namespace</b></summary>
+
+<pre><code class="csharp">namespace Learning_C_Sharp
+{
+    class Program {
+        public static void Main() {
+            System.Console.WriteLine ();
+            NameSpace.Animal animal = new NameSpace.Animal ();
+            animal.SayHi ();
+        }
+    }
+}
+
+namespace NameSpace {
+    class Animal {
+        public string animalColor;
+
+        public void SayHi() {
+            Console.WriteLine (&quot;Hi from my own namespace&quot;);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Struct</b></summary>
+
+<p><img src="imgs/struct.png" alt="" /></p>
+
+
+<pre><code class="csharp">namespace Learning_C_Sharp
+{
+    class Program {
+        public static void Main() {
+            Employee emp = new Employee (&quot;Mosaab&quot;, &quot;Data Scientist&quot;, 9000);
+            Console.WriteLine ($&quot;Name: {emp.name}, Job: {emp.job}, Salary: &quot;);
+        }
+    }
+
+    struct Employee {
+        public string name;
+        public string job;
+        private decimal salary;
+
+        public Employee(string EmpName, string EmpJob, decimal EmpSalary) {
+            name   = EmpName;
+            job    = EmpJob;
+            salary = EmpSalary;
+        }
+
+        //public decimal Salary () {get; set;}
+
+        public void SayHi() {
+            Console.WriteLine (&quot;Hi from the method in struct&quot;);
+        }
+    }
+}
+</code></pre>
+
+</details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

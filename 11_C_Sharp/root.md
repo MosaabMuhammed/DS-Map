@@ -614,4 +614,38 @@ namespace NameSpace {
 }
 ```
 </details>
+<details><summary><b>Struct</b></summary>
+
+<p><img src="imgs/struct.png" alt="" /></p>
+
+```csharp
+namespace Learning_C_Sharp
+{
+	class Program {
+		public static void Main() {
+			Employee emp = new Employee ("Mosaab", "Data Scientist", 9000);
+			Console.WriteLine ($"Name: {emp.name}, Job: {emp.job}, Salary: ");
+		}
+	}
+
+	struct Employee {
+		public string name;
+		public string job;
+		private decimal salary;
+
+		public Employee(string EmpName, string EmpJob, decimal EmpSalary) {
+			name   = EmpName;
+			job    = EmpJob;
+			salary = EmpSalary;
+		}
+
+		//public decimal Salary () {get; set;}
+
+		public void SayHi() {
+			Console.WriteLine ("Hi from the method in struct");
+		}
+	}
+}
+```
+</details>
 </div>
