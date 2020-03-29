@@ -852,4 +852,19 @@ namespace Learning_C_Sharp {
 var distance = 149_600_000;
 ```
 </details>
+<details><summary><b>"default"</b> Keyword</summary>
+```
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			long longVar = default(long);
+			string str   = default(string);
+			int integer = default(int);
+
+			Console.WriteLine ($"{longVar}, {str}, {integer}");
+		}
+
+	}
+}
+```
 </div>
