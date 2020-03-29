@@ -946,4 +946,322 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>Hashtables</b> (Non-Generic)</summary>
+```
+using System.Collections;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating
+			Hashtable table = new Hashtable ();
+
+			// Adding
+			table.Add ("Microsoft", "USA");
+			table.Add ("Sony", "Japan");
+			table.Add ("IKEA", "Sweden");
+			table.Add ("Mercedes", "Germany");
+
+			// Looping
+			foreach (DictionaryEntry item in table) {
+				Console.WriteLine ($"{item.Key}: {item.Value}");
+			}
+			for(var i = 0; i < table .Count; i++) {
+				Console.WriteLine ($"{table.GetKey(i)}: {list.GetByIndex(i)}");
+			}
+
+			// Length
+			Console.WriteLine (table.Count);
+
+			// Remove
+			table.Remove ("IKEA");
+			foreach(DictionaryEntry item in table) {
+				Console.WriteLine (item.Key); 
+			}
+
+			// Contains
+			Console.WriteLine (table.Contains ("panasonic")); // for keys.
+			Console.WriteLine (table.ContainsValue ("Japan")); // for values.
+
+			// To ArrayList
+			ArrayList arr = new ArrayList (table.Values);
+			foreach (var item in arr) {
+				Console.WriteLine (item);
+			}
+		}
+	}
+}
+```
+</details>
+
+<details><summary><b>SortedList</b></summary>
+<ul>
+<li>There is generic and non-generic SortedList</li>
+<li>Stores the key-value pairs in ascending order of the key.</li>
+<li>Key must be unique and can't be null.</li>
+<li>Value can be null or duplicate.</li>
+<li>Value can be of any type</li>
+
+```
+using System.Collections;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating
+			SortedList list = new SortedList ();
+
+			// Adding
+			/// No duplicate keys.
+			/// duplicate values allowed.
+			list.Add (10, "Jan");
+			list.Add (2, "Feb");
+			list.Add (3, "Mar");
+			list.Add (4, "Apr");
+
+			// Length
+			Console.WriteLine (list.Count);
+
+			// Looping
+			foreach(DictionaryEntry item in list) {
+				Console.WriteLine ($"{item.Key}: {item.Value}");
+			}
+
+			for(var i = 0; i < list.Count; i++) {
+				Console.WriteLine ($"{list.GetKey(i)}: {list.GetByIndex(i)}");
+			}
+
+			// Index
+			Console.WriteLine (list [10].ToString ());
+
+			// Remove
+			list.RemoveAt (1);
+
+			foreach(DictionaryEntry item in list) {
+				print ($"{item.Key}: {item.Value}");
+			}
+
+			// Contains
+			print (list.ContainsValue ("Apr"));
+		
+			// To ArrayList
+			ArrayList arr = new ArrayList (list.Values);
+
+		}
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+}
+```
+</details>
+<details><summary><b>Stack</b> (Non-Generic)</summary>
+```
+using System.Collections;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating.
+			Stack st = new Stack ();
+
+			// Adding.
+			st.Push ("David");
+			st.Push ("Emmy");
+			st.Push ("Jack");
+			st.Push ("Emma");
+
+			// Length.
+			print (st.Count);
+
+			// Looping.
+			foreach(var item in st) {
+				print (item); 
+			}
+
+			// Peek at the first element to go.
+			print ("---------------");
+			print (st.Peek ());
+
+			// Remove (pop).
+			print ("---------------");
+			print (st.Pop ());
+			print (st.Count);
+
+			foreach(var item in st) {
+				print (item);
+			}
+		}
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+}
+```
+</details>
+<details><summary><b>Queue</b> (Non-Generic)</summary>
+```
+using System.Collections;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating.
+			Queue qu = new Queue ();
+
+			// Adding
+			qu.Enqueue ("Cavin");
+			qu.Enqueue ("Tom");
+			qu.Enqueue ("Emma");
+
+			// Length
+			print (qu.Count);
+
+			// Loop
+			foreach(var item in qu) {
+				print (item);
+			}
+
+			// Peek at the first element.
+			print ($"First element: {qu.Peek ()}");
+
+			// Remove (Dequeue)
+			print (qu.Dequeue ()); 
+
+		}
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+}
+```
+</details>
+<details><summary><b>BitArray</b> (Non-Generic)</summary>
+```
+using System.Collections;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating.
+			bool[] boolArr = new bool[4];
+
+			boolArr [0] = false;
+			boolArr [1] = false;
+			boolArr [2] = false;
+			boolArr [3] = true;
+
+			BitArray firstArr = new BitArray(4);
+			BitArray secondArr = new BitArray (boolArr);
+
+			// Setting Values.
+			firstArr.Set (0, false);
+			firstArr.Set (1, false);
+			firstArr.Set (2, true);
+			firstArr.Set (3, true);
+
+			// Loop
+			foreach(var item in secondArr) {
+				print (item);
+			}
+
+			// Length
+			print (secondArr.Count);
+
+			// AND - OR - NOT
+			BitArray result = new BitArray (4);
+			// result = firstArr.And (secondArr);
+			// result = firstArr.Or (secondArr);
+			result = firstArr.Not ();
+
+			foreach(var item in result) {
+				print (item);
+			}
+
+
+		}
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+}
+```
+</details>
+<details><summary><b>List</b> (Generic)</summary>
+<ul>
+<li>Stores elements of the specified type.</li>
+<li>It grows and shrinks automatically.</li>
+<li>Can store multiple null and duplicate elements</li>
+<li>Can be accessed using indexer, for loop or foreach statement</li>
+<li>It is ideal for storing and retrieving large number of elements</li>
+</ul>
+
+```
+using System.Collections.Generic;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating
+			List<string> firstList = new List<string> ();
+			IList<string> secList = new List<string> ();
+
+			// Adding.
+			firstList.Add ("England");
+			firstList.Add ("Hungary");
+			firstList.Add ("China");
+			firstList.Add ("Germany");
+			firstList.Add ("Egypt");
+
+			// Count/Length
+			print (firstList.Count);
+
+			// Loop
+			foreach(var item in firstList) {
+				print (item);
+			}
+			print ("-------------");
+
+			for(var i = 0; i < firstList.Count; i++) {
+				print (firstList[i]);
+			}
+
+			// Sorting
+			print ("-------------");
+			firstList.Sort ();
+			printList (firstList);
+
+			// Reverse
+			print ("---------");
+			firstList.Reverse ();
+			printList (firstList);
+
+			// Remove
+			firstList.Remove ("Egypt");   // Remove value.
+			firstList.RemoveAt (0);       // Remove value at index.
+			// firstList.RemoveRange (0, 1); // Remove range.
+			// firstList.Clear ();			  // Remove All values.
+
+			// Contains.
+			print (firstList.Contains ("Egypt"));
+
+			// Get Range
+			firstList.GetRange (0, 2);
+		}
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+
+		public static void printList(List<string> list) {
+			foreach (var item in list) {
+				print (item);
+			}
+		}
+	}
+}
+```
 </div>
