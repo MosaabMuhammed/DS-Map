@@ -826,4 +826,25 @@ namespace Learning_C_Sharp {
 	}
 }
 ```
+</details>
+
+<details><summary><b>Console.Color</b></summary>
+```
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			string msg = "Hallo, Guten Morgen";
+
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine (msg);
+
+			Console.ForegroundColor = ConsoleColor.DarkYellow;
+			Console.BackgroundColor = ConsoleColor.White;
+			Console.WriteLine (msg);
+		}
+
+	}
+}
+```
+</details>
 </div>
