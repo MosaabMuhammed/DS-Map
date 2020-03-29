@@ -770,6 +770,8 @@ namespace Learning_C_Sharp {
 <p><img src="./imgs/20200328-155340.png" alt="" /></p>
 </details>
 </details><hr>
+
+<details><summary><b>Advanced</b></summary>
 <details><summary><b>.NET</b></summary>
 <p><b>.NET</b> is a component of Windows that includes a virtual execution system called the <b>(CLR)</b> Common Language Runtime and a unified set of class libraries.</p>
 </details>
@@ -867,4 +869,81 @@ namespace Learning_C_Sharp {
 	}
 }
 ```
+</details>
+</details><hr>
+
+<details><summary><b>ArrayList</b> (Non-Generic)</summary>
+```
+using System.Collections;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating
+			ArrayList array = new ArrayList ();
+
+			// Adding
+			array.Add ("first");
+			array.Add (12);
+			array.Add (41.2d);
+
+			// Looping
+			foreach(var item in array) {
+				Console.WriteLine (item);
+			}
+
+			// Inserting
+			array.Insert (1, "second");
+
+			Console.WriteLine ("----------------");
+
+			// Length & Indexing
+			for(var i = 0; i < array.Count; i++) {
+				Console.WriteLine (array [i]);
+			}
+
+			// Sorting
+			ArrayList arr2 = new ArrayList ();
+			arr2.Add ("Ahmed");
+			arr2.Add ("Mosaab");
+			arr2.Add ("Sally");
+
+			arr2.Sort ();
+			Console.WriteLine ("----------------");
+			foreach(var item in arr2) {
+				Console.WriteLine (item);
+			}
+
+			// Reversing
+			arr2.Reverse ();
+			Console.WriteLine ("----------------");
+			foreach(var item in arr2) {
+				Console.WriteLine (item);
+			}
+
+			// Removing
+			arr2.Remove ("Ahmed");    // Remove an item.
+			arr2.RemoveAt (0);        // Remove item at index.
+			//arr2.RemoveRange (1, 3);  // Remove items between these range.
+			//arr2.Clear ();            // Remove all items.
+			Console.WriteLine ("----------------");
+			foreach(var item in arr2) {
+				Console.WriteLine (item);
+			}
+
+			// Contains
+			Console.WriteLine (array.Contains (12));
+
+			// GetRange
+			ArrayList subArr = new ArrayList ();
+			subArr = array.GetRange (0, 2);
+
+			foreach(var item in subArr) {
+				Console.WriteLine (item); 
+			}
+		}
+	}
+}
+```
+</details>
 </div>
