@@ -847,4 +847,9 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>Digit Seperator</b></summary>
+```
+var distance = 149_600_000;
+```
+</details>
 </div>
