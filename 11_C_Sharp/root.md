@@ -931,6 +931,192 @@ namespace Learning_C_Sharp {
     }
 }
 ```
+</details>
+<details><summary><b>"params"</b> keyword</summary>
+```
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            printAll("Ahemd", "Mohamed", "Sayed", "Shaker");
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static void printAll<T>]](params T[] names)
+        {
+            foreach(var name in names)
+            {
+                print(name);
+            }
+        }
+    }
+}
+```
+</details>
+<details><summary><b>Extention</b> methods</summary>
+```
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            int x = 0;
+            string y = "100";
+            Console.WriteLine(x.IsGreater(10));
+            Console.WriteLine(y.IsNumber());
+        }
+
+    }
+    static class CustomExtention
+    {
+        public static bool IsGreater(this int value, int number)
+        {
+            return value > number;
+        }
+
+        public static bool IsNumber(this string text)
+        {
+            return int.TryParse(text, out int result);
+        }
+    }
+}
+```
+</details>
+<details><summary><b>Stopwatch</b></summary>
+```
+using System;
+using System.Diagnostics;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            for(int i = 0; i < 1000; i++)
+            {
+
+            }
+            watch.Stop();
+
+            print($"MilliSeconds: {watch.Elapsed.Milliseconds}");
+            print($"Total in Milli: {watch.Elapsed.TotalMilliseconds}");
+            print($"Total Seconds: {watch.Elapsed.TotalSeconds}");
+            print($"Seconds: {watch.Elapsed.Seconds}");
+            print($"Ticks: {watch.Elapsed.Ticks}");
+        }
+
+        public static void print<T>(T str)
+        {
+            Console.WriteLine(str);
+        }
+    }
+}
+```
+</details>
+
+<details><summary><b>Delegates</b></summary>
+<p>A delegate is a reference type variable that holds the reference to a method. Which means delegates allow methods to be passed as parameters.</p>
+
+```
+namespace Learning_C_Sharp {
+    // void delegate with no argument.
+    public delegate void PlayerInfoDel();
+
+    // Void delegate with one string argument.
+    public delegate void PlayerInfoWithNameDel(string playerName);
+
+    // Void Delegate with one string and one integer arguments.
+    public delegate void PlayerInfoNameWithGoalsDel(string name, int goals);
+    class Program
+    {
+        public static void Main()
+        {
+            PlayerInfoDel ronaldoino = new PlayerInfoDel(DisplayInfo);
+            ronaldoino.Invoke();
+            // or we can invoke without using Invoke
+            ronaldoino();
+
+            PlayerInfoWithNameDel playerName = new PlayerInfoWithNameDel(DisplayInfo);
+            playerName("Messi");
+
+            PlayerInfoNameWithGoalsDel player = new PlayerInfoNameWithGoalsDel(HandlePlayerInfoNameWithGoalsDel);
+            player("Mosaab", 10);
+
+
+        }
+
+        static void HandlePlayerInfoNameWithGoalsDel(string name, int goals)
+        {
+            print($"Information about: {name}, goals: {goals}");
+        }
+
+
+        public static void print<T>(T str)
+        {
+            Console.WriteLine(str);
+        }
+
+        public static void DisplayInfo()
+        {
+            print("Information about: Ronaldinho");
+        }
+
+        public static void DisplayInfo(string name)
+        {
+            print($"Information about: {name}");
+        }
+
+        public static void DisplayInfo(string name, int goals)
+        {
+        }
+    }
+}
+```
+</details>
+<details><summary><b>Multi-cast Delegates</b></summary>
+```
+namespace Learning_C_Sharp {
+    public delegate void SayHiDelegate();
+
+    class Program
+    {
+        public static void Main()
+        {
+            SayHiDelegate sayHi = null;
+            sayHi = new SayHiDelegate(sayHiEnglish);
+            sayHi += new SayHiDelegate(sayHiSpanish);
+            sayHi += new SayHiDelegate(sayHiGerman);
+
+            sayHi();
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static void sayHiEnglish()
+        {
+            print("Hi there.");
+        }
+
+        public static void sayHiSpanish()
+        {
+            print("Hola.");
+        }
+
+        public static void sayHiGerman()
+        {
+            print("Hallo.");
+        }
+    }
+}
+```
+</details>
 </details><hr>
 
 <details><summary><b>Collections</b></summary>
