@@ -1694,4 +1694,52 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>Nested Tuples</b></summary>
+```
+namespace Learning_C_Sharp {
+	class Program {
+        public static void Main() {
+            // Creating
+            var empInfo = new Tuple<int, string, string, string, string, string, string, Tuple<decimal, decimal, decimal, decimal, decimal, decimal, decimal>>
+                (105, "James", "Moh", "cool", "", "", "", Tuple.Create(200m, 10m, 10m, 1231m, 12412m, 123m, 213m));
+
+            print(empInfo.Item1);
+            print(empInfo.Rest.Item7);
+        }
+
+        public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+    }
+}
+```
+</details>
+
+<details><summary><b>Methods with Tuples</b></summary>
+```
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            var aria = Tuple.Create(12, "Aria", "Stark", "Winterfell");
+            var sansa = Tuple.Create(18, "Sansa", "cool", "Winterfell");
+
+            DisplayInfo(aria);
+            DisplayInfo(sansa);
+        }
+
+        public static void print(object msg) {
+    		Console.WriteLine(msg);
+    	}
+
+        public static void DisplayInfo(Tuple<int, string, string, string> personInfo)
+        {
+            print(personInfo.Item1);
+            print(personInfo.Item2);
+            print(personInfo.Item3);
+            print(personInfo.Item4);
+        }
+    }
+}
+```
+</details>
 </div>
