@@ -886,6 +886,51 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>Named</b> parameters</summary>
+```
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            DisplayInfo(playerName: "Ronaldo", playerNum: 11, playerGoals: 23);
+        }
+
+        public static void print(object msg = null) {
+    		Console.WriteLine(msg);
+    	}
+
+        public static void DisplayInfo(int playerNum,
+                                       string playerName,
+                                       int playerGoals,
+                                       string country="Unkown")
+        {
+            print(playerNum);
+            print(playerName);
+            print(playerGoals);
+            print(country);
+        }
+    }
+}
+```
+</details>
+<details><summary><b>Generic</b> parameters</summary>
+```
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            print("hello");
+            print(10);
+            print(Tuple.Create(10, 20));
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+```
 </details><hr>
 
 <details><summary><b>Collections</b></summary>
