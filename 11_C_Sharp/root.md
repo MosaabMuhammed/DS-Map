@@ -994,7 +994,7 @@ namespace Learning_C_Sharp {
 ```
 </details>
 
-<details><summary><b>SortedList</b></summary>
+<details><summary><b>SortedList</b> (Non-Generic)</summary>
 <ul>
 <li>There is generic and non-generic SortedList</li>
 <li>Stores the key-value pairs in ascending order of the key.</li>
@@ -1259,6 +1259,124 @@ namespace Learning_C_Sharp {
 		public static void printList(List<string> list) {
 			foreach (var item in list) {
 				print (item);
+			}
+		}
+	}
+}
+```
+</details>
+<details><summary><b>Dictionary</b> (Generic)</summary>
+```
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+			// Creating
+			Dictionary<string, string> cap = new Dictionary<string, string>();
+
+			// Adding
+			cap.Add("Russia", "Moscow");
+			cap.Add("Italy", "Rome");
+			cap.Add("England", "London");
+			cap.Add("Japan", "Tokyo");
+
+			// Creating with Initialization.
+			Dictionary<int, string> names = new Dictionary<int, string> () {
+				{ 1, "James" },
+				{ 2, "Mosaab" },
+				{ 3, "Muhammad" }
+			};
+
+			// Length/Count
+			print ($"Count: {cap.Count}");
+
+			// Loop
+			foreach(var item in cap) {
+				print($"{item.Key}: {item.Value}");
+			}
+			print ("----------------");
+
+			for(int i = 0; i < cap.Count; i++) {
+				print ($"{cap.Keys.ElementAt(i)}: {cap[cap.Keys.ElementAt(i)]}");
+			}
+
+			// Get a Value by a Key.
+			print (cap ["Japan"]);
+			print(cap.TryGetValue ("Germany", out string result));
+
+			// Remove All.
+			// cap.Clear();
+
+			// Contains.
+			print(cap.ContainsKey("Japan"));
+
+		}
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+
+		public static void printDict(Dictionary<string, string> dict) {
+			foreach(var item in dict) {
+				print($"{item.Key}: {item.Value}");
+			}
+		}
+	}
+
+```
+</details>
+
+<details><summary><b>SortedList</b> (Generic)</summary>
+```
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+            // Creating.
+            SortedList<string, string> list = new SortedList<string, string>();
+
+            // Adding
+            list.Add("England", "London");
+            list.Add("Japan", "Tokyo");
+            list.Add("Egypt", "Cairo");
+            list.Add("Italy", "Rome");
+
+            // Count/Length
+            print($"Count: {list.Count}");
+
+            // Loop
+            foreach(var item in list) {
+                print($"{item.Key}: {item.Value}");
+            }
+
+            for(int i = 0; i < list.Count; i++) {
+                print($"{list.Keys[i]}: {list.Values[i]}");
+            }
+
+            // TryGetValue.
+            print($"Exists: {list.TryGetValue("Jack", out string number)}");
+
+            // Remove
+            list.Remove("Japan");
+            // list.Clear();
+            list.RemoveAt(0);
+            printDict(list);
+
+            // Contains
+            print(list.ContainsKey("England"));
+        }
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+
+		public static void printDict(SortedList<string, string> dict) {
+			foreach(var item in dict) {
+				print($"{item.Key}: {item.Value}");
 			}
 		}
 	}
