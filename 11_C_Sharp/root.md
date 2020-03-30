@@ -1117,6 +1117,115 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>Generic Delegates</b></summary>
+```
+namespace Learning_C_Sharp {
+
+    public delegate T DisplayInfo<T>(T value);
+    class Program
+    {
+        public static void Main()
+        {
+            DisplayInfo<int> Num = new DisplayInfo<int>(DisplayValue);
+            Num(100);
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static T DisplayValue<T>(T value)
+        {
+            print($"Hi there. {value.GetType().Name}");
+            return value;
+        }
+    }
+}
+```
+</details>
+<details><summary><b>Anonymous Methods </b></summary>
+```
+namespace Learning_C_Sharp {
+    delegate void DisplayDel();
+    delegate void Display2Del(int num);
+
+    class Program
+    {
+        public static void Main()
+        {
+            DisplayDel Num = delegate { print("Hi there, Anonymous method"); };
+            Num();
+
+            Display2Del Num2 = delegate (int num2) { print($"Hi {num2}"); };
+            Num2(10002);
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+```
+</details>
+<details><summary><b>Lambda Method </b></summary>
+```
+namespace Learning_C_Sharp {
+    delegate void Display2Del(int num);
+    delegate void DisplayMsgDel();
+
+    class Program
+    {
+        public static void Main()
+        {
+            Display2Del Num2 = n => print($"n*3: {n * 3}");
+            Num2(10);
+
+            DisplayMsgDel msg = () => print($"Cool man, cool");
+            msg();
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+```
+<h5>Lambda methods with Generic collection</h5>
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            List<int> list = new List<int>();
+            list.Add(1); list.Add(2); list.Add(5); list.Add(10);
+            list.Add(5); list.Add(3); list.Add(9); list.Add(8);
+
+            var odd = list.Where(n => n % 2 != 0).ToList();
+            var even = list.Where(n => n % 2 == 0).ToList();
+
+            foreach(var item in odd)
+            {
+                print(item);
+            }
+            print("-----------------");
+            foreach(var item in even)
+            {
+                print(item);
+            }
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+```
+</details>
 </details><hr>
 
 <details><summary><b>Collections</b></summary>

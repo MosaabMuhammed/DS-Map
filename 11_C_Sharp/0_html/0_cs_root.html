@@ -909,8 +909,377 @@ namespace Learning_C_Sharp {
 </code></pre>
 
 </details>
+
+<details><summary><b>Optional</b> parameters</summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            print();
+        }
+
+        public static void print(object msg = null) {
+            Console.WriteLine(msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Named</b> parameters</summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            DisplayInfo(playerName: &quot;Ronaldo&quot;, playerNum: 11, playerGoals: 23);
+        }
+
+        public static void print(object msg = null) {
+            Console.WriteLine(msg);
+        }
+
+        public static void DisplayInfo(int playerNum,
+                                       string playerName,
+                                       int playerGoals,
+                                       string country=&quot;Unkown&quot;)
+        {
+            print(playerNum);
+            print(playerName);
+            print(playerGoals);
+            print(country);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Generic</b> parameters</summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            print(&quot;hello&quot;);
+            print(10);
+            print(Tuple.Create(10, 20));
+        }
+
+        public static void print&lt;T&gt;(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>"params"</b> keyword</summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            printAll(&quot;Ahemd&quot;, &quot;Mohamed&quot;, &quot;Sayed&quot;, &quot;Shaker&quot;);
+        }
+
+        public static void print&lt;T&gt;(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static void printAll&lt;T&gt;]](params T[] names)
+        {
+            foreach(var name in names)
+            {
+                print(name);
+            }
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Extention</b> methods</summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            int x = 0;
+            string y = &quot;100&quot;;
+            Console.WriteLine(x.IsGreater(10));
+            Console.WriteLine(y.IsNumber());
+        }
+
+    }
+    static class CustomExtention
+    {
+        public static bool IsGreater(this int value, int number)
+        {
+            return value &gt; number;
+        }
+
+        public static bool IsNumber(this string text)
+        {
+            return int.TryParse(text, out int result);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Stopwatch</b></summary>
+
+<pre><code>using System;
+using System.Diagnostics;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            for(int i = 0; i &lt; 1000; i++)
+            {
+
+            }
+            watch.Stop();
+
+            print($&quot;MilliSeconds: {watch.Elapsed.Milliseconds}&quot;);
+            print($&quot;Total in Milli: {watch.Elapsed.TotalMilliseconds}&quot;);
+            print($&quot;Total Seconds: {watch.Elapsed.TotalSeconds}&quot;);
+            print($&quot;Seconds: {watch.Elapsed.Seconds}&quot;);
+            print($&quot;Ticks: {watch.Elapsed.Ticks}&quot;);
+        }
+
+        public static void print&lt;T&gt;(T str)
+        {
+            Console.WriteLine(str);
+        }
+    }
+}
+</code></pre>
+
+</details>
+
+<details><summary><b>Delegates</b></summary>
+<p>A delegate is a reference type variable that holds the reference to a method. Which means delegates allow methods to be passed as parameters.</p>
+
+
+<pre><code>namespace Learning_C_Sharp {
+    // void delegate with no argument.
+    public delegate void PlayerInfoDel();
+
+    // Void delegate with one string argument.
+    public delegate void PlayerInfoWithNameDel(string playerName);
+
+    // Void Delegate with one string and one integer arguments.
+    public delegate void PlayerInfoNameWithGoalsDel(string name, int goals);
+    class Program
+    {
+        public static void Main()
+        {
+            PlayerInfoDel ronaldoino = new PlayerInfoDel(DisplayInfo);
+            ronaldoino.Invoke();
+            // or we can invoke without using Invoke
+            ronaldoino();
+
+            PlayerInfoWithNameDel playerName = new PlayerInfoWithNameDel(DisplayInfo);
+            playerName(&quot;Messi&quot;);
+
+            PlayerInfoNameWithGoalsDel player = new PlayerInfoNameWithGoalsDel(HandlePlayerInfoNameWithGoalsDel);
+            player(&quot;Mosaab&quot;, 10);
+
+
+        }
+
+        static void HandlePlayerInfoNameWithGoalsDel(string name, int goals)
+        {
+            print($&quot;Information about: {name}, goals: {goals}&quot;);
+        }
+
+
+        public static void print&lt;T&gt;(T str)
+        {
+            Console.WriteLine(str);
+        }
+
+        public static void DisplayInfo()
+        {
+            print(&quot;Information about: Ronaldinho&quot;);
+        }
+
+        public static void DisplayInfo(string name)
+        {
+            print($&quot;Information about: {name}&quot;);
+        }
+
+        public static void DisplayInfo(string name, int goals)
+        {
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Multi-cast Delegates</b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    public delegate void SayHiDelegate();
+
+    class Program
+    {
+        public static void Main()
+        {
+            SayHiDelegate sayHi = null;
+            sayHi = new SayHiDelegate(sayHiEnglish);
+            sayHi += new SayHiDelegate(sayHiSpanish);
+            sayHi += new SayHiDelegate(sayHiGerman);
+
+            sayHi();
+        }
+
+        public static void print&lt;T&gt;(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static void sayHiEnglish()
+        {
+            print(&quot;Hi there.&quot;);
+        }
+
+        public static void sayHiSpanish()
+        {
+            print(&quot;Hola.&quot;);
+        }
+
+        public static void sayHiGerman()
+        {
+            print(&quot;Hallo.&quot;);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Generic Delegates</b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+
+    public delegate T DisplayInfo&lt;T&gt;(T value);
+    class Program
+    {
+        public static void Main()
+        {
+            DisplayInfo&lt;int&gt; Num = new DisplayInfo&lt;int&gt;(DisplayValue);
+            Num(100);
+        }
+
+        public static void print&lt;T&gt;(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static T DisplayValue&lt;T&gt;(T value)
+        {
+            print($&quot;Hi there. {value.GetType().Name}&quot;);
+            return value;
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Anonymous Methods </b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    delegate void DisplayDel();
+    delegate void Display2Del(int num);
+
+    class Program
+    {
+        public static void Main()
+        {
+            DisplayDel Num = delegate { print(&quot;Hi there, Anonymous method&quot;); };
+            Num();
+
+            Display2Del Num2 = delegate (int num2) { print($&quot;Hi {num2}&quot;); };
+            Num2(10002);
+        }
+
+        public static void print&lt;T&gt;(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Lambda Method </b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    delegate void Display2Del(int num);
+    delegate void DisplayMsgDel();
+
+    class Program
+    {
+        public static void Main()
+        {
+            Display2Del Num2 = n =&gt; print($&quot;n*3: {n * 3}&quot;);
+            Num2(10);
+
+            DisplayMsgDel msg = () =&gt; print($&quot;Cool man, cool&quot;);
+            msg();
+        }
+
+        public static void print&lt;T&gt;(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+</code></pre>
+
+<h5>Lambda methods with Generic collection</h5>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            List&lt;int&gt; list = new List&lt;int&gt;();
+            list.Add(1); list.Add(2); list.Add(5); list.Add(10);
+            list.Add(5); list.Add(3); list.Add(9); list.Add(8);
+
+            var odd = list.Where(n =&gt; n % 2 != 0).ToList();
+            var even = list.Where(n =&gt; n % 2 == 0).ToList();
+
+            foreach(var item in odd)
+            {
+                print(item);
+            }
+            print(&quot;-----------------&quot;);
+            foreach(var item in even)
+            {
+                print(item);
+            }
+        }
+
+        public static void print&lt;T&gt;(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
 </details><hr>
 
+<details><summary><b>Collections</b></summary>
 <details><summary><b>ArrayList</b> (Non-Generic)</summary>
 
 <pre><code>using System.Collections;
@@ -1035,7 +1404,7 @@ namespace Learning_C_Sharp {
 
 </details>
 
-<details><summary><b>SortedList</b></summary>
+<details><summary><b>SortedList</b> (Non-Generic)</summary>
 <ul>
 <li>There is generic and non-generic SortedList</li>
 <li>Stores the key-value pairs in ascending order of the key.</li>
@@ -1310,4 +1679,493 @@ namespace Learning_C_Sharp {
 }
 </code></pre>
 
+</details>
+<details><summary><b>Dictionary</b> (Generic)</summary>
+
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            Dictionary&lt;string, string&gt; cap = new Dictionary&lt;string, string&gt;();
+
+            // Adding
+            cap.Add(&quot;Russia&quot;, &quot;Moscow&quot;);
+            cap.Add(&quot;Italy&quot;, &quot;Rome&quot;);
+            cap.Add(&quot;England&quot;, &quot;London&quot;);
+            cap.Add(&quot;Japan&quot;, &quot;Tokyo&quot;);
+
+            // Creating with Initialization.
+            Dictionary&lt;int, string&gt; names = new Dictionary&lt;int, string&gt; () {
+                { 1, &quot;James&quot; },
+                { 2, &quot;Mosaab&quot; },
+                { 3, &quot;Muhammad&quot; }
+            };
+
+            // Length/Count
+            print ($&quot;Count: {cap.Count}&quot;);
+
+            // Loop
+            foreach(var item in cap) {
+                print($&quot;{item.Key}: {item.Value}&quot;);
+            }
+            print (&quot;----------------&quot;);
+
+            for(int i = 0; i &lt; cap.Count; i++) {
+                print ($&quot;{cap.Keys.ElementAt(i)}: {cap[cap.Keys.ElementAt(i)]}&quot;);
+            }
+
+            // Get a Value by a Key.
+            print (cap [&quot;Japan&quot;]);
+            print(cap.TryGetValue (&quot;Germany&quot;, out string result));
+
+            // Remove All.
+            // cap.Clear();
+
+            // Contains.
+            print(cap.ContainsKey(&quot;Japan&quot;));
+
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+
+        public static void printDict(Dictionary&lt;string, string&gt; dict) {
+            foreach(var item in dict) {
+                print($&quot;{item.Key}: {item.Value}&quot;);
+            }
+        }
+    }
+
+</code></pre>
+
+</details>
+
+<details><summary><b>SortedList</b> (Generic)</summary>
+
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating.
+            SortedList&lt;string, string&gt; list = new SortedList&lt;string, string&gt;();
+
+            // Adding
+            list.Add(&quot;England&quot;, &quot;London&quot;);
+            list.Add(&quot;Japan&quot;, &quot;Tokyo&quot;);
+            list.Add(&quot;Egypt&quot;, &quot;Cairo&quot;);
+            list.Add(&quot;Italy&quot;, &quot;Rome&quot;);
+
+            // Count/Length
+            print($&quot;Count: {list.Count}&quot;);
+
+            // Loop
+            foreach(var item in list) {
+                print($&quot;{item.Key}: {item.Value}&quot;);
+            }
+
+            for(int i = 0; i &lt; list.Count; i++) {
+                print($&quot;{list.Keys[i]}: {list.Values[i]}&quot;);
+            }
+
+            // TryGetValue.
+            print($&quot;Exists: {list.TryGetValue(&quot;Jack&quot;, out string number)}&quot;);
+
+            // Remove
+            list.Remove(&quot;Japan&quot;);
+            // list.Clear();
+            list.RemoveAt(0);
+            printDict(list);
+
+            // Contains
+            print(list.ContainsKey(&quot;England&quot;));
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+
+        public static void printDict(SortedList&lt;string, string&gt; dict) {
+            foreach(var item in dict) {
+                print($&quot;{item.Key}: {item.Value}&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>SortedDictionary</b> (Generic)</summary>
+<ul>
+<li>SortedList uses less memory than SortedDictionary</li>
+<li>SortedDictionary has faster insertion and removal operations for unsorted data.</li>
+<li>If the list is populated all at once from sorted data, SortedList is faster than SortedDictionary</li>
+</ul>
+
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            SortedDictionary&lt;int, string&gt; colors = new SortedDictionary&lt;int, string&gt;();
+
+            // Adding.
+            colors.Add(4, &quot;Blue&quot;);
+            colors.Add(2, &quot;Black&quot;);
+            colors.Add(3, &quot;Orange&quot;);
+            colors.Add(5, &quot;Purple&quot;);
+            colors.Add(1, &quot;White&quot;);
+
+            // Looping
+            foreach(var item in colors) {
+                print($&quot;{item.Key}: {item.Value}&quot;);
+            }
+
+            for(int i = 0; i &lt; colors.Count; i++) {
+                print($&quot;{colors.Keys.ElementAt(i)}: {colors.Values.ElementAt(i)}&quot;);
+            }
+
+            // Remove
+            colors.Remove(1);
+            colors.Clear();
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Stack</b> (Generic)</summary>
+
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            Stack&lt;string&gt; Ram = new Stack&lt;string&gt;();
+
+            // Adding (pusing);
+            Ram.Push(&quot;VSC&quot;);
+            Ram.Push(&quot;Pandas&quot;);
+            Ram.Push(&quot;Numpy&quot;);
+            Ram.Push(&quot;Google Ghrome&quot;);
+
+            // Loop
+            foreach(var item in Ram)
+            {
+                print(item);
+            }
+
+            // Peek
+            print(Ram.Peek());
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+
+<details><summary><b>Queue</b> (Generic)</summary>
+
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            Queue&lt;DateTime&gt; arrivals = new Queue&lt;DateTime&gt;();
+
+            // Adding (Enqueue)
+            arrivals.Enqueue(new DateTime(2017, 01, 01));
+            arrivals.Enqueue(new DateTime(2016, 10, 14));
+            arrivals.Enqueue(new DateTime(2018, 06, 02));
+
+            // Peek.
+            print(arrivals.Peek());
+
+            // Length/Count
+            print($&quot;Count: {arrivals.Count}&quot;);
+
+            // Loop
+            foreach(var item in arrivals)
+            {
+                print(item);
+            }
+
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>KeyValuePair</b> (Generic)</summary>
+<p><b>KeyValuePair</b> stores 2 values together. It's a single generic struct</p>
+
+
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            var cap = new List&lt;KeyValuePair&lt;string, string&gt;&gt;();
+
+            // Adding.
+            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Russia&quot;, &quot;Moscow&quot;));
+            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Sweden&quot;, &quot;Stockholm&quot;));
+            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Portugal&quot;, &quot;Lisbon&quot;));
+            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Egypt&quot;, &quot;Cairo&quot;));
+
+            // Remove.
+            cap.RemoveAt(0);
+
+            // Loop
+            foreach(var item in cap)
+            {
+                print(item.Key+&quot; &quot;+item.Value);
+            }
+
+            print(get_first_and_last());
+            print(get_first_and_last().Key);
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+
+        public static KeyValuePair&lt;string, string&gt; get_first_and_last()
+        {
+            string firstName = &quot;Mosaab&quot;;
+            string lastName = &quot;Muhammad&quot;;
+            return new KeyValuePair&lt;string, string&gt;(firstName, lastName);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>NameValueCollection</b></summary>
+
+<pre><code>using System;
+using System.Collections.Specialized;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            NameValueCollection cities = new NameValueCollection();
+
+            // Adding.
+            cities.Add(&quot;Germany&quot;, &quot;Berlin&quot;);
+            cities.Add(&quot;Germany&quot;, &quot;Hamburg&quot;);
+            cities.Add(&quot;Germany&quot;, &quot;Frankfurt&quot;);
+            cities.Add(&quot;Italy&quot;, &quot;Milan&quot;);
+            cities.Add(&quot;Italy&quot;, &quot;Rome&quot;);
+
+            // Loop.
+            foreach(var item in cities)
+            {
+                print($&quot;{item}: {cities[(string)item]}&quot;);
+            }
+
+            // Set.
+            // This will change the values of italy to ONLY Venice.
+            cities.Set(&quot;Italy&quot;, &quot;Venice&quot;);
+
+            // Remove.
+            // cities.Clear();
+            cities.Remove(&quot;Italy&quot;);
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+
+        public static KeyValuePair&lt;string, string&gt; get_first_and_last()
+        {
+            string firstName = &quot;Mosaab&quot;;
+            string lastName = &quot;Muhammad&quot;;
+            return new KeyValuePair&lt;string, string&gt;(firstName, lastName);
+        }
+    }
+}
+</code></pre>
+
+</details>
+
+
+<details><summary><b>Cutom Generic Class</b></summary>
+
+<pre><code>using System;
+using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            Buildings&lt;int&gt; empireState = new Buildings&lt;int&gt;();
+            empireState.Name = &quot;Empire&quot;;
+            empireState.City = &quot;New york&quot;;
+            empireState.Height = 445;
+            empireState.Weight = 365_000;
+
+            Buildings&lt;double&gt; burjKhalifa = new Buildings&lt;double&gt;();
+            burjKhalifa.Name = &quot;Burj Khalifa&quot;;
+            burjKhalifa.City = &quot;Dubai&quot;;
+            burjKhalifa.Height = 830;
+            burjKhalifa.Weight = 450_000;
+
+            print(empireState.Name);
+            print(empireState.City);
+            print(empireState.Height);
+            print(empireState.Weight);
+
+            print(burjKhalifa.Name);
+            print(burjKhalifa.City);
+            print(burjKhalifa.Height);
+            print(burjKhalifa.Weight);
+
+        }
+
+        class Buildings&lt;T&gt;
+        {
+            private string name;
+            public string Name
+            {
+                get { return name; }
+                set { name = value; }
+            }
+
+            private string city;
+            public string City
+            {
+                get { return city; }
+                set { city = value; }
+            }
+
+            private T height;
+            public T Height
+            {
+                get { return height; }
+                set { height = value; }
+            }
+
+            private T weight;
+            public T Weight
+            {
+                get { return weight; }
+                set { weight = value; }
+            }
+        }
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+    }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Tuples</b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            var empInfo = new Tuple&lt;int, string, string, DateTime, bool&gt;(100, &quot;Mosaab&quot;, &quot;Muhammad&quot;, new DateTime(2017, 12, 10), true);
+
+            // Display
+            print(empInfo.Item1);
+            print(empInfo.Item2);
+            // and so on.
+
+            // Another Creation procedure.
+            var studentInfo = Tuple.Create(5, &quot;John&quot;, &quot;Cavin&quot;, new DateTime(2000, 10, 25));
+            print(studentInfo.Item2);
+
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+<details><summary><b>Nested Tuples</b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            // Creating
+            var empInfo = new Tuple&lt;int, string, string, string, string, string, string, Tuple&lt;decimal, decimal, decimal, decimal, decimal, decimal, decimal&gt;&gt;
+                (105, &quot;James&quot;, &quot;Moh&quot;, &quot;cool&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, Tuple.Create(200m, 10m, 10m, 1231m, 12412m, 123m, 213m));
+
+            print(empInfo.Item1);
+            print(empInfo.Rest.Item7);
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine (msg);
+        }
+    }
+}
+</code></pre>
+
+</details>
+
+<details><summary><b>Methods with Tuples</b></summary>
+
+<pre><code>namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            var aria = Tuple.Create(12, &quot;Aria&quot;, &quot;Stark&quot;, &quot;Winterfell&quot;);
+            var sansa = Tuple.Create(18, &quot;Sansa&quot;, &quot;cool&quot;, &quot;Winterfell&quot;);
+
+            DisplayInfo(aria);
+            DisplayInfo(sansa);
+        }
+
+        public static void print(object msg) {
+            Console.WriteLine(msg);
+        }
+
+        public static void DisplayInfo(Tuple&lt;int, string, string, string&gt; personInfo)
+        {
+            print(personInfo.Item1);
+            print(personInfo.Item2);
+            print(personInfo.Item3);
+            print(personInfo.Item4);
+        }
+    }
+}
+</code></pre>
+
+</details></details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
