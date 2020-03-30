@@ -1382,4 +1382,82 @@ namespace Learning_C_Sharp {
 	}
 }
 ```
+</details>
+<details><summary><b>SortedDictionary</b> (Generic)</summary>
+<ul>
+<li>SortedList uses less memory than SortedDictionary</li>
+<li>SortedDictionary has faster insertion and removal operations for unsorted data.</li>
+<li>If the list is populated all at once from sorted data, SortedList is faster than SortedDictionary</li>
+</ul>
+```
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+            SortedDictionary<int, string> colors = new SortedDictionary<int, string>();
+
+            // Adding.
+            colors.Add(4, "Blue");
+            colors.Add(2, "Black");
+            colors.Add(3, "Orange");
+            colors.Add(5, "Purple");
+            colors.Add(1, "White");
+
+            // Looping
+            foreach(var item in colors) {
+                print($"{item.Key}: {item.Value}");
+            }
+
+            for(int i = 0; i < colors.Count; i++) {
+                print($"{colors.Keys.ElementAt(i)}: {colors.Values.ElementAt(i)}");
+            }
+
+            // Remove
+            colors.Remove(1);
+            colors.Clear();
+        }
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+}
+```
+</details>
+<details><summary><b>Stack</b> (Generic)</summary>
+```
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+            // Creating
+            Stack<string> Ram = new Stack<string>();
+
+            // Adding (pusing);
+            Ram.Push("VSC");
+            Ram.Push("Pandas");
+            Ram.Push("Numpy");
+            Ram.Push("Google Ghrome");
+
+            // Loop
+            foreach(var item in Ram)
+            {
+                print(item);
+            }
+
+            // Peek
+            print(Ram.Peek());
+        }
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+}
+```
+</details>
 </div>
