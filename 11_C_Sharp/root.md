@@ -1544,4 +1544,154 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>NameValueCollection</b></summary>
+```
+using System;
+using System.Collections.Specialized;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+            // Creating
+            NameValueCollection cities = new NameValueCollection();
+
+            // Adding.
+            cities.Add("Germany", "Berlin");
+            cities.Add("Germany", "Hamburg");
+            cities.Add("Germany", "Frankfurt");
+            cities.Add("Italy", "Milan");
+            cities.Add("Italy", "Rome");
+
+            // Loop.
+            foreach(var item in cities)
+            {
+                print($"{item}: {cities[(string)item]}");
+            }
+
+            // Set.
+            // This will change the values of italy to ONLY Venice.
+            cities.Set("Italy", "Venice");
+
+            // Remove.
+            // cities.Clear();
+            cities.Remove("Italy");
+        }
+
+        public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+
+        public static KeyValuePair<string, string> get_first_and_last()
+        {
+            string firstName = "Mosaab";
+            string lastName = "Muhammad";
+            return new KeyValuePair<string, string>(firstName, lastName);
+        }
+    }
+}
+```
+</details>
+
+
+<details><summary><b>Cutom Generic Class</b></summary>
+```
+using System;
+using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+            // Creating
+            Buildings<int> empireState = new Buildings<int>();
+            empireState.Name = "Empire";
+            empireState.City = "New york";
+            empireState.Height = 445;
+            empireState.Weight = 365_000;
+
+            Buildings<double> burjKhalifa = new Buildings<double>();
+            burjKhalifa.Name = "Burj Khalifa";
+            burjKhalifa.City = "Dubai";
+            burjKhalifa.Height = 830;
+            burjKhalifa.Weight = 450_000;
+
+            print(empireState.Name);
+            print(empireState.City);
+            print(empireState.Height);
+            print(empireState.Weight);
+
+            print(burjKhalifa.Name);
+            print(burjKhalifa.City);
+            print(burjKhalifa.Height);
+            print(burjKhalifa.Weight);
+
+        }
+
+        class Buildings<T>
+        {
+            private string name;
+            public string Name
+            {
+                get { return name; }
+                set { name = value; }
+            }
+
+            private string city;
+            public string City
+            {
+                get { return city; }
+                set { city = value; }
+            }
+
+            private T height;
+            public T Height
+            {
+                get { return height; }
+                set { height = value; }
+            }
+
+            private T weight;
+            public T Weight
+            {
+                get { return weight; }
+                set { weight = value; }
+            }
+        }
+        public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+    }
+}
+```
+</details>
+<details><summary><b>Tuples</b></summary>
+```
+namespace Learning_C_Sharp {
+	class Program {
+        public static void Main() {
+            // Creating
+            var empInfo = new Tuple<int, string, string, DateTime, bool>(100, "Mosaab", "Muhammad", new DateTime(2017, 12, 10), true);
+
+            // Display
+            print(empInfo.Item1);
+            print(empInfo.Item2);
+            // and so on.
+
+            // Another Creation procedure.
+            var studentInfo = Tuple.Create(5, "John", "Cavin", new DateTime(2000, 10, 25));
+            print(studentInfo.Item2);
+
+        }
+
+        public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+    }
+}
+```
+</details>
 </div>
