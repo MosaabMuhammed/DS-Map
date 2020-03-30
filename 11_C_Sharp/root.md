@@ -870,8 +870,25 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+
+<details><summary><b>Optional</b> parameters</summary>
+```
+namespace Learning_C_Sharp {
+    class Program {
+        public static void Main() {
+            print();
+        }
+
+        public static void print(object msg = null) {
+    		Console.WriteLine(msg);
+    	}
+    }
+}
+```
+</details>
 </details><hr>
 
+<details><summary><b>Collections</b></summary>
 <details><summary><b>ArrayList</b> (Non-Generic)</summary>
 ```
 using System.Collections;
@@ -1741,5 +1758,5 @@ namespace Learning_C_Sharp {
     }
 }
 ```
-</details>
+</details></details>
 </div>
