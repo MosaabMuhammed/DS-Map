@@ -1460,4 +1460,88 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+
+<details><summary><b>Queue</b> (Generic)</summary>
+```
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+            // Creating
+            Queue<DateTime> arrivals = new Queue<DateTime>();
+
+            // Adding (Enqueue)
+            arrivals.Enqueue(new DateTime(2017, 01, 01));
+            arrivals.Enqueue(new DateTime(2016, 10, 14));
+            arrivals.Enqueue(new DateTime(2018, 06, 02));
+
+            // Peek.
+            print(arrivals.Peek());
+
+            // Length/Count
+            print($"Count: {arrivals.Count}");
+
+            // Loop
+            foreach(var item in arrivals)
+            {
+                print(item);
+            }
+
+        }
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+	}
+}
+```
+</details>
+<details><summary><b>KeyValuePair</b> (Generic)</summary>
+<p><b>KeyValuePair</b> stores 2 values together. It's a single generic struct</p>
+
+```
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Learning_C_Sharp {
+	class Program {
+		public static void Main() {
+            // Creating
+            var cap = new List<KeyValuePair<string, string>>();
+
+            // Adding.
+            cap.Add(new KeyValuePair<string, string>("Russia", "Moscow"));
+            cap.Add(new KeyValuePair<string, string>("Sweden", "Stockholm"));
+            cap.Add(new KeyValuePair<string, string>("Portugal", "Lisbon"));
+            cap.Add(new KeyValuePair<string, string>("Egypt", "Cairo"));
+
+            // Remove.
+            cap.RemoveAt(0);
+
+            // Loop
+            foreach(var item in cap)
+            {
+                print(item.Key+" "+item.Value);
+            }
+
+            print(get_first_and_last());
+            print(get_first_and_last().Key);
+        }
+
+		public static void print(object msg) {
+			Console.WriteLine (msg);
+		}
+
+        public static KeyValuePair<string, string> get_first_and_last()
+        {
+            string firstName = "Mosaab";
+            string lastName = "Muhammad";
+            return new KeyValuePair<string, string>(firstName, lastName);
+        }
+    }
+}
+```
+</details>
 </div>
