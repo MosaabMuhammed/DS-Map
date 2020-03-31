@@ -1,0 +1,86 @@
+<h1>Python</h1>
+
+<div style='width:1000px;margin:auto'>
+
+<details><summary><b>OOP</b></summary><ul>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Class-Variables:'>Class Variables</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Class-Methods-and-Static-Methods:'>Class Methods & Static Methods</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Inheritance:'>Inheritance</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Multiple-Inhertance:'>Multiple Inheritance</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Magic/Dunder-Methods:'>Magic/Dunder Methods</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Property-Decorator:'>@property Decorator</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Encapsulation:'>Encapsulation</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Importing-Modules:'>Importing Modules</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Python-Composition:'>Composition</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Python-Aggregation:'>Aggregation</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Abstract-Class:'>Abstract Class</a></li>
+</ul></details>
+
+<hr>
+
+<details><summary><b>Tips & Tricks</b></summary><ul>
+
+<details><summary><b>Looping over a range of numbers</b></summary>
+```
+for i in range(6):
+	print(i)
+```
+</details></li>
+
+<details><summary><b>Looping over a collection</b></summary>
+```
+colors = ["green", "red", "blue", "black"]
+
+for color in colors:
+	print(color)
+```
+</details>
+
+<details><summary><b>Looping Backwards</b></summary>
+```
+colors = ["green", "red", "blue", "black"]
+
+# Ugly
+for i in range(len(colors)-1, -1, -1):
+	print(colors[i])
+	
+# Pythonic
+for color in reversed(colors):
+	print(color)
+```
+</details>
+
+<details><summary><b>Looping over a collection and indices</b></summary>
+```
+colors = ["green", "red", "blue", "black"]
+
+# Ugly
+for i in range(len(colors)):
+	print(i, colors[i])
+	
+# Pythonic
+for i, color in enumerate(colors):
+	print(i, color)
+```
+</details>
+
+<details><summary><b>Looping over 2 collections</b></summary>
+```
+colors = ["green", "red", "blue", "black"]
+names = ["raymond", "rachel", "matthew"]
+
+# Ugly
+n = min(len(names), len(colors))
+for i in range(n):
+	print(names[i], '-->', colors[i])
+
+	
+# Pythonic
+for name, color in zip(names, colors):
+	print(name, "-->", color)
+```
+</details>
+
+</ul></details>
+
+</div>
