@@ -1264,6 +1264,38 @@ namespace Learning_C_Sharp {
 ```
 </details>
 
+<p>Action delegate is the same as Funcdelgate except that the Action delegate desn't return a value.</p>
+
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            Action<int> actionOne = DisplayInfo;
+            actionOne(16);
+
+            Action actionTwo = DisplayInfo;
+            actionTwo();
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static void DisplayInfo(int number)
+        {
+            print($"Daniele De Rossi number is {number}");
+        }
+
+        public static void DisplayInfo()
+        {
+            print("Gabriel Batistuta");
+        }
+    }
+}
+```
 
 </details><hr>
 
