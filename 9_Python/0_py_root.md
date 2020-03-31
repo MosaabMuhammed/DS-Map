@@ -81,6 +81,34 @@ for name, color in zip(names, colors):
 ```
 </details>
 
+<details><summary><b>Looping in sorted order</b></summary>
+<p><b>NOTE</b><ul>
+<li><b>sorted():</b>new_list = sorted(list)</li>
+<li><b>sort():</b> list.sort()  ""in-place""</li></p>
+```
+colors = ["green", "red", "blue", "black"]
+
+# Pythonic
+# Asceding
+for color in sorted(colors):
+	print(color)
+	
+# Decsending
+for color in sorted(colors, reverse=True):
+	print(color)
+```
+</details>
+
+<details><summary><b>Custom Sort Order</b></summary>
+```
+colors = ["green", "red", "blue", "black"]
+	
+# Pythonic
+print(sorted(colors, key=len))
+```
+</details>
+
+
 </ul></details>
 
 </div>
