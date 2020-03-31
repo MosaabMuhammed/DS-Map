@@ -108,6 +108,34 @@ print(sorted(colors, key=len))
 ```
 </details>
 
+<details><summary><b>Distinguishing multiple exit points in loops</b>[for-else]</summary>
+```
+colors = ["green", "red", "blue", "black"]
+
+# Ugly
+def find(seq, target):
+     found = False
+     for i, value in enumerate(seq):
+             if value == trgt:
+                     found = True
+                     break
+     if not found:
+             return -1
+     return i
+
+# Pythonic
+def find(seq, target):
+	for i, value in enumerate(seq):
+		if value == trgt:
+			break
+			
+	else:
+		return -1
+	return i
+```
+</details>
+
+
 
 </ul></details>
 
