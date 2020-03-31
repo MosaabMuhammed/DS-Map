@@ -1,2171 +1,331 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>C#</h1>
-<div style="width:1000px;margin:auto">
-<details><summary><b>Basic</b></summary>
-<details><summary><b>Input / Output</b></summary>
-
-<pre><code class="csharp">// Reading input from user.
-string name = Console.ReadLine();
-int num = int.Parse(Console.ReadLine());   // parse the string into integer.
-# Handle if user doesn't provide an integer
-int x = 0;
-int.TryParse(Console.ReadLine(), out x);
-
-// Printing the output
-Console.WriteLine(&quot;Hello &quot; + name);
-Console.Write(&quot;Hello {0}&quot;, name);
-</code></pre>
-
-</details>
-
-<details><summary><b>Data Types</b></summary>
-
-<pre><code class="csharp">byte ByteNumber = 123;   // 1 byte (0 --&gt; 255)
-sbyte SByteNum  = -12;    // 1 byte (-128 --&gt; 127)
-
-
-short shortNumber = 2;    // 2 bytes (-32,768 --&gt; 32,768)
-ushort UshortNum = 12;   // 2 bytes (0 --&gt; 65,535)
-
-int intNumber = 10;          // 4 bytes (-2,147,483,648 --&gt; 2,147,483,648)
-uint UintNum =  120;        // 4 bytes (0 --&gt; 4,294,967,295)
-
-long LongNum = 213;       // 8 bytes (-9,223,372,036,854,775,808 --&gt; +9,223,...)
-ulong ULongNum = 12;     // 8 bytes (0 --&gt; 18,446,744,073,709,551,615)
-
-float floatNumber = 10.123f;       // 4 bytes.
-double douNumber = 121.234d;    // 8 bytes.
-decimal decNumber = 123m;       // 16 bytes.
-
-string name = &quot;Mosaab&quot;;
-char character = 'M';
-
-bool condition = true;
-
-// Let C# determine the type of data.
-// using &quot;var&quot; keyword.
-var test = 1000;
-</code></pre>
-
-</details>
-
-<details><summary><b>Casting</b></summary>
-
-<pre><code class="csharp">int intNumber = 10;
-float floatNumber = 10.123f;
-double douNumber = 121.234d;
-string name = &quot;&quot;;
-
-# First way.
-name = intNumber.ToString();
-
-# Second way: using Convert class.
-searialNo = Convert.ToInt32 (anyNo);
-
-# Third way: direct casting.
-searialNo = (int)anyNo;
-</code></pre>
-
-</details>
-
-<details><summary><b>DateTime</b></summary>
-
-<pre><code class="csharp"># DateTime
-DateTime myDate = new DateTime(2020, 5, 25);
-DateTime myDate = DateTime.Today;
-DateTime myDate = DateTime.Now;
-
-# Show DateTime 
-Console.WriteLine(myDate.ToShortDateString());  // show only the date (short format).
-Console.WriteLine(myDate.ToShortTimeString());  // show only the time (short format).
-Console.WriteLine(myDate.ToLongDateString());   // (long format)
-Console.WriteLine(myDate.ToLongTimeString());   // (long format)
-
-# Formatted datetime.
-string formattedDate = string.Format(&quot;Date is {0: yyyy MMMM dddd HH mm ss tt}&quot;, myDate);
-Console.WriteLine(formattedDate);
-</code></pre>
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Python</h1>
 
-</details>
-
-<details><summary><b>If Condition</b></summary>
-
-<pre><code class="csharp">if (num1 &gt; num2)
-{
-    Console.WriteLine (&quot;Num1 is larger than Num2&quot;);
-}
-else if (num1 &lt; num2)
-{
-    Console.WriteLine (&quot;Num1 is less than Num2&quot;);
-}
-else
-{
-    Console.WriteLine (&quot;Num1 equals Num2&quot;);
-}
-</code></pre>
-
-</details>
-
-<details><summary><b>Constants</b></summary>
-
-<pre><code class="csharp">const double gravity = 9.8d;
-</code></pre>
-
-</details>
-
-<details><summary><b>String Manipulations</b></summary>
-
-<pre><code class="csharp">string movieName = &quot;       Lord of the RingS      &quot;;
-
-// Indexing
-Console.WriteLine (movieName[12]);
+<div style='width:1000px;margin:auto'>
 
-// Trim
-Console.WriteLine (movieName.Trim());
+<details><summary><b>OOP</b></summary><ul>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Class-Variables:'>Class Variables</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Class-Methods-and-Static-Methods:'>Class Methods & Static Methods</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Inheritance:'>Inheritance</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Multiple-Inhertance:'>Multiple Inheritance</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Magic/Dunder-Methods:'>Magic/Dunder Methods</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Property-Decorator:'>@property Decorator</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Encapsulation:'>Encapsulation</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Importing-Modules:'>Importing Modules</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Python-Composition:'>Composition</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Python-Aggregation:'>Aggregation</a></li>
+<li><a style='color:#333;font-weight:bold' href='OOP.html#Abstract-Class:'>Abstract Class</a></li>
+</ul></details>
 
-// Upper Case
-Console.WriteLine (movieName.ToUpper ().Trim ());
+<hr>
 
-// Lower Case
-Console.WriteLine (movieName.Trim ().ToLower ());
+<details><summary><b>Tips & Tricks</b></summary><ul>
 
-// Length
-Console.WriteLine (movieName.Length);
+<details><summary><b>Looping over a range of numbers</b></summary>
 
-// Replace
-Console.WriteLine (movieName.Replace ('l', 'L').Trim ());
-
-// Index of 
-Console.WriteLine (movieName.IndexOf ('o'));
-
-// Last Index of
-Console.WriteLine (movieName.LastIndexOf ('o')); 
-
-// Substring
-Console.WriteLine (movieName.Trim().Substring (5, 2));
-
-// Remove after Index
-Console.WriteLine (movieName.Trim().Remove (4));
-
-// Insert
-Console.WriteLine (movieName.Trim().Insert (0, &quot;Added &quot;));
-</code></pre>
-
-</details>
-
-<details><summary><b>Escape Characters</b></summary>
-
-<pre><code class="csharp">// Ignore the special characters.
-string path = @&quot;C:\nami\tark&quot;;
-
-// Don't ignore the special characters.
-string path = &quot;C:\\nami\\tark&quot;
+<pre><code>for i in range(6):
+    print(i)
 </code></pre>
-
-</details>
-
-<details><summary><b>String Interpolation</b></summary>
 
-<pre><code class="csharp">string name = &quot;Mosaab&quot;;
+</details></li>
 
-Console.WriteLine(&quot;Welcome &quot; + name);
-Console.WriteLine(&quot;Welcome {0}&quot;, name);
-Console.WriteLine($&quot;Welcome {name}&quot;);
-</code></pre>
+<details><summary><b>Looping over a collection</b></summary>
 
-</details>
+<pre><code>colors = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;]
 
-<details><summary><b>Loops</b></summary>
-
-<pre><code class="csharp">// For Loop
-for(int i = 0; i &lt;= 10; i++) {
-    Console.WriteLine (i);
-}
-
-// While Loop
-int x = 5;
-while (x &lt;= 10) {
-    Console.WriteLine (x++);
-}
+for color in colors:
+    print(color)
 </code></pre>
 
 </details>
-
-<details><summary><b>Math</b></summary>
-
-<pre><code class="csharp">double x = 4.226d;
-
-// Ceiling
-Console.WriteLine($&quot;Ceiling: {Math.Ceiling(x)}&quot;);
-
-// Floor
-Console.WriteLine($&quot;Floor: {Math.Floor(x)}&quot;);
-
-// Round
-Console.WriteLine($&quot;Round: {Math.Round(x, 2)}&quot;);
-
-// Truncate
-Console.WriteLine($&quot;Truncate: {Math.Truncate(x)}&quot;);
-
-// Max
-Console.WriteLine($&quot;Max: {Math.Max(x, y)}&quot;);
-
-// Min
-Console.WriteLine($&quot;Min: {Math.Min(x, y)}&quot;);
-
-// Sqrt
-Console.WriteLine($&quot;Sqrt: {Math.Sqrt(y)}&quot;);
-
-// POW
-Console.WriteLine($&quot;Pow: {Math.Pow(2, 2)}&quot;);
-</code></pre>
 
-</details>
+<details><summary><b>Looping Backwards</b></summary>
 
-<details><summary><b>Random</b></summary>
-
-<pre><code class="csharp">// Random Integer.
-Random rand = new Random();
-int x = 0;
-x = rand.Next(1, 13);
-Console.WriteLine(&quot;Month: &quot; + x);
-
-// Random Float
-double y = 0;
-y = rand.NextDouble() * 10;
-Console.WriteLine(&quot;Random Double: &quot; + y);
-</code></pre>
+<pre><code>colors = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;]
 
-</details>
+# Ugly
+for i in range(len(colors)-1, -1, -1):
+    print(colors[i])
 
-<details><summary><b>Array</b></summary>
-<h4>Arrays</h4>
-
-<pre><code class="csharp">// Instansiate an array
-int[] nums = new int[5] { 1, 2, 3, 4, 5 };
-string[] days = { &quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thur&quot;, &quot;Fri&quot;, &quot;Sat&quot; };
-
-// Loop over the arrays. using FOR
-for (int i=0; i &lt; nums.Length; i++) {
-    Console.WriteLine (nums [i]);
-}
-
-// Loop Over the array. using FOREACH.
-foreach(var day in days) {
-    Console.WriteLine (day);
-}
+# Pythonic
+for color in reversed(colors):
+    print(color)
 </code></pre>
 
 </details>
-
-<details><summary><b>Method/Function</b></summary>
-<h4>1. Basic Structure</h4>
-
-<pre><code class="csharp">// Define the method outside of the Main method.
-static void DisplayMessage() {
-    Console.WriteLine(&quot;Process is done&quot;);
-}
-</code></pre>
-
-
-<h4>2. Parameters</h4>
-
-<pre><code class="csharp">// Define the method outside of the Main method.
-static int Add(int x, int y) {
-    return x + y
-}
-</code></pre>
-
-
-<h4>3. value Vs. reference</h4>
-
-<pre><code class="csharp">// variable has to be initialized.
-int x = 10;
-
-// outside of the main method
-static void ChangeX(ref int x) {
-    x = 200;
-}
 
-// to call the function as follows:
-ChangeX(ref x)
-</code></pre>
-
-
-<pre><code class="csharp">// if variable is not instialized, we can use &quot;out&quot; keyword.
-int x;
-
-// outside of the main method.
-static void Change(out int x) {
-    x = 200;
-}
-
-// use it like this.
-Change(out x);
-</code></pre>
+<details><summary><b>Looping over a collection and indices</b></summary>
 
-
-<h4>4. Overloaded Methods</h4>
-
-<pre><code class="csharp">static void WelcomeGuest() {
-    Console.WriteLine(&quot;Something&quot;);
-}
-
-static void WelcomeGuest(string name) {
-    Console.WriteLine($&quot;Welcome {name}&quot;);
-}
-</code></pre>
-
-</details>
-</details><hr>
-<details><summary><b>OOP</b></summary>
-<details><summary><b>Class</b> & <b>Getter & Setter</b></summary>
-
-<pre><code class="csharp">// everthing is by default private
-class Person {
-    string firstName;
-    public string lastName;
-    DateTime birthDate;
-    string country;
-
-    // Getter &amp; Setter
-    public string FirstName {
-        get { return firstName; }
-        set { firstName = value; }
-    }
-
-    // Another way of Getter &amp; Setter
-    public DateTime BirthDate { get; set; }
-}
-
-// instatiating the class in the main method
-Person perOne = new Person();
-perOne.FirstName = &quot;Mosaab&quot;;
-perOne.BirthDate = new DateTime(12, 1, 1996);
-</code></pre>
+<pre><code>colors = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;]
 
-</details>
+# Ugly
+for i in range(len(colors)):
+    print(i, colors[i])
 
-<details><summary><b>Constructor</b></summary>
-
-<pre><code class="csharp">// everthing is by default private
-class Person {
-    string firstName;
-    public string lastName;
-    DateTime birthDate;
-    string country;
-
-    // Constructor
-    public Person (string first, string last) {
-        firstName = first;
-        lastName  = last;
-    }
-}
-
-// instatiating the class in the main method
-Person perOne = new Person(&quot;Mosaab&quot;, &quot;Muhammad&quot;);
+# Pythonic
+for i, color in enumerate(colors):
+    print(i, color)
 </code></pre>
 
 </details>
 
-<details><summary><b>Static Methods</b></summary>
-<h4>Used without the need to instantiate the class.</h4>
+<details><summary><b>Looping over 2 collections</b></summary>
 
-<pre><code class="csharp">static void Main() {
-    Person person = new Person();
-    person.SayHi(); // called from the static method.
-}
+<pre><code>colors = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;]
+names = [&quot;raymond&quot;, &quot;rachel&quot;, &quot;matthew&quot;]
 
-static void SayHi() {
-    Console.WriteLine(&quot;Hi!, from static method&quot;);
-}
+# Ugly
+n = min(len(names), len(colors))
+for i in range(n):
+    print(names[i], '--&gt;', colors[i])
 
 
-class Person {
-    public void SayHi() {
-        // print something.
-    }
-}
+# Pythonic
+for name, color in zip(names, colors):
+    print(name, &quot;--&gt;&quot;, color)
 </code></pre>
 
 </details>
-<details><summary><b>Inheritance</b></summary>
-<p><img src="./imgs/inheritance.png" alt="" /></p>
 
-<pre><code class="csharp">    class Dog : Animal {
-
-    }
-</code></pre>
+<details><summary><b>Looping in sorted order</b></summary>
+<p><b>NOTE</b><ul>
+<li><b>sorted():</b>new_list = sorted(list)</li>
+<li><b>sort():</b> list.sort()  ""in-place""</li></p>
 
-</details>
+<pre><code>colors = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;]
 
-<details><summary><b>Access Modifiers</b></summary><p><ul>
-<li><b>Public:</b> Access is not restricted.</li>
-<li><b>Protected:</b> Access is limited to the containing class or types derived from the containing class.</li>
-<li><b>Private:</b> Access is limited to the containing type.</li>
-<li><b>Internal:</b> Access is limited to the current assembly.</li>
-<li><b>Protected Internal:</b> Access is limited to the current assembly or types derived from the containing class.</li>
-</ul></p></details>
-
-<details><summary><b>Polymorphism</b></summary>
-<h5>use `virtual` in the parent class, and `override` in the child class.</h5>
-
-<pre><code class="csharp">class MainClass
-{
-    public static void Main (string[] args)
-    {
-        Shape[] shapes = new Shape[3];
-        shapes [0] = new Line ();
-        shapes [1] = new Circle ();
-        shapes [2] = new Triangle ();
-
-        foreach (var shape in shapes) {
-            shape.Draw ();
-        }
-    }
-}
-
-class Shape {
-    public virtual void Draw() {
-        Console.WriteLine (&quot;I am a simple shape&quot;);
-    }
-}
-
-class Circle : Shape {
-    public override void Draw() {
-        Console.WriteLine (&quot;I am a Circle&quot;);
-    }
-}
-
-class Triangle : Shape {
-    public override void Draw() {
-        Console.WriteLine (&quot;I am a Triangel&quot;);
-    }
-}
-
-class Line : Shape {
-    public override void Draw() {
-        Console.WriteLine (&quot;I am a Line&quot;);
-    }
-}
-</code></pre>
+# Pythonic
+# Asceding
+for color in sorted(colors):
+    print(color)
 
-</details>
-<details><summary><b>Abstraction</b></summary>
-<p><b>Abstract Class</b> is a concept or an idea not associated with any specific instance. "Can't be instantiated"</p>
-
-<pre><code class="csharp">class MainClass
-{
-    static void Main()
-    {
-        Line line = new Line ();
-        line.SayHi();
-    }
-
-}
-
-abstract class Shape
-{
-    public void SayHi()
-    {
-        Console.WriteLine (&quot;Hi from the abstract class.&quot;);
-    }
-
-    abstract public void Draw();
-}
-
-class Line : Shape
-{
-    public override  void Draw()
-    {
-        Console.WriteLine (&quot;Hi Im a line&quot;);
-    }
-}
+# Decsending
+for color in sorted(colors, reverse=True):
+    print(color)
 </code></pre>
 
 </details>
-<details><summary><b>#region</b> & <b>#endregion</b></summary>
-
-<pre><code class="csharp">// region is used to fold the code.
-class Program {
-    public static void Main() {
-        Mercedes car = new Mercedes ();
-        car.DisplayInfo ();
-    }
-}
-
-#region Car = This is the solution for the car exercies
-class Car {
-
-    #region Properties
-    private decimal price;
-    protected int maxSpeed;
-    public string color;
-    #endregion
-
-    protected decimal Price {
-        get { return price; }
-        set { price = value; }
-    }
-
-    public virtual void DisplayInfo() {
-        price = 10000;
-        maxSpeed = 300;
-        color = &quot;Black&quot;;
-
-        Console.WriteLine ($&quot;Default values: price is {Price}, max speed = {maxSpeed}, color = {color}&quot;);
-    }
-}
-
-class Mercedes : Car {
-    public override void DisplayInfo() {
-        base.DisplayInfo ();
-
-        base.Price = 15000;
-        base.color = &quot;blue&quot;;
-        base.maxSpeed = 200;
-
-        Console.WriteLine ($&quot;Overriden values: price = {Price}, speed = {maxSpeed}, color = {color}&quot;);
-    }
-}
-#endregion
-
-</code></pre>
 
-</details>
-<details><summary><b>Sealed Class</b> can't be inherted </summary>
-
-<pre><code class="csharp">// Animal class CAN'T be inherted.
-sealed class Animal {
-    public int number = 200;
-}
-</code></pre>
+<details><summary><b>Custom Sort Order</b></summary>
 
-</details>
-<details><summary><b>Static Class</b></summary>
-<p><ul>
-<li>You can only have static members</li>
-<li>You can't create an instance of it</li>
-<li>They are implicitly sealed</li>
-</ul></p>
-
-<pre><code class="csharp">class Program {
-    public static void Main() {
-        // There's no need to instantiate a class.
-        Animal.GetAge ();
-    }
-}
-
-static class Animal {
-    // members must be static
-    static public string name;
-
-    // methods must be static
-    static public void GetAge() {
-        Console.WriteLine (DateTime.Now.Year - DateTime.Now.AddYears (-2).Year);
-    }
-
-}
-</code></pre>
+<pre><code>colors = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;]
 
-</details>
-<details><summary><b>Nested Class</b></summary>
-
-<pre><code class="csharp">class Program {
-    public static void Main() {
-        Animal animal = new Animal ();
-
-        // instantiate a dog nested class.
-        Animal.Dog dog = new Animal.Dog ();
-
-        // instantiate a cat nested class.
-        Animal.Cat cat = new Animal.Cat ();
-    }
-}
-
-class Animal {
-    public string name;
-    public string country;
-
-    public class Dog {
-        public string breed;
-        public string nickName;
-    }
-
-    public class Cat {
-        public string CatName;
-    }
-}
+# Pythonic
+print(sorted(colors, key=len))
 </code></pre>
 
 </details>
-
-<details><summary><b>Partial Class</b></summary>
-when you write parts of the same class in different places.
 
-<pre><code class="csharp">class Program {
-    public static void Main() {
-        Animal animal = new Animal ();
-        Console.WriteLine (animal.age + &quot; &quot; + animal.name);
-    }
-}
+<details><summary><b>Distinguishing multiple exit points in loops</b>[for-else]</summary>
 
-partial class Animal {
-    public int age = 13;
+<pre><code>colors = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;]
 
-}
+# Ugly
+def find(seq, target):
+     found = False
+     for i, value in enumerate(seq):
+             if value == trgt:
+                     found = True
+                     break
+     if not found:
+             return -1
+     return i
 
-partial class Animal {
-    public string name = &quot;Max&quot;;
-}
+# Pythonic
+def find(seq, target):
+    for i, value in enumerate(seq):
+        if value == trgt:
+            break
 
+    else:
+        return -1
+    return i
 </code></pre>
 
-</details>
-<details><summary><b>Namespace</b></summary>
-
-<pre><code class="csharp">namespace Learning_C_Sharp
-{
-    class Program {
-        public static void Main() {
-            System.Console.WriteLine ();
-            NameSpace.Animal animal = new NameSpace.Animal ();
-            animal.SayHi ();
-        }
-    }
-}
-
-namespace NameSpace {
-    class Animal {
-        public string animalColor;
-
-        public void SayHi() {
-            Console.WriteLine (&quot;Hi from my own namespace&quot;);
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>Struct</b></summary>
-<p><img src="imgs/struct.png" alt="" /></p>
-
-
-<pre><code class="csharp">namespace Learning_C_Sharp
-{
-    class Program {
-        public static void Main() {
-            Employee emp = new Employee (&quot;Mosaab&quot;, &quot;Data Scientist&quot;, 9000);
-            Console.WriteLine ($&quot;Name: {emp.name}, Job: {emp.job}, Salary: &quot;);
-        }
-    }
-
-    struct Employee {
-        public string name;
-        public string job;
-        private decimal salary;
-
-        public Employee(string EmpName, string EmpJob, decimal EmpSalary) {
-            name   = EmpName;
-            job    = EmpJob;
-            salary = EmpSalary;
-        }
-
-        //public decimal Salary () {get; set;}
-
-        public void SayHi() {
-            Console.WriteLine (&quot;Hi from the method in struct&quot;);
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>Enum</b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            string weekDayName = WeekDay.Monday.ToString ();
-            WeekDay day = WeekDay.Sunday;
-
-            Console.WriteLine ((int)day+&quot; &quot;+weekDayName);
-        }
-    }
-    enum WeekDay {
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday = 40,
-        Saturday = 50,
-        Sunday = 60
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>this</b> Keyword</summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            Animal ani = new Animal(&quot;Mosaab&quot;);
-
-            Console.WriteLine ($&quot;Hello {ani.Name}&quot;);
-        }
-    }
-
-    class Animal {
-        string name;
-
-        public Animal (string name) {
-            this.name = name;
-        }
-
-        public string Name {
-            get { return name; }
-            set { name = value; }
-        }
-    }
-}
-
-</code></pre>
-
-</details>
-
-<details><summary><b>Interface</b></summary>
-<details><summary>Interface Vs Abstract</summary>
-<p><img src="./imgs/interface.png" alt="" /></p>
-<p><img src="./imgs/interfaceVsAbstract.png" alt="" /></p>
-</details>
+</details><br>
 
+<details><summary><b>Looping Over dictionary Keys</b></summary>
 
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            Dog dog = new Dog ();
-            dog.Attack (); 
-            dog.Run ();
-        }
-    }
-
-    public interface IAnimal {
-        void Run();
-    }
-
-    public interface IDogCommands : IAnimal{
-        void Stay();
-        void Sit();
-        void Attack();
-
-        string DogName { get; set; }
-    }
-
-    class Dog : IDogCommands, IAnimal {
-        private string DogBreed;
-
-        public void Stay() {
-            Console.WriteLine (&quot;Do is staying&quot;);
-        }
-        public void Sit() {
-            Console.WriteLine (&quot;Dog is sitting.&quot;);
-        }
-        public void Attack() {
-            Console.WriteLine (&quot;Attack&quot;);
-        }
-        public void Run() {
-            Console.WriteLine (&quot;Run&quot;);
-        }
-
-        public string DogName { get; set; }
-    }
-
-}
-</code></pre>
-
-</details>
+<pre><code>d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
 
-<details><summary><b>Composition</b></summary>
-<ul>
-<li><b>Composition</b> is defined as <i>"part-of"</i> relationship between objects, i.e. Engine is part of Car.</li>
-<li>The lifetime of the child instance is denpendant on the owner or the parent class instance. Child objects doesn't have their lifecycle without parent object.</li>
-<li>If a parent object is deleted, all its child objects will also be deleted</li>
-</ul>
-</details>
+#Ugly
+for k in d:
+     print(k)
 
-<details><summary><b>Aggregation</b></summary>
-<p><img src="./imgs/20200328-154806.png" alt="" /></p>
-<p><img src="./imgs/20200328-154942.png" alt="" /></p>
-</details>
+# Pythonic
+for k in d.keys():
+     print(k)
 
-<details><summary><b>Association</b></summary>
-<p><img src="./imgs/20200328-155201.png" alt="" /></p>
-<p><img src="./imgs/20200328-155340.png" alt="" /></p>
-</details>
-</details><hr>
-
-<details><summary><b>Advanced</b></summary>
-<details><summary><b>.NET</b></summary>
-<p><b>.NET</b> is a component of Windows that includes a virtual execution system called the <b>(CLR)</b> Common Language Runtime and a unified set of class libraries.</p>
-</details>
-<details><summary><b>Debug.WriteLine()</b></summary>
-
-<pre><code>using System.Diagnostics;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            int x = 0;
-            int y = 2;
-
-            Debug.WriteLine($&quot;x = {x}&quot;);
-            Debug.WriteLineIf(y &gt; 0, $&quot;y = {y}&quot;);
-        }
-    }
-}
+# Another Pythonic one
+d = {k: d[k] for k in d}
 </code></pre>
 
 </details>
 
-<details><summary><b>Documentation</b></summary>
-Write /// then it will show like this:
+<details><summary><b>Looping Over dictionary Keys nad Values</b></summary>
 
-<pre><code>/// &lt;summary&gt;
-/// Class Animal will be a base class for the child classes like Dogs.
-/// &lt;/summary&gt;
-class Program {
+<pre><code>d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
 
-}
-</code></pre>
+#Ugly
+for k in d:
+     print(k, &quot;--&gt;&quot;, d[k])
 
-</details>
-<details><summary><b>Files</b></summary>
-
-<pre><code>using System.IO;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // WRITING
-            string file = @&quot;path/to/your/file&quot;;
-            StreamWriter sw = new StreamWriter(file, true);
-            sw.WriteLine (&quot;John&quot;);
-            sw.WriteLine (&quot;Ahmed&quot;);
-            sw.Close ();
-
-            // READING
-            string file = @&quot;path/to/your/file&quot;;
-            StreamReader sr = new StreamReader(file);
-            Console.WriteLine(sr.ReadToEnd());
-            Console.WriteLine(&quot;File Ended&quot;);
-            sr.Close();
-        }
-    }
-}
+# Pythonic
+for k, v in d.items():
+     print(k, v)
 </code></pre>
 
 </details>
-
-<details><summary><b>Console.Color</b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            string msg = &quot;Hallo, Guten Morgen&quot;;
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine (msg);
+<details><summary><b>Construct a dictionary from pairs</b></summary>
 
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.WriteLine (msg);
-        }
+<pre><code>names = ['raymond', 'rachel', 'meatthew']
+colors = ['red', 'blue', 'black']
 
-    }
-}
+d = dict(zip(names, colors))
 </code></pre>
 
 </details>
-<details><summary><b>Digit Seperator</b></summary>
 
-<pre><code>var distance = 149_600_000;
-</code></pre>
-
-</details>
-<details><summary><b>"default"</b> Keyword</summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            long longVar = default(long);
-            string str   = default(string);
-            int integer = default(int);
-
-            Console.WriteLine ($&quot;{longVar}, {str}, {integer}&quot;);
-        }
-
-    }
-}
-</code></pre>
-
-</details>
+<details><summary><b>Counting with dictionaries</b></summary>
 
-<details><summary><b>Optional</b> parameters</summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            print();
-        }
-
-        public static void print(object msg = null) {
-            Console.WriteLine(msg);
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>Named</b> parameters</summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main()
-        {
-            DisplayInfo(playerName: &quot;Ronaldo&quot;, playerNum: 11, playerGoals: 23);
-        }
-
-        public static void print(object msg = null) {
-            Console.WriteLine(msg);
-        }
-
-        public static void DisplayInfo(int playerNum,
-                                       string playerName,
-                                       int playerGoals,
-                                       string country=&quot;Unkown&quot;)
-        {
-            print(playerNum);
-            print(playerName);
-            print(playerGoals);
-            print(country);
-        }
-    }
-}
-</code></pre>
+<pre><code>colors = ['red', 'red', 'green', 'blue', 'blue', 'green', 'red', 'blue']
 
-</details>
-<details><summary><b>Generic</b> parameters</summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main()
-        {
-            print(&quot;hello&quot;);
-            print(10);
-            print(Tuple.Create(10, 20));
-        }
-
-        public static void print&lt;T&gt;(T msg)
-        {
-            Console.WriteLine(msg);
-        }
-    }
-}
-</code></pre>
+# Basic
+d = {}
+for color in colors:
+    if color not in d:
+        d[color] = 0
+    d[color] += 1
 
-</details>
-<details><summary><b>"params"</b> keyword</summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main()
-        {
-            printAll(&quot;Ahemd&quot;, &quot;Mohamed&quot;, &quot;Sayed&quot;, &quot;Shaker&quot;);
-        }
-
-        public static void print&lt;T&gt;(T msg)
-        {
-            Console.WriteLine(msg);
-        }
-
-        public static void printAll&lt;T&gt;]](params T[] names)
-        {
-            foreach(var name in names)
-            {
-                print(name);
-            }
-        }
-    }
-}
-</code></pre>
+# Intermediate
+d = {}
+for color in colors:
+    d[color] = d.get(color, 0) + 1
 
-</details>
-<details><summary><b>Extention</b> methods</summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main()
-        {
-            int x = 0;
-            string y = &quot;100&quot;;
-            Console.WriteLine(x.IsGreater(10));
-            Console.WriteLine(y.IsNumber());
-        }
-
-    }
-    static class CustomExtention
-    {
-        public static bool IsGreater(this int value, int number)
-        {
-            return value &gt; number;
-        }
-
-        public static bool IsNumber(this string text)
-        {
-            return int.TryParse(text, out int result);
-        }
-    }
-}
-</code></pre>
+# Pythonic
+from collections import defaultdict
 
-</details>
-<details><summary><b>Stopwatch</b></summary>
-
-<pre><code>using System;
-using System.Diagnostics;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main()
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            for(int i = 0; i &lt; 1000; i++)
-            {
-
-            }
-            watch.Stop();
-
-            print($&quot;MilliSeconds: {watch.Elapsed.Milliseconds}&quot;);
-            print($&quot;Total in Milli: {watch.Elapsed.TotalMilliseconds}&quot;);
-            print($&quot;Total Seconds: {watch.Elapsed.TotalSeconds}&quot;);
-            print($&quot;Seconds: {watch.Elapsed.Seconds}&quot;);
-            print($&quot;Ticks: {watch.Elapsed.Ticks}&quot;);
-        }
-
-        public static void print&lt;T&gt;(T str)
-        {
-            Console.WriteLine(str);
-        }
-    }
-}
+d = deafultdict(int)
+for color in colors:
+    d[color] += 1
 </code></pre>
 
 </details>
-
-<details><summary><b>Delegates</b></summary>
-<p>A delegate is a reference type variable that holds the reference to a method. Which means delegates allow methods to be passed as parameters.</p>
-
-
-<pre><code>namespace Learning_C_Sharp {
-    // void delegate with no argument.
-    public delegate void PlayerInfoDel();
-
-    // Void delegate with one string argument.
-    public delegate void PlayerInfoWithNameDel(string playerName);
-
-    // Void Delegate with one string and one integer arguments.
-    public delegate void PlayerInfoNameWithGoalsDel(string name, int goals);
-    class Program
-    {
-        public static void Main()
-        {
-            PlayerInfoDel ronaldoino = new PlayerInfoDel(DisplayInfo);
-            ronaldoino.Invoke();
-            // or we can invoke without using Invoke
-            ronaldoino();
-
-            PlayerInfoWithNameDel playerName = new PlayerInfoWithNameDel(DisplayInfo);
-            playerName(&quot;Messi&quot;);
-
-            PlayerInfoNameWithGoalsDel player = new PlayerInfoNameWithGoalsDel(HandlePlayerInfoNameWithGoalsDel);
-            player(&quot;Mosaab&quot;, 10);
-
-
-        }
-
-        static void HandlePlayerInfoNameWithGoalsDel(string name, int goals)
-        {
-            print($&quot;Information about: {name}, goals: {goals}&quot;);
-        }
 
+<details><summary><b>Grouping with dictionaries</b></summary>
 
-        public static void print&lt;T&gt;(T str)
-        {
-            Console.WriteLine(str);
-        }
+<pre><code>names = ['mosaab', 'cool', 'hany', 'shady', 'muhamed', 'raymond']
 
-        public static void DisplayInfo()
-        {
-            print(&quot;Information about: Ronaldinho&quot;);
-        }
+# Basic
+d = {}
+for name in names:
+    key = len(name)
+    if key not in d:
+        d[key] = []
+    d[key].append(name)
 
-        public static void DisplayInfo(string name)
-        {
-            print($&quot;Information about: {name}&quot;);
-        }
+# Intermediate
+d = {}
+for name in names:
+    key = len(name)
+    d.setdefault(key, []).append(name)
 
-        public static void DisplayInfo(string name, int goals)
-        {
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>Multi-cast Delegates</b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    public delegate void SayHiDelegate();
-
-    class Program
-    {
-        public static void Main()
-        {
-            SayHiDelegate sayHi = null;
-            sayHi = new SayHiDelegate(sayHiEnglish);
-            sayHi += new SayHiDelegate(sayHiSpanish);
-            sayHi += new SayHiDelegate(sayHiGerman);
-
-            sayHi();
-        }
-
-        public static void print&lt;T&gt;(T msg)
-        {
-            Console.WriteLine(msg);
-        }
-
-        public static void sayHiEnglish()
-        {
-            print(&quot;Hi there.&quot;);
-        }
-
-        public static void sayHiSpanish()
-        {
-            print(&quot;Hola.&quot;);
-        }
-
-        public static void sayHiGerman()
-        {
-            print(&quot;Hallo.&quot;);
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>Generic Delegates</b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-
-    public delegate T DisplayInfo&lt;T&gt;(T value);
-    class Program
-    {
-        public static void Main()
-        {
-            DisplayInfo&lt;int&gt; Num = new DisplayInfo&lt;int&gt;(DisplayValue);
-            Num(100);
-        }
-
-        public static void print&lt;T&gt;(T msg)
-        {
-            Console.WriteLine(msg);
-        }
-
-        public static T DisplayValue&lt;T&gt;(T value)
-        {
-            print($&quot;Hi there. {value.GetType().Name}&quot;);
-            return value;
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>Anonymous Methods </b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    delegate void DisplayDel();
-    delegate void Display2Del(int num);
-
-    class Program
-    {
-        public static void Main()
-        {
-            DisplayDel Num = delegate { print(&quot;Hi there, Anonymous method&quot;); };
-            Num();
-
-            Display2Del Num2 = delegate (int num2) { print($&quot;Hi {num2}&quot;); };
-            Num2(10002);
-        }
-
-        public static void print&lt;T&gt;(T msg)
-        {
-            Console.WriteLine(msg);
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>Lambda Method </b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    delegate void Display2Del(int num);
-    delegate void DisplayMsgDel();
-
-    class Program
-    {
-        public static void Main()
-        {
-            Display2Del Num2 = n =&gt; print($&quot;n*3: {n * 3}&quot;);
-            Num2(10);
-
-            DisplayMsgDel msg = () =&gt; print($&quot;Cool man, cool&quot;);
-            msg();
-        }
-
-        public static void print&lt;T&gt;(T msg)
-        {
-            Console.WriteLine(msg);
-        }
-    }
-}
-</code></pre>
+# Pythonic
+from collections import defaultdict
 
-<h5>Lambda methods with Generic collection</h5>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program
-    {
-        public static void Main()
-        {
-            List&lt;int&gt; list = new List&lt;int&gt;();
-            list.Add(1); list.Add(2); list.Add(5); list.Add(10);
-            list.Add(5); list.Add(3); list.Add(9); list.Add(8);
-
-            var odd = list.Where(n =&gt; n % 2 != 0).ToList();
-            var even = list.Where(n =&gt; n % 2 == 0).ToList();
-
-            foreach(var item in odd)
-            {
-                print(item);
-            }
-            print(&quot;-----------------&quot;);
-            foreach(var item in even)
-            {
-                print(item);
-            }
-        }
-
-        public static void print&lt;T&gt;(T msg)
-        {
-            Console.WriteLine(msg);
-        }
-    }
-}
+d = defaultdict(list)
+for name in names:
+    key = len(name)
+    d[key].append(name)
 </code></pre>
 
 </details>
-</details><hr>
-
-<details><summary><b>Collections</b></summary>
-<details><summary><b>ArrayList</b> (Non-Generic)</summary>
-
-<pre><code>using System.Collections;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            ArrayList array = new ArrayList ();
-
-            // Adding
-            array.Add (&quot;first&quot;);
-            array.Add (12);
-            array.Add (41.2d);
-
-            // Looping
-            foreach(var item in array) {
-                Console.WriteLine (item);
-            }
-
-            // Inserting
-            array.Insert (1, &quot;second&quot;);
-
-            Console.WriteLine (&quot;----------------&quot;);
-
-            // Length &amp; Indexing
-            for(var i = 0; i &lt; array.Count; i++) {
-                Console.WriteLine (array [i]);
-            }
-
-            // Sorting
-            ArrayList arr2 = new ArrayList ();
-            arr2.Add (&quot;Ahmed&quot;);
-            arr2.Add (&quot;Mosaab&quot;);
-            arr2.Add (&quot;Sally&quot;);
-
-            arr2.Sort ();
-            Console.WriteLine (&quot;----------------&quot;);
-            foreach(var item in arr2) {
-                Console.WriteLine (item);
-            }
-
-            // Reversing
-            arr2.Reverse ();
-            Console.WriteLine (&quot;----------------&quot;);
-            foreach(var item in arr2) {
-                Console.WriteLine (item);
-            }
-
-            // Removing
-            arr2.Remove (&quot;Ahmed&quot;);    // Remove an item.
-            arr2.RemoveAt (0);        // Remove item at index.
-            //arr2.RemoveRange (1, 3);  // Remove items between these range.
-            //arr2.Clear ();            // Remove all items.
-            Console.WriteLine (&quot;----------------&quot;);
-            foreach(var item in arr2) {
-                Console.WriteLine (item);
-            }
-
-            // Contains
-            Console.WriteLine (array.Contains (12));
-
-            // GetRange
-            ArrayList subArr = new ArrayList ();
-            subArr = array.GetRange (0, 2);
-
-            foreach(var item in subArr) {
-                Console.WriteLine (item); 
-            }
-        }
-    }
-}
-</code></pre>
 
-</details>
-<details><summary><b>Hashtables</b> (Non-Generic)</summary>
-
-<pre><code>using System.Collections;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            Hashtable table = new Hashtable ();
-
-            // Adding
-            table.Add (&quot;Microsoft&quot;, &quot;USA&quot;);
-            table.Add (&quot;Sony&quot;, &quot;Japan&quot;);
-            table.Add (&quot;IKEA&quot;, &quot;Sweden&quot;);
-            table.Add (&quot;Mercedes&quot;, &quot;Germany&quot;);
-
-            // Looping
-            foreach (DictionaryEntry item in table) {
-                Console.WriteLine ($&quot;{item.Key}: {item.Value}&quot;);
-            }
-            for(var i = 0; i &lt; table .Count; i++) {
-                Console.WriteLine ($&quot;{table.GetKey(i)}: {list.GetByIndex(i)}&quot;);
-            }
-
-            // Length
-            Console.WriteLine (table.Count);
-
-            // Remove
-            table.Remove (&quot;IKEA&quot;);
-            foreach(DictionaryEntry item in table) {
-                Console.WriteLine (item.Key); 
-            }
-
-            // Contains
-            Console.WriteLine (table.Contains (&quot;panasonic&quot;)); // for keys.
-            Console.WriteLine (table.ContainsValue (&quot;Japan&quot;)); // for values.
-
-            // To ArrayList
-            ArrayList arr = new ArrayList (table.Values);
-            foreach (var item in arr) {
-                Console.WriteLine (item);
-            }
-        }
-    }
-}
-</code></pre>
+<details><summary><b>Linking dictionaries</b></summary>
 
-</details>
+<pre><code>d1 = {'mosaab': 'blue', 'hany': 'black', 'sally': 'purple'}
+d2 = {'shaker': 'yellow', 'hoda': 'brown'}
 
-<details><summary><b>SortedList</b> (Non-Generic)</summary>
-<ul>
-<li>There is generic and non-generic SortedList</li>
-<li>Stores the key-value pairs in ascending order of the key.</li>
-<li>Key must be unique and can't be null.</li>
-<li>Value can be null or duplicate.</li>
-<li>Value can be of any type</li>
-
-
-<pre><code>using System.Collections;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            SortedList list = new SortedList ();
-
-            // Adding
-            /// No duplicate keys.
-            /// duplicate values allowed.
-            list.Add (10, &quot;Jan&quot;);
-            list.Add (2, &quot;Feb&quot;);
-            list.Add (3, &quot;Mar&quot;);
-            list.Add (4, &quot;Apr&quot;);
-
-            // Length
-            Console.WriteLine (list.Count);
-
-            // Looping
-            foreach(DictionaryEntry item in list) {
-                Console.WriteLine ($&quot;{item.Key}: {item.Value}&quot;);
-            }
-
-            for(var i = 0; i &lt; list.Count; i++) {
-                Console.WriteLine ($&quot;{list.GetKey(i)}: {list.GetByIndex(i)}&quot;);
-            }
-
-            // Index
-            Console.WriteLine (list [10].ToString ());
-
-            // Remove
-            list.RemoveAt (1);
-
-            foreach(DictionaryEntry item in list) {
-                print ($&quot;{item.Key}: {item.Value}&quot;);
-            }
-
-            // Contains
-            print (list.ContainsValue (&quot;Apr&quot;));
-
-            // To ArrayList
-            ArrayList arr = new ArrayList (list.Values);
-
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
-</code></pre>
+# Basic
+totalDict = dict()
+totalDict.update(d1)
+totalDict.update(d2)
 
-</details>
-<details><summary><b>Stack</b> (Non-Generic)</summary>
-
-<pre><code>using System.Collections;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating.
-            Stack st = new Stack ();
-
-            // Adding.
-            st.Push (&quot;David&quot;);
-            st.Push (&quot;Emmy&quot;);
-            st.Push (&quot;Jack&quot;);
-            st.Push (&quot;Emma&quot;);
-
-            // Length.
-            print (st.Count);
-
-            // Looping.
-            foreach(var item in st) {
-                print (item); 
-            }
-
-            // Peek at the first element to go.
-            print (&quot;---------------&quot;);
-            print (st.Peek ());
-
-            // Remove (pop).
-            print (&quot;---------------&quot;);
-            print (st.Pop ());
-            print (st.Count);
-
-            foreach(var item in st) {
-                print (item);
-            }
-        }
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
+# Pythonic
+totalDict = ChainMap(d1, d2)
 </code></pre>
-
-</details>
-<details><summary><b>Queue</b> (Non-Generic)</summary>
-
-<pre><code>using System.Collections;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating.
-            Queue qu = new Queue ();
-
-            // Adding
-            qu.Enqueue (&quot;Cavin&quot;);
-            qu.Enqueue (&quot;Tom&quot;);
-            qu.Enqueue (&quot;Emma&quot;);
-
-            // Length
-            print (qu.Count);
-
-            // Loop
-            foreach(var item in qu) {
-                print (item);
-            }
-
-            // Peek at the first element.
-            print ($&quot;First element: {qu.Peek ()}&quot;);
 
-            // Remove (Dequeue)
-            print (qu.Dequeue ()); 
+</details><br>
 
-        }
 
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
-</code></pre>
+<details><summary><b>Improving Clarity</b></summary>
 
-</details>
-<details><summary><b>BitArray</b> (Non-Generic)</summary>
-
-<pre><code>using System.Collections;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating.
-            bool[] boolArr = new bool[4];
-
-            boolArr [0] = false;
-            boolArr [1] = false;
-            boolArr [2] = false;
-            boolArr [3] = true;
-
-            BitArray firstArr = new BitArray(4);
-            BitArray secondArr = new BitArray (boolArr);
-
-            // Setting Values.
-            firstArr.Set (0, false);
-            firstArr.Set (1, false);
-            firstArr.Set (2, true);
-            firstArr.Set (3, true);
-
-            // Loop
-            foreach(var item in secondArr) {
-                print (item);
-            }
-
-            // Length
-            print (secondArr.Count);
-
-            // AND - OR - NOT
-            BitArray result = new BitArray (4);
-            // result = firstArr.And (secondArr);
-            // result = firstArr.Or (secondArr);
-            result = firstArr.Not ();
-
-            foreach(var item in result) {
-                print (item);
-            }
-
-
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
-</code></pre>
+<pre><code># 1. Clarify function calls with keyword arguments. (It might slow you some milliseconds, but it's worth it).
+# Ugly
+twitter_search('@obama', False, 20, True)
 
-</details>
-<details><summary><b>List</b> (Generic)</summary>
-<ul>
-<li>Stores elements of the specified type.</li>
-<li>It grows and shrinks automatically.</li>
-<li>Can store multiple null and duplicate elements</li>
-<li>Can be accessed using indexer, for loop or foreach statement</li>
-<li>It is ideal for storing and retrieving large number of elements</li>
-</ul>
-
-
-<pre><code>using System.Collections.Generic;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            List&lt;string&gt; firstList = new List&lt;string&gt; ();
-            IList&lt;string&gt; secList = new List&lt;string&gt; ();
-
-            // Adding.
-            firstList.Add (&quot;England&quot;);
-            firstList.Add (&quot;Hungary&quot;);
-            firstList.Add (&quot;China&quot;);
-            firstList.Add (&quot;Germany&quot;);
-            firstList.Add (&quot;Egypt&quot;);
-
-            // Count/Length
-            print (firstList.Count);
-
-            // Loop
-            foreach(var item in firstList) {
-                print (item);
-            }
-            print (&quot;-------------&quot;);
-
-            for(var i = 0; i &lt; firstList.Count; i++) {
-                print (firstList[i]);
-            }
-
-            // Sorting
-            print (&quot;-------------&quot;);
-            firstList.Sort ();
-            printList (firstList);
-
-            // Reverse
-            print (&quot;---------&quot;);
-            firstList.Reverse ();
-            printList (firstList);
-
-            // Remove
-            firstList.Remove (&quot;Egypt&quot;);   // Remove value.
-            firstList.RemoveAt (0);       // Remove value at index.
-            // firstList.RemoveRange (0, 1); // Remove range.
-            // firstList.Clear ();            // Remove All values.
-
-            // Contains.
-            print (firstList.Contains (&quot;Egypt&quot;));
-
-            // Get Range
-            firstList.GetRange (0, 2);
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-
-        public static void printList(List&lt;string&gt; list) {
-            foreach (var item in list) {
-                print (item);
-            }
-        }
-    }
-}
+# Pythonic 
+twitter_search('@obama', retweets=False, numtweets=20, popular=True)
 </code></pre>
 
 </details>
-<details><summary><b>Dictionary</b> (Generic)</summary>
-
-<pre><code>using System.Collections.Generic;
-using System.Linq;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            Dictionary&lt;string, string&gt; cap = new Dictionary&lt;string, string&gt;();
-
-            // Adding
-            cap.Add(&quot;Russia&quot;, &quot;Moscow&quot;);
-            cap.Add(&quot;Italy&quot;, &quot;Rome&quot;);
-            cap.Add(&quot;England&quot;, &quot;London&quot;);
-            cap.Add(&quot;Japan&quot;, &quot;Tokyo&quot;);
-
-            // Creating with Initialization.
-            Dictionary&lt;int, string&gt; names = new Dictionary&lt;int, string&gt; () {
-                { 1, &quot;James&quot; },
-                { 2, &quot;Mosaab&quot; },
-                { 3, &quot;Muhammad&quot; }
-            };
-
-            // Length/Count
-            print ($&quot;Count: {cap.Count}&quot;);
-
-            // Loop
-            foreach(var item in cap) {
-                print($&quot;{item.Key}: {item.Value}&quot;);
-            }
-            print (&quot;----------------&quot;);
-
-            for(int i = 0; i &lt; cap.Count; i++) {
-                print ($&quot;{cap.Keys.ElementAt(i)}: {cap[cap.Keys.ElementAt(i)]}&quot;);
-            }
-
-            // Get a Value by a Key.
-            print (cap [&quot;Japan&quot;]);
-            print(cap.TryGetValue (&quot;Germany&quot;, out string result));
-
-            // Remove All.
-            // cap.Clear();
-
-            // Contains.
-            print(cap.ContainsKey(&quot;Japan&quot;));
-
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-
-        public static void printDict(Dictionary&lt;string, string&gt; dict) {
-            foreach(var item in dict) {
-                print($&quot;{item.Key}: {item.Value}&quot;);
-            }
-        }
-    }
-
-</code></pre>
 
-</details>
+<details><summary><b>Name Tuple</b></summary>
 
-<details><summary><b>SortedList</b> (Generic)</summary>
-
-<pre><code>using System.Collections.Generic;
-using System.Linq;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating.
-            SortedList&lt;string, string&gt; list = new SortedList&lt;string, string&gt;();
-
-            // Adding
-            list.Add(&quot;England&quot;, &quot;London&quot;);
-            list.Add(&quot;Japan&quot;, &quot;Tokyo&quot;);
-            list.Add(&quot;Egypt&quot;, &quot;Cairo&quot;);
-            list.Add(&quot;Italy&quot;, &quot;Rome&quot;);
-
-            // Count/Length
-            print($&quot;Count: {list.Count}&quot;);
-
-            // Loop
-            foreach(var item in list) {
-                print($&quot;{item.Key}: {item.Value}&quot;);
-            }
-
-            for(int i = 0; i &lt; list.Count; i++) {
-                print($&quot;{list.Keys[i]}: {list.Values[i]}&quot;);
-            }
-
-            // TryGetValue.
-            print($&quot;Exists: {list.TryGetValue(&quot;Jack&quot;, out string number)}&quot;);
-
-            // Remove
-            list.Remove(&quot;Japan&quot;);
-            // list.Clear();
-            list.RemoveAt(0);
-            printDict(list);
-
-            // Contains
-            print(list.ContainsKey(&quot;England&quot;));
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-
-        public static void printDict(SortedList&lt;string, string&gt; dict) {
-            foreach(var item in dict) {
-                print($&quot;{item.Key}: {item.Value}&quot;);
-            }
-        }
-    }
-}
-</code></pre>
+<pre><code># 2. Clarify multiple return values with named tuples.
+# Ugly
+doctest.testmode()
+# (0, 4)
 
-</details>
-<details><summary><b>SortedDictionary</b> (Generic)</summary>
-<ul>
-<li>SortedList uses less memory than SortedDictionary</li>
-<li>SortedDictionary has faster insertion and removal operations for unsorted data.</li>
-<li>If the list is populated all at once from sorted data, SortedList is faster than SortedDictionary</li>
-</ul>
-
-<pre><code>using System.Collections.Generic;
-using System.Linq;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            SortedDictionary&lt;int, string&gt; colors = new SortedDictionary&lt;int, string&gt;();
-
-            // Adding.
-            colors.Add(4, &quot;Blue&quot;);
-            colors.Add(2, &quot;Black&quot;);
-            colors.Add(3, &quot;Orange&quot;);
-            colors.Add(5, &quot;Purple&quot;);
-            colors.Add(1, &quot;White&quot;);
-
-            // Looping
-            foreach(var item in colors) {
-                print($&quot;{item.Key}: {item.Value}&quot;);
-            }
-
-            for(int i = 0; i &lt; colors.Count; i++) {
-                print($&quot;{colors.Keys.ElementAt(i)}: {colors.Values.ElementAt(i)}&quot;);
-            }
-
-            // Remove
-            colors.Remove(1);
-            colors.Clear();
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
-</code></pre>
+# Pythonic
+from collections import namedtuple
 
-</details>
-<details><summary><b>Stack</b> (Generic)</summary>
-
-<pre><code>using System.Collections.Generic;
-using System.Linq;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            Stack&lt;string&gt; Ram = new Stack&lt;string&gt;();
-
-            // Adding (pusing);
-            Ram.Push(&quot;VSC&quot;);
-            Ram.Push(&quot;Pandas&quot;);
-            Ram.Push(&quot;Numpy&quot;);
-            Ram.Push(&quot;Google Ghrome&quot;);
-
-            // Loop
-            foreach(var item in Ram)
-            {
-                print(item);
-            }
-
-            // Peek
-            print(Ram.Peek());
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
+Point = namedtuple('Point', ['x', 'y'], verbose=True)
+p = Point(x=10, y=20)
+p
+# Point(x=10, y=20)
+print(p.x, p.y)
+# 10 20
 </code></pre>
 
 </details>
-
-<details><summary><b>Queue</b> (Generic)</summary>
-
-<pre><code>using System.Collections.Generic;
-using System.Linq;
 
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            Queue&lt;DateTime&gt; arrivals = new Queue&lt;DateTime&gt;();
+<details><summary><b>Unpacking Sequences</b></summary>
 
-            // Adding (Enqueue)
-            arrivals.Enqueue(new DateTime(2017, 01, 01));
-            arrivals.Enqueue(new DateTime(2016, 10, 14));
-            arrivals.Enqueue(new DateTime(2018, 06, 02));
+<pre><code>p = 'Raymond', 'Hettinger', 0x30, 'python@example.com'
 
-            // Peek.
-            print(arrivals.Peek());
+# Ugly
+fname = p[0]
+lname = p[1]
+age = p[2]
+email = p[3]
 
-            // Length/Count
-            print($&quot;Count: {arrivals.Count}&quot;);
-
-            // Loop
-            foreach(var item in arrivals)
-            {
-                print(item);
-            }
-
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
+# Pythonic
+fname, lname, age, email = p
 </code></pre>
 
 </details>
-<details><summary><b>KeyValuePair</b> (Generic)</summary>
-<p><b>KeyValuePair</b> stores 2 values together. It's a single generic struct</p>
-
-
-<pre><code>using System.Collections.Generic;
-using System.Linq;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            var cap = new List&lt;KeyValuePair&lt;string, string&gt;&gt;();
-
-            // Adding.
-            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Russia&quot;, &quot;Moscow&quot;));
-            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Sweden&quot;, &quot;Stockholm&quot;));
-            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Portugal&quot;, &quot;Lisbon&quot;));
-            cap.Add(new KeyValuePair&lt;string, string&gt;(&quot;Egypt&quot;, &quot;Cairo&quot;));
-
-            // Remove.
-            cap.RemoveAt(0);
-
-            // Loop
-            foreach(var item in cap)
-            {
-                print(item.Key+&quot; &quot;+item.Value);
-            }
-
-            print(get_first_and_last());
-            print(get_first_and_last().Key);
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-
-        public static KeyValuePair&lt;string, string&gt; get_first_and_last()
-        {
-            string firstName = &quot;Mosaab&quot;;
-            string lastName = &quot;Muhammad&quot;;
-            return new KeyValuePair&lt;string, string&gt;(firstName, lastName);
-        }
-    }
-}
-</code></pre>
-
-</details>
-<details><summary><b>NameValueCollection</b></summary>
-
-<pre><code>using System;
-using System.Collections.Specialized;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            NameValueCollection cities = new NameValueCollection();
-
-            // Adding.
-            cities.Add(&quot;Germany&quot;, &quot;Berlin&quot;);
-            cities.Add(&quot;Germany&quot;, &quot;Hamburg&quot;);
-            cities.Add(&quot;Germany&quot;, &quot;Frankfurt&quot;);
-            cities.Add(&quot;Italy&quot;, &quot;Milan&quot;);
-            cities.Add(&quot;Italy&quot;, &quot;Rome&quot;);
-
-            // Loop.
-            foreach(var item in cities)
-            {
-                print($&quot;{item}: {cities[(string)item]}&quot;);
-            }
-
-            // Set.
-            // This will change the values of italy to ONLY Venice.
-            cities.Set(&quot;Italy&quot;, &quot;Venice&quot;);
-
-            // Remove.
-            // cities.Clear();
-            cities.Remove(&quot;Italy&quot;);
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-
-        public static KeyValuePair&lt;string, string&gt; get_first_and_last()
-        {
-            string firstName = &quot;Mosaab&quot;;
-            string lastName = &quot;Muhammad&quot;;
-            return new KeyValuePair&lt;string, string&gt;(firstName, lastName);
-        }
-    }
-}
-</code></pre>
+<details><summary><b>Updating Sequences</b>[deque]</summary>
 
-</details>
+<pre><code>names = ['raymond', 'rachel', 'matthew', 'roger', 'betty']
 
+# Ugly
+del names[0]
+names.pop(0)
+names.insert(0, 'mark')
 
-<details><summary><b>Cutom Generic Class</b></summary>
-
-<pre><code>using System;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            Buildings&lt;int&gt; empireState = new Buildings&lt;int&gt;();
-            empireState.Name = &quot;Empire&quot;;
-            empireState.City = &quot;New york&quot;;
-            empireState.Height = 445;
-            empireState.Weight = 365_000;
-
-            Buildings&lt;double&gt; burjKhalifa = new Buildings&lt;double&gt;();
-            burjKhalifa.Name = &quot;Burj Khalifa&quot;;
-            burjKhalifa.City = &quot;Dubai&quot;;
-            burjKhalifa.Height = 830;
-            burjKhalifa.Weight = 450_000;
-
-            print(empireState.Name);
-            print(empireState.City);
-            print(empireState.Height);
-            print(empireState.Weight);
-
-            print(burjKhalifa.Name);
-            print(burjKhalifa.City);
-            print(burjKhalifa.Height);
-            print(burjKhalifa.Weight);
-
-        }
-
-        class Buildings&lt;T&gt;
-        {
-            private string name;
-            public string Name
-            {
-                get { return name; }
-                set { name = value; }
-            }
-
-            private string city;
-            public string City
-            {
-                get { return city; }
-                set { city = value; }
-            }
-
-            private T height;
-            public T Height
-            {
-                get { return height; }
-                set { height = value; }
-            }
-
-            private T weight;
-            public T Weight
-            {
-                get { return weight; }
-                set { weight = value; }
-            }
-        }
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-    }
-}
-</code></pre>
+# Pythonic
+from collections import deque
 
-</details>
-<details><summary><b>Tuples</b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            var empInfo = new Tuple&lt;int, string, string, DateTime, bool&gt;(100, &quot;Mosaab&quot;, &quot;Muhammad&quot;, new DateTime(2017, 12, 10), true);
-
-            // Display
-            print(empInfo.Item1);
-            print(empInfo.Item2);
-            // and so on.
-
-            // Another Creation procedure.
-            var studentInfo = Tuple.Create(5, &quot;John&quot;, &quot;Cavin&quot;, new DateTime(2000, 10, 25));
-            print(studentInfo.Item2);
-
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
-</code></pre>
+names = deque(['raymond', 'rachel', 'matthew', 'roger', 'betty', 'melissa', 'judith', 'charlie'])
 
-</details>
-<details><summary><b>Nested Tuples</b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            // Creating
-            var empInfo = new Tuple&lt;int, string, string, string, string, string, string, Tuple&lt;decimal, decimal, decimal, decimal, decimal, decimal, decimal&gt;&gt;
-                (105, &quot;James&quot;, &quot;Moh&quot;, &quot;cool&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, Tuple.Create(200m, 10m, 10m, 1231m, 12412m, 123m, 213m));
-
-            print(empInfo.Item1);
-            print(empInfo.Rest.Item7);
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine (msg);
-        }
-    }
-}
+# Much faster
+de names[0]
+names.popleft()
+names.appendleft('mark')
 </code></pre>
 
 </details>
-
-<details><summary><b>Methods with Tuples</b></summary>
-
-<pre><code>namespace Learning_C_Sharp {
-    class Program {
-        public static void Main() {
-            var aria = Tuple.Create(12, &quot;Aria&quot;, &quot;Stark&quot;, &quot;Winterfell&quot;);
-            var sansa = Tuple.Create(18, &quot;Sansa&quot;, &quot;cool&quot;, &quot;Winterfell&quot;);
-
-            DisplayInfo(aria);
-            DisplayInfo(sansa);
-        }
-
-        public static void print(object msg) {
-            Console.WriteLine(msg);
-        }
-
-        public static void DisplayInfo(Tuple&lt;int, string, string, string&gt; personInfo)
-        {
-            print(personInfo.Item1);
-            print(personInfo.Item2);
-            print(personInfo.Item3);
-            print(personInfo.Item4);
-        }
-    }
-}
-</code></pre>
+</ul></details>
 
-</details></details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

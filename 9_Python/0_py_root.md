@@ -288,20 +288,24 @@ email = p[3]
 fname, lname, age, email = p
 ```
 </details>
-<br>
-
-<details><summary><b>Concatenating Strings</b></summary>
+<details><summary><b>Updating Sequences</b>[deque]</summary>
 ```
 names = ['raymond', 'rachel', 'matthew', 'roger', 'betty']
 
 # Ugly
-s = names[0]
-for name in names[1:]:
-	s += ', ' + name
-print(s)
+del names[0]
+names.pop(0)
+names.insert(0, 'mark')
 
 # Pythonic
-print(', '.join(names)
+from collections import deque
+
+names = deque(['raymond', 'rachel', 'matthew', 'roger', 'betty', 'melissa', 'judith', 'charlie'])
+
+# Much faster
+de names[0]
+names.popleft()
+names.appendleft('mark')
 ```
 </details>
 </ul></details>
