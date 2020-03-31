@@ -1226,6 +1226,45 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
+<details><summary><b>Generic Delegeate Func </b></summary>
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            Func<int, int, int> funcOne = AddTwoNumbers;
+            print(AddTwoNumbers(3, 10));
+
+            Func<int> funcTwo = AddTwoNumbers;
+            print(AddTwoNumbers());
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static int AddTwoNumbers(int x, int y)
+        {
+            return x + y;
+        }
+
+        public static int AddTwoNumbers()
+        {
+            int z = 0;
+            int x = 5;
+            int y = 2;
+
+            z = x + y;
+            return z;
+        }
+    }
+}
+```
+</details>
+
+
 </details><hr>
 
 <details><summary><b>Collections</b></summary>
