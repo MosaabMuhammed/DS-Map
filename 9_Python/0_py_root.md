@@ -227,6 +227,67 @@ for name in names:
 	d[key].append(name)
 ```
 </details>
+
+<details><summary><b>Linking dictionaries</b></summary>
+```
+d1 = {'mosaab': 'blue', 'hany': 'black', 'sally': 'purple'}
+d2 = {'shaker': 'yellow', 'hoda': 'brown'}
+
+# Basic
+totalDict = dict()
+totalDict.update(d1)
+totalDict.update(d2)
+	
+# Pythonic
+totalDict = ChainMap(d1, d2)
+```
+</details><br>
+
+
+<details><summary><b>Improving Clarity</b></summary>
+```
+# 1. Clarify function calls with keyword arguments. (It might slow you some milliseconds, but it's worth it).
+# Ugly
+twitter_search('@obama', False, 20, True)
+
+# Pythonic 
+twitter_search('@obama', retweets=False, numtweets=20, popular=True)
+```
+</details>
+
+<details><summary><b>Name Tuple</b></summary>
+```
+# 2. Clarify multiple return values with named tuples.
+# Ugly
+doctest.testmode()
+# (0, 4)
+
+# Pythonic
+from collections import namedtuple
+
+Point = namedtuple('Point', ['x', 'y'], verbose=True)
+p = Point(x=10, y=20)
+p
+# Point(x=10, y=20)
+print(p.x, p.y)
+# 10 20
+```
+</details>
+
+<details><summary><b>Unpacking Sequences</b></summary>
+```
+p = 'Raymond', 'Hettinger', 0x30, 'python@example.com'
+
+# Ugly
+fname = p[0]
+lname = p[1]
+age = p[2]
+email = p[3]
+
+# Pythonic
+fname, lname, age, email = p
+```
+</details>
 </ul></details>
 
 </div>
