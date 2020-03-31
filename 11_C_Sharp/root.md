@@ -1328,6 +1328,55 @@ namespace Learning_C_Sharp {
 ```
 </details>
 
+<details><summary><b>Nullable Types</b></summary>
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            DateTime? myDate = null;
+            int? Integer = null;
+            int msg = 10;
+
+            print(myDate);
+            print(Integer);
+
+            // print variable if not null.
+            // print otherVariable it the first var is null.
+            print(Integer ?? msg);
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+    }
+}
+```
+</details>
+
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            print(IsAdmin() ? "Yes, it's" : "No, it not");
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static bool IsAdmin()
+        {
+            return false;
+        }
+    }
+}
+```
 
 </details><hr>
 
