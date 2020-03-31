@@ -133,10 +133,100 @@ def find(seq, target):
 		return -1
 	return i
 ```
+</details><br>
+
+<details><summary><b>Looping Over dictionary Keys</b></summary>
+```
+d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
+
+#Ugly
+for k in d:
+     print(k)
+
+# Pythonic
+for k in d.keys():
+     print(k)
+     
+# Another Pythonic one
+d = {k: d[k] for k in d}
+```
 </details>
 
+<details><summary><b>Looping Over dictionary Keys nad Values</b></summary>
+```
+d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
 
+#Ugly
+for k in d:
+     print(k, "-->", d[k])
 
+# Pythonic
+for k, v in d.items():
+     print(k, v)
+```
+</details>
+
+<details><summary><b>Construct a dictionary from pairs</b></summary>
+```
+names = ['raymond', 'rachel', 'meatthew']
+colors = ['red', 'blue', 'black']
+
+d = dict(zip(names, colors))
+```
+</details>
+
+<details><summary><b>Counting with dictionaries</b></summary>
+```
+colors = ['red', 'red', 'green', 'blue', 'blue', 'green', 'red', 'blue']
+
+# Basic
+d = {}
+for color in colors:
+	if color not in d:
+		d[color] = 0
+	d[color] += 1
+	
+# Intermediate
+d = {}
+for color in colors:
+	d[color] = d.get(color, 0) + 1
+	
+# Pythonic
+from collections import defaultdict
+
+d = deafultdict(int)
+for color in colors:
+	d[color] += 1
+```
+</details>
+
+<details><summary><b>Grouping with dictionaries</b></summary>
+```
+names = ['mosaab', 'cool', 'hany', 'shady', 'muhamed', 'raymond']
+
+# Basic
+d = {}
+for name in names:
+	key = len(name)
+	if key not in d:
+		d[key] = []
+	d[key].append(name)
+	
+# Intermediate
+d = {}
+for name in names:
+	key = len(name)
+	d.setdefault(key, []).append(name)
+	
+# Pythonic
+from collections import defaultdict
+
+d = defaultdict(list)
+for name in names:
+	key = len(name)
+	d[key].append(name)
+```
+</details>
 </ul></details>
 
 </div>
