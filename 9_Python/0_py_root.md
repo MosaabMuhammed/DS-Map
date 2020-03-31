@@ -288,6 +288,22 @@ email = p[3]
 fname, lname, age, email = p
 ```
 </details>
+<br>
+
+<details><summary><b>Concatenating Strings</b></summary>
+```
+names = ['raymond', 'rachel', 'matthew', 'roger', 'betty']
+
+# Ugly
+s = names[0]
+for name in names[1:]:
+	s += ', ' + name
+print(s)
+
+# Pythonic
+print(', '.join(names)
+```
+</details>
 </ul></details>
 
 </div>
