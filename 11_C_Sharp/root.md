@@ -1263,7 +1263,7 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
-
+<details><summary><b>Generic Delegeate: Action </b></summary>
 <p>Action delegate is the same as Funcdelgate except that the Action delegate desn't return a value.</p>
 
 ```
@@ -1296,6 +1296,38 @@ namespace Learning_C_Sharp {
     }
 }
 ```
+</details>
+
+<details><summary><b>Generic Delegeate: Action </b></summary>
+<p>Predict delegate is the same as Action and Func dlegate. But it must take one input parameter and returns a boolean value.</p>
+
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            Predicate<int> condition = IsAdmin;
+            condition(11);
+        }
+
+        public static void print<T>(T msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static bool IsAdmin(int empNo)
+        {
+            if (empNo == 10)
+                return true;
+            else
+                return false;
+        }
+    }
+}
+```
+</details>
+
 
 </details><hr>
 
