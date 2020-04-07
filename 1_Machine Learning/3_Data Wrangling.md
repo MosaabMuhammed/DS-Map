@@ -7,6 +7,14 @@ import os
 print(os.listdir("../input"))
 ```
 </p></details>
+
+<details><summary> <b>Change value of cell in dataframe</b> </summary><p>
+```
+# using .at
+news_df.at[idx, 'word'] = operations[operation_idx](random_row.word)
+```
+</p></details>
+
 <details><summary> Rename<b> Repeated</b> columns </summary>
 ```python
 cols = []
