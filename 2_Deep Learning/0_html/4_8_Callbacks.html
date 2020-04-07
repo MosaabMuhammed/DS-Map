@@ -1,57 +1,15 @@
-<!DOCTYPE HTML>
-<html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1 id="nbspcallbacksnbsp">
-   CallBacks
-  </h1>
-  <p>
-   <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/solutions/5%20Gradient%20Descent%20Exercises%20Solution.html#Exercise-4">
-    <span style="color:#333">
-     Ex on
-     <strong>
-      Tensorboard
-     </strong>
-     &amp;
-     <strong>
-      EarlyStopping
-     </strong>
-     &amp;
-     <strong>
-      Checkpoint
-     </strong>
-    </span>
-   </a>
-  </p>
-  <details>
-   <summary>
-    <strong>
-     ReduceLROnPlateau
-    </strong>
-   </summary>
-   <p>
-   </p>
-   <p>
-    <a href="https://keras.io/callbacks/#reducelronplateau">
-     <strong>
-      Docs
-     </strong>
-    </a>
-   </p>
-   - Reduce learning rate when a metric has stopped improving.
-   <h4 id="1class">
-    1. Class
-   </h4>
-   <pre><code class="python">keras.callbacks.callbacks.ReduceLROnPlateau(
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1 id="nbspcallbacksnbsp">CallBacks</h1>
+
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/solutions/5%20Gradient%20Descent%20Exercises%20Solution.html#Exercise-4"><span style='color:#333'>Ex on <strong>Tensorboard</strong> &amp; <strong>EarlyStopping</strong>  &amp; <strong>Checkpoint</strong></span></a> </p>
+<details><summary><strong>ReduceLROnPlateau</strong></summary>
+<p>
+<p><a href="https://keras.io/callbacks/#reducelronplateau"><strong>Docs</strong></a></p>
+
+- Reduce learning rate when a metric has stopped improving.
+
+<h4 id="1class">1. Class</h4>
+
+<pre><code class="python">keras.callbacks.callbacks.ReduceLROnPlateau(
                         monitor='val_loss', 
                         factor=0.1, 
                         patience=10, 
@@ -61,31 +19,25 @@
                         cooldown=0, 
                         min_lr=0)
 </code></pre>
-   <h4 id="2example">
-    2. Example
-   </h4>
-   <pre><code class="python">reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
+
+
+<h4 id="2example">2. Example</h4>
+
+<pre><code class="python">reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
                               patience=5, min_lr=0.001)
 model.fit(X_train, Y_train, callbacks=[reduce_lr])
 </code></pre>
-  </details>
-  <details>
-   <summary>
-    <strong>
-     EarlyStopping
-    </strong>
-   </summary>
-   <p>
-    <a href="https://keras.io/callbacks/#earlystopping">
-     <strong>
-      Docs
-     </strong>
-    </a>
-   </p>
-   <h4 id="1class">
-    1. Class
-   </h4>
-   <pre><code class="python">keras.callbacks.callbacks.EarlyStopping(
+
+</p>
+</details>
+
+<details><summary><strong>EarlyStopping</strong></summary>
+<p>
+<a href="https://keras.io/callbacks/#earlystopping"><strong>Docs</strong></a>
+
+<h4 id="1class">1. Class</h4>
+
+<pre><code class="python">keras.callbacks.callbacks.EarlyStopping(
                         monitor='val_loss', 
                         min_delta=0, 
                         patience=0, 
@@ -95,29 +47,22 @@ model.fit(X_train, Y_train, callbacks=[reduce_lr])
                         restore_best_weights=False)
 
 </code></pre>
-   <h4 id="2example">
-    2. Example
-   </h4>
-   <pre><code class="python">
+
+
+<h4 id="2example">2. Example</h4>
+
+<pre><code class="python">
 </code></pre>
-  </details>
-  <details>
-   <summary>
-    <b>
-     ModelCheckPointer
-    </b>
-   </summary>
-   <p>
-   </p>
-   <p>
-    <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/06.%20Model%20Validation%20in%20Keras.html">
-     Example from DLND
-    </a>
-   </p>
-   <h4>
-    1. Class
-   </h4>
-   <pre><code class="python">keras.callbacks.callbacks.ModelCheckpoint(
+
+</p>
+</details>
+
+<details><summary><b>ModelCheckPointer</b></summary>
+<p>
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/06.%20Model%20Validation%20in%20Keras.html">Example from DLND</a> </p>
+<h4>1. Class</h4>
+
+<pre><code class="python">keras.callbacks.callbacks.ModelCheckpoint(
                                 filepath, 
                                 monitor='val_loss', 
                                 verbose=0, 
@@ -127,10 +72,10 @@ model.fit(X_train, Y_train, callbacks=[reduce_lr])
                                 period=1)
 
 </code></pre>
-   <h4>
-    2. Nice Example on Saving best weights
-   </h4>
-   <pre><code class="python"># Checkpoint the weights when validation accuracy improves
+
+<h4>2. Nice Example on Saving best weights</h4>
+
+<pre><code class="python"># Checkpoint the weights when validation accuracy improves
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.callbacks import ModelCheckpoint
@@ -138,7 +83,7 @@ import matplotlib.pyplot as plt
 import numpy
 numpy.random.seed(seed)
 # load pima indians dataset
-dataset = numpy.loadtxt("pima-indians-diabetes.csv", delimiter=",")
+dataset = numpy.loadtxt(&quot;pima-indians-diabetes.csv&quot;, delimiter=&quot;,&quot;)
 # split into input (X) and output (Y) variables
 X = dataset[:,0:8]
 Y = dataset[:,8]
@@ -150,16 +95,17 @@ model.add(Dense(1, activation='sigmoid'))
 # Compile model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 # checkpoint
-filepath="weights-improvement-{epoch:02d}-{val_accuracy:.2f}.hdf5"
+filepath=&quot;weights-improvement-{epoch:02d}-{val_accuracy:.2f}.hdf5&quot;
 checkpoint = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 # Fit the model
 model.fit(X, Y, validation_split=0.33, epochs=150, batch_size=10, callbacks=callbacks_list, verbose=0)
 </code></pre>
-   <h4>
-    3. Loading the best weights
-   </h4>
-   <pre><code class="python"># How to load and use weights from a checkpoint
+
+
+<h4>3. Loading the best weights</h4>
+
+<pre><code class="python"># How to load and use weights from a checkpoint
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.callbacks import ModelCheckpoint
@@ -171,34 +117,53 @@ model.add(Dense(12, input_dim=8, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 # load weights
-model.load_weights("weights.best.hdf5")
+model.load_weights(&quot;weights.best.hdf5&quot;)
 # Compile model (required to make predictions)
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-print("Created model and loaded weights from file")
+print(&quot;Created model and loaded weights from file&quot;)
 # load pima indians dataset
-dataset = numpy.loadtxt("pima-indians-diabetes.csv", delimiter=",")
+dataset = numpy.loadtxt(&quot;pima-indians-diabetes.csv&quot;, delimiter=&quot;,&quot;)
 # split into input (X) and output (Y) variables
 X = dataset[:,0:8]
 Y = dataset[:,8]
 # estimate accuracy on whole dataset using loaded weights
 scores = model.evaluate(X, Y, verbose=0)
-print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+print(&quot;%s: %.2f%%&quot; % (model.metrics_names[1], scores[1]*100))
 </code></pre>
-  </details>
-  <ul>
-   <li>
-    Tensorboard
-   </li>
-  </ul>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
-</html>
+
+</p>
+</details>
+
+<details><summary><b>Custom Callback</b>- Stopping when reached some loss value</summary>
+
+<pre><code>import tensorflow as tf
+print(tf.__version__)
+
+class myCallback(tf.keras.callbacks.Callback):
+  def on_epoch_end(self, epoch, logs={}):
+    if(logs.get('loss')&lt;0.4):
+      print(&quot;\nReached 60% accuracy so cancelling training!&quot;)
+      self.model.stop_training = True
+
+callbacks = myCallback()
+mnist = tf.keras.datasets.fashion_mnist
+(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+
+training_images=training_images/255.0
+test_images=test_images/255.0
+
+model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(),
+  tf.keras.layers.Dense(512, activation=tf.nn.relu),
+  tf.keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy')
+model.fit(training_images, training_labels, epochs=5, callbacks=[callbacks])
+</code></pre>
+
+</details>
+
+<ul>
+<li>Tensorboard</li>
+</ul><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

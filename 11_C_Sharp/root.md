@@ -318,6 +318,12 @@ class Person {
 	
 	// Another way of Getter & Setter
 	public DateTime BirthDate { get; set; }
+	
+	// Another way
+	public string FirstName {
+		get => firstName;
+		set => firstName = value;
+	}
 }
 
 // instatiating the class in the main method
@@ -1355,7 +1361,7 @@ namespace Learning_C_Sharp {
 }
 ```
 </details>
-
+<details><summary><b>Ternery Operator</b></summary>
 ```
 namespace Learning_C_Sharp {
     class Program
@@ -1377,7 +1383,66 @@ namespace Learning_C_Sharp {
     }
 }
 ```
+</details>
 
+<details><summary><b>Safe Navigation Operator</b></summary>
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            Car car = new Car();
+            car.name = "Mes";
+            car.brand = null;
+
+            print(car?.name); // equals if car is not null, print it, otherwise don't print it.
+            print(car?.brand);
+        }
+
+        public static void print<T>(T msg) {
+            Console.WriteLine(msg);
+        }
+    }
+
+    class Car
+    {
+        public string name;
+        public string brand;
+    }
+}
+```
+</details>
+</details><hr>
+
+<details><summary><b>LINQ</b></summary>
+<p>LINQ stands for Language-Integrated Query, it's a query syntax used to bridges the gap b/w the world of objects and the world of data.</p>
+```
+namespace Learning_C_Sharp {
+    class Program
+    {
+        public static void Main()
+        {
+            Car car = new Car();
+            car.name = "Mes";
+            car.brand = null;
+
+            print(car?.name); // equals if car is not null, print it, otherwise don't print it.
+            print(car?.brand);
+        }
+
+        public static void print<T>(T msg) {
+            Console.WriteLine(msg);
+        }
+    }
+
+    class Car
+    {
+        public string name;
+        public string brand;
+    }
+}
+```
 </details><hr>
 
 <details><summary><b>Collections</b></summary>
