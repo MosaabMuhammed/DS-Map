@@ -6,6 +6,8 @@
 
 <h2 id=""><a href="./8_TS_Models.html"><span style='color:#333333'>2. Modeling:</span></a></h2>
 
+<h2><a href="./9_TS_deep_learning.html"><span style='color:#333333'>3. Deep Learning:</span></a></h2>
+
 
 </div>
 
