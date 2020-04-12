@@ -156,4 +156,25 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy')
 model.fit(training_images, training_labels, epochs=5, callbacks=[callbacks])
 ```
 </details>
+
+<details><summary><b>LR Schedular</b> How to choose the perfect learning rate</summary>
+```
+lr_schedule = tf.keras.callbacks.LearningRateScheduler(
+    lambda epoch: 1e-8 * 10**(epoch / 20))
+    
+optimizer = tf.keras.optimizers.SGD(lr=1e-8, momentum=0.9)
+
+model.compile(loss="mse", optimizer=optimizer)
+
+history = model.fit(dataset, epochs=100, callbacks=[lr_schedule], verbose=0)
+```
+
+```
+# Plot lrs along epochs, choose the lowest value.
+# Then run your model again with the updated value of the learning rate.
+lrs = 1e-8 * (10 ** (np.arange(100) / 20))
+plt.semilogx(lrs, history.history["loss"])
+plt.axis([1e-8, 1e-3, 0, 300])
+```
+</details>
 - Tensorboard

@@ -252,6 +252,12 @@ print('The Best Score for training =', knn_cv.best_score_*100,'%')
 
 # See the Best K value
 print('The Best parameters (K) =', knn_cv.best_params_['n_neighbors'])
+
+# Show all resutls.
+resutls = pd.DataFrame(knn_cv.cv_results_)[['params', 'mean_test_score', rank_test_score']]
+
+# Sort by test score
+results.sort_values('rank_test_score')
 ~~~
 </p>
 </details>
