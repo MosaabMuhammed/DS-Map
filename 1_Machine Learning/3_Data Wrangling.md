@@ -8,6 +8,34 @@ print(os.listdir("../input"))
 ```
 </p></details>
 
+<details><summary> <b>Difference</b> & <b>Intersection</b> & <b>Combination</b> b/w lists</summary><p>
+```
+a = [1, 2, 3, 4, 5]
+b = [4, 5, 5, 6, 5, 6]
+
+### 1. Existing in (a) but NOT in (b)
+# Returns a set.
+set(a).difference(b) # {1, 2, 3}
+set(a) - set(b)          # {1, 2, 3}
+# Returns array
+np.setdiff1d(a, b)     # array([1, 2, 3])
+
+### 2. Intersection b/w (a) and (b)
+# Returns a set.
+set(a).intersection(b)     # {4, 5}
+
+# Returns an array.
+np.intersect1d(a, b)       # array([4, 5])
+
+### 3. All of them together.
+a + b           
+
+
+
+
+```
+</p></details>
+
 <details><summary> <b>Change value of cell in dataframe</b> </summary><p>
 ```
 # using .at
