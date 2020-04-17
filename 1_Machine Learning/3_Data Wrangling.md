@@ -1,6 +1,13 @@
 # 3. Data Wrangling
 
 <div style='width:1000px;margin:auto'>
+
+<details><summary>Show <b>Thousands comma seperator</b> in dataframe </summary><p>
+```
+df = pd.read_csv("file.csv", thousands=",")
+```
+</p></details>
+
 <details><summary> <b>See Files in Current Directory</b> </summary><p>
 ```
 import os
