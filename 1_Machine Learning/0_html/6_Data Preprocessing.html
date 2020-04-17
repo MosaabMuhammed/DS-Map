@@ -114,14 +114,14 @@
 
 <hr>
 
-<details><summary> <b>Train Test Split</b> </summary>
+<details><summary> <b>Train Test Split (Stratified)</b> [Categorical]</summary>
 <p style="margin: 0">
 <p>1) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">Explanation for <b>Train<em>Test</em>Split</b></a> <br>
 2) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Train-Test-Split">Train Test Split notebook</a></p>
 
 <pre><code>from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(
-    df_feat, y, test_size=0.4, random_state=42)
+    df_feat, y, test_size=0.4, stratify=y, random_state=42)
 </code></pre>
 
 
@@ -144,8 +144,36 @@ print(len(train_set)/housing.shape[0], len(test_set)/housing.shape[0])
 </code></pre>
 
 
-</p>
-</details>
+</p></details>
+
+<details><summary> <b>Train Test Split (Stratified)</b> [Regression]</summary><p>
+<h5>Descritize the target column into n bins.</h5>
+
+<pre><code>housing['income_cat'] = pd.cut(housing['median_income'],
+                               bins=[0., 1.5, 3., 4.5, 6., np.inf],
+                               labels=[1, 2, 3, 4, 5])
+</code></pre>
+
+
+<h5>Split based on the new categorical binned column</h5>
+
+<pre><code>from sklearn.model_selection import StratifiedShuffleSplit
+
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+for train_index, test_index in split.split(housing, housing['income_cat']):
+    strat_train_set = housing.loc[train_index]
+    strat_test_set  = housing.loc[test_index]
+</code></pre>
+
+
+<h5>Then, remove the binned column.</h5>
+
+<pre><code># Remove the &quot;income_cat&quot;.
+for set_ in (strat_train_set , strat_test_set):
+    set_.drop(&quot;income_cat&quot;, axis=1, inplace=True)
+</code></pre>
+
+</p></details>
 
 <details><summary> <b>Temporal Splitting (Time Based  Splitting)</b> </summary>
 <p>

@@ -114,14 +114,14 @@ def post_process(feature_matrix, missing_threshold=.95, correlation_threshold=.9
 
 <hr>
 
-<details><summary> <b>Train Test Split</b> </summary>
+<details><summary> <b>Train Test Split (Stratified)</b> [Categorical]</summary>
 <p style="margin: 0">
 <p>1) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">Explanation for <b>Train<em>Test</em>Split</b></a> <br>
 2) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Train-Test-Split">Train Test Split notebook</a></p>
 ~~~
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(
-    df_feat, y, test_size=0.4, random_state=42)
+    df_feat, y, test_size=0.4, stratify=y, random_state=42)
 ~~~
 
 <p>Another way to split, by hashing the unique identifier of each row, to make sure that at the next run, the training and test sets will be the same</p>
@@ -142,8 +142,33 @@ train_set, test_set = split_train_test_by_id(housing_with_id, 0.2, "index")
 print(len(train_set)/housing.shape[0], len(test_set)/housing.shape[0])
 ```
 
-</p>
-</details>
+</p></details>
+
+<details><summary> <b>Train Test Split (Stratified)</b> [Regression]</summary><p>
+<h5>Descritize the target column into n bins.</h5>
+```
+housing['income_cat'] = pd.cut(housing['median_income'],
+                               bins=[0., 1.5, 3., 4.5, 6., np.inf],
+                               labels=[1, 2, 3, 4, 5])
+```
+
+<h5>Split based on the new categorical binned column</h5>
+```
+from sklearn.model_selection import StratifiedShuffleSplit
+
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+for train_index, test_index in split.split(housing, housing['income_cat']):
+    strat_train_set = housing.loc[train_index]
+    strat_test_set  = housing.loc[test_index]
+```
+
+<h5>Then, remove the binned column.</h5>
+```
+# Remove the "income_cat".
+for set_ in (strat_train_set , strat_test_set):
+    set_.drop("income_cat", axis=1, inplace=True)
+```
+</p></details>
 
 <details><summary> <b>Temporal Splitting (Time Based  Splitting)</b> </summary>
 <p>
