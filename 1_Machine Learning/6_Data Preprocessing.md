@@ -309,39 +309,6 @@ knn_cv.best_estimator_
 </p>
 </details>
 
-<details><summary> <b>Randomized Search</b> </summary><p>
-```
-# Import Libraries
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import make_pipeline
-
-# Make the pipeline
-pipe = make_pipeline(CounterVectorizer(), MultinomialNB())
-
-# Cross-validate the pipeline using default parameters.
-from sklearn.model_selection import cross_val_score
-cross_val_score(pipe, X, y, cv=5, scoring='accuracy').mean()
-
-# Specifiy parameter values to search (use a distribution for any continous parameters)
-import scipy as sp
-params = {}
-params['countvectorizer__min_df'] = [1, 2, 3, 4]
-params['countvectorizer__lowercase'] = [True, False]
-params['multinomialnb__alpha'] = sp.stats.uniform(scale=1)
-
-# try "n_iter" random combinations of those parameter values.
-from sklearn.model_selection import RandomizedSearchCV
-rand = RandomizedSearchCV(pipe, params, n_iter=10, cv=5, scoring='accuracy', random_state=1)
-rand.fit(X, y)
-
-# What was the best score found during the search?
-rand.best_score_
-
-# Which combination of parameters produced the best score.
-rand.best_params_
-```
-</p></details> 
 
 <details><summary> <b>Custom Transformer</b> </summary><p>
 ```
@@ -593,10 +560,74 @@ print(f"~> Final Result: {optimizer.max}")
 </p></details>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">For <b>Sklearn Models</b></a></li>
+</ul></p></details>
 
+<details><summary> <b style='font-size:20px'>Randomized Search</b></summary><p>
+<h4>NOTE:</h4>
+<p><b>Reciprocal Distribution</b> is useful when you have no idea what the scale of the hyperparameter should be.</p>
+<p><b>Exponential Distribution</b> is best when you know (more or less) what the scale of the hyperparameter should be.</p>
+see more distributions from <a href="https://docs.scipy.org/doc/scipy/reference/stats.html">here</a><br>
 
+<ul><details><summary> <b>MultiNomial</b> </summary><p>
+```
+# Import Libraries
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
+from scipy.stats import expon, reciprocal, geom, uniform
+
+# Make the pipeline
+pipe = make_pipeline(CounterVectorizer(), MultinomialNB())
+
+# Cross-validate the pipeline using default parameters.
+from sklearn.model_selection import cross_val_score
+cross_val_score(pipe, X, y, cv=5, scoring='accuracy').mean()
+
+# Specifiy parameter values to search (use a distribution for any continous parameters)
+import scipy as sp
+params = {}
+params['countvectorizer__min_df'] = [1, 2, 3, 4]
+params['countvectorizer__lowercase'] = [True, False]
+params['multinomialnb__alpha'] = sp.stats.uniform(scale=1)
+
+# try "n_iter" random combinations of those parameter values.
+from sklearn.model_selection import RandomizedSearchCV
+rand = RandomizedSearchCV(pipe, params, n_iter=10, cv=5, scoring='accuracy', random_state=1)
+rand.fit(X, y)
+
+# What was the best score found during the search?
+rand.best_score_
+
+# Which combination of parameters produced the best score.
+rand.best_params_
+```
+</p></details>
+
+<details><summary> <b>SVR</b> </summary><p>
+```
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import expon, reciprocal
+
+# see https://docs.scipy.org/doc/scipy/reference/stats.html
+# for `expon()` and `reciprocal()` documentation and more probability distribution functions.
+
+# Note: gamma is ignored when kernel is "linear"
+param_distribs = {
+        'kernel': ['linear', 'rbf'],
+        'C': reciprocal(20, 200000),
+        'gamma': expon(scale=1.0),
+    }
+
+svm_reg = SVR()
+rnd_search = RandomizedSearchCV(svm_reg, param_distributions=param_distribs,
+                                n_iter=50, cv=5, scoring='neg_mean_squared_error',
+                                verbose=2, random_state=42)
+rnd_search.fit(housing_prepared, housing_labels)
+```
+</p></details>
 
 </ul></p></details>
+
 
 </div>
 

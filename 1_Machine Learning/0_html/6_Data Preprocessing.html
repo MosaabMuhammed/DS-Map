@@ -312,42 +312,40 @@ resutls = pd.DataFrame(knn_cv.cv_results_)[['params', 'mean_test_score', rank_te
 
 # Sort by test score
 results.sort_values('rank_test_score')
+
+# Get the best model.
+knn_cv.best_estimator_
 </code></pre>
 
 </p>
 </details>
 
-<details><summary> <b>Randomized Search</b> </summary><p>
 
-<pre><code># Import Libraries
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import make_pipeline
+<details><summary> <b>Custom Transformer</b> </summary><p>
 
-# Make the pipeline
-pipe = make_pipeline(CounterVectorizer(), MultinomialNB())
+<pre><code>from sklearn.base import BaseEstimator, TransformerMixin
 
-# Cross-validate the pipeline using default parameters.
-from sklearn.model_selection import cross_val_score
-cross_val_score(pipe, X, y, cv=5, scoring='accuracy').mean()
+rooms_ix, bedrooms_ix, population_ix, households_ix = 3, 4, 5, 6
 
-# Specifiy parameter values to search (use a distribution for any continous parameters)
-import scipy as sp
-params = {}
-params['countvectorizer__min_df'] = [1, 2, 3, 4]
-params['countvectorizer__lowercase'] = [True, False]
-params['multinomialnb__alpha'] = sp.stats.uniform(scale=1)
+class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
+    def __init__(self, add_bedrooms_per_room = True): # no *args or **kargs
+        self.add_bedrooms_per_room = add_bedrooms_per_room
+    def fit(self, X, y=None):
+        return self # nothing else to do
+    def transform(self, X, y=None):
+        rooms_per_household = X[:, rooms_ix] / X[:, households_ix]
+        population_per_household = X[:, population_ix] / X[:, households_ix]
+        if self.add_bedrooms_per_room:
+            bedrooms_per_room = X[:, bedrooms_ix] / X[:, rooms_ix]
+            return np.c_[X, rooms_per_household,
+                       population_per_household,
+                       bedrooms_per_room]
+        else:
+            return np.c_[X, rooms_per_household, population_per_household]
 
-# try &quot;n_iter&quot; random combinations of those parameter values.
-from sklearn.model_selection import RandomizedSearchCV
-rand = RandomizedSearchCV(pipe, params, n_iter=10, cv=5, scoring='accuracy', random_state=1)
-rand.fit(X, y)
 
-# What was the best score found during the search?
-rand.best_score_
-
-# Which combination of parameters produced the best score.
-rand.best_params_
+attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False)
+housing_extra_attribs = attr_adder.transform(housing.values)
 </code></pre>
 
 </p></details> 
@@ -580,9 +578,75 @@ print(f&quot;~&gt; Final Result: {optimizer.max}&quot;)
 </p></details>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">For <b>Sklearn Models</b></a></li>
+</ul></p></details>
 
+<details><summary> <b style='font-size:20px'>Randomized Search</b></summary><p>
+<h4>NOTE:</h4>
+<p><b>Reciprocal Distribution</b> is useful when you have no idea what the scale of the hyperparameter should be.</p>
+<p><b>Exponential Distribution</b> is best when you know (more or less) what the scale of the hyperparameter should be.</p>
+see more distributions from <a href="https://docs.scipy.org/doc/scipy/reference/stats.html">here</a><br>
 
+<ul><details><summary> <b>MultiNomial</b> </summary><p>
+
+<pre><code># Import Libraries
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
+from scipy.stats import expon, reciprocal, geom, uniform
+
+# Make the pipeline
+pipe = make_pipeline(CounterVectorizer(), MultinomialNB())
+
+# Cross-validate the pipeline using default parameters.
+from sklearn.model_selection import cross_val_score
+cross_val_score(pipe, X, y, cv=5, scoring='accuracy').mean()
+
+# Specifiy parameter values to search (use a distribution for any continous parameters)
+import scipy as sp
+params = {}
+params['countvectorizer__min_df'] = [1, 2, 3, 4]
+params['countvectorizer__lowercase'] = [True, False]
+params['multinomialnb__alpha'] = sp.stats.uniform(scale=1)
+
+# try &quot;n_iter&quot; random combinations of those parameter values.
+from sklearn.model_selection import RandomizedSearchCV
+rand = RandomizedSearchCV(pipe, params, n_iter=10, cv=5, scoring='accuracy', random_state=1)
+rand.fit(X, y)
+
+# What was the best score found during the search?
+rand.best_score_
+
+# Which combination of parameters produced the best score.
+rand.best_params_
+</code></pre>
+
+</p></details>
+
+<details><summary> <b>SVR</b> </summary><p>
+
+<pre><code>from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import expon, reciprocal
+
+# see https://docs.scipy.org/doc/scipy/reference/stats.html
+# for `expon()` and `reciprocal()` documentation and more probability distribution functions.
+
+# Note: gamma is ignored when kernel is &quot;linear&quot;
+param_distribs = {
+        'kernel': ['linear', 'rbf'],
+        'C': reciprocal(20, 200000),
+        'gamma': expon(scale=1.0),
+    }
+
+svm_reg = SVR()
+rnd_search = RandomizedSearchCV(svm_reg, param_distributions=param_distribs,
+                                n_iter=50, cv=5, scoring='neg_mean_squared_error',
+                                verbose=2, random_state=42)
+rnd_search.fit(housing_prepared, housing_labels)
+</code></pre>
+
+</p></details>
 
 </ul></p></details>
+
 
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
