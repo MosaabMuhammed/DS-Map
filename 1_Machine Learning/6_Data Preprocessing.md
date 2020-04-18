@@ -302,6 +302,9 @@ resutls = pd.DataFrame(knn_cv.cv_results_)[['params', 'mean_test_score', rank_te
 
 # Sort by test score
 results.sort_values('rank_test_score')
+
+# Get the best model.
+knn_cv.best_estimator_
 ~~~
 </p>
 </details>
