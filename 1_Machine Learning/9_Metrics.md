@@ -114,6 +114,74 @@ recall_score(y_train_5, y_train_pred)
 ```
 </p></details>
 
+<details><summary> <b>F1 Score</b> </summary><p>
+```
+from sklearn.metrics import f1_score
+
+f1_score(y_train_5, y_train_pred)
+```
+</p></details>
+
+<details><summary> Plot <b>Precision and Recall </b> Vs <b>Thresholds</b></summary><p>
+<h4>1. Calculate the decision function for the dataset.</h4>
+```
+y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
+```
+<h4>2. Get the precisions, recalls and thresholds</h4>
+```
+from sklearn.metrics import precision_recall_curve
+
+precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+```
+
+<h4>3. Plot it, and take the best threshold</h4>
+```
+def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    plt.figure(figsize=(10, 6))
+    plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
+    plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
+    plt.legend(); plt.grid()
+    plt.xlabel("Thresholds")
+    
+plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+```
+</p></details>
+
+<details><summary> Plot <b>Precision</b> Vs. <b>Recal</b> </summary><p>
+<h4>1. Calculate the decision function for the dataset.</h4>
+```
+y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
+```
+<h4>2. Get the precisions, recalls and thresholds</h4>
+```
+from sklearn.metrics import precision_recall_curve
+
+precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+```
+
+<h4>3. Plot the precisions vs. recall</h4>
+```
+plt.figure(figsize=(10, 6))
+plt.plot(recalls, precisions)
+plt.grid()
+plt.xlabel("Recall")
+plt.ylabel("Precision")
+plt.title("Precision vs. Recall", size=20, y=1.05)
+```
+
+<h4>4. Choose the threshold based on your business case.</h4>
+```
+threshold_90_precision = thresholds[np.argmax(precisions >= .9)]
+y_train_pred_90 = (y_scores >= threshold_90_precision)
+
+precision_score(y_train_5, y_train_pred_90),\
+recall_score(y_train_5, y_train_pred_90)
+
+# (0.9000345901072293, 0.4799852425751706)
+```
+
+</p></details>
+
 - Mean Absolute Error (Regression).
 - Mean Squared Error (Regression).
 - Square Root Mean Square Error (Regression).

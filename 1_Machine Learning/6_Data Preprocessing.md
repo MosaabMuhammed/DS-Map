@@ -270,8 +270,13 @@ print(f'~> 10 Fold Cross Validation F1 Score = {bg(round(cv_results.mean(), 4), 
 <details><summary> <b>cross_val_predict</b> </summary><p>
 ```
 # Returns the predictions 
-# you can predict_proba to in the parameters.
-y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, verbose=1)
+y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, verbose=1, method="predict")
+
+# Predict Proba
+y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, verbose=1, method="predict_proba")
+
+# Predict decision function
+y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, verbose=1, method="decision_function")
 ```
 </p></details>
 
