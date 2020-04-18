@@ -92,13 +92,27 @@ squared_errors = (final_predictions - y_test) ** 2
 
 np.sqrt(stats.t.interval(confidence, len(squared_errors) - 1, loc=squared_errors.mean(), scale=stats.sem(squared_errors)))
 
-
 ### Returns
 #array([45685.10470776, 49691.25001878])
-
 ```
-</p>
-</details>
+</p></details>
+
+<details><summary> <b>Precision</b> </summary><p>
+<p><b>Precision</b> is simply the accuracy of the positive predictions.</p>
+```
+from sklearn.metrics import precision_score
+
+precision_score(y_train_5, y_train_pred)
+```
+</p></details>
+
+<details><summary> <b>Recall</b> </summary><p>
+```
+from sklearn.metrics import recall_score
+
+recall_score(y_train_5, y_train_pred)
+```
+</p></details>
 
 - Mean Absolute Error (Regression).
 - Mean Squared Error (Regression).
