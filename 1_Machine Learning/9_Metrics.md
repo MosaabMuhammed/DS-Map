@@ -46,6 +46,17 @@ from sklearn.metrics import confusion_matrix
 
 sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
 ```
+
+<h4>See the errors in each class (see the confusion of the model)</h4>
+```
+row_sums     = conf_mx.sum(axis=1, keepdims=True)
+norm_conf_mx = conf_mx / row_sums
+
+np.fill_diagonal(norm_conf_mx, 0)
+sns.heatmap(norm_conf_mx, cmap="viridis")
+plt.xlabel("Predicted Labels")
+plt.ylabel("True Labels");~~~~
+```
 </p></details>
 
 <details><summary> <b>Classification Report</b> </summary><p>
