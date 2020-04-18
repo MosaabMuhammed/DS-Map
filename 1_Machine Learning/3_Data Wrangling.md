@@ -488,18 +488,30 @@ m = RandomForestRegressor(n_jobs=-1)
 %time X = np.array(X, dtype=np.float32)
 ```
 </p></details>
-<details><summary>Save List using <b>Pickle</b></summary><p>
+<details><summary>Save List using <b>Pickle</b> and <b>joblib</b></summary><p>
 <h4>1. Save list</h4>
 ~~~python
+# Pickle
 # Save the onehot columns to later use.
 with open('onehot_cols.pkl', 'wb') as f:
     pickle.dump(onehot_cols, f)
+    
+# Joblib
+from sklearn.externals import joblib
+
+joblib.dump(my_model, "my_model.pkl")
 ~~~
 
-<h4>2. Load List</h4>
+<h4>2. Read List</h4>
 ~~~python
+# Pickle
 with open('onehot_cols.pkl', 'rb') as f:
 	myList = pickle.load(f)
+	
+# Joblib
+from sklearn.externals import joblib
+
+my_model_loaded = joblib.load("my_model.pkl")
 ~~~
 
 <h4>3. Read or Save (Compact Version) (best)</h4>
