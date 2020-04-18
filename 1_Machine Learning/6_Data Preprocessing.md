@@ -256,18 +256,24 @@ def Stratified_kfolds(alg, X, y):
 
 </p></details>
 
-<details><summary> <b>Cross_val_score</b> </summary>
-<p>
-~~~python
+<details><summary> <b>Cross_val_score</b> </summary><p>
+```
 model = RF(n_estimators=100, n_jobs=-1)
 
 # 10 Fold cross validation
 cv_results = cross_val_score(model, train_set, train_labels, cv=10, scoring=scorer)
 
 print(f'~> 10 Fold Cross Validation F1 Score = {bg(round(cv_results.mean(), 4), "s")} with std = {bg(round(cv_results.std(), 4), "s")}')
-~~~
-</p>
-</details>
+```
+</p></details>
+
+<details><summary> <b>cross_val_predict</b> </summary><p>
+```
+# Returns the predictions 
+# you can predict_proba to in the parameters.
+y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, verbose=1)
+```
+</p></details>
 
 <details><summary><b>Cross Validation</b></summary>
 <p style="margin: 0">
