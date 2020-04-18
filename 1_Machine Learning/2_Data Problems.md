@@ -1297,6 +1297,28 @@ for col in X_train:
     trN_teY = set(X_test[col].unique()) - set(X_train[col].unique())
     result = result.append({'col': col, 'Train': len(trY_teN), 'Test': len(trN_teY)}, ignore_index=True)
 ```
+</p></details><hr>
+
+<details><summary style='font-size:23px;text-decoration:underline'><b>10. Underfitting & Overfitting</b></summary><p>
+<h4>1. Fix Overfitting</h4>
+<ul>
+<li>To simplify the model by selecting one with fewer parameters
+(e.g., a linear model rather than a high-degree polynomial
+model), by reducing the number of attributes in the training
+data or by constraining the model</li>
+<li>To gather more training data</li>
+<li>To reduce the noise in the training data (e.g., fix data errors
+and remove outliers)</li>
+</ul>
+
+<h4>2. Fix Underfitting</h4>
+<ul>
+<li>Selecting a more powerful model, with more parameters</li>
+<li>Feeding better features to the learning algorithm (feature engineering)</li>
+<li>Reducing the constraints on the model (e.g., reducing the regularization hyper‐
+parameter)</li>
+</ul>
+
 </p></details>
 </div>
 
