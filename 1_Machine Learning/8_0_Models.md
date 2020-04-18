@@ -139,7 +139,28 @@ feature_importance_sorted = plot_feature_importance(feature_importance)
 <li>Kernel SVM.</li>
 </ul>
 
-<h2 id="multiclassclassification">Multi-Class Classification:</h2>
+<details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
+<p><b>NOTE:</b> Sklearn detects when you try to use a binary classification algorithm for a multi-class classification task, and it automatically runs OvA (except for SVM classifiers for which it uses OvO).</p>
+<details><summary><b>One Vs. All</b></summary></p>
+```
+from sklearn.multiclass import OneVsAllClassifier
+
+ova_clf = OneVsAll(SVC(random_state=42))
+ova_clf.fit(X_train, y_train)
+```
+</p></details>
+
+<details><summary><b>One Vs. One</b></summary></p>
+```
+from sklearn.multiclass import OneVsOneClassifier
+
+ovo_clf = OneVsOneClassifier(SGDClassifier(random_state=42))
+ovo_clf.fit(X_train, y_train)
+ovo_clf.predict([some_digit])
+```
+</p></details>
+
+</p></details>
 
 <h2 id="regression">Regression:</h2>
 

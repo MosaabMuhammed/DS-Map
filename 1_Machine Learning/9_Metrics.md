@@ -148,6 +148,7 @@ plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
 </p></details>
 
 <details><summary> Plot <b>Precision</b> Vs. <b>Recal</b> </summary><p>
+<p><b>NOTE:</b> We prefer PR curve whenever the positive class is rare or when you care more about the <b>false positive</b> than the <b>false negative</b>, otherwise use ROC curve.</p>
 <h4>1. Calculate the decision function for the dataset.</h4>
 ```
 y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")

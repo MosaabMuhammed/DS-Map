@@ -97,14 +97,107 @@ squared_errors = (final_predictions - y_test) ** 2
 
 np.sqrt(stats.t.interval(confidence, len(squared_errors) - 1, loc=squared_errors.mean(), scale=stats.sem(squared_errors)))
 
-
 ### Returns
 #array([45685.10470776, 49691.25001878])
-
 </code></pre>
 
-</p>
-</details>
+</p></details>
+
+<details><summary> <b>Precision</b> </summary><p>
+<p><b>Precision</b> is simply the accuracy of the positive predictions.</p>
+
+<pre><code>from sklearn.metrics import precision_score
+
+precision_score(y_train_5, y_train_pred)
+</code></pre>
+
+</p></details>
+
+<details><summary> <b>Recall</b> </summary><p>
+
+<pre><code>from sklearn.metrics import recall_score
+
+recall_score(y_train_5, y_train_pred)
+</code></pre>
+
+</p></details>
+
+<details><summary> <b>F1 Score</b> </summary><p>
+
+<pre><code>from sklearn.metrics import f1_score
+
+f1_score(y_train_5, y_train_pred)
+</code></pre>
+
+</p></details>
+
+<details><summary> Plot <b>Precision and Recall </b> Vs <b>Thresholds</b></summary><p>
+<h4>1. Calculate the decision function for the dataset.</h4>
+
+<pre><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method=&quot;decision_function&quot;)
+</code></pre>
+
+<h4>2. Get the precisions, recalls and thresholds</h4>
+
+<pre><code>from sklearn.metrics import precision_recall_curve
+
+precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+</code></pre>
+
+
+<h4>3. Plot it, and take the best threshold</h4>
+
+<pre><code>def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    plt.figure(figsize=(10, 6))
+    plt.plot(thresholds, precisions[:-1], &quot;b--&quot;, label=&quot;Precision&quot;)
+    plt.plot(thresholds, recalls[:-1], &quot;g-&quot;, label=&quot;Recall&quot;)
+    plt.legend(); plt.grid()
+    plt.xlabel(&quot;Thresholds&quot;)
+
+plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+</code></pre>
+
+</p></details>
+
+<details><summary> Plot <b>Precision</b> Vs. <b>Recal</b> </summary><p>
+<p><b>NOTE:</b> We prefer PR curve whenever the positive class is rare or when you care more about the <b>false positive</b> than the <b>false negative</b>, otherwise use ROC curve.</p>
+<h4>1. Calculate the decision function for the dataset.</h4>
+
+<pre><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method=&quot;decision_function&quot;)
+</code></pre>
+
+<h4>2. Get the precisions, recalls and thresholds</h4>
+
+<pre><code>from sklearn.metrics import precision_recall_curve
+
+precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+</code></pre>
+
+
+<h4>3. Plot the precisions vs. recall</h4>
+
+<pre><code>plt.figure(figsize=(10, 6))
+plt.plot(recalls, precisions)
+plt.grid()
+plt.xlabel(&quot;Recall&quot;)
+plt.ylabel(&quot;Precision&quot;)
+plt.title(&quot;Precision vs. Recall&quot;, size=20, y=1.05)
+</code></pre>
+
+
+<h4>4. Choose the threshold based on your business case.</h4>
+
+<pre><code>threshold_90_precision = thresholds[np.argmax(precisions &gt;= .9)]
+y_train_pred_90 = (y_scores &gt;= threshold_90_precision)
+
+precision_score(y_train_5, y_train_pred_90),\
+recall_score(y_train_5, y_train_pred_90)
+
+# (0.9000345901072293, 0.4799852425751706)
+</code></pre>
+
+
+</p></details>
 
 <ul>
 <li>Mean Absolute Error (Regression).</li>
