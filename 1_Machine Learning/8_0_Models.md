@@ -191,6 +191,37 @@ sgd_reg = SGDRegressor(max_iter=1000, tol=1e-3, penalty=None, eta0=0.1)
 sgd_reg.fit(X, y.ravel())
 sgd_reg.intercept_, sgd_reg.coef_
 ```
+
+<h4>SGD with Early Stopping</h4>
+```
+from sklearn.base import clone
+from sklearn.preprocessing import StandardScaler
+
+# Prepare the data.
+poly_scaler = Pipeline([
+    ("poly_features", PolynomialFeatures(degree=90, include_bias=False)),
+    ("std_scaler", StandardScaler())
+])
+X_train_poly_scaled = poly_scaler.fit_transform(X_train)
+X_valid_poly_scaled = poly_scaler.transform(X_valid)
+
+# Note: warm_start=True, when fit() method is called, it just continues training
+# where it left off instead of restarting from scratch.
+sgd_reg = SGDRegressor(max_iter=1, tol=-np.infty, warm_start=True,
+                       penalty=None, learning_rate="constant", eta0=0.0005)
+
+minimum_valid_error = float("inf")
+best_epoch          = None
+best_model          = None
+
+for epoch in range(1000):
+    sgd_reg.fit(X_train_poly_scaled, y_train)   # continues where it left off.
+    y_valid_preds = sgd_reg.predict(X_valid_poly_scaled)
+    valid_error   = mean_squared_error(y_valid, y_valid_preds)
+
+    if valid_error < minimum_valid_error:
+        minimum_valid_error, best_epoch, best_model = valid_error, epoch, clone(sgd_reg)
+```
 </p></details></li>
 
 <li><details><summary><b>Polynomial Regressor</b></summary><p>
