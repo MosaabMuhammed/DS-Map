@@ -113,11 +113,10 @@ feature_importance_sorted = plot_feature_importance(feature_importance)
 </p>
 </details> 
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.8-Bonus-Machine-Learning-Algorithms-Overview.html" style='font-weight:bold'>Models Comparsion</a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.8-Bonus-Machine-Learning-Algorithms-Overview.html" style='font-weight:bold'>Models Comparsion</a> </p></li><hr>
 
 
-<hr>
-<h2 id="binaryclassification">Binary Classification:</h2>
+<details><summary><b style="font-size:25px">Binary Classification:</b></summary><p>
 
 <ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Logistic%20Regression.html"><b>Logistic Regression/SGDClassifier</b></a> </li>
@@ -137,7 +136,7 @@ feature_importance_sorted = plot_feature_importance(feature_importance)
 <li>SVM.</li>
 
 <li>Kernel SVM.</li>
-</ul>
+</ul></details>
 
 <details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
 <p><b>NOTE:</b> Sklearn detects when you try to use a binary classification algorithm for a multi-class classification task, and it automatically runs OvA (except for SVM classifiers for which it uses OvO).</p>
@@ -162,9 +161,36 @@ ovo_clf.predict([some_digit])
 
 </p></details>
 
-<h2 id="regression">Regression:</h2>
+<details><summary><b style="font-size:25px">Regression:</b></summary><p><ul>
 
-<ul>
+<li><details><summary><b>Linear Regression</b></summary><p>
+```
+# Don't use when you have a large features.
+# Doesn't require scaling!!
+from sklearn.linear_models import LinearRegression
+
+lin_reg = LinearRegression()
+lin_reg.fit(X, y)
+
+print(lin_reg.intercept_)
+print(lin_reg.coef_)
+```
+</p></details></li>
+
+<details><summary><b>SGD Regressor</b></summary><p>
+```
+# Change the thetas at each instance.
+# gives a better thetas than GD, but not the best!
+# Requires Scaling!!
+from sklearn.linear_model import SGDRegressor
+
+sgd_reg = SGDRegressor(max_iter=1000, tol=1e-3, penalty=None, eta0=0.1)
+sgd_reg.fit(X, y.ravel())
+sgd_reg.intercept_, sgd_reg.coef_
+```
+</p></details>
+
+
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/KNN.html"><b>K Nearest Neighbors</b></a> </li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/Decision%20Tree.html"><b>Decision Tree</b></a></li>
@@ -174,21 +200,18 @@ ovo_clf.predict([some_digit])
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/BaggingRegressor.html"><b>Bagging Regressor</b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Stacking.html"><b>Stacking</b></a> </li>
-</ul>
+</ul></details>
 
-<h2 id="clustering">Clustering:</h2>
+<details><summary><b style="font-size:25px">Clustering:</b></summary><p><ul>
 
-<ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/KMeans.html"><b>K-means</b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html"><b>AgglomerativeClustering</b></a> </li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/DBSCAN.html"><b>DBSCAN</b></a> </li>
-</ul>
+</ul></details>
 
-<p><a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/"><b><span style='font-size:28px;color:#333'>Multi-Label Classification</span></b></a> </p>
-
-<details><summary style='font-size:27px;font-weight:bold'>Auto ML</summary><p><ul>
+<details><summary><b style='font-size:27px;'>Auto ML</b></summary><p><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/auto-sklearn.html#auto-sklearn"><b><span style='color:#333'>Auto-Sklearn</span></b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Titanic_Kaggle.html#Data-Analysis-using-TPOT"><b><span style='color:#333'>TPOT</span></b></a></li>
@@ -196,6 +219,10 @@ ovo_clf.predict([some_digit])
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/automl_binary_classification_product_backorders.html#H2O-AutoML-Binary-Classification-Demo"><b><span style='color:#333'>H2O</span></b></a></li>
 
 </ul></p></details>
+
+<p><a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/"><b><span style='font-size:28px;color:#333'>Multi-Label Classification</span></b></a> </p>
+
+
 
 
 </div>

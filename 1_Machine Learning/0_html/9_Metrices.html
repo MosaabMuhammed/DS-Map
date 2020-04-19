@@ -48,6 +48,18 @@ pd.crosstab(data.Pclass,data.Survived,margins=True).style.background_gradient(cm
 sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
 </code></pre>
 
+
+<h4>See the errors in each class (see the confusion of the model)</h4>
+
+<pre><code>row_sums     = conf_mx.sum(axis=1, keepdims=True)
+norm_conf_mx = conf_mx / row_sums
+
+np.fill_diagonal(norm_conf_mx, 0)
+sns.heatmap(norm_conf_mx, cmap=&quot;viridis&quot;)
+plt.xlabel(&quot;Predicted Labels&quot;)
+plt.ylabel(&quot;True Labels&quot;);~~~~
+</code></pre>
+
 </p></details>
 
 <details><summary> <b>Classification Report</b> </summary><p>
