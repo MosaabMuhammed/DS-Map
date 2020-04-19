@@ -165,7 +165,8 @@ ovo_clf.predict([some_digit])
 
 <li><details><summary><b>Linear Regression</b></summary><p>
 ```
-# Don't use when you have a large features.
+# Fast when we have large training instance.
+# Slow when we have large numer of features.
 # Doesn't require scaling!!
 from sklearn.linear_models import LinearRegression
 
@@ -179,6 +180,8 @@ print(lin_reg.coef_)
 
 <details><summary><b>SGD Regressor</b></summary><p>
 ```
+# Fast when we have large training instances.
+# Fast when we have large number of features too!
 # Change the thetas at each instance.
 # gives a better thetas than GD, but not the best!
 # Requires Scaling!!
@@ -189,6 +192,25 @@ sgd_reg.fit(X, y.ravel())
 sgd_reg.intercept_, sgd_reg.coef_
 ```
 </p></details>
+
+<li><details><summary><b>Polynomial Regressor</b></summary><p>
+```
+# Create the polynomial features.
+# WATCH THE NUMBER OF FEATURES = (n + d)!/d! * n!
+# where n = number of features.
+# where d = degree.
+from sklearn.preprocessing import PolynomialFeatures
+
+poly_features = PolynomialFeatures(degree=2, include_bias=False)
+X_poly        = poly_features.fit_transform(X)
+```
+```
+# Then apply linear regular model.
+lin_reg = LinearRegression()
+lin_reg.fit(X_poly, y)
+lin_reg.intercept_, lin_reg.coef_
+```
+</p></details></li>
 
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/KNN.html"><b>K Nearest Neighbors</b></a> </li>
