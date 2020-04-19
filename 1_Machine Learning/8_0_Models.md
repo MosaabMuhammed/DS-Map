@@ -178,7 +178,7 @@ print(lin_reg.coef_)
 ```
 </p></details></li>
 
-<details><summary><b>SGD Regressor</b></summary><p>
+<li><details><summary><b>SGD Regressor</b></summary><p>
 ```
 # Fast when we have large training instances.
 # Fast when we have large number of features too!
@@ -191,7 +191,7 @@ sgd_reg = SGDRegressor(max_iter=1000, tol=1e-3, penalty=None, eta0=0.1)
 sgd_reg.fit(X, y.ravel())
 sgd_reg.intercept_, sgd_reg.coef_
 ```
-</p></details>
+</p></details></li>
 
 <li><details><summary><b>Polynomial Regressor</b></summary><p>
 ```
@@ -209,7 +209,62 @@ poly_model = Pipeline([
 ])
 
 poly_model.fit(X, y)
+```
+</p></details></li>
 
+<li><details><summary><b>Ridge Regressor</b> [L2 Regulaizer]</summary><p>
+<p><b>NOTE:</b> Requires Scalling and you can make it polynomial as Linear Regression.</p>
+```
+# Also called "Tikhonov Regularization", L2.
+# if alpha = 0, the Ridge Regression is just a Linear Regression.
+# if alpha = v.large, then all weights end up v.close to zero.
+# 1. Ridge using Closed-form solution.
+from sklearn.linear_model import Ridge
+
+# you can use solver="sag" too.
+ridge_reg = Ridge(alpha=1, solver="cholesky", normalize=True)
+ridge_reg.fit(X, y)
+
+# 2. Ridge using Gradient Descent.
+from sklearn.linear_model import SGDRegressor
+
+sgd_reg = SGDRegressor(penalty="l2")
+sgd_reg.fit(X, y.ravel())
+sgd_reg.predict([[1.5]])
+```
+</p></details></li>
+
+
+<li><details><summary><b>Lasso Regressor</b> [L1 Regulaizer]</summary><p>
+<p><b>NOTE:</b> Requires Scalling and you can make it polynomial as Linear Regression.</p>
+```
+# 1. Lasso using Closed-form solution.
+from sklearn.linear_model import Lasso
+
+lasso_reg = Lasso(alpha=0.1)
+lasso_reg.fit(X, y)
+lasso_reg.predict([[1.5]])
+
+# 2. Ridge using Gradient Descent.
+from sklearn.linear_model import SGDRegressor
+
+sgd_reg = SGDRegressor(penalty="l1")
+sgd_reg.fit(X, y.ravel())
+sgd_reg.predict([[1.5]])
+```
+</p></details></li>
+
+<li><details><summary><b>Elastic Net</b> [L1 + L2 Regulaizer]</summary><p>
+<p><b>NOTE:</b> Requires Scalling and you can make it polynomial as Linear Regression.</p>
+```
+# when r = 0, Elastic Net = Ridge Regression.
+# when r = 1, Elastic Net = Lasso Regression.
+# 1. ElasticNet using Closed-form solution.
+from sklearn.linear_model import ElasticNet
+
+elastic_net = ElasticNet(alpha=.1, l1_ratio=.5)
+elastic_net.fit(X, y)
+elastic_net.predict([[1.5]])
 ```
 </p></details></li>
 
