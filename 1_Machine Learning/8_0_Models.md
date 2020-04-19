@@ -199,16 +199,17 @@ sgd_reg.intercept_, sgd_reg.coef_
 # WATCH THE NUMBER OF FEATURES = (n + d)!/d! * n!
 # where n = number of features.
 # where d = degree.
-from sklearn.preprocessing import PolynomialFeatures
 
-poly_features = PolynomialFeatures(degree=2, include_bias=False)
-X_poly        = poly_features.fit_transform(X)
-```
-```
-# Then apply linear regular model.
-lin_reg = LinearRegression()
-lin_reg.fit(X_poly, y)
-lin_reg.intercept_, lin_reg.coef_
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import Pipeline
+
+poly_model = Pipeline([
+        ("poly_features", PolynomialFeatures(degree=10, include_bias=False)),
+        ("lin_reg", LinearRegression())
+])
+
+poly_model.fit(X, y)
+
 ```
 </p></details></li>
 

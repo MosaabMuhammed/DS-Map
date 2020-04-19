@@ -1317,7 +1317,33 @@ and remove outliers)</li>
 <li>Feeding better features to the learning algorithm (feature engineering)</li>
 <li>Reducing the constraints on the model (e.g., reducing the regularization hyper‐
 parameter)</li>
-</ul>
+</ul><hr>
+
+<h4>Learning Curves to check Overfitting or Underfitting</h4>
+```
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+
+def plot_learning_curves(model, X, y):
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2)
+    train_errors, valid_errors = [], []
+
+    for m in range(1, len(X_train)):
+        model.fit(X_train[:m], y_train[:m])
+        y_train_preds = model.predict(X_train[:m])
+        y_valid_preds = model.predict(X_valid)
+
+        train_errors.append(mean_squared_error(y_train[:m], y_train_preds))
+        valid_errors.append(mean_squared_error(y_valid, y_valid_preds))
+    
+    plt.figure(figsize=(8, 6))
+    plt.plot(np.sqrt(train_errors), "r-+", lw=2, label="train")
+    plt.plot(np.sqrt(valid_errors), "b-", lw=3, label="valid")
+    plt.xlabel('Training Size', size=18)
+    plt.ylabel('RMSE', size=18)
+    plt.legend(); plt.grid()
+    return plt
+```
 
 </p></details>
 </div>
