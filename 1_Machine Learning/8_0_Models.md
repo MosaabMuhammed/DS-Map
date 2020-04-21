@@ -129,11 +129,112 @@ feature_importance_sorted = plot_feature_importance(feature_importance)
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Stacking.html"><b>Stacking</b></a> </li>
 
+<li><details><summary><b>Linear SVM</b></summary><p>
+<ul>
+<li>A smaller "C" value leads to a wider street but more margin violations.</li>
+<li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+<li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.</li>
+<li>Make sure to set "dual = False", unless there are more features than training instances.</li>
+</ul>
+```
+import numpy as np
+from sklearn import datasets
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import LinearSVC
+
+iris = datasets.load_iris()
+print(list(iris.keys()))
+X = iris["data"][:, (2, 3)]
+y = (iris["target"] == 2).astype(np.float64)
+
+svm_clf = Pipeline([
+    ("scaler", StandardScaler()),
+    ("linear_svc", LinearSVC(C=1, loss="hinge"))
+])
+
+svm_clf.fit(X, y)
+```
+
+```
+# For a huge dataset.
+# Supports out-of-core learning.
+from sklearn.linear_model import SGDClassifier
+
+svm_clf = Pipeline([
+    ("scaler", StandardScaler()),
+    ("linear_svc", SGDClassifier(loss="hinge", alpha=1/(m*C)))
+])
+
+svm_clf.fit(X, y)
+```
+</p></details></li>
+
+<li><details><summary><b>Non-Linear SVM</b></summary><p>
+<ul>
+<li>A smaller "C" value leads to a wider street but more margin violations.</li>
+<li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+<li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.</li>
+<li>Make sure to set "dual = False", unless there are more features than training instances.</li>
+</ul>
+```
+from sklearn.datasets import make_moons
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures
+
+poly_svm_clf = Pipeline([
+    ("poly_features", PolynomialFeatures(degree=3)),
+    ("scaler", StandardScaler()),
+    ("svm_clf", LinearSVC(C=10, loss="hinge"))
+])
+
+poly_svm_clf.fit(X, y)
+```
+</p></details></li>
+
+<li><details><summary><b>Polynomial Kernel SVM</b></summary><p>
+<ul>
+<li>A smaller "C" value leads to a wider street but more margin violations.</li>
+<li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+<li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.</li>
+<li>Make sure to set "dual = False", unless there are more features than training instances.</li>
+<li><b>coef0</b> controls how much the model is influenced by high-degree polynomials versus low-degree polynomials.</li>
+</ul>
+```
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.svm import SVC
+
+poly_kernel_svm_clf = Pipeline([
+    ("scaler", StandardScaler()),
+    ("svm_clf", SVC(kernel="poly", degree=3, coef0=1, C=5))
+])
+
+poly_kernel_svm_clf.fit(X, y)
+```
+</p></details></li>
+<li><details><summary><b>Gaussian RBF Kernel SVM</b></summary><p>
+<ul>
+<li>If you training set is very large, you end up with an equally large number of features.</li>
+<li><b>gamma</b> acts like a regularization hyperparameter: if your model is overfitting, you should reduce it, and if it's underfitting, you should increase it (similar to C hyperparameter).</li>
+</ul>
+```
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.svm import SVC
+
+rbf_kernel_svm_clf = Pipeline([
+	("scaler", StandardScaler()),
+	("svm_clf", SVC(kernel="rbf", gamma=5, C=0.001))
+])
+
+rbf_kernel_svm_clf.fit(X, y)
+```
+</p></details></li>
+
 <li>Decision Tree.</li>
 
 <li>K-Nearest Neighbors.</li>
-
-<li>SVM.</li>
 
 <li>Kernel SVM.</li>
 </ul></details>
@@ -296,6 +397,36 @@ from sklearn.linear_model import ElasticNet
 elastic_net = ElasticNet(alpha=.1, l1_ratio=.5)
 elastic_net.fit(X, y)
 elastic_net.predict([[1.5]])
+```
+</p></details></li>
+
+<li><details><summary><b>Linear SVM</b></summary><p>
+<ul>
+<li>A smaller "C" value leads to a wider street but more margin violations.</li>
+<li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+<li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.</li>
+<li>Make sure to set "dual = False", unless there are more features than training instances.</li>
+</ul>
+```
+from sklearn.svm import LinearSVR
+
+svm_reg = LinearSVR(epsilon=1.5)
+svm_reg.fit(X, y)
+```
+</p></details></li>
+
+<li><details><summary><b>Kernel SVM</b></summary><p>
+<ul>
+<li>A smaller "C" value leads to a wider street but more margin violations.</li>
+<li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+<li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.</li>
+<li>Make sure to set "dual = False", unless there are more features than training instances.</li>
+</ul>
+```
+from sklearn.svm import SVR
+
+svm_poly_reg = SVR(kernel="poly", degree=2, C=100, epsilon=.1)
+svm_poly_reg.fit(X, y)
 ```
 </p></details></li>
 
