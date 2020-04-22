@@ -232,11 +232,44 @@ rbf_kernel_svm_clf.fit(X, y)
 ```
 </p></details></li>
 
+<li><details><summary><b>Voting Classifier</b></summary><p>
+<p><b>NOTE:</b> When all models can `predict_proba`, you can set voting to `soft`, otherwise set it to `hard`.</p>
+<p>For `SVC` to turn on his `predict_proba`, set `probability` to True.</p>
+```
+from sklearn.datasets import make_moons
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+
+iris = make_moons(n_samples=5000, noise=.1)
+X = iris[0]
+y = iris[1]
+
+X_train, X_valid, y_train, y_valid = train_test_split(X, y, stratify=y, test_size=.2, random_state=42)
+
+log_clf = LogisticRegression()
+rf_clf  = RandomForestClassifier()
+svm_clf = SVC(probability=True)
+
+voting_clf = VotingClassifier([
+        ("lr", log_clf),
+        ("rf", rf_clf),
+        ("svc", svm_clf)
+], voting="hard")
+
+
+for clf in (log_clf, rf_clf, svm_clf, voting_clf):
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_valid)
+    print(clf.__class__.__name__, accuracy_score(y_valid, y_pred))
+```
+</p></details></li>
+
 <li>Decision Tree.</li>
 
 <li>K-Nearest Neighbors.</li>
-
-<li>Kernel SVM.</li>
 </ul></details>
 
 <details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
