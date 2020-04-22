@@ -272,6 +272,7 @@ for clf in (log_clf, rf_clf, svm_clf, voting_clf):
 <li><b>Pasting</b> is like `Bagging` but without bootstrapping, so to use it, set `bootstrap` to False.</li>
 <li><b>Random Patches Method</b> Samples both training instances and features.</li>
 <li><b>Random Subspaces Method</b> keeps all training instances (i.e. bootstrap=False and max_samples=1.0) but sampling features (i.e. bootstrap_features=True and/or max_features=smaller than 1.0)</li>
+</ul>
 ```
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -284,6 +285,39 @@ print(accuracy_score(y_valid, y_pred))
 print(bag_clf.oob_score_)
 ```
 </p></details></li>
+
+<li><details><summary><b>Random Forest</b></summary><p>
+```
+from sklearn.ensemble import RandomForestClassifier
+
+rf_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1, oob_score=True)
+rf_clf.fit(X_train, y_train)
+
+y_pred = rf_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+print(rf_clf.oob_score_)
+```
+
+<h4>Feature Importance</h4>
+```
+for name, score in zip(iris["feature_names"], rf_clf.feature_importances_):
+    print(name, score)
+```
+</p></details></li>
+<li><details><summary><b>Extra-Trees</b></summary><p>
+<p>In each tree, RF tries to choose the best feature to split on, but Extra-Trees chooses the features at random.</p>
+```
+from sklearn.ensemble import ExtraTreesClassifier
+
+rf_clf = ExtraTreesClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1, bootstrap=True, oob_score=True)
+rf_clf.fit(X_train, y_train)
+
+y_pred = rf_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+print(rf_clf.oob_score_)
+```
+</p></details></li>
+
 </ul></details>
 
 <details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
