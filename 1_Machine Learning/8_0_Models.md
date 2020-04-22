@@ -267,9 +267,23 @@ for clf in (log_clf, rf_clf, svm_clf, voting_clf):
 ```
 </p></details></li>
 
-<li>Decision Tree.</li>
+<li><details><summary><b>Bagging</b> and <b>Pasting</b></summary><p>
+<ul>
+<li><b>Pasting</b> is like `Bagging` but without bootstrapping, so to use it, set `bootstrap` to False.</li>
+<li><b>Random Patches Method</b> Samples both training instances and features.</li>
+<li><b>Random Subspaces Method</b> keeps all training instances (i.e. bootstrap=False and max_samples=1.0) but sampling features (i.e. bootstrap_features=True and/or max_features=smaller than 1.0)</li>
+```
+from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
 
-<li>K-Nearest Neighbors.</li>
+bag_clf = BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
+                            max_samples=500, bootstrap=True, n_jobs=-1, oob_score=True)
+bag_clf.fit(X_train, y_train)
+y_pred = bag_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+print(bag_clf.oob_score_)
+```
+</p></details></li>
 </ul></details>
 
 <details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
