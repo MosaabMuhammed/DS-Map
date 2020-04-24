@@ -580,6 +580,27 @@ print(metrics.mean_absolute_error(y_valid, y_pred))
 ```
 </p></details></li>
 
+<li><details><summary><b>Stacking</b></summary><p>
+```
+X_val_predictions = np.empty((len(X_val), len(estimators)), dtype=np.float32)
+
+for index, estimator in enumerate(estimators):
+    X_val_predictions[:, index] = estimator.predict(X_val)
+    
+# Meta Model
+rnd_forest_blender = RandomForestClassifier(n_estimators=200, oob_score=True, random_state=42)
+rnd_forest_blender.fit(X_val_predictions, y_val)
+
+# Predictions
+X_test_predictions = np.empty((len(X_test), len(estimators)), dtype=np.float32)
+
+for index, estimator in enumerate(estimators):
+    X_test_predictions[:, index] = estimator.predict(X_test)
+    
+y_pred = rnd_forest_blender.predict(X_test_predictions)
+```
+</p></details></li>
+
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/KNN.html"><b>K Nearest Neighbors</b></a> </li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/Decision%20Tree.html"><b>Decision Tree</b></a></li>
