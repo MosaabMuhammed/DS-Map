@@ -318,6 +318,20 @@ print(rf_clf.oob_score_)
 ```
 </p></details></li>
 
+<li><details><summary><b>AdaBoost</b></summary><p>
+```
+from sklearn.ensemble import AdaBoostClassifier
+
+ada_clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
+                             n_estimators=200,
+                             algorithm="SAMME.R",
+                             learning_rate=.4)
+ada_clf.fit(X_train, y_train)
+y_pred = ada_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+```
+</p></details></li>
+
 </ul></details>
 
 <details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
@@ -511,6 +525,60 @@ svm_poly_reg.fit(X, y)
 ```
 </p></details></li>
 
+<li><details><summary><b>Gradient Boosting</b></summary><p>
+```
+# GBDT with early stopping but run all the iterations.
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn import metrics
+
+gbrt = GradientBoostingRegressor(max_depth=2, n_estimators=200)
+gbrt.fit(X_train, y_train)
+
+errors = [metrics.mean_squared_error(y_valid, y_pred)
+            for y_pred in gbrt.staged_predict(X_valid)]
+bst_n_estimators = np.argmin(errors)
+print(bst_n_estimators)
+
+gbrt_best = GradientBoostingRegressor(max_depth=2, n_estimators=bst_n_estimators)
+gbrt_best.fit(X_train, y_train)
+y_pred = gbrt_best.predict(X_valid)
+print(metrics.mean_absolute_error(y_valid, y_pred))
+```
+
+```
+# Early Stopping but breaks when there's no improvment.
+gbrt = GradientBoostingRegressor(max_depth=2, warm_start=True)
+
+min_valid_error = float("inf")
+error_going_up  = 0
+
+for n_estimators in range(1, 120):
+    gbrt.n_estimators = n_estimators
+    gbrt.fit(X_train, y_train)
+    y_pred = gbrt.predict(X_valid)
+    valid_error = metrics.mean_squared_error(y_valid, y_pred)
+
+    if valid_error < min_valid_error:
+        min_valid_error, error_going_up = valid_error, 0
+    else:
+        error_going_up += 1
+        if error_going_up == 5:
+            break   # Early Stopping
+```
+</p></details></li>
+
+<li><details><summary><b>XGBoost</b></summary><p>
+```
+import xgboost 
+
+xgb_reg = xgboost.XGBRegressor(n_estimators=200, max_depth=4)
+xgb_reg.fit(X_train, y_train,
+            eval_set=[(X_train, y_train), (X_valid, y_valid)],
+            early_stopping_rounds=200)
+y_pred = xgb_reg.predict(X_valid)
+print(metrics.mean_absolute_error(y_valid, y_pred))
+```
+</p></details></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/KNN.html"><b>K Nearest Neighbors</b></a> </li>
 
