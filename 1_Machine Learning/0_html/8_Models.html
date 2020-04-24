@@ -238,11 +238,112 @@ rbf_kernel_svm_clf.fit(X, y)
 
 </p></details></li>
 
-<li>Decision Tree.</li>
+<li><details><summary><b>Voting Classifier</b></summary><p>
+<p><b>NOTE:</b> When all models can `predict_proba`, you can set voting to `soft`, otherwise set it to `hard`.</p>
+<p>For `SVC` to turn on his `predict_proba`, set `probability` to True.</p>
 
-<li>K-Nearest Neighbors.</li>
+<pre><code>from sklearn.datasets import make_moons
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 
-<li>Kernel SVM.</li>
+iris = make_moons(n_samples=5000, noise=.1)
+X = iris[0]
+y = iris[1]
+
+X_train, X_valid, y_train, y_valid = train_test_split(X, y, stratify=y, test_size=.2, random_state=42)
+
+log_clf = LogisticRegression()
+rf_clf  = RandomForestClassifier()
+svm_clf = SVC(probability=True)
+
+voting_clf = VotingClassifier([
+        (&quot;lr&quot;, log_clf),
+        (&quot;rf&quot;, rf_clf),
+        (&quot;svc&quot;, svm_clf)
+], voting=&quot;hard&quot;)
+
+
+for clf in (log_clf, rf_clf, svm_clf, voting_clf):
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_valid)
+    print(clf.__class__.__name__, accuracy_score(y_valid, y_pred))
+</code></pre>
+
+</p></details></li>
+
+<li><details><summary><b>Bagging</b> and <b>Pasting</b></summary><p>
+<ul>
+<li><b>Pasting</b> is like `Bagging` but without bootstrapping, so to use it, set `bootstrap` to False.</li>
+<li><b>Random Patches Method</b> Samples both training instances and features.</li>
+<li><b>Random Subspaces Method</b> keeps all training instances (i.e. bootstrap=False and max_samples=1.0) but sampling features (i.e. bootstrap_features=True and/or max_features=smaller than 1.0)</li>
+</ul>
+
+<pre><code>from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+bag_clf = BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
+                            max_samples=500, bootstrap=True, n_jobs=-1, oob_score=True)
+bag_clf.fit(X_train, y_train)
+y_pred = bag_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+print(bag_clf.oob_score_)
+</code></pre>
+
+</p></details></li>
+
+<li><details><summary><b>Random Forest</b></summary><p>
+
+<pre><code>from sklearn.ensemble import RandomForestClassifier
+
+rf_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1, oob_score=True)
+rf_clf.fit(X_train, y_train)
+
+y_pred = rf_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+print(rf_clf.oob_score_)
+</code></pre>
+
+
+<h4>Feature Importance</h4>
+
+<pre><code>for name, score in zip(iris[&quot;feature_names&quot;], rf_clf.feature_importances_):
+    print(name, score)
+</code></pre>
+
+</p></details></li>
+<li><details><summary><b>Extra-Trees</b></summary><p>
+<p>In each tree, RF tries to choose the best feature to split on, but Extra-Trees chooses the features at random.</p>
+
+<pre><code>from sklearn.ensemble import ExtraTreesClassifier
+
+rf_clf = ExtraTreesClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1, bootstrap=True, oob_score=True)
+rf_clf.fit(X_train, y_train)
+
+y_pred = rf_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+print(rf_clf.oob_score_)
+</code></pre>
+
+</p></details></li>
+
+<li><details><summary><b>AdaBoost</b></summary><p>
+
+<pre><code>from sklearn.ensemble import AdaBoostClassifier
+
+ada_clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
+                             n_estimators=200,
+                             algorithm=&quot;SAMME.R&quot;,
+                             learning_rate=.4)
+ada_clf.fit(X_train, y_train)
+y_pred = ada_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+</code></pre>
+
+</p></details></li>
+
 </ul></details>
 
 <details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
@@ -447,6 +548,85 @@ svm_poly_reg.fit(X, y)
 
 </p></details></li>
 
+<li><details><summary><b>Gradient Boosting</b></summary><p>
+
+<pre><code># GBDT with early stopping but run all the iterations.
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn import metrics
+
+gbrt = GradientBoostingRegressor(max_depth=2, n_estimators=200)
+gbrt.fit(X_train, y_train)
+
+errors = [metrics.mean_squared_error(y_valid, y_pred)
+            for y_pred in gbrt.staged_predict(X_valid)]
+bst_n_estimators = np.argmin(errors)
+print(bst_n_estimators)
+
+gbrt_best = GradientBoostingRegressor(max_depth=2, n_estimators=bst_n_estimators)
+gbrt_best.fit(X_train, y_train)
+y_pred = gbrt_best.predict(X_valid)
+print(metrics.mean_absolute_error(y_valid, y_pred))
+</code></pre>
+
+
+
+<pre><code># Early Stopping but breaks when there's no improvment.
+gbrt = GradientBoostingRegressor(max_depth=2, warm_start=True)
+
+min_valid_error = float(&quot;inf&quot;)
+error_going_up  = 0
+
+for n_estimators in range(1, 120):
+    gbrt.n_estimators = n_estimators
+    gbrt.fit(X_train, y_train)
+    y_pred = gbrt.predict(X_valid)
+    valid_error = metrics.mean_squared_error(y_valid, y_pred)
+
+    if valid_error &lt; min_valid_error:
+        min_valid_error, error_going_up = valid_error, 0
+    else:
+        error_going_up += 1
+        if error_going_up == 5:
+            break   # Early Stopping
+</code></pre>
+
+</p></details></li>
+
+<li><details><summary><b>XGBoost</b></summary><p>
+
+<pre><code>import xgboost 
+
+xgb_reg = xgboost.XGBRegressor(n_estimators=200, max_depth=4)
+xgb_reg.fit(X_train, y_train,
+            eval_set=[(X_train, y_train), (X_valid, y_valid)],
+            early_stopping_rounds=200)
+y_pred = xgb_reg.predict(X_valid)
+print(metrics.mean_absolute_error(y_valid, y_pred))
+</code></pre>
+
+</p></details></li>
+
+<li><details><summary><b>Stacking</b></summary><p>
+
+<pre><code>X_val_predictions = np.empty((len(X_val), len(estimators)), dtype=np.float32)
+
+for index, estimator in enumerate(estimators):
+    X_val_predictions[:, index] = estimator.predict(X_val)
+
+# Meta Model
+rnd_forest_blender = RandomForestClassifier(n_estimators=200, oob_score=True, random_state=42)
+rnd_forest_blender.fit(X_val_predictions, y_val)
+
+# Predictions
+X_test_predictions = np.empty((len(X_test), len(estimators)), dtype=np.float32)
+
+for index, estimator in enumerate(estimators):
+    X_test_predictions[:, index] = estimator.predict(X_test)
+
+y_pred = rnd_forest_blender.predict(X_test_predictions)
+</code></pre>
+
+</p></details></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/KNN.html"><b>K Nearest Neighbors</b></a> </li>
 

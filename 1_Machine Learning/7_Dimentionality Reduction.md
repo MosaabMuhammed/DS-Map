@@ -110,9 +110,7 @@ for method, name in zip([umap, pca, ica, tsne],
 </p>
 </details>
  
-<details><summary><b>PCA</b></summary>
-<p>
-
+<details><summary><b>PCA</b></summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.decomposition.PCA.html#sklearn-decomposition-pca"><b>Docs</b></a> </p>
  
 <h4> PCA inside a pipeline</h4>
@@ -131,6 +129,11 @@ pipeline = Pipeline(steps = [('imputer', Imputer(strategy = 'median')),
 
 # Fit and transform on the training data
 train_pca = pipeline.fit_transform(train)
+
+
+# See how each axis preserve variance.
+pca.explained_variance_ratio_
+
 
 # transform the testing data
 test_pca = pipeline.transform(test)
@@ -163,9 +166,21 @@ plt.title('PC2 vs PC1 by Target');
 ~~~python
 print('2 principal components account for {:.4f}% of the variance.'.format(100 * np.sum(pca.explained_variance_ratio_[:2])))
 ~~~
- 
- </p>
- </details>
+</p></details>
+
+<details><summary><b>Incremental PCA</b></summary><p>
+```
+from sklearn.decomposition import IncrementalPCA
+
+n_batches = 100
+inc_pca = IncrementalPCA(n_componenets=154)
+
+for X_batch in np.array_split(X_train, n_batches):
+	inc_pca.partial_fit(X_batch)
+	
+X_reduced = inc_pca.transform(X_train)
+```
+</p></details>
  
 <details><summary><b>t-SNE</b></summary><p>
 <h4>1. Faster Wrapper for t-SNE</h4>
