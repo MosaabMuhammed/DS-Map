@@ -169,6 +169,7 @@ print('2 principal components account for {:.4f}% of the variance.'.format(100 *
 </p></details>
 
 <details><summary><b>Incremental PCA</b></summary><p>
+<h4>1. Using np.array_split()</h4>
 ```
 from sklearn.decomposition import IncrementalPCA
 
@@ -180,8 +181,55 @@ for X_batch in np.array_split(X_train, n_batches):
 	
 X_reduced = inc_pca.transform(X_train)
 ```
+
+<h4>2. Using np.memmap()</h4>
+```
+# np.memmap allows you to manipulate a large
+# array store in a binary file on disk as if it were entirely in memory;
+# The class loads only the data it needs in memory, when it needs it.
+# 1. Let's create the memmap() structure and copy MNIST data into it. This would typically be done by a first program.
+filename = "mnist.data"
+m, n = X_train.shape
+
+X_mm = np.memmap(filename, dtype="float32", mode="write", shape=(m, n))
+X_mm[:] = X_train
+
+# Now deleting the memmap() object will trigger its Python finalizer, which ensures that the data is saved to disk.
+del X_mm
+
+# Another program would load the data and use it for training.
+X_mm = np.memmap(filename, dtype="float32", mode="readonly", shape=(m, n))
+
+batch_size = m // n_batches
+inc_pca = IncrementalPCA(n_components=154, batch_size=batch_size)
+inc_pca.fit(X_mm)
+```
 </p></details>
- 
+
+<details><summary><b>Kernel PCA</b></summary><p>
+```
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+
+clf = Pipeline([
+	("kpca", KernelPCA(n_components=2)),
+	("log_reg", LogisticRegression())
+])
+
+param_grid = [{
+	"kpca__gamma": np.linspace(0.03, .05, 10),
+	"kpca__kernel": ["rbf", "sigmoid"]
+}]
+
+grid_search = GridSearchCV(clf, param_grid, cv=3)
+grid_search.fit(X, y)
+
+# Print the best hyperparameters.
+print(grid_search.best_params_)
+```
+</p></details>
+
 <details><summary><b>t-SNE</b></summary><p>
 <h4>1. Faster Wrapper for t-SNE</h4>
 ```
