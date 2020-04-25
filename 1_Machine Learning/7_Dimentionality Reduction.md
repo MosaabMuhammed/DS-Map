@@ -230,6 +230,43 @@ print(grid_search.best_params_)
 ```
 </p></details>
 
+<details><summary><b>LLE</b> [LocallyLinearEmbedding]</summary><p>
+```
+from sklearn.manifold import LocallyLinearEmbedding
+
+lle = LocallyLinearEmbedding(n_components=2, n_neighbors=10)
+X_reduced = lle.fit_transform(X)
+```
+</p></details>
+
+<details><summary><b>KMeans</b></summary><p>
+<p>Clustering can be an efficient approach to dimensionality reduction, in particular as a preprocessing step before a supervised learning algorithm</p>
+```
+from sklearn.pipeline import Pipeline
+from sklearn.cluster import KMeans
+
+pipeline = Pipeline([
+    ("kmeans", KMeans(n_clusters=50)),
+    ("log_clf", LogisticRegression(random_state=42))
+])
+pipeline.fit(X_train, y_train)
+pipeline.score(X_test, y_test)
+```
+
+<h4>Using GridSearch</h4>
+```
+from sklearn.pipeline import Pipeline
+from sklearn.cluster import KMeans
+
+pipeline = Pipeline([
+    ("kmeans", KMeans(n_clusters=50)),
+    ("log_clf", LogisticRegression(random_state=42))
+])
+pipeline.fit(X_train, y_train)
+pipeline.score(X_test, y_test)~~~~
+```
+</p></details>
+
 <details><summary><b>t-SNE</b></summary><p>
 <h4>1. Faster Wrapper for t-SNE</h4>
 ```

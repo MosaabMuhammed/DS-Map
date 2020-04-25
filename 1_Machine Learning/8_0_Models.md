@@ -614,7 +614,32 @@ y_pred = rnd_forest_blender.predict(X_test_predictions)
 
 <details><summary><b style="font-size:25px">Clustering:</b></summary><p><ul>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/KMeans.html"><b>K-means</b></a></li>
+<li><details><summary>K-Means</summary><p>
+<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/KMeans.html"><b>K-means</b></a>
+
+<h4>Beside Elbow method, we can use silhouette coefficient too</h4>
+```
+# silhouette = (b - a) / max(a, b)
+# a = mean distance to the other instances in the same cluster.
+# b = mean nearest-cluster distance.
+# silhouette varies from -1 to +1, +1 means the instance is well inside its own cluster and far from othe clusters, and 0 means it's close to a cluster boundary, and -1 means that the instance may have been assigned to the wrong cluster.
+# Visualize silhouette coef. for different k (n of clusters).
+# The k with the larger silhouette is the best.
+from sklearn.metrics import silhouette_score
+
+silhouette_scores = [silhouette_score(X, model.labels_)
+                     for model in kmeans_per_k[1:]]
+                     
+# Visualize
+plt.figure(figsize=(8, 3))
+plt.plot(range(2, 10), silhouette_scores, "bo-")
+plt.xlabel("$k$", fontsize=14)
+plt.ylabel("Silhouette score", fontsize=14)
+plt.axis([1.8, 8.5, 0.55, 0.7])
+save_fig("silhouette_score_vs_k_plot")
+plt.show()
+```
+</p></details></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html"><b>AgglomerativeClustering</b></a> </li>
 

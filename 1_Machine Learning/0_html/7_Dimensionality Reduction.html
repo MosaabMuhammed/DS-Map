@@ -113,9 +113,7 @@ for method, name in zip([umap, pca, ica, tsne],
 </p>
 </details>
 
-<details><summary><b>PCA</b></summary>
-<p>
-
+<details><summary><b>PCA</b></summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.decomposition.PCA.html#sklearn-decomposition-pca"><b>Docs</b></a> </p>
 
 <h4> PCA inside a pipeline</h4>
@@ -134,6 +132,11 @@ pipeline = Pipeline(steps = [('imputer', Imputer(strategy = 'median')),
 
 # Fit and transform on the training data
 train_pca = pipeline.fit_transform(train)
+
+
+# See how each axis preserve variance.
+pca.explained_variance_ratio_
+
 
 # transform the testing data
 test_pca = pipeline.transform(test)
@@ -170,9 +173,82 @@ plt.title('PC2 vs PC1 by Target');
 <pre><code class="python">print('2 principal components account for {:.4f}% of the variance.'.format(100 * np.sum(pca.explained_variance_ratio_[:2])))
 </code></pre>
 
+</p></details>
 
- </p>
- </details>
+<details><summary><b>Incremental PCA</b></summary><p>
+<h4>1. Using np.array_split()</h4>
+
+<pre><code>from sklearn.decomposition import IncrementalPCA
+
+n_batches = 100
+inc_pca = IncrementalPCA(n_componenets=154)
+
+for X_batch in np.array_split(X_train, n_batches):
+    inc_pca.partial_fit(X_batch)
+
+X_reduced = inc_pca.transform(X_train)
+</code></pre>
+
+
+<h4>2. Using np.memmap()</h4>
+
+<pre><code># np.memmap allows you to manipulate a large
+# array store in a binary file on disk as if it were entirely in memory;
+# The class loads only the data it needs in memory, when it needs it.
+# 1. Let's create the memmap() structure and copy MNIST data into it. This would typically be done by a first program.
+filename = &quot;mnist.data&quot;
+m, n = X_train.shape
+
+X_mm = np.memmap(filename, dtype=&quot;float32&quot;, mode=&quot;write&quot;, shape=(m, n))
+X_mm[:] = X_train
+
+# Now deleting the memmap() object will trigger its Python finalizer, which ensures that the data is saved to disk.
+del X_mm
+
+# Another program would load the data and use it for training.
+X_mm = np.memmap(filename, dtype=&quot;float32&quot;, mode=&quot;readonly&quot;, shape=(m, n))
+
+batch_size = m // n_batches
+inc_pca = IncrementalPCA(n_components=154, batch_size=batch_size)
+inc_pca.fit(X_mm)
+</code></pre>
+
+</p></details>
+
+<details><summary><b>Kernel PCA</b></summary><p>
+
+<pre><code>from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+
+clf = Pipeline([
+    (&quot;kpca&quot;, KernelPCA(n_components=2)),
+    (&quot;log_reg&quot;, LogisticRegression())
+])
+
+param_grid = [{
+    &quot;kpca__gamma&quot;: np.linspace(0.03, .05, 10),
+    &quot;kpca__kernel&quot;: [&quot;rbf&quot;, &quot;sigmoid&quot;]
+}]
+
+grid_search = GridSearchCV(clf, param_grid, cv=3)
+grid_search.fit(X, y)
+
+# Print the best hyperparameters.
+print(grid_search.best_params_)
+</code></pre>
+
+</p></details>
+
+<details><summary><b>LLE</b> [LocallyLinearEmbedding]</summary><p>
+
+<pre><code>from sklearn.manifold import LocallyLinearEmbedding
+
+lle = LocallyLinearEmbedding(n_components=2, n_neighbors=10)
+X_reduced = lle.fit_transform(X)
+</code></pre>
+
+</p></details>
 
 <details><summary><b>t-SNE</b></summary><p>
 <h4>1. Faster Wrapper for t-SNE</h4>
