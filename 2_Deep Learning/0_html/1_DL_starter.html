@@ -9,4 +9,31 @@ plot_model(model, to_file='model_plot4a.png', show_shapes=True, show_layer_names
 </code></pre>
 
 </p></details>
+
+<details><summary><b>Save & Load Model</b></summary><p>
+
+<pre><code>#NOTE: This is only available for Sequential and Functional API and NOT for Subclass API.
+# But you can use save_weights() and load_weights() to save and restore the model parameters!
+# Save Model.
+model.save(&quot;my_keras_model.h5&quot;)
+
+# Load Model.
+model = tf.keras.models.load_model(&quot;my_keras_model.h5&quot;)
+</code></pre>
+
+
+
+<pre><code># Using Checkpints
+checkpoint_cb = keras.callbacks.ModelCheckpoint(&quot;my_keras_model.h5&quot;,
+save_best_only=True)
+
+history = model.fit(X_train, y_train, epochs=10,
+                validation_data=(X_valid, y_valid),
+                callbacks=[checkpoint_cb])
+
+model = keras.models.load_model(&quot;my_keras_model.h5&quot;) # rollback to best model
+
+</code></pre>
+
+</p></details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

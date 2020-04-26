@@ -128,7 +128,7 @@ print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 </p>
 </details>
 
-<details><summary><b>Custom Callback</b>- Stopping when reached some loss value</summary>
+<details><summary><b>Custom Callback</b>- Stopping when reached some loss value</summary><p>
 ```
 import tensorflow as tf
 print(tf.__version__)
@@ -140,22 +140,23 @@ class myCallback(tf.keras.callbacks.Callback):
       self.model.stop_training = True
 
 callbacks = myCallback()
-mnist = tf.keras.datasets.fashion_mnist
-(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
 
-training_images=training_images/255.0
-test_images=test_images/255.0
-
-model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(),
-  tf.keras.layers.Dense(512, activation=tf.nn.relu),
-  tf.keras.layers.Dense(10, activation=tf.nn.softmax)
-])
+# Your models here.
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy')
 model.fit(training_images, training_labels, epochs=5, callbacks=[callbacks])
 ```
-</details>
+
+<h4>You can call the following methods:</h4>
+<ul>
+<li>on_train_begin()</li>
+<li>on_train_end()</li>
+<li>on_batch_end()</li>
+<li>on_batch_begin()</li>
+<li>on_predict_begin()</li>
+<li>on_predict_end()</li>
+</ul>
+</p></details>
 
 <details><summary><b>LR Schedular</b> How to choose the perfect learning rate</summary>
 ```
@@ -177,4 +178,30 @@ plt.semilogx(lrs, history.history["loss"])
 plt.axis([1e-8, 1e-3, 0, 300])
 ```
 </details>
-- Tensorboard
+
+<details><summary><b>Tensorboard</b></summary>
+```
+import os
+root_logdir = os.path.join(os.curdir, "my_logs")
+
+def get_run_logdir():
+    import time
+    run_id = time.strftime("run_%Y_%m_%d-%H_%M_%S")
+    return os.path.join(root_logdir, run_id)
+
+run_logdir = get_run_logdir()
+
+# 2. Fit the model.
+tensorboard_cv = tf.keras.callbacks.TensorBoard(run_logdir)
+history = model.fit(X_train_scaled,
+                    y_train,
+                    epochs=20,
+                    validation_data=(X_valid_scaled, y_valid),
+                    callbacks=[tensorboard_cv])
+                    
+# 3. Show Tensorboard
+!tensorboard --logdir=./my_logs --port=6006
+
+# Note, the last command won't work in colab, search for it.
+```
+</details>
