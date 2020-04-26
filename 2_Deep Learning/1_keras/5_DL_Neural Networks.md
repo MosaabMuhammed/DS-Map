@@ -62,12 +62,10 @@ history = model.fit_generator(generator=train_batches,
                               validation_data=val_batches,
                               validation_steps=val_batches.n)
 ~~~
-</p>
-</details>
+</p></details>
 
 
-<details><summary><strong>2. Fully Connected Model</strong> (Digit Recoginzer)</summary>
-<p>
+<details><summary><strong>2. Fully Connected Model</strong> (Digit Recoginzer)</summary><p>
 <h4 id="desingthearchitectureofthemodel">Desing the architecture of the model.</h4>
 ~~~python
 def get_fc_model():
@@ -94,9 +92,45 @@ fc.optimizer.lr=0.01
 history=fc.fit_generator(generator=batches, steps_per_epoch=batches.n, epochs=1, 
                     validation_data=val_batches, validation_steps=val_batches.n)
 ~~~
+</p></details>
 
-</p>
-</details>
+<details><summary><strong>3. Multiple Inputs & Outputs</strong></summary><p>
+<h4>Strucuture of the model</h4>
+```
+import tensorflow as tf
+
+input_A = tf.keras.layers.Input(shape=[5], name="Input_A")
+input_B = tf.keras.layers.Input(shape=[6], name="Input_B")
+
+hidden1 = tf.keras.layers.Dense(30, activation="relu", name="Hidden_1")(input_B)
+hidden2 = tf.keras.layers.Dense(30, activation="relu", name="Hidden_2")(hidden1)
+concat  = tf.keras.layers.concatenate([input_A, hidden2])
+output  = tf.keras.layers.Dense(1, activation="linear", name="Output")(concat)
+aux_out = tf.keras.layers.Dense(1, activation="linear", name="Aux_Output")(hidden2)
+
+model = tf.keras.models.Model(inputs=[input_A, input_B], outputs=[output, aux_out])
+
+# Visualize the structure of the model.
+tf.keras.utils.plot_model(model)
+```
+
+<h4>Reset the dataset to be fed</h4>
+```
+X_train_A, X_train_B = X_train_scaled[:, :5], X_train_scaled[:, 2:]
+X_valid_A, X_valid_B = X_valid_scaled[:, :5], X_valid_scaled[:, 2:]
+X_test_A, X_test_B   = X_test_scaled[:, :5],  X_test_scaled[:, 2:]
+
+# Fit and Compile.
+model.compile(loss=["mse", "mse"],
+              loss_weights=[.9, .1],
+              optimizer="sgd")
+
+history = model.fit([X_train_A, X_train_B],
+                    [y_train, y_train],
+                    epochs=20,
+                    validation_data=([X_valid_A, X_valid_B], [y_valid, y_valid]))
+```
+</p></details>
 
 - [**Manual Hyperparameter Tunning**](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/5%20Gradient%20Descent.html#Logistic-Regression-Model)
 
