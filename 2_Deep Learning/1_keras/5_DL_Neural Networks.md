@@ -132,6 +132,32 @@ history = model.fit([X_train_A, X_train_B],
 ```
 </p></details>
 
+<details><summary><strong>4. SubClass API</strong></summary><p>
+```
+# In call(), you can use if statements, for loops, whatever you want!
+class WideAndDeepModel(tf.keras.models.Model):
+    def __init__(self, units=30, activation="relu", **kwargs):
+        super().__init__(**kwargs)  # Handles standard args (e.g., name)
+        self.hidden1     = tf.keras.layers.Dense(units, activation=activation)
+        self.hidden2     = tf.keras.layers.Dense(units, activation=activation)
+        self.main_output = tf.keras.layers.Dense(1)
+        self.aux_output  = tf.keras.layers.Dense(1)
+
+    def call(self, inputs):
+        input_A, input_B = inputs
+
+        hidden1 = self.hidden1(input_B)
+        hidden2 = self.hidden2(hidden1)
+        concat  = tf.keras.layers.concatenate([input_A, hidden2])
+        min_out = self.main_output(concat)
+        aux_out = self.aux_output(hidden2)
+
+        return main_output, aux_output
+
+model = WideAndDeepModel()
+```
+</p></details>
+
 - [**Manual Hyperparameter Tunning**](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/5%20Gradient%20Descent.html#Logistic-Regression-Model)
 
 - [**Using Keras API (Input, Model)**](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/solutions/5%20Gradient%20Descent%20Exercises%20Solution.html#Exercise-3)
