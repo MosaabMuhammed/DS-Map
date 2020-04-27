@@ -22,4 +22,10 @@ optimizer = tf.keras.optimizers.SGD(lr=0.001, momentum=.9)
 optimizer = tf.keras.optimizers.SGD(lr=0.001, momentum=.9, nesterov=True)
 ```
 </p></details>
+<details><summary><b>RMSprop</b></summary><p>
+```
+optimizer = tf.keras.optimizers.RMSprop(lr=.001, rho=.9)
+```
+</p></details>
+
 </div>
