@@ -28,4 +28,10 @@ optimizer = tf.keras.optimizers.RMSprop(lr=.001, rho=.9)
 ```
 </p></details>
 
+<details><summary><b>Adam</b></summary><p>
+```
+optimizer = tf.keras.optimizers.Adam(lr=.001, beta_1=.9, beta_1=.999)
+```
+</p></details>
+
 </div>
