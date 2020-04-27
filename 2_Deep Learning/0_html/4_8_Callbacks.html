@@ -165,7 +165,21 @@ model.fit(training_images, training_labels, epochs=5, callbacks=[callbacks])
 </ul>
 </p></details>
 
-<details><summary><b>LR Schedular</b> How to choose the perfect learning rate</summary>
+<details><summary><b>LR Schedular</b> How to choose the perfect learning rate</summary><ul>
+<li><details><summary><b>Power Scheduling</b></summary><p>
+
+<pre><code># lr(t) = lr_0(t) / ( + t/s)**c
+# t  = number of epoch.
+# s = number of steps, after s steps, lr = lr/2, and so on.
+# c = 1
+optimizer = tf.keras.optimizers.SGD(lr=0.01, decay=1e-4)
+</code></pre>
+
+
+</p></details></li>
+
+<li><details><summary><b>Exponential Scheduling</b></summary><p>
+<h4>First Method</h4>
 
 <pre><code>lr_schedule = tf.keras.callbacks.LearningRateScheduler(
     lambda epoch: 1e-8 * 10**(epoch / 20))
@@ -186,7 +200,80 @@ plt.semilogx(lrs, history.history[&quot;loss&quot;])
 plt.axis([1e-8, 1e-3, 0, 300])
 </code></pre>
 
-</details>
+<h4>Another way to do it</h4>
+
+<pre><code>s = 20 * len(X_train) // 32 # number of steps in 20 epochs (batch size = 32)
+learning_rate = keras.optimizers.schedules.ExponentialDecay(0.01, s, 0.1)
+optimizer = keras.optimizers.SGD(learning_rate)
+</code></pre>
+
+</p></details></li>
+
+<li><details><summary><b>Piecewise Constant Scheduling</b></summary><p>
+
+<pre><code>def piecewise_constant_fn(epoch):
+    if epoch &lt; 5:
+        return 0.01
+    elif epoch &lt; 15:
+        return 0.005
+    else:
+        return 0.001
+</code></pre>
+
+
+
+<pre><code>def piecewise_constant(boundaries, values):
+    boundaries = np.array([0] + boundaries)
+    values = np.array(values)
+    def piecewise_constant_fn(epoch):
+        return values[np.argmax(boundaries &gt; epoch) - 1]
+    return piecewise_constant_fn
+
+piecewise_constant_fn = piecewise_constant([5, 15], [0.01, 0.005, 0.001])
+</code></pre>
+
+
+
+<pre><code>lr_scheduler = keras.callbacks.LearningRateScheduler(piecewise_constant_fn)
+# ...
+history = model.fit(X_train_scaled, y_train, epochs=n_epochs,
+                    validation_data=(X_valid_scaled, y_valid),
+                    callbacks=[lr_scheduler])
+
+</code></pre>
+
+</p></details></li>
+
+<li><details><summary><b>Performance Scheduling</b></summary><p>
+
+<pre><code>lr_scheduler = keras.callbacks.ReduceLROnPlateau(factor=0.5, patience=5)
+</code></pre>
+
+
+
+<pre><code># Visualize Learing_rate vs. validation loss.
+plt.plot(history.epoch, history.history[&quot;lr&quot;], &quot;bo-&quot;)
+plt.xlabel(&quot;Epoch&quot;)
+plt.ylabel(&quot;Learning Rate&quot;, color='b')
+plt.tick_params('y', colors='b')
+plt.gca().set_xlim(0, n_epochs - 1)
+plt.grid(True)
+
+ax2 = plt.gca().twinx()
+ax2.plot(history.epoch, history.history[&quot;val_loss&quot;], &quot;r^-&quot;)
+ax2.set_ylabel('Validation Loss', color='r')
+ax2.tick_params('y', colors='r')
+
+plt.title(&quot;Reduce LR on Plateau&quot;, fontsize=14)
+plt.show()
+
+
+</code></pre>
+
+</p></details></li>
+
+
+</ul></details>
 
 <details><summary><b>Tensorboard</b></summary>
 
