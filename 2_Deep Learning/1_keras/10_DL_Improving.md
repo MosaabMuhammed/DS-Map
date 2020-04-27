@@ -50,9 +50,17 @@ output1     = tf.keras.layers.Dense(1, activation="sigmoid")
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Data-augmentation"><b style='color:#333'>2. Code Example</b></a> </p>
 
+</p></details>
 
-</p>
-</details>
+<details><summary><b>Gradient Clipping</b> [solving exploding gradient]</summary><p>
+```
+# Try to use "clipvalue" and "clipnorm", and see which one works best for your data.
+optimizer = keras.optimizers.SGD(clipvalue=1.0)
+model.compile(loss="mse", optimizer=optimizer)
+
+# now, every gradient will be between -1 and 1.
+```
+</p></details>
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Embeddings"><b style='color:#333'>5. Embedding</b></a> </p>
 
