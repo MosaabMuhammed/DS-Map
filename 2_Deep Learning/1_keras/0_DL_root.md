@@ -9,9 +9,9 @@
 
 <li><a href="3_DL_layers.html"><span style='color:#333;font-weight:bold;font-size:25px'>Layers</span></a> </li>
 
-<li<a href="4_DL_Optimizers.html"><span style='color:#333;font-weight:bold;font-size:25px'>Optimizers.</span></a></li>
+<li><a href="4_DL_Optimizers.html"><span style='color:#333;font-weight:bold;font-size:25px'>Optimizers.</span></a></li>
 
-<li>Activations.</li>
+<li><a href="4_3_DL_Activations.html"><span style='color:#333;font-weight:bold;font-size:25px'>Activations</span></a> </li>
 
 <li>Losses. </li>
 
