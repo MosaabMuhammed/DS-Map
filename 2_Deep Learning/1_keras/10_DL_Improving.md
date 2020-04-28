@@ -98,6 +98,54 @@ history = model.fit(X_train_scaled, y_train, epochs=n_epochs,
 ```
 </p></details>
 
+<details><summary><b>Monte-Carlo Dropout</b></summary><p>
+<p><b>MC Dropout</b> simply is applying dropout on testing data, and taking n number of predictions for testing data, then averging them.</p>
+<h4>1. If you have a model trained on a normal Droptout</h4>
+```
+with tf.keras.backend.learning_phase_scope(1):  # Force training mode = dropout on
+    y_probas = np.stack([model.predict(X_test) for sample in range(500)])
+
+# Take the mean along the first axis, which is number of samples.
+y_proba = y_probas.mean(axis=0) 
+
+# From probabilities to classes.
+y_pred = np.round(y_proba)
+# OR
+y_pred = np.argmax(y_proba)
+```
+
+<h4>2. MC Dropout Implementation</h4>
+```
+class MCDropout(tf.keras.layers.Dropout):
+    def call(self, inputs):
+        return super().call(inputs, training=True)
+
+class MCAlphaDropout(tf.keras.layers.AlphaDropout):
+    def call(self, inputs):
+        return super().call(inputs, training=True)
+```
+```
+# Build the model as normal
+tf.random.set_seed(42)
+np.random.seed(42)
+
+mc_model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(50, activation="elu", kernel_initializer="he_normal", input_shape=[10]),
+    MCDropout(0.2),
+    tf.keras.layers.Dense(30, activation="elu", kernel_initializer="he_normal"),
+    MCDropout(.2),
+    tf.keras.layers.Dense(1, activation="sigmoid")
+])
+```
+```
+# Then Predict.
+y_probas = np.stack([mc_model.predict(X_test) for _ in range(100)])
+
+y_pred = np.round(y_probas.mean(axis=0))
+print(metrics.accuracy_score(y_test, y_pred))
+```
+</p></details>
+
 <details><summary><b>Weight Regularization</b></summary>
 <p>
 <li><a href="https://keras.io/initializers/"><b style='color:#333'>1. Available initializers in Keras</b></a> </li>
