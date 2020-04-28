@@ -252,12 +252,122 @@ ax2.tick_params('y', colors='r')
 
 plt.title("Reduce LR on Plateau", fontsize=14)
 plt.show()
-
-
 ```
 </p></details></li>
 
+<li><details><summary><b>One Cycle Policy</b></summary><p>
+```
+# Functions.
+def find_learning_rate(model, X, y, epochs=1, batch_size=32, min_rate=10**-5, max_rate=10):
+    init_weights = model.get_weights()
+    iterations = len(X) // batch_size * epochs
+    factor = np.exp(np.log(max_rate / min_rate) / iterations)
+    init_lr = K.get_value(model.optimizer.lr)
+    K.set_value(model.optimizer.lr, min_rate)
+    exp_lr = ExponentialLearningRate(factor)
+    history = model.fit(X, y, epochs=epochs, batch_size=batch_size,
+                        callbacks=[exp_lr])
+    K.set_value(model.optimizer.lr, init_lr)
+    model.set_weights(init_weights)
+    return exp_lr.rates, exp_lr.losses
 
+def plot_lr_vs_loss(rates, losses):
+    plt.plot(rates, losses)
+    plt.gca().set_xscale('log')
+    plt.hlines(min(losses), min(rates), max(rates))
+    plt.axis([min(rates), max(rates), min(losses), (losses[0] + min(losses)) / 2])
+    plt.xlabel("Learning rate")
+    plt.ylabel("Loss")
+
+```
+
+```
+# One Cycle Policy
+class OneCycleScheduler(keras.callbacks.Callback):
+    def __init__(self, iterations, max_rate, start_rate=None,
+                 last_iterations=None, last_rate=None):
+        self.iterations = iterations
+        self.max_rate = max_rate
+        self.start_rate = start_rate or max_rate / 10
+        self.last_iterations = last_iterations or iterations // 10 + 1
+        self.half_iteration = (iterations - self.last_iterations) // 2
+        self.last_rate = last_rate or self.start_rate / 1000
+        self.iteration = 0
+    def _interpolate(self, iter1, iter2, rate1, rate2):
+        return ((rate2 - rate1) * (self.iteration - iter1)
+                / (iter2 - iter1) + rate1)
+    def on_batch_begin(self, batch, logs):
+        if self.iteration < self.half_iteration:
+            rate = self._interpolate(0, self.half_iteration, self.start_rate, self.max_rate)
+        elif self.iteration < 2 * self.half_iteration:
+            rate = self._interpolate(self.half_iteration, 2 * self.half_iteration,
+                                     self.max_rate, self.start_rate)
+        else:
+            rate = self._interpolate(2 * self.half_iteration, self.iterations,
+                                     self.start_rate, self.last_rate)
+            rate = max(rate, self.last_rate)
+        self.iteration += 1
+        K.set_value(self.model.optimizer.lr, rate)
+```
+<h4>How to use</h4>
+```
+# 1. run the first 2 functions to show which learning rate has the lowest loss.
+keras.backend.clear_session()
+tf.random.set_seed(42)
+np.random.seed(42)
+
+model = keras.models.Sequential()
+model.add(keras.layers.Flatten(input_shape=[32, 32, 3]))
+for _ in range(20):
+    model.add(keras.layers.Dense(100,
+                                 kernel_initializer="lecun_normal",
+                                 activation="selu"))
+
+model.add(keras.layers.AlphaDropout(rate=0.1))
+model.add(keras.layers.Dense(10, activation="softmax"))
+
+optimizer = keras.optimizers.SGD(lr=1e-3)
+model.compile(loss="sparse_categorical_crossentropy",
+              optimizer=optimizer,
+              metrics=["accuracy"])
+              
+              
+####### Visualize
+batch_size = 128
+rates, losses = find_learning_rate(model, X_train_scaled, y_train, epochs=1, batch_size=batch_size)
+plot_lr_vs_loss(rates, losses)
+plt.axis([min(rates), max(rates), min(losses), (losses[0] + min(losses)) / 1.4])
+```
+
+<h4>Refit the mode again with the new learning rate, and apply One Cycle Policy</h4>
+```
+keras.backend.clear_session()
+tf.random.set_seed(42)
+np.random.seed(42)
+
+model = keras.models.Sequential()
+model.add(keras.layers.Flatten(input_shape=[32, 32, 3]))
+for _ in range(20):
+    model.add(keras.layers.Dense(100,
+                                 kernel_initializer="lecun_normal",
+                                 activation="selu"))
+
+model.add(keras.layers.AlphaDropout(rate=0.1))
+model.add(keras.layers.Dense(10, activation="softmax"))
+
+optimizer = keras.optimizers.SGD(lr=1e-2)
+model.compile(loss="sparse_categorical_crossentropy",
+              optimizer=optimizer,
+              metrics=["accuracy"])
+
+### Apply One Cycle Policy
+n_epochs = 15
+onecycle = OneCycleScheduler(len(X_train_scaled) // batch_size * n_epochs, max_rate=0.05)
+history = model.fit(X_train_scaled, y_train, epochs=n_epochs, batch_size=batch_size,
+                    validation_data=(X_valid_scaled, y_valid),
+                    callbacks=[onecycle])
+```
+</p></details></li>
 </ul></details>
 
 <details><summary><b>Tensorboard</b></summary>
