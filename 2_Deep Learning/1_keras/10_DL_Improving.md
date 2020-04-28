@@ -146,6 +146,27 @@ print(metrics.accuracy_score(y_test, y_pred))
 ```
 </p></details>
 
+<details><summary><b>Max-Norm Regularization</b></summary><p>
+```
+layer = tf.keras.layers.Dense(100,
+                              activation="selu",
+                              kernel_initializer="lecun_normal",
+                              kernel_constraint=tf.keras.constraints.max_norm(1., axis=0))
+
+MaxNormDense = partial(tf.keras.layers.Dense,
+                       activation="selu",
+                       kernel_initializer="lecun_normal",
+                       kernel_constraint=tf.keras.constraints.max_norm(1.))
+
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Input(shape=[10]),
+    MaxNormDense(50),
+    MaxNormDense(30),
+    tf.keras.layers.Dense(1, activation="sigmoid")
+])
+```
+</p></details>
+
 <details><summary><b>Weight Regularization</b></summary>
 <p>
 <li><a href="https://keras.io/initializers/"><b style='color:#333'>1. Available initializers in Keras</b></a> </li>
