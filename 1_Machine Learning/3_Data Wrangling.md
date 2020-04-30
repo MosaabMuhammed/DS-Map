@@ -97,6 +97,40 @@ np.expand_dims(x, 0)
 
 <details><summary><b>DataFrame</b></summary><p>
 
+<details><summary>From <b>Normal Dataframe</b> to <b> Similarity Matrix</b></summary><p>
+
+<h4>1. Create graph dataframe</h4>
+```
+col_index = "person"
+col_value = "docs"
+
+index1, index2, n_values = [], [], []
+index_value = df.groupby(col_index)[col_value].apply(pd.Series.unique).to_dict()
+
+for p1, p2 in itertools.permutations(np.unique(df[col_index].values), 2):
+    index1.append(p1)
+    index2.append(p2)
+    n_values.append(len(set(index_value[p1]).intersection(index_value[p2])))
+
+# Create a dataframe has columns ["index1", "index2", "common_values_b/w_them"]
+index_df = pd.DataFrame({'index1': index1, 'index2': index2, 'n_values': n_values})
+```
+
+<h4>2. Create the Similarity Matrix</h4>
+```
+index_df = pd.pivot(index_df, index='index1', columns='index2', values='n_values')
+```
+
+<h4>3. Visualize it with Heatmap (if possible)</h4>
+```
+plt.figure(figsize=(10, 8))
+sns.heatmap(person_df, cmap='viridis')
+plt.title("People Correlation", size=30, y=1.05)
+plt.xticks(size=16)
+plt.yticks(size=16);
+```
+</p></details>
+
 <details><summary>From <b>One-Hot Encoding</b> to <b> Unpiovt Table</b></summary><p>
 <h4>1. Convert array of labels in a raw to One-Hot Encoding</h4>
 ```
