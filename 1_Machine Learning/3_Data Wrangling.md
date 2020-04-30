@@ -97,6 +97,33 @@ np.expand_dims(x, 0)
 
 <details><summary><b>DataFrame</b></summary><p>
 
+<details><summary>From <b>One-Hot Encoding</b> to <b> Unpiovt Table</b></summary><p>
+<h4>1. Convert array of labels in a raw to One-Hot Encoding</h4>
+```
+df  = df_eng
+col = "MoreSamples"
+
+from sklearn.preprocessing import MultiLabelBinarizer
+
+binarizer = MultiLabelBinarizer()
+samples = binarizer.fit_transform(df[col].values)
+```
+
+<h4>2. Create the One-Hot encoding dataframe</h4>
+```
+samples_df = pd.DataFrame(samples, columns=binarizer.classes_)
+df = pd.concat([df.reset_index(), samples_df.reset_index()], axis=1).drop(["index", col], axis=1)
+```
+
+<h4>3. Unpivot the One-Hot encoding dataframe</h4>
+```
+# Change "DisplayName" to your columns to be used as index.
+df = pd.melt(df, id_vars=["DisplayName"])
+df = df_eng[(df.value == 1)]
+df.drop("value", axis=1, inplace=True)
+```
+</p></details>
+
 <details><summary>Show <b>Thousands comma seperator</b> in dataframe </summary><p>
 ```
 df = pd.read_csv("file.csv", thousands=",")
