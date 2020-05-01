@@ -1,8 +1,7 @@
-# ==&nbsp;Data Preprocessing&nbsp;==
+# Data Preprocessing
 
-<details><summary>**1. One-Hot Encoding (to_categorical)**</summary>
-<p>
-~~~python
+<details><summary><b>One-Hot Encoding (to_categorical)</b></summary><p>
+```
 from keras.utils.np_utils import to_categorical
 
 ## y_train (before).unique() = [0, 1, ... , 9]
@@ -12,24 +11,22 @@ num_classes
 
 #### Result ######
 10
-~~~
-</p>
-</details>
+```
+</p></details>
 
-<details><summary>**2. Data Augmentation (Images)**</summary>
-<p>
+<details><summary><b>Data Augmentation (Images)</b></summary><p>
 [**Docs**](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Image%20Preprocessing%20-%20Keras%20Documentation.html)
 
 #### 1. Import the class ImageDataGenerator.
 **NOTE:** you can specify its parameters. - see the docs -.
-~~~python
+```
 from keras.preprocessing import image
 
 gen = image.ImageDataGenerator()
-~~~
+```
 
 #### 2. Test split before generating.
-~~~python
+```
 from sklearn.model_selection import train_test_split
 
 X = X_train
@@ -38,12 +35,142 @@ y = y_train
 X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.1, random_state=42)
 train_batches = gen.flow(X_train, y_train, batch_size=64)
 val_batches   = gen.flow(X_val, y_val, batch_size=64)
-~~~
+```
 
 #### 3. After you defined your model using `Sequential`.
-~~~python
+```
 history=model.fit_generator(generator=batches, steps_per_epoch=batches.n, epochs=3, 
                     validation_data=val_batches, validation_steps=val_batches.n)
-~~~
-</p>
-</details>
+```
+</p></details>
+
+<details><summary><b>Loading Large Dataset</b></summary><p>
+
+<h4>1. Load the data</h4>
+```
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from utils import *
+import os, numpy as np, pandas as pd
+
+housing = fetch_california_housing()
+
+X_train_full, X_test, y_train_full, y_test = train_test_split(housing.data,
+                                                              housing.target[..., None],
+                                                              random_state=42)
+X_train, X_valid, y_train, y_valid = train_test_split(X_train_full,
+                                                      y_train_full,
+                                                      random_state=42)
+shape(X_train, X_valid, X_test, y_train, y_valid, y_test)
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_mean = scaler.mean_
+X_std  = scaler.scale_
+```
+
+<h4>2. Split the data into multiple csv files</h4>
+```
+import os, numpy as np, pandas as pd
+def save_to_multiple_csv_files(data, name_prefix, header=None, n_parts=10):
+    housing_dir = os.path.join("datasets", "housing")  # Write where to save the new csv files.
+    os.makedirs(housing_dir, exist_ok=True)
+    path_format = os.path.join(housing_dir, "my_{}_{:02d}.csv")
+
+    filepaths = []
+    m = len(data)
+    for file_idx, row_indices in enumerate(np.array_split(np.arange(m), n_parts)):
+        part_csv = path_format.format(name_prefix, file_idx)
+        filepaths.append(part_csv)
+
+        with open(part_csv, "wt", encoding="utf-8") as f:
+            if header is not None:
+                f.write(header)
+                f.write("\n")
+            for row_idx in row_indices:
+                f.write(",".join([repr(col) for col in data[row_idx]]))
+                f.write("\n")
+    return filepaths
+```
+
+```
+train_data  = np.c_[X_train, y_train]
+valid_data  = np.c_[X_valid, y_valid]
+test_data   = np.c_[X_test, y_test]
+header_cols = housing.feature_names + ["MedianHouseValue"]
+header      = ",".join(header_cols)
+
+train_filepaths = save_to_multiple_csv_files(train_data, "train", header, n_parts=20)
+valid_filepaths = save_to_multiple_csv_files(valid_data, "valid", header, n_parts=10)
+test_filepaths  = save_to_multiple_csv_files(test_data, "test", header, n_parts=10)
+```
+
+<h4>3. Handle how to read the multiple files</h4>
+```
+n_inputs = 8
+
+@tf.function
+def preprocess(line):
+    defs   = [0.]*n_inputs + [tf.constant([], dtype=tf.float32)]
+    fields = tf.io.decode_csv(line, record_defaults=defs)
+    X      = tf.stack(fields[:-1])
+    y      = tf.stack(fields[-1:])
+    return (X - X_mean) / X_std, y
+```
+
+```
+def csv_reader_dataset(filepaths, repeat=1, n_readers=5,
+                       n_read_threads=tf.data.experimental.AUTOTUNE,
+                       shuffle_buffer_size=10_000,
+                       n_parse_threads=5, batch_size=32):
+    dataset = tf.data.Dataset.list_files(filepaths).repeat(repeat)
+    dataset = dataset.interleave(
+        lambda filepath: tf.data.TextLineDataset(filepath).skip(1),
+        cycle_length=n_readers,
+        num_parallel_calls=n_read_threads
+    )
+    dataset = dataset.shuffle(shuffle_buffer_size)
+    dataset = dataset.map(preprocess, num_parallel_calls=n_parse_threads)
+    dataset = dataset.batch(batch_size)
+    return dataset.prefetch(1)
+```
+```
+train_set = csv_reader_dataset(train_filepaths, repeat=None)
+valid_set = csv_reader_dataset(valid_filepaths)
+test_set  = csv_reader_dataset(test_filepaths)
+```
+
+<h4>4. Modelling</h4>
+```
+tf.keras.backend.clear_session()
+np.random.seed(42)
+tf.random.set_seed(42)
+
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(30, activation="relu", input_shape=X_train.shape[1:]),
+    tf.keras.layers.Dense(30, activation="relu"),
+    tf.keras.layers.Dense(1)
+])
+```
+```
+model.compile(loss="mse",
+              optimizer=tf.keras.optimizers.Adam(lr=1e-3))
+batch_size = 16
+model.fit(train_set,
+          steps_per_epoch=len(X_train) // batch_size,
+          epochs=10,
+          validation_data=valid_set)
+```
+
+<h4>5. Predict & Evaluate</h4>
+```
+model.evaluate(test_set, steps=len(X_test) // batch_size)
+```
+```
+new_set = test_set.map(lambda X, y: X) # we could instead just pass test_set, Keras would ignore the labels
+X_new = X_test
+model.predict(new_set, steps=len(X_new) // batch_size)
+```
+</p></details>
+
+
