@@ -35,4 +35,27 @@ model = keras.models.load_model("my_keras_model.h5") # rollback to best model
 
 ```
 </p></details>
+
+<details><summary><b>Plot Training & Validation Losses</b></summary><p>
+```
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+def plot_learning_curves(loss, val_loss):
+    plt.plot(np.arange(len(loss)) + 0.5, loss, "b.-", label="Training loss")
+    plt.plot(np.arange(len(val_loss)) + 1, val_loss, "r.-", label="Validation loss")
+    plt.gca().xaxis.set_major_locator(mpl.ticker.MaxNLocator(integer=True))
+    plt.axis([1, 20, 0, 0.05])
+    plt.legend(fontsize=14)
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.grid(True)
+    return plt
+
+plt.figure(figsize=(12, 5))
+plot_learning_curves(history.history["loss"], history.history["val_loss"])
+plt.show()
+
+```
+</p></details>
 </div>
