@@ -58,4 +58,12 @@ plt.show()
 
 ```
 </p></details>
+<details><summary><b>Random Seeder</b></summary><p>
+```
+SEED = 42
+tf.keras.backend.clear_session()
+np.random.seed(SEED)
+tf.random.set_seed(SEED)
+```
+</p></details>
 </div>
