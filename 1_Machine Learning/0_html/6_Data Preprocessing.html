@@ -366,6 +366,71 @@ housing_extra_attribs = attr_adder.transform(housing.values)
 
 <details><summary><b style='font-size:20px'>Bayesian Optimization</b> </summary><p><ul>
 
+<pre><code>!pip install bayesian-optimization
+from bayes_opt import BayesianOptimization
+</code></pre>
+
+<details><summary> <b>LogisticRegression</b> </summary><p>
+
+<pre><code># Define LogisticRegression CV
+def lg_cv(C, 
+          penalty, 
+          solver, 
+          data, targets):
+    alg = LogisticRegression(C=C,
+                                         penalty=penalty,
+                                         solver=solver,
+                                         random_state=42)
+    alg.fit(data, targets)
+    y_pred = alg.predict(X_test)
+    score = metrics.accuracy_score(y_test, y_pred)
+    return score
+
+# Optimization Strategy
+def optimize_lg(data, targets):
+    def lg_crossval(expC, 
+                    expPenalty,
+                    expSolver
+                    ):
+        penalty_dict = {0: &quot;l1&quot;,
+                        1: &quot;l2&quot;,
+                        2: &quot;none&quot;}
+        solver_dict  = {0: &quot;newton-cg&quot;,
+                        1: &quot;lbfgs&quot;,
+                        2: &quot;sag&quot;,
+                        3: &quot;saga&quot;}
+
+        C       = 10 ** expC
+        penalty = penalty_dict[int(expPenalty)]
+        if penalty in [&quot;l2&quot;, &quot;none&quot;]:
+            solver = solver_dict[int(expSolver)]
+        else:
+            solver = &quot;liblinear&quot;
+        return lg_cv(C=C, 
+                     penalty=penalty,
+                     solver=solver,
+                     data=data, targets=targets)
+
+    optimizer = BayesianOptimization(
+        f=lg_crossval,
+        pbounds={'expC': (-2, .5),
+                 'expPenalty': (0, 2.9),
+                 'expSolver': (0, 3.9)
+                 },
+        random_state=42,
+        verbose=2
+    )
+    optimizer.maximize(n_iter=20, init_points=10)
+
+    print(f&quot;~&gt; Best parameters: {optimizer.max}&quot;)
+    return optimizer.max['params']
+
+# Run the optimization
+best_params = optimize_lg(X_train, y_train)
+</code></pre>
+
+</p></details>
+
 <details><summary> <b>LinearSVC</b> </summary><p>
 
 <pre><code>def svc_cv(C, data, targets):
@@ -421,6 +486,38 @@ def optimize_ridge(data, targets):
 
 # Run the optimization
 optimize_ridge(X, y)
+</code></pre>
+
+</p></details>
+
+<details><summary> <b>LassoClassifier</b> </summary><p>
+
+<pre><code>from sklearn.linear_models import Lasso
+
+# Define Lasso CV
+def lasso_cv(alpha, data, targets):
+    alg = Lasso(alpha=alpha, random_state=33)
+    score = Stratified_kfolds(alg, data, targets)
+    return score
+
+# Optimization Strategy
+def optimize_lasso(data, targets):
+    def lasso_crossval(expAlpha):
+        alpha = 10 ** expAlpha
+        return lasso_cv(alpha=alpha, data=data, targets=targets)
+
+    optimizer = BayesianOptimization(
+        f=ridge_crossval,
+        pbounds={'expAlpha': (-7, 5)},
+        random_state=33,
+        verbose=2
+    )
+    optimizer.maximize(n_iter=20, init_points=5)
+
+    print(f&quot;~&gt; Best parameters: {optimizer.max}&quot;)
+
+# Run the optimization
+optimize_lasso(X, y)
 </code></pre>
 
 </p></details>

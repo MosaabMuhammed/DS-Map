@@ -363,10 +363,10 @@ def lg_cv(C,
           penalty, 
           solver, 
           data, targets):
-    alg = OneVsRestClassifier(LogisticRegression(C=C,
-                                                 penalty=penalty,
-                                                 solver=solver,
-                                                 random_state=42))
+    alg = LogisticRegression(C=C,
+                                         penalty=penalty,
+                                         solver=solver,
+                                         random_state=42)
     alg.fit(data, targets)
     y_pred = alg.predict(X_test)
     score = metrics.accuracy_score(y_test, y_pred)
@@ -470,6 +470,37 @@ def optimize_ridge(data, targets):
     
 # Run the optimization
 optimize_ridge(X, y)
+```
+</p></details>
+
+<details><summary> <b>LassoClassifier</b> </summary><p>
+```
+from sklearn.linear_models import Lasso
+
+# Define Lasso CV
+def lasso_cv(alpha, data, targets):
+    alg = Lasso(alpha=alpha, random_state=33)
+    score = Stratified_kfolds(alg, data, targets)
+    return score
+    
+# Optimization Strategy
+def optimize_lasso(data, targets):
+    def lasso_crossval(expAlpha):
+        alpha = 10 ** expAlpha
+        return lasso_cv(alpha=alpha, data=data, targets=targets)
+    
+    optimizer = BayesianOptimization(
+        f=ridge_crossval,
+        pbounds={'expAlpha': (-7, 5)},
+        random_state=33,
+        verbose=2
+    )
+    optimizer.maximize(n_iter=20, init_points=5)
+    
+    print(f"~> Best parameters: {optimizer.max}")
+    
+# Run the optimization
+optimize_lasso(X, y)
 ```
 </p></details>
 
