@@ -352,6 +352,69 @@ housing_extra_attribs = attr_adder.transform(housing.values)
 <hr>
 
 <details><summary><b style='font-size:20px'>Bayesian Optimization</b> </summary><p><ul>
+```
+!pip install bayesian-optimization
+from bayes_opt import BayesianOptimization
+```
+<details><summary> <b>LogisticRegression</b> </summary><p>
+```
+# Define LogisticRegression CV
+def lg_cv(C, 
+          penalty, 
+          solver, 
+          data, targets):
+    alg = OneVsRestClassifier(LogisticRegression(C=C,
+                                                 penalty=penalty,
+                                                 solver=solver,
+                                                 random_state=42))
+    alg.fit(data, targets)
+    y_pred = alg.predict(X_test)
+    score = metrics.accuracy_score(y_test, y_pred)
+    return score
+
+# Optimization Strategy
+def optimize_lg(data, targets):
+    def lg_crossval(expC, 
+                    expPenalty,
+                    expSolver
+                    ):
+        penalty_dict = {0: "l1",
+                        1: "l2",
+                        2: "none"}
+        solver_dict  = {0: "newton-cg",
+                        1: "lbfgs",
+                        2: "sag",
+                        3: "saga"}
+
+        C       = 10 ** expC
+        penalty = penalty_dict[int(expPenalty)]
+        if penalty in ["l2", "none"]:
+            solver = solver_dict[int(expSolver)]
+        else:
+            solver = "liblinear"
+        return lg_cv(C=C, 
+                     penalty=penalty,
+                     solver=solver,
+                     data=data, targets=targets)
+
+    optimizer = BayesianOptimization(
+        f=lg_crossval,
+        pbounds={'expC': (-2, .5),
+                 'expPenalty': (0, 2.9),
+                 'expSolver': (0, 3.9)
+                 },
+        random_state=42,
+        verbose=2
+    )
+    optimizer.maximize(n_iter=20, init_points=10)
+
+    print(f"~> Best parameters: {optimizer.max}")
+    return optimizer.max['params']
+
+# Run the optimization
+best_params = optimize_lg(X_train, y_train)
+```
+</p></details>
 
 <details><summary> <b>LinearSVC</b> </summary><p>
 ```

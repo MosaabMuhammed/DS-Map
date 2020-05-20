@@ -51,6 +51,11 @@ def remove_emoji(text):
                            "]+", flags=re.UNICODE)
     return emoji_pattern.sub(r'', text)
 ~~~
+
+```
+def remove_emoji(inputString):
+    return inputString.encode('ascii', 'ignore').decode('ascii')
+```
 </p></details>
 
 <details><summary><b style='font-size:20px'>4. Remove Punctuations</b></summary><p>
