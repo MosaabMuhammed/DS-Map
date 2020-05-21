@@ -416,31 +416,83 @@ best_params = optimize_lg(X_train, y_train)
 ```
 </p></details>
 
-<details><summary> <b>LinearSVC</b> </summary><p>
+<details><summary><b> LinearSVC</b></summary><p>
 ```
-def svc_cv(C, data, targets):
-    alg   = LinearSVC(C=C, random_state=33, penalty='l2')
-    score = Stratified_kfolds(alg, data, targets)
-    return score
+def svc_cv(C, loss, data, targets):
+    alg = Pipeline([
+        ("scaler", MinMaxScaler()),
+        ("linear_svc", OneVsRestClassifier(LinearSVC(C=C,
+                                                     penalty="l2",
+                                                     loss=loss,
+                                                     random_state=42)))
+    ])
+    alg.fit(data, targets)
+    y_pred = alg.predict(X_test)
+    return metrics.accuracy_score(y_test, y_pred)
 
 def optimize_svc(data, targets):
-    def svc_crossval(expC):
+    def svc_crossval(expC, expLoss):
+        loss_dict = {0: "hinge",
+                     1: "squared_hinge"}
         C = 10 ** expC
-        return svc_cv(C=C, data=data, targets=targets)
-    
+        loss    = loss_dict[int(expLoss)]
+        return svc_cv(C=C, loss=loss, data=data, targets=targets)
+
     optimizer = BayesianOptimization(
         f=svc_crossval,
-        pbounds={'expC': (-6, 5)},
-        random_state=33,
+        pbounds={'expC': (-6, 5),
+                 'expLoss': (0, 1.9)},
+        random_state=42,
         verbose=2,
 
     )
-    optimizer.maximize(n_iter=30, init_points=5)
-    
+    optimizer.maximize(n_iter=40, init_points=10)
+
     print(f"~> Final Result: {optimizer.max}")
-    
+
 # Optimize
-optimize_svc(X, y)
+optimize_svc(X_train, y_train)
+```
+</p></details>
+
+<details><summary><b> Kernel SVM</b></summary><p>
+```
+def svc_cv(C, kernel, data, targets):
+    alg = Pipeline([
+        ("scaler", StandardScaler()),
+        ("linear_svc", OneVsOneClassifier(SVC(C=C,
+                                              kernel=kernel,
+                                              random_state=42)))
+    ])
+    alg.fit(data, targets)
+    y_pred = alg.predict(X_test)
+    return metrics.accuracy_score(y_test, y_pred)
+
+def optimize_svc(data, targets):
+    def svc_crossval(expC, expKernel):
+        kernel_dict = {0: "poly",
+                       1: "rbf",
+                       2: "sigmoid",
+                    #    3: "precomputed",
+                       }
+        C      = 10 ** expC
+        kernel = kernel_dict[int(expKernel)]
+        return svc_cv(C=C, kernel=kernel, data=data, targets=targets)
+
+    optimizer = BayesianOptimization(
+        f=svc_crossval,
+        pbounds={'expC': (-6, 5),
+                 'expKernel': (0, 2.999)},
+        random_state=42,
+        verbose=2,
+
+    )
+    optimizer.maximize(n_iter=40, init_points=10)
+
+    print(f"~> Final Result: {optimizer.max}")
+
+# Optimize
+optimize_svc(X_train, y_train)
 ```
 </p></details>
 
