@@ -611,6 +611,72 @@ print(f"~> Best Result: {optimizer.max}")
 ```
 </p></details>
 
+<details><summary><b> Decision Tree</b></summary><p>
+```
+# CV Strategy
+def dt_cv(criterion,
+          splitter,
+          max_depth,
+          min_samples_split,
+          min_samples_leaf,
+          max_features,
+          data, targets):
+    alg = DecisionTreeClassifier(criterion=criterion,
+                                 splitter=splitter,
+                                 max_depth=max_depth,
+                                 min_samples_split=min_samples_split,
+                                 min_samples_leaf=min_samples_leaf,
+                                 max_features=max_features,
+                                 random_state=42)
+    alg.fit(data, targets)
+    y_pred = alg.predict(X_test)
+    return metrics.accuracy_score(y_test, y_pred)
+
+def optimize_dt(data, targets):
+    def dt_crossval(criterion, splitter, max_depth, min_samples_split, min_samples_leaf, max_features):
+        criterion_dict = {0: "gini",
+                          1: "entropy"}
+        splitter_dict  = {0: "best",
+                          1: "random"}
+        maxFeat_dict   = {0: "sqrt",
+                          1: "log2",
+                          2: None}
+
+        criterion    = criterion_dict[int(criterion)]
+        splitter     = splitter_dict[int(splitter)]
+        max_depth    = int(max_depth)
+        max_features = maxFeat_dict[int(max_features)]
+
+        return dt_cv(criterion=criterion,
+                    splitter=splitter,
+                    max_depth=max_depth,
+                    min_samples_split=min_samples_split,
+                    min_samples_leaf=min_samples_leaf,
+                    max_features=max_features,
+                    data=data, targets=targets)
+
+    optimizer = BayesianOptimization(
+        f=dt_crossval,
+        pbounds={'criterion': (0, 1.999),
+                 'splitter': (0, 1.999),
+                 'max_depth': (1, 50),
+                 "min_samples_split": (0.05, 1),
+                 "min_samples_leaf": (0.05, .5),
+                 "max_features": (0, 2.999)},
+        random_state=42,
+        verbose=2
+    )
+    # Optimize
+    optimizer.maximize(
+        n_iter=50,
+        init_points=60
+    )
+    print(f"~> Best Result: {optimizer.max}")
+
+optimize_dt(X_train, y_train)
+```
+</p></details>
+
 <details><summary> <b>XGBoostClassifier</b> </summary><p>
 ```
 # Importing
