@@ -55,4 +55,7 @@ tqdm.pandas()
 df['caps_vs_length'] = df.progress_apply(lambda row: float(row['capitals'])/float(row['total_length']), axis=1)
 ```
 </p></details>
+
+- Gender Feature [detect if sentence is male, female, or none].<br>
+- Grammer Feature [detect if sentence is in past, present, or future].
 </div>
