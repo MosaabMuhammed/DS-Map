@@ -332,6 +332,18 @@ print(accuracy_score(y_valid, y_pred))
 ```
 </p></details></li>
 
+<li><details><summary><b>MultinomialNB</b></summary><p>
+<b>MultinomialNB</b> is more suitable for text classification</b>
+```
+from sklearn.naive_bayes import MultinomialNB
+
+clf = MultinomialNB(alpha=0.0, class_prior=[0.4, 0.6])
+clf.fit(X_train, y_train)
+y_pred = ada_clf.predict(X_valid)
+print(accuracy_score(y_valid, y_pred))
+```
+</p></details></li>
+
 </ul></details>
 
 <details><summary><b style="font-size:25px">Multi-Class Classification:</b></summary></p>
