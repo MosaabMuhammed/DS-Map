@@ -189,4 +189,33 @@ visualizer.fit(docs)
 visualizer.poof()
 ```
 </details>
+
+<details><summary><b style="font-size:20px">t-SNE Visualizer</b></summary>
+<p><b>yellowbrick</b> applies a decomosition first (SVD with 50 components by defaults), then performs the t-SNE embedding</p>
+```
+from yellowbrick.text import TSNEVisualizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# We could use any vectorization technique and not specifically TF-IDF.
+tfidf = TfidfVectorizer()
+docs  = tfidf.fit_transform(df["sample"].values)
+
+# We could try PCA instead of SVD, by passing "decompose="pca"" into TSNEVisualizer().
+tsne = TSNEVisualizer()
+tsne.fit(docs, y=df["intent"].values)
+tsne.poof()
+```
+
+```
+# Apply clustering instead of class names.
+from sklearn.cluster import KMeans
+clusters = KMeans(n_clusters=5)
+clusters.fit(docs)
+
+tsne = TSNEVisualizer()
+tsne.fit(docs, ["c{}".format(c) for c in clusters.labels_])
+tsne.poof()
+
+```
+</details>
 </div>

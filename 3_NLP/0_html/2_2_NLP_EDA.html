@@ -110,10 +110,121 @@ mtx.sample(5)
 
 <h4>2. Show Heatmap</h4>
 
-<pre><code>
+<pre><code>import matplotlib
+
+fig, ax = plt.subplots()
+fig.suptitle(&quot;Co-occurrence of Tokens&quot;, fontsize=12)
+fig.subplots_adjust(wspace=.75)
+
+n = len(specific_tokens)
+x_tick_marks = np.arange(n)
+y_tick_marks = np.arange(n)
+
+ax1 = plt.subplot(121)
+ax1.set_xticks(x_tick_marks)
+ax1.set_yticks(y_tick_marks)
+ax1.set_xticklabels(specific_tokens, fontsize=8, rotation=90)
+ax1.set_yticklabels(specific_tokens, fontsize=8)
+ax1.xaxis.tick_top()
+ax1.set_xlabel(&quot;By Frequency&quot;)
+sns.heatmap(mtx, cmap=&quot;viridis&quot;)
+
+# And alphabetically
+alpha_cast = sorted(specific_tokens)
+alpha_mtx  = 
 </code></pre>
 
 </details>
 
+<details><summary><b style="font-size:20px">POS Tagging Coloring</b></summary>
 
+<pre><code># Import required libraries.
+import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+from nltk import pos_tag, word_tokenize
+from yellowbrick.text.postag import PosTagVisualizer
+</code></pre>
+
+
+
+<pre><code>pie = &quot;&quot;&quot;
+In a small saucepan, combine sugar and eggs
+until well blended. Cook over low heat, stirring
+constantly, until mixture reaches 160° and coats
+the back of a metal spoon. Remove from the heat.
+Stir in chocolate and vanilla until smooth. Cool
+to lukewarm (90°), stirring occasionally. In a small
+bowl, cream butter until light and fluffy. Add cooled
+chocolate mixture; beat on high speed for 5 minutes
+or until light and fluffy. In another large bowl,
+beat cream until it begins to thicken. Add
+confectioners' sugar; beat until stiff peaks form.
+Fold into chocolate mixture. Pour into crust. Chill
+for at least 6 hours before serving. Garnish with
+whipped cream and chocolate curls if desired.
+&quot;&quot;&quot;
+
+tokens = word_tokenize(pie)
+tagged = pos_tag(tokens)
+
+visualizer = PosTagVisualizer()
+visualizer.transform(tagged)
+
+print(&quot; &quot;.join((visualizer.colorize(token, color)
+                for color, token in visualizer.tagged)))
+print(&quot;\n&quot;)
+</code></pre>
+
+</details>
+
+<details><summary><b style="font-size:20px">Frequency Distribution</b></summary>
+
+<pre><code>from yellowbrick.text.freqdist import FreqDistVisualizer
+from sklearn.feature_extraction.text import CountVectorizer
+
+# &quot;stop_words&quot; parameter removes stopwords.
+# Remove the parameter, if you prefer another thing.
+vectorizer = CountVectorizer(stop_words=&quot;english&quot;)
+docs       = vectorizer.fit_transform(df[&quot;sample&quot;].values)
+features   = vectorizer.get_feature_names()
+
+plt.figure(figsize=(15, 8))
+visualizer = FreqDistVisualizer(features=features)
+visualizer.fit(docs)
+visualizer.poof()
+</code></pre>
+
+</details>
+
+<details><summary><b style="font-size:20px">t-SNE Visualizer</b></summary>
+<p><b>yellowbrick</b> applies a decomosition first (SVD with 50 components by defaults), then performs the t-SNE embedding</p>
+
+<pre><code>from yellowbrick.text import TSNEVisualizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# We could use any vectorization technique and not specifically TF-IDF.
+tfidf = TfidfVectorizer()
+docs  = tfidf.fit_transform(df[&quot;sample&quot;].values)
+
+# We could try PCA instead of SVD, by passing &quot;decompose=&quot;pca&quot;&quot; into TSNEVisualizer().
+tsne = TSNEVisualizer()
+tsne.fit(docs, y=df[&quot;intent&quot;].values)
+tsne.poof()
+</code></pre>
+
+
+
+<pre><code># Apply clustering instead of class names.
+from sklearn.cluster import KMeans
+clusters = KMeans(n_clusters=5)
+clusters.fit(docs)
+
+tsne = TSNEVisualizer()
+tsne.fit(docs, [&quot;c{}&quot;.format(c) for c in clusters.labels_])
+tsne.poof()
+
+</code></pre>
+
+</details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
