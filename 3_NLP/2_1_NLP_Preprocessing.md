@@ -79,4 +79,8 @@ def describe():
 ```
 </details>
 
+<details><summary><b style="font-size:20px">Spatializing Similarity</b></summary>
+<p><img src="imgs/20200605-141728.png"/></p>
+</details>
+
 </div>
