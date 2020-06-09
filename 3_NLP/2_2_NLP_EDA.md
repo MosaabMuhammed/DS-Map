@@ -171,4 +171,22 @@ print(" ".join((visualizer.colorize(token, color)
 print("\n")
 ```
 </details>
+
+<details><summary><b style="font-size:20px">Frequency Distribution</b></summary>
+```
+from yellowbrick.text.freqdist import FreqDistVisualizer
+from sklearn.feature_extraction.text import CountVectorizer
+
+# "stop_words" parameter removes stopwords.
+# Remove the parameter, if you prefer another thing.
+vectorizer = CountVectorizer(stop_words="english")
+docs       = vectorizer.fit_transform(df["sample"].values)
+features   = vectorizer.get_feature_names()
+
+plt.figure(figsize=(15, 8))
+visualizer = FreqDistVisualizer(features=features)
+visualizer.fit(docs)
+visualizer.poof()
+```
+</details>
 </div>
