@@ -218,4 +218,51 @@ tsne.poof()
 
 ```
 </details>
+
+<details><summary><b style="font-size:20px">Classification Report - Visualizer</b></summary>
+
+```
+from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+from yellowbrick.classifier import ClassificationReport
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder
+
+docs   = TfidfVectorizer().fit_transform(df["sample"].values)
+labels = LabelEncoder().fit_transform(df["intent"].values)
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+    docs.toarray(), labels, test_size=.2
+)
+
+plt.figure(figsize=(15, 8))
+visualizer = ClassificationReport(GaussianNB(), classes=df["intent"].unique())
+visualizer.fit(X_train, y_train)
+visualizer.score(docs.toarray(), labels)
+visualizer.poof()
+
+```
+</details>
+
+<details><summary><b style="font-size:20px">Confusion Matrix - Visualizer</b></summary>
+```
+from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+from yellowbrick.classifier import ConfusionMatrix
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder
+
+samples = TfidfVectorizer().fit_transform(df["sample"].values)
+# intents = LabelEncoder().fit_transform(df["intent"].values)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    samples.toarray(), df["intent"].values, test_size=.2
+)
+
+visualizer = ConfusionMatrix(GaussianNB(), classes=df["intent"].unique())
+visualizer.fit(X_train, y_train)
+visualizer.score(X_test, y_test)
+visualizer.poof()
+```
 </div>
