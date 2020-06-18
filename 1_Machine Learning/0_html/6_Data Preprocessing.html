@@ -362,6 +362,149 @@ housing_extra_attribs = attr_adder.transform(housing.values)
 
 </p></details> 
 
+
+<details><summary> <b>Paralleism</b> </summary><p>
+
+<pre><code># Prepare the logging.
+import logging
+
+# Logging configuration.
+logging.basicConfig(
+    level=logging.INFO,
+    format=&quot;%(processName)-10s %(asctime)s %(message)s&quot;,
+    datefmt=&quot;%Y-%m-%d %H:%M:%S&quot;
+)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+</code></pre>
+
+
+<pre><code># Prepare Timing function.
+from functools import wraps
+import time
+
+def timeit(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        return result, time.time() - start
+    return wrapper
+</code></pre>
+
+
+
+<pre><code># Prepare validation strategy.
+from sklearn.externals import joblib
+from sklearn.model_selection import cross_val_score
+
+@timeit
+def train_model(path, model, saveto=None, cv=2):
+    # Load the corpus data and labels for classification.
+    X = df[&quot;sample&quot;].values
+    y = df['intent'].values
+
+    # Compute cross validation scores.
+    scores = cross_val_score(model, X, y, cv=cv)
+
+    # Fit the model on entire dataset.
+    model.fit(X, y)
+
+    # Write to disk if specified
+    if saveto:
+        joblib.dump(model, saveto)
+
+    # Return scores as well as training time via decorator.
+    return scores
+</code></pre>
+
+
+
+<pre><code># Prepare model.s
+from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.neural_network import MLPClassifier
+
+def fit_naive_bayes(path, saveto=None, cv=2):
+    model = Pipeline([
+        (&quot;tfidf&quot;, TfidfVectorizer()),
+        (&quot;clf&quot;, MultinomialNB())
+    ])
+
+    if saveto is None:
+        saveto = f&quot;naive_bayes_{time.time()}.pkl&quot;
+
+    scores, delta = train_model(path, model, saveto, cv)
+
+    logger.info((
+        f&quot;\nnaive bayes training took {delta:0.2f} seconds.&quot;
+        f&quot;with an average score of {scores.mean():0.3f}&quot;
+    ))
+
+def fit_logistic_regression(path, saveto=None, cv=2):
+    model = Pipeline([
+        (&quot;tfidf&quot;, TfidfVectorizer()),
+        (&quot;clf&quot;, LogisticRegression())
+    ])
+
+    if saveto is None:
+        saveto = f&quot;log_reg_{time.time()}.pkl&quot;
+
+    scores, delta = train_model(path, model, saveto, cv)
+    logger.info((
+        f&quot;\nlogistic regression training took {delta:0.2f} seconds&quot;
+        f&quot;with an average score of {scores.mean():.3f}&quot;
+    ))
+
+
+def fit_multilayer_perceptron(path, saveto=None, cv=2):
+    model = Pipeline([
+        (&quot;tfidf&quot;, TfidfVectorizer()),
+        (&quot;clf&quot;, MLPClassifier(hidden_layer_sizes=(10, 10), early_stopping=True))
+    ])
+
+    if saveto is None:
+        saveto = f&quot;multilayer_perceptron_{time.time()}.pkl&quot;
+
+    scores, delta = train_model(path, model, saveto, cv)
+
+    logger.info((
+        f&quot;\nmultilayer perceptron training took {delta:.2f} seconds&quot;
+        f&quot; with an average score of {scores.mean():.3f}&quot;
+    ))
+</code></pre>
+
+
+
+<pre><code># Paralleism.
+import multiprocessing as mp
+
+def run_parallel(path):
+    tasks = [
+        fit_naive_bayes, fit_logistic_regression, fit_multilayer_perceptron
+    ]
+    logger.info(&quot;\nbeginning parallel tasks&quot;)
+    start = time.time()
+
+    procs = []
+    for task in tasks:
+        proc = mp.Process(name=task.__name__, target=task, args=(path,))
+        procs.append(proc)
+        proc.start()
+
+    for proc in procs:
+        proc.join()
+
+    delta = time.time() - start
+    logger.info(f&quot;\ntotal parallel fit time: {delta:.2f} seconds.\n&quot;)
+
+run_parallel(&quot;./&quot;)
+</code></pre>
+
+</p></details> 
+
 <hr>
 
 <details><summary><b style='font-size:20px'>Bayesian Optimization</b> </summary><p><ul>

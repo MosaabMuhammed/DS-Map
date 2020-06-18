@@ -630,6 +630,9 @@ y_pred = rnd_forest_blender.predict(X_test_predictions)
 <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/KMeans.html"><b>K-means</b></a>
 
 <h4>Beside Elbow method, we can use silhouette coefficient too</h4>
+<p>The silhouette coefficient is used when the ground-truth about the dataset is unknown, instead computing the density of clusters produced by the model. A silhouette score can then be calculated by averaging the silhouette coefficient for each sample, computed as the difference between the average intracluster distance and the mean nearest-cluster distance for each sample, normalized by the maximum value.<br><br>
+This produces a score between 1 and -1, where 1 is highly dense clusters, -1 is completely incorrect clustering, and values near zero indicate overlapping clusters. The higher the score the better, because the clusters are denser and more separate. Negative values imply that samples have been assigned to the wrong cluster, and positive
+values mean that there are discrete clusters. The scores can then be plotted to display a measure of how close each point in one cluster is to points in the neighboring clusters.</p>
 ```
 # silhouette = (b - a) / max(a, b)
 # a = mean distance to the other instances in the same cluster.
@@ -650,6 +653,26 @@ plt.ylabel("Silhouette score", fontsize=14)
 plt.axis([1.8, 8.5, 0.55, 0.7])
 save_fig("silhouette_score_vs_k_plot")
 plt.show()
+```
+
+```
+from sklearn.cluster import KMeans
+from yellowbrick.cluster import SilhouetteVisualizer
+
+# Instantiate the clustering model and visualizer
+visualizer = SilhouetteVisualizer(KMeans(n_clusters=6))
+visualizer.fit(docs)
+visualizer.poof()
+```
+
+<h4>Elbow Methods using Yellowbrick</h4>
+```
+from sklearn.cluster import KMeans
+from yellowbrick.cluster import KElbowVisualizer
+# Instantiate the clustering model and visualizer
+visualizer = KElbowVisualizer(KMeans(), metric='silhouette', k=[4,10])
+visualizer.fit(docs)
+visualizer.poof()
 ```
 </p></details></li>
 

@@ -227,4 +227,53 @@ tsne.poof()
 </code></pre>
 
 </details>
+
+<details><summary><b style="font-size:20px">Classification Report - Visualizer</b></summary>
+
+
+<pre><code>from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+from yellowbrick.classifier import ClassificationReport
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder
+
+docs   = TfidfVectorizer().fit_transform(df[&quot;sample&quot;].values)
+labels = LabelEncoder().fit_transform(df[&quot;intent&quot;].values)
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+    docs.toarray(), labels, test_size=.2
+)
+
+plt.figure(figsize=(15, 8))
+visualizer = ClassificationReport(GaussianNB(), classes=df[&quot;intent&quot;].unique())
+visualizer.fit(X_train, y_train)
+visualizer.score(docs.toarray(), labels)
+visualizer.poof()
+
+</code></pre>
+
+</details>
+
+<details><summary><b style="font-size:20px">Confusion Matrix - Visualizer</b></summary>
+
+<pre><code>from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+from yellowbrick.classifier import ConfusionMatrix
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder
+
+samples = TfidfVectorizer().fit_transform(df[&quot;sample&quot;].values)
+# intents = LabelEncoder().fit_transform(df[&quot;intent&quot;].values)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    samples.toarray(), df[&quot;intent&quot;].values, test_size=.2
+)
+
+visualizer = ConfusionMatrix(GaussianNB(), classes=df[&quot;intent&quot;].unique())
+visualizer.fit(X_train, y_train)
+visualizer.score(X_test, y_test)
+visualizer.poof()
+</code></pre>
+
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
