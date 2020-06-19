@@ -97,6 +97,14 @@ np.expand_dims(x, 0)
 
 <details><summary><b>DataFrame</b></summary><p>
 
+<details><summary><b>Better Visualization for Sparse Matrix/Dataframe</b></summary><p>
+```
+# By simpling replacing 0 with ''
+df[df==0] = 0
+df
+```
+</p></details>
+
 <details><summary>From <b>Normal Dataframe</b> to <b> Similarity Matrix</b></summary><p>
 
 <h4>1. Create graph dataframe</h4>
