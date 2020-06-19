@@ -14,6 +14,7 @@ for sentence in sent_tokenize(paragraph):
 </details>
 
 <details><summary><b style="font-size:20px">Tokenization</b></summary>
+<h4>wordpunct_tokenize</h4>
 
 <pre><code>#  do we want to remove punctuation from tokens, and if so, should we make punctuation marks tokens themselves? Should we preserve hyphenated words as compound elements or break them apart? Should we approach contractions as one token or two, and if they are two tokens, where should they be split?
 
@@ -22,6 +23,99 @@ from nltk import wordpunct_tokenize
 tokens = []
 for token in wordpunct_tokenize(sentence):
     tokens.append(token)
+</code></pre>
+
+
+<h4>TreeBank</h4>
+
+<pre><code>from nltk.tokenize import TreebankWordTokenizer
+
+sentence = &quot;&quot;&quot;Monticello wasn't designated as UNESCO world Heritage Site until 1987.&quot;&quot;&quot;
+
+tokenizer = TreebankWordTokenizer()
+tokenizer.tokenize(sentence)
+
+#### RESULT ########
+['Monticello',
+'was',
+&quot;n't&quot;,
+'designated',
+'as',
+'UNESCO',
+'World',
+'Heritage',
+'Site',
+'until',
+'1987',
+'.']
+
+</code></pre>
+
+
+<h4>Tokenize informal text from social networks like Twitter and Facebook</h4>
+
+<pre><code># The NLTK library includues a tokenizer that was built to deal with short, informal, emtion-laced texts from social networks where grammar and spelling conventions vary widely.
+from nltk.tokenize.casual import casual_tokenize
+
+message = &quot;&quot;&quot;RT @TJMonticello Best day everrrrrrrr at Monticello. Awesommmmmmeeeeeee day:*)&quot;&quot;&quot;
+
+casual_tokenize(message)
+
+#### RESULT ####
+['RT',
+ '@TJMonticello',
+ 'Best',
+ 'day',
+ 'everrrrrrrr',
+ 'at',
+ 'Monticello',
+ '.',
+ 'Awesommmmmmeeeeeee',
+ 'day',
+ ':*)']
+
+casual_tokenize(message, reduce_len=True, strip_handles=True)
+
+###### Result ########
+ ['RT',
+ 'Best',
+ 'day',
+ 'everrr',
+ 'at',
+ 'Monticello',
+ '.',
+ 'Awesommmeee',
+ 'day',
+ ':*)']
+</code></pre>
+
+
+<h4>n-gram Tokenizer</h4>
+NOTE: n-grams that occurs in more than 25% of all documens in your corpus, you usually ignore it.
+
+<pre><code># First find the individual tokens using the previous methods.
+sentence = &quot;&quot;&quot;Thomas Jefferson began building Monticello at the age of 26.&quot;&quot;&quot;
+pattern = re.compile(r&quot;([-\s.,;!?])+&quot;)
+tokens = pattern.split(sentence)
+tokens = [x for x in tokens if x and x not in '- \t\n.,;!?']
+
+
+# 2. Create the n-gram tokenizer.
+from nltk.util import ngrams
+two_grams = list(ngrams(tokens, 2))
+#### RESULT ######
+[('Thomas', 'Jefferson'),
+('Jefferson', 'began'),
+('began', 'building'),
+('building', 'Monticello'),
+('Monticello', 'at'),
+('at', 'the'),
+('the', 'age'),
+('age', 'of'),
+('of', '26')]
+
+# Add them together in a string instead of tuple
+two_grams = [&quot; &quot;.join(x) for x in two_grams]
 </code></pre>
 
 </details>

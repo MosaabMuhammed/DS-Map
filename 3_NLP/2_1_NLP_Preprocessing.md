@@ -86,6 +86,34 @@ casual_tokenize(message, reduce_len=True, strip_handles=True)
  'day',
  ':*)']
 ```
+
+<h4>n-gram Tokenizer</h4>
+NOTE: n-grams that occurs in more than 25% of all documens in your corpus, you usually ignore it.
+```
+# First find the individual tokens using the previous methods.
+sentence = """Thomas Jefferson began building Monticello at the age of 26."""
+pattern = re.compile(r"([-\s.,;!?])+")
+tokens = pattern.split(sentence)
+tokens = [x for x in tokens if x and x not in '- \t\n.,;!?']
+
+
+# 2. Create the n-gram tokenizer.
+from nltk.util import ngrams
+two_grams = list(ngrams(tokens, 2))
+#### RESULT ######
+[('Thomas', 'Jefferson'),
+('Jefferson', 'began'),
+('began', 'building'),
+('building', 'Monticello'),
+('Monticello', 'at'),
+('at', 'the'),
+('the', 'age'),
+('age', 'of'),
+('of', '26')]
+
+# Add them together in a string instead of tuple
+two_grams = [" ".join(x) for x in two_grams]
+```
 </details>
 
 <details><summary><b style="font-size:20px">Part-of-Speech Tagging</b></summary>

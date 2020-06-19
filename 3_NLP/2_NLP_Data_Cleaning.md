@@ -203,6 +203,9 @@ def lemma_text(text):
 </p></details>
 
 <details><summary><b style='font-size:20px'>12. Remove Stopwords</b></summary><p>
+<p><b>NOTE:</b>Stopwords in NLTK is different than in Sklearn.</p>
+
+<h4>NLTK</h4>
 ```
 import nltk
 from nltk.corpus import stopwords
@@ -215,6 +218,15 @@ def remove_stopwords(text):
     
 #### Usage 
 tweet['text'] = tweet.text.progress_apply(remove_stopwords)
+```
+
+<h4>Sklearn</h4>
+```
+from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS as sklearn_stop_words
+print(len(sklearn_stop_words))
+
+# You can take the common between NLTK and Sklearn.
+print(len(nltk_stop_words.intersection(sklearn_stop_words)))
 ```
 </p></details>
 
