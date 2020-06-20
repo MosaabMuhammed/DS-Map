@@ -16,13 +16,34 @@ x = Bidirectional(LSTM(15, return_sequences=True))(x)
 x = GlobalMaxPool1D()(x)
 </code></pre>
 
-
 </p></details>
 
 <details><summary><b>BERT</b></summary><p>
 <li><a href='./0_notebooks/BERT for Humans.html#Comprehensive-BERT-Tutorial'>Tutorials on BERT</a></li>
 <li><a href='./0_notebooks/BERT Keras.html#This-is-the-very-first-time-I-would-be-implementing-BERT.'>BERT Keras</a></li>
 <li><a href='./0_notebooks/BERT using simple transformers.html'>BERT using simpleTransformers</a></li>
+</p></details>
+
+<details><summary><b>Sentiment Analysis</b> using <b>Rule-based</b></summary><p>
+
+<pre><code># !pip install vaderSentiment
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+sa = SentimentIntensityAnalyzer()
+# sa.lexicon --&gt; Print the lexicons
+
+sa.polarity_scores(text=&quot;Python is very readable and it's great for NLP.&quot;)
+</code></pre>
+
+
+<pre><code>corpus = [&quot;Absolutely perfect! Love it! :-) :-) :-)&quot;,
+          &quot;Horrible! Completely useless. :(&quot;,
+          &quot;It was OK. some good and some bad things.&quot;]
+
+for doc in corpus:
+    scores = sa.polarity_scores(doc)
+    print(f&quot;{scores['compound']:+}: {doc}&quot;)
+</code></pre>
+
 </p></details>
 
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

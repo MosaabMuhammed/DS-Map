@@ -171,6 +171,7 @@ replace_contractions("this's a text with contraction")
 </p></details>
 
 <details><summary><b style='font-size:20px'>9. Stemming</b></summary><p>
+<p>One trick you could do, is to use <b>lemmatizer</b> then use <b>stemmer</b> and see if improves your models.</p>
 <h4>1. Snowball Stemmer</h4>
 ~~~
 from nltk.stem import  SnowballStemmer
@@ -197,7 +198,11 @@ stemmer = PorterStemmer()
 </p></details>
 
 <details><summary><b style='font-size:20px'>10. Lemmatization</b></summary><p>
+<p>One trick you could do, is to use <b>lemmatizer</b> then use <b>stemmer</b> and see if improves your models.</p>
 ~~~
+# Note: for WordNetLemmatizer, you can specifiy the grammar pos of the word, for better lemmatization.
+# ex: lemmatizer.lemmatize("better", pos="a") --> good
+# by default: WordNetLemmatizer assumes it's a noun, so be careful, the POS can have a HUGE effect on your lemmatization.
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize.toktok import ToktokTokenizer

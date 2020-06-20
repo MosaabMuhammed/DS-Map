@@ -16,13 +16,32 @@
 x = Bidirectional(LSTM(15, return_sequences=True))(x)
 x = GlobalMaxPool1D()(x)
 ```
-
 </p></details>
 
 <details><summary><b>BERT</b></summary><p>
 <li><a href='./0_notebooks/BERT for Humans.html#Comprehensive-BERT-Tutorial'>Tutorials on BERT</a></li>
 <li><a href='./0_notebooks/BERT Keras.html#This-is-the-very-first-time-I-would-be-implementing-BERT.'>BERT Keras</a></li>
 <li><a href='./0_notebooks/BERT using simple transformers.html'>BERT using simpleTransformers</a></li>
+</p></details>
+
+<details><summary><b>Sentiment Analysis</b> using <b>Rule-based</b></summary><p>
+```
+# !pip install vaderSentiment
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+sa = SentimentIntensityAnalyzer()
+# sa.lexicon --> Print the lexicons
+
+sa.polarity_scores(text="Python is very readable and it's great for NLP.")
+```
+```
+corpus = ["Absolutely perfect! Love it! :-) :-) :-)",
+          "Horrible! Completely useless. :(",
+          "It was OK. some good and some bad things."]
+
+for doc in corpus:
+    scores = sa.polarity_scores(doc)
+    print(f"{scores['compound']:+}: {doc}")
+```
 </p></details>
 
 </div>
