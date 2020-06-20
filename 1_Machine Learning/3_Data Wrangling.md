@@ -4,6 +4,13 @@
 
 <details><summary><b>Python</b></summary><p>
 
+<details><summary> From <b>list of lists</b> to <b>list of items</b></summary><p>
+```
+list_of_lists = [[1, 2, 3, 4], [5, 6, 76], [123, 12, 123, 123,124123,123,123]]
+list_elements = sum(terms, [])
+```
+</p></details>
+
 <details><summary> <b>See Files in Current Directory</b> </summary><p>
 ```
 import os
