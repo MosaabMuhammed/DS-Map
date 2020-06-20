@@ -171,6 +171,7 @@ replace_contractions("this's a text with contraction")
 </p></details>
 
 <details><summary><b style='font-size:20px'>9. Stemming</b></summary><p>
+<h4>1. Snowball Stemmer</h4>
 ~~~
 from nltk.stem import  SnowballStemmer
 from nltk.tokenize.toktok import ToktokTokenizer
@@ -182,6 +183,17 @@ def stem_text(text):
     tokens = [stemmer.stem(token.lower()) for token in tokens]
     return ' '.join(tokens)
 ~~~
+
+<h4>2. Porter Stemmer</h4>
+```
+from nltk.stem.porter import PorterStemmer
+
+stemmer = PorterStemmer()
+' '.join([stemmer.stem(w).strip("'") for w in "dish washer's washed dishes".split()])
+
+##### Result #######
+'dish washer wash dish'
+```
 </p></details>
 
 <details><summary><b style='font-size:20px'>10. Lemmatization</b></summary><p>
