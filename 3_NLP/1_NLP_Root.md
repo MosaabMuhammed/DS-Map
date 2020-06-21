@@ -20,7 +20,7 @@
 
 <li><a href="./6_NLP_Word_Embedding.html"><b style='font-size:20px;color:#333'>Word Embedding</b></a></li>
 
-<li><a href="./8_NLP_Deep_Learning.html"><b style='font-size:20px;color:#333'>Deep Learning</b></a></li>
+<li><a href="./8_NLP_Deep_Learning.html"><b style='font-size:20px;color:#333'>Models</b></a></li>
 
  
 </div>

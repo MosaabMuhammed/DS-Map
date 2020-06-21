@@ -17,6 +17,7 @@ xtest_cntv = cnt_vectorizer.transform(test_df.cleaned_text.values)
 </p></details>
 
 <details><summary><b style='font-size:20px'>2. TF-IDF</b></summary><p>
+<p><b>NOTE:</b> You can build TF-IDF followed by search engine instead of ML models, and calculate cosine similarity between the quest and your documents using inverted index O(1) using Whoosh python library.</p>
 ~~~
 # Always start with these features. They work (almost) everytime!
 tfv = TfidfVectorizer(dtype=np.float32, min_df=3,  max_features=None, 
