@@ -45,4 +45,8 @@ xvalid_hv = hv.transform(test_df.cleaned_text.values)
 y_train = train_df.target.values
 ~~~
 </p></details>
+
+<details><summary><b style='font-size:20px'>4. Other Schemes</b></summary><p>
+<p><img src="imgs/20200621-174111.png" alt="" /></p>
+</p></details>
 </div>

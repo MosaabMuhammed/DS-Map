@@ -17,6 +17,7 @@ xtest_cntv = cnt_vectorizer.transform(test_df.cleaned_text.values)
 </p></details>
 
 <details><summary><b style='font-size:20px'>2. TF-IDF</b></summary><p>
+<p><b>NOTE:</b> You can build TF-IDF followed by search engine instead of ML models, and calculate cosine similarity between the quest and your documents using inverted index O(1) using Whoosh python library.</p>
 
 <pre><code># Always start with these features. They work (almost) everytime!
 tfv = TfidfVectorizer(dtype=np.float32, min_df=3,  max_features=None, 
@@ -45,5 +46,9 @@ xvalid_hv = hv.transform(test_df.cleaned_text.values)
 y_train = train_df.target.values
 </code></pre>
 
+</p></details>
+
+<details><summary><b style='font-size:20px'>4. Other Schemes</b></summary><p>
+<p><img src="imgs/20200621-174111.png" alt="" /></p>
 </p></details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
