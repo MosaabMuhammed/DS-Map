@@ -1,4 +1,4 @@
-# Deep Learning
+# Modeling
 
 <div style='width:1000px;margin:auto'>
 
@@ -42,6 +42,35 @@ for doc in corpus:
     scores = sa.polarity_scores(doc)
     print(f"{scores['compound']:+}: {doc}")
 ```
+</p></details>
+
+<details><summary><b>Latent Discriminant Analysis</b></summary><p>
+<p>NOTE: you can use it in sklearn. (sklearn.discriminant_analysis.LinearDiscriminantAnalysis), but here we show the manual calculations on spam filter.</p>
+<p>LDA is very useful when we have more columns and less rows, specially in text analysis</p>
+
+```
+# 1. Calculate the TF-IDF
+from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.tokenize.casual import casual_tokenize
+tfidf_model = TfidfVectorizer(tokenizer=casual_tokenize)
+tfidf_docs  = tfidf_model.fit_transform(sms.text).toarray()
+
+# 2. Calculate the mean for spam and ham.
+mask = sms.spam.astype(bool).values
+spam_centriod = tfidf_docs[mask].mean(axis=0)
+ham_centriod  = tfidf_docs[~mask].mean(axis=0)
+
+# 3. Dot product with TF_IDF matrix.
+spamminess_score = tfidf_docs.dot(spam_centriod - ham_centriod)
+spamminess_score.round(2)
+
+# 4. Normalize to predict.
+from sklearn.preprocessing import MinMaxScaler
+sms["lda_score"]   = MinMaxScaler().fit_transform(spamminess_score.reshape(-1, 1))
+sms["lda_predict"] = (sms.lda_score > .5).astype(int)
+sms["spam lda_predict lda_score".split()].round(2).head(6)~~~~
+```
+
 </p></details>
 
 </div>
