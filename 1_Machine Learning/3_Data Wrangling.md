@@ -4,6 +4,19 @@
 
 <details><summary><b>Python</b></summary><p>
 
+<details><summary>Sort Dictionary easily by <b>keys</b> or <b>values</b></summary><p>
+```
+sorting = {1: 23, 2: 24, 4: 51, 10: 1, "cool": 20}
+
+# to sort by values, put it first.
+values, keys = zip(*sorted(zip(sorting.values(), sorting.keys())))
+values, keys
+
+# OUTPUT
+((1, 20, 23, 24, 51), (10, 'cool', 1, 2, 4))
+```
+</p></details>
+
 <details><summary> From <b>list of lists</b> to <b>list of items</b></summary><p>
 ```
 list_of_lists = [[1, 2, 3, 4], [5, 6, 76], [123, 12, 123, 123,124123,123,123]]
