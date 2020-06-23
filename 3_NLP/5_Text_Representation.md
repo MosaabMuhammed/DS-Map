@@ -46,7 +46,17 @@ y_train = train_df.target.values
 ~~~
 </p></details>
 
-<details><summary><b style='font-size:20px'>4. Other Schemes</b></summary><p>
+<details><summary><b style='font-size:20px'>4. Latent Semantic Analysis</b></summary><p>
+
+The idea here, is to gather all the words that have closer meaning together into a topic, to reduce the dimensionality and avoid overfitting and increase the generality of the models.<br><br>
+
+You can do this by appling PCA/TruncatedSVD/LDiA/LDA/NNMF after building TF-IDF / BoW.<br><br>
+
+Then feed this new data to the models.
+
+</p></details>
+
+<details><summary><b style='font-size:20px'>5. Other Schemes</b></summary><p>
 <p><img src="imgs/20200621-174111.png" alt="" /></p>
 </p></details>
 </div>
