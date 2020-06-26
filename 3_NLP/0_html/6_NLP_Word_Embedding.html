@@ -1,6 +1,6 @@
 <!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Word Embedding</h1>
 <div style='width:1000px;margin:auto'>
-<details><summary><b style='font-size:20px'>1. GloVe</b></summary><p>
+<details><summary><b style='font-size:20px'>GloVe</b></summary><p>
 
 <details><summary><b style='font-size:20px'>Read Glove</b></summary><p>
 <h4>1. Read GloVe Vectors</h4>
@@ -154,7 +154,7 @@ X_train, X_valid = X_train.apply(pd.Series), X_valid.apply(pd.Series)
 </p></details>
 </p></details>
 
-<details><summary><b style='font-size:20px'>2. Universal Sentence Encoding</b></summary><p>
+<details><summary><b style='font-size:20px'>Universal Sentence Encoding</b></summary><p>
 <h4>1. Load the embeddings</h4>
 
 <pre><code># Import the hubber
@@ -172,6 +172,141 @@ X_test_embedding  = embed(test.text.values)
 <pre><code># Merge with TF-IDF
 train_df    = np.concatenate([X_train_embedding['outputs'], tf_train], axis=1)
 test_df     = np.concatenate([X_test_embedding['outputs'], tf_test], axis=1)
+</code></pre>
+
+</p></details>
+
+<details><summary><b style='font-size:20px'>Gensim [Word2Vec]</b></summary><p>
+<h4>1. Load Word2Vec into Gensim</h4>
+
+<pre><code># NOTE: you can limit = 200_000, if you have limited memory.
+# GoogleNews: https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit
+from gensim.models.keyedvectors import KeyedVectors
+
+word_vectors = KeyedVectors.load_word2vec_format(&quot;path/to/GoogleNews-vectors-negative300.bin.gz&quot;, binary=True, limit=200_000)
+</code></pre>
+
+
+<h4>2. Most similar words "Synonems"</h4>
+
+<pre><code>word_vectors.most_similar(positive=['cooking', 'potatoes'], topn=5)
+
+#Result.
+[('cook', 0.6973530650138855),
+('oven_roasting', 0.6754530668258667),
+('Slow_cooker', 0.6742032170295715),
+('sweet_potatoes', 0.6600279808044434),
+('stir_fry_vegetables', 0.6548759341239929)]
+</code></pre>
+
+
+<h4>3. Adding & Subtracting words.</h4>
+
+<pre><code>word_vectors.most_similar(positive=['king', 'women'], negative=['man'], topn=2)
+
+#RESULT
+[('queen', 0.7118192315101624), ('monarch', 0.6189674139022827)]
+</code></pre>
+
+
+<h4>4. Detect unrelated terms</h4>
+
+<pre><code>word_vectors.doesnt_match(&quot;potatoes milk cake computer&quot;.split())
+
+#RESULT
+'computer'
+</code></pre>
+
+
+<h4>5. Cosine similarity b/w words.</h4>
+
+<pre><code>word_vectors.similarity('princess', 'queen')
+
+#RESULT
+0.70705315983704509
+</code></pre>
+
+
+<h4>6. Numerical Dimension of the word.</h4>
+
+<pre><code>word_vectors['phone']
+
+#RESULT
+array([-0.01446533, -0.12792969, -0.11572266, -0.22167969, -0.07373047,
+-0.05981445, -0.10009766, -0.06884766, 0.14941406, 0.10107422,
+-0.03076172, -0.03271484, -0.03125
+ , -0.10791016, 0.12158203,
+0.16015625, 0.19335938, 0.0065918 , -0.15429688, 0.03710938,
+...
+</code></pre>
+
+</p></details>
+
+<details><summary><b style='font-size:20px'>Build Custom Word2Vec</b></summary><p>
+First you need to break your documents into sentences and the sentences into tokens. End up like this:
+
+<pre><code>&gt;&gt;&gt; token_list
+[
+['to', 'provide', 'early', 'intervention/early', 'childhood', 'special',
+'education', 'services', 'to', 'eligible', 'children', 'and', 'their',
+'families'],
+['essential', 'job', 'functions'],
+['participate', 'as', 'a', 'transdisciplinary', 'team', 'member', 'to',
+'complete', 'educational', 'assessments', 'for']
+...
+]
+</code></pre>
+
+
+<h4>Load the Model</h4>
+
+<pre><code>from gensim.models.word2vec import Word2Vec
+
+# Setup the parameters.
+num_features = 300  # Number of vector elements to represent the word.
+min_word_count = 3  # Min number of word count to be considered in the Word2vec model.
+num_workers = 2   # Number of CPU cores used for the training.
+window_size = 6  # Context window size.
+subsampling = 1e-3      # Subsampling rate for frequent terms.
+</code></pre>
+
+
+<h4>Build the Model</h4>
+
+<pre><code>model = Word2Vec(
+            token_list,
+            workers=num_workers,
+            size=num_features,
+            min_count=min_word_count,
+            window=window_size,
+            sample=subsampling)
+
+</code></pre>
+
+
+Word2vec models can consume quite a bit of memory. But remember that only the
+weight matrix for the hidden layer is of interest. Once you’ve trained your word
+model, you can reduce the memory footprint by about half if you freeze your model
+and discard the unnecessary information. The following command will discard the
+unneeded output weights of your neural network:
+
+<pre><code>model.init_sims(replace=True)
+</code></pre>
+
+
+<h4>Save the model</h4>
+
+<pre><code>model_name = &quot;my_domain_specific_word2vec_model&quot;
+model.save(model_name)
+</code></pre>
+
+
+<h4>Use the newly trained model</h4>
+
+<pre><code>from gensim.models.word2vec import Word2Vec
+model_name = &quot;my_domain_specific_word2vec_model&quot;
+model = Word2Vec.load(model_name)
+model.most_similar('radiology')
 </code></pre>
 
 </p></details>

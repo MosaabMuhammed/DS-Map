@@ -1,7 +1,7 @@
 # Word Embedding
 
 <div style='width:1000px;margin:auto'>
-<details><summary><b style='font-size:20px'>1. GloVe</b></summary><p>
+<details><summary><b style='font-size:20px'>GloVe</b></summary><p>
 
 <details><summary><b style='font-size:20px'>Read Glove</b></summary><p>
 <h4>1. Read GloVe Vectors</h4>
@@ -144,7 +144,7 @@ X_train, X_valid = X_train.apply(pd.Series), X_valid.apply(pd.Series)
 </p></details>
 </p></details>
 
-<details><summary><b style='font-size:20px'>2. Universal Sentence Encoding</b></summary><p>
+<details><summary><b style='font-size:20px'>Universal Sentence Encoding</b></summary><p>
 <h4>1. Load the embeddings</h4>
 ```
 # Import the hubber
@@ -161,6 +161,129 @@ X_test_embedding  = embed(test.text.values)
 # Merge with TF-IDF
 train_df    = np.concatenate([X_train_embedding['outputs'], tf_train], axis=1)
 test_df     = np.concatenate([X_test_embedding['outputs'], tf_test], axis=1)
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>Gensim [Word2Vec]</b></summary><p>
+<h4>1. Load Word2Vec into Gensim</h4>
+```
+# NOTE: you can limit = 200_000, if you have limited memory.
+# GoogleNews: https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit
+from gensim.models.keyedvectors import KeyedVectors
+
+word_vectors = KeyedVectors.load_word2vec_format("path/to/GoogleNews-vectors-negative300.bin.gz", binary=True, limit=200_000)
+```
+
+<h4>2. Most similar words "Synonems"</h4>
+```
+word_vectors.most_similar(positive=['cooking', 'potatoes'], topn=5)
+
+#Result.
+[('cook', 0.6973530650138855),
+('oven_roasting', 0.6754530668258667),
+('Slow_cooker', 0.6742032170295715),
+('sweet_potatoes', 0.6600279808044434),
+('stir_fry_vegetables', 0.6548759341239929)]
+```
+
+<h4>3. Adding & Subtracting words.</h4>
+```
+word_vectors.most_similar(positive=['king', 'women'], negative=['man'], topn=2)
+
+#RESULT
+[('queen', 0.7118192315101624), ('monarch', 0.6189674139022827)]
+```
+
+<h4>4. Detect unrelated terms</h4>
+```
+word_vectors.doesnt_match("potatoes milk cake computer".split())
+
+#RESULT
+'computer'
+```
+
+<h4>5. Cosine similarity b/w words.</h4>
+```
+word_vectors.similarity('princess', 'queen')
+
+#RESULT
+0.70705315983704509
+```
+
+<h4>6. Numerical Dimension of the word.</h4>
+```
+word_vectors['phone']
+
+#RESULT
+array([-0.01446533, -0.12792969, -0.11572266, -0.22167969, -0.07373047,
+-0.05981445, -0.10009766, -0.06884766, 0.14941406, 0.10107422,
+-0.03076172, -0.03271484, -0.03125
+ , -0.10791016, 0.12158203,
+0.16015625, 0.19335938, 0.0065918 , -0.15429688, 0.03710938,
+...
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>Build Custom Word2Vec</b></summary><p>
+First you need to break your documents into sentences and the sentences into tokens. End up like this:
+```
+>>> token_list
+[
+['to', 'provide', 'early', 'intervention/early', 'childhood', 'special',
+'education', 'services', 'to', 'eligible', 'children', 'and', 'their',
+'families'],
+['essential', 'job', 'functions'],
+['participate', 'as', 'a', 'transdisciplinary', 'team', 'member', 'to',
+'complete', 'educational', 'assessments', 'for']
+...
+]
+```
+
+<h4>Load the Model</h4>
+```
+from gensim.models.word2vec import Word2Vec
+
+# Setup the parameters.
+num_features = 300  # Number of vector elements to represent the word.
+min_word_count = 3  # Min number of word count to be considered in the Word2vec model.
+num_workers = 2   # Number of CPU cores used for the training.
+window_size = 6  # Context window size.
+subsampling = 1e-3		# Subsampling rate for frequent terms.
+```
+
+<h4>Build the Model</h4>
+```
+model = Word2Vec(
+			token_list,
+			workers=num_workers,
+			size=num_features,
+			min_count=min_word_count,
+			window=window_size,
+			sample=subsampling)
+
+```
+
+Word2vec models can consume quite a bit of memory. But remember that only the
+weight matrix for the hidden layer is of interest. Once you’ve trained your word
+model, you can reduce the memory footprint by about half if you freeze your model
+and discard the unnecessary information. The following command will discard the
+unneeded output weights of your neural network:
+```
+model.init_sims(replace=True)
+```
+
+<h4>Save the model</h4>
+```
+model_name = "my_domain_specific_word2vec_model"
+model.save(model_name)
+```
+
+<h4>Use the newly trained model</h4>
+```
+from gensim.models.word2vec import Word2Vec
+model_name = "my_domain_specific_word2vec_model"
+model = Word2Vec.load(model_name)
+model.most_similar('radiology')
 ```
 </p></details>
 </div>
