@@ -169,9 +169,9 @@ test_df     = np.concatenate([X_test_embedding['outputs'], tf_test], axis=1)
 ```
 # NOTE: you can limit = 200_000, if you have limited memory.
 # GoogleNews: https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit
-from gensim.models.keyedvectors import KeyedVectors
+from gensim.models import KeyedVectors
 
-word_vectors = KeyedVectors.load_word2vec_format("path/to/GoogleNews-vectors-negative300.bin.gz", binary=True, limit=200_000)
+word_vectors = KeyedVectors.load_word2vec_format("https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz", binary=True, limit=200_000)
 ```
 
 <h4>2. Most similar words "Synonems"</h4>
@@ -284,6 +284,36 @@ from gensim.models.word2vec import Word2Vec
 model_name = "my_domain_specific_word2vec_model"
 model = Word2Vec.load(model_name)
 model.most_similar('radiology')
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>fastText</b></summary><p>
+Head over to the fastText model repository and download the bin+text model for your language of choice.
+After the download finishes, unzip the binary language file.27 With the following code, you can then load it into gensim:
+```
+# If using gensim version before 3.2.0, use the following code: gensim.models.wrappers.fasttext import FastText
+from gensim.models.fasttext import FastText
+ft_model = FastText.load_fasttext_format(\
+		model_file=MODEL_PATH)
+ft_model.most_similar('soccer')
+```
+</p></details>
+
+<details><summary><b style='font-size:20px'>Similarity Measures</b></summary><p>
+```
+# Calculate "Eclidean distance"
+np.linalg.norm(wv["Illinois"] - wv["Illini"])
+
+# Calculate Cosine Similatiry == Normalized dot product.
+cos_similarity = np.dot(wv["Illinois"], wv["Illini"]) / (
+    np.linalg.norm(wv["Illinois"]) *\
+    np.linalg.norm(wv["Illini"]))
+print(cos_similarity)
+
+# Calculate Cosine Distance.
+# 0 = Similar
+# 
+print(1 - cos_similarity)
 ```
 </p></details>
 </div>

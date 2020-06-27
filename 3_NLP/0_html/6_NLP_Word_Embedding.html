@@ -181,9 +181,9 @@ test_df     = np.concatenate([X_test_embedding['outputs'], tf_test], axis=1)
 
 <pre><code># NOTE: you can limit = 200_000, if you have limited memory.
 # GoogleNews: https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit
-from gensim.models.keyedvectors import KeyedVectors
+from gensim.models import KeyedVectors
 
-word_vectors = KeyedVectors.load_word2vec_format(&quot;path/to/GoogleNews-vectors-negative300.bin.gz&quot;, binary=True, limit=200_000)
+word_vectors = KeyedVectors.load_word2vec_format(&quot;https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz&quot;, binary=True, limit=200_000)
 </code></pre>
 
 
@@ -307,6 +307,38 @@ model.save(model_name)
 model_name = &quot;my_domain_specific_word2vec_model&quot;
 model = Word2Vec.load(model_name)
 model.most_similar('radiology')
+</code></pre>
+
+</p></details>
+
+<details><summary><b style='font-size:20px'>fastText</b></summary><p>
+Head over to the fastText model repository and download the bin+text model for your language of choice.
+After the download finishes, unzip the binary language file.27 With the following code, you can then load it into gensim:
+
+<pre><code># If using gensim version before 3.2.0, use the following code: gensim.models.wrappers.fasttext import FastText
+from gensim.models.fasttext import FastText
+ft_model = FastText.load_fasttext_format(\
+        model_file=MODEL_PATH)
+ft_model.most_similar('soccer')
+</code></pre>
+
+</p></details>
+
+<details><summary><b style='font-size:20px'>Similarity Measures</b></summary><p>
+
+<pre><code># Calculate &quot;Eclidean distance&quot;
+np.linalg.norm(wv[&quot;Illinois&quot;] - wv[&quot;Illini&quot;])
+
+# Calculate Cosine Similatiry == Normalized dot product.
+cos_similarity = np.dot(wv[&quot;Illinois&quot;], wv[&quot;Illini&quot;]) / (
+    np.linalg.norm(wv[&quot;Illinois&quot;]) *\
+    np.linalg.norm(wv[&quot;Illini&quot;]))
+print(cos_similarity)
+
+# Calculate Cosine Distance.
+# 0 = Similar
+# 
+print(1 - cos_similarity)
 </code></pre>
 
 </p></details>
