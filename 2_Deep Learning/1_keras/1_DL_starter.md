@@ -12,6 +12,7 @@ plot_model(model, to_file='model_plot4a.png', show_shapes=True, show_layer_names
 </p></details>
 
 <details><summary><b>Save & Load Model</b></summary><p>
+<h4>1. using save()</h4>
 ```
 #NOTE: This is only available for Sequential and Functional API and NOT for Subclass API.
 # But you can use save_weights() and load_weights() to save and restore the model parameters!
@@ -22,6 +23,7 @@ model.save("my_keras_model.h5")
 model = tf.keras.models.load_model("my_keras_model.h5")
 ```
 
+<h4>2. using checkpoint</h4>
 ```
 # Using Checkpints
 checkpoint_cb = keras.callbacks.ModelCheckpoint("my_keras_model.h5",
@@ -33,6 +35,24 @@ history = model.fit(X_train, y_train, epochs=10,
 
 model = keras.models.load_model("my_keras_model.h5") # rollback to best model
 
+```
+
+<h4>3. saving model in json</h4>
+```
+## WRITE model & weights
+model_structure = model.to_json()
+with open("cnn_model.json", "w") as json_file:
+	json_file.write(model_structure)
+	
+model.save_weights("cnn_weights.h5")
+
+
+## READ model & weights
+from keras.models import model_from_json
+with open("cnn_model.json", "r") as json_file:
+	json_string = json_file.read()
+model = model_from_json(json_string)
+model.load_weights('cnn_weights.h5')
 ```
 </p></details>
 
