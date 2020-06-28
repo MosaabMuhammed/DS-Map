@@ -2,9 +2,10 @@
 
 <div style='width:1000px;margin:auto'>
 
-<details><summary><b>CNN with GloVe</b></summary><p>
-<li><a href='./0_notebooks/CNN.html'>CNN with Text</a></li>
-</p></details>
+<details><summary><b>CNN with Embedding</b></summary><p><ul>
+<li><a href='./0_notebooks/CNN.html'>CNN with GloVe</a></li>
+<li><a href='./0_notebooks/ch07.html'>CNN with GoogleNews <b>word2vec</b></a></li>
+</ul></p></details>
 
 <details><summary><b>LSTM & GRU & Bi-Directional</b></summary><p>
 <li><a href='./0_notebooks/LSTM_Toxic.html'>LSTM with Text</a></li>
