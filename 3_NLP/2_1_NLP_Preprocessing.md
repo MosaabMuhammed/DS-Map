@@ -174,4 +174,61 @@ def describe():
 <p><img src="imgs/20200605-141728.png"/></p>
 </details>
 
+<details><summary><b style="font-size:20px">Entity Extraction</b></summary><ul>
+<li><details><summary><b>Extracting GPS coordinates</b></summary>
+```
+# Extracting GPS coordinates
+import re
+lat = r'([-]?[0-9]?[0-9][.][0-9]{2,10})'
+lon = r'([-]?1?[0-9]?[0-9][.][0-9]{2,10})'
+sep = r'[,/ ]{1,3}'
+re_gps = re.compile(lat+sep+lon)
+
+print(re_gps.findall("http://...maps/@34.0551066,-118.2496763..."))
+print( re_gps.findall("https://www.openstreetmap.org/#map=10/5.9666/116.0566"))
+print(re_gps.findall("Zig Zag Cafe is at 45.344, -121.9431 on my GPS."))
+```
+</details></li>
+<li><details><summary><b>Extracting Dates</b></summary>
+The state-of-the-art is <b>dateutil.parser.parse</b> and <b>sutime</b> libraries.
+```
+# Regular Expression for US dates.
+us  = r'((([01]?\d)[-/]([0123]?\d))([-/]([0123]\d)\d\d)?)'
+mdy = re.findall(us, "Santa came 12/25/2017. An elf appeared 12/12.")
+
+print(mdy)
+
+dates = [{"mdy": x[0], "md": x[1], "m": int(x[2]), 'd': int(x[3]),
+          "y": int(x[4].lstrip('/') or 0), 'c': int(x[5] or 0)} for x in mdy]
+print(dates)
+```
+```
+# If you have a second date without a year, append the mentioned year to that date.
+for i, d in enumerate(dates):
+    for k, v in d.items():
+        if not v:
+            d[k] = dates[max(i-1, 0)][k]
+
+print(dates)
+
+# Transform the dates into date type.
+from datetime import date
+datetimes = [date(d['y'], d['m'], d['d']) for d in dates]
+print(datetimes)
+```
+```
+# Extracting European dates.
+eu  = r'((([0123]?\d)[-/]([01]?\d))([-/]([0123]\d)?\d\d)?)'
+dmy = re.findall(eu, "Alan Mathison Turing OBE FRS (23/6/1912-7/6/1954) was an English computer scientist.")
+print(dmy)
+```
+```
+mon_words = 'January February March April May June July August September October November December'
+mon = (r'\b(' + '|'.join('{}|{}|{}|{}|{:02d}'.format(
+    m, m[:4], m[:3], i + 1, i + 1) for i, m in enumerate(mon_words.split())) + r')\b')
+re.findall(mon, 'January has 31 days, February the 2nd month of 12, has 28, except in a Leap Year.')
+```
+</details></li>
+
+</ul></details>
 </div>
