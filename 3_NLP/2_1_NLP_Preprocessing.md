@@ -117,6 +117,7 @@ two_grams = [" ".join(x) for x in two_grams]
 </details>
 
 <details><summary><b style="font-size:20px">Part-of-Speech Tagging</b></summary>
+<h4>1. NLTK</h4>
 ```
 from nltk import pos_tag
 
@@ -124,6 +125,32 @@ tags = []
 for paragraph in paragraphs:
 	for sentence in sent_tokenize(paragraph):
 		tags.append(pos_tag(wordpunct_tokenize(sentence)))
+```
+
+<h4>2. SpaCy</h4>
+```
+# import spacy
+# !python -m spacy download en_core_web_sm
+# en_model = spacy.load('en_core_web_sm')
+sentence = ("In 1541 Desoto wrote in his journal that the Pascagoula people ranged as far north as the confluence of the Leaf and Chickasawhay rivers at 30.4, 88.5")
+parsed_sent = en_model(sentence)
+# Print entities.
+print(parsed_sent.ents)
+
+# Print tokens.
+' '.join(['{}_{}'.format(tok, tok.tag_) for tok in parsed_sent])
+```
+```
+# Show the TAG in dataframe.
+from collections import OrderedDict
+def token_dict(token):
+    return OrderedDict(ORTH=token.orth_, LEMMA=token.lemma_,
+                       POS=token.pos_, TAG=token.tag_,
+                       DEP=token.dep_)
+def doc_dataframe(doc):
+    return pd.DataFrame([token_dict(tok) for tok in doc])
+
+doc_dataframe(en_model("In 1541 Desoto met the Pascagoula."))
 ```
 </details>
 
