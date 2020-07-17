@@ -343,4 +343,89 @@ respone(&quot;what is the internet?&quot;)
 </code></pre>
 
 </p></details>
+
+<details><summary><b>Approximate Nearest Neighbors (ANN) Search</b> Libraries</summary><p><ul>
+<li>Spotify's Annoy <a href="https://github.com/spotify/annoy">github</a></li>
+<li>BallTree (using nmslib) <a href="https://github.com/searchivarius/nmslib">github</a></li>
+<li>Brute Force using Basic Linear Algebra Subprograms library (BLAS) <a href="http://scikit-learn.org/stable/modules/neighbors.html#brute-force">github</a></li>
+<li>Brute Force using Non-Metric Space Library (NMSlib) <a href="https://github.com/searchivarius/NMSLIB"> github</a></li>
+<li>Dimension reductiOn and LookuPs on a Hypercube for effIcient Near Neigh-bor (DolphinnPy) <a href="https://github.com/ipsarros/DolphinnPy"> github</a></li>
+<li>Random Projection Tree Forest (rpforest)<a href="https://github.com/lyst/rpforest"> github</a></li>
+<li>Locality sensitive hashing (datasketch)<a href="https://github.com/ekzhu/datasketch"> github</a></li>
+<li>Multi-indexing hashing (MIH)<a href="https://github.com/norouzi/mih"> github</a></li>
+<li>Fast Lookup of Cosine and Other Nearest Neighbors (FALCONN)<a href="https://pypi.python.org/pypi/FALCONN"> github</a></li>
+<li>Fast Lookup of Approximate Nearest Neighbors (FLANN)<a href="http://www.cs.ubc.ca/research/flann/"> github</a></li>
+<li>Hierarchical Navigable Small World (HNSW) (in nmslib)<a href="https://github.com/searchivarius/
+nmslib/blob/master/similarity_search/include/factory/method/hnsw.h"> github</a></li>
+<li>K-Dimensional Trees (kdtree)<a href="https://github.com/stefankoegl/kdtree"> github</a></li>
+<li>nearpy <a href="https://pypi.python.org/pypi/NearPy">github</a></li>
+</ul>
+
+<details><summary>Using <b>Annoy</b> on word-vectors</summary><p>
+NOTE: Read Page 409 in nlp in action book.
+<h4>1. Load WordVectors using gensim (wv), Annoy</h4>
+
+<pre><code>!pip install annoy
+from annoy import AnnoyIndex
+
+n_words, n_dimensions = wv.vectors.shape
+index                   = AnnoyIndex(n_dimensions)
+</code></pre>
+
+
+<h4>2. Add each word vector to the AnnoyIndex</h4>
+
+<pre><code>from tqdm import tqdm
+for i, word in enumerate(tqdm(wv.index2word)):
+    index.add_item(i, wv[word])
+</code></pre>
+
+<h4>Build Euclidean/Cosine distance index with 15 trees</h4>
+
+<pre><code># Euclidean
+from tqdm import tqdm
+for i, word in enumerate(tqdm(wv.index2word)):
+    index.add_item(i, wv[word])
+
+index.build(n_trees)
+index.save('Word2vec_euc_index.ann')
+w2id = dict(zip(range(len(wv.vocab)), wv.vocab))
+
+# Cosine
+index_cos = AnnoyIndex(f=n_dimensions, metric='angular')
+
+for i, word in enumerate(wv.index2word):
+    if not i % 100_000:   # Another way to keep track of your progress.
+        print(f&quot;{i}: {word}&quot;)
+    index_cos.add_item(i, wv[word])
+
+# Increase the number of trees to get more accurate results.
+index_cos.build(30)
+index_cos.save('word2vec_cos_index.ann')
+</code></pre>
+
+
+
+<h4>Find Harry_Potter neighbors with AnnoyIndex</h4>
+
+<pre><code># Find Harry_Potter neighbors with AnnoyIndex.
+print(wv.vocab['Harry_Potter'].index)
+print(wv.vocab['Harry_Potter'].count)
+
+w2id = dict(zip(
+    wv.vocab, range(len(wv.vocab))
+))
+
+print(w2id['Harry_Potter'])
+
+# Get similar items to &quot;Harry_Potter&quot;.
+ids = index.get_nns_by_item(w2id['Harry_Potter'], 11)
+print(ids)
+
+print([wv.vocab[i] for i in ids])
+print([wv.index2word[i] for i in ids])
+</code></pre>
+
+</p></details>
+</p></details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
