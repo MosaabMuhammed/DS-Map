@@ -294,6 +294,42 @@ recall_score(y_train_5, y_train_pred_90)
 # (0.9000345901072293, 0.4799852425751706)
 </code></pre>
 
+</p></details>
+
+<details><summary> <b>Log Loss</b></summary><p>
+<h4>Manual</h4>
+
+<pre><code>def log_loss(y_true, y_proba):
+    # Define an epsilon value.
+    # this can also be an input.
+    # this value is used to clip probabilities.
+    epsilon = 1e-15
+
+    # Iniitialize empty list to store.
+    # individual losses.
+    loss = []
+
+    # Loop over all true and predicted probabitlity values
+    for yt, yp in zip(y_true, y_proba):
+        # Adjust probability.
+        # 0 gets converted to 1e-15
+        # 1 gets converted to 1 - 1e15
+        yp = np.clip(yp, epsilon, 1 - epsilon)
+
+        # Calculate loss for one sample
+        temp_loss = - 1. * (yt * np.log(yp) + (1 - yt) * np.log(1 - yp))
+
+        # Add to loss list.
+        loss.append(temp_loss)
+    return np.mean(loss)
+</code></pre>
+
+
+<h4>Using Sklearn</h4>
+
+<pre><code>from sklearn import metrics
+metrics.log_loss(y_true, y_proba)
+</code></pre>
 
 </p></details>
 
