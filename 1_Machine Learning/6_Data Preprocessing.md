@@ -211,10 +211,32 @@ pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
 train_set = pipeline.fit_transform(train_set)
 test_st   = pipeline.transform(test_set)
 ~~~
-</p>
-</details>
+</p></details>
 
 <details><summary> <b>K-Fold CV</b> </summary><p>
+```
+# We can use this method with almost all kinds of datasets.
+from sklearn import model_selection
+
+# Create a new column called kfold and fill it with -1.
+df['kfold'] = -1
+
+# Randomize the rows of the data.
+df = df.sample(frac=1).reset_index(drop=True)
+
+# Initiate the kfold class from model_selection module
+kf = model_selection.KFold(n_splits=5)
+
+# fill the new kfold column.
+for fold, (trn_, val_) in enumerate(kf.split(X=df)):
+    df.loc[val_, 'kfold'] = fold
+
+# Save the new csv with kfold column.
+df.to_csv("train_folds.csv", index=False)
+```
+</p></details>
+
+<details><summary> <b>Stratified K-Fold CV</b> </summary><p>
 ```
 # Using Custom Stratified K-folds
 def Stratified_kfolds(alg, X, y):
@@ -253,7 +275,6 @@ def Stratified_kfolds(alg, X, y):
         
     return score_valid/skf.n_splits
 ```
-
 </p></details>
 
 <details><summary> <b>Cross_val_score</b> </summary><p>
@@ -280,11 +301,6 @@ y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, v
 ```
 </p></details>
 
-<details><summary><b>Cross Validation</b></summary>
-<p style="margin: 0">
-<p>1) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">Explanation for <b>Cross Validation</b></a> </p>
-</p>
-</details>
 
 <details><summary> <b>GridSearchCV</b> </summary>
 <p style="margin: 0">
