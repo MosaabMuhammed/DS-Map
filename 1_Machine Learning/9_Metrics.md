@@ -32,6 +32,43 @@ def plot_confusion_matrix(y_test, y_pred):
 ```
 accuracy = model.score(y_test, y_pred)
 ```
+<h4>Manual</h4>
+```
+def accuracy(y_true, y_pred):
+    correct_counter = 0
+
+    for yt, yp in zip(y_true, y_pred):
+        if yt == yp:
+            correct_counter += 1
+    return correct_counter / len(y_true)
+```
+</p></details>
+
+<details><summary> <b>TP, TN, FP, FN</b></summary><p>
+```
+# This can be true_positive or true_negative 
+# based on the class_label!
+def true_positive(y_true, y_pred, class_label):
+    tp = 0
+    for yt, yp in zip(y_true, y_pred):
+        if yt == class_label and yp == class_label:
+            tp += 1
+    return tp
+
+def false_positive(y_true, y_pred, class_label):
+    fp = 0
+    for yt, yp in zip(y_true, y_pred):
+        if yt != class_label and yp == class_label:
+            fp += 1
+    return fp
+
+def false_negative(y_true, y_pred, class_label):
+    fn = 0
+    for yt, yp in zip(y_true, y_pred):
+        if yt == class_label and yp != class_label:
+            fn += 1
+    return fn
+```
 </p></details>
 
 <details><summary> <b>Confusion Matrix</b> </summary><p>
@@ -55,7 +92,7 @@ norm_conf_mx = conf_mx / row_sums
 np.fill_diagonal(norm_conf_mx, 0)
 sns.heatmap(norm_conf_mx, cmap="viridis")
 plt.xlabel("Predicted Labels")
-plt.ylabel("True Labels");~~~~
+plt.ylabel("True Labels");
 ```
 </p></details>
 
@@ -115,21 +152,62 @@ from sklearn.metrics import precision_score
 
 precision_score(y_train_5, y_train_pred)
 ```
+
+<h4>Manual</h4>
+```
+def precision(y_true, y_pred, class_label=0):
+    tp = true_positive(y_true, y_pred, class_label)
+    fp = false_positive(y_true, y_pred, class_label)
+    precision = tp / (tp + fp)
+    return precision
+```
 </p></details>
 
-<details><summary> <b>Recall</b> </summary><p>
+<details><summary> <b>Recall</b> aka <b>True Positive Rate (TPR)</b> aka <b>Sensitivity</b></summary><p>
 ```
 from sklearn.metrics import recall_score
 
 recall_score(y_train_5, y_train_pred)
 ```
+
+<h4>Manual</h4>
+```
+def recall(y_true, y_pred, class_label=0):
+    tp = true_positive(y_true, y_pred, class_label)
+    fn = false_negative(y_true, y_pred, class_label)
+    recall = tp / (tp + fn)
+    return recall
+```
 </p></details>
 
+<details><summary> <b>False Positive Rate (FPR)</b></summary><p>
+```
+def FPR(y_true, y_pred, class_label=0):
+    fp = false_positive(y_true, y_pred, class_label)
+    tn = true_negative(y_true, y_pred, class_label)
+    return fp / (tn + fp)
+```
+</p></details>
+
+<details><summary> <b>True Negative Rate (TNR)</b> aka <b>Specifity</b></summary><p>
+```
+def TNR(y_true, y_pred, class_label=0):
+    return 1 - FPR(y_true, y_pred, class_label)
+```
+</p></details>
 <details><summary> <b>F1 Score</b> </summary><p>
 ```
 from sklearn.metrics import f1_score
 
 f1_score(y_train_5, y_train_pred)
+```
+<h4>Manual</h4>
+```
+def f1(y_true, y_pred, class_label=0):
+    p = precision(y_true, y_pred, class_label)
+    r = recall(y_true, y_pred, class_label)
+    score = 2 * p * r / (p + r)
+    return score
 ```
 </p></details>
 
