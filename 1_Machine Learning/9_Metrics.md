@@ -231,6 +231,43 @@ metrics.precision_score(y_true, y_pred, average="micro")
 ```
 </p></details>
 
+<details><summary><b>Weighted Precision</b> </summary><p>
+<b>Weighted Averaged Precision</b>: same as "macro" but in this case, it's weighted average depending on the number of items in each class.
+
+<h4>Manual</h4>
+```
+from collections import Counter
+
+def weighted_precision(y_true, y_pred):
+    # Find number of classes.
+    num_classes = len(np.unique(y_true))
+
+    # Store how many each class is showed up.
+    class_counts = Counter(y_true)
+
+    # Initialize precision to 0
+    precision = 0
+
+    # loop over all classes.
+    for class_ in range(num_classes):
+        tp = true_positive(y_true, y_pred, class_)
+        fp = false_positive(y_true, y_pred, class_)
+        temp_precision = tp / (tp + fp)
+        weighted_precision = class_counts[class_] * temp_precision
+        precision += weighted_precision
+
+    overall_precision = precision / len(y_true)
+    return overall_precision
+```
+
+<h4>Sklearn</h4>
+```
+from sklearn import metrics
+
+metrics.precision_score(y_true, y_pred, average="weighted")
+```
+</p></details>
+
 <details><summary> <b>Recall</b> aka <b>True Positive Rate (TPR)</b> aka <b>Sensitivity</b></summary><p>
 ```
 from sklearn.metrics import recall_score
