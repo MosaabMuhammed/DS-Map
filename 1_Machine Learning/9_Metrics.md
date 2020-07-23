@@ -25,8 +25,9 @@ def plot_confusion_matrix(y_test, y_pred):
     plt.title(liOfTitles[i])
     plt.show(
 ```
-</p></details>
+</p></details><br>
 
+<details><summary> <b>Classification</b></summary><p>
 
 <details><summary> <b>Accuracy Score</b></summary><p>
 ```
@@ -55,6 +56,7 @@ def true_positive(y_true, y_pred, class_label):
             tp += 1
     return tp
 
+# Type-I error
 def false_positive(y_true, y_pred, class_label):
     fp = 0
     for yt, yp in zip(y_true, y_pred):
@@ -62,6 +64,7 @@ def false_positive(y_true, y_pred, class_label):
             fp += 1
     return fp
 
+#  Type-II error
 def false_negative(y_true, y_pred, class_label):
     fn = 0
     for yt, yp in zip(y_true, y_pred):
@@ -82,6 +85,16 @@ pd.crosstab(data.Pclass,data.Survived,margins=True).style.background_gradient(cm
 from sklearn.metrics import confusion_matrix
 
 sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
+
+# Another way to plot it.
+# cm = confusion_matrix()
+plt.figure(figsize=(10, 10))
+cmap = sns.cubehelix_palette(50, hue=0.05, rot=0, light=0.9, dark=0,
+as_cmap=True)
+sns.set(font_scale=2.5)
+sns.heatmap(cm, annot=True, cmap=cmap, cbar=False)
+plt.ylabel('Actual Labels', fontsize=20)
+plt.xlabel('Predicted Labels', fontsize=20)
 ```
 
 <h4>See the errors in each class (see the confusion of the model)</h4>
@@ -448,7 +461,235 @@ from sklearn import metrics
 metrics.log_loss(y_true, y_proba)
 ```
 </p></details>
+<details><summary><b>Quadratic Weighted Kappa</b> [Cohen's Kappa]</summary><p>
+<p> QWK measures the “agreement” between two “ratings”.
+The ratings can be any real numbers in 0 to N. And predictions are also in the same range.
+An agreement can be defined as how close these ratings are to each other. 
+So, it’s suitable for a classification problem with N different categories/classes. If the agreement is high, the score is closer towards 1.0. In the case of low agreement, the score is close to 0.</p>
+```
+from sklearn import metrics
+y_true = [1, 2, 3, 1, 2, 3, 1, 2, 3]
+y_pred = [2, 1, 3, 1, 2, 3, 3, 1, 2]
 
-- Mean Absolute Error (Regression).
-- Mean Squared Error (Regression).
-- Square Root Mean Square Error (Regression).
+print(metrics.cohen_kappa_score(y_true, y_pred, weights="quadratic")
+# 0.333333333
+```
+</p></details>
+
+<details><summary><b>Matthew’s Correlation Coefficient (MCC)</b> [Cohen's Kappa]</summary><p>
+<p> MCC ranges from -1 to 1. 1 is perfect prediction, -1 is imperfect prediction, and 0 is random prediction.
+
+We see that MCC takes into consideration TP, FP, TN and FN and thus can be used for problems where classes are skewed. </p>
+		
+MCC = (TP * TN - FP * FN) / [ (TP + FP) * (FN + TN) * (FP + TN) * (TP + FN) ] ^ (0.5)
+	
+
+```
+def mcc(y_true, y_pred):
+	tp = true_positive(y_true, y_pred)
+	tn = true_negative(y_true, y_pred)
+	fp = false_positive(y_true, y_pred)
+	fn = false_negative(y_true, y_pred)
+	
+	numerator = (tp * tn) - (fp * fn)
+	denominator = (
+		(tp + fp) *
+		(fn + tn) *
+		(fp + tn) *
+		(tp + fn)
+	)
+	
+	denominator = denominator ** 0.5
+	return numerator / denominator
+```
+</p></details>
+</p></details>
+
+<details><summary><b>Multi-Label Classification</b></summary><p>
+
+<details><summary><b>Precision @ K</b></summary><p>
+```
+# Precision at k --> P @ K
+def pk(y_true, y_pred, k):
+    # if k = 0, return 0. we should never have this.
+    # as k is always >= 1.
+    if k == 0: return 0
+
+    # We are interested only in top-k predictions.
+    y_pred = y_pred[:k]
+
+    # Convert predictions to set.
+    pred_set = set(y_pred)
+
+    # Convert actual values to set.
+    true_set = set(y_true)
+
+    # Find common values.
+    common_values = pred_set.intersection(true_set)
+
+    # Return length of common values over k.
+    return len(common_values) / len(y_pred[:k])
+```
+</p></details>
+<details><summary><b>Average Precision @ K</b></summary><p>
+```
+def apk(y_true, y_pred, k):
+	"""
+	This function calculates average precision at k
+	for a single sample
+	:param y_true: list of values, actual classes
+	:param y_pred: list of values, predicted classes
+	:return: average precision at a given value k
+	"""
+	# initialize p@k list of values
+	pk_values = []
+	# loop over all k. from 1 to k + 1
+	for i in range(1, k + 1):
+		# calculate p@i and append to list
+		pk_values.append(pk(y_true, y_pred, i))
+	# if we have no values in the list, return 0
+	if len(pk_values) == 0:
+		return 0
+	# else, we return the sum of list over length of list
+	return sum(pk_values) / len(pk_values)
+```
+<p>The next implementation is another version of AP@k where order matters and we weigh the predictions.<br>
+This implementation will have slightly different results from the first one.</p>
+```
+# taken from:
+# https://github.com/benhamner/Metrics/blob/
+# master/Python/ml_metrics/average_precision.py
+import numpy as np
+def apk(actual, predicted, k=10):
+    """
+    Computes the average precision at k.
+    This function computes the AP at k between two lists of
+    items.
+    Parameters
+    ----------
+    actual : list
+    A list of elements to be predicted (order doesn't matter)
+    predicted : list
+    A list of predicted elements (order does matter)
+    k : int, optional
+    The maximum number of predicted elements
+    Returns
+    -------
+    score : double
+    The average precision at k over the input lists
+    """
+    if len(predicted)>k:
+        predicted = predicted[:k]
+    score = 0.0
+    num_hits = 0.0
+    for i,p in enumerate(predicted):
+        if p in actual and p not in predicted[:i]:
+            num_hits += 1.0
+            score += num_hits / (i+1.0)
+    if not actual:
+        return 0.0
+    return score / min(len(actual), k)
+
+```
+</p></details>
+<details><summary><b>Mean Average Precision @ K</b></summary><p>
+```
+# Mean Average Precision at k.
+def mapk(y_true, y_pred, k):
+    # Initialize empty list for apk values.
+    apk_values = []
+
+    for i in range(len(y_true)):
+        # Store apk values for every sample.
+        apk_values.append(apk(y_true[i], y_pred[i], k=k))
+    
+    # return mean of apk values list.
+    return sum(apk_values) / len(apk_values)
+```
+</p></details>
+</p></details>
+
+<details><summary><b>Regression</b></summary><p>
+<details><summary><b>Mean Absolute Error</b></summary><p>
+```
+# Without Numpy
+def mean_absolute_error(y_true, y_pred):
+    # Initialize error at 0
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += np.abs(yt - yp)
+    return error / len(y_true)
+```
+</p></details>
+<details><summary><b>Mean Squared Error</b></summary><p>
+```
+def mean_squared_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (yt - yp) ** 2
+    return error / len(y_true)
+```
+</p></details>
+<details><summary><b>Mean Squared Log Error</b></summary><p>
+```
+def mean_squared_log_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (np.log(1 + yt) - np.log(1 + yp)) ** 2
+    return error / len(y_true)
+```
+</p></details>
+<details><summary><b>Mean Percentage Error</b></summary><p>
+```
+def mean_percentage_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (yt - yp) / yt
+    return error / len(y_true)
+```
+</p></details>
+<details><summary><b>Mean Absolute Percentage Error</b></summary><p>
+```
+def mean_abs_percentage_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += np.abs(yt - yp) / yt
+    return error / len(y_true)
+```
+</p></details>
+<details><summary><b>R-Squared</b></summary><p>
+```
+# R-squared says how good your model fits the data.
+# R-squared closer to 1.0 says that the model fits the data quite well, whereas closer 0 means that model isn’t that good.
+# R-squared can also be negative when the model just makes absurd predictions.
+
+def R2(y_true, y_pred):
+    mean_true_value = np.mean(y_true)
+    numerator       = 0
+    denominator     = 0
+
+    for yt, yp in zip(y_true, y_pred):
+        numerator += (yt - yp)**2
+        denominator += (yt - mean_true_value)**2
+    ratio = numerator / denominator
+    return 1 - ratio
+```
+</p></details>
+
+<details><summary><b>Mean Percentage Error</b></summary><p>
+```
+def mean_percentage_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (yt - yp) / yt
+    return error / len(y_true)
+```
+</p></details>
+
+</p></details>
+
+
+
+
+
+
