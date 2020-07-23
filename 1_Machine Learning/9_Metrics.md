@@ -163,6 +163,74 @@ def precision(y_true, y_pred, class_label=0):
 ```
 </p></details>
 
+<details><summary><b>Macro Precision</b> </summary><p>
+<b>Macro Averaged Precision</b>: calculate precision for all classes individually and then average them.
+
+<h4>Manual</h4>
+```
+def macro_precision(y_true, y_pred):
+    # find the number of classes by taking
+    # length of unique values in true list
+    num_classes = len(np.unique(y_true))
+
+    # Initialize precision to 0.
+    precision = 0
+
+    # Loop over all classes.
+    for class_ in range(num_classes):
+        # Calculate true positive for current class.
+        tp = true_positive(y_true, y_pred, class_)
+
+        # Calculate false positive for current class.
+        fp = false_positive(y_true, y_pred, class_)
+
+        # Calculate precision for current class.
+        temp_precision = tp / (tp + fp)
+
+        # Keep adding precision for all classes.
+        precision += temp_precision
+
+    # Calculate and return average precision over all classes.
+    precision /= num_classes
+    return precision
+```
+
+<h4>Sklearn</h4>
+```
+metrics.precision_score(y_true, y_pred, average="macro")
+```
+</p></details>
+
+<details><summary><b>Micro Precision</b> </summary><p>
+<b>Micro Averaged Precision</b>: calculate class-wise "True Positive" and "False Positive" and then use that to calculate overall precision.
+
+<h4>Manual</h4>
+```
+def micro_precision(y_true, y_pred):
+    # Find the number of classes.
+    num_classes = len(np.unique(y_true))
+
+    # Initialize tp and fp to zero [0].
+    tp, fp = 0, 0
+
+    # Loop over all classes.
+    for class_ in range(num_classes):
+        tp += true_positive(y_true, y_pred, class_)
+        fp += false_positive(y_true, y_pred, class_)
+
+    # Calculate and return overall precision.
+    precision = tp / (tp + fp)
+    return precision
+```
+
+<h4>Sklearn</h4>
+```
+from sklearn import metrics
+
+metrics.precision_score(y_true, y_pred, average="micro")
+```
+</p></details>
+
 <details><summary> <b>Recall</b> aka <b>True Positive Rate (TPR)</b> aka <b>Sensitivity</b></summary><p>
 ```
 from sklearn.metrics import recall_score
@@ -272,6 +340,9 @@ recall_score(y_train_5, y_train_pred_90)
 </p></details>
 
 <details><summary> <b>Log Loss</b></summary><p>
+when dealing with log loss, you need to be very
+careful; any non-confident prediction will have a very high log loss.
+
 <h4>Manual</h4>
 ```
 def log_loss(y_true, y_proba):
