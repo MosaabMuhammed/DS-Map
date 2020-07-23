@@ -316,6 +316,41 @@ def f1(y_true, y_pred, class_label=0):
 ```
 </p></details>
 
+<details><summary><b>Weighted F1 Score</b> </summary><p>
+<b>Weighted Averaged F1</b>: same as "macro" but in this case, it's weighted average depending on the number of items in each class.
+
+<h4>Manual</h4>
+```
+from collections import Counter
+
+def weighted_f1(y_true, y_pred):
+    num_classes = len(np.unique(y_true))
+
+    class_counts = Counter(y_true)
+
+    # initialize f1 to 0
+    f1 = 0
+
+    for class_ in range(num_classes):
+        p = precision(y_true, y_pred, class_)
+        r = recall(y_true, y_pred, class_)
+
+        temp_f1 = 2 * p * r / (p+r+1e-20)
+
+        f1 += class_counts[class_] * temp_f1
+
+    overall_f1 = f1 / len(y_true)
+    return overall_f1
+```
+
+<h4>Sklearn</h4>
+```
+from sklearn import metrics
+
+metrics.f1_score(y_true, y_pred, average="weighted")
+```
+</p></details>
+
 <details><summary> Plot <b>Precision and Recall </b> Vs <b>Thresholds</b></summary><p>
 <h4>1. Calculate the decision function for the dataset.</h4>
 ```
