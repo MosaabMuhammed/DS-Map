@@ -215,8 +215,7 @@ models = [LogisticRegression(**lr_params).fit(X_train_sparse[t], y_train[t])
 </p>
 </details>
 
-<details><summary>From <b>One-Hot Encoding</b> To <b>Ordinal</b></summary>
-<p>
+<details><summary>From <b>One-Hot Encoding</b> To <b>Ordinal</b></summary><p>
 ~~~
 ind['inst'] = np.argmax(np.array(ind[[c for c in ind if c.startswith('instl')]]), axis = 1)
 ~~~ 
@@ -599,8 +598,19 @@ for col in ['ord_5_oe1', 'ord_5_oe2', 'ord_5_oe_add', 'ord_5_oe_join']:
 ~~~python
 train[['ord_5', 'ord_5_oe_add', 'ord_5_oe_join', 'ord_5_oe1', 'ord_5_oe2']].head()
 ~~~
-</p>
-</details>
+</p></details>
+
+<details><summary><b>Combination of cat features</summary><p>
+```
+import itertools
+
+def create_combinations(df, cat_cols):
+	combi = list(itertools.combinations(cat_cols, 2))
+	for c1, c2 in combi:
+		df.loc[:, c1 + "_" + c2] = df[c1].astype(str) + "_" + df[c2].astype(str)
+	return df
+```
+</p></details>
 
 
 <details><summary><b>Encoding Librariy</b></summary>
