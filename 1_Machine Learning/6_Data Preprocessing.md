@@ -598,6 +598,10 @@ run_parallel("./")
 !pip install bayesian-optimization
 from bayes_opt import BayesianOptimization
 ```
+
+<details><summary> <b>Which parameters to optimize</b> </summary><p>
+<img src="imgs/20200725-170244.png" alt="" />
+</p></details>
 <details><summary> <b>LogisticRegression</b> </summary><p>
 ```
 # Define LogisticRegression CV
@@ -1095,6 +1099,62 @@ if __name__ == "__main__":
 ## Show the plot of iterations.
 from skopt.plots import plot_convergence
 plot_convergence(result)
+```
+</p></details>
+
+
+<details><summary> <b>Random Forest</b> [hyperopt]</summary><p>
+```
+from functools import partial
+from sklearn import ensemble, metrics, model_selection
+from hyperopt import hp, fmin, tpe, Trials
+from hyperopt.pyll.base import scope
+
+def optimize(params, X, y):
+    # initialize model with current paramters.
+    model = ensemble.RandomForestClassifier(**params)
+
+    # Initialize stratified k-fold.
+    kf = model_selection.StratifiedKFold(n_splits=5)
+
+    .
+    . # see skopt part to know what to do in this part.
+    . 
+
+    return -1 * np.mean(accuracies)
+
+if __name__ == "__main__":
+    # Read the training data.
+    df = pd.read_csv("...")
+
+    X = ...
+    y = ...
+
+    # Define a parameters space.
+    param_space = {
+        # quniform gives round(uniform(low, high) / q) * q
+        # We want int values for depth and estimators.
+        "max_depth": scope.int(hp.quniform("max_depth", 1, 15, 1)),
+        "n_estimators": scope.int(hp.quniform("n_estimators", 100, 1500, 1)),
+        # choice chooses from a list of values.
+        "criterion": hp.choice("criterion", ["gini", "entropy"]),
+        # uniform chooses a value between two values.
+        "max_features": hp.uniform("max_featuers", 0, 1)
+    }
+
+    # Partial function.
+    optimization_function = partial(optimize, X=X, y=y)
+
+    # Initialize trials to keep logging information.
+    trials = Trials()
+
+    # Run hyperopt.
+    hopt = fmin(fn=optimization_function,
+                space=param_space,
+                algo=tpe.suggest,
+                max_evals=15,
+                trials=trials)
+    print(hopt)
 ```
 </p></details>
 
