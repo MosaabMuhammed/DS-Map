@@ -374,10 +374,26 @@ def aggregate_client(df, group_vars, df_names):
 cash_by_client = aggregate_client(cash, group_vars = ['SK_ID_PREV', 'SK_ID_CURR'], df_names = ['cash', 'client'])
 ~~~
 
-</p></details><details><summary><b>Date Features</b></summary><p>
+</p></details><details><summary><b>Date & Time-Series </b>Features</summary><p>
 <ul><li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.01_Engineering_dates.html#Engineering-Dates"><b>Date Features</b></a></li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.02_Engineering_time.html#Engineering-Time"><b>Time Features</b></a></li></ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-12-Engineering-Date-Time/12.02_Engineering_time.html#Engineering-Time"><b>Time Features</b></a></li>
+
+<li><h4>tsfresh</h4> for time-series feature-engineering
+<p>Read the documentation for more details.</p>
+```
+from tsfresh.feature_extraction import feature_calculators as fc
+
+# tsfreash based features.
+feature_dict["abs_energy"] = fc.abs_energy(x)
+feature_dict['count_above_mean'] = fc.count_above_mean(x)
+feature_dict['count_below_mean'] = fc.count_below_mean(x)
+feature_dict['mean_abs_change'] = fc.mean_abs_change(x)
+feature_dict['mean_change'] = fc.mean_change(x)
+```
+</li></ul>
+
+
 
 ```
 # Import add_datepart function
