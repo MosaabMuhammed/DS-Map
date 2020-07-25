@@ -718,10 +718,7 @@ plt.ylabel("Response")
 plt.show()
 ~~~
 </p></details>
-
-</p>
-</details>
-
+</p></details>
 
 <hr>
 
@@ -877,7 +874,15 @@ plt.show()
 
 <details><summary><b>8. Automatic Imputing [GridSearch]</b></summary><p>
 <li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-04-Missing-Data-Imputation/04.14-Automatic-Imputation-Method-Detection-Sklearn.html#Automatic-selection-of-best-imputation-technique-with-Sklearn"><b style='color:#333'>Sklearn</b></a> </p></li>
+</p></details>
 
+<details><summary><b>9. KNN Imputer</b></summary><p>
+```
+from sklearn import impute
+
+knn_imputer = impute.KNNImputer(n_neighbors=2)
+knn_imputer.fit_transfrom(X)
+```
 </p></details>
 
 

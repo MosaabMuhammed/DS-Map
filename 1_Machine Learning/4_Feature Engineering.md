@@ -394,7 +394,6 @@ feature_dict['mean_change'] = fc.mean_change(x)
 </li></ul>
 
 
-
 ```
 # Import add_datepart function
 from fastai.tabular import add_datepart
