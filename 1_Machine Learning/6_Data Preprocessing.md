@@ -1017,11 +1017,85 @@ print(f"~> Final Result: {optimizer.max}")
 </ul>
 </p></details>
 
-<details><summary> <b>Catboost</b> </summary><p>
-<ul>
-
+<details><summary> <b>Catboost</b> </summary><p><ul>
 <li><a href="./6_data_processing/hyperopt_for_catboost.html">Using<b> hyperopt</b> library</a></li>
-</ul>
+</ul></p></details>
+
+<details><summary> <b>Random Forest</b> [skopt]</summary><p>
+```
+from functools import partial
+from sklearn import ensemble, metrics, model_selection
+
+from skopt import gp_minimize
+from skopt import space
+
+def optimize(params, param_names, X, y):
+    # convert params to dictionary.
+    params = dict(zip(param_names, params))
+
+    # initialize model with current parameters.
+    model = ensemble.RandomForestClassifier(**params)
+
+    # Initialize stratified k-fold.
+    kf = model_selection.StratifiedKFold(n_splits=5)
+
+    # initliaze accuracy list.
+    accuracies = []
+
+    # Loop over all folds.
+    for train_idx, test_idx in kf.split(X=X, y=y):
+        X_train, y_train = X[train_idx], y[train_idx]
+        X_test,  y_test  = X[test_idx],  y[test_idx]
+
+        # Fit model for current fold.
+        model.fit(X_train, y_train)
+
+        # Create predictions.
+        y_preds = model.predict(X_test)
+
+        # Calaculate and append accuracy.
+        fold_accuracy = metrics.accuracy_score(y_test, y_preds)
+        accuracies.append(fold_accuracy)
+
+    # Return negative accuracy.
+    return -1 * np.mean(accuracies)
+
+if __name__ == "__main__":
+    # Read the training data.
+    df = pd.read_csv("../input/mobile_train.csv")
+
+    X = ...
+    y = ...
+
+    # Define a parameter space.
+    param_space = [space.Integer(3, 15, name="max_depth"),
+                   space.Integer(100, 1500, name="n_estimators"),
+                   space.Categorical(["gini", "entropy"], name="criterion"),
+                   space.Real(0.01, 1, prior="uniform", name="max_features")]
+
+    param_names = ["max_depth",
+                   "n_estimators",
+                   "criterion",
+                   "max_features"]
+
+    optimization_function = partial(optimize, param_names=param_names, X=X, y=y)
+
+    result = gp_minimize(optimization_function,
+                         dimensions=param_space,
+                         n_calls=15,
+                         n_random_starts=10,
+                         verbose=10)
+    # Create best params dict and print it.
+    best_params = dict(zip(param_names,
+                           result.x))
+    print(best_params)
+```
+
+```
+## Show the plot of iterations.
+from skopt.plots import plot_convergence
+plot_convergence(result)
+```
 </p></details>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">For <b>Sklearn Models</b></a></li>

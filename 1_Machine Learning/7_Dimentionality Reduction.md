@@ -411,7 +411,7 @@ for idx, (col_1, col_2) in enumerate(combinations(train.columns, 2)):
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.2_Information_gain.html#Information-gain---mutual-information"><b>Mutual Information</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.3_Fisher_score.html#Fisher-Score---chi-square-implementation-in-sklearn"><b>Fisher Score - Chi-Square</b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.3_Fisher_score.html#Fisher-Score---chi-square-implementation-in-sklearn"><b>Fisher Score - Chi-Square</b></a> useful to be applied after bag-of-words. and use chi-square ONLY for data which is non-negative in nature.</li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.4_Univariate_selection.html#Univariate-feature-selection"><b>Univariate Feature Selection (ANOVA)</b></a> </li>
 
