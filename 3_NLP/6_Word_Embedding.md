@@ -316,4 +316,30 @@ print(cos_similarity)
 print(1 - cos_similarity)
 ```
 </p></details>
+
+<details><summary><b style='font-size:20px'>Embeddings for Sentence</b></summary><p>
+```
+def sentence_to_vec(sent, embedding_dict):
+	# initialize emtpy list to store embeddings.
+	M = []
+	for w in words:
+		# for every word, fetch the embedding from
+		# the dictionary, and append to list of embeddings.
+		if w in embedding_dict:
+			M.append(embedding_dict[w])
+			
+	# if we don't have any vectors, returns zeros.
+	if len(M) == 0:
+		return np.zeros(300)
+		
+	# Convert list of embeddings to array.
+	M = np.array(M)
+	
+	# Calculate sum over axis=0
+	v = M.sum(axis=0)
+	
+	# Return normalized vector
+	return v / np.sqrt((v ** 2).sum())
+```
+</p></details>
 </div>
