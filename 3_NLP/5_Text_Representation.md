@@ -59,4 +59,25 @@ Then feed this new data to the models.
 <details><summary><b style='font-size:20px'>5. Other Schemes</b></summary><p>
 <p><img src="imgs/20200621-174111.png" alt="" /></p>
 </p></details>
+
+<details><summary><b style='font-size:20px'>6. Semantic Hashing</b></summary><p>
+```
+def find_ngrams(input_list, n):
+    return zip(*[input_list[i:] for i in range(n)])
+
+def semhash_tokenizer(text):
+    tokens       = text.lower().split(" ")
+    final_tokens = []
+    for unhashed_token in tokens:
+        hashed_token = f"#{unhashed_token}#"
+        final_tokens += [''.join(gram) for gram in list(find_ngrams(list(hashed_token), 3))]
+
+    return final_tokens
+
+# Use this one.
+def semhash_corpus(sentence):
+    tokens   = semhash_tokenizer(sentence)
+    return " ".join(map(str, tokens))
+```
+</p></details>
 </div>
