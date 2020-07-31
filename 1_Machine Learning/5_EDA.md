@@ -611,8 +611,7 @@ def kde_target(var_name, df):
     print('~> The median value for loan that was not repaid = %.4f' % avg_not_repaid)
     print('~> The median value for loan that was repaid = %.4f' % avg_repaid)
 ~~~
-</p>
-</details>
+</p></details>
 
 <details><summary>Show the <b>Legend</b> outside of the plot</summary>
 <p>
@@ -623,11 +622,18 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 # Note:
 # ncol=1 (default) is another parameter, you can tweak to change the number of columns to fill in a raw in the legend.
 ~~~
-</p>
-</details>
+</p></details>
+<details><summary>Add <b>Vertical</b> or <b>Horizontal</b> line in a plot</summary><p>
+```
+# Vertical Line.
+plt.axvline(x=np.mean(df.weight), color="red", label="mean")
 
-</p>
-</details>
+# Horizontal Line.
+plt.axhline(y=.5, color="red", label="something")
+```
+</p></details>
+
+</p></details>
 
 <hr>
 
@@ -678,19 +684,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/6_Style%20and%20Color.html#Style-and-Color"><b>6. Styles &amp; Coloring</b></a></li>
 
-<li><details><summary><b>catplot</b></summary><p>
-```
-# Used as countplot for categorical feature with its count.
-sns.catplot("cut", data=df, aspect=1.5, kind="count", color="b")
-```
-</p></details></li>
 
-<li><details><summary><b>lineplot</b></summary><p>
-<p>The solid line represent the mean of the y axis feature at the corresponding x coordinate.<br>The shaded area around the line plot shows the confidence interval for the y axis feature. (by default, seaborn set this to 95% confidence interval)<br><br>Line plots are great visualization techniques for scenarios where we have data that changes over time.</p>
-```
-ax = sns.lineplot(x="cat_col", y="num_col", data=df, ci=68)
-```
-</p></details></li>
 </ul>
 
 </p>
@@ -723,30 +717,64 @@ ax = sns.lineplot(x="cat_col", y="num_col", data=df, ci=68)
 <h4>2. Bi-Variate Visualization:</h4>
 
 <ul>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/1_Scatter%20Plot.html#Scatter-Plot-using-Matplotlib"><b>Scatter</b> Plot.</a> </p></li>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/2_HeatMap.html#Heat-Map-using-Matplotlib"><b>Heat Map</b></a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/1_Scatter%20Plot.html#Scatter-Plot-using-Matplotlib"><b>Scatter</b> Plot.</a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/2_HeatMap.html#Heat-Map-using-Matplotlib"><b>Heat Map</b></a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/3_Violin%20Plot.html#Violin-Plot-using-Seaborn"><b>Violin</b> Plot</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/3_Violin%20Plot.html#Violin-Plot-using-Seaborn"><b>Violin</b> Plot</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/4_Box%20Plot.html#Box-Plot-vs.-Violin-Plot"><b>Box</b> Plot</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/4_Box%20Plot.html#Box-Plot-vs.-Violin-Plot"><b>Box</b> Plot</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/5_Clustered%20Bar%20Chart.html#Clustered-Bar-+-Heatmap"><b>Clustered Bar</b> Chart</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/5_Clustered%20Bar%20Chart.html#Clustered-Bar-+-Heatmap"><b>Clustered Bar</b> Chart</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/6_Facet%20Grid.html#Faced-Grid"><b>Facet Grid</b></a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/6_Facet%20Grid.html#Faced-Grid"><b>Facet Grid</b></a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Pairs-Plot"><b>Sweet Pair Grid</b></a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Pairs-Plot"><b>Sweet Pair Grid</b></a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/7_Adapted%20Bar%20Chart.html#Adapted-Bar-Chart"><b>Adapted Bar</b> Chart,  <b>Point</b> Chart</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/7_Adapted%20Bar%20Chart.html#Adapted-Bar-Chart"><b>Adapted Bar</b> Chart,  <b>Point</b> Chart</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/16.%20Extra%20Q-Q%20Plots.html"><b>Q-Q</b> Plot: Used to check normal distribution.</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/16.%20Extra%20Q-Q%20Plots.html"><b>Q-Q</b> Plot: Used to check normal distribution.</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html"><b>Swarm</b> Plot</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html"><b>Swarm</b> Plot</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html"><b>Rug</b> and <b>Strip</b> Plot</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html"><b>Rug</b> and <b>Strip</b> Plot</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html"><b>Stacked</b> Plots</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html"><b>Stacked</b> Plots</a></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html"><b>Ridgeline</b> Plot</a> </p></li>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html"><b>Ridgeline</b> Plot</a></li>
+
+<li><details><summary><b>catplot</b></summary><p>
+```
+# Used as countplot for categorical feature with its count.
+sns.catplot("cut", data=df, aspect=1.5, kind="count", color="b")
+```
+</p></details></li>
+
+<li><details><summary><b>lineplot</b></summary><p>
+<p>The solid line represent the mean of the y axis feature at the corresponding x coordinate.<br>The shaded area around the line plot shows the confidence interval for the y axis feature. (by default, seaborn set this to 95% confidence interval)<br><br>Line plots are great visualization techniques for scenarios where we have data that changes over time.</p>
+```
+ax = sns.lineplot(x="cat_col", y="num_col", data=df, ci=68)
+```
+</p></details></li>
+
+<li><details><summary><b>clustermap</b></summary><p>
+We can can determine the similarity(distance) metrics by using (metric) parameter, and the possible values ["euclidean"(default), "manhattan", "correlation", ...]
+```
+pd_pivoted = df.pivot("month", "year", "passenegers")
+
+# We can cluster by "year" (row_cluster=False, col_cluster=True).
+# We can cluster them by both "year" and "month".
+# The following is clustered by "month".
+ax = sns.clustermap(df_pivoted, col_cluster=False, row_cluster=True, metric="euclidean")
+```
+
+<p>Appling linkage in Heatmaps:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- If we define the distance b/w 2 clusters as the distance b/w the 2 points across the clusters <b>closest</b> to each other, the rule is called <b>single linkage</b>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- If the rule is to define the distance b/w 2 clusters as the distance b/w the points <b>farthest</b> from each other, it is called <b>complete linkage</b>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- If the rule is to define the distance as the <b>average</b> of all possible pairs of rows in the 2 clusters, it's called <b>average linkage</b>.</p>
+```
+sns.clustermap(df_pivoted, row_cluster=False, metric="correlation", method="single")
+```
+</p></details></li>
 </ul>
 
 <h4>3. Multi-Variate Visualization:</h4>
