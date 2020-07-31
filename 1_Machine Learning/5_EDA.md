@@ -619,6 +619,9 @@ def kde_target(var_name, df):
 ~~~python
 # To relocate the legend
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+
+# Note:
+# ncol=1 (default) is another parameter, you can tweak to change the number of columns to fill in a raw in the legend.
 ~~~
 </p>
 </details>
@@ -628,9 +631,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 <hr>
 
-<details><summary><b>Pandas</b></summary>
-<p>
-<ul>
+<details><summary><b>Pandas</b></summary><p><ul>
 <li><b>df.plot.hist()</b>     histogram</li>
 
 <li><b>df.plot.bar()</b>      bar chart</li>
@@ -652,36 +653,44 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 <li><b>df.plot.pie()</b>      pie chart</li>
 </ul>
 
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types"><b>Built-in Visualization<b></a> </p>
-</p>
-</details>
+<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types"><b>Built-in Visualization</b></a> </p>
+</p></details>
 
-<details><summary><b>Matplotlib</b></summary>
-<p>
+<details><summary><b>Matplotlib</b></summary><p><ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture"><b>1. Matplotlib Concepts</b></a></li>
 
-<ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture"><b>1. Matplotlib Concepts<b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture"><b>2. Advanced Concepts<b></a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture"><b>2. Advanced Concepts</b></a></li>
 </ul>
 
 </p>
 </details>
 
-<details><summary><b>Seaborn</b></summary>
-<p>
-<ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/1_Distribution%20Plots.html#Distribution-Plots"><b>1. Distrubtion Plots<b></a></li>
+<details><summary><b>Seaborn</b></summary><p><ul>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/1_Distribution%20Plots.html#Distribution-Plots"><b>1. Distrubtion Plots</b></a></li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/2_Categorical%20Plots.html#Categorical-Data-Plots"><b>2. Categorical Data Plots<b></a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/2_Categorical%20Plots.html#Categorical-Data-Plots"><b>2. Categorical Data Plots</b></a></li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/3_Matrix%20Plots.html#Matrix-Plots"><b>3. Matrix Plots<b></a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/3_Matrix%20Plots.html#Matrix-Plots"><b>3. Matrix Plots</b></a></li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/4_Regression%20Plots.html#Regression-Plots"><b>4. Regression Plots<b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/4_Regression%20Plots.html#Regression-Plots"><b>4. Regression Plots</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/5_Grids.html#Grids"><b>5. Grids<b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/5_Grids.html#Grids"><b>5. Grids</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/6_Style%20and%20Color.html#Style-and-Color"><b>6. Styles &amp; Coloring<b></a></li>
+<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/6_Style%20and%20Color.html#Style-and-Color"><b>6. Styles &amp; Coloring</b></a></li>
+
+<li><details><summary><b>catplot</b></summary><p>
+```
+# Used as countplot for categorical feature with its count.
+sns.catplot("cut", data=df, aspect=1.5, kind="count", color="b")
+```
+</p></details></li>
+
+<li><details><summary><b>lineplot</b></summary><p>
+<p>The solid line represent the mean of the y axis feature at the corresponding x coordinate.<br>The shaded area around the line plot shows the confidence interval for the y axis feature. (by default, seaborn set this to 95% confidence interval)<br><br>Line plots are great visualization techniques for scenarios where we have data that changes over time.</p>
+```
+ax = sns.lineplot(x="cat_col", y="num_col", data=df, ci=68)
+```
+</p></details></li>
 </ul>
 
 </p>
@@ -706,7 +715,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/3_Histograms.html#Histograms-Using-Matplotlib"><b>Histograms</b> Using Matplotlib</a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/16.%20Extra%20Kernel%20Density%20Estimation.html"><b>Kernal Density Estimation (KDE)</b></a> </li>
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/16.%20Extra%20Kernel%20Density%20Estimation.html"><b>Kernal Density Estimation (KDE)</b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/17.%20Extra%20Waffle%20Plots.html"><b>Waffle</b> Plots</a> </li>
 </ul>
@@ -733,7 +742,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 <li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html"><b>Swarm</b> Plot</a> </p></li>
 
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html"><b>Rug</b> and <b>Strip<b> Plot</a> </p></li>
+<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html"><b>Rug</b> and <b>Strip</b> Plot</a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html"><b>Stacked</b> Plots</a> </p></li>
 
@@ -751,7 +760,23 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/4_Plot%20Matices.html#Pair-Grid"><b>Plot Metrices</b></a> </li>
 </ul>
-</p>
-</details>
+</p></details>
 
+<hr>
+
+<details><summary><b>NOTES</b></summary><ul>
+<details><summary><b>KDE</b></summary>
+<p>The kernel density estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. Usually, a KDE doesn't tell us anything more than what we can infer from the histogram itself. However, it is
+helpful when comparing multiple histograms on the same plot.</p>
+</p></details>
+
+<details><summary><b>Histogram</b></summary>
+
+<ul>Three observations are important in a histogram:
+<li>Which feature values are more frequent in the dataset. you may log() the data in order to inspect better.</li>
+<li>How many peaks exist in the data (the peaks need to be further inspected for possible causes in the context of the data).</li>
+<li>Whether there are any outliers in the data</li>
+<li>df.hist() & sns.distplot()</li></ul>
+</p></details>
+</ul></p></details>
 </div>
