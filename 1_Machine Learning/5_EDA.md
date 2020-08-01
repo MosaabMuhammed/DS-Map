@@ -690,10 +690,22 @@ plt.axhline(y=.5, color="red", label="something")
 </p>
 </details>
 
-<details><summary><b>Plotly</b></summary><p>
+<details><summary><b>Plotly</b></summary><p><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks"><b>Plotly &amp; Cufflinks</b></a> </li>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/10_Plotly_tutorials/Notebook.html#INTRODUCTION"><b>Plotly Tutorials</b></a> </li> 
-</p></details>
+
+<li><details><summary><b>Scatter plot</b>Plotly Express</summary><p>
+```
+import plotly.express as px
+
+# Create a scatter plot.
+fig = px.scatter(data, x='gdp', y='co2', animation_frame='year', animation_group='country', color='region', hover_name='country', facet_col='region', width=1579, height=400, log_x=True, size_max=45, range_x=[xmin, xmax], range_y=[ymin, ymax])
+
+fig.show()
+```
+
+</p></details></li>
+</ul></p></details>
 
 <details><summary><b>Bokeh</b></summary><p><ul>
 <li><details><summary><b>Scatter Plot</b></summary><p>
