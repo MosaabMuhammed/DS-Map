@@ -690,12 +690,84 @@ plt.axhline(y=.5, color="red", label="something")
 </p>
 </details>
 
-<details><summary><b>Plotly</b></summary>
-<p>
+<details><summary><b>Plotly</b></summary><p>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks"><b>Plotly &amp; Cufflinks</b></a> </li>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/10_Plotly_tutorials/Notebook.html#INTRODUCTION"><b>Plotly Tutorials</b></a> </li> 
-</p>
-</details>
+</p></details>
+
+<details><summary><b>Bokeh</b></summary><p><ul>
+<li><details><summary><b>Scatter Plot</b></summary><p>
+
+```
+# curdoc returns the current default state of the document/plot.
+# bokeh.plotting creates the figure for plotting.
+# HoverTool, ColumnDataSource, CategoricalColorMapper and Slider are interactive tools for mapping data from pandas df.
+# Spectral6: A color palette for the plot.
+from bokeh.io import curdoc, output_notebook
+from bokeh.plotting import figure, show
+from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Slider
+from bokeh.palettes import Spectral6
+from bokeh.layouts import widgetbox, row
+# enable the plot to be displayed within the notebook.
+output_notebook()
+```
+```
+# Create color maps for points.
+regions_list = data.region.unique().tolist()
+color_mapper = CategoricalColorMapper(factors=regions_list, palette=Spectral6)
+```
+```
+# Make a data source for the plot.
+source = ColumnDataSource(data={'x': data.gdp[data['year'] == 1964],
+                                'y': data.co2[data['year'] == 1964],
+                                'country': data.country[data['year'] == 1964],
+                                'region':  data.region[data['year'] == 1964]})
+
+xmin, xmax = min(data.gdp), max(data.gdp)
+ymin, ymax = min(data.co2), max(data.co2)
+```
+```
+# Create the plot.
+plot = figure(title='CO2 Emissions vs GDP in 1964',
+                    plot_height=600, plot_width=1000,
+                    x_range=(xmin, xmax),
+                    y_range=(ymin, ymax),
+                    y_axis_type='log')
+plot.circle(x='x', y='y', fill_alpha=.8, source=source,
+            legend='region', color=dict(field='region', transform=color_mapper),
+            size=7)
+plot.legend.location  = 'bottom_right'
+plot.xaxis.axis_label = 'Income Per Person'
+plot.yaxis.axis_label = 'CO2 Emissions (tons per person)'
+show(plot)
+```
+```
+# Add a slider for year.
+slider = Slider(start=min(data.year), end=max(data.year), step=1, value=min(data.year), title='Year')
+
+def update_plot(attr, old, new):
+    yr = slider.value
+    new_data = {'x': data.gdp[data['year'] == yr],
+                'y': data.co2[data['year'] == yr],
+                'country': data.country[data['year'] == yr],
+                'region':  data.region[data['year'] == yr]}
+    source.data = new_data
+    plot.title.text = 'CO2 Emission vs GDP in %d' % yr
+
+slider.on_change('value', update_plot)
+layout = row(widgetbox(slider), plot)
+curdoc().add_root(layout)
+```
+```
+# Create a HoverTool.
+hover = HoverTool(tooltips=[('Country', '@country'), ('GDP', '@x'), ('CO2 Emission', '@y')])
+plot.add_tools(hover)
+```
+```
+!bokeh serve --show test.ipynb
+```
+</p></details></li>
+</ul></p></details>
 <hr>
 
 <details><summary><b>Data Scientist ND</b></summary>
