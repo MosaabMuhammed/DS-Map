@@ -63,15 +63,63 @@ def calmap(ax, year, data):
 ```
 </p></details>
 
+<details><summary><b>Upsampling</b></summary>
+<p><b>Upsampling</b> Chaning the time from, for example, <b>minutes to seconds</b>. <br><b>Upsampling</b> helps us to visualize and analyze data in more detail, and these fine-grained observations are calculated using <b>interpolation</b>.<br>
+<h5>Pitfalls:</h5>
+<b>Upsampling</b> leads to <b>NaN</b> values. the methods used in <b>interpolation</b> are linear or cubic splines for imputing <b>NaN</b> values. This might not represent the original data, so the analysis & visualization might be misleading.</p>
+
+```
+# Aggregate dataframe by year since we have a yearly time-series dataframe.
+walmart_store_count = walmart_stores.groupby("YEAR")[["storenum"]].agg("count").rename(columns={"storenum": "store_count"})
+```
+
+```
+# Convert the frequecy to 2 days (Upsampling):
+walmart_store_count_series = walmart_store_count_series.asfreq('2D')
+# And this will generated NaNs, and we will fill it with interpolation.
+```
+
+```
+# Imputing NaNs with interpolation.
+walmart_store_count_series = walmart_store_count_series.interpolate(method="spline", order=2)
+
+# Then plot it.
+walmart_store_count_series.plot(style=":")
+```
+<img src="./imgs/upsampling.png">
+</details>
+
+<details><summary><b>Downsampling</b></summary>
+<p><b>Downsampling</b> Chaning the time from, for example, <b>months to years</b>. <br><b>Downsampling</b> helps summarize and get a general sense of trends in data.<br>
+<h5>Pitfalls:</h5>
+<b>Downsampling</b> aggregates the observation over sample frequency, where we provide a frequency to function as an argument, so we might lose information.</p>
+
+```
+# After aggreation, we will smooth out the plot using downsampling with a frequency of BA(business year).
+plt.figure(figsize=(12, 8))
+plt.ylabel("Interpolated Values")
+plt.plot(walmart_store_count_series)
+walmart_store_count_series.resample('BA').mean().plot(style=':', title="Values Smoothen by Business Year Frequency") #BA stands for Business Year
+```
+<img src="./imgs/downsampling_1.png">
+
+```
+# Downsample with a frequency of BQ(business quarter) to observe higher granularity.
+plt.figure(figsize=(12,8))
+plt.ylabel("Interpolated Values")
+walmart_store_count_series.plot(alpha=0.5, style='-')
+walmart_store_count_series.resample('BQ').mean().plot(style=':', title="Values Smoothen by Business Quarter Frequency")#BQ stands for Business quarter
+```
+<img src="./imgs/downsampling_2.png">
+</details>
+
 </p></details>
 
 <hr>
 
-<details><summary><b>Time-Series Analysis Course</b></summary>
-<p>
+<details><summary><b>Time-Series Analysis Course</b></summary><p>
 
-<details><summary><b>Time-Series with Pandas</b></summary>
-<p>
+<details><summary><b>Time-Series with Pandas</b></summary><p>
 
 <ul>
 <li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review"><b>1. Datetime Index</b></a> </p></li>
