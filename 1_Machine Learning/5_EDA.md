@@ -780,11 +780,23 @@ plot.add_tools(hover)
 ```
 </p></details></li>
 </ul></p></details>
+
+<details><summary><b>Altair</b></summary><p><ul>
+<li><a href="./5_eda/01-alt-Iris-Demo.html"><b>IRIS Demo</b></a> </li>
+<li><a href="./5_eda/01-Cars-Demo.html"><b>Car Demo</b></a> </li>
+<li><a href="./5_eda/02-Simple-Charts.html"><b></b>Simple Charts</a> </li>
+<li><a href="./5_eda/03-Binning-and-aggregation.html"><b>Binning & Aggregation</b></a> </li>
+<li><a href="./5_eda/04-Compound-charts.html"><b>Compound Charts</b></a> </li>
+<li><a href="./5_eda/06-Selections.html"><b>Selections</b></a> </li>
+<li><a href="./5_eda/07-Transformations.html"><b>Transformations</b></a> </li>
+<li><a href="./5_eda/08-Configuration.html"><b>Configuration</b></a> </li>
+<li><a href="./5_eda/09-Geographic-plots.html"><b>Geographic Plots</b></a> </li>
+</ul></p></details>
 <hr>
 
 <details><summary><b>Data Scientist ND</b></summary>
 <p>
-<h4>1. Uni-Variate Visualization:</h4>
+<h4>1. Uni-Variate Visualization:</h4> 
 
 <ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart"><b>Bar</b> Chart</a> </li>

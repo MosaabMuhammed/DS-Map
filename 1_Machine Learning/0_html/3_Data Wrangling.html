@@ -573,6 +573,16 @@ def target_corrs(df, target):
 </code></pre>
 
 </p></details>
+<details><summary>From <b>groupby()</b> to <b>DataFrame</b></summary><p>
+
+<pre><code># Aggregate #passengers by month.
+# you can pass multiple columns in the 2 brackets.
+# Must be 2 brackets to result in dataframe, if 1 bracket, it will end in series if and only if 1 column is there.
+df_per_month = df.groupby('month')[['#Passengers']].sum().reset_index()
+df_per_month
+</code></pre>
+
+</p></details>
 
 </p></details><hr>
 
