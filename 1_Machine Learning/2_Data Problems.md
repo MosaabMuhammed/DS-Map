@@ -600,7 +600,7 @@ train[['ord_5', 'ord_5_oe_add', 'ord_5_oe_join', 'ord_5_oe1', 'ord_5_oe2']].head
 ~~~
 </p></details>
 
-<details><summary><b>Combination of cat features</summary><p>
+<details><summary><b>Combination of cat features</b></summary><p>
 ```
 import itertools
 
@@ -717,6 +717,43 @@ plt.xlabel("Input")
 plt.ylabel("Response")
 plt.show()
 ~~~
+</p></details>
+
+<details><summary><b>z-score</b></summary><p>
+The <b>z-score</b> of value x is a measure of how many standard deviations x is away from the mean.<br> <b>z-score</b> is a normalization technique used in the preprocessing of features. It helps the ML model to learn better from data.<br><br> High <b>z-score</b> values in a sample indicate that the sample value is far away from the mean and could be an outlier. Here's how we calculate zscore mathematically: z-score = (x - mean(x)) / std(x) <br><br>
+
+Most used in Time-Series problem.
+
+```
+df['mean']       = df['#Passengers'].mean()
+df['std']        = df['#Passengers'].std()
+df['zscore']     = (df['#Passengers'] - df['mean']) / df['std']
+df['zscore_abs'] = abs(df['zscore'])
+df.sort_values(by='zscore_abs', ascending=False).head()
+```
+
+```
+# Select by high and low z-scores.
+anamlous_df_high = df.sort_values(by='zscore', ascending=False).head(10)
+anamlous_df_high['Date'] = pd.to_datetime(anamlous_df_high['Date'])
+
+anamlous_df_low  = df.sort_values(by='zscore', ascending=True).head(10)
+anamlous_df_low['Date'] = pd.to_datetime(anamlous_df_low['Date'])
+```
+
+```
+# Plot it.
+plt.figure(figsize=(15, 8))
+plt.grid=True
+plt.title('Top 10 high Traffic passenger count')
+ax = sns.lineplot(x='Date', y='#Passengers', data=df)
+ax = sns.scatterplot(x='Date', y='#Passengers', data=anamlous_df_high, size='#Passengers')
+ax = sns.lineplot(x='Date', y='mean', data=df)
+ax.text(pd.to_datetime('1950'), 290, 'Mean Line', ha='left', size='large', color='Blue')
+ax = sns.scatterplot(x='Date', y='#Passengers', data=anamlous_df_low, size='#Passengers')
+ax.grid()
+```
+<img src="./imgs/zscore.png">
 </p></details>
 </p></details>
 
