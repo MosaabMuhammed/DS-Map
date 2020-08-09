@@ -1,5 +1,6 @@
 # 8. Metrices
 
+<div style="width:1000px;margin:auto">
 <details><summary style='font-size:18px;color:red'> <b>1. Important Functions</b></summary>
 <p>
 ```
@@ -658,6 +659,10 @@ def mean_abs_percentage_error(y_true, y_pred):
 ```
 </p></details>
 <details><summary><b>R-Squared</b></summary><p>
+NOTE: R-squared increases with the number of features in the model, even if they don't contain any information about the target value at all!!<br>
+So it's better to use adjusted R-squared = adj. R^2 = R^2 - (1 - R^2) * p / (n - p - 1) where p = number of features.<br><br>
+
+The following code implement R-squared
 ```
 # R-squared says how good your model fits the data.
 # R-squared closer to 1.0 says that the model fits the data quite well, whereas closer 0 means that model isn’t that good.
@@ -687,9 +692,7 @@ def mean_percentage_error(y_true, y_pred):
 </p></details>
 
 </p></details>
-
-
-
+</div>
 
 
 

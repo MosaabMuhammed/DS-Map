@@ -720,7 +720,7 @@ fig.update_layout(
 fig.show()
 ```
 </p></details></li>
-<li><details><summary><b>Geographic</b> - Lat & Lon</summary><p>
+<li><details><summary><b>Geographic</b> - Lat & Lon - Scatter</summary><p>
 ```
 import plotly.graph_objects as go
 
