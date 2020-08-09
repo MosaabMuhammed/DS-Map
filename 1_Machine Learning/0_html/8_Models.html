@@ -236,6 +236,10 @@ rbf_kernel_svm_clf.fit(X, y)
 
 </p></details></li>
 
+<li><details><summary><b>RuleFit</b> [Skope-Rules]</summary><p>
+<a href="./9_pipelines/demo_titanic.html"><b>Titanic Example</b></a>
+</p></details></li>
+
 <li><details><summary><b>Voting Classifier</b></summary><p>
 <p><b>NOTE:</b> When all models can `predict_proba`, you can set voting to `soft`, otherwise set it to `hard`.</p>
 <p>For `SVC` to turn on his `predict_proba`, set `probability` to True.</p>
@@ -730,9 +734,10 @@ rf.predict(X)
 rules = rf.get_rules()
 
 rules = rules[rules.coef != 0].sort_values(&quot;support&quot;, ascending=False)
-print(rules)
+rules.head()
 </code></pre>
 
+You can create new features with these rules, and then apply linear models or other models and see the result.
 </p></details></li>
 
 <li><details><summary><b>Linear SVM</b></summary><p>
