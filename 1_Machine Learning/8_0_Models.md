@@ -667,6 +667,47 @@ elastic_net.predict([[1.5]])
 ```
 </p></details></li>
 
+<li><details><summary><b>RuleFit</b></summary><p>
+The algorithm can be used for predicting an output vector y given an input matrix X. In the first step a tree ensemble is generated with gradient boosting. The trees are then used to form rules, where the paths to each node in each tree form one rule. A rule is a binary decision if an observation is in a given node, which is dependent on the input features that were used in the splits. The ensemble of rules together with the original input features are then being input in a L1-regularized linear model, also called Lasso, which estimates the effects of each rule on the output target but at the same time estimating many of those effects to zero.
+```
+# pip install git+git://github.com/christophM/rulefit.git
+
+# TRAIN the Model.
+import numpy as np
+import pandas as pd
+
+from rulefit import RuleFit
+
+boston_data = pd.read_csv("boston.csv", index_col=0)
+
+y = boston_data.medv.values
+X = boston_data.drop("medv", axis=1)
+features = X.columns
+X = X.as_matrix()
+
+rf = RuleFit()
+rf.fit(X, y, feature_names=features)
+```
+```
+# If you want to have influence on the tree generator you can pass the generator as argument:
+from sklearn.ensemble import GradientBoostingRegressor
+gb = GradientBoostingRegressor(n_estimators=500, max_depth=10, learning_rate=0.01)
+rf = RuleFit(gb)
+
+rf.fit(X, y, feature_names=features)
+```
+```
+# Predict:
+rf.predict(X)
+
+# Inspect Rules:
+rules = rf.get_rules()
+
+rules = rules[rules.coef != 0].sort_values("support", ascending=False)
+print(rules)
+```
+</p></details></li>
+
 <li><details><summary><b>Linear SVM</b></summary><p>
 <ul>
 <li>A smaller "C" value leads to a wider street but more margin violations.</li>
