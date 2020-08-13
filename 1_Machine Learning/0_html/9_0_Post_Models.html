@@ -16,6 +16,8 @@
 </ul>
 </blockquote>
 
+<p><a href="./10_interpretability/03_Model_Interpretability_Blog_Post.html"><b>Blog Post</b> [Must Read]</a></p>
+
 <details><summary> <b>Permutation Importance</b> </summary>
 <p>
 <h4> Fit a model</h4>
@@ -50,12 +52,12 @@ eli5.show_weights(perm, feature_names = val_X.columns.tolist())
 # You'll occasionally see negative values for permutation importances. In those cases, the predictions on the shuffled (or noisy) data happened to be more accurate than the real data. This happens when the feature didn't matter (should have had an importance close to 0), but random chance caused the predictions on shuffled data to be more accurate. This is more common with small datasets, like the one in this example, because there is more room for luck/chance.
 </code></pre>
 
-</p>
-</details>
+</p></details>
 
 
-<details><summary> <b>Partial Dependance Plots</b> </summary>
-<p>
+<details><summary> <b>Partial Dependance Plots</b> (PDP)</summary><p>
+<p><a href="./10_interpretability/03_Model_Interpretability_Blog_Post.html#PDP-and-ICE-plots"><b>PDP plots</b></a></p>
+
 <p><a href="https://www.kaggle.com/dansbecker/partial-plots"><b>Notebook</b></a> </p>
 <h4> 1. Building a model.</h4>
 
@@ -98,8 +100,12 @@ pdp.pdp_interact_plot(pdp_interact_out=inter1, feature_names=features_to_plot, p
 plt.show()
 </code></pre>
 
-</p>
-</details>
+</p></details>
+
+<details><summary> <b>Individual Conditional Expectation</b> (ICE)</summary><p>
+<p><a href="./10_interpretability/03_Model_Interpretability_Blog_Post.html#PDP-and-ICE-plots"><b>ICE & Centered ICE plots</b></a></p>
+
+</p></details>
 
 
 <details><summary> <b>SHAP</b> Values (One Row & All Features) </summary>
