@@ -102,6 +102,34 @@ plt.show()
 
 </p></details>
 
+<details><summary> <b>Accumulated Local Effects</b> (ALE)</summary><p>
+<b>NOTE:</b> Read Interpretable Machine Learning - page: 125
+```
+# install the library.
+!pip install alepython
+```
+
+```
+from alepython import ale_plot
+
+model = RandomForestRegressor(n_estimators=20, bootstrap=True)
+model.fit(X, y)
+
+# Create First-Order of ALE plots.
+ale_plot(model,
+	     X,
+	     X.columns[:1],
+	     bins=20,
+	     monte_carlo=True,
+	     monte_carlo_rep=100,
+	     monte_carlo_ratio=0.6)
+```
+
+```
+# Create Second-Order ALE plot.
+ale_plot(model, X, X.columns[:2], bins=10)
+```
+</p></details>
 
 <details><summary> <b>SHAP</b> Values (One Row & All Features) </summary>
 <p>
@@ -121,8 +149,8 @@ def patient_risk_factors(my_model, row):
 
 patient_risk_factors(my_model, data_for_prediction) 
 ~~~
-</p>
-</details>
+</p></details>
+
 
 <details><summary> SHAP <b>Summary Plot</b> (All Rows & All Features)</summary>
 <p>
