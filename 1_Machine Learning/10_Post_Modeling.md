@@ -131,6 +131,14 @@ ale_plot(model, X, X.columns[:2], bins=10)
 ```
 </p></details>
 
+<details><summary> <b>Local Interpretable Model-agnostic Explanations</b> (LIME)</summary><p>
+<b>NOTE:</b> Read Interpretable Machine Learning - page: 168
+
+<p><a href="./10_interpretability/03_Model_Interpretability_Blog_Post.html#LIME"><b>LIME Code</b></a></p>
+
+</p></details>
+
+
 <details><summary> <b>SHAP</b> Values (One Row & All Features) </summary>
 <p>
 <p><a href="https://www.kaggle.com/dansbecker/shap-values"><b>Notebook</b></a> </p>
@@ -152,8 +160,7 @@ patient_risk_factors(my_model, data_for_prediction)
 </p></details>
 
 
-<details><summary> SHAP <b>Summary Plot</b> (All Rows & All Features)</summary>
-<p>
+<details><summary> SHAP <b>Summary Plot</b> (All Rows & All Features)</summary><p>
 <p><a href="https://www.kaggle.com/dansbecker/advanced-uses-of-shap-values"><b>Notebook</b></a> </p>
 ~~~python
 import shap  # package used to calculate Shap values
@@ -168,8 +175,7 @@ shap_values = explainer.shap_values(val_X)
 # Make plot. Index of [1] is explained in text below.
 shap.summary_plot(shap_values[1], val_X)
 ~~~
-</p>
-</details>
+</p></details>
 
 <details><summary> SHAP <b>Dependence Contribution Plot</b> (All Rows & One Feature)</summary>
 <p>
