@@ -139,9 +139,11 @@ ale_plot(model, X, X.columns[:2], bins=10)
 </p></details>
 
 
-<details><summary> <b>SHAP</b> Values (One Row & All Features) </summary>
+<details><summary> <b>SHAP Values</b> (One Row & All Features) </summary>
 <p>
 <p><a href="https://www.kaggle.com/dansbecker/shap-values"><b>Notebook</b></a> </p>
+
+<p><a href="./10_interpretability/03_Model_Interpretability_Blog_Post.html">Great Notebook</a></p>
 ~~~python
 # Your Code Here
 import shap  # package used to calculate Shap values
@@ -160,7 +162,7 @@ patient_risk_factors(my_model, data_for_prediction)
 </p></details>
 
 
-<details><summary> SHAP <b>Summary Plot</b> (All Rows & All Features)</summary><p>
+<details><summary> <b>SHAP Summary Plot</b> (All Rows & All Features)</summary><p>
 <p><a href="https://www.kaggle.com/dansbecker/advanced-uses-of-shap-values"><b>Notebook</b></a> </p>
 ~~~python
 import shap  # package used to calculate Shap values
@@ -177,7 +179,7 @@ shap.summary_plot(shap_values[1], val_X)
 ~~~
 </p></details>
 
-<details><summary> SHAP <b>Dependence Contribution Plot</b> (All Rows & One Feature)</summary>
+<details><summary> <b>SHAP Dependence Contribution Plot</b> (All Rows & One Feature)</summary>
 <p>
 <p><a href="https://www.kaggle.com/dansbecker/advanced-uses-of-shap-values"><b>Notebook</b></a> </p>
 ~~~python
