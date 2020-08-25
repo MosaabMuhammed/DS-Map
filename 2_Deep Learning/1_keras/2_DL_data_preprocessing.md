@@ -174,6 +174,36 @@ model.predict(new_set, steps=len(X_new) // batch_size)
 ```
 </p></details>
 
+<details><summary><b>Hold-out Validation</b></summary><p>
+<p>NOTE: use this method if you have enough data.</p>
+<p>If this method is used on little data, then your validation and test sets may contain too few samles to be statistically representative of the data at hand.</p>
+<p>Apply K-fold or Iterated K-fold in small datasets.</p>
+```
+#### Hold-out Validation.
+num_validation_samples = 10_000
+
+# Shuffling the data is usually appropiate.
+np.random.shuffle(data)
+
+X_valid = data[:num_validation_samples]
+X_train = data[num_validation_samples:]
+
+# Traing the model with training data, and validate it with
+# validation data.
+model.train(X_train)
+validation_score = model.evaluate(X_valid)
+
+# At this point, you can tune your model,
+# retrain it, evaluate it, tune it again...
+# Once you've tuned your hyperparameters, it's common
+# to train your final model from scratch on 
+# all non-test data available.
+model = get_model()
+model.train(np.concatenate([X_train, X_valid]))
+test_score = model.evaluate(X_test)
+```
+</p></details>
+
 <details><summary><b>K-Fold cross-validation</b></summary><p>
 <h4>K-Folds</h4>
 ```
