@@ -13,7 +13,7 @@
 
 <li><a href="4_3_DL_Activations.html"><span style='color:#333;font-weight:bold;font-size:25px'>Activations</span></a> </li>
 
-<li>Losses. </li>
+<li><a href="4_4_DL_Losses.html"><span style='color:#333;font-weight:bold;font-size:25px'>Losses</span></a> </li>
 
 <li><a href="4_2_DL_Metrics.html"><span style='color:#333;font-weight:bold;font-size:25px'>Metrics</span></a></li>
 
@@ -29,13 +29,10 @@
 
 <li><p><a href="6_DL_CNN.html"><font style='color:#333;font-weight:bold;font-size:25px'>CNN</font></a> </p></li>
 
-<li><p>RNN.</p></li>
 
-<li><p><a href="7_DL_LSTM.html"><font style='color:#333;font-weight:bold;font-size:25px'>LSTM</font></a> </p></li>
+<li><p><a href="7_DL_LSTM.html"><font style='color:#333;font-weight:bold;font-size:25px'>RNN</font></a> </p></li>
 
 <li><p>GAN.</p></li>
-
-<li><p>GRU.</p></li>
 
 <li><p><a href="10_0_DL_AutoEncoder.html"><font style='color:#333;font-weight:bold;font-size:25px'>AutoEncoder</font></a> </p></li>
 </ul>
