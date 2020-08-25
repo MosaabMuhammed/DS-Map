@@ -1,5 +1,6 @@
 # Data Preprocessing
 
+<div style="width:1000px;margin:auto">
 <details><summary><b>One-Hot Encoding (to_categorical)</b></summary><p>
 ```
 from keras.utils.np_utils import to_categorical
@@ -173,4 +174,80 @@ model.predict(new_set, steps=len(X_new) // batch_size)
 ```
 </p></details>
 
+<details><summary><b>K-Fold cross-validation</b></summary><p>
+<h4>K-Folds</h4>
+```
+# K-fold cross-validation
+import numpy as np
 
+k = 4
+num_val_samples = len(train_data) // k
+num_epochs      = 500
+all_scores      = []
+
+for i in range(k):
+    print(f'processing fold #{i}')
+    val_data   = train_data[i * num_val_samples: (i+1)*num_val_samples]
+    val_labels = train_labels[i * num_val_samples: (i+1)*num_val_samples]
+
+    partial_train_data = np.concatenate([train_data[:i*num_val_samples],
+                                         train_data[(i+1)*num_val_samples:]], axis=0)
+    partial_train_labels = np.concatenate([train_labels[:i*num_val_samples],
+                                           train_labels[(i+1)*num_val_samples:]], axis=0)
+    
+    history = model.fit(partial_train_data,
+              partial_train_labels,
+              epochs=num_epochs,
+              batch_size=1,
+              validation_data=(val_data, val_labels),
+              verbose=0)
+    metric_history = history.history['val_mae']
+    # val_mse, val_mae = model.evaluate(val_data, val_labels, verbose=0)
+    all_scores.append(metric_history)
+```
+
+<h4>Building the history of successive mean K-fold validation</h4>
+```
+average_metric_history = [np.mean([x[i] for x in all_scores]) for i in range(num_epochs)]
+```
+
+<h4>Plotting validation Scores</h4>
+```
+import matplotlib.pyplot as plt
+
+plt.plot(range(1, len(average_metric_history)+1), average_metric_history)
+plt.xlabel('Epochs')
+plt.ylabel('Validation MAE')
+plt.show()
+```
+<p> if the plotting is a little bit difficult to read, due to scaling issues and relatively high variance, you can do the following</p>
+```
+def smooth_curve(points, factor=0.9):
+	smoothed_points = []
+	for point in points:
+		if smoothed_points:
+			previous = smoothed_points[-1]
+			smoothed_points.append(previous * factor + point * (1 - factor))
+		else:
+			smoothed_points.append(point)
+	return smoothed_points
+	
+	
+smooth_mae_history = smooth_curve(average_metric_history[10:])
+
+plt.plot(range(1, len(average_metric_history) + 1), smooth_mae_history)
+plt.xlabel('Epochs')
+plt.ylabel('Validation MAE')
+plt.show()
+```
+<p>Then from this plot, you can figure out, which number of epochs you model doesn't overfit, and build your model normally</p>
+```
+model = build_model()
+
+model.fit(train_data, train_targets, epochs=80, batch_size=16, verbose=0)
+
+test_mse_score, test_mae_score = model.evaluate(test_data, test_targets)
+
+```
+</p></details>
+</div>
