@@ -1,4 +1,4 @@
-# CNN
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>CNN</h1>
 <div style='width:1000px;margin:auto'>
 
 <details><summary><b>Tutorials</b></summary><p><ul>
@@ -9,8 +9,8 @@
 <details><summary>2. Understanding <b>Model.summary()</b> in <b> [Keras]</b></summary>
 <p>
 <h4>1. Output of model.summary()</h4>
-~~~python
-_________________________________________________________________
+
+<pre><code class="python">_________________________________________________________________
 Layer (type)                 Output Shape              Param #
 =================================================================
 conv2d_1 (Conv2D)            (None, 222, 222, 32)      896
@@ -20,7 +20,8 @@ _________________________________________________________________
 conv2d_3 (Conv2D)            (None, 218, 218, 128)     73856
 _________________________________________________________________
 dense_9 (Dense)              (None, 218, 218, 10)      1290
-~~~
+</code></pre>
+
 
 <h4>2. Output Shape</h4>
 <p>
@@ -40,15 +41,16 @@ dense_9 (Dense)              (None, 218, 218, 10)      1290
 2. <b>Kernel Size (F)</b>: The height and Width of the conv layer.<br>
 3. <b>Input Shape (D_in)</b>: The depth of the previous layer.<br>
 
-~~~python
-# Formula
+
+<pre><code class="python"># Formula
 (K * F * F * D_in) + K
 
 assert 32 * (3 * (3*3) + 1) == 896
 assert 64 * (32 * (3*3) + 1) == 18496
 assert 128 * (64 * (3*3) + 1) == 73856
-assert num_classes * (128 + 1) == 1290	
-~~~
+assert num_classes * (128 + 1) == 1290  
+</code></pre>
+
 
 - Since there are <span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>F * F * D_in</span> weights per filter, and the conv layer is composed of <span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>K</span> filters, the total number of weights in the conv layer is <span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>K * F * F * D_in</span>.<br>
 - Since there is one bias term per filter, the conv layer has <span style='color:white;background-color:#2F3D48;padding:3px;border-radius:4px;font-weight:bold'>K</span> biases. We can generate the formula above.
@@ -79,8 +81,7 @@ $$Weight = ceil(\frac{float(W_{in} - F + 1)}{float(S)})$$
 
 </p></details>
 
-</p></details>
-
+<p></p></details></p>
 <details><summary><b>Refreshing Examples</b></summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/6%20Convolutional%20Neural%20Networks.html"><b>1. MNIST Example</b></a> </p>
 
@@ -109,11 +110,11 @@ and so on.</li>
 </ul>
 
 <h4>1. Using a class</h4>
-```
-# Notice the depth of the layer should be divisor by the depth of the previous layer.
+
+<pre><code># Notice the depth of the layer should be divisor by the depth of the previous layer.
 # here we can use 3, since we have a RGB image.
 class DepthMaxPool(keras.layers.Layer):
-    def __init__(self, pool_size, strides=None, padding="VALID", **kwargs):
+    def __init__(self, pool_size, strides=None, padding=&quot;VALID&quot;, **kwargs):
         super().__init__(**kwargs)
         if strides is None:
             strides = pool_size
@@ -128,261 +129,22 @@ class DepthMaxPool(keras.layers.Layer):
 
 # Use the class
 depth_pool = DepthMaxPool(3)
-with tf.device("/cpu:0"): # there is no GPU-kernel yet
+with tf.device(&quot;/cpu:0&quot;): # there is no GPU-kernel yet
     depth_output = depth_pool(cropped_images)
 depth_output.shape
-```
+</code></pre>
+
 
 <h4>2. Using Lambda</h4>
-```
-depth_pool = keras.layers.Lambda(lambda X: tf.nn.max_pool(
-    X, ksize=(1, 1, 1, 3), strides=(1, 1, 1, 3), padding="VALID"))
-with tf.device("/cpu:0"): # there is no GPU-kernel yet
+
+<pre><code>depth_pool = keras.layers.Lambda(lambda X: tf.nn.max_pool(
+    X, ksize=(1, 1, 1, 3), strides=(1, 1, 1, 3), padding=&quot;VALID&quot;))
+with tf.device(&quot;/cpu:0&quot;): # there is no GPU-kernel yet
     depth_output = depth_pool(cropped_images)
 depth_output.shape
 
-```
+</code></pre>
+
 </p></details>
 
-
-<details><summary><b>Transfer Learning</b></summary>
-<p><ul>
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/25.%20Transfer%20Learning.html"><b>How to choose Transfer Learning Model</b></a> </p></li>
-
-<li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/26.%20Transfer%20Learning%20in%20Keras.html"><b>How to use Transfer Learning</b></a> </p></li>
-	
-<li><p><a href="https://github.com/alexisbcook/keras_transfer_cifar10/blob/master/Keras_Transfer_CIFAR10.ipynb"><b>1. Inception</b></a> </p></li></ul>
-
-<details><summary><b>2. VGG16</b></summary><p>
-<h4>1. Import VGG16</h4>
-~~~python
-from keras import applications
-
-# This will load the whole VGG16 network, including the top Dense layers.
-# Note: by specifying the shape of top layers, input tensor shape is forced
-# to be (224, 224, 3), therefore you can use it only on 224x224 images.
-vgg_model = applications.VGG16(weights='imagenet', include_top=True)
-
-# If you are only interested in convolution filters. Note that by not
-# specifying the shape of top layers, the input tensor shape is (None, None, 3),
-# so you can use them for any size of images.
-vgg_model = applications.VGG16(weights='imagenet', include_top=False)
-
-# If you want to specify input tensor
-from keras.layers import Input
-input_tensor = Input(shape=(160, 160, 3))
-vgg_model = applications.VGG16(weights='imagenet',
-                               include_top=False,
-                               input_tensor=input_tensor)
-
-# To see the models' architecture and layer names, run the following
-vgg_model.summary()
-~~~
-
-<h4>2. Create a new network with bottom layers taken from VGG</h4>
-<p>Assume that for some specific task for images with the size (160, 160, 3), you want to use pre-trained bottom layers of VGG, up to layer with the name block2_pool.</p>
-~~~python
-vgg_model = applications.VGG16(weights='imagenet',
-                               include_top=False,
-                               input_shape=(160, 160, 3))
-
-# Creating dictionary that maps layer names to the layers
-layer_dict = dict([(layer.name, layer) for layer in vgg_model.layers])
-
-# Getting output tensor of the last VGG layer that we want to include
-x = layer_dict['block2_pool'].output
-
-# Stacking a new simple convolutional network on top of it    
-x = Conv2D(filters=64, kernel_size=(3, 3), activation='relu')(x)
-x = MaxPooling2D(pool_size=(2, 2))(x)
-x = Flatten()(x)
-x = Dense(256, activation='relu')(x)
-x = Dropout(0.5)(x)
-x = Dense(10, activation='softmax')(x)
-
-# Creating new model. Please note that this is NOT a Sequential() model.
-from keras.models import Model
-custom_model = Model(input=vgg_model.input, output=x)
-
-# Make sure that the pre-trained bottom layers are not trainable
-for layer in custom_model.layers[:7]:
-    layer.trainable = False
-
-# Do not forget to compile it
-custom_model.compile(loss='categorical_crossentropy',
-                     optimizer='rmsprop',
-                     metrics=['accuracy'])
-~~~
-</p></details>
-
-<p>After taking only the convolution base (Top Layers), you have 2 options to proceed:</p>
-<ul>
-<li>Running the convolutional base over your dataset, recording its output to a
-Numpy array on disk, and then using this data as input to a standalone, densely connected classifier similar to those you saw in part 1 of this book. This solution is fast and cheap to run, because it only requires running the convolutional base once for every input image, and the convolutional base is by far the most expensive part of the pipeline. But for the same reason, this technique won’t allow you to use data augmentation.</li><br>
-
-<details><summary><b>Feature Extraction WITHOUT Data Augmentation</b></summary>
-<h4>Fetch the pretrained model</h4>
-```
-# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
-from tensorflow.keras.applications import VGG16
-
-conv_base = VGG16(weights='imagenet',
-				 include_top=False,
-				 input_shape=(150, 150, 3))
-
-# weights: specifies the weight checkpoint from which to initialize the model.
-# include_top: refers to including (or not) the densely connected layers.
-# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
-```
-<h4>Extracting features using the pretrained convolutional base</h4>
-```
-import os
-import numpy as np
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-base_dir = '/cats_and_dogs_small'
-train_dir = os.path.join(base_dir, 'train')
-valid_dir = os.path.join(base_dir, 'valid')
-test_dri   = os.path.join(base_dir, 'test')
-
-datagen = ImageDataGenerator(rescale=1./255)
-batch_size = 20
-
-def extract_features(directory, sample_count):
-	# This is the final shape of the conv_base, you can check it by using
-	# conv_base.summary()
-	features = np.zeros(shape=(sample_count, 4, 4, 512))
-	labels     = np.zeros(shape=(sample_count))
-	generator = datagen.flow_from_directory(
-						directory,
-						target_size=(150, 150),
-						batch_size=batch_size,
-						class_mode='binary')
-	i = 0
-	for inputs_batch, labels_batch in generator:
-		features_batch = conv_base.predict(inputs_batch)
-		features[i*batch_size:(i+1)*batch_size] = features_batch
-		labels[i*batch_size:(i+1)*batch_size] = labels_batch
-		i += 1
-		if i * batch_size >= sample_count:
-			break
-	return features, labels
-	
-# generate features for training, validation, and testing.
-# 2000 is the number of training rows.
-train_features, train_labels = extract_features(train_dir, 2000)
-valid_features, valid_labels = extract_features(valid_dir, 1000)
-test_features, test_labels    = extract_features(test_dir, 1000)
-```
-
-<h4>Change the shape, to feed it to Dense layers</h4>
-```
-train_features = np.reshape(train_features, (2000, 4*4*512))
-valid_features = np.reshape(valid_features, (1000, 4*4*512))
-test_features  = np.reshape(test_features, (1000, 4*4*512))
-```
-
-<h4>Create the Dense layers</h4>
-```
-from tensorflow.keras import models, layers, optimizers
-
-mode = models.Sequential()
-model.add(layers.Dense(256, activation='relu', input_dim=4*4*512))
-model.add(layers.Dropout(0.5))
-model.add(layers.Dense(1, activation='sigmoid'))
-
-model.compile(optimizer=optimizers.RMSprop(lr=2e-5),
-			loss='binary_crossentropy',
-			metrics=['accuracy'])
-			
-history = model.fit(train_features, train_labels,
-			      epochs=30,
-			      batch_size=20,
-			      validation_data=(valid_features, valid_labels))
-# Training will be fast!
-```
-</details><br><br>
-<li>Extending the model you have (conv_base) by adding Dense layers on top, and
-running the whole thing end to end on the input data. This will allow you to use
-data augmentation, because every input image goes through the convolutional
-base every time it’s seen by the model. But for the same reason, this technique is
-far more expensive than the first.</li><br>
-
-<details><summary><b>Feature Extraction WITH Data Augmentation</b></summary>
-<h4>Fetch the pretrained model</h4>
-```
-# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
-from tensorflow.keras.applications import VGG16
-
-conv_base = VGG16(weights='imagenet',
-				 include_top=False,
-				 input_shape=(150, 150, 3))
-
-# weights: specifies the weight checkpoint from which to initialize the model.
-# include_top: refers to including (or not) the densely connected layers.
-# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
-```
-
-<h4>Adding a densly connected classifier on top of convolutional base</h4>
-```
-from tensorflow.keras import models, layers.
-
-model = models.Sequential()
-model.add(conv_base)
-model.add(layers.Flatten())
-model.add(layers.Dense(254, activation='relu'))
-model.add(layers.Dense(1, activation='sigmoid'))
-```
-
-<h4>Freeze the convoluational base's weights</h4>
-```
-print(f"~> Number of trainable weights before freezing conv base: {len(model.trainable_weights}"))
-
-conv_base.trainable = False
-
-print(f"~> Number of trainable weights After freezing conv base: {len(model.trainable_weights}"))
-```
-
-<h4>Data Augmenation</h4>
-```
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras import optimizers
-
-train_datagen = ImageDataGenerator(
-					rescale=1./255,
-					rotation_range=40,
-					width_shift_range=.2,
-					height_shift_range=.2,
-					shear_range=.2,
-					zoom_range=.2,
-					horizontal_flip=True,
-					fill_mode='nearest')
-					
-test_datagen = ImageDataGenerator(rescale=1./255)
-
-train_generator = train_datagen.flow_from_directory(
-					train_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_model='binary')
-					
-valid_generator = test_datagen.flow_from_directory(
-					valid_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_mode='binary')
-					
-model.compile(loss='binary_crossentropy',
-			optimizer=optimizers.RMSprop(lr=2-e5),
-			metrics=['accuracy'])
-			
-history = model.fit_generator(
-				train_generator,
-				steps_per_epoch=100,
-				epochs=30,
-				validation_data=validation_generator,
-				validation_steps=50)
-```
-</p></details></ul>
-</p></details>
-</div>
+</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>

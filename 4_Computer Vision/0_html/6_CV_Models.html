@@ -1,30 +1,29 @@
-# Models
-
+<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Models</h1>
 <div style='width:1000px;margin:auto;'>
 
 <details><summary><b>Bi-Directional LSTM</b> for Images</summary><p>
-```
-from keras.models import Model
+
+<pre><code>from keras.models import Model
 from keras.layers import Input, LSTM, GRU, Bidirectional, GlobalMaxPooling1D, Lambda, Concatenate, Dense
 import keras.backend as K
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-if len(K.tensorflow_backend._get_available_gpus()) > 0:
+if len(K.tensorflow_backend._get_available_gpus()) &gt; 0:
   from keras.layers import CuDNNLSTM as LSTM
   from keras.layers import CuDNNGRU as GRU
 
 
 def get_mnist(limit=None):
   if not os.path.exists('../large_files'):
-    print("You must create a folder called large_files adjacent to the class folder first.")
+    print(&quot;You must create a folder called large_files adjacent to the class folder first.&quot;)
   if not os.path.exists('../large_files/train.csv'):
-    print("Looks like you haven't downloaded the data or it's not in the right spot.")
-    print("Please get train.csv from https://www.kaggle.com/c/digit-recognizer")
-    print("and place it in the large_files folder.")
+    print(&quot;Looks like you haven't downloaded the data or it's not in the right spot.&quot;)
+    print(&quot;Please get train.csv from https://www.kaggle.com/c/digit-recognizer&quot;)
+    print(&quot;and place it in the large_files folder.&quot;)
 
-  print("Reading in and transforming data...")
+  print(&quot;Reading in and transforming data...&quot;)
   df = pd.read_csv('../large_files/train.csv')
   data = df.values
   np.random.shuffle(data)
@@ -74,7 +73,7 @@ model = Model(inputs=input_, outputs=output)
 
 # testing
 # o = model.predict(X)
-# print("o.shape:", o.shape)
+# print(&quot;o.shape:&quot;, o.shape)
 
 # compile
 model.compile(
@@ -100,7 +99,8 @@ plt.plot(r.history['val_acc'], label='val_acc')
 plt.legend()
 plt.show()
 
-```
+</code></pre>
+
 </p></details>
 
 <details><summary><b>Transfer Learning</b></summary>
@@ -108,13 +108,13 @@ plt.show()
 <li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/25.%20Transfer%20Learning.html"><b>How to choose Transfer Learning Model</b></a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/26.%20Transfer%20Learning%20in%20Keras.html"><b>How to use Transfer Learning</b></a> </p></li>
-	
+
 <li><p><a href="https://github.com/alexisbcook/keras_transfer_cifar10/blob/master/Keras_Transfer_CIFAR10.ipynb"><b>1. Inception</b></a> </p></li></ul>
 
 <details><summary><b>2. VGG16</b></summary><p>
 <h4>1. Import VGG16</h4>
-~~~python
-from keras import applications
+
+<pre><code class="python">from keras import applications
 
 # This will load the whole VGG16 network, including the top Dense layers.
 # Note: by specifying the shape of top layers, input tensor shape is forced
@@ -135,12 +135,13 @@ vgg_model = applications.VGG16(weights='imagenet',
 
 # To see the models' architecture and layer names, run the following
 vgg_model.summary()
-~~~
+</code></pre>
+
 
 <h4>2. Create a new network with bottom layers taken from VGG</h4>
 <p>Assume that for some specific task for images with the size (160, 160, 3), you want to use pre-trained bottom layers of VGG, up to layer with the name block2_pool.</p>
-~~~python
-vgg_model = applications.VGG16(weights='imagenet',
+
+<pre><code class="python">vgg_model = applications.VGG16(weights='imagenet',
                                include_top=False,
                                input_shape=(160, 160, 3))
 
@@ -170,7 +171,8 @@ for layer in custom_model.layers[:7]:
 custom_model.compile(loss='categorical_crossentropy',
                      optimizer='rmsprop',
                      metrics=['accuracy'])
-~~~
+</code></pre>
+
 </p></details>
 
 <p>After taking only the convolution base (Top Layers), you have 2 options to proceed:</p>
@@ -180,21 +182,22 @@ Numpy array on disk, and then using this data as input to a standalone, densely 
 
 <details><summary><b>Feature Extraction WITHOUT Data Augmentation</b></summary>
 <h4>Fetch the pretrained model</h4>
-```
-# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
+
+<pre><code># you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
 from tensorflow.keras.applications import VGG16
 
 conv_base = VGG16(weights='imagenet',
-				 include_top=False,
-				 input_shape=(150, 150, 3))
+                 include_top=False,
+                 input_shape=(150, 150, 3))
 
 # weights: specifies the weight checkpoint from which to initialize the model.
 # include_top: refers to including (or not) the densely connected layers.
-# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
-```
+# input_shape: is the shape of the image tensor that you'll feed to the network.  --&gt; This is purely OPTIONAL.
+</code></pre>
+
 <h4>Extracting features using the pretrained convolutional base</h4>
-```
-import os
+
+<pre><code>import os
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
@@ -207,42 +210,44 @@ datagen = ImageDataGenerator(rescale=1./255)
 batch_size = 20
 
 def extract_features(directory, sample_count):
-	# This is the final shape of the conv_base, you can check it by using
-	# conv_base.summary()
-	features = np.zeros(shape=(sample_count, 4, 4, 512))
-	labels     = np.zeros(shape=(sample_count))
-	generator = datagen.flow_from_directory(
-						directory,
-						target_size=(150, 150),
-						batch_size=batch_size,
-						class_mode='binary')
-	i = 0
-	for inputs_batch, labels_batch in generator:
-		features_batch = conv_base.predict(inputs_batch)
-		features[i*batch_size:(i+1)*batch_size] = features_batch
-		labels[i*batch_size:(i+1)*batch_size] = labels_batch
-		i += 1
-		if i * batch_size >= sample_count:
-			break
-	return features, labels
-	
+    # This is the final shape of the conv_base, you can check it by using
+    # conv_base.summary()
+    features = np.zeros(shape=(sample_count, 4, 4, 512))
+    labels     = np.zeros(shape=(sample_count))
+    generator = datagen.flow_from_directory(
+                        directory,
+                        target_size=(150, 150),
+                        batch_size=batch_size,
+                        class_mode='binary')
+    i = 0
+    for inputs_batch, labels_batch in generator:
+        features_batch = conv_base.predict(inputs_batch)
+        features[i*batch_size:(i+1)*batch_size] = features_batch
+        labels[i*batch_size:(i+1)*batch_size] = labels_batch
+        i += 1
+        if i * batch_size &gt;= sample_count:
+            break
+    return features, labels
+
 # generate features for training, validation, and testing.
 # 2000 is the number of training rows.
 train_features, train_labels = extract_features(train_dir, 2000)
 valid_features, valid_labels = extract_features(valid_dir, 1000)
 test_features, test_labels    = extract_features(test_dir, 1000)
-```
+</code></pre>
+
 
 <h4>Change the shape, to feed it to Dense layers</h4>
-```
-train_features = np.reshape(train_features, (2000, 4*4*512))
+
+<pre><code>train_features = np.reshape(train_features, (2000, 4*4*512))
 valid_features = np.reshape(valid_features, (1000, 4*4*512))
 test_features  = np.reshape(test_features, (1000, 4*4*512))
-```
+</code></pre>
+
 
 <h4>Create the Dense layers</h4>
-```
-from tensorflow.keras import models, layers, optimizers
+
+<pre><code>from tensorflow.keras import models, layers, optimizers
 
 mode = models.Sequential()
 model.add(layers.Dense(256, activation='relu', input_dim=4*4*512))
@@ -250,15 +255,16 @@ model.add(layers.Dropout(0.5))
 model.add(layers.Dense(1, activation='sigmoid'))
 
 model.compile(optimizer=optimizers.RMSprop(lr=2e-5),
-			loss='binary_crossentropy',
-			metrics=['accuracy'])
-			
+            loss='binary_crossentropy',
+            metrics=['accuracy'])
+
 history = model.fit(train_features, train_labels,
-			      epochs=30,
-			      batch_size=20,
-			      validation_data=(valid_features, valid_labels))
+                  epochs=30,
+                  batch_size=20,
+                  validation_data=(valid_features, valid_labels))
 # Training will be fast!
-```
+</code></pre>
+
 </details><br><br>
 <li>Extending the model you have (conv_base) by adding Dense layers on top, and
 running the whole thing end to end on the input data. This will allow you to use
@@ -268,79 +274,83 @@ far more expensive than the first.</li><br>
 
 <details><summary><b>Feature Extraction WITH Data Augmentation</b></summary>
 <h4>Fetch the pretrained model</h4>
-```
-# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
+
+<pre><code># you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
 from tensorflow.keras.applications import VGG16
 
 conv_base = VGG16(weights='imagenet',
-				 include_top=False,
-				 input_shape=(150, 150, 3))
+                 include_top=False,
+                 input_shape=(150, 150, 3))
 
 # weights: specifies the weight checkpoint from which to initialize the model.
 # include_top: refers to including (or not) the densely connected layers.
-# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
-```
+# input_shape: is the shape of the image tensor that you'll feed to the network.  --&gt; This is purely OPTIONAL.
+</code></pre>
+
 
 <h4>Adding a densly connected classifier on top of convolutional base</h4>
-```
-from tensorflow.keras import models, layers.
+
+<pre><code>from tensorflow.keras import models, layers.
 
 model = models.Sequential()
 model.add(conv_base)
 model.add(layers.Flatten())
 model.add(layers.Dense(254, activation='relu'))
 model.add(layers.Dense(1, activation='sigmoid'))
-```
+</code></pre>
+
 
 <h4>Freeze the convoluational base's weights</h4>
-```
-print(f"~> Number of trainable weights before freezing conv base: {len(model.trainable_weights}"))
+
+<pre><code>print(f&quot;~&gt; Number of trainable weights before freezing conv base: {len(model.trainable_weights}&quot;))
 
 conv_base.trainable = False
 
-print(f"~> Number of trainable weights After freezing conv base: {len(model.trainable_weights}"))
-```
+print(f&quot;~&gt; Number of trainable weights After freezing conv base: {len(model.trainable_weights}&quot;))
+</code></pre>
+
 
 <h4>Data Augmenation</h4>
-```
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+<pre><code>from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 
 train_datagen = ImageDataGenerator(
-					rescale=1./255,
-					rotation_range=40,
-					width_shift_range=.2,
-					height_shift_range=.2,
-					shear_range=.2,
-					zoom_range=.2,
-					horizontal_flip=True,
-					fill_mode='nearest')
-					
+                    rescale=1./255,
+                    rotation_range=40,
+                    width_shift_range=.2,
+                    height_shift_range=.2,
+                    shear_range=.2,
+                    zoom_range=.2,
+                    horizontal_flip=True,
+                    fill_mode='nearest')
+
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
-					train_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_model='binary')
-					
+                    train_dir,
+                    target_size=(150, 150),
+                    batch_size=20,
+                    class_model='binary')
+
 valid_generator = test_datagen.flow_from_directory(
-					valid_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_mode='binary')
-					
+                    valid_dir,
+                    target_size=(150, 150),
+                    batch_size=20,
+                    class_mode='binary')
+
 model.compile(loss='binary_crossentropy',
-			optimizer=optimizers.RMSprop(lr=2-e5),
-			metrics=['accuracy'])
-			
+            optimizer=optimizers.RMSprop(lr=2-e5),
+            metrics=['accuracy'])
+
 history = model.fit_generator(
-				train_generator,
-				steps_per_epoch=100,
-				epochs=30,
-				validation_data=validation_generator,
-				validation_steps=50)
-```
+                train_generator,
+                steps_per_epoch=100,
+                epochs=30,
+                validation_data=validation_generator,
+                validation_steps=50)
+</code></pre>
+
 </p></details></ul>
 <details><summary><b>Fine-Tunning</b> a Transfer learning mode</summary>
 <ol><li>Add your custom network on top of an already-trained base network</li>
@@ -350,48 +360,51 @@ history = model.fit_generator(
 <li>Jointly train both these layers and the part you added.</li></ol>
 
 <h4>Freezing all layers up to a specific point</h4>
-```
-# to know the name of the layers, do the following.
+
+<pre><code># to know the name of the layers, do the following.
 conv_base.summary()
 
 conv_base.trainable = True
 
 set_trainable = False
 for layer in conv_base.layers:
-	if layer.name == 'block5_conv1':
-		set_trainable = True
-	if set_trainable:
-		layer.trainable = True
-	else:
-		layer.trainable = False
-```
+    if layer.name == 'block5_conv1':
+        set_trainable = True
+    if set_trainable:
+        layer.trainable = True
+    else:
+        layer.trainable = False
+</code></pre>
+
 
 <h4>Fine-tuning the model</h4>
-```
-# Make sure to use a small learning rate, to avoid changing the weight too much.
+
+<pre><code># Make sure to use a small learning rate, to avoid changing the weight too much.
 model.compile(loss='binary_crossentropy',
-			optimizer=optimizers.RMSprop(lr=1e-5),
-			metrics=['accuracy'])
-			
+            optimizer=optimizers.RMSprop(lr=1e-5),
+            metrics=['accuracy'])
+
 history = model.fit_generator(
-				train_generator,
-				steps_per_epoch=100,
-				epochs=100,
-				validation_data=validation_generator,
-				validation_steps=50)
-```
+                train_generator,
+                steps_per_epoch=100,
+                epochs=100,
+                validation_data=validation_generator,
+                validation_steps=50)
+</code></pre>
+
 
 <h4>Test the model</h4>
-```
-test_generator = test_datagen.flow_from_directory(
-					test_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_mode='binary')
-					
+
+<pre><code>test_generator = test_datagen.flow_from_directory(
+                    test_dir,
+                    target_size=(150, 150),
+                    batch_size=20,
+                    class_mode='binary')
+
 test_loss, test_acc = model.evaluate_generator(test_generator, steps=50)
-print(f"test acc: {test_acc}")
-```
+print(f&quot;test acc: {test_acc}&quot;)
+</code></pre>
+
 </p></details>
 </p></details>
-</div>
+</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
