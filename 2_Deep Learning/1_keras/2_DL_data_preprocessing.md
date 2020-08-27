@@ -210,6 +210,9 @@ test_score = model.evaluate(X_test)
 # K-fold cross-validation
 import numpy as np
 
+# Shuffling the data is usually appropiate.
+np.random.shuffle(train_data)
+
 k = 4
 num_val_samples = len(train_data) // k
 num_epochs      = 500
@@ -231,9 +234,9 @@ for i in range(k):
               batch_size=1,
               validation_data=(val_data, val_labels),
               verbose=0)
-    metric_history = history.history['val_mae']
-    # val_mse, val_mae = model.evaluate(val_data, val_labels, verbose=0)
-    all_scores.append(metric_history)
+    # metric_history = history.history['val_mae']
+    val_mse, val_mae = model.evaluate(val_data, val_labels, verbose=0)
+    all_scores.append(val_mae)
 ```
 
 <h4>Building the history of successive mean K-fold validation</h4>

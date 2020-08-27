@@ -1354,11 +1354,9 @@ for col in X_train:
 <details><summary style='font-size:23px;text-decoration:underline'><b>10. Underfitting & Overfitting</b></summary><p>
 <h4>1. Fix Overfitting</h4>
 <ul>
-<li>To simplify the model by selecting one with fewer parameters
-(e.g., a linear model rather than a high-degree polynomial
-model), by reducing the number of attributes in the training
-data or by constraining the model</li>
-<li>To gather more training data</li>
+<li>To simplify the model <br>&nbsp;&nbsp;&nbsp;&nbsp;by selecting one with fewer parameters (e.g., a linear model rather than a high-degree polynomial
+model), <br>&nbsp;&nbsp;&nbsp;&nbsp;by reducing the number of attributes in the training data or<br>&nbsp;&nbsp;&nbsp;&nbsp;by constraining the model (Adding Regularization)<br> &nbsp;&nbsp;&nbsp;&nbsp; In DL, reduce the number of layers/neurons or add a drop-out layer.</li>
+<li>To gather more training data.</li>
 <li>To reduce the noise in the training data (e.g., fix data errors
 and remove outliers)</li>
 </ul>

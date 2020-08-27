@@ -153,8 +153,7 @@ depth_output.shape
 	
 <li><p><a href="https://github.com/alexisbcook/keras_transfer_cifar10/blob/master/Keras_Transfer_CIFAR10.ipynb"><b>1. Inception</b></a> </p></li></ul>
 
-<details><summary><b>2. VGG16</b></summary>
-<p>
+<details><summary><b>2. VGG16</b></summary><p>
 <h4>1. Import VGG16</h4>
 ~~~python
 from keras import applications
@@ -215,5 +214,175 @@ custom_model.compile(loss='categorical_crossentropy',
                      metrics=['accuracy'])
 ~~~
 </p></details>
+
+<p>After taking only the convolution base (Top Layers), you have 2 options to proceed:</p>
+<ul>
+<li>Running the convolutional base over your dataset, recording its output to a
+Numpy array on disk, and then using this data as input to a standalone, densely connected classifier similar to those you saw in part 1 of this book. This solution is fast and cheap to run, because it only requires running the convolutional base once for every input image, and the convolutional base is by far the most expensive part of the pipeline. But for the same reason, this technique won’t allow you to use data augmentation.</li><br>
+
+<details><summary><b>Feature Extraction WITHOUT Data Augmentation</b></summary>
+<h4>Fetch the pretrained model</h4>
+```
+# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
+from tensorflow.keras.applications import VGG16
+
+conv_base = VGG16(weights='imagenet',
+				 include_top=False,
+				 input_shape=(150, 150, 3))
+
+# weights: specifies the weight checkpoint from which to initialize the model.
+# include_top: refers to including (or not) the densely connected layers.
+# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
+```
+<h4>Extracting features using the pretrained convolutional base</h4>
+```
+import os
+import numpy as np
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+base_dir = '/cats_and_dogs_small'
+train_dir = os.path.join(base_dir, 'train')
+valid_dir = os.path.join(base_dir, 'valid')
+test_dri   = os.path.join(base_dir, 'test')
+
+datagen = ImageDataGenerator(rescale=1./255)
+batch_size = 20
+
+def extract_features(directory, sample_count):
+	# This is the final shape of the conv_base, you can check it by using
+	# conv_base.summary()
+	features = np.zeros(shape=(sample_count, 4, 4, 512))
+	labels     = np.zeros(shape=(sample_count))
+	generator = datagen.flow_from_directory(
+						directory,
+						target_size=(150, 150),
+						batch_size=batch_size,
+						class_mode='binary')
+	i = 0
+	for inputs_batch, labels_batch in generator:
+		features_batch = conv_base.predict(inputs_batch)
+		features[i*batch_size:(i+1)*batch_size] = features_batch
+		labels[i*batch_size:(i+1)*batch_size] = labels_batch
+		i += 1
+		if i * batch_size >= sample_count:
+			break
+	return features, labels
+	
+# generate features for training, validation, and testing.
+# 2000 is the number of training rows.
+train_features, train_labels = extract_features(train_dir, 2000)
+valid_features, valid_labels = extract_features(valid_dir, 1000)
+test_features, test_labels    = extract_features(test_dir, 1000)
+```
+
+<h4>Change the shape, to feed it to Dense layers</h4>
+```
+train_features = np.reshape(train_features, (2000, 4*4*512))
+valid_features = np.reshape(valid_features, (1000, 4*4*512))
+test_features  = np.reshape(test_features, (1000, 4*4*512))
+```
+
+<h4>Create the Dense layers</h4>
+```
+from tensorflow.keras import models, layers, optimizers
+
+mode = models.Sequential()
+model.add(layers.Dense(256, activation='relu', input_dim=4*4*512))
+model.add(layers.Dropout(0.5))
+model.add(layers.Dense(1, activation='sigmoid'))
+
+model.compile(optimizer=optimizers.RMSprop(lr=2e-5),
+			loss='binary_crossentropy',
+			metrics=['accuracy'])
+			
+history = model.fit(train_features, train_labels,
+			      epochs=30,
+			      batch_size=20,
+			      validation_data=(valid_features, valid_labels))
+# Training will be fast!
+```
+</details><br><br>
+<li>Extending the model you have (conv_base) by adding Dense layers on top, and
+running the whole thing end to end on the input data. This will allow you to use
+data augmentation, because every input image goes through the convolutional
+base every time it’s seen by the model. But for the same reason, this technique is
+far more expensive than the first.</li><br>
+
+<details><summary><b>Feature Extraction WITH Data Augmentation</b></summary>
+<h4>Fetch the pretrained model</h4>
+```
+# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
+from tensorflow.keras.applications import VGG16
+
+conv_base = VGG16(weights='imagenet',
+				 include_top=False,
+				 input_shape=(150, 150, 3))
+
+# weights: specifies the weight checkpoint from which to initialize the model.
+# include_top: refers to including (or not) the densely connected layers.
+# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
+```
+
+<h4>Adding a densly connected classifier on top of convolutional base</h4>
+```
+from tensorflow.keras import models, layers.
+
+model = models.Sequential()
+model.add(conv_base)
+model.add(layers.Flatten())
+model.add(layers.Dense(254, activation='relu'))
+model.add(layers.Dense(1, activation='sigmoid'))
+```
+
+<h4>Freeze the convoluational base's weights</h4>
+```
+print(f"~> Number of trainable weights before freezing conv base: {len(model.trainable_weights}"))
+
+conv_base.trainable = False
+
+print(f"~> Number of trainable weights After freezing conv base: {len(model.trainable_weights}"))
+```
+
+<h4>Data Augmenation</h4>
+```
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras import optimizers
+
+train_datagen = ImageDataGenerator(
+					rescale=1./255,
+					rotation_range=40,
+					width_shift_range=.2,
+					height_shift_range=.2,
+					shear_range=.2,
+					zoom_range=.2,
+					horizontal_flip=True,
+					fill_mode='nearest')
+					
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+train_generator = train_datagen.flow_from_directory(
+					train_dir,
+					target_size=(150, 150),
+					batch_size=20,
+					class_model='binary')
+					
+valid_generator = test_datagen.flow_from_directory(
+					valid_dir,
+					target_size=(150, 150),
+					batch_size=20,
+					class_mode='binary')
+					
+model.compile(loss='binary_crossentropy',
+			optimizer=optimizers.RMSprop(lr=2-e5),
+			metrics=['accuracy'])
+			
+history = model.fit_generator(
+				train_generator,
+				steps_per_epoch=100,
+				epochs=30,
+				validation_data=validation_generator,
+				validation_steps=50)
+```
+</p></details></ul>
 </p></details>
 </div>

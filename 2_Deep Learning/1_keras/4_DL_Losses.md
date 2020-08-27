@@ -5,7 +5,8 @@
 
 
 <details><summary><b>binary_crossentropy</b></summary><p><ul>
-<li>Used with ONLY <b>binary classification</b> problem.</li>
+<li>Used with <b>binary classification</b> problem.</li>
+<li>Can be used for <b>Multi-class, multilabel classification</b> problem</li>.
 <li>The last layer has only <b>1 neuron</b>.</li>
 <li>The last layer has <b>sigmoid</b> activation function.</li>
 <li>The <b>y_labels</b> is an array of ONLY <b>zeros</b> and <b>ones</b></li></ul>
