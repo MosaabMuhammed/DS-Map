@@ -9,6 +9,8 @@
 
 <h2><a href="./6_CV_Models.html"><span style='color:#333333'>Models</span></a></h2>
 
+
+<h2><a href="./4_CV_Visualization.html"><span style='color:#333333'>Visualization</span></a></h2>
 </div>
 
 
