@@ -38,7 +38,8 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 
 MAX_LEN = 50
-tokensizer = Tokenizer()
+max_words = 10_000 # considers only the top10,000 words in the dataset.
+tokensizer = Tokenizer(num_words=max_words)
 tokensizer.fit_on_texts(corpus)
 sequences  = tokensizer.texts_to_sequences(corpus)
 
@@ -51,16 +52,15 @@ print(f'~> Number of Unique words: {bg(len(word_index))}')
 
 <h4>3. Create Embedding Matrix</h4>
 ```
+# num_words should equal max_words if you define it first, if not, go with the following line.
 num_words = len(word_index)+1
 embedding_matrix = np.zeros((num_words, 100))
 
 for word, i in tqdm(word_index.items()):
-    if i > num_words:
-        continue
-        
-    emb_vec = embedding_dict.get(word)
-    if emb_vec is not None:
-        embedding_matrix[i] = emb_vec
+    if i < num_words:
+	    emb_vec = embedding_dict.get(word)
+	    if emb_vec is not None:
+		embedding_matrix[i] = emb_vec
 ``` 
 
 <h4>4. LSTM Model with Embedding</h4>
