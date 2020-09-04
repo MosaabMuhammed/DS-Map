@@ -1,7 +1,10 @@
 <h1 id="nbspcallbacksnbsp">CallBacks</h1>
 
 
-[<span style='color:#333'>Ex on **Tensorboard** & **EarlyStopping**  & **Checkpoint**</span>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/solutions/5%20Gradient%20Descent%20Exercises%20Solution.html#Exercise-4) 
+<div style="width:1000px;margin:auto">
+
+<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/solutions/5%20Gradient%20Descent%20Exercises%20Solution.html#Exercise-4"><span style='color:#333'>Ex on Tensorboard & EarlyStopping  & Checkpoint</span></a>
+
 
 <details><summary><strong>ReduceLROnPlateau</strong></summary>
 <p>
@@ -139,6 +142,8 @@ class myCallback(tf.keras.callbacks.Callback):
     if(logs.get('loss')<0.4):
       print("\nReached 60% accuracy so cancelling training!")
       self.model.stop_training = True
+      # You can access validation data too.
+      # self.validation_data --> The value of what was passed to fit as validation data.
 
 callbacks = myCallback()
 
@@ -157,6 +162,27 @@ model.fit(training_images, training_labels, epochs=5, callbacks=[callbacks])
 <li>on_predict_begin()</li>
 <li>on_predict_end()</li>
 </ul>
+</p></details>
+
+<details><summary><b>ActivationLogger</b> [Custom]</summary><p>
+```
+class ActivationLogger(keras.callbacks.Callback):
+
+	def set_model(self, model):
+		self.model = model
+		layer_outputs = [layer.output for layer in model.layers]
+		self.activations_model = keras.models.Model(model.input, layer_outputs)
+		
+	def on_epoch_end(self, epoch, logs=None):
+		if self.validation_data is None:
+			raise RuntimeError("Required validation_data.")
+		validation_sample = self.validation_data[0][0:1]
+		activations = self.activations_model.predict(validation_sample)
+		f = open('activations_at_epoch_' + str(epoch) + '.npz', 'w')
+		np.savez(f, activations)
+		f.close()
+			
+```
 </p></details>
 
 <details><summary><b>LR Schedular</b> How to choose the perfect learning rate</summary><ul>
@@ -383,7 +409,9 @@ def get_run_logdir():
 run_logdir = get_run_logdir()
 
 # 2. Fit the model.
-tensorboard_cv = tf.keras.callbacks.TensorBoard(run_logdir)
+tensorboard_cv = tf.keras.callbacks.TensorBoard(run_logdir,
+									  # histogram_freq=1, Records activation histogram every 1 epoch.
+									  # embeddings_freq=1) Record embedding data every 1 epoch.
 history = model.fit(X_train_scaled,
                     y_train,
                     epochs=20,
@@ -396,3 +424,5 @@ history = model.fit(X_train_scaled,
 # Note, the last command won't work in colab, search for it.
 ```
 </details>
+
+</div>
