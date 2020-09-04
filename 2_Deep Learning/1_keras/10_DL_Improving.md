@@ -1,5 +1,6 @@
 <h1 id="improvingperformance">Improving Performance</h1>
 
+<div style="width:1000px;margin:auto">
 <details><summary><b>Partial Layers</b></summary><p>
 ```
 from functools import partial
@@ -17,7 +18,6 @@ model = tf.keras.models.Sequential([
                      kernel_initializer="glorot_uniform")
 ])
 ```
-
 </p></details>
 
 <details><summary><b>Learning Curves</b></summary><p>
@@ -212,7 +212,38 @@ layer = tf.keras.layers.Dense(100, activation="elu", kernel_initializer="he_norm
 ```
 </p></details>
 
+<details><summary><b>Residual Conncetions</b></summary><p>
+- It helps with <b>vanishing gradient</b> and <b>representational bottlenecks</b> problems.<br>
+- Adding it to any model that has more than <b>10 layers</b> is likely to be beneficial.
+```
+from tensorflow.keras import layers
+
+x = ...
+y = layers.Conv2D(128, 3, activation="relu", padding="same")(x)
+y = layers.Conv2D(128, 3, activation="relu", padding="same")(y)
+y = layers.Conv2D(128, 3, activation="relu", padding="same")(y)
+
+y = layers.add([y, x])
+```
+
+<h4>If they don't have the same shape</h4>
+```
+# Note, if the 2 layers that are going to be added have different length/sizes, do the following: Dense layer without activation / convolutional feature maps 1x1 convolutions without activation, to insure they have the same shape.
+from tensorflow.keras import layers
+
+x = ...
+y = layers.Conv2D(128, 3, activation="relu", padding="same")(x)
+y = layers.Conv2D(128, 3, activation="relu", padding="same")(y)
+y = layers.MaxPooling2D(2, stride=2)(y)
+
+residual = layers.Conv2D(128, 1, strides=2, padding='same')(x)
+y = layers.add([y, residual])
+```
+</p></details>
+
+
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Embeddings"><b style='color:#333'>5. Embedding</b></a> </p>
 
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Sentiment-prediction-on-movie-Reviews"><b style='color:#333'>Ex: Sentiment Analysis on Movie Review</b></a> </p>
  
+</div>
