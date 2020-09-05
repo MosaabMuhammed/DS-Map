@@ -394,4 +394,6 @@ print(f"test acc: {test_acc}")
 ```
 </p></details>
 </p></details>
+
+<a href="./notebooks/deepdream.html" style="color:#333;font-size:17px;font-weight:bold;padding:15px">DeepDream</a>
 </div>
