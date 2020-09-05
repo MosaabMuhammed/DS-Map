@@ -395,5 +395,7 @@ print(f"test acc: {test_acc}")
 </p></details>
 </p></details>
 
-<a href="./notebooks/deepdream.html" style="color:#333;font-size:17px;font-weight:bold;padding:15px">DeepDream</a>
+<div><a href="./notebooks/deepdream.html" style="color:#333;font-size:16px;font-weight:bold;padding:15px">DeepDream</a></div>
+
+<a href="./notebooks/style_transfer.html" style="color:#333;font-size:16px;font-weight:bold;padding:15px">Neural Style Transfer</a>
 </div>
