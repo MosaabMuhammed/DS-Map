@@ -219,30 +219,7 @@ y_test = data[-split_test:]['Target']
 ~~~
 </p></details>
 
-<details><summary> <b>Make Scorer</b> </summary><p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer"><b>Sklearn Docs</b></a> </p>
-~~~python
-from sklearn.metrics import f1_score, make_scorer
 
-scorer = make_scorer(f1_score, greater_is_better=True, average='macro')
-
-~~~
-</p></details>
-
-<details><summary> Create a <b>Pipeline</b> </summary><p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a> </p>
-~~~python
-from sklearn.preprocessing import Imputer, MinMaxScaler
-from sklearn.pipeline import Pipeline
-
-pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
-                     ('scaler', MinMaxScaler())])
-
-# Fit and transform the training data
-train_set = pipeline.fit_transform(train_set)
-test_st   = pipeline.transform(test_set)
-~~~
-</p></details>
 
 <details><summary> <b>Random K-Fold CV</b> </summary><p>
 ```
@@ -365,6 +342,21 @@ TRAIN: [2 3] TEST: [0 1]
 ```
 </p></details>
 
+<details><summary> <b>Multi-Label Stratified K-Fold CV</b> </summary><p>
+```
+from iterstart.ml_startifiers import MultilabelStratifiedKFold
+
+df.loc[:, "kfold"] = -1
+df = df.sample(frac=1).reset_index(drop=True)
+
+mskf = MultilabelStratifiedKFold(n_splits=5)
+for fold_, (trn_, val_) in enumerate(mskf.split(X=df, y=targets)):
+	df.loc[val_, "kfold"] = fold_
+	
+df.to_csv("train_folds.csv", index=False)
+```
+</p></details>
+
 <details><summary> <b>Cross_val_score</b> </summary><p>
 ```
 model = RF(n_estimators=100, n_jobs=-1)
@@ -453,6 +445,30 @@ housing_extra_attribs = attr_adder.transform(housing.values)
 ```
 </p></details> 
 
+<details><summary> <b>Make Scorer</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer"><b>Sklearn Docs</b></a> </p>
+~~~python
+from sklearn.metrics import f1_score, make_scorer
+
+scorer = make_scorer(f1_score, greater_is_better=True, average='macro')
+
+~~~
+</p></details>
+
+<details><summary> Create a <b>Pipeline</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a> </p>
+~~~python
+from sklearn.preprocessing import Imputer, MinMaxScaler
+from sklearn.pipeline import Pipeline
+
+pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
+                     ('scaler', MinMaxScaler())])
+
+# Fit and transform the training data
+train_set = pipeline.fit_transform(train_set)
+test_st   = pipeline.transform(test_set)
+~~~
+</p></details>
 
 <details><summary> <b>Paralleism</b> </summary><p>
 ```
