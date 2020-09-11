@@ -14,6 +14,18 @@ fig.savefig('doc_term_matrix.png', dpi=800)
 ```
 </p></details>
 
+<details><summary><b>top & left ticks</b> in correlation matrix</summary><p>
+```
+f = plt.figure(figsize=(19, 15))
+corrmat = train_features.corr()
+plt.matshow(corrmat, fignum=f.number)
+plt.xticks(range(train_features.shape[1]), train_features.columns, fontsize=3, rotation=50)
+plt.yticks(range(train_features.shape[1]), train_features.columns, fontsize=3)
+cb = plt.colorbar()
+cb.ax.tick_params(labelsize=14)
+```
+</p></details>
+
 <details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><p>
 ```
 plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
@@ -42,16 +54,14 @@ plt.ylabel('Count', rotation=0, labelpad=30)
 </p>
 </details>
 
-<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary>
-<p>
+<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary><p>
 ~~~python
 with plt.xkcd():
     plt.plot(roc_curve[0], roc_curve[1]);
     plt.plot([0,1], [0,1])
     plt.xlabel('FPR'); plt.ylabel('TPR'); plt.title('test AUC = %f' % (auc)); plt.axis([-0.05,1.05,-0.05,1.05]);
 ~~~
-</p>
-</details>
+</p></details>
 
 <details><summary><b>CDF</b> Plotting</summary>
 <p>
