@@ -3,6 +3,7 @@
 
 <details><summary><b>Python</b></summary><p>
 
+<details><summary><b>Sorting</b></summary><p>
 <details><summary>Sort Dictionary easily by <b>keys</b> or <b>values</b></summary><p>
 
 <pre><code>sorting = {1: 23, 2: 24, 4: 51, 10: 1, &quot;cool&quot;: 20}
@@ -13,6 +14,81 @@ values, keys
 
 # OUTPUT
 ((1, 20, 23, 24, 51), (10, 'cool', 1, 2, 4))
+</code></pre>
+
+
+<pre><code>word_counts = {&quot;a&quot;: 12, &quot;b&quot;:23, &quot;c&quot;: 1, &quot;d&quot;:2}
+
+# Sort by keys from small to large.
+new_dict = sorted(word_counts, key=lambda val: val[0], reverse=False)
+# [('a', 12), ('b', 23), ('c', 1), ('d', 2)]
+
+
+# Sort by values from small to large.
+new_dict = sorted(word_counts, key=lambda val: val[1], reverse=False)
+# [('c', 1), ('d', 2), ('a', 12), ('b', 23)]
+</code></pre>
+
+</p></details>
+
+<details><summary>Sort <b>Lists</b></summary><p>
+
+<pre><code>x = [4, 1, 2, 3]
+y = sorted(x)  # x is unchanged.
+x.sort()            # x is changed and sorted.
+
+# Sort the list by absolute values from largest to smallest.
+x = sorted([-4, 1, -2, 3], key=abs, reverse=True)
+</code></pre>
+
+</p></details>
+</p></details>
+
+<details><summary><b>Randomness</b></summary><p>
+
+<pre><code>import random
+random.seed(42)
+
+# random.random() produces numbers uniformly between 0 and 1 it's the random function we'll use most often
+four_uniform_randoms = [random.random() for _ in range(4)]
+#[0.8444218515250481,
+# 0.7579544029403025,
+# 0.420571580830845,
+# 0.25891675029296335]
+
+# Take random between range of numbers.
+random.randrange(10) # choose randomly from [0, ..., 9]
+random.randrange(3, 6) # choose randomly from [3, 4, 5]
+
+# Shuffle given list.
+lst= range(10)
+random.shuffle(lst)
+print(lst)
+# [2, 5, 1, 8, ...]
+
+# Pick random element from a list.
+myPick = random.choice(['Alice', &quot;bob&quot;, &quot;charlie&quot;])
+
+# Pick a sublist of elements without duplication.
+lottery_nums = range(60)
+winning_numbers = random.sample(lottery_numbers, 6)
+# [16, 36, 10, 6, 25, 9]
+
+# Pick a sublist of elements WITH duplication.
+sublst = [random.choice(range(10)) for _ in range(4)]
+# [9, 3, 3, 2]
+</code></pre>
+
+</p></details>
+
+<details><summary> <b>Regex</b></summary><p>
+
+<pre><code>import re
+
+re.match(&quot;a&quot;, &quot;cat&quot;) # --&gt; cat doesn't start with a
+re.search(&quot;a&quot;, &quot;cat&quot;) # --&gt; cat has an &quot;a&quot; in it.
+re.split(&quot;[ab]&quot;, &quot;carbs&quot;) # --&gt; split on a or b to [&quot;c&quot;, &quot;r&quot;, &quot;s&quot;]
+re.sub(&quot;[0-9]&quot;, &quot;-&quot;, &quot;R2D2&quot;) # --&gt; replace digits with dashes.
 </code></pre>
 
 </p></details>

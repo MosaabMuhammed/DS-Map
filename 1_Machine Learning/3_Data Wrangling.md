@@ -75,10 +75,19 @@ winning_numbers = random.sample(lottery_numbers, 6)
 # Pick a sublist of elements WITH duplication.
 sublst = [random.choice(range(10)) for _ in range(4)]
 # [9, 3, 3, 2]
-
 ```
 </p></details>
 
+<details><summary> <b>Regex</b></summary><p>
+```
+import re
+
+re.match("a", "cat") # --> cat doesn't start with a
+re.search("a", "cat") # --> cat has an "a" in it.
+re.split("[ab]", "carbs") # --> split on a or b to ["c", "r", "s"]
+re.sub("[0-9]", "-", "R2D2") # --> replace digits with dashes.
+```
+</p></details>
 
 <details><summary> From <b>list of lists</b> to <b>list of items</b></summary><p>
 ```
