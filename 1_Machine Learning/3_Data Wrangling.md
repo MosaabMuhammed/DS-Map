@@ -4,6 +4,7 @@
 
 <details><summary><b>Python</b></summary><p>
 
+<details><summary><b>Sorting</b></summary><p>
 <details><summary>Sort Dictionary easily by <b>keys</b> or <b>values</b></summary><p>
 ```
 sorting = {1: 23, 2: 24, 4: 51, 10: 1, "cool": 20}
@@ -15,7 +16,33 @@ values, keys
 # OUTPUT
 ((1, 20, 23, 24, 51), (10, 'cool', 1, 2, 4))
 ```
+```
+word_counts = {"a": 12, "b":23, "c": 1, "d":2}
+
+# Sort by keys from small to large.
+new_dict = sorted(word_counts, key=lambda val: val[0], reverse=False)
+# [('a', 12), ('b', 23), ('c', 1), ('d', 2)]
+
+
+# Sort by values from small to large.
+new_dict = sorted(word_counts, key=lambda val: val[1], reverse=False)
+# [('c', 1), ('d', 2), ('a', 12), ('b', 23)]
+```
 </p></details>
+
+<details><summary>Sort <b>Lists</b></summary><p>
+```
+x = [4, 1, 2, 3]
+y = sorted(x)  # x is unchanged.
+x.sort()            # x is changed and sorted.
+
+# Sort the list by absolute values from largest to smallest.
+x = sorted([-4, 1, -2, 3], key=abs, reverse=True)
+```
+</p></details>
+</p></details>
+
+
 
 <details><summary> From <b>list of lists</b> to <b>list of items</b></summary><p>
 ```
