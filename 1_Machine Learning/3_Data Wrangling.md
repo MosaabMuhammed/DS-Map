@@ -42,6 +42,42 @@ x = sorted([-4, 1, -2, 3], key=abs, reverse=True)
 </p></details>
 </p></details>
 
+<details><summary><b>Randomness</b></summary><p>
+```
+import random
+random.seed(42)
+
+# random.random() produces numbers uniformly between 0 and 1 it's the random function we'll use most often
+four_uniform_randoms = [random.random() for _ in range(4)]
+#[0.8444218515250481,
+# 0.7579544029403025,
+# 0.420571580830845,
+# 0.25891675029296335]
+
+# Take random between range of numbers.
+random.randrange(10) # choose randomly from [0, ..., 9]
+random.randrange(3, 6) # choose randomly from [3, 4, 5]
+
+# Shuffle given list.
+lst= range(10)
+random.shuffle(lst)
+print(lst)
+# [2, 5, 1, 8, ...]
+
+# Pick random element from a list.
+myPick = random.choice(['Alice', "bob", "charlie"])
+
+# Pick a sublist of elements without duplication.
+lottery_nums = range(60)
+winning_numbers = random.sample(lottery_numbers, 6)
+# [16, 36, 10, 6, 25, 9]
+
+# Pick a sublist of elements WITH duplication.
+sublst = [random.choice(range(10)) for _ in range(4)]
+# [9, 3, 3, 2]
+
+```
+</p></details>
 
 
 <details><summary> From <b>list of lists</b> to <b>list of items</b></summary><p>
