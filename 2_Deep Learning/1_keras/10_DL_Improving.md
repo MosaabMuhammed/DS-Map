@@ -88,6 +88,10 @@ output1     = tf.keras.layers.Dense(1, activation="sigmoid")
 ```
 </p></details>
 
+<details><summary><b>Weight Normalization</b></summary><ul>
+<li><a href="./notebooks/layers_weightnormalization.html">TF Docs</a></li>
+</ul></details>
+
 <details><summary><b>Dropout</b></summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/zero_to_deep_learning_video/course/9%20Improving%20performance.html#Weight-Regularization-&amp;-Dropout"><b style='color:#333'>3. Dropout</b></a> </p>
 <ul>

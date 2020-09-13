@@ -4,7 +4,7 @@
 <details><summary><b>binary_crossentropy</b></summary><p><ul>
 <li>Used with <b>binary classification</b> problem.</li>
 <li>Can be used for <b>Multi-class, multilabel classification</b> problem</li>.
-<li>The last layer has only <b>1 neuron</b>.</li>
+<li>The last layer has only <b>1 neuron</b> [Binary Classification] and <b>n-1 neurons</b> [Multi-Label Classification] where n is the number of classes.</li>
 <li>The last layer has <b>sigmoid</b> activation function.</li>
 <li>The <b>y_labels</b> is an array of ONLY <b>zeros</b> and <b>ones</b></li></ul>
 
@@ -74,7 +74,5 @@ results = model.predict(X_valid)
 class_idx = np.argmax(results)
 </code></pre>
 
-
 </p></details>
-
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
