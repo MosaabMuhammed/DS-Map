@@ -34,4 +34,29 @@ optimizer = tf.keras.optimizers.Adam(lr=.001, beta_1=.9, beta_1=.999)
 ```
 </p></details>
 
+<details><summary><b>Look a Head</b></summary><p>
+```
+!pip install -q -U tensorflow-addons
+
+import tensorflow as tf
+import tensorflow_addons as tfa
+
+opt = tf.keras.optimizers.Adam(learning_rate)
+opt = tfa.optimizers.Lookahead(opt)
+
+model.compile(opitmizer=opt)
+```
+```
+# Class.
+tfa.optimizers.Lookahead(
+    optimizer: types.Optimizer,
+    sync_period: int = 6,
+    slow_step_size: tfa.image.filters.FloatTensorLike = 0.5,
+    name: str = 'Lookahead',
+    **kwargs
+)
+
+```
+</p></details>
+
 </div>

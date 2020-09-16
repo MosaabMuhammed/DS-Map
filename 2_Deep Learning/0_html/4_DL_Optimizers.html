@@ -38,4 +38,31 @@
 
 </p></details>
 
+<details><summary><b>Look a Head</b></summary><p>
+
+<pre><code>!pip install -q -U tensorflow-addons
+
+import tensorflow as tf
+import tensorflow_addons as tfa
+
+opt = tf.keras.optimizers.Adam(learning_rate)
+opt = tfa.optimizers.Lookahead(opt)
+
+model.compile(opitmizer=opt)
+</code></pre>
+
+
+<pre><code># Class.
+tfa.optimizers.Lookahead(
+    optimizer: types.Optimizer,
+    sync_period: int = 6,
+    slow_step_size: tfa.image.filters.FloatTensorLike = 0.5,
+    name: str = 'Lookahead',
+    **kwargs
+)
+
+</code></pre>
+
+</p></details>
+
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
