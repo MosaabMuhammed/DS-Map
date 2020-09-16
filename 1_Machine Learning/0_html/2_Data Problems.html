@@ -827,7 +827,29 @@ ax.grid()
 </p></details>
 
 <details><summary><b>6. Scaling to vector unit length / unit norm</b></summary><p>
+Read <b>mastering ml book</b> page: 12<br><br>
+Scikit-learn recommends this scaling procedures for text classification or clustering. For example, they quote the dot product of two l2-normalized TF-IDF vectors is the cosine similarity of the vectors and is the base similarity metric for the Vector Space Model commonly used by the Information Retrieval community.
+
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-10-Feature-Scaling/10.06-Scaling-to-unit-length.html#Scaling-to-vector-unit--length-/-unit-norm" style='font-weight:bold'>Sklearn</a> </p>
+</p></details>
+
+<details><summary><b>7. Whitening</b></summary><p>
+<b>NOTE:</b> It is provided in PCA in sklearn<br>
+Read <b>mastering ml book</b> page: 15<br><br>
+
+
+<pre><code>import numpy as np
+
+def zero_center(X):
+    return X - np.mean(X, axis=0)
+
+def whiten(X, correct=True):
+    Xc = zero_center(X)
+    _, L, V = np.linalg.svd(Xc)
+    W = np.dot(V.T, np.diag(1.0 / L))
+    return np.dot(Xc, W) * np.sqrt(X.shape[0]) if correct else 1.0
+</code></pre>
+
 </p></details>
 
 
