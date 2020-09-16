@@ -1416,6 +1416,55 @@ def plot_learning_curves(model, X, y):
     return plt
 ```
 
+<h4>Using sklearn</h4>
+```
+# Get data.
+from sklearn.datasets import make_classification
+from sklearn.preprocessing import StandardScaler
+
+X, y = make_classification(n_samples=500,
+                           n_classes=5,
+                           n_features=50,
+                           n_informative=10,
+                           n_redundant=5,
+                           n_clusters_per_class=3,
+                           random_state=1000)
+ss = StandardScaler()
+X  = ss.fit_transform(X)
+```
+
+```
+# choose model and run learning curves.
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import learning_curve, StratifiedKFold
+
+lr          = LogisticRegression(solver="lbfgs", random_state=1000)
+splits      = StratifiedKFold(n_splits=10, shuffle=True, random_state=1000)
+train_sizes = np.linspace(.1, 1.0, 20)
+
+lr_train_sizes, lr_train_scores, lr_test_scores = \
+    learning_curve(lr, X, y, cv=splits, train_sizes=train_sizes,
+                   n_jobs=-1, scoring='accuracy',
+                   shuffle=True, random_state=1000)
+```
+
+```
+# Plot the scores
+sns.set()
+
+fig, ax = plt.subplots(figsize=(15, 8))
+
+ax.plot(lr_train_sizes, np.mean(lr_train_scores, axis=1), "o-", label="Training")
+ax.plot(lr_train_sizes, np.mean(lr_test_scores, axis=1), "o-", label="Test")
+ax.set_xlabel('Training set size', fontsize=18)
+ax.set_ylabel('Average accuracy', fontsize=18)
+ax.set_xticks(lr_train_sizes)
+ax.grid(True)
+ax.legend(fontsize=16)
+
+plt.show()
+```
+<img src="imgs/20200916-161740.png" height=200 width=400>
 </p></details>
 </div>
 

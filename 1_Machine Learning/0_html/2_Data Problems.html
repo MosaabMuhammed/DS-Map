@@ -1474,5 +1474,57 @@ def plot_learning_curves(model, X, y):
 </code></pre>
 
 
+<h4>Using sklearn</h4>
+
+<pre><code># Get data.
+from sklearn.datasets import make_classification
+from sklearn.preprocessing import StandardScaler
+
+X, y = make_classification(n_samples=500,
+                           n_classes=5,
+                           n_features=50,
+                           n_informative=10,
+                           n_redundant=5,
+                           n_clusters_per_class=3,
+                           random_state=1000)
+ss = StandardScaler()
+X  = ss.fit_transform(X)
+</code></pre>
+
+
+
+<pre><code># choose model and run learning curves.
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import learning_curve, StratifiedKFold
+
+lr          = LogisticRegression(solver=&quot;lbfgs&quot;, random_state=1000)
+splits      = StratifiedKFold(n_splits=10, shuffle=True, random_state=1000)
+train_sizes = np.linspace(.1, 1.0, 20)
+
+lr_train_sizes, lr_train_scores, lr_test_scores = \
+    learning_curve(lr, X, y, cv=splits, train_sizes=train_sizes,
+                   n_jobs=-1, scoring='accuracy',
+                   shuffle=True, random_state=1000)
+</code></pre>
+
+
+
+<pre><code># Plot the scores
+sns.set()
+
+fig, ax = plt.subplots(figsize=(15, 8))
+
+ax.plot(lr_train_sizes, np.mean(lr_train_scores, axis=1), &quot;o-&quot;, label=&quot;Training&quot;)
+ax.plot(lr_train_sizes, np.mean(lr_test_scores, axis=1), &quot;o-&quot;, label=&quot;Test&quot;)
+ax.set_xlabel('Training set size', fontsize=18)
+ax.set_ylabel('Average accuracy', fontsize=18)
+ax.set_xticks(lr_train_sizes)
+ax.grid(True)
+ax.legend(fontsize=16)
+
+plt.show()
+</code></pre>
+
+<img src="imgs/20200916-161740.png" height=200 width=400>
 </p></details>
 </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
