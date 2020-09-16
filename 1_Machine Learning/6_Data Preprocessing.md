@@ -220,6 +220,30 @@ y_test = data[-split_test:]['Target']
 </p></details>
 
 
+<details><summary> <b>Leave-One-Out</b> </summary><p>
+~~~python
+import numpy as np
+from sklearn.model_selection import LeaveOneOut
+X = np.array([[1, 2], [3, 4]])
+y = np.array([1, 2])
+loo = LeaveOneOut()
+loo.get_n_splits(X)
+
+print(loo)
+
+for train_index, test_index in loo.split(X):
+    print("TRAIN:", train_index, "TEST:", test_index)
+    X_train, X_test = X[train_index], X[test_index]
+    y_train, y_test = y[train_index], y[test_index]
+    print(X_train, X_test, y_train, y_test)
+    
+# TRAIN: [1] TEST: [0]
+# [[3 4]] [[1 2]] [2] [1]
+# TRAIN: [0] TEST: [1]
+# [[1 2]] [[3 4]] [1] [2]
+~~~
+</p></details>
+
 
 <details><summary> <b>Random K-Fold CV</b> </summary><p>
 ```
