@@ -898,9 +898,53 @@ visualizer.poof()
 
 </ul></p></details>
 
-<p><a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/"><b><span style='font-size:28px;color:#333'>Multi-Label Classification</span></b></a> </p>
+<p><a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/"><b><span style='font-size:25px;color:#333'>Multi-Label Classification</span></b></a> </p>
+ 
+<details><summary><b style="font-size:25px">Semi-Supervised Learning Models</b></summary><ul>
 
+<li><details><summary><b>Gaussian Mixture</b></summary>
+```
+class sklearn.mixture.GaussianMixture(n_components=1, *, covariance_type='full', tol=0.001, reg_covar=1e-06, max_iter=100, n_init=1, init_params='kmeans', weights_init=None, means_init=None, precisions_init=None, random_state=None, warm_start=False, verbose=0, verbose_interval=10)[source]
+```
+</details></li>
 
+<li><details><summary><b>Self-Learning</b></summary>
+Read <b>master ML book</b> - Page: 87
+```
+nb_samples = X.shape[0]
+nb_labeled = 20
+nb_unlabeled = nb_samples - nb_labeled
+nb_unlabeled_samples = 2
+X_train = X[:nb_labeled]
+Y_train = Y[:nb_labeled]
+X_unlabeled = X[nb_labeled:]
+```
 
+```
+import numpy as np
+from sklearn.naive_bayes import GaussianNB
+while X_train.shape[0] <= nb_samples:
+	nb = GaussianNB()
+	nb.fit(X_train, Y_train)
+	if X_train.shape[0] == nb_samples:
+		break
+	probs = nb.predict_proba(X_unlabeled)
+	top_confidence_idxs = np.argsort(np.max(probs, axis=1)).astype(np.
+	int64)[::-1]
+	selected_idxs = top_confidence_idxs[0:nb_unlabeled_samples]
+	X_new_train = X_unlabeled[selected_idxs]
+	Y_new_train = nb.predict(X_new_train)
+	X_train = np.concatenate((X_train, X_new_train), axis=0)
+	Y_train = np.concatenate((Y_train, Y_new_train), axis=0)
+	X_unlabeled = np.delete(X_unlabeled, selected_idxs, axis=0)
+
+```
+</details></li>
+
+<li><details><summary><b>Semi-Supervised Learning Models</b></summary>
+
+</details></li>
+
+</ul></details>
 
 </div>
