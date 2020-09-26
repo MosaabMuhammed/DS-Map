@@ -13,10 +13,11 @@
 <h2 id=""><a href="./6_Data%20Preprocessing.html"><span style='color:#333333'>6. Data Preprocessing:</span></a></h2>
 <h2 id=""><a href="./7_Dimensionality%20Reduction.html"><span style='color:#333333'>7. Dimensionlity Reduction</span></a></h2>
 <h2 id=""><a href="./8_Models.html"><span style='color:#333333'>8. ML Models</span></a></h2>
-<h2 id=""><a href="./8_0_Models%20Pipelines.html"><span style='color:#333333'>9. Pipelines</span></a></h2>
-<h2 id=""><a href="./9_Metrices.html"><span style='color:#333333'>10. Metrices</span></a></h2>
-<h2 id=""><a href="./9_0_Post_Models.html"><span style='color:#333333'>11. Interpretability</span></a></h2>
-<h2 id=""><a href="./11_Reading.html"><span style='color:#333333'>12. Reading</span></a></h2>
+<h2 id=""><a href="./8_1_Hyperparameter Optimization.html"><span style='color:#333333'>9. Hyperparameter Optimization</span></a></h2>
+<h2 id=""><a href="./8_0_Models%20Pipelines.html"><span style='color:#333333'>10. Pipelines</span></a></h2>
+<h2 id=""><a href="./9_Metrices.html"><span style='color:#333333'>11. Metrices</span></a></h2>
+<h2 id=""><a href="./9_0_Post_Models.html"><span style='color:#333333'>12. Interpretability</span></a></h2>
+<h2 id=""><a href="./11_Reading.html"><span style='color:#333333'>13. Reading</span></a></h2>
 
 </div>
 
