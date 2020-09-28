@@ -457,7 +457,12 @@ housing_extra_attribs = attr_adder.transform(housing.values)
       </b>
      </a>
     </p>
-    wzxhzdk:3
+    <pre><code>
+from sklearn.metrics import f1_score, make_scorer
+
+scorer = make_scorer(f1_score, greater_is_better=True, average='macro')
+
+</code></pre>
    </details>
    <details>
     <summary>
@@ -475,7 +480,16 @@ housing_extra_attribs = attr_adder.transform(housing.values)
       </b>
      </a>
     </p>
-    wzxhzdk:4
+    <pre><code>from sklearn.preprocessing import Imputer, MinMaxScaler
+from sklearn.pipeline import Pipeline
+
+pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
+                     ('scaler', MinMaxScaler())])
+
+# Fit and transform the training data
+train_set = pipeline.fit_transform(train_set)
+test_st   = pipeline.transform(test_set)
+</code></pre>
    </details>
    <details>
     <summary>

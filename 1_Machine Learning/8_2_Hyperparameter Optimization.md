@@ -689,6 +689,93 @@ if __name__ == "__main__":
     study.optimize(optimization_function, n_trials=15)
 </code></pre>
 </p></details></li>
+
+<li><details><summary> <b>LightGBM</b></summary><p><pre><code>from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.metrics import log_loss
+
+import lightgbm as lgb
+
+
+def fit_predict(n_splits, params, x_train, y_train, x_test):
+    
+    oof = np.zeros(x_train.shape[0])
+    
+    y_preds = []
+    
+    cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
+    for train_idx, valid_idx in cv.split(x_train, y_train):
+        
+        x_train_train = x_train.iloc[train_idx]
+        y_train_train = y_train.iloc[train_idx]
+        x_train_valid = x_train.iloc[valid_idx]
+        y_train_valid = y_train.iloc[valid_idx]
+
+        lgb_train = lgb.Dataset(data=x_train_train.astype('float32'), label=y_train_train.astype('float32'))
+        lgb_valid = lgb.Dataset(data=x_train_valid.astype('float32'), label=y_train_valid.astype('float32'))
+
+        estimator = lgb.train(params, lgb_train, 10000, valid_sets=lgb_valid,
+                              early_stopping_rounds=25, verbose_eval=0)
+
+        oof_part = estimator.predict(x_train_valid, num_iteration=estimator.best_iteration)
+        oof[valid_idx] = oof_part
+        
+        if x_test is not None:
+            y_part = estimator.predict(x_test, num_iteration=estimator.best_iteration)
+            y_preds.append(y_part)
+        
+    score = log_loss(y_train, oof)
+    print('LogLoss Score:', score)
+    
+    y_pred = np.mean(y_preds, axis=0)
+    
+    return y_pred, oof, score
+    
+    
+import optuna
+
+
+columns_to_try = [
+    'glutamate_receptor_antagonist',
+    'dna_inhibitor',
+    'serotonin_receptor_antagonist',
+    'dopamine_receptor_antagonist',
+    'cyclooxygenase_inhibitor'
+]
+
+def objective(trial):
+    
+    params = {
+        'objective': 'binary',
+        'metric': 'binary_logloss',
+        'boosting_type': 'gbdt',
+        'boost_from_average': True,
+        'num_threads': 4,
+        'random_state': 42,
+        
+        'num_leaves': trial.suggest_int('num_leaves', 10, 1000),
+        'min_data_in_leaf': trial.suggest_int('min_data_in_leaf', 10, 200),
+        'min_child_weight': trial.suggest_loguniform('min_child_weight', 0.001, 0.1),
+        'max_depth': trial.suggest_int('max_depth', 1, 100),
+        'bagging_fraction': trial.suggest_loguniform('bagging_fraction', .5, .99),
+        'feature_fraction': trial.suggest_loguniform('feature_fraction', .5, .99),
+        'lambda_l1': trial.suggest_loguniform('lambda_l1', 0.1, 2),
+        'lambda_l2': trial.suggest_loguniform('lambda_l2', 0.1, 2)
+    }
+    
+    scores = []
+    for column in columns_to_try:
+        _, _, score = fit_predict(3, params, x_train, y_train[column], None)
+        scores.append(score)
+    
+    return np.mean(scores)
+
+
+# study = optuna.create_study(direction='minimize')
+# study.optimize(objective, n_trials=100)
+# study.best_trial
+</code></pre>
+</p></details></li>
+
 </ul></details>
 
 </ul></p></details>

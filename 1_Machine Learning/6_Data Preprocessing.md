@@ -333,18 +333,17 @@ housing_extra_attribs = attr_adder.transform(housing.values)
 
 <details><summary> <b>Make Scorer</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer"><b>Sklearn Docs</b></a> </p>
-~~~python
+<pre><code>
 from sklearn.metrics import f1_score, make_scorer
 
 scorer = make_scorer(f1_score, greater_is_better=True, average='macro')
 
-~~~
+</code></pre>
 </p></details>
 
 <details><summary> Create a <b>Pipeline</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a> </p>
-~~~python
-from sklearn.preprocessing import Imputer, MinMaxScaler
+<pre><code>from sklearn.preprocessing import Imputer, MinMaxScaler
 from sklearn.pipeline import Pipeline
 
 pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
@@ -353,7 +352,7 @@ pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
 # Fit and transform the training data
 train_set = pipeline.fit_transform(train_set)
 test_st   = pipeline.transform(test_set)
-~~~
+</code></pre>
 </p></details>
 
 <details><summary> <b>Paralleism</b> </summary><p><pre><code># Prepare the logging.
