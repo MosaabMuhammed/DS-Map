@@ -4,7 +4,7 @@
 <ul>
 <li><a href="./16_Torch_Activations.html"><font color='#333'><b style='font-size:20px'>Activations</b></font></a> </li>
 
-<li><a href="./16_Torch_Losses.html"><font color='#333'><b style='font-size:20px'>Losses</b></font></a> </li>
+<li><a href="./17_Torch_Losses.html"><font color='#333'><b style='font-size:20px'>Losses</b></font></a> </li>
 
 
 </ul>
