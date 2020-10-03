@@ -6,11 +6,10 @@
 <p style="margin: 0">
 <p>1) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">Explanation for <b>Train<em>Test</em>Split</b></a> <br>
 2) <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Train-Test-Split">Train Test Split notebook</a></p>
-~~~
-from sklearn.model_selection import train_test_split
+<pre><code>from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(
     df_feat, y, test_size=0.4, stratify=y, random_state=42)
-~~~
+</code></pre>
 
 <p>Another way to split, by hashing the unique identifier of each row, to make sure that at the next run, the training and test sets will be the same</p><pre><code>from zlib import crc32
 
@@ -85,8 +84,7 @@ def create_folds(data):
 </p></details>
 
 <details><summary> <b>Temporal Splitting (Time Based  Splitting)</b> </summary><p>
-~~~python
-split_train = int(len(data) * .8)
+<pre><code>split_train = int(len(data) * .8)
 split_test  = int(len(data) * .2)
 
 X_train = data[:split_train]
@@ -94,13 +92,12 @@ y_train = data[:split_train]['Target']
 
 X_test = data[-split_test:]
 y_test = data[-split_test:]['Target']
-~~~
+</code></pre>
 </p></details>
 
 
 <details><summary> <b>Leave-One-Out</b> </summary><p>
-~~~python
-import numpy as np
+<pre><code>import numpy as np
 from sklearn.model_selection import LeaveOneOut
 X = np.array([[1, 2], [3, 4]])
 y = np.array([1, 2])
@@ -119,7 +116,7 @@ for train_index, test_index in loo.split(X):
 # [[3 4]] [[1 2]] [2] [1]
 # TRAIN: [0] TEST: [1]
 # [[1 2]] [[3 4]] [1] [2]
-~~~
+</code></pre>
 </p></details>
 
 

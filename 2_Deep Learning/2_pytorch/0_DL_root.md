@@ -1,34 +1,37 @@
 <h1 style='color:#1E3D7F'>Deep Learning [PyTorch]</h1>
 
 <div style='width:1000px;margin:auto'>
+<ul>
+<li><a href="./16_Torch_Activations.html"><font color='#333'><b style='font-size:20px'>Activations</b></font></a> </li>
+
+<li><a href="./16_Torch_Losses.html"><font color='#333'><b style='font-size:20px'>Losses</b></font></a> </li>
+
+
+</ul>
+<br><br>
 
 <details><summary><b>Types of API</b></summary>
-
 <details style='padding-left:15px'><summary><b>Functional</b> API</summary>
-<p>
-~~~python
-import torch.nn.functional as F
+<p><pre><code>import torch.nn.functional as F
 
 class Network(nn.Module):
     def __init__(self):
         super().__init__()
         self.hidden = nn.Linear(28*28, 256)
         self.output = nn.Linear(256, 10)
-    
+
     def forward(self, x):
         x = F.sigmoid(self.hidden(x))
         x = F.softmax(self.output(x), dim=1)
-        
+
         return x
-~~~
+</code></pre>
 </p>
 </details>
 
 <details style='padding-left:15px'><summary><b>Sequential</b> API</summary>
 <p>
-<h4>1. Upload MNIST data</h4>
-~~~python
-from torchvision import datasets, transforms
+<h4>1. Upload MNIST data</h4><pre><code>from torchvision import datasets, transforms
 
 # Define a transform to normalize the data
 transform = transforms.Compose([transforms.ToTensor(),
@@ -38,11 +41,9 @@ transform = transforms.Compose([transforms.ToTensor(),
 # Download and load the training data
 trainset = datasets.MNIST('~/.pytorch/MNIST_data/', download=True, train=True, transform=transform)
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
-~~~
+</code></pre>
 
-<h4>2. Design the model</h4>
-~~~python
-input_size   = 784
+<h4>2. Design the model</h4><pre><code>input_size   = 784
 hidden_sizes = [128, 64]
 output_size  = 10
 
@@ -66,11 +67,9 @@ model = nn.Sequential(OrderedDict([
                       ('softmax', nn.Softmax(dim=1))]))
 # Now we can access like than
 print(model.fc1) # Instead of model[0]
-~~~
+</code></pre>
 
-<h4>3. Utitlity Function</h4>
-~~~python
-def view_classify(img, ps, version="MNIST"):
+<h4>3. Utitlity Function</h4><pre><code>def view_classify(img, ps, version="MNIST"):
     ''' Function for viewing an image and it's predicted classes.
     '''
     ps = ps.data.numpy().squeeze()
@@ -98,11 +97,9 @@ def view_classify(img, ps, version="MNIST"):
     ax2.set_xlim(0, 1.1)
 
     plt.tight_layout()
-~~~
+</code></pre>
 
-<h4>4. Start Optimizing</h4>
-~~~python
-criterion = nn.NLLLoss()
+<h4>4. Start Optimizing</h4><pre><code>criterion = nn.NLLLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.003)
 
 epochs = 5
@@ -111,21 +108,19 @@ for e in range(epochs):
     for images, labels in trainloader:
         # Flatten MNIST images into a 784 long vector
         images = images.view(images.shape[0], -1)  # We can do this step in the Network class .forward  (instead of doing it here).
-    
+
         # TODO: Training pass
         outputs = model(images)
         loss    = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
-        
+
         running_loss += loss.item()
     else:
         print(f"Training loss: {running_loss/len(trainloader)}")
-~~~
+</code></pre>
 
-<h4>5. Test on a new data</h4>
-~~~python
-images, labels = next(iter(trainloader))
+<h4>5. Test on a new data</h4><pre><code>images, labels = next(iter(trainloader))
 
 img = images[0].view(1, 784)
 # Turn off gradients to speed up this part
@@ -135,7 +130,7 @@ with torch.no_grad():
 # Output of the network are log-probabilities, need to take exponential for probabilities
 ps = torch.exp(logps)
 helper.view_classify(img.view(1, 28, 28), ps)
-~~~
+</code></pre>
 </p>
 </details>
 </details>
@@ -173,30 +168,28 @@ helper.view_classify(img.view(1, 28, 28), ps)
 <p>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/deep-learning-v2-pytorch/convolutional-neural-networks/mnist-mlp/mnist_mlp_solution_with_validation.html#Train-the-Network"><b style='font-size:18px'>Have-Write Example</b></a></li>
 
-<h4>NOTE:</h4>When loading the weights, it has to be assigend to the same architecture.<br>
-~~~python
-checkpoint = {'input_size': 784,
-		       'output_size': 10,
-		       'hidden_layers': [each.out_features for each in model.hidden_layers],
-		       'state_dict': model.state_dict()}
-		       
+<h4>NOTE:</h4>When loading the weights, it has to be assigend to the same architecture.<br><pre><code>checkpoint = {'input_size': 784,
+               'output_size': 10,
+               'hidden_layers': [each.out_features for each in model.hidden_layers],
+               'state_dict': model.state_dict()}
+
 torch.save(checkpoint, 'checkpoint.pth')
 ~~~
 
-<h4>2. Load the weights</h4>
+&lt;h4&gt;2. Load the weights&lt;/h4&gt;
 ~~~python
 def load_checkpoint(filepath):
-	checkpoint = torch.load(filepath)
-	
-	model = Network(checkpoint['input_size'],
-	 			    checkpoint['output_size'],
-	 			    checkpoint['hidden_layers'])
-	 			 
-	 return model
-	 
+    checkpoint = torch.load(filepath)
+
+    model = Network(checkpoint['input_size'],
+                    checkpoint['output_size'],
+                    checkpoint['hidden_layers'])
+
+     return model
+
 model = load_checkpoint('checkpoint.pth')
 print(model)
-~~~
+</code></pre>
 </p>
 </details>
 
