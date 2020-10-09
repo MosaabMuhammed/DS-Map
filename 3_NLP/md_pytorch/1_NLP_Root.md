@@ -36,5 +36,11 @@
 
 </details>
 
+<details><summary><b>Pre-Trained Embedding Class</b></summary>
+
+<a href="./0_notebooks/5_1_Pretrained_Embeddings.html"><b>notebook</b></a>
+
+</details>
+
 
 </div>
