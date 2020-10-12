@@ -52,4 +52,14 @@ Remember, sum(dim=1) after Embedding layer to sum up words vector into context v
 <a href="./0_notebooks/5_3_Munging_AG_News.html"><b>Prepare Data</b></a><br>
 <a href="./0_notebooks/5_3_Document_Classification_with_CNN.html"><b>Train C-BOW</b></a>
 </details>
+
+<details><summary><b>Unconditioned text Generation</b> [GRU/LSTM]</summary>
+<a href="./0_notebooks/7_3_Munging_Surname_Dataset.html"><b>Prepare Data</b></a><br>
+<a href="./0_notebooks/7_3_Model1_Unconditioned_Surname_Generation.html"><b>Train C-BOW</b></a>
+</details>
+
+<details><summary><b>Conditioned text Generation</b> [GRU/LSTM]</summary>
+<a href="./0_notebooks/7_3_Munging_Surname_Dataset.html"><b>Prepare Data</b></a><br>
+<a href="./0_notebooks/7_3_Model2_Conditioned_Surname_Generation.html"><b>Train C-BOW</b></a>
+</details>
 </div>
