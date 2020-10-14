@@ -300,7 +300,19 @@ knn_cv.best_estimator_
 </code>
 </p>
 </details>
+<details><summary> Create a <b>Pipeline</b> </summary><p>
+<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a> </p>
+<pre><code>from sklearn.preprocessing import Imputer, MinMaxScaler
+from sklearn.pipeline import Pipeline
 
+pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
+                     ('scaler', MinMaxScaler())])
+
+# Fit and transform the training data
+train_set = pipeline.fit_transform(train_set)
+test_st   = pipeline.transform(test_set)
+</code></pre>
+</p></details>
 
 <details><summary> <b>Custom Transformer</b> </summary><p><pre><code>from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -328,6 +340,68 @@ housing_extra_attribs = attr_adder.transform(housing.values)
 </code></pre>
 </p></details> 
 
+<details><summary><b>Custom Steps</b> in Pipeline </summary><p>
+<p><a href="./6_data_processing/custom_pipelines.html"><b>Notebook</b></a> </p>
+<pre><code>from sklearn.preprocessing import FunctionTransformer
+from sklearn.compose import ColumnTransformer
+from sklearn.base import BaseEstimator, TransformerMixin
+play_data = dataset.drop(['intent', 'family_1', 'family_2', 'family_3'], axis=1).copy()
+
+vectorizer = 'count'
+
+def process_text(df):
+    if type(df) == str:
+        df = pd.DataFrame([df], columns=['sample'])
+    df['sample'] = df['sample'].apply(preprocess)
+    return df
+def semantic_hashing(df):
+    df['sample'] = df['sample'].apply(semhash_corpus)
+    return df
+
+def feat_eng(df, apply=True):
+    if apply:
+        df['n_letters'] = df['sample'].apply(len)
+        df['n_words']   = df['sample'].str.count('\S+')
+    return df
+
+class Vectorizer(BaseEstimator, TransformerMixin):
+    def __init__(self, col, vec_type='count', ngram_range=(1, 1)):
+        self.col       = col
+        self.vec_type = vec_type
+        self._vec      = CountVectorizer(ngram_range=ngram_range, token_pattern=r"[#]*\w+[#]*") \
+                         if self.vec_type == 'count' else \
+                         TfidfVectorizer(ngram_range=ngram_range, token_pattern=r"[#]*\w+[#]*")
+
+    def fit(self, X, y=None):
+        self._vec.fit(X[self.col])
+        return self
+
+    def transform(self, X, y=None):
+        X_vec = self._vec.transform(X[self.col])
+        X = pd.concat([X.reset_index(), pd.DataFrame(X_vec.todense(), columns=self._vec.get_feature_names())], axis=1)
+        X = X.drop(['index', self.col], axis=1)
+        return X
+
+pipeline = Pipeline([
+    ('text_processor', FunctionTransformer(
+        func=process_text,
+    )),
+    ('feat_eng', FunctionTransformer(
+        func=feat_eng,
+        kw_args={'apply': True}
+    )),
+    ('sem_hash', FunctionTransformer(
+        func=semantic_hashing,
+    )),
+    ('vectorizer', Vectorizer(col='sample', vec_type='tfidf', ngram_range=(1, 1))),
+    ('scaler', StandardScaler())
+])
+
+play_data = pipeline.fit_transform(play_data)
+dd(play_data)
+</code></pre>
+</p></details>
+
 <details><summary> <b>Make Scorer</b> </summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer"><b>Sklearn Docs</b></a> </p>
 <pre><code>
@@ -338,19 +412,6 @@ scorer = make_scorer(f1_score, greater_is_better=True, average='macro')
 </code></pre>
 </p></details>
 
-<details><summary> Create a <b>Pipeline</b> </summary><p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a> </p>
-<pre><code>from sklearn.preprocessing import Imputer, MinMaxScaler
-from sklearn.pipeline import Pipeline
-
-pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
-                     ('scaler', MinMaxScaler())])
-
-# Fit and transform the training data
-train_set = pipeline.fit_transform(train_set)
-test_st   = pipeline.transform(test_set)
-</code></pre>
-</p></details>
 
 <details><summary> <b>Paralleism</b> </summary><p><pre><code># Prepare the logging.
 import logging
