@@ -1,6 +1,11 @@
 <h1>Deployment</h1>
 
 <div style="width:1000px;margin:auto">
+<details><summary style='font-size:20px;font-weight:bold'>Make it Reproducable</summary></p><ul>
+<li>Always remember to <b>set the SEED</b> for all environments.</li>
+<li>Make sure <b>Dataset is Consistant</b> through the whole pipeline.</li>
+<li>Record order of features, applied feature transformations, hyperparamters, ....</li>
+</ul></p></details>
 <details><summary style='font-size:20px;font-weight:bold'>1. Research Environment</summary></p><ul>
 <li><a style="font-weight:bold"  href="./1_research_environment/02.6_ML_Pipeline_Step1-DataAnalysis.html">Data Analysis</a></li>
 <li><a style="font-weight:bold"  href="./1_research_environment/02.7_ML_Pipeline_Step2-FeatureEngineering.html">Feature Engineering</a></li>
