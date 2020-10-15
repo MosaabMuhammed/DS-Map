@@ -114,5 +114,11 @@ git log | emojify
 </code></pre>
 </details>
 
+<details><summary>Version</summary>
+<pre><code>3.1.12
+Major.Minor.Batch
+</code></pre>
+</details>
+
 </ul></p></details>
 </div>
