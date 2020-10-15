@@ -6,11 +6,44 @@
 <li>Make sure <b>Dataset is Consistant</b> through the whole pipeline.</li>
 <li>Record order of features, applied feature transformations, hyperparamters, ....</li>
 </ul></p></details>
-<details><summary style='font-size:20px;font-weight:bold'>1. Research Environment</summary></p><ul>
+<details><summary style='font-size:20px;font-weight:bold'>Research Environment</summary></p><ul>
 <li><a style="font-weight:bold"  href="./1_research_environment/02.6_ML_Pipeline_Step1-DataAnalysis.html">Data Analysis</a></li>
 <li><a style="font-weight:bold"  href="./1_research_environment/02.7_ML_Pipeline_Step2-FeatureEngineering.html">Feature Engineering</a></li>
 <li><a style="font-weight:bold"  href="./1_research_environment/02.8_ML_Pipeline_Step3-FeatureSelection.html">Feature Selection</a></li>
 <li><a style="font-weight:bold"  href="./1_research_environment/02.9_ML_Pipeline_Step4-MachineLearningModelBuild.html">ML Building</a></li>
 <li><a style="font-weight:bold"  href="./1_research_environment/02.10_ML_Pipeline-WrapUp_for_Deployment.html">Wrap up for Deployment</a></li>
+</ul></p></details>
+
+<details><summary style='font-size:20px;font-weight:bold'>Create Depolyment Environment</summary></p><ul>
+
+<details><summary>Create Virtual Environment</summary>
+inside your project, write the following:<br>
+<pre><code># Create env
+python -m venv &lt;name-of-env&gt;
+
+# Activate it.
+source &lt;name-of-env&gt;/bin/activate
+
+# Install packages.
+pip install ...
+
+# Deactivate.
+deactivate
+</code></pre>
+</details>
+
+<details><summary>Create Requirment file</summary>
+```
+# Create the file.
+touch requirements.txt
+# Then add packages manually.
+
+# Add them automatically.
+pip freeze > requirements.txt
+
+# Install libraries in requirments file.
+pip install -r requirements.txt 
+```
+</details>
 </ul></p></details>
 </div>
