@@ -72,5 +72,32 @@ $ export PYTHONPATH="$PYTHONPATH:path/to/your/pipeline/first_package_folder_name
 </code></pre>
 </details>
 
+<details><summary>Add Tests</summary>
+Make sure to follow the commit from this <a href="https://github.com/MosaabMuhammed/deploying-machine-learning-models/tree/53bc67c6a94e01f3fdaf05cbfa2b49465a0c7a1f">link</a>
+<pre><code>
+$ pytest packages/regression_model/tests -W ignore:DeprecationWarning
+</code></pre>
+
+<pre><code># Example of test function
+import math
+
+from regression_model.predict import make_prediction
+from regression_model.processing.data_management import load_dataset
+
+def test_make_single_prediction():
+    # Given
+    test_data = load_dataset(file_name='test.csv')
+    single_test_json = test_data[0:1].to_json(orient='records')
+
+    # When
+    subject = make_prediction(input_data=single_test_json)
+
+    # Then
+    assert subject is not None
+    assert isinstance(subject.get("predictions")[0], float)
+    assert math.ceil(subject.get("predictions")[0]) == 112476
+</code></pre>
+</details>
+
 </ul></p></details>
 </div>
