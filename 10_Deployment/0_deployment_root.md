@@ -33,17 +33,37 @@ deactivate
 </details>
 
 <details><summary>Create Requirment file</summary>
-```
-# Create the file.
+<pre><code># Create the file.
 touch requirements.txt
 # Then add packages manually.
 
 # Add them automatically.
-pip freeze > requirements.txt
+pip freeze &gt; requirements.txt
 
 # Install libraries in requirments file.
 pip install -r requirements.txt 
-```
+</code></pre>
+</details>
+
+<details><summary>Python Convetions</summary>
+<pre><code># Type Hints.
+import typing as t
+
+def add_two_integers(first: int, second: t.Optional[int]=None) -&gt; int:
+    """Sum two numbers"""
+    result = first
+    if second is not None:
+        result = first + second
+    return result
+</code></pre>
+
+<pre><code># Forcing Key Word Arguments (kwargs).
+def my_function(*, foo):
+    pass
+
+# When calling this funciton, we have to name foo:
+my_function(foo="bar")
+</code></pre>
 </details>
 </ul></p></details>
 </div>
