@@ -65,5 +65,12 @@ def my_function(*, foo):
 my_function(foo="bar")
 </code></pre>
 </details>
+<details><summary>Add your ML pipeline</summary>
+Make sure to follow the commit from this <a href="https://github.com/MosaabMuhammed/deploying-machine-learning-models/tree/53bc67c6a94e01f3fdaf05cbfa2b49465a0c7a1f">link</a> and make sure to make them 2 folders together with the same name.
+<pre><code># Add your pipeline package to PYTHONPATH
+$ export PYTHONPATH="$PYTHONPATH:path/to/your/pipeline/first_package_folder_name/"
+</code></pre>
+</details>
+
 </ul></p></details>
 </div>
