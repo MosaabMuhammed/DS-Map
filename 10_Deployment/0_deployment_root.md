@@ -65,6 +65,7 @@ def my_function(*, foo):
 my_function(foo="bar")
 </code></pre>
 </details>
+
 <details><summary>Add your ML pipeline</summary>
 Make sure to follow the commit from this <a href="https://github.com/MosaabMuhammed/deploying-machine-learning-models/tree/53bc67c6a94e01f3fdaf05cbfa2b49465a0c7a1f">link</a> and make sure to make them 2 folders together with the same name.
 <pre><code># Add your pipeline package to PYTHONPATH
@@ -96,6 +97,20 @@ def test_make_single_prediction():
     assert subject is not None
     assert isinstance(subject.get("predictions")[0], float)
     assert math.ceil(subject.get("predictions")[0]) == 112476
+</code></pre>
+</details>
+
+<details><summary>Add Emojis to your git commits [side-note]</summary>
+Check <a herf="https://gist.github.com/parmentf/035de27d6ed1dce0b36a">possible emojis</a>
+<pre><code># First install emojify to allow emojis in the terminal.
+$ sudo sh -c "curl https://raw.githubusercontent.com/mrowa44/emojify/master/emojify -o /usr/local/bin/emojify && chmod +x /usr/local/bin/emojify"
+
+# Add commit
+git commit -am ":tada: Initial Commit :tada:"
+
+# Show emojis in the terminal
+git log --oneline --color | emojify | less -r
+git log | emojify
 </code></pre>
 </details>
 
