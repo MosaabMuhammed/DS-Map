@@ -120,5 +120,23 @@ Major.Minor.Batch
 </code></pre>
 </details>
 
+<details><summary>Package your code</summary>
+Make sure to create the following files:<ul>
+<li>MANIFEST.in: contains which files to be included in the package</li>
+<li>requirements.txt</li>
+<li>setup.py</li>
+<li>README.md</li></ul>
+<pre><code># Then write the following commands.
+# This command to install the requirements.
+pip install -r packages/regression_model/requirements.txt
+
+# Then create the distribution & wheel.
+python packages/regression_model/setup.py sdist bdist_wheel
+
+# Then pip install your package locally, to see if working.
+pip install -e packages/regression_model
+</code></pre>
+</details>
+
 </ul></p></details>
 </div>
