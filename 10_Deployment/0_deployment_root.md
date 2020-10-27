@@ -101,8 +101,10 @@ def test_make_single_prediction():
 </details>
 
 <details><summary>Add Emojis to your git commits [side-note]</summary>
-Check <a herf="https://gist.github.com/parmentf/035de27d6ed1dce0b36a">possible emojis</a>
-<pre><code># First install emojify to allow emojis in the terminal.
+Check <a href="https://gist.github.com/parmentf/035de27d6ed1dce0b36a">possible emojis</a>
+<pre><code>https://gist.github.com/parmentf/035de27d6ed1dce0b36a
+
+# First install emojify to allow emojis in the terminal.
 $ sudo sh -c "curl https://raw.githubusercontent.com/mrowa44/emojify/master/emojify -o /usr/local/bin/emojify && chmod +x /usr/local/bin/emojify"
 
 # Add commit
@@ -135,6 +137,15 @@ python packages/regression_model/setup.py sdist bdist_wheel
 
 # Then pip install your package locally, to see if working.
 pip install -e packages/regression_model
+</code></pre>
+</details>
+
+<details><summary>Startup Command on Azure</summary>
+<pre><code>export INTENT_CLF_PACKAGE="/home/site/repository/packages/intent_clf"
+export ML_API_PACKAGE="`/home/site/repository/packages/ml_api"
+export PYTHONPATH="$PYTHONPATH:$ML_API_PACKAGE"
+pip install -e $INTENT_CLF_PACKAGE
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker packages.ml_api.run:application --timeout 400
 </code></pre>
 </details>
 
