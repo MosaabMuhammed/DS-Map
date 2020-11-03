@@ -2,15 +2,11 @@
 
 <div style='width:1000px;margin:auto'>
 
-
-
 <details><summary> <b style="font-size:20px">Transformers</b></summary><ul>
 
 <details><summary>How to use <b>transformers</b> library</summary>
 <a href="./0_notebooks/02_transformers.html">notebook</a>
 </details>
-
-
 
 <details><summary>Using <b>BERT</b>/<b>DistilBERT</b> as Embeddings [Arabic/English]</summary>
 Use BERT for embedding and sklearn model after it.
@@ -67,6 +63,15 @@ tokenizer.tokenize("كيف حالك اليوم؟ و حال أولادك يا ع�
 <a href="./0_notebooks/01_training_tokenizers.html">notebook</a>
 
 </details></li>
+</ul></details>
+
+<details><summary> <b style="font-size:20px">Pipeline</b></summary><ul>
+
+<details><summary>How to use <b>pipelines</b> [ner, sent_ana, text_extraction, ...]</summary>
+<a href="./0_notebooks/03_pipelines.html">notebook</a>
+</details>
+
+
 </ul></details>
 
 </div>
