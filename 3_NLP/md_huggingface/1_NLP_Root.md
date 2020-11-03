@@ -6,10 +6,15 @@
 
 <details><summary> <b style="font-size:20px">Transformers</b></summary><ul>
 
-<details><summary>Using <b>BERT</b> as Embeddings [Arabic/English]</summary>
-Use BERT for embedding and sklearn model after it.
-<a href="./0_notebooks/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.html"><b >notebook</b></a><br>
+<details><summary>How to use <b>transformers</b> library</summary>
+<a href="./0_notebooks/02_transformers.html">notebook</a>
+</details>
 
+
+
+<details><summary>Using <b>BERT</b>/<b>DistilBERT</b> as Embeddings [Arabic/English]</summary>
+Use BERT for embedding and sklearn model after it.
+<a href="./0_notebooks/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.html"><b >notebook</b></a>
 </details>
 
 </ul></details>
@@ -41,7 +46,7 @@ tokenizer.tokenize("Don't you love transformers? We pretty sure you do.")
 # '▁you',
 # '▁do',
 # '.']
-</code></pre> 
+</code></pre>
 </details></li>
 <li><details><summary><b>Byte-level BPE</b></summary><pre><code>import transformers as ppb
 tokenizer = ppb.GPT2Tokenizer.from_pretrained('gpt2')
