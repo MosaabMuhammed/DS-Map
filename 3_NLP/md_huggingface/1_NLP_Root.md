@@ -60,6 +60,7 @@ tokenizer.tokenize("كيف حالك اليوم؟ و حال أولادك يا ع�
 </details></li>
 
 <li><details><summary>Build <b>Custom Tokenizer</b></summary>
+<a href="https://huggingface.co/docs/tokenizers/python/latest/quicktour.html">Quicktour [huggingface's docs]</a><br>
 <a href="./0_notebooks/01_training_tokenizers.html">notebook</a>
 
 </details></li>
