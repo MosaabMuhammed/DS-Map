@@ -1,781 +1,848 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>3. Data Wrangling</h1>
-<div style='width:1000px;margin:auto'>
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><style class="darkreader darkreader--fallback" media="screen"></style><style class="darkreader darkreader--text" media="screen"></style><style class="darkreader darkreader--invert" media="screen">.jfk-bubble.gtx-bubble, .captcheck_answer_label > input + img, embed[type="application/pdf"] {
+    filter: invert(100%) hue-rotate(180deg) brightness(83%) contrast(88%) sepia(20%) !important;
+}</style><style class="darkreader darkreader--inline" media="screen">[data-darkreader-inline-bgcolor] {
+  background-color: var(--darkreader-inline-bgcolor) !important;
+}
+[data-darkreader-inline-bgimage] {
+  background-image: var(--darkreader-inline-bgimage) !important;
+}
+[data-darkreader-inline-border] {
+  border-color: var(--darkreader-inline-border) !important;
+}
+[data-darkreader-inline-border-bottom] {
+  border-bottom-color: var(--darkreader-inline-border-bottom) !important;
+}
+[data-darkreader-inline-border-left] {
+  border-left-color: var(--darkreader-inline-border-left) !important;
+}
+[data-darkreader-inline-border-right] {
+  border-right-color: var(--darkreader-inline-border-right) !important;
+}
+[data-darkreader-inline-border-top] {
+  border-top-color: var(--darkreader-inline-border-top) !important;
+}
+[data-darkreader-inline-boxshadow] {
+  box-shadow: var(--darkreader-inline-boxshadow) !important;
+}
+[data-darkreader-inline-color] {
+  color: var(--darkreader-inline-color) !important;
+}
+[data-darkreader-inline-fill] {
+  fill: var(--darkreader-inline-fill) !important;
+}
+[data-darkreader-inline-stroke] {
+  stroke: var(--darkreader-inline-stroke) !important;
+}
+[data-darkreader-inline-outline] {
+  outline-color: var(--darkreader-inline-outline) !important;
+}</style><style class="darkreader darkreader--variables" media="screen">:root {
+   --darkreader-neutral-background: #181a1b;
+   --darkreader-neutral-text: #e8e6e3;
+   --darkreader-selection-background: #12427b;
+   --darkreader-selection-text: #ccc5b9;
+}</style><style class="darkreader darkreader--user-agent" media="screen">html {
+    background-color: #181918 !important;
+}
+html, body, input, textarea, select, button {
+    background-color: #181918;
+}
+html, body, input, textarea, select, button {
+    border-color: #655d50;
+    color: #ccc5b9;
+}
+a {
+    color: #417bbd;
+}
+table {
+    border-color: #4d4f4d;
+}
+::placeholder {
+    color: #9c9485;
+}
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: #4b4d0e !important;
+    color: #ccc5b9 !important;
+}
+::-webkit-scrollbar {
+    background-color: #1f201f;
+    color: #968e7f;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #404140;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #505250;
+}
+::-webkit-scrollbar-thumb:active {
+    background-color: #424443;
+}
+::-webkit-scrollbar-corner {
+    background-color: #181918;
+}
+* {
+    scrollbar-color: #1f201f #404140;
+}
+::selection {
+    background-color: #12427b !important;
+    color: #ccc5b9 !important;
+}
+::-moz-selection {
+    background-color: #12427b !important;
+    color: #ccc5b9 !important;
+}</style><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="3_Data%20Wrangling_files/github.css"><style class="darkreader darkreader--cors" media="screen">.hljs{display:block;overflow-x:auto;padding:.5em;color:#333;background:#f8f8f8}.hljs-comment,.hljs-template_comment,.diff .hljs-header,.hljs-javadoc{color:#998;font-style:italic}.hljs-keyword,.css .rule .hljs-keyword,.hljs-winutils,.javascript .hljs-title,.nginx .hljs-title,.hljs-subst,.hljs-request,.hljs-status{color:#333;font-weight:bold}.hljs-number,.hljs-hexcolor,.ruby .hljs-constant{color:#099}.hljs-string,.hljs-tag .hljs-value,.hljs-phpdoc,.tex .hljs-formula{color:#d14}.hljs-title,.hljs-id,.coffeescript .hljs-params,.scss .hljs-preprocessor{color:#900;font-weight:bold}.javascript .hljs-title,.lisp .hljs-title,.clojure .hljs-title,.hljs-subst{font-weight:normal}.hljs-class .hljs-title,.haskell .hljs-type,.vhdl .hljs-literal,.tex .hljs-command{color:#458;font-weight:bold}.hljs-tag,.hljs-tag .hljs-title,.hljs-rules .hljs-property,.django .hljs-tag .hljs-keyword{color:#000080;font-weight:normal}.hljs-attribute,.hljs-variable,.lisp .hljs-body{color:#008080}.hljs-regexp{color:#009926}.hljs-symbol,.ruby .hljs-symbol .hljs-string,.lisp .hljs-keyword,.tex .hljs-special,.hljs-prompt{color:#990073}.hljs-built_in,.lisp .hljs-title,.clojure .hljs-built_in{color:#0086b3}.hljs-preprocessor,.hljs-pragma,.hljs-pi,.hljs-doctype,.hljs-shebang,.hljs-cdata{color:#999;font-weight:bold}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.diff .hljs-change{background:#0086b3}.hljs-chunk{color:#aaa}</style><style class="darkreader darkreader--sync" media="screen"></style><style type="text/css">body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style><style class="darkreader darkreader--sync" media="screen"></style><meta name="darkreader" content="4e39b6f0de0dc6071334069f6c8b7332"><style class="darkreader darkreader--override" media="screen">.vimvixen-hint {
+    background-color: #644800 !important;
+    border-color: #b49628 !important;
+    color: #d4c7a8 !important;
+}
+::placeholder {
+    opacity: 0.5 !important;
+}</style><style>
+.vimvixen-console-frame {
+  margin: 0;
+  padding: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 2147483647;
+  border: none !important;
+  background-color: unset !important;
+  pointer-events:none;
+}
+
+.vimvixen-hint {
+  background-color: yellow;
+  border: 1px solid gold;
+  font-weight: bold;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 2147483647;
+  font-size: 12px;
+  color: black;
+}
+</style><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style class="darkreader darkreader--sync" media="screen"></style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style class="darkreader darkreader--sync" media="screen"></style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style class="darkreader darkreader--sync" media="screen"></style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style class="darkreader darkreader--sync" media="screen"></style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style class="darkreader darkreader--sync" media="screen"></style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style class="darkreader darkreader--sync" media="screen"></style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style class="darkreader darkreader--sync" media="screen"></style></head><body><div id="MathJax_Message" style="display: none;"></div><h1 id="3datawrangling">3. Data Wrangling</h1>
+
+<div style="width:1000px;margin:auto">
 
 <details><summary><b>Python</b></summary><p>
 
-<details><summary><b>Sorting</b></summary><p>
-<details><summary>Sort Dictionary easily by <b>keys</b> or <b>values</b></summary><p>
+</p><details><summary><b>Sorting</b></summary><p>
+</p><details><summary>Sort Dictionary easily by <b>keys</b> or <b>values</b></summary><p></p><pre><code class=" hljs perl">sorting = {<span class="hljs-number">1</span>: <span class="hljs-number">23</span>, <span class="hljs-number">2</span>: <span class="hljs-number">24</span>, <span class="hljs-number">4</span>: <span class="hljs-number">51</span>, <span class="hljs-number">10</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"cool"</span>: <span class="hljs-number">20</span>}
 
-<pre><code>sorting = {1: 23, 2: 24, 4: 51, 10: 1, &quot;cool&quot;: 20}
+<span class="hljs-comment"># to sort by values, put it first.</span>
+<span class="hljs-keyword">values</span>, <span class="hljs-keyword">keys</span> = zip(*sorted(zip(sorting.<span class="hljs-keyword">values</span>(), sorting.<span class="hljs-keyword">keys</span>())))
+<span class="hljs-keyword">values</span>, <span class="hljs-keyword">keys</span>
 
-# to sort by values, put it first.
-values, keys = zip(*sorted(zip(sorting.values(), sorting.keys())))
-values, keys
+<span class="hljs-comment"># OUTPUT</span>
+((<span class="hljs-number">1</span>, <span class="hljs-number">20</span>, <span class="hljs-number">23</span>, <span class="hljs-number">24</span>, <span class="hljs-number">51</span>), (<span class="hljs-number">10</span>, <span class="hljs-string">'cool'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>))
+</code></pre><pre><code class=" hljs python">word_counts = {<span class="hljs-string">"a"</span>: <span class="hljs-number">12</span>, <span class="hljs-string">"b"</span>:<span class="hljs-number">23</span>, <span class="hljs-string">"c"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"d"</span>:<span class="hljs-number">2</span>}
 
-# OUTPUT
-((1, 20, 23, 24, 51), (10, 'cool', 1, 2, 4))
+<span class="hljs-comment"># Sort by keys from small to large.</span>
+new_dict = sorted(word_counts, key=<span class="hljs-keyword">lambda</span> val: val[<span class="hljs-number">0</span>], reverse=<span class="hljs-keyword">False</span>)
+<span class="hljs-comment"># [('a', 12), ('b', 23), ('c', 1), ('d', 2)]</span>
+
+
+<span class="hljs-comment"># Sort by values from small to large.</span>
+new_dict = sorted(word_counts, key=<span class="hljs-keyword">lambda</span> val: val[<span class="hljs-number">1</span>], reverse=<span class="hljs-keyword">False</span>)
+<span class="hljs-comment"># [('c', 1), ('d', 2), ('a', 12), ('b', 23)]</span>
 </code></pre>
+<p></p></details>
 
+<details><summary>Sort <b>Lists</b></summary><p></p><pre><code class=" hljs perl"><span class="hljs-keyword">x</span> = [<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+<span class="hljs-keyword">y</span> = sorted(<span class="hljs-keyword">x</span>)  <span class="hljs-comment"># x is unchanged.</span>
+<span class="hljs-keyword">x</span>.<span class="hljs-keyword">sort</span>()            <span class="hljs-comment"># x is changed and sorted.</span>
 
-<pre><code>word_counts = {&quot;a&quot;: 12, &quot;b&quot;:23, &quot;c&quot;: 1, &quot;d&quot;:2}
-
-# Sort by keys from small to large.
-new_dict = sorted(word_counts, key=lambda val: val[0], reverse=False)
-# [('a', 12), ('b', 23), ('c', 1), ('d', 2)]
-
-
-# Sort by values from small to large.
-new_dict = sorted(word_counts, key=lambda val: val[1], reverse=False)
-# [('c', 1), ('d', 2), ('a', 12), ('b', 23)]
+<span class="hljs-comment"># Sort the list by absolute values from largest to smallest.</span>
+<span class="hljs-keyword">x</span> = sorted([-<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, -<span class="hljs-number">2</span>, <span class="hljs-number">3</span>], key=<span class="hljs-keyword">abs</span>, <span class="hljs-keyword">reverse</span>=True)
 </code></pre>
+<p></p></details>
+<p></p></details>
 
-</p></details>
+<details><summary><b>Randomness</b></summary><p></p><pre><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> random
+random.seed(<span class="hljs-number">42</span>)
 
-<details><summary>Sort <b>Lists</b></summary><p>
+<span class="hljs-comment"># random.random() produces numbers uniformly between 0 and 1 it's the random function we'll use most often</span>
+four_uniform_randoms = [random.random() <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>)]
+<span class="hljs-comment">#[0.8444218515250481,</span>
+<span class="hljs-comment"># 0.7579544029403025,</span>
+<span class="hljs-comment"># 0.420571580830845,</span>
+<span class="hljs-comment"># 0.25891675029296335]</span>
 
-<pre><code>x = [4, 1, 2, 3]
-y = sorted(x)  # x is unchanged.
-x.sort()            # x is changed and sorted.
+<span class="hljs-comment"># Take random between range of numbers.</span>
+random.randrange(<span class="hljs-number">10</span>) <span class="hljs-comment"># choose randomly from [0, ..., 9]</span>
+random.randrange(<span class="hljs-number">3</span>, <span class="hljs-number">6</span>) <span class="hljs-comment"># choose randomly from [3, 4, 5]</span>
 
-# Sort the list by absolute values from largest to smallest.
-x = sorted([-4, 1, -2, 3], key=abs, reverse=True)
-</code></pre>
-
-</p></details>
-</p></details>
-
-<details><summary><b>Randomness</b></summary><p>
-
-<pre><code>import random
-random.seed(42)
-
-# random.random() produces numbers uniformly between 0 and 1 it's the random function we'll use most often
-four_uniform_randoms = [random.random() for _ in range(4)]
-#[0.8444218515250481,
-# 0.7579544029403025,
-# 0.420571580830845,
-# 0.25891675029296335]
-
-# Take random between range of numbers.
-random.randrange(10) # choose randomly from [0, ..., 9]
-random.randrange(3, 6) # choose randomly from [3, 4, 5]
-
-# Shuffle given list.
-lst= range(10)
+<span class="hljs-comment"># Shuffle given list.</span>
+lst= range(<span class="hljs-number">10</span>)
 random.shuffle(lst)
-print(lst)
-# [2, 5, 1, 8, ...]
+<span class="hljs-built_in">print</span>(lst)
+<span class="hljs-comment"># [2, 5, 1, 8, ...]</span>
 
-# Pick random element from a list.
-myPick = random.choice(['Alice', &quot;bob&quot;, &quot;charlie&quot;])
+<span class="hljs-comment"># Pick random element from a list.</span>
+myPick = random.choice([<span class="hljs-string">'Alice'</span>, <span class="hljs-string">"bob"</span>, <span class="hljs-string">"charlie"</span>])
 
-# Pick a sublist of elements without duplication.
-lottery_nums = range(60)
-winning_numbers = random.sample(lottery_numbers, 6)
-# [16, 36, 10, 6, 25, 9]
+<span class="hljs-comment"># Pick a sublist of elements without duplication.</span>
+lottery_nums = range(<span class="hljs-number">60</span>)
+winning_numbers = random.sample(lottery_numbers, <span class="hljs-number">6</span>)
+<span class="hljs-comment"># [16, 36, 10, 6, 25, 9]</span>
 
-# Pick a sublist of elements WITH duplication.
-sublst = [random.choice(range(10)) for _ in range(4)]
-# [9, 3, 3, 2]
+<span class="hljs-comment"># Pick a sublist of elements WITH duplication.</span>
+sublst = [random.choice(range(<span class="hljs-number">10</span>)) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>)]
+<span class="hljs-comment"># [9, 3, 3, 2]</span>
 </code></pre>
+<p></p></details>
 
-</p></details>
+<details><summary> <b>Regex</b></summary><p></p><pre><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> re
 
-<details><summary> <b>Regex</b></summary><p>
-
-<pre><code>import re
-
-re.match(&quot;a&quot;, &quot;cat&quot;) # --&gt; cat doesn't start with a
-re.search(&quot;a&quot;, &quot;cat&quot;) # --&gt; cat has an &quot;a&quot; in it.
-re.split(&quot;[ab]&quot;, &quot;carbs&quot;) # --&gt; split on a or b to [&quot;c&quot;, &quot;r&quot;, &quot;s&quot;]
-re.sub(&quot;[0-9]&quot;, &quot;-&quot;, &quot;R2D2&quot;) # --&gt; replace digits with dashes.
+re.match(<span class="hljs-string">"a"</span>, <span class="hljs-string">"cat"</span>) <span class="hljs-comment"># --&gt; cat doesn't start with a</span>
+re.search(<span class="hljs-string">"a"</span>, <span class="hljs-string">"cat"</span>) <span class="hljs-comment"># --&gt; cat has an "a" in it.</span>
+re.split(<span class="hljs-string">"[ab]"</span>, <span class="hljs-string">"carbs"</span>) <span class="hljs-comment"># --&gt; split on a or b to ["c", "r", "s"]</span>
+re.sub(<span class="hljs-string">"[0-9]"</span>, <span class="hljs-string">"-"</span>, <span class="hljs-string">"R2D2"</span>) <span class="hljs-comment"># --&gt; replace digits with dashes.</span>
 </code></pre>
+<p></p></details>
 
-</p></details>
-
-<details><summary> From <b>list of lists</b> to <b>list of items</b></summary><p>
-
-<pre><code>list_of_lists = [[1, 2, 3, 4], [5, 6, 76], [123, 12, 123, 123,124123,123,123]]
-list_elements = sum(terms, [])
+<details><summary> From <b>list of lists</b> to <b>list of items</b></summary><p></p><pre><code class=" hljs makefile"><span class="hljs-constant">list_of_lists</span> = [[1, 2, 3, 4], [5, 6, 76], [123, 12, 123, 123,124123,123,123]]
+<span class="hljs-constant">list_elements</span> = sum(terms, [])
 </code></pre>
+<p></p></details>
 
-</p></details>
-
-<details><summary> <b>See Files in Current Directory</b> </summary><p>
-
-<pre><code>import os
-print(os.listdir(&quot;../input&quot;))
+<details><summary> <b>See Files in Current Directory</b> </summary><p></p><pre><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> os
+<span class="hljs-built_in">print</span>(os.listdir(<span class="hljs-string">"../input"</span>))
 </code></pre>
+<p></p></details>
 
-</p></details>
+<details><summary> <b>Difference</b> &amp; <b>Intersection</b> &amp; <b>Combination</b> b/w lists</summary><p></p><pre><code class=" hljs bash">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+b = [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]
 
-<details><summary> <b>Difference</b> & <b>Intersection</b> & <b>Combination</b> b/w lists</summary><p>
+<span class="hljs-comment">### 1. Existing in (a) but NOT in (b)</span>
+<span class="hljs-comment"># Returns a set.</span>
+<span class="hljs-keyword">set</span>(a).difference(b) <span class="hljs-comment"># {1, 2, 3}</span>
+<span class="hljs-keyword">set</span>(a) - <span class="hljs-keyword">set</span>(b)          <span class="hljs-comment"># {1, 2, 3}</span>
+<span class="hljs-comment"># Returns array</span>
+np.setdiff1d(a, b)     <span class="hljs-comment"># array([1, 2, 3])</span>
 
-<pre><code>a = [1, 2, 3, 4, 5]
-b = [4, 5, 5, 6, 5, 6]
+<span class="hljs-comment">### 2. Intersection b/w (a) and (b)</span>
+<span class="hljs-comment"># Returns a set.</span>
+<span class="hljs-keyword">set</span>(a).intersection(b)     <span class="hljs-comment"># {4, 5}</span>
 
-### 1. Existing in (a) but NOT in (b)
-# Returns a set.
-set(a).difference(b) # {1, 2, 3}
-set(a) - set(b)          # {1, 2, 3}
-# Returns array
-np.setdiff1d(a, b)     # array([1, 2, 3])
+<span class="hljs-comment"># Returns an array.</span>
+np.intersect1d(a, b)       <span class="hljs-comment"># array([4, 5])</span>
 
-### 2. Intersection b/w (a) and (b)
-# Returns a set.
-set(a).intersection(b)     # {4, 5}
-
-# Returns an array.
-np.intersect1d(a, b)       # array([4, 5])
-
-### 3. All of them together.
+<span class="hljs-comment">### 3. All of them together.</span>
 a + b           
 </code></pre>
+<p></p></details>
+<details><summary> <b>Partial Function</b> [python 3] </summary><p></p><pre><code class=" hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> partial 
 
-</p></details>
-<details><summary> <b>Partial Function</b> [python 3] </summary><p>
+<span class="hljs-comment"># A normal function </span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(a, b, c)</span>:</span> 
+    <span class="hljs-keyword">return</span> <span class="hljs-number">100</span> * a + <span class="hljs-number">10</span> * b + c 
 
-<pre><code>from functools import partial 
+<span class="hljs-comment"># A partial function with b = 1 and c = 2 </span>
+add_part = partial(add, c = <span class="hljs-number">2</span>, b = <span class="hljs-number">1</span>) 
 
-# A normal function 
-def add(a, b, c): 
-    return 100 * a + 10 * b + c 
-
-# A partial function with b = 1 and c = 2 
-add_part = partial(add, c = 2, b = 1) 
-
-# Calling partial function 
-print(add_part(3)) 
+<span class="hljs-comment"># Calling partial function </span>
+print(add_part(<span class="hljs-number">3</span>)) 
 </code></pre>
-
-</p></details>
+<p></p></details>
 <details><summary> <b>f-Literal</b> </summary><p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">Formatted String Literal</a> </p>
-</p></details>
+</p><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">Formatted String Literal</a> </p>
+<p></p></details>
 
 
-</p></details><hr>
+<p></p></details><hr>
 
 <details><summary><b>Numpy</b> </summary><p>
 
-<details><summary><b>Concatenate [c_]</b> in Numpy </summary><p>
+</p><details><summary><b>Concatenate [c_]</b> in Numpy </summary><p></p><pre><code class=" hljs apache"><span class="hljs-comment"># Example 1.</span>
+<span class="hljs-keyword">np</span>.c_[[1, 2, 3],<span class="hljs-sqbracket"> [5, 6, 7]]</span>
+<span class="hljs-comment"># array([[1, 4],</span>
+<span class="hljs-comment">#           [2, 5],</span>
+<span class="hljs-comment">#               [3, 6]])</span>
 
-<pre><code># Example 1.
-np.c_[[1, 2, 3], [5, 6, 7]]
-# array([[1, 4],
-#          [2, 5],
-#              [3, 6]])
-
-# Example 2.
-np.c_[[[1, 2, 3]], 0, 1, [[4, 5, 6]]]
-# array([[1, 2, 3, 0, 1, 4, 5, 6]])
+<span class="hljs-comment"># Example 2.</span>
+<span class="hljs-keyword">np</span>.c_[[[1, 2, 3]], 0, 1,<span class="hljs-sqbracket"> [[4, 5, 6]]]</span>
+<span class="hljs-comment"># array([[1, 2, 3, 0, 1, 4, 5, 6]])</span>
 </code></pre>
+<p></p></details>
+<details><summary>Add <b>new dimension</b> to vector/matrix [np.array] </summary><p></p><pre><code class=" hljs python"><span class="hljs-comment">#### Trick number #1:</span>
+<span class="hljs-comment"># Add a second dimension</span>
+<span class="hljs-comment"># This is like x[:, np.newaxis] == x[:, None]</span>
+x[np.newaxis].shape, x[<span class="hljs-keyword">None</span>].shape
 
-</p></details>
-<details><summary>Add <b>new dimension</b> to vector/matrix [np.array] </summary><p>
-
-<pre><code>#### Trick number #1:
-# Add a second dimension
-# This is like x[:, np.newaxis] == x[:, None]
-x[np.newaxis].shape, x[None].shape
-
-#### Trick number #2:
-# Add a new dimension at last.
-# This is much better/safe approch
-x[..., None].shape, x[..., np.newaxis].shape
+<span class="hljs-comment">#### Trick number #2:</span>
+<span class="hljs-comment"># Add a new dimension at last.</span>
+<span class="hljs-comment"># This is much better/safe approch</span>
+x[..., <span class="hljs-keyword">None</span>].shape, x[..., np.newaxis].shape
 
 
-#### Trick number #3:
-# First parameter is the array/tensor
-# Second parameter is the position where you want to add.
-# ex:  BEFORE: x.shape --&gt; (4,)
-#        AFTER:    x.shape --&gt; (1, 4)
-np.expand_dims(x, 0)
+<span class="hljs-comment">#### Trick number #3:</span>
+<span class="hljs-comment"># First parameter is the array/tensor</span>
+<span class="hljs-comment"># Second parameter is the position where you want to add.</span>
+<span class="hljs-comment"># ex:  BEFORE: x.shape --&gt; (4,)</span>
+<span class="hljs-comment">#        AFTER:    x.shape --&gt; (1, 4)</span>
+np.expand_dims(x, <span class="hljs-number">0</span>)
 </code></pre>
+<p></p></details>
 
-</p></details>
-
-</p></details><hr>
+<p></p></details><hr>
 
 <details><summary><b>DataFrame</b></summary><p>
 
-<details><summary><b>Better Visualization for Sparse Matrix/Dataframe</b></summary><p>
+</p><details><summary>Best-Practices when working with <b>DataFrame</b></summary><p></p><ul>
+<li>Column-Selector.</li>
+<li>Iterating over rows. [apply(), iterrows(), itertuples(), df-&gt;row-majior]</li>
+<li>Ordering Slicing Operations.</li>
+<li>Editing df [view, copy]</li>
+<li>Indesing &amp; Slicing.</li>
+<li>Accessors. [str, cat, sparse, ...]</li>
+<li>Other.</li></ul>
 
-<pre><code># By simpling replacing 0 with ''
-df[df==0] = 0
+<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/1_Machine%20Learning/0_html/3_data_wrangling/just-pandas-things.html">notebook</a>
+
+<p></p></details>
+
+<details><summary><b>Better Visualization for Sparse Matrix/Dataframe</b></summary><p></p><pre><code class=" hljs javascript"># By simpling replacing <span class="hljs-number">0</span> <span class="hljs-keyword">with</span> <span class="hljs-string">''</span>
+df[df==<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>
 df
 </code></pre>
-
-</p></details>
+<p></p></details>
 
 <details><summary>From <b>Normal Dataframe</b> to <b> Similarity Matrix</b></summary><p>
 
-<h4>1. Create graph dataframe</h4>
-
-<pre><code>col_index = &quot;person&quot;
-col_value = &quot;docs&quot;
+</p><h4>1. Create graph dataframe</h4><pre><code class=" hljs javascript">col_index = <span class="hljs-string">"person"</span>
+col_value = <span class="hljs-string">"docs"</span>
 
 index1, index2, n_values = [], [], []
 index_value = df.groupby(col_index)[col_value].apply(pd.Series.unique).to_dict()
 
-for p1, p2 in itertools.permutations(np.unique(df[col_index].values), 2):
+<span class="hljs-keyword">for</span> p1, p2 <span class="hljs-keyword">in</span> itertools.permutations(np.unique(df[col_index].values), <span class="hljs-number">2</span>):
     index1.append(p1)
     index2.append(p2)
     n_values.append(len(set(index_value[p1]).intersection(index_value[p2])))
 
-# Create a dataframe has columns [&quot;index1&quot;, &quot;index2&quot;, &quot;common_values_b/w_them&quot;]
-index_df = pd.DataFrame({'index1': index1, 'index2': index2, 'n_values': n_values})
+# Create a dataframe has columns [<span class="hljs-string">"index1"</span>, <span class="hljs-string">"index2"</span>, <span class="hljs-string">"common_values_b/w_them"</span>]
+index_df = pd.DataFrame({<span class="hljs-string">'index1'</span>: index1, <span class="hljs-string">'index2'</span>: index2, <span class="hljs-string">'n_values'</span>: n_values})
 </code></pre>
 
-
-<h4>2. Create the Similarity Matrix</h4>
-
-<pre><code>index_df = pd.pivot(index_df, index='index1', columns='index2', values='n_values')
+<h4>2. Create the Similarity Matrix</h4><pre><code class=" hljs perl">index_df = pd.pivot(index_df, <span class="hljs-keyword">index</span>=<span class="hljs-string">'index1'</span>, columns=<span class="hljs-string">'index2'</span>, <span class="hljs-keyword">values</span>=<span class="hljs-string">'n_values'</span>)
 </code></pre>
 
-
-<h4>3. Visualize it with Heatmap (if possible)</h4>
-
-<pre><code>plt.figure(figsize=(10, 8))
-sns.heatmap(person_df, cmap='viridis')
-plt.title(&quot;People Correlation&quot;, size=30, y=1.05)
-plt.xticks(size=16)
-plt.yticks(size=16);
+<h4>3. Visualize it with Heatmap (if possible)</h4><pre><code class=" hljs coffeescript">plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">8</span>))
+sns.heatmap(person_df, cmap=<span class="hljs-string">'viridis'</span>)
+plt.title(<span class="hljs-string">"People Correlation"</span>, size=<span class="hljs-number">30</span>, y=<span class="hljs-number">1.05</span>)
+plt.xticks(size=<span class="hljs-number">16</span>)
+plt.yticks(size=<span class="hljs-number">16</span>);
 </code></pre>
-
-</p></details>
+<p></p></details>
 
 <details><summary>From <b>One-Hot Encoding</b> to <b> Unpiovt Table</b></summary><p>
-<h4>1. Convert array of labels in a raw to One-Hot Encoding</h4>
-
-<pre><code>df  = df_eng
-col = &quot;MoreSamples&quot;
+</p><h4>1. Convert array of labels in a raw to One-Hot Encoding</h4><pre><code class=" hljs makefile"><span class="hljs-constant">df</span>  = df_eng
+<span class="hljs-constant">col</span> = "MoreSamples"
 
 from sklearn.preprocessing import MultiLabelBinarizer
 
-binarizer = MultiLabelBinarizer()
-samples = binarizer.fit_transform(df[col].values)
+<span class="hljs-constant">binarizer</span> = MultiLabelBinarizer()
+<span class="hljs-constant">samples</span> = binarizer.fit_transform(df[col].values)
 </code></pre>
 
-
-<h4>2. Create the One-Hot encoding dataframe</h4>
-
-<pre><code>samples_df = pd.DataFrame(samples, columns=binarizer.classes_)
-df = pd.concat([df.reset_index(), samples_df.reset_index()], axis=1).drop([&quot;index&quot;, col], axis=1)
+<h4>2. Create the One-Hot encoding dataframe</h4><pre><code class=" hljs ini"><span class="hljs-setting">samples_df = <span class="hljs-value">pd.DataFrame(samples, columns=binarizer.classes_)</span></span>
+<span class="hljs-setting">df = <span class="hljs-value">pd.concat([df.reset_index(), samples_df.reset_index()], axis=<span class="hljs-number">1</span>).drop([<span class="hljs-string">"index"</span>, col], axis=<span class="hljs-number">1</span>)</span></span>
 </code></pre>
 
+<h4>3. Unpivot the One-Hot encoding dataframe</h4><pre><code class=" hljs sql"># <span class="hljs-operator"><span class="hljs-keyword">Change</span> <span class="hljs-string">"DisplayName"</span> <span class="hljs-keyword">to</span> your <span class="hljs-keyword">columns</span> <span class="hljs-keyword">to</span> be used <span class="hljs-keyword">as</span> <span class="hljs-keyword">index</span>.
+df = pd.melt(df, id_vars=[<span class="hljs-string">"DisplayName"</span>])
+df = df_eng[(df.<span class="hljs-keyword">value</span> == <span class="hljs-number">1</span>)]
+df.<span class="hljs-keyword">drop</span>(<span class="hljs-string">"value"</span>, axis=<span class="hljs-number">1</span>, inplace=<span class="hljs-literal">True</span>)
+</span></code></pre>
+<p></p></details>
 
-<h4>3. Unpivot the One-Hot encoding dataframe</h4>
-
-<pre><code># Change &quot;DisplayName&quot; to your columns to be used as index.
-df = pd.melt(df, id_vars=[&quot;DisplayName&quot;])
-df = df_eng[(df.value == 1)]
-df.drop(&quot;value&quot;, axis=1, inplace=True)
+<details><summary>Show <b>Thousands comma seperator</b> in dataframe </summary><p></p><pre><code class=" hljs nginx"><span class="hljs-title">df</span> = pd.read_csv(<span class="hljs-string">"file.csv"</span>, thousands=<span class="hljs-string">","</span>)
 </code></pre>
+<p></p></details>
 
-</p></details>
-
-<details><summary>Show <b>Thousands comma seperator</b> in dataframe </summary><p>
-
-<pre><code>df = pd.read_csv(&quot;file.csv&quot;, thousands=&quot;,&quot;)
+<details><summary> <b>Change value of cell in dataframe</b> </summary><p></p><pre><code class=" hljs coffeescript"><span class="hljs-comment"># using .at</span>
+news_df.at[idx, <span class="hljs-string">'word'</span>] = operations[operation_idx](random_row.word)
 </code></pre>
-
-</p></details>
-
-<details><summary> <b>Change value of cell in dataframe</b> </summary><p>
-
-<pre><code># using .at
-news_df.at[idx, 'word'] = operations[operation_idx](random_row.word)
-</code></pre>
-
-</p></details>
-<details><summary> Rename<b> Repeated</b> columns </summary>
-
-<pre><code class="python">cols = []
-col_name = &quot;Grill&quot;
-count = 1
-for column in X.columns:
-    if column == col_name:
-        cols.append(f'{col_name}_{count}')
-        count+=1
-        continue
+<p></p></details>
+<details><summary> Rename<b> Repeated</b> columns </summary><pre><code class="python language-python hljs ">cols = []
+col_name = <span class="hljs-string">"Grill"</span>
+count = <span class="hljs-number">1</span>
+<span class="hljs-keyword">for</span> column <span class="hljs-keyword">in</span> X.columns:
+    <span class="hljs-keyword">if</span> column == col_name:
+        cols.append(f<span class="hljs-string">'{col_name}_{count}'</span>)
+        count+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">continue</span>
     cols.append(column)
 X.columns = cols
 </code></pre>
-
 </details>
-<details><summary> <b>Display</b> Multiple dataframes</summary><p>
+<details><summary> <b>Display</b> Multiple dataframes</summary><p></p><pre><code class=" hljs python"><span class="hljs-keyword">import</span> IPython
 
-<pre><code>import IPython
-
-def display(*dfs, head=True):
-    for df in dfs:
-        IPython.display.display(df.head() if head else df)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">display</span><span class="hljs-params">(*dfs, head=True)</span>:</span>
+    <span class="hljs-keyword">for</span> df <span class="hljs-keyword">in</span> dfs:
+        IPython.display.display(df.head() <span class="hljs-keyword">if</span> head <span class="hljs-keyword">else</span> df)
 </code></pre>
-
-</p></details>
-<details><summary> <b>Chain</b> of <b>Functions [pipe()]</b></summary><p>
-
-<pre><code class="python"># using pipe, we can chain functions on dataframe or series.
-prices = pd.read_csv(f&quot;{INPUT_DIR}/sell_prices.csv&quot;).pipe(reduce_mem_usage)
+<p></p></details>
+<details><summary> <b>Chain</b> of <b>Functions [pipe()]</b></summary><p></p><pre><code class="python language-python hljs "><span class="hljs-comment"># using pipe, we can chain functions on dataframe or series.</span>
+prices = pd.read_csv(f<span class="hljs-string">"{INPUT_DIR}/sell_prices.csv"</span>).pipe(reduce_mem_usage)
 </code></pre>
-
-</p></details>
-<details><summary> Create <b>DataFrame for Testing</b> </summary><p>
-
-<pre><code># Import pandas
+<p></p></details>
+<details><summary> Create <b>DataFrame for Testing</b> </summary><p></p><pre><code class=" hljs makefile"><span class="hljs-comment"># Import pandas</span>
 import pandas as pd
 
-# Create the testing dataframe.
-test_df = pd.util.testing.makeMixedDataFrame()
-test_df = pd.util.testing.makeDataFrame()
-test_df = pd.util.testing.makeMissingDataframe()
-test_df = pd.util.testing.makeTimeDataFrame()
-test_df = pd.util.testing.makePeriodFrame()
+<span class="hljs-comment"># Create the testing dataframe.</span>
+<span class="hljs-constant">test_df</span> = pd.util.testing.makeMixedDataFrame()
+<span class="hljs-constant">test_df</span> = pd.util.testing.makeDataFrame()
+<span class="hljs-constant">test_df</span> = pd.util.testing.makeMissingDataframe()
+<span class="hljs-constant">test_df</span> = pd.util.testing.makeTimeDataFrame()
+<span class="hljs-constant">test_df</span> = pd.util.testing.makePeriodFrame()
 </code></pre>
-
-</p></details>
-<details><summary> <b>Relationship Table</b> b/w <b> 2 categorical features</b></summary><p>
-
-<pre><code>table = pd.crosstab(df.label, df.flow_id, normalize='columns'); table
+<p></p></details>
+<details><summary> <b>Relationship Table</b> b/w <b> 2 categorical features</b></summary><p></p><pre><code class=" hljs nginx"><span class="hljs-title">table</span> = pd.crosstab(df.label, df.flow_id, normalize=<span class="hljs-string">'columns'</span>); <span class="hljs-title">table</span>
 </code></pre>
+<p></p></details>
+<details><summary> Return columns have <b>NaNs or Infinite</b> values</summary><p></p><pre><code class=" hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">return_cols_have_inf</span><span class="hljs-params">(df)</span>:</span>
+    <span class="hljs-keyword">return</span> [col <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> df <span class="hljs-keyword">if</span> np.isfinite(df[col]).sum() != df.shape[<span class="hljs-number">0</span>]]
 
-</p></details>
-<details><summary> Return columns have <b>NaNs or Infinite</b> values</summary><p>
-
-<pre><code>def return_cols_have_inf(df):
-    return [col for col in df if np.isfinite(df[col]).sum() != df.shape[0]]
-
-def return_cols_have_nan(df):
-    return [col for col in df if np.isnan(df[col]).sum()]
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">return_cols_have_nan</span><span class="hljs-params">(df)</span>:</span>
+    <span class="hljs-keyword">return</span> [col <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> df <span class="hljs-keyword">if</span> np.isnan(df[col]).sum()]
 </code></pre>
-
-</p></details>
-<details><summary><b>A series of arrays</b> to <b>DataFrame</b> </summary><p>
-
-<pre><code class="python">X_train = X_train.apply(pd.Series)
+<p></p></details>
+<details><summary><b>A series of arrays</b> to <b>DataFrame</b> </summary><p></p><pre><code class="python language-python hljs ">X_train = X_train.apply(pd.Series)
 </code></pre>
-
-</p></details>
-<details><summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary><p>
-
-<pre><code class="python">from tqdm import tqdm
+<p></p></details>
+<details><summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary><p></p><pre><code class="python language-python hljs "><span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm
 tqdm.pandas()
 
 temp = tweet.text.progress_apply(len)
 </code></pre>
-
-</p></details>
+<p></p></details>
 <details><summary> <b>Select All Columns EXCEPT specific columns</b> </summary>
-<p>
+<p></p><pre><code class="python language-python hljs "><span class="hljs-comment"># Option 1</span>
+df.loc[:, df.columns != <span class="hljs-string">'b'</span>]
 
-<pre><code class="python"># Option 1
-df.loc[:, df.columns != 'b']
+<span class="hljs-comment"># Option 2</span>
+df.drop(<span class="hljs-string">'b'</span>, axis=<span class="hljs-number">1</span>)
 
-# Option 2
-df.drop('b', axis=1)
+<span class="hljs-comment"># Option 3</span>
+df[df.columns.difference([<span class="hljs-string">'b'</span>])]
 
-# Option 3
-df[df.columns.difference(['b'])]
+<span class="hljs-comment"># Option 4</span>
+df.loc[:, ~df.columns.isin([<span class="hljs-string">'col1'</span>, <span class="hljs-string">'col2'</span>])]
 
-# Option 4
-df.loc[:, ~df.columns.isin(['col1', 'col2'])]
-
-# Option 5
-df[map(lambda x :x not in ['b'], list(df.columns))]
+<span class="hljs-comment"># Option 5</span>
+df[map(<span class="hljs-keyword">lambda</span> x :x <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-string">'b'</span>], list(df.columns))]
 </code></pre>
+<p></p></details>
 
-</p></details>
-
-<details><summary> <b>Save & Remove label at the same time</b> </summary><p>
-
-<pre><code>label = iris.pop('species')
+<details><summary> <b>Save &amp; Remove label at the same time</b> </summary><p></p><pre><code class=" hljs nginx"><span class="hljs-title">label</span> = iris.pop(<span class="hljs-string">'species'</span>)
 </code></pre>
+<p></p></details>
+<details><summary> <b>Add Prefix or Suffix to all columns name</b> </summary><p></p><pre><code class="python language-python hljs "><span class="hljs-comment"># Add Prefix</span>
+df.add_prefix(<span class="hljs-string">'X_'</span>)
 
-</p></details>
-<details><summary> <b>Add Prefix or Suffix to all columns name</b> </summary><p>
-
-<pre><code class="python"># Add Prefix
-df.add_prefix('X_')
-
-# Add Suffix
-df.add_suffix('_Y')
+<span class="hljs-comment"># Add Suffix</span>
+df.add_suffix(<span class="hljs-string">'_Y'</span>)
 </code></pre>
-
-</p></details>
-<details><summary> <b>Create Rare Category</b> </summary><p>
-
-<pre><code class="python"># See the value counts for each category
+<p></p></details>
+<details><summary> <b>Create Rare Category</b> </summary><p></p><pre><code class="python language-python hljs "><span class="hljs-comment"># See the value counts for each category</span>
 genre.value_counts()
 
-# Select the top n categories
-top_four = genre.value_counts().nlargest(4).index
+<span class="hljs-comment"># Select the top n categories</span>
+top_four = genre.value_counts().nlargest(<span class="hljs-number">4</span>).index
 top_four
 
-# Add Rare category
-genre_updated = genre.where(genre.isin(top_four), other='Rare')
+<span class="hljs-comment"># Add Rare category</span>
+genre_updated = genre.where(genre.isin(top_four), other=<span class="hljs-string">'Rare'</span>)
 
-# See the changes
+<span class="hljs-comment"># See the changes</span>
 genre_updated.value_counts()
 </code></pre>
+<p></p></details>
+<details><summary> <b>Select Multiple Slices of Columns from a DataFrame</b> </summary><p></p><pre><code class="python language-python hljs "><span class="hljs-comment"># DataFrame</span>
+df = pd.DataFrame(np.random.rand(<span class="hljs-number">3</span>, <span class="hljs-number">11</span>), columns=list(<span class="hljs-string">'ABCDEFGHIJk'</span>))
 
-</p></details>
-<details><summary> <b>Select Multiple Slices of Columns from a DataFrame</b> </summary><p>
+<span class="hljs-comment"># Option 1</span>
+pd.concat([df.loc[:, <span class="hljs-string">'A'</span>, <span class="hljs-string">'C'</span>], df.loc[:, <span class="hljs-string">'F'</span>], df.loc[:, <span class="hljs-string">'J'</span>:<span class="hljs-string">'K'</span>]], axis=<span class="hljs-string">'columns'</span>)
 
-<pre><code class="python"># DataFrame
-df = pd.DataFrame(np.random.rand(3, 11), columns=list('ABCDEFGHIJk'))
+<span class="hljs-comment"># Option 2</span>
+df[list(df.columns[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]) + list(df.columns[<span class="hljs-number">5</span>]) + list(df.columns[<span class="hljs-number">9</span>:<span class="hljs-number">11</span>])]
 
-# Option 1
-pd.concat([df.loc[:, 'A', 'C'], df.loc[:, 'F'], df.loc[:, 'J':'K']], axis='columns')
-
-# Option 2
-df[list(df.columns[0:3]) + list(df.columns[5]) + list(df.columns[9:11])]
-
-# Option 3
-df.iloc[:, np.r_[0:3, 5, 9:11]]
-
+<span class="hljs-comment"># Option 3</span>
+df.iloc[:, np.r_[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">9</span>:<span class="hljs-number">11</span>]]
 </code></pre>
+<p></p></details>
+<details><summary> <b>Remove Duplicated cat/num features</b> </summary><p></p><pre><code class="python language-python hljs ">train_enc = pd.DataFrame(index=train_reduced.index)
 
-</p></details>
-<details><summary> <b>Remove Duplicated cat/num features</b> </summary><p>
-
-<pre><code class="python">train_enc = pd.DataFrame(index=train_reduced.index)
-
-for col in tqdm_notebook(traintest.columns):
-    train_enc[col] = train_reduced[col].factorize()[0]
+<span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> tqdm_notebook(traintest.columns):
+    train_enc[col] = train_reduced[col].factorize()[<span class="hljs-number">0</span>]
 </code></pre>
+<pre><code class="python language-python hljs ">dup_cols = {}
 
-
-
-<pre><code class="python">dup_cols = {}
-
-for i, c1 in enumerate(tqdm_notebook(train_enc.columns)):
-    for c2 in train_enc.columns[i+1:]:
-        if c2 not in dup_cols and np.all(train_enc[c1] == train_enc[c2]):
+<span class="hljs-keyword">for</span> i, c1 <span class="hljs-keyword">in</span> enumerate(tqdm_notebook(train_enc.columns)):
+    <span class="hljs-keyword">for</span> c2 <span class="hljs-keyword">in</span> train_enc.columns[i+<span class="hljs-number">1</span>:]:
+        <span class="hljs-keyword">if</span> c2 <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> dup_cols <span class="hljs-keyword">and</span> np.all(train_enc[c1] == train_enc[c2]):
             dup_cols[c2] = c1
 </code></pre>
 
-
-<h4> Drop them </h4>
-
-<pre><code class="python">traintest.drop(dup_cols.keys(), axis=1, inplace=True)
+<h4> Drop them </h4><pre><code class="python language-python hljs ">traintest.drop(dup_cols.keys(), axis=<span class="hljs-number">1</span>, inplace=<span class="hljs-keyword">True</span>)
 </code></pre>
-
-</p></details>
+<p></p></details>
 <details><summary>See If which features have <b>Differencet Distrubtion</b> in <b>traing</b> and <b>test</b> datasets <b>(KS Test)</b> </summary>
 <p>
 
-<p><a href="https://www.kaggle.com/alexpengxiao/preprocessing-model-averaging-by-xgb-lgb-1-39"><b>Credits</b></a> </p>
-
-<pre><code class="python">from scipy.stats import ks_2samp
-THRESHOLD_P_VALUE = 0.01 #need tuned
-THRESHOLD_STATISTIC = 0.3 #need tuned
+</p><p><a href="https://www.kaggle.com/alexpengxiao/preprocessing-model-averaging-by-xgb-lgb-1-39"><b>Credits</b></a> </p><pre><code class="python language-python hljs "><span class="hljs-keyword">from</span> scipy.stats <span class="hljs-keyword">import</span> ks_2samp
+THRESHOLD_P_VALUE = <span class="hljs-number">0.01</span> <span class="hljs-comment">#need tuned</span>
+THRESHOLD_STATISTIC = <span class="hljs-number">0.3</span> <span class="hljs-comment">#need tuned</span>
 diff_cols = []
-for col in train.columns:
+<span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> train.columns:
     statistic, pvalue = ks_2samp(train[col].values, test[col].values)
-    if pvalue &lt;= THRESHOLD_P_VALUE and np.abs(statistic) &gt; THRESHOLD_STATISTIC:
+    <span class="hljs-keyword">if</span> pvalue &lt;= THRESHOLD_P_VALUE <span class="hljs-keyword">and</span> np.abs(statistic) &gt; THRESHOLD_STATISTIC:
         diff_cols.append(col)
-for col in diff_cols:
-    if col in train.columns:
-        train.drop(col, axis=1, inplace=True)
-        test.drop(col, axis=1, inplace=True)
+<span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> diff_cols:
+    <span class="hljs-keyword">if</span> col <span class="hljs-keyword">in</span> train.columns:
+        train.drop(col, axis=<span class="hljs-number">1</span>, inplace=<span class="hljs-keyword">True</span>)
+        test.drop(col, axis=<span class="hljs-number">1</span>, inplace=<span class="hljs-keyword">True</span>)
 train.shape
 </code></pre>
-
-</p></details>
-<details><summary> Read <b>specific</b> # rows <b>(if data is large)</b> </summary><p>
-
-<pre><code class="python">features_sample = pd.read_csv('../input/home-credit-default-risk-feature-tools/feature_matrix.csv', nrows = 20000)
+<p></p></details>
+<details><summary> Read <b>specific</b> # rows <b>(if data is large)</b> </summary><p></p><pre><code class="python language-python hljs ">features_sample = pd.read_csv(<span class="hljs-string">'../input/home-credit-default-risk-feature-tools/feature_matrix.csv'</span>, nrows = <span class="hljs-number">20000</span>)
 </code></pre>
-
-</p></details>
-<details><summary> Show <b>a specific number of columns in (df.head())</b> </summary><p>
-
-<pre><code class="python">pd.options.display.max_columns = 1700
+<p></p></details>
+<details><summary> Show <b>a specific number of columns in (df.head())</b> </summary><p></p><pre><code class="python language-python hljs ">pd.options.display.max_columns = <span class="hljs-number">1700</span>
 </code></pre>
-
-</p></details>
+<p></p></details>
 <details><summary> <b>De-Ananomitizing</b> </summary><p>
-[<b>Example</b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&%20Visualization.html#Importing,-Importing,-Importing:) 
+[<b>Example</b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Importing,-Importing,-Importing:)
+ 
 </p></details>
-<details><summary> Show <b># of Unique Values</b> for each <b>Column</b> </summary><p>
+<details><summary> Show <b># of Unique Values</b> for each <b>Column</b> </summary><p></p><pre><code class="python language-python hljs "><span class="hljs-comment"># Number of unique classes in each object column</span>
+app_train.select_dtypes(<span class="hljs-string">'object'</span>).apply(pd.Series.nunique, axis = <span class="hljs-number">0</span>)
 
-<pre><code class="python"># Number of unique classes in each object column
-app_train.select_dtypes('object').apply(pd.Series.nunique, axis = 0)
-
-#### Result #####
-NAME_CONTRACT_TYPE             2
-CODE_GENDER                    3
-FLAG_OWN_CAR                   2
-FLAG_OWN_REALTY                2
-NAME_TYPE_SUITE                7
-NAME_INCOME_TYPE               8
-NAME_EDUCATION_TYPE            5
-NAME_FAMILY_STATUS             6
+<span class="hljs-comment">#### Result #####</span>
+NAME_CONTRACT_TYPE             <span class="hljs-number">2</span>
+CODE_GENDER                    <span class="hljs-number">3</span>
+FLAG_OWN_CAR                   <span class="hljs-number">2</span>
+FLAG_OWN_REALTY                <span class="hljs-number">2</span>
+NAME_TYPE_SUITE                <span class="hljs-number">7</span>
+NAME_INCOME_TYPE               <span class="hljs-number">8</span>
+NAME_EDUCATION_TYPE            <span class="hljs-number">5</span>
+NAME_FAMILY_STATUS             <span class="hljs-number">6</span>
 </code></pre>
-
-</p></details>
-<details><summary> Rename <b>Columns Name</b> </summary><p>
-
-<pre><code>rename = {'Column Name 1':'New Name 1', 
-    'Column Name 2': 'New Name 2'}
-data.rename(index=str, columns=rename, inplace=True)
-</code></pre>
-
-</p></details>
+<p></p></details>
+<details><summary> Rename <b>Columns Name</b> </summary><p></p><pre><code class=" hljs sql"><span class="hljs-operator"><span class="hljs-keyword">rename</span> = {<span class="hljs-string">'Column Name 1'</span>:<span class="hljs-string">'New Name 1'</span>, 
+    <span class="hljs-string">'Column Name 2'</span>: <span class="hljs-string">'New Name 2'</span>}
+<span class="hljs-keyword">data</span>.<span class="hljs-keyword">rename</span>(<span class="hljs-keyword">index</span>=<span class="hljs-keyword">str</span>, <span class="hljs-keyword">columns</span>=<span class="hljs-keyword">rename</span>, inplace=<span class="hljs-literal">True</span>)
+</span></code></pre>
+<p></p></details>
 <details><summary> Show a <b>Beautiful</b> Statistical Result </summary>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/1_Titanic%20Survival/EDA%20To%20Prediction(DieTanic).html#Embarked--%3E-Categorical-Value">See the <b>Result</b></a> <br>
 <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html">See the <b>Doc</b></a> </p>
-<p>
+<p></p><pre><code class=" hljs coffeescript">data.groupby([<span class="hljs-string">'Fare_Range'</span>])[<span class="hljs-string">'Survived'</span>].mean().to_frame().style.background_gradient(cmap=<span class="hljs-string">'summer_r'</span>)
 
-<pre><code>data.groupby(['Fare_Range'])['Survived'].mean().to_frame().style.background_gradient(cmap='summer_r')
+data[<span class="hljs-string">'Age_band'</span>].value_counts().to_frame().style.background_gradient(cmap=<span class="hljs-string">'summer'</span>)<span class="hljs-comment">#checking the number of passenegers in each band</span>
 
-data['Age_band'].value_counts().to_frame().style.background_gradient(cmap='summer')#checking the number of passenegers in each band
-
-pd.crosstab(data.Parch,data.Pclass).style.background_gradient(cmap='summer_r')
+pd.crosstab(data.Parch,data.Pclass).style.background_gradient(cmap=<span class="hljs-string">'summer_r'</span>)
 </code></pre>
-
-</p></details>
+<p></p></details>
 <details><summary> <b>Word Cloud</b></summary>
-<p style="margin: 0">
+<p style="margin: 0"></p><pre><code class="python language-python hljs "><span class="hljs-keyword">from</span> wordcloud <span class="hljs-keyword">import</span> WordCloud, STOPWORDS
 
-<pre><code class="python">from wordcloud import WordCloud, STOPWORDS
-
-# textn_w is your list of words.
-wc = WordCloud(width=1440, height=1080, background_color='black',
+<span class="hljs-comment"># textn_w is your list of words.</span>
+wc = WordCloud(width=<span class="hljs-number">1440</span>, height=<span class="hljs-number">1080</span>, background_color=<span class="hljs-string">'black'</span>,
                max_words=len(textn_w), stopwords=set(STOPWORDS)
 wc.generate(textn_w)
-print(bg('Word Cloud for non_duplicate Questions Pairs:', 'str', 'green'))
-plt.figure(figsize=(20, 15))
-plt.imshow(wc, interpolation='bilinear')
-plt.axis('off');
+print(bg(<span class="hljs-string">'Word Cloud for non_duplicate Questions Pairs:'</span>, <span class="hljs-string">'str'</span>, <span class="hljs-string">'green'</span>))
+plt.figure(figsize=(<span class="hljs-number">20</span>, <span class="hljs-number">15</span>))
+plt.imshow(wc, interpolation=<span class="hljs-string">'bilinear'</span>)
+plt.axis(<span class="hljs-string">'off'</span>);
 </code></pre>
 
-
 <h4> 2. Generate from Dictionary (tag, number of occurances)</h4>
-[<b>Notebook</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/0_Case%20Studies/4_Stackoverflow%20Tag%20Predictor/1_Course%20Code/SO_Tag_Predictor.html) 
-
-<pre><code class="python"># Lets first convert the 'result' dictionary to 'list of tuples'
+[<b>Notebook</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/0_Case%20Studies/4_Stackoverflow%20Tag%20Predictor/1_Course%20Code/SO_Tag_Predictor.html)
+ <pre><code class="python language-python hljs "><span class="hljs-comment"># Lets first convert the 'result' dictionary to 'list of tuples'</span>
 tup = dict(result.items())
-#Initializing WordCloud using frequencies of tags.
-wordcloud = WordCloud(    background_color='black',
-                          width=1600,
-                          height=800,
+<span class="hljs-comment">#Initializing WordCloud using frequencies of tags.</span>
+wordcloud = WordCloud(    background_color=<span class="hljs-string">'black'</span>,
+                          width=<span class="hljs-number">1600</span>,
+                          height=<span class="hljs-number">800</span>,
                           stopwords=set(STOPWORDS),
                     ).generate_from_frequencies(tup)
 
-fig = plt.figure(figsize=(30,20))
+fig = plt.figure(figsize=(<span class="hljs-number">30</span>,<span class="hljs-number">20</span>))
 plt.imshow(wordcloud)
-plt.axis('off')
-plt.tight_layout(pad=0)
-fig.savefig(&quot;tag.png&quot;)
+plt.axis(<span class="hljs-string">'off'</span>)
+plt.tight_layout(pad=<span class="hljs-number">0</span>)
+fig.savefig(<span class="hljs-string">"tag.png"</span>)
 plt.show()
 </code></pre>
-
-</p>
+<p></p>
 </details>
 <details><summary>From <b>String</b> to <b>Date</b></summary>
 <p style="margin: 0">
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/8_First%20Capstone%20Project/911%20Calls%20Data%20Capstone%20Project-Mosaab.html#From-String-to-Datetime">See <b>Code</b> in notebook</a> </p>
-
-<pre><code class="python">df['timeStamp'] = pd.to_datetime(df['timeStamp'])
+</p><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/8_First%20Capstone%20Project/911%20Calls%20Data%20Capstone%20Project-Mosaab.html#From-String-to-Datetime">See <b>Code</b> in notebook</a> </p><pre><code class="python language-python hljs ">df[<span class="hljs-string">'timeStamp'</span>] = pd.to_datetime(df[<span class="hljs-string">'timeStamp'</span>])
 </code></pre>
-
-</p>
+<p></p>
 </details>
 
 
 <details><summary>Convert a Column to Type (<b>Int</b>)</summary>
 <p style="margin: 0">
-[See <b>Code</b> in Kaggle](https://www.kaggle.com/jemseow/machine-learning-to-predict-app-ratings) 
-
-<pre><code class="python"># convert reviews to numeric
-df['Reviews'] = df['Reviews'].astype(int)
+[See <b>Code</b> in Kaggle](https://www.kaggle.com/jemseow/machine-learning-to-predict-app-ratings) </p><pre><code class="python language-python hljs "><span class="hljs-comment"># convert reviews to numeric</span>
+df[<span class="hljs-string">'Reviews'</span>] = df[<span class="hljs-string">'Reviews'</span>].astype(int)
 </code></pre>
-
-</p>
+<p></p>
 </details>
 
-<details><summary><b>Align Training & Testing data with same columns</b></summary>
+<details><summary><b>Align Training &amp; Testing data with same columns</b></summary>
 <p>
-[see <b>results</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Aligning-Training-and-Testing-Data) 
+[see <b>results</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Aligning-Training-and-Testing-Data)
+ </p><pre><code class="python language-python hljs ">train_labels = app_train[<span class="hljs-string">'TARGET'</span>]
 
-<pre><code class="python">train_labels = app_train['TARGET']
+<span class="hljs-comment"># Align the training and testing data, keep only columns present in both dataframes</span>
+app_train, app_test = app_train.align(app_test, join = <span class="hljs-string">'inner'</span>, axis = <span class="hljs-number">1</span>)
 
-# Align the training and testing data, keep only columns present in both dataframes
-app_train, app_test = app_train.align(app_test, join = 'inner', axis = 1)
+<span class="hljs-comment"># Add the target back in</span>
+app_train[<span class="hljs-string">'TARGET'</span>] = train_labels
 
-# Add the target back in
-app_train['TARGET'] = train_labels
-
-print('Training Features shape: ', app_train.shape)
-print('Testing Features shape: ', app_test.shape)
+print(<span class="hljs-string">'Training Features shape: '</span>, app_train.shape)
+print(<span class="hljs-string">'Testing Features shape: '</span>, app_test.shape)
 </code></pre>
-
-</p>
+<p></p>
 </details>
 
 
 <details><summary>Show <b>Top Correlated Features</b> with <b>TARGET</b></summary>
-<p>
+<p></p><pre><code class="python language-python hljs "><span class="hljs-comment"># Function to calculate correlations with the target for a dataframe</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">target_corrs</span><span class="hljs-params">(df, target)</span>:</span>
 
-<pre><code class="python"># Function to calculate correlations with the target for a dataframe
-def target_corrs(df, target):
-
-    # List of correlations
+    <span class="hljs-comment"># List of correlations</span>
     corrs = []
 
-    # Iterate through the columns 
-    for col in df.columns:
+    <span class="hljs-comment"># Iterate through the columns </span>
+    <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> df.columns:
         print(col)
-        # Skip the target column
-        if col != target:
-            # Calculate correlation with the target
+        <span class="hljs-comment"># Skip the target column</span>
+        <span class="hljs-keyword">if</span> col != target:
+            <span class="hljs-comment"># Calculate correlation with the target</span>
             corr = df[target].corr(df[col])
 
-            # Append the list as a tuple
+            <span class="hljs-comment"># Append the list as a tuple</span>
             corrs.append((col, corr))
 
-    # Sort by absolute magnitude of correlations
-    corrs = sorted(corrs, key = lambda x: abs(x[1]), reverse = True)
+    <span class="hljs-comment"># Sort by absolute magnitude of correlations</span>
+    corrs = sorted(corrs, key = <span class="hljs-keyword">lambda</span> x: abs(x[<span class="hljs-number">1</span>]), reverse = <span class="hljs-keyword">True</span>)
 
-    return corrs
+    <span class="hljs-keyword">return</span> corrs
 </code></pre>
-
-</p></details>
-<details><summary><b>Add a record to a DataFrame</b></summary><p>
-
-<pre><code>df = train.append(test, ignore_index=True)
+<p></p></details>
+<details><summary><b>Add a record to a DataFrame</b></summary><p></p><pre><code class=" hljs ini"><span class="hljs-setting">df = <span class="hljs-value">train.append(test, ignore_index=<span class="hljs-keyword">True</span>)</span></span>
 </code></pre>
-
-</p></details>
-<details><summary>From <b>groupby()</b> to <b>DataFrame</b></summary><p>
-
-<pre><code># Aggregate #passengers by month.
+<p></p></details>
+<details><summary>From <b>groupby()</b> to <b>DataFrame</b></summary><p></p><pre><code class=" hljs sql"># Aggregate #passengers by month.
 # you can pass multiple columns in the 2 brackets.
-# Must be 2 brackets to result in dataframe, if 1 bracket, it will end in series if and only if 1 column is there.
-df_per_month = df.groupby('month')[['#Passengers']].sum().reset_index()
+# Must be 2 brackets to result in dataframe, if 1 bracket, it will <span class="hljs-operator"><span class="hljs-keyword">end</span> <span class="hljs-keyword">in</span> series <span class="hljs-keyword">if</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">only</span> <span class="hljs-keyword">if</span> <span class="hljs-number">1</span> <span class="hljs-keyword">column</span> <span class="hljs-keyword">is</span> there.
+df_per_month = df.groupby(<span class="hljs-string">'month'</span>)[[<span class="hljs-string">'#Passengers'</span>]].<span class="hljs-keyword">sum</span>().reset_index()
 df_per_month
-</code></pre>
+</span></code></pre>
+<p></p></details>
 
-</p></details>
-
-</p></details><hr>
+<p></p></details><hr>
 
 <details><summary><b>Misc</b></summary><p>
 
-<details><summary> Upload <b> files</b> into colab </summary>
-
-<pre><code class="python">from google.colab import files
+</p><details><summary> Upload <b> files</b> into colab </summary><pre><code class="python language-python hljs "><span class="hljs-keyword">from</span> google.colab <span class="hljs-keyword">import</span> files
 
 uploaded = files.upload()
 
-for fn in uploaded.keys():
-  print('User uploaded file &quot;{name}&quot; with length {length} bytes'.format(
+<span class="hljs-keyword">for</span> fn <span class="hljs-keyword">in</span> uploaded.keys():
+  print(<span class="hljs-string">'User uploaded file "{name}" with length {length} bytes'</span>.format(
       name=fn, length=len(uploaded[fn])))
 </code></pre>
-
 </details>
 <details><summary> <b>Sparse Matrix</b> </summary><p>
-<p><a href="./3_data_wrangling/3-logreg-nb-imdb.html#5.-Sparse-Matrix-Representation">FastAI tutorials on Sparse Matrix</a> </p>
-</p></details>
+</p><p><a href="file:///tmp/3_data_wrangling/3-logreg-nb-imdb.html#5.-Sparse-Matrix-Representation">FastAI tutorials on Sparse Matrix</a> </p>
+<p></p></details>
 
-<details><summary><b>Settings for Plotting</b> </summary><p>
+<details><summary><b>Settings for Plotting</b> </summary><p></p><pre><code class=" hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
 
-<pre><code>import matplotlib.pyplot as plt
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_plot_sizes</span><span class="hljs-params">(sml, med, big)</span>:</span>
+    plt.rc(<span class="hljs-string">'font'</span>, size=sml)          <span class="hljs-comment"># controls default text sizes</span>
+    plt.rc(<span class="hljs-string">'axes'</span>, titlesize=sml)     <span class="hljs-comment"># fontsize of the axes title</span>
+    plt.rc(<span class="hljs-string">'axes'</span>, labelsize=med)    <span class="hljs-comment"># fontsize of the x and y labels</span>
+    plt.rc(<span class="hljs-string">'xtick'</span>, labelsize=sml)    <span class="hljs-comment"># fontsize of the tick labels</span>
+    plt.rc(<span class="hljs-string">'ytick'</span>, labelsize=sml)    <span class="hljs-comment"># fontsize of the tick labels</span>
+    plt.rc(<span class="hljs-string">'legend'</span>, fontsize=sml)    <span class="hljs-comment"># legend fontsize</span>
+    plt.rc(<span class="hljs-string">'figure'</span>, titlesize=big)  <span class="hljs-comment"># fontsize of the figure title</span>
 
-def set_plot_sizes(sml, med, big):
-    plt.rc('font', size=sml)          # controls default text sizes
-    plt.rc('axes', titlesize=sml)     # fontsize of the axes title
-    plt.rc('axes', labelsize=med)    # fontsize of the x and y labels
-    plt.rc('xtick', labelsize=sml)    # fontsize of the tick labels
-    plt.rc('ytick', labelsize=sml)    # fontsize of the tick labels
-    plt.rc('legend', fontsize=sml)    # legend fontsize
-    plt.rc('figure', titlesize=big)  # fontsize of the figure title
-
-# Usage
-set_plot_sizes(12, 14, 16)
+<span class="hljs-comment"># Usage</span>
+set_plot_sizes(<span class="hljs-number">12</span>, <span class="hljs-number">14</span>, <span class="hljs-number">16</span>)
 </code></pre>
+<p></p></details>
+<details><summary> <b>[Profiling]</b> See which command takes the most in a function </summary><p></p><pre><code class=" hljs perl"><span class="hljs-comment"># Let's run it in RandomForest.</span>
+<span class="hljs-keyword">m</span> = RandomForestRegressor(n_jobs=-<span class="hljs-number">1</span>)
+<span class="hljs-variable">%prun</span> <span class="hljs-keyword">m</span>.fit(X, <span class="hljs-keyword">y</span>)
 
-</p></details>
-<details><summary> <b>[Profiling]</b> See which command takes the most in a function </summary><p>
-
-<pre><code># Let's run it in RandomForest.
-m = RandomForestRegressor(n_jobs=-1)
-%prun m.fit(X, y)
-
-# After that you can notice that the following command takes the most time in running m.fit()
-# So we make once and use it multiple times.
-%time X = np.array(X, dtype=np.float32)
+<span class="hljs-comment"># After that you can notice that the following command takes the most time in running m.fit()</span>
+<span class="hljs-comment"># So we make once and use it multiple times.</span>
+<span class="hljs-variable">%time</span> X = np.array(X, dtype=np.float32)
 </code></pre>
-
-</p></details>
+<p></p></details>
 <details><summary>Save List using <b>Pickle</b> and <b>joblib</b></summary><p>
-<h4>1. Save list</h4>
-
-<pre><code class="python"># Pickle
-# Save the onehot columns to later use.
-with open('onehot_cols.pkl', 'wb') as f:
+</p><h4>1. Save list</h4><pre><code class="python language-python hljs "><span class="hljs-comment"># Pickle</span>
+<span class="hljs-comment"># Save the onehot columns to later use.</span>
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'onehot_cols.pkl'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:
     pickle.dump(onehot_cols, f)
 
-# Joblib
-from sklearn.externals import joblib
+<span class="hljs-comment"># Joblib</span>
+<span class="hljs-keyword">from</span> sklearn.externals <span class="hljs-keyword">import</span> joblib
 
-joblib.dump(my_model, &quot;my_model.pkl&quot;)
+joblib.dump(my_model, <span class="hljs-string">"my_model.pkl"</span>)
 </code></pre>
 
-
-<h4>2. Read List</h4>
-
-<pre><code class="python"># Pickle
-with open('onehot_cols.pkl', 'rb') as f:
+<h4>2. Read List</h4><pre><code class="python language-python hljs "><span class="hljs-comment"># Pickle</span>
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'onehot_cols.pkl'</span>, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
     myList = pickle.load(f)
 
-# Joblib
-from sklearn.externals import joblib
+<span class="hljs-comment"># Joblib</span>
+<span class="hljs-keyword">from</span> sklearn.externals <span class="hljs-keyword">import</span> joblib
 
-my_model_loaded = joblib.load(&quot;my_model.pkl&quot;)
+my_model_loaded = joblib.load(<span class="hljs-string">"my_model.pkl"</span>)
 </code></pre>
 
-
-<h4>3. Read or Save (Compact Version) (best)</h4>
-
-<pre><code class="python"># See if frequency encoded colums is there or not.
-if os.path.isfile('./freq_cols.pkl'):
-    with open('freq_cols.pkl', 'rb') as f: 
+<h4>3. Read or Save (Compact Version) (best)</h4><pre><code class="python language-python hljs "><span class="hljs-comment"># See if frequency encoded colums is there or not.</span>
+<span class="hljs-keyword">if</span> os.path.isfile(<span class="hljs-string">'./freq_cols.pkl'</span>):
+    <span class="hljs-keyword">with</span> open(<span class="hljs-string">'freq_cols.pkl'</span>, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f: 
         freq_cols = pickle.load(f)
-else:
-    # Select only the dummy variables.
-    freq_cols = [col for col in train.columns if col.startswith('freq')]
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-comment"># Select only the dummy variables.</span>
+    freq_cols = [col <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> train.columns <span class="hljs-keyword">if</span> col.startswith(<span class="hljs-string">'freq'</span>)]
 
-    # Save the onehot columns to later use.
-    with open('freq_cols.pkl', 'wb') as f:
+    <span class="hljs-comment"># Save the onehot columns to later use.</span>
+    <span class="hljs-keyword">with</span> open(<span class="hljs-string">'freq_cols.pkl'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:
         pickle.dump(freq_cols, f)
 </code></pre>
+<p></p></details>
+<details><summary><b>Download &amp; Extract tgz file</b> with Python</summary><p></p><pre><code class=" hljs python"><span class="hljs-keyword">import</span> os, tarfile
+<span class="hljs-keyword">from</span> six.moves <span class="hljs-keyword">import</span> urllib
 
-</p></details>
-<details><summary><b>Download & Extract tgz file</b> with Python</summary><p>
+<span class="hljs-comment"># Constants.</span>
+DOWNLOAD_ROOT = <span class="hljs-string">"https://raw.githubusercontent.com/ageron/handson-ml2/master/"</span>
+HOUSING_PATH  = os.path.join(<span class="hljs-string">"datasets"</span>, <span class="hljs-string">"housing"</span>)
+HOUSING_URL   = os.path.join(DOWNLOAD_ROOT, HOUSING_PATH, <span class="hljs-string">"housing.tgz"</span>)
 
-<pre><code>import os, tarfile
-from six.moves import urllib
-
-# Constants.
-DOWNLOAD_ROOT = &quot;https://raw.githubusercontent.com/ageron/handson-ml2/master/&quot;
-HOUSING_PATH  = os.path.join(&quot;datasets&quot;, &quot;housing&quot;)
-HOUSING_URL   = os.path.join(DOWNLOAD_ROOT, HOUSING_PATH, &quot;housing.tgz&quot;)
-
-def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
-    if not os.path.isdir(housing_path):
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch_housing_data</span><span class="hljs-params">(housing_url=HOUSING_URL, housing_path=HOUSING_PATH)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.isdir(housing_path):
         os.makedirs(housing_path)
-    tgz_path = os.path.join(housing_path, &quot;housing.tgz&quot;)
+    tgz_path = os.path.join(housing_path, <span class="hljs-string">"housing.tgz"</span>)
     urllib.request.urlretrieve(housing_url, tgz_path)
     housing_tgz = tarfile.open(tgz_path)
     housing_tgz.extractall(path=housing_path)
     housing_tgz.close()
 </code></pre>
+<p></p></details>
 
-</p></details>
 
-
-</p></details>
- </div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+<p></p></details>
+ </div><script src="3_Data%20Wrangling_files/highlight.js"></script><script>hljs.initHighlightingOnLoad();</script><script src="3_Data%20Wrangling_files/MathJax.js" id=""></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script><iframe src="3_Data%20Wrangling_files/console.html" id="vimvixen-console-frame" class="vimvixen-console-frame"></iframe></body></html>
