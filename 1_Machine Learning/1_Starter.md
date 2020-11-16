@@ -537,5 +537,15 @@ data_table.DataTable(data.airports(), include_index=False, num_rows_per_page=10)
 </code></pre>
 </p></details>
 
+<details><summary> <b>VSCODE</b> in Google Colab </summary><p><pre><code># Install the library
+!pip install colabcode
+
+from colabcode import ColabCode
+
+# run colabcode with by deafult options.
+ColabCode()
+</code></pre>
+</p></details>
+
 
 </div>
