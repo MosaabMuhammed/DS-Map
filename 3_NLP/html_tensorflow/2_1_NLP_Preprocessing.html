@@ -345,6 +345,16 @@ vocab = dict(enumerate(set(words)))
 # {0: 'corpus...', 1: 'very', 2: 'long'}
 </code></pre>
    </details>
+   <details>
+    <summary>
+     <b style="font-size:20px">
+      Frequency List
+     </b>
+     [UNIX]
+    </summary>
+    <pre><code>tr -sc ’A-Za-z’ ’\n’ &lt; sh.txt | tr A-Z a-z | sort | uniq -c | sort -n -r
+</code></pre>
+   </details>
   </div>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
   </script>
