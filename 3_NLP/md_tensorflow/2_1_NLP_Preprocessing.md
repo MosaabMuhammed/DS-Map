@@ -13,9 +13,8 @@ for sentence in sent_tokenize(paragraph):
 
 </details>
 
-<details><summary><b style="font-size:20px">Tokenization</b></summary>
-<h4>wordpunct_tokenize</h4>
-
+<details><summary><b style="font-size:20px">Tokenization</b></summary><ul>
+<li><details><summary><b>wordpunct_tokenize</b></summary>
 <pre><code>#  do we want to remove punctuation from tokens, and if so, should we make punctuation marks tokens themselves? Should we preserve hyphenated words as compound elements or break them apart? Should we approach contractions as one token or two, and if they are two tokens, where should they be split?
 
 from nltk import wordpunct_tokenize
@@ -24,10 +23,9 @@ tokens = []
 for token in wordpunct_tokenize(sentence):
     tokens.append(token)
 </code></pre>
+</details></li>
 
-
-<h4>Keras Tokenizer</h4>
-
+<li><details><summary><b>Keras Tokenizer</b></summary>
 <pre><code>from tensorflow.keras.preprocessing.text import Tokenizer
 
 samles = ['The cat sat on the mat.', 'The dog ate my homework.']
@@ -42,10 +40,9 @@ one_hot_results = tokenizer.texts_to_matrix(samples, mode='binary')
 word_index = tokenizer.word_index
 print(f&quot;Found {len(word_index)} unique tokens.&quot;)
 </code></pre>
+</details></li>
 
-
-<h4>TreeBank</h4>
-
+<li><details><summary><b>TreeBank</b></summary>
 <pre><code>from nltk.tokenize import TreebankWordTokenizer
 
 sentence = &quot;&quot;&quot;Monticello wasn't designated as UNESCO world Heritage Site until 1987.&quot;&quot;&quot;
@@ -68,9 +65,9 @@ tokenizer.tokenize(sentence)
 '.']
 
 </code></pre>
+</details></li>
 
-
-<h4>Tokenize informal text from social networks like Twitter and Facebook</h4>
+<li><details><summary><b>Tokenize informal text from social networks like Twitter and Facebook</b></summary>
 
 <pre><code># The NLTK library includues a tokenizer that was built to deal with short, informal, emtion-laced texts from social networks where grammar and spelling conventions vary widely.
 from nltk.tokenize.casual import casual_tokenize
@@ -106,9 +103,9 @@ casual_tokenize(message, reduce_len=True, strip_handles=True)
  'day',
  ':*)']
 </code></pre>
+</details></li>
 
-
-<h4>n-gram Tokenizer</h4>
+<li><details><summary><b>n-gram Tokenizer</b></summary>
 NOTE: n-grams that occurs in more than 25% of all documens in your corpus, you usually ignore it.
 
 <pre><code># First find the individual tokens using the previous methods.
@@ -135,8 +132,30 @@ two_grams = list(ngrams(tokens, 2))
 # Add them together in a string instead of tuple
 two_grams = [&quot; &quot;.join(x) for x in two_grams]
 </code></pre>
+</details></li>
 
-</details>
+
+<li><details><summary><b>Regex Tokenizer</b></summary>
+
+<code><pre>text = ’That U.S.A. poster-print costs $12.40...’
+pattern = r’’’(?x)
+# set flag to allow verbose regexps
+	([A-Z]\.)+
+# abbreviations, e.g. U.S.A.
+	| \w+(-\w+)*
+# words with optional internal hyphens
+	| \$?\d+(\.\d+)?%? # currency and percentages, e.g. $12.40, 82%
+	| \.\.\.
+# ellipsis
+	| [][.,;"’?():-_‘] # these are separate tokens; includes ], [
+’’’
+
+nltk.regexp_tokenize(text, pattern)
+# [’That’, ’U.S.A.’, ’poster-print’, ’costs’, ’$12.40’, ’...’]
+</code></pre>
+</details></li>
+
+</ul></details>
 
 <details><summary><b style="font-size:20px">Part-of-Speech Tagging</b></summary>
 <h4>1. NLTK</h4>
