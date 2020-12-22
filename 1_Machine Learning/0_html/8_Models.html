@@ -70,6 +70,89 @@
    <details>
     <summary>
      <b style="font-size:25px">
+      Custom Model
+     </b>
+    </summary>
+    <pre><code>from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
+from sklearn.utils.multiclass import unique_labels
+from collections import defaultdict, Counter
+from Levenshtein import distance, ratio
+
+class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
+    def __init__(self, limit=1000, sim_metric="none", out_of_score_label="Nothing Identified", verbose=False):
+        self.limit                  = limit
+        self.sim_metric             = sim_metric
+        self.out_of_score_label     = out_of_score_label
+        self.X_corpus_per_label     = defaultdict(str)
+        self.label_counter          = defaultdict(Counter)
+        self.unique_words_per_label = defaultdict(list)
+        self.verbose                = verbose
+
+    def fit(self, X, y):
+        self.classes_     = unique_labels(y)
+        self._X, self._y  = X, y
+        self._df          = pd.concat([self._X, self._y], axis=1)
+        self._df.columns  = ['sample', 'intent']
+
+        for label in self.classes_:
+            self.X_corpus_per_label[label] = ' '.join(self._df[self._df.index.isin(self._df[self._df['intent'] == label].index)]['sample'].values)
+            self.label_counter[label]      = Counter(self.X_corpus_per_label[label].split())
+
+        for label1 in self.classes_:
+            temp_lst = []
+            for label2 in self.classes_:
+                if label1 == label2: continue
+                temp_lst.extend(list(self.label_counter[label2]))
+            self.unique_words_per_label[label1] = list(set(self.label_counter[label1]).difference(set(temp_lst)))[:self.limit]
+
+            if len(self.unique_words_per_label[label1]) == 0 and self.verbose:
+                print(f"[{label1}] has no unique words, so it won't be predicted!")
+        return self
+
+    def predict(self, X):
+        preds = []
+        for sample in X:
+            preds.append(self.predict_single_sample(sample))
+        return preds
+
+
+    def score(self, X, y):
+        y_preds = self.predict(X)
+        acc     = sum(y_preds == y) / len(y)
+        return acc
+
+    def predict_single_sample(self, X:str):
+        if self.sim_metric == "unique":
+            score = self._calc_with_unique_words(X)
+        elif self.sim_metric.startswith("leve"):
+            score = self._calc_with_levenstein_ratio(X)
+        else:
+            score = self._calc_with_all_words(X)
+        # print(score)
+        score = sorted(score, reverse=True) if len(score) else [self.out_of_score_label]
+        return score[0]
+
+    def _calc_with_unique_words(self, X):
+        score = defaultdict(int)
+        for word in X.split():
+            for label in self.classes_:
+                if word in self.unique_words_per_label[label]:
+                    score[label] += 1
+        return score
+
+    def _calc_with_all_words(self, X):
+        score = defaultdict(int)
+        for word in X.split():
+            for label in self.classes_:
+                score[label] += self.label_counter[label][word]
+
+        return score
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b style="font-size:25px">
       Binary Classification:
      </b>
     </summary>
