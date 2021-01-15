@@ -19,13 +19,301 @@ print(ws.name, "Workspace loaded")
 </code></pre>
 </details></li>
 <li><details><summary><b>Running an Experiment & Viewing Results</b></summary>
-<pre><code class="python language-python"># Create an Azure ML experiment in your workspace.
+<pre><code class="python language-python">from azureml.core import Experiment
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+# Create an Azure ML experiment in your workspace.
 experiment = Experiment(workspace=ws, name="diabetes-experiment")
 
 # Start logging data from the experiment.
 run = experiment.start_logging()
 print("Starting epxeriment:", experiment.name)
+
+# Load the data from a local file.
+data = pd.read_csv("data/diabetes.csv")
 </code></pre>
-</details></details></li>
+<pre><code class="python language-python">##### Example of logging a number.
+# Count the rows and log the result.
+row_count = (len(data))
+run.log('observations', row_count)
+print(f"Analysing {row_count} rows of data.")
+</code></pre>
+<pre><code class="python language-python">##### Example of logging an image.
+# Plot and log the count of diabetic vs non-diabetic patients.
+diabetic_counts = data['Diabetic'].value_counts()
+
+fig = plt.figure(figsize=(6, 6))
+ax  = fig.gca()
+diabetic_counts.plot.bar(ax=ax)
+ax.set_title("Patients with Diabetes")
+ax.set_xlabel("Diagnosis")
+ax.set_ylabel("Patients")
+plt.show()
+
+run.log_image(name='label distribution', plot=fig)
+</code></pre>
+<pre><code class="python language-python">#### Example of logging a list.
+# Log distinct pregancy counts.
+pregnancies = data.Pregnancies.unique()
+run.log_list("pregnancy categories", pregnancies)
+</code></pre>
+<pre><code class="python language-python">##### Example of logging a number.
+# Count the rows and log the result.
+row_count = (len(data))
+run.log('observations', row_count)
+print(f"Analysing {row_count} rows of data.")
+</code></pre>
+<pre><code class="python language-python">#### Example of logging a summary statistics for numeric columns.
+med_columns = ["PlasmaGlucose", "DiastolicBloodPressure"]
+summary_stats = data[med_columns].describe().to_dict()
+for col in summary_stats:
+    keys   = list(summary_stats[col].keys())
+    values = list(summary_stats[col].values())
+    for index in range(len(keys)):
+        run.log_row(col, stat=keys[index], value=values[index])
+</code></pre>
+<pre><code class="python language-python"># save a sample of the data and upload it to the experiment output.
+data.sample(100).to_csv("sample.csv", index=False, header=True)
+run.upload_file(name="outputs/sample.csv", path_or_stream="./sample.csv")
+
+# Complete the run
+run.complete()
+</code></pre>
+<pre><code class="python language-python">########## View experiemnt results.
+import json
+
+# Get run details.
+details = run.get_details()
+print(details)
+
+# Get logged metrics
+metrics = run.get_metrics()
+print(json.dumps(metrics, indent=2))
+
+# Get output files.
+files = run.get_file_names()
+print(json.dumps(files, indent=2))
+</code></pre>
+<pre><code class="python language-python">### Get the details of the run experiment while it's running or when it's finished.
+from azureml.widgets import RunDetails
+
+RunDetails(run).show()
+</code></pre>
+</details></li>
+<li><details><summary><b>Running an Experiment Script</b></summary>
+<pre><code class="python language-python"># Here we try to run an experiment from a python script
+
+import os, shutil
+
+# Create a folder for the experiment files.
+folder_name = "diabetes-experiment-files"
+experiment_folder = "./" + folder_name
+os.makedirs(folder_name, exist_ok=True)
+
+# Copy the data file into the experiment folder.
+shutil.copy("data/diabetes.csv", os.path.join(folder_name, "diabetes.csv"))
+</code></pre>
+<pre><code class="python language-python">%%writefile $folder_name/diabetes_experiment.py
+from azureml.core import Run
+import pandas as pd
+import os
+
+# Get the experiment run context.
+run = Run.get_context()
+
+# Load the diabetes dataset.
+data = pd.read_csv("diabetes.csv")
+
+# County the rows and log the results.
+row_count = (len(data))
+run.log("Observations", row_count)
+print(f"Analysing {row_count} rows of data.")
+</code></pre>
+<pre><code class="python language-python"># Count and log label counts.
+diabetic_counts = data['Diabetic'].value_counts()
+print(diabetic_counts)
+for k, v in diabetic_counts.items():
+    run.log("label:" + str(k), v)
+</code></pre>
+<pre><code class="python language-python"># Save a sample of the data in the outputs folder (which gets uploaded automatically).
+os.makedirs("outputs", exist_ok=True)
+data.sample(100).to_csv("outputs/sample.csv", index=False, header=True)
+
+# Compelete the run.
+run.complete()
+</code></pre>
+<pre><code class="python language-python">import os, sys
+from azureml.core import Experiment, RunConfiguration, ScriptRunConfig
+from azureml.widgets import RunDetails
+
+# Create a new RunConfig object.
+experiment_run_config = RunConfiguration()
+
+# Create a script config.
+src = ScriptRunConfig(source_directory=experiment_folder,
+                      script="diabetes_experiment.py",
+                      run_config=experiment_run_config)
+
+# Submit the experiment.
+experiment = Experiment(workspace=ws, name="diabetes-experiment")
+run        = experiment.submit(config=src)
+RunDetails(run).show()
+run.wait_for_completion()
+</code></pre>
+<pre><code class="python language-python"># Get logged metrics.
+metrics = run.get_metrics()
+for key in metrics.keys():
+    print(key, metrics.get(key))
+
+print("\n")
+for file in run.get_file_names():
+    print(file)
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Viewing Experiment Run History & Cleaning Up</b></summary>
+<pre><code class="python language-python">import os, sys
+from azureml.core import Experiment, RunConfiguration, ScriptRunConfig
+from azureml.widgets import RunDetails
+
+# Create a new RunConfig object.
+experiment_run_config = RunConfiguration()
+
+# Create a script config.
+src = ScriptRunConfig(source_directory=experiment_folder,
+                      script="diabetes_experiment.py",
+                      run_config=experiment_run_config)
+
+# Submit the experiment.
+experiment = Experiment(workspace=ws, name="diabetes-experiment")
+run        = experiment.submit(config=src)
+RunDetails(run).show()
+run.wait_for_completion()
+</code></pre>
+<pre><code class="python language-python"># Get logged metrics.
+metrics = run.get_metrics()
+for key in metrics.keys():
+    print(key, metrics.get(key))
+
+print("\n")
+for file in run.get_file_names():
+    print(file)
+</code></pre>
+<pre><code class="python language-python">from azureml.core import Experiment, Run
+
+diabetes_experiment = ws.experiments['diabetes-experiment']
+for logged_run in diabetes_experiment.get_runs():
+    print(f"Run ID: {logged_run.id}")
+    metrics = logged_run.get_metrics()
+    for key in metrics.keys():
+        print(f"- {key} {metrics.get(key)}")
+</code></pre>
+</details></li>
+
+</ul></details></details>
+
+<details><summary><b>Running a Training Script</b></summary><ul>
+<li><details><summary><b>Connecting to Your Workspace</b></summary>
+<pre><code class="python language-python">import azureml.core
+from azureml.core import Workspace
+
+# Load the workspace from the saved config file.
+ws = Workspace.from_config()
+print(f"Ready to use Azure ML {azureml.core.VERSION} to work with {ws.name}")
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Creating a Training Script</b></summary>
+<pre><code class="python language-python">import os, shutil
+
+# Create a folder for the experiment files.
+training_folder = "diabetes-training"
+os.makedirs(training_folder, exist_ok=True)
+
+# Copy the data file into the experiment folder.
+shutil.copy("data/diabetes.csv", os.path.join(training_folder, "diabetes.csv"))
+</code></pre>
+<pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
+# Import libraries.
+from azureml.core import Run
+import pandas as pd
+import numpy as np
+import joblib, os
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, roc_curve
+
+# Get the experiment run context.
+run = Run.get_context()
+</code></pre>
+<pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
+# Import libraries.
+from azureml.core import Run
+import pandas as pd
+import numpy as np
+import joblib, os
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, roc_curve
+
+# Get the experiment run context.
+run = Run.get_context()
+</code></pre>
+<pre><code class="python language-python"># Load the diabetes dataset.
+print("Loading Data...")
+diabetes = pd.read_csv("diabetes.csv")
+
+# Separate features and labels.
+X, y = diabetes[["Pregnancies", "PlasmaGlucose", "DiastolicBloodPressure"]].values, diabetes['Diabetic'].values
+
+# Split data into training set and test set.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
+</code></pre>
+<pre><code class="python language-python"># Set regularization hyperparameter.
+reg = 0.01
+
+# Traing a logistic regression model.
+print(f"Training a LR with reg rate of {reg}")
+run.log("Regularization Rate ", np.float(reg))
+
+model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
+</code></pre>
+<pre><code class="python language-python"># Calculate accuracy.
+y_hat = model.predict(X_test)
+acc   = np.average(y_hat == y_test)
+print(f"Accuracy: {acc}")
+run.log("Accuracy", np.float(acc))
+
+# Calculate AUC
+y_scores = model.predict_proba(X_test)
+auc      = roc_auc_score(y_test, y_scores[:, 1])
+print(f"AUC: {auc}")
+run.log("AUC", np.float(auc))
+</code></pre>
+<pre><code class="python language-python"># Save the trained model in the outputs folder.
+os.makedirs("outputs", exist_ok=True)
+joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
+
+
+run.complete()
+</code></pre>
+</details></li>
+<li><details><summary><b>Using an Estimate to Run the Script as an Experiment</b></summary>
+
+</details></li>
+<li><details><summary><b>Registering the Trained Model</b></summary>
+
+</details></li>
+<li><details><summary><b>Creating a Parameterized Training Script</b></summary>
+
+</details></li>
+<li><details><summary><b>Using a Framework-Specific Estimator</b></summary>
+
+</details></li>
+<li><details><summary><b>Registering a New Version of the Model & Cleaning Up</b></summary>
+
+</details></li>
 </ul></details></details>
 </div>
