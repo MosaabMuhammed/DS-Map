@@ -462,4 +462,364 @@ for model in Model.list(ws):
 </code></pre>
 </details></li>
 </ul></details></details>
+
+<details><summary><b>Datastores & Datasets</b></summary><ul>
+<li><details><summary><b>Working with and viewing Datastores</b></summary>
+<pre><code class="python language-python"># Get the default datastore in your workspace.
+default_ds = ws.get_default_datastore()
+
+# Enumerate all datastores, indicating which is the default.
+for ds_name in ws.datastores:
+    print(ds_name, "- Default =", ds_name == default_ds.name)
+</code></pre>
+</details></li>
+<li><details><summary><b>Uploading Data to a Datastore</b></summary>
+<pre><code class="python language-python">default_ds.upload_files(files=['./data/diabetes.csv',
+                               './data/diabetes2.csv'],
+                        target_path="diabetes-data",  # Put it in a folder path in the datastore
+                        overwrite=True,
+                        show_progress=True)
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Training a Model from a Datastore</b></summary>
+<pre><code class="python language-python">import os
+
+# Create a folder for the experiment files.
+experiment_folder = "diabetes_training_from_datastore"
+os.makedirs(experiment_folder, exist_ok=True)
+print(experiment_folder, "folder created.")
+</code></pre>
+<pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
+# Import Libraries
+import os, argparse
+from azureml.core import Run
+import pandas as pd
+import numpy as np
+import joblib
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, roc_curve
+</code></pre>
+<pre><code class="python language-python"># Get parameters.
+parser = argparse.ArgumentParser()
+parser.add_argument("--regularization", type=float, dest="reg_rate", default=0.01, help="regularization rate")
+parser.add_argument("--data-folder", type=str, dest="data_folder", help="data folder reference")
+args = parser.parse_args()
+reg  = args.reg_rate
+</code></pre>
+<pre><code class="python language-python"># Get the experiment run context.
+run = Run.get_context()
+
+# Load the diabetes data from the data reference.
+data_folder = args.data_folder
+print("loading data from", data_folder)
+
+# Load all files and concatenate their contents as a single dataframe.
+all_files = os.listdir(data_folder)
+diabetes = pd.concat((pd.read_csv(os.path.join(data_folder, csv_file)) for csv_file in all_files))
+</code></pre>
+<pre><code class="python language-python"># Separate features and labels.
+X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
+
+# Split data into training set and test set.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
+
+# Train a logistic regression model.
+print("Training a logistic regression model with regularization rate of", reg)
+run.log("regularization rate", np.float(reg))
+model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
+</code></pre>
+<pre><code class="python language-python"># Calculate accuracy.
+y_hat = model.predict(X_test)
+acc   = np.average(y_hat == y_test)
+print(f"Accuracy: {acc}")
+run.log("Accuracy", np.float(acc))
+
+# Calculate AUC
+y_scores = model.predict_proba(X_test)
+auc      = roc_auc_score(y_test, y_scores[:, 1])
+print(f"AUC: {auc}")
+run.log("AUC", np.float(auc))
+</code></pre>
+<pre><code class="python language-python">from azureml.train.sklearn import SKLearn
+from azureml.core import Experiment
+from azureml.widgets import RunDetails
+
+# Set up the parameters.
+script_params = {
+    "--regularization": .1, # Regularization rate
+    "--data-folder": data_ref
+}
+
+# Create an estimator.
+estimator = SKLearn(source_directory=experiment_folder,
+                    entry_script="diabetes_training.py",
+                    script_params=script_params,
+                    compute_target="local")
+
+# Create an experiment
+experiment_name = "diabetes-training"
+experiment      = Experiment(workspace=ws, name=experiment_name)
+
+# Run the experiment
+run = experiment.submit(config=estimator)
+
+# Show the run details while running.
+RunDetails(run).show()
+run.wait_for_completion()
+</code></pre>
+
+<li><details><summary><b>Working with and Creating Datasets</b></summary>
+<pre><code class="python language-python"># Create a Tabular Dataset.
+from azureml.core import Dataset
+
+# Get the default datastore.
+default_ds = ws.get_default_datastore()
+
+# Create a tabular dataset from the path on the datastore (this may take a short while)
+tab_data_set = Dataset.Tabular.from_delimited_files(path=(default_ds, 'diabetes-data/*.csv'))
+
+# Display the first 20 rows as a pandas dataframe.
+tab_data_set.take(20).to_pandas_dataframe()
+</code></pre>
+<pre><code class="python language-python"># Crate a File Dataset.
+file_data_set = Dataset.File.from_files(path=(default_ds, 'diabetes-data/*.csv'))
+
+# Get the files in the dataset.
+for file_path in file_data_set.to_path():
+    print(file_path)
+</code></pre>
+</details></li>
+</details></li>
+
+<li><details><summary><b>Registering Datasets</b></summary>
+<pre><code class="python language-python"># Register Datasets.
+try:
+    tab_data_set = tab_data_set.register(workspace=ws,
+                                         name="diabetes dataset",
+                                         description="diabetes data",
+                                         tags={"format": "CSV"},
+                                         create_new_version=True)
+
+except Exception as ex:
+    print(ex)
+
+# Register the file dataset.
+try:
+    file_data_set = file_data_set.register(workspace=ws,
+                                           name="diabetes file dataset",
+                                           description="diabetes files",
+                                           tags={"format": "CSV"},
+                                           create_new_version=True)
+except Exception as ex:
+    print(ex)
+print("Databsets registered")
+</code></pre>
+<pre><code class="python language-python">print("Datasets:")
+for dataset_name in list(ws.datasets.keys()):
+    dataset = Dataset.get_by_name(ws, dataset_name)
+    print("\t", dataset.name, "version", dataset.version)
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Training a Model from a Tabular Dataset</b></summary>
+<pre><code class="python language-python">import os
+
+# Create a folder for the experiment files.
+experiment_folder = "diabetes_training_from_tab_dataset"
+os.makedirs(experiment_folder, exist_ok=True)
+print(experiment_folder, "folder created.")
+</code></pre>
+<pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
+# Import Libraries.
+import os, argparse
+from azureml.core import Run
+import pandas as pd
+import numpy as np
+import joblib
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, roc_curve
+</code></pre>
+<pre><code class="python language-python"># Set regularization hyperparameter (passed as an argument to the script)
+parser = argparse.ArgumentParser()
+parser.add_argument("--regularization", type=float, dest="reg_rate", default=0.01, help="regularization rate")
+args = parser.parse_args()
+reg = args.reg_rate
+</code></pre>
+<pre><code class="python language-python"># Get the experiment run context
+run = Run.get_context()
+
+# Load the diabetes data (passed as an inpute dataset)
+print("Loading data")
+diabetes = run.input_datasets["diabetes"].to_pandas_dataframe()
+</code></pre>
+<pre><code class="python language-python"># Separate features and labels.
+X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
+
+# Split data into training set and test set.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
+
+# Train a logistic regression model.
+print("Training a logistic regression model with regularization rate of", reg)
+run.log("regularization rate", np.float(reg))
+model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
+</code></pre>
+<pre><code class="python language-python"># Calculate accuracy.
+y_hat = model.predict(X_test)
+acc   = np.average(y_hat == y_test)
+print(f"Accuracy: {acc}")
+run.log("Accuracy", np.float(acc))
+
+# Calculate AUC
+y_scores = model.predict_proba(X_test)
+auc      = roc_auc_score(y_test, y_scores[:, 1])
+print(f"AUC: {auc}")
+run.log("AUC", np.float(auc))
+</code></pre>
+<pre><code class="python language-python">os.makedirs("outputs", exist_ok=True)
+
+# note file saved in the outputs folder is automatically uploaded into experiment record.
+joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
+run.complete()
+</code></pre>
+<pre><code class="python language-python">from azureml.train.sklear import SKLearn
+from azureml.core import Experiment
+from azureml.widgets import RunDetails
+
+# Set the script parameters.
+script_params = {
+    "--regularization": 0.1
+}
+
+# Get the training dataset.
+diabetes_ds = ws.datasets.get("diabets dataset")
+
+# Create an estimator
+estimator = SKLearn(source_directory=experiment_folder,
+                    entry_script="diabetes_training.py",
+                    script_params=script_params,
+                    compute_target="local",
+                    inputs=[diabetes_ds.as_named_input('diabetes')], # pass the dataset object as an input.
+                    pip_packages=['azureml-dataprep[pandas]'])  # so you need the dataprep package
+
+# Create an experiment.
+experiment_name = "diabetes-training"
+experiment      = Experiment(workspace=ws, name=experiment_name)
+
+# Run the experiment.
+run = experiment.submit(config=estimator)
+
+# Show the run details while running.
+RunDetails(run).show()
+run.wait_for_completion()
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Training a Model from a File Dataset</b></summary>
+<pre><code class="python language-python">import os
+
+# Create a folder for the experiment files.
+experiment_folder = "diabetes_training_from_file_dataset"
+os.makedirs(experiment_folder, exist_ok=True)
+print(experiment_folder, "folder created")
+</code></pre>
+<pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
+#Import libraries
+import os, argparse, glob
+from azureml.core import Workspace, Dataset, Experiment, Run
+import pandas as pd
+import numpy as np
+import joblib
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, roc_curve
+</code></pre>
+<pre><code class="python language-python"># Set regularization hyperparameter (passed as an argument to the script)
+parser = argparse.ArgumentParser()
+parser.add_argument("--regularization", type=float, dest="reg_rate", default=0.01, help="regularization rate")
+args = parser.parse_args()
+reg  = args.reg_rate
+
+# Get the experiment run context.
+run = Run.get_context()
+
+# Load the diabetes dataset.
+print("Loading Data...")
+data_path = run.input_datasets['diabetes'] # Get the training data from the estimator input
+all_files = glob.glob(data_path + "/*.csv")
+diabetes = pd.concat((pd.read_csv(f) for f in all_files))
+</code></pre>
+<pre><code class="python language-python"># Separate features and labels.
+X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
+
+# Split data into training set and test set.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
+
+# Train a logistic regression model.
+print("Training a logistic regression model with regularization rate of", reg)
+run.log("regularization rate", np.float(reg))
+model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
+</code></pre>
+<pre><code class="python language-python"># Calculate accuracy.
+y_hat = model.predict(X_test)
+acc   = np.average(y_hat == y_test)
+print(f"Accuracy: {acc}")
+run.log("Accuracy", np.float(acc))
+
+# Calculate AUC
+y_scores = model.predict_proba(X_test)
+auc      = roc_auc_score(y_test, y_scores[:, 1])
+print(f"AUC: {auc}")
+run.log("AUC", np.float(auc))
+</code></pre>
+<pre><code class="python language-python">os.makedirs('outputs', exist_ok=True)
+# Note file saved in the ouputs folder is automatically uploaded into experiment record
+joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
+run.complete()
+</code></pre>
+<pre><code class="python language-python">from azureml.train.sklearn import SKLearn
+from azureml.core import Experiment
+from azureml.widgets import RunDetails
+
+# Set the script parameters.
+script_params = {
+    "--regularization": 0.1
+}
+
+# Get the training dataset.
+diabetes_ds = ws.datasets.get("diabetes file dataset.")
+</code></pre>
+<pre><code class="python language-python"># Create an estimator
+estimator = SKLearn(source_directory=experiment_folder,
+                    entry_script="diabetes_training.py",
+                    script_params=script_params,
+                    compute_target="local",
+                    inputs=[diabetes_ds.as_named_input("diabetes").as_download(path_on_compute="diabetes_data")],
+                    pip_packages=['azureml-dataprep[pandas]'])
+
+# Create an experiment.
+experiment_name = "diabetes-training"
+experiment      = Experiment(workspace=ws, name=experiment_name)
+
+# Run the experiment.
+run = experiment.submit(config=estimator)
+# Show the run details while running.
+RunDetails(run).show()
+run.wait_for_completion()
+</code></pre>
+</details></li>
+</ul></details>
+
+<details><summary><b>Install</b></summary>
+<pre><code class="python language-python">
+</code></pre>
+</details></details>
+</details></details>
+
+<details><summary><b>Install</b></summary>
+<pre><code class="python language-python">
+</code></pre>
+</details></details>
 </div>
