@@ -17,6 +17,7 @@
 
 <li><a href="./10_Deployment/0_html/0_deployment_root.html"><font color='#333'><b style='font-size:27px'>Deployment</b></font></a> </li>
 
+<li><a href="./13_Azure_ML_SDK/0_html/azure_root.html"><font color='#333'><b style='font-size:27px'>Azure ML SDK</b></font></a> </li>
 
 </ul>
 

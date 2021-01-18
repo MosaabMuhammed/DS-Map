@@ -1221,7 +1221,6 @@ register_step = PythonScriptStep(name="Register Model",
                                  compute_target=pipeline_cluster,
                                  runconfig=pipeline_run_config,
                                  allow_reuse=True)</code></pre>
-</details></li>
 <pre><code class="python language-python">from auzreml.core import Experiment
 from azureml.pipeline.core import Pipeline
 from azureml.widgets import RunDetails
@@ -1238,7 +1237,6 @@ print("Pipeline submitted for expecution.")
 
 RunDetails(pipeline_run).show()
 pipeline_run.wait_for_completion()</code></pre>
-</details></li>
 <pre><code class="python language-python">from azureml.core import Model
 
 for model in Model.list(ws):
@@ -1251,26 +1249,202 @@ for model in Model.list(ws):
         print("\t", prop_name, ":", prop)
     print("\n")</code></pre>
 </details></li>
-
 <li><details><summary><b>Publishing the Pipeline</b></summary>
-<pre><code class="python language-python"></code></pre>
+<pre><code class="python language-python">published_pipeline = pipeline.publish(name="Diabetes_Training_Pipeline",
+                                      description="Trains diabetes model",
+                                      version="1.0")
+rest_endpoint = published_pipeline.endpoint
+print(rest_endpoint)
+</code></pre>
+<pre><code class="python language-python">from azureml.core.authentication import InteractiveLoginAuthentication
+
+interactive_auth = InteractiveLoginAuthentication()
+auth_header = interactive_auth.get_authentication_header()
+
+import requests
+experiment_name = "Run-diabetes-pipeline"
+
+response = requests.post(rest_endpoint,
+                         headers=auth_header,
+                         json={"ExperimentName": experiment_name})
+run_id = response.json()["Id"]
+run_id
+</code></pre>
+<pre><code class="python language-python">from azureml.pipeline.core.run import PipelineRun
+from azureml.widgets import RunDetails
+
+published_pipeline_run = PipelineRun(ws.experiments[experiment_name], run_id)
+RunDetails(published_pipeline_run).show()
+</code></pre>
+
 </details></li>
-<pre><code class="python language-python">
-</code></pre>
-<pre><code class="python language-python">
-</code></pre>
-<pre><code class="python language-python">
-</code></pre>
-<pre><code class="python language-python">
-</code></pre>
-<pre><code class="python language-python">
-</code></pre>
-<pre><code class="python language-python">
-</code></pre>
+
 </ul></details>
 
-<details><summary><b>Deploying the Model</b></summary>
+<details><summary><b>Deploying the Model</b></summary><ul>
+<li><details><summary><b>Real-time Inference Service -- Training and Registering a Model</b></summary>
+<pre><code class="python language-python">from azureml.core import Experiment
+from azureml.core import Model
+import pandas as pd
+import numpy as np
+import joblib
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import roc_auc_score, roc_curve
+
+# Create an Azure ML experiment in your workspace.
+experiment = Experiment(workspace=ws, name="diabetes-training")
+run        = experiment.start_logging()
+print("Starting experiment:", experiment.name)
+</code></pre>
+<pre><code class="python language-python"># Load the diabetes dataset.
+print("Loading Data...")
+diabetes = pd.read_csv("data/diabetes.csv")
+
+# Separate features and labels.
+X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
+
+# Split data into training set and test set.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
+
+# train a decision tree.
+print("training a decision tree")
+model = DecisionTreeClassifier().fit(X_train, y_train)
+</code></pre>
+<pre><code class="python language-python"># Calculate accuracy.
+y_hat = model.predict(X_test)
+acc   = np.average(y_hat == y_test)
+print(f"Accuracy: {acc}")
+run.log("Accuracy", np.float(acc))
+
+# Calculate AUC
+y_scores = model.predict_proba(X_test)
+auc      = roc_auc_score(y_test, y_scores[:, 1])
+print(f"AUC: {auc}")
+run.log("AUC", np.float(auc))
+</code></pre>
+<pre><code class="python language-python"># Save the trained model.
+model_file = "diabetes_model.pkl"
+joblib.dump(value=model, filename=model_file)
+run.upload_file(name="outputs/"+model_file, path_or_stream="./"+model_file)
+
+# Complete the run.
+run.complete()
+</code></pre>
+<pre><code class="python language-python"># Register the model.
+run.register_model(model_path="outputs/diabetes_model.pkl",
+                   model_name="diabetes_model",
+                   tags={"Training context": "Inline Training"},
+                   properties={"AUC": run.get_metrics()["AUC"],
+                               "Accuracy": run.get_metrics()["Accuracy"]})
+
+print("Model trained and registered.")
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Deploying a Model as a Web Service</b></summary>
+<pre><code class="python language-python"># See the available model in the workspace.
+from azureml.core import Model
+
+for model in Model.list(ws):
+    print(model.name, "version:", model.version)
+    for tag_name in model.tags:
+        tag = model.tags[tag_name]
+        print("\t", tag_name, ":", tag)
+    for prop_name in model.properties:
+        prop = model.properties[prop_name]
+        print("\t", prop_name, ":", prop)
+    print("\n")
+</code></pre>
+<pre><code class="python language-python"># Get the model to be deployed.
+model = ws.models["diabetes_model"]
+print(model.name, "version", model.version)
+</code></pre>
+<pre><code class="python language-python"># Create a folder and configuration files for the web serivce.
+import os
+
+folder_name = "diabetes_service"
+
+# Create a folder for the web serivce files.
+experiment_folder = "./"+folder_name
+os.makedirs(folder_name, exist_ok=True)
+
+print(folder_name, "folder created.")
+</code></pre>
+<pre><code class="python language-python">%%writefile $folder_name/score_diabetes.py
+import json
+import joblib
+import numpy as np
+from azureml.core.model import Model
+
+# Called when the service is loaded.
+def init():
+    global model
+    # Get the path to the deployed model file and load it.
+    model_path = Model.get_model_path("diabetes_model")
+    model      = joblib.load(model_path)
+
+# Called when a request is received
+def run(raw_data):
+    # Get the input data as a numpy array.
+    data = np.array(json.loads(raw_data)['data'])
+    # Get a prediction from the model.
+    predictions = model.predict(data)
+    # Get the corresponding classname for each prediction (0 or 1)
+    classnames = ['not-diabetic', 'diabetic']
+    predicted_classes = []
+    for prediction in predictions:
+        predicted_classes.append(classnames[prediction])
+    # Return the prediction as JSON
+    return json.dumps(predicted_classes)
+</code></pre>
+<pre><code class="python language-python">from azureml.core.conda_dependencies import CondaDependencies
+
+# Add the dependencies for our model (AzureML defaults is already included)
+myenv = CondaDependencies()
+myenv.add_conda_package("scikit-learn")
+
+# Save the environment config as .yml file.
+env_file = folder_name + "/diabetes_env.yml"
+with open(env_file, "w") as f:
+    f.write(myenv.serialize_to_string())
+print("Saved dependency info in ", env_file)
+
+# Print the .yml file.
+with open(env_file, "r") as f:
+    print(f.read())
+</code></pre>
+<pre><code class="python language-python">from azureml.core.webservice import AciWebservice
+from azureml.core.model import InferenceConfig
+
+# Configure the scoring enviroment.
+inference_config = InferenceConfig(runtime="python",
+                                   source_directory=folder_name,
+                                   entry_script="score_diabetes.py",
+                                   conda_file="diabetes_env.yml")
+
+deployment_config = AciWebservice.deploy_configuration(cpu_cores=1, memory_gb=1)
+service_name      = "diabetes-service"
+service           = Model.deploy(ws, service_name, [model], inference_config,
+                                 deployment_config)
+service.wait_for_deployment(True)
+print(service.state)
+</code></pre>
+<pre><code class="python language-python">print(service.state)
+print(service.get_logs())
+
+# If you need to make a change and redeploy, you may need to delete unhealty service using the following code:
+# service.delete()
+</code></pre>
+<pre><code class="python language-python"># See the active webserivce name
+for webservice_name in ws.webservices:
+    print(webservice_name)
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Using the Web Service</b></summary>
 <pre><code class="python language-python">
 </code></pre>
-</details>
+</details></li>
+</ul></details>
 </div>
