@@ -1433,7 +1433,7 @@ print(service.state)
 <pre><code class="python language-python">print(service.state)
 print(service.get_logs())
 
-# If you need to make a change and redeploy, you may need to delete unhealty service using the following code:
+# If you need to make a change and redeploy, you may need to delete unhealty service using the following code:  
 # service.delete()
 </code></pre>
 <pre><code class="python language-python"># See the active webserivce name
@@ -1447,4 +1447,7 @@ for webservice_name in ws.webservices:
 </code></pre>
 </details></li>
 </ul></details>
+
+<li><a href="./notebooks/CA-AzureML-Pipelines.html">Complete Pipeline</a></li>
+
 </div>
