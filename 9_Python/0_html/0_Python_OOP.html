@@ -581,6 +581,126 @@ logger.addHandler(stream_handler)
      </details>
     </ul>
    </details>
+   <details>
+    <summary>
+     <b>
+      Threading
+     </b>
+    </summary>
+    Threading is related to I/O bound, like downloading images from the internet, reading/writing files.
+    <h4>
+     Old way
+    </h4>
+    <pre><code>import threading, time
+
+start = time.perf_counter()
+
+def do_something(sec):
+    print(f"sleeping for {sec} sec")
+    time.sleep(sec)
+    return "done sleeping"
+
+ threads = []
+ for _ in range(10):
+     t = threading.Thread(target=do_something, args=[1.5])
+     t.start()
+     threads.append(t)
+
+ for thread in threads:
+     thread.join()
+
+
+finish = time.perf_counter()
+
+print(f"Finished in {round(finish-start, 2)} seconds.")
+</code></pre>
+    <h4>
+     Better way
+    </h4>
+    <pre><code>import concurrent.futures
+import time
+
+start = time.perf_counter()
+
+
+def do_something(seconds):
+    print(f'Sleeping {seconds} second(s)...')
+    time.sleep(seconds)
+    return f'Done Sleeping...{seconds}'
+
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    secs = [5, 4, 3, 2, 1]
+    results = executor.map(do_something, secs)
+
+     for result in results:
+         print(result)
+
+finish = time.perf_counter()
+
+print(f'Finished in {round(finish-start, 2)} second(s)')
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Multi-Processing
+     </b>
+    </summary>
+    Multi-Processing is related to CPU bound, like using only one CPU to the computation and not using the other CPUs.
+    <h4>
+     Old way
+    </h4>
+    <pre><code>import multiprocess, time
+
+start = time.perf_counter()
+
+def do_something(sec):
+    print(f"sleeping for {sec} sec")
+    time.sleep(sec)
+    return "done sleeping"
+
+ threads = []
+ for _ in range(10):
+     t = multiprocess.Process(target=do_something, args=[1.5])
+     t.start()
+     threads.append(t)
+
+ for thread in threads:
+     thread.join()
+
+
+finish = time.perf_counter()
+
+print(f"Finished in {round(finish-start, 2)} seconds.")
+</code></pre>
+    <h4>
+     Better way
+    </h4>
+    <pre><code>import concurrent.futures
+import time
+
+start = time.perf_counter()
+
+
+def do_something(seconds):
+    print(f'Sleeping {seconds} second(s)...')
+    time.sleep(seconds)
+    return f'Done Sleeping...{seconds}'
+
+
+with concurrent.futures.ProcessPoolExecutor() as executor:
+    secs = [5, 4, 3, 2, 1]
+    results = executor.map(do_something, secs)
+
+     for result in results:
+         print(result)
+
+finish = time.perf_counter()
+
+print(f'Finished in {round(finish-start, 2)} second(s)')
+</code></pre>
+   </details>
   </div>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
   </script>
