@@ -1,431 +1,464 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Modeling</h1>
-<div style='width:1000px;margin:auto'>
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="modeling">
+   Modeling
+  </h1>
+  <div style="width:1000px;margin:auto">
+   <details>
+    <summary>
+     <b>
+      CNN with Embedding
+     </b>
+    </summary>
+    <p>
+    </p>
+    <ul>
+     <li>
+      <a href="./0_notebooks/CNN.html">
+       CNN with GloVe
+      </a>
+     </li>
+     <li>
+      <a href="./0_notebooks/ch07.html">
+       CNN with GoogleNews
+       <b>
+        word2vec
+       </b>
+      </a>
+     </li>
+    </ul>
+   </details>
+   <details>
+    <summary>
+     <b>
+      LSTM &amp; GRU &amp; Bi-Directional
+     </b>
+    </summary>
+    <p>
+    </p>
+    <li>
+     <a href="./0_notebooks/LSTM_Toxic.html">
+      LSTM with Text
+     </a>
+    </li>
+    <h4>
+     Note: For Bi-Directional, do the following:
+    </h4>
+    wzxhzdk:0
+   </details>
+   <details>
+    <summary>
+     <b>
+      BERT
+     </b>
+    </summary>
+    <p>
+    </p>
+    <li>
+     <a href="./0_notebooks/BERT for Humans.html#Comprehensive-BERT-Tutorial">
+      Tutorials on BERT
+     </a>
+    </li>
+    <li>
+     <a href="./0_notebooks/BERT Keras.html#This-is-the-very-first-time-I-would-be-implementing-BERT.">
+      BERT Keras
+     </a>
+    </li>
+    <li>
+     <a href="./0_notebooks/BERT using simple transformers.html">
+      BERT using simpleTransformers
+     </a>
+    </li>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Sentiment Analysis
+     </b>
+     using
+     <b>
+      Rule-based
+     </b>
+    </summary>
+    <p>
+     wzxhzdk:1
 
-<details><summary><b>CNN with Embedding</b></summary><p><ul>
-<li><a href='./0_notebooks/CNN.html'>CNN with GloVe</a></li>
-<li><a href='./0_notebooks/ch07.html'>CNN with GoogleNews <b>word2vec</b></a></li>
-</ul></p></details>
 
-<details><summary><b>LSTM & GRU & Bi-Directional</b></summary><p>
-<li><a href='./0_notebooks/LSTM_Toxic.html'>LSTM with Text</a></li>
-<h4>Note: For Bi-Directional, do the following:</h4>
+wzxhzdk:2
+    </p>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Latent Discriminant Analysis
+     </b>
+    </summary>
+    <p>
+    </p>
+    <p>
+     NOTE: you can use it in sklearn. (sklearn.discriminant_analysis.LinearDiscriminantAnalysis), but here we show the manual calculations on spam filter.
+    </p>
+    <p>
+     LDA is very useful when we have more columns and less rows, specially in text analysis
+    </p>
+    wzxhzdk:3
+   </details>
+   <details>
+    <summary>
+     <b>
+      Language Model
+     </b>
+    </summary>
+    <p>
+    </p>
+    <h4>
+     1. Load the corpus
+    </h4>
+    wzxhzdk:4
+    <h4>
+     2. Prepare the input &amp; output
+    </h4>
+    wzxhzdk:5
+    <h4>
+     3. Create One-Hot encoding
+    </h4>
+    wzxhzdk:6
+    <h4>
+     3. Create the model
+    </h4>
+    wzxhzdk:7
+    <h4>
+     4. Predict the next n characters with temperature
+    </h4>
+    wzxhzdk:8
+   </details>
+   <details>
+    <summary>
+     <b>
+      Seq2Seq
+     </b>
+    </summary>
+    <p>
+    </p>
+    <h4>
+     1. Prepare the data
+    </h4>
+    wzxhzdk:9
 
-<pre><code># you have 2 options:
-# 1. return a sequence, then select the max features among them.
-# 2. Don't return a sequence, just return the last value, and here there's no neet for GlobalMaxPool1D
-x = Bidirectional(LSTM(15, return_sequences=True))(x)
-x = GlobalMaxPool1D()(x)
+
+
+wzxhzdk:10
+
+
+
+wzxhzdk:11
+    <h4>
+     2. Build the Model
+    </h4>
+    wzxhzdk:12
+
+
+wzxhzdk:13
+    <h4>
+     3. Response
+    </h4>
+    wzxhzdk:14
+
+
+wzxhzdk:15
+   </details>
+   <details>
+    <summary>
+     <b>
+      Approximate Nearest Neighbors (ANN) Search
+     </b>
+     Libraries
+    </summary>
+    <p>
+    </p>
+    <ul>
+     <li>
+      Spotify's Annoy
+      <a href="https://github.com/spotify/annoy">
+       github
+      </a>
+     </li>
+     <li>
+      BallTree (using nmslib)
+      <a href="https://github.com/searchivarius/nmslib">
+       github
+      </a>
+     </li>
+     <li>
+      Brute Force using Basic Linear Algebra Subprograms library (BLAS)
+      <a href="http://scikit-learn.org/stable/modules/neighbors.html#brute-force">
+       github
+      </a>
+     </li>
+     <li>
+      Brute Force using Non-Metric Space Library (NMSlib)
+      <a href="https://github.com/searchivarius/NMSLIB">
+       github
+      </a>
+     </li>
+     <li>
+      Dimension reductiOn and LookuPs on a Hypercube for effIcient Near Neigh-bor (DolphinnPy)
+      <a href="https://github.com/ipsarros/DolphinnPy">
+       github
+      </a>
+     </li>
+     <li>
+      Random Projection Tree Forest (rpforest)
+      <a href="https://github.com/lyst/rpforest">
+       github
+      </a>
+     </li>
+     <li>
+      Locality sensitive hashing (datasketch)
+      <a href="https://github.com/ekzhu/datasketch">
+       github
+      </a>
+     </li>
+     <li>
+      Multi-indexing hashing (MIH)
+      <a href="https://github.com/norouzi/mih">
+       github
+      </a>
+     </li>
+     <li>
+      Fast Lookup of Cosine and Other Nearest Neighbors (FALCONN)
+      <a href="https://pypi.python.org/pypi/FALCONN">
+       github
+      </a>
+     </li>
+     <li>
+      Fast Lookup of Approximate Nearest Neighbors (FLANN)
+      <a href="http://www.cs.ubc.ca/research/flann/">
+       github
+      </a>
+     </li>
+     <li>
+      Hierarchical Navigable Small World (HNSW) (in nmslib)
+      <a href="https://github.com/searchivarius/
+nmslib/blob/master/similarity_search/include/factory/method/hnsw.h">
+       github
+      </a>
+     </li>
+     <li>
+      K-Dimensional Trees (kdtree)
+      <a href="https://github.com/stefankoegl/kdtree">
+       github
+      </a>
+     </li>
+     <li>
+      nearpy
+      <a href="https://pypi.python.org/pypi/NearPy">
+       github
+      </a>
+     </li>
+    </ul>
+    <details>
+     <summary>
+      Using
+      <b>
+       Annoy
+      </b>
+      on word-vectors
+     </summary>
+     <p>
+      NOTE: Read Page 409 in nlp in action book.
+     </p>
+     <h4>
+      1. Load WordVectors using gensim (wv), Annoy
+     </h4>
+     wzxhzdk:16
+     <h4>
+      2. Add each word vector to the AnnoyIndex
+     </h4>
+     wzxhzdk:17
+     <h4>
+      Build Euclidean/Cosine distance index with 15 trees
+     </h4>
+     wzxhzdk:18
+     <h4>
+      Find Harry_Potter neighbors with AnnoyIndex
+     </h4>
+     wzxhzdk:19
+    </details>
+   </details>
+   <details>
+    <summary>
+     Add
+     <b>
+      OUT_OF_SCOPE
+     </b>
+     label by filtering
+     <b>
+      thresholds
+     </b>
+    </summary>
+    <p>
+    </p>
+    <p>
+     <a href="https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/">
+      threshold moving techniques for binary classification[must read]
+     </a>
+    </p>
+    My way of adopting it to the multiclassification problem.
+    <br/>
+    <b>
+     NOTE:
+    </b>
+    ROC is not working properly.
+    <pre><code>######################################################################################
+'''
+Description:
+    - This page includes determining the best threshold for each class based on
+      the confidence of the model on the validation set.
+    - To know more: (https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/)
+
+Author: Mosaab Muhammad (mosaab@dxwand.com)
+Creation Date: 
+Last Update Date: (12/1/2021)
+
+'''
+######################################################################################
+
+from intent_clf.config import config
+
+import joblib
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve, precision_recall_curve, accuracy_score
+from collections import defaultdict
+from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.utils.multiclass import unique_labels
+from sklearn.base import clone
+from collections import Counter
+from sklearn.model_selection import StratifiedKFold
+
+
+class ThresholdWrapper(BaseEstimator, ClassifierMixin):
+    def __init__(self, clf, threshold_method:str="prc"):
+        self.fitted_clf       = clf
+        self.refitted_clf     = clone(clf)
+        self.threshold_method = threshold_method # ["pcr", "roc"]
+        self.thresholds_dict  = defaultdict(int)
+        self.kf               = StratifiedKFold(n_splits=config.THRESHOLD_N_SPLITS,
+                                                shuffle=True,
+                                                random_state=config.SEED)  
+
+    def fit(self, X, y):
+        self.classes_ = unique_labels(y)
+        bin_labels = defaultdict(list)
+
+        for train_idxes, valid_idxes in self.kf.split(X=X, y=y):
+            X_train, X_valid = X.loc[train_idxes], X.loc[valid_idxes]
+            y_train, y_valid = y.loc[train_idxes], y.loc[valid_idxes]
+
+            for label in self.classes_:
+                bin_labels[label] = np.where(y_valid == label, 1, 0)
+
+            self.refitted_clf.fit(X_train, y_train)
+            ds = self.refitted_clf.decision_function(X_valid)
+
+            if len(self.classes_) == 2:
+                ds = np.repeat(np.array([ds]), 2, axis=0).T
+                ds[:, 0] = ds[:, 0] * -1
+
+            if self.threshold_method == 'roc':
+                tpr, fpr, threshold = self.get_thresholds_curve_per_label(bin_labels, ds, roc_curve)
+                for label in self.classes_:
+                    gmeans = np.sqrt(tpr[label] * (1-fpr[label]))
+                    ix = np.argmax(gmeans)
+                    self.thresholds_dict[label] += threshold[label][ix]
+            else:
+                precision, recall, threshold = self.get_thresholds_curve_per_label(bin_labels, ds, precision_recall_curve)
+
+                for label in self.classes_:
+                    fscore = (2 * precision[label] * recall[label]) / (precision[label] + recall[label])
+                    ix = np.argmax(fscore)
+                    self.thresholds_dict[label] += threshold[label][ix]
+
+        def divide_by_n_splits(x): return x / config.THRESHOLD_N_SPLITS
+        self.thresholds_dict = dict(map(lambda x: (x[0], divide_by_n_splits(x[1])), self.thresholds_dict.items()))
+        return self
+
+    def predict(self, X, confidence=False, top_n:int=3):
+        '''
+            params:
+                X: (str, pd.Series, list) - the sample/s to be predicted. after reprocessed from the pipeline.
+                return_top_conf: (int) - 0 -&gt; if you want to return only the label without using out_of_scope label.
+                                         n -&gt; if you want to return the prediction of the label + using out_of_scope label.
+                                              and also returning the confidence for all the classes (only available for single prediction).
+        '''
+        if confidence:
+            # Handle the prediction of single and multiple samples.
+            if X.shape[0] &gt; 1:
+                y_preds = X.apply(lambda x: self._predict_single_with_conf(x, top_n=top_n)[0], axis=1)
+                return y_preds
+            else:
+                return self._predict_single_with_conf(X, top_n=top_n)
+        else:
+            return self.fitted_clf.predict(X)
+
+    def score(self, X, y, use_out_of_scope=False):
+        y_preds = self.predict(X, confidence=use_out_of_scope)
+        acc = accuracy_score(y, y_preds)
+        return acc
+
+    def get_thresholds_curve_per_label(self, y_true_onehot, ds, curve_func):
+        probs_onehot, first, second, thresholds = [], defaultdict(list), defaultdict(list), defaultdict(list)
+
+        for i, _ in enumerate(ds):
+            probs_onehot.append(np.exp(ds[i]) / np.sum(np.exp(ds[i])))
+
+        probs_onehot = np.array(probs_onehot)
+        for i, label in enumerate(self.classes_):
+            first[label], second[label], thresholds[label] = curve_func(y_true_onehot[label], probs_onehot[:, i])
+        return first, second, thresholds
+
+    def _predict_single_with_conf(self, X, top_n=3):
+        if isinstance(X, pd.Series): X = X.values.reshape(1, -1)
+        pred_label   = self.fitted_clf.predict(X)
+        d            = self.fitted_clf.decision_function(X)[0]
+        if len(self.classes_) == 2:
+            d = np.repeat(np.array([[d]]), 2, axis=0).T
+            d[:, 0] = d[:, 0] * -1
+        probs        = np.exp(d) / np.sum(np.exp(d))
+        pred_label   = pred_label[0] if (np.max(probs) &gt; self.thresholds_dict[pred_label[0]]) else config.OUT_OF_SCOPE_LABEL
+
+        if len(self.classes_) == 2:
+            classes_w_conf     = {key: val for key, val in zip(self.classes_, probs.ravel())}
+        else:
+            classes_w_conf     = {key: val for key, val in zip(self.classes_, probs)}
+        top_classes_w_conf = dict(Counter(classes_w_conf).most_common(top_n))
+        return (pred_label, top_classes_w_conf)
+
 </code></pre>
-
-</p></details>
-
-<details><summary><b>BERT</b></summary><p>
-<li><a href='./0_notebooks/BERT for Humans.html#Comprehensive-BERT-Tutorial'>Tutorials on BERT</a></li>
-<li><a href='./0_notebooks/BERT Keras.html#This-is-the-very-first-time-I-would-be-implementing-BERT.'>BERT Keras</a></li>
-<li><a href='./0_notebooks/BERT using simple transformers.html'>BERT using simpleTransformers</a></li>
-</p></details>
-
-<details><summary><b>Sentiment Analysis</b> using <b>Rule-based</b></summary><p>
-
-<pre><code># !pip install vaderSentiment
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-sa = SentimentIntensityAnalyzer()
-# sa.lexicon --&gt; Print the lexicons
-
-sa.polarity_scores(text=&quot;Python is very readable and it's great for NLP.&quot;)
-</code></pre>
-
-
-<pre><code>corpus = [&quot;Absolutely perfect! Love it! :-) :-) :-)&quot;,
-          &quot;Horrible! Completely useless. :(&quot;,
-          &quot;It was OK. some good and some bad things.&quot;]
-
-for doc in corpus:
-    scores = sa.polarity_scores(doc)
-    print(f&quot;{scores['compound']:+}: {doc}&quot;)
-</code></pre>
-
-</p></details>
-
-<details><summary><b>Latent Discriminant Analysis</b></summary><p>
-<p>NOTE: you can use it in sklearn. (sklearn.discriminant_analysis.LinearDiscriminantAnalysis), but here we show the manual calculations on spam filter.</p>
-<p>LDA is very useful when we have more columns and less rows, specially in text analysis</p>
-
-
-<pre><code># 1. Calculate the TF-IDF
-from sklearn.feature_extraction.text import TfidfVectorizer
-from nltk.tokenize.casual import casual_tokenize
-tfidf_model = TfidfVectorizer(tokenizer=casual_tokenize)
-tfidf_docs  = tfidf_model.fit_transform(sms.text).toarray()
-
-# 2. Calculate the mean for spam and ham.
-mask = sms.spam.astype(bool).values
-spam_centriod = tfidf_docs[mask].mean(axis=0)
-ham_centriod  = tfidf_docs[~mask].mean(axis=0)
-
-# 3. Dot product with TF_IDF matrix.
-spamminess_score = tfidf_docs.dot(spam_centriod - ham_centriod)
-spamminess_score.round(2)
-
-# 4. Normalize to predict.
-from sklearn.preprocessing import MinMaxScaler
-sms[&quot;lda_score&quot;]   = MinMaxScaler().fit_transform(spamminess_score.reshape(-1, 1))
-sms[&quot;lda_predict&quot;] = (sms.lda_score &gt; .5).astype(int)
-sms[&quot;spam lda_predict lda_score&quot;.split()].round(2).head(6)~~~~
-</code></pre>
-
-</p></details>
-
-<details><summary><b>Language Model</b></summary><p>
-<h4>1. Load the corpus</h4>
-
-<pre><code>import nltk
-nltk.download(&quot;gutenberg&quot;)
-from nltk.corpus import gutenberg
-gutenberg.fileids()
-
-# Concatenate the samples into one corpus
-text = ''
-for txt in gutenberg.fileids():
-    if 'shakespeare' in txt:
-        text += gutenberg.raw(txt).lower()
-
-chars = sorted(list(set(text)))
-char_indices = dict((c, i) for i, c in enumerate(chars))
-indices_char = dict((i, c) for i, c in enumerate(chars))
-
-print(f&quot;corpus length: {bg(len(text))}, total chars: {bg(len(chars))}&quot;)
-</code></pre>
-
-
-<h4>2. Prepare the input & output</h4>
-
-<pre><code>maxlen = 40
-step   = 3
-sentences  = []
-next_chars = []
-
-for i in range(0, len(text) - maxlen, step):
-    sentences.append(text[i: i+maxlen])
-    next_chars.append(text[i+maxlen])
-
-print(f&quot;nb sequences: {bg(len(sentences))}, {bg(len(next_chars))}&quot;)
-</code></pre>
-
-
-<h4>3. Create One-Hot encoding</h4>
-
-<pre><code>X = np.zeros((len(sentences), maxlen, len(chars)), dtype=np.bool)
-y = np.zeros((len(sentences), len(chars)), dtype=np.bool)
-
-for i, sentence in enumerate(sentences):
-    for t, char in enumerate(sentence):
-        X[i, t, char_indices[char]] = 1
-    y[i, char_indices[next_chars[i]]] = 1
-</code></pre>
-
-
-<h4>3. Create the model</h4>
-
-<pre><code>import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation
-from tensorflow.keras.layers import LSTM
-from tensorflow.keras.optimizers import RMSprop
-
-model = Sequential([
-    LSTM(128, input_shape=(maxlen, len(chars))),
-    Dense(len(chars), activation=&quot;softmax&quot;)
-])
-
-optimizer = RMSprop(lr=.01)
-model.compile(loss=&quot;categorical_crossentropy&quot;, optimizer=optimizer)
-model.summary()
-
-# Train the model.
-epochs          = 6
-batch_size      = 128
-model_structure = model.to_json()
-with open(&quot;shakes_lstm_model.json&quot;, &quot;w&quot;) as json_file:
-    json_file.write(model_structure)
-
-for i in range(5):
-    model.fit(X, y,
-              batch_size=batch_size,
-              epochs=epochs)
-    model.save_weights(f&quot;shakes_lstm_weights_{i+1}.h5&quot;)
-</code></pre>
-
-
-<h4>4. Predict the next n characters with temperature</h4>
-
-<pre><code>import random
-def sample(preds, temprature=1.0):
-    preds     = np.asarray(preds).astype('float64')
-    preds     = np.log(preds) / temprature
-    exp_preds = np.exp(preds)
-    preds     = exp_preds / np.sum(exp_preds)
-    probas    = np.random.multinomial(1, preds, 1)
-    return np.argmax(probas)
-
-import sys
-start_index = random.randint(0, len(text)-maxlen-1)
-for diversity in [.2, .5, 1.]:
-    print()
-    print(f&quot;------------ Diversity: {diversity}&quot;)
-    generated = ''
-    sentence  = text[start_index: start_index+maxlen]
-    generated += sentence
-    print(f&quot;---------- Generating with seed: {sentence}&quot;)
-    sys.stdout.write(generated)
-
-    for i in range(400):
-        x = np.zeros((1, maxlen, len(chars)))
-        for t, char in enumerate(sentence):
-            x[0, t, char_indices[char]] = 1.
-        preds = model.predict(x, verbose=0)[0]
-        next_index = sample(preds, diversity)
-        next_char  = indices_char[next_index]
-        generated += next_char
-        sentence   = sentence[1:] + next_char
-        sys.stdout.write(next_char)
-        sys.stdout.flush()
-
-    print()
-</code></pre>
-
-</p></details>
-
-<details><summary><b>Seq2Seq</b></summary><p>
-<h4>1. Prepare the data</h4>
-
-<pre><code># !pip install nlpia
-from nlpia.loaders import get_data
-df = get_data(&quot;moviedialog&quot;)
-input_texts, target_texts = [], []
-input_vocab, output_vocab = set(), set()
-start_token, stop_token   = '\t', '\n'
-max_training_samples      = min(25_000, len(df)-1)
-
-
-for input_text, target_text in zip(df.statement, df.reply):
-    target_text = start_token + target_text + stop_token
-    input_texts.append(input_text)
-    target_texts.append(target_text)
-
-    for char in input_text:
-        if char not in input_vocab:
-            input_vocab.add(char)
-
-    for char in target_text:
-        if char not in output_vocab:
-            output_vocab.add(char)
-</code></pre>
-
-
-
-<pre><code>input_vocab  = sorted(input_vocab)
-output_vocab = sorted(output_vocab)
-
-input_vocab_size  = len(input_vocab)
-output_vocab_size = len(output_vocab)
-
-max_encoder_seq_length = max([len(txt) for txt in input_texts])
-max_decoder_seq_length = max([len(txt) for txt in target_texts])
-
-input_token_index  = dict([(char, i) for i, char in enumerate(input_vocab)])
-target_token_index = dict([(char, i) for i, char in enumerate(output_vocab)])
-
-reverse_input_char_index  = dict((i, char) for char, i in input_token_index.items())
-reverse_target_char_index = dict((i, char) for char, i in target_token_index.items())
-</code></pre>
-
-
-
-<pre><code>encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_length, input_vocab_size),
-                              dtype='float32')
-decoder_input_data = np.zeros((len(input_texts), max_decoder_seq_length, output_vocab_size),
-                              dtype=&quot;float32&quot;)
-decoder_target_data = np.zeros((len(input_texts), max_decoder_seq_length, output_vocab_size),
-                               dtype=&quot;float32&quot;)
-
-for i, (input_text, target_text) in enumerate(zip(input_texts, target_texts)):
-    for t, char in enumerate(input_text):
-        encoder_input_data[i, t, input_token_index[char]] = 1.
-
-    for t, char in enumerate(target_text):
-        decoder_input_data[i, t, target_token_index[char]] = 1.
-        if t &gt; 0:
-            decoder_target_data[i, t-1, target_token_index[char]] = 1
-</code></pre>
-
-
-<h4>2. Build the Model</h4>
-
-<pre><code>from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, LSTM, Dense
-
-batch_size  = 64
-epochs      = 100
-num_neurons = 256
-
-encoder_inputs = Input(shape=(None, input_vocab_size))
-encoder        = LSTM(num_neurons, return_state=True)
-encoder_outputs, state_h, state_c = encoder(encoder_inputs)
-encoder_states = [state_h, state_c]
-
-decoder_inputs  = Input(shape=(None, output_vocab_size))
-decoder_lstm    = LSTM(num_neurons, return_sequences=True, return_state=True)
-decoder_outputs = decoder_lstm(decoder_inputs, initial_state=encoder_states)[0]
-decoder_dense   = Dense(output_vocab_size, activation='softmax')
-decoder_outputs = decoder_dense(decoder_outputs)
-
-model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
-model.compile(optimizer=&quot;rmsprop&quot;, loss=&quot;categorical_crossentropy&quot;, metrics=[&quot;acc&quot;])
-
-model.fit([encoder_input_data, decoder_input_data],
-          decoder_target_data,
-          batch_size=batch_size,
-          epochs=epochs,
-          validation_split=.1)
-</code></pre>
-
-
-<pre><code>encoder_model = Model(encoder_inputs, encoder_states)
-thought_input = [Input(shape=(num_neurons,)),
-                 Input(shape=(num_neurons,))]
-decoder_outputs, state_h, state_c = decoder_lstm(decoder_inputs,
-                                                 initial_state=thought_input)
-decoder_states  = [state_h, state_c]
-decoder_outputs = decoder_dense(decoder_outputs)
-decoder_model   = Model(
-    inputs=[decoder_inputs] + thought_input,
-    outputs=[decoder_outputs] + decoder_states
-)
-</code></pre>
-
-
-<h4>3. Response </h4>
-
-<pre><code>def decode_sequence(input_seq):
-    thought = encoder_model.predict(input_seq)
-
-    target_seq = np.zeros((1, 1, output_vocab_size))
-    target_seq[0, 0, target_token_index[stop_token]] = 1.
-
-    stop_condition = False
-    generated_sequence = ''
-
-    while not stop_condition:
-        output_tokens, h, c = decoder_model.predict([target_seq] + thought)
-
-        generated_token_idx = np.argmax(output_tokens[0, -1, :])
-        generated_char      = reverse_target_char_index[generated_token_idx]
-        generated_sequence += generated_char
-        if (generated_char == stop_token or len(generated_sequence) &gt; max_decoder_seq_length):
-            stop_condition = True
-            target_seq = np.zeros((1, 1, output_vocab_size))
-            target_seq[0, 0, generated_token_idx] = 1.
-            thought = [h, c]
-
-    return generated_sequence
-</code></pre>
-
-
-<pre><code>def response(input_text):
-    input_seq = np.zeros((1, max_encoder_seq_length, input_vocab_size), dtype=&quot;float32&quot;)
-    for t, char in enumerate(input_text):
-        input_seq[0, t, input_token_index[char]] = 1.
-    decoded_sentence = decode_sequence(input_seq)
-    print(f&quot;Bot Reply: {decoded_sentence}&quot;)
-
-respone(&quot;what is the internet?&quot;)
-</code></pre>
-
-</p></details>
-
-<details><summary><b>Approximate Nearest Neighbors (ANN) Search</b> Libraries</summary><p><ul>
-<li>Spotify's Annoy <a href="https://github.com/spotify/annoy">github</a></li>
-<li>BallTree (using nmslib) <a href="https://github.com/searchivarius/nmslib">github</a></li>
-<li>Brute Force using Basic Linear Algebra Subprograms library (BLAS) <a href="http://scikit-learn.org/stable/modules/neighbors.html#brute-force">github</a></li>
-<li>Brute Force using Non-Metric Space Library (NMSlib) <a href="https://github.com/searchivarius/NMSLIB"> github</a></li>
-<li>Dimension reductiOn and LookuPs on a Hypercube for effIcient Near Neigh-bor (DolphinnPy) <a href="https://github.com/ipsarros/DolphinnPy"> github</a></li>
-<li>Random Projection Tree Forest (rpforest)<a href="https://github.com/lyst/rpforest"> github</a></li>
-<li>Locality sensitive hashing (datasketch)<a href="https://github.com/ekzhu/datasketch"> github</a></li>
-<li>Multi-indexing hashing (MIH)<a href="https://github.com/norouzi/mih"> github</a></li>
-<li>Fast Lookup of Cosine and Other Nearest Neighbors (FALCONN)<a href="https://pypi.python.org/pypi/FALCONN"> github</a></li>
-<li>Fast Lookup of Approximate Nearest Neighbors (FLANN)<a href="http://www.cs.ubc.ca/research/flann/"> github</a></li>
-<li>Hierarchical Navigable Small World (HNSW) (in nmslib)<a href="https://github.com/searchivarius/
-nmslib/blob/master/similarity_search/include/factory/method/hnsw.h"> github</a></li>
-<li>K-Dimensional Trees (kdtree)<a href="https://github.com/stefankoegl/kdtree"> github</a></li>
-<li>nearpy <a href="https://pypi.python.org/pypi/NearPy">github</a></li>
-</ul>
-
-<details><summary>Using <b>Annoy</b> on word-vectors</summary><p>
-NOTE: Read Page 409 in nlp in action book.
-<h4>1. Load WordVectors using gensim (wv), Annoy</h4>
-
-<pre><code>!pip install annoy
-from annoy import AnnoyIndex
-
-n_words, n_dimensions = wv.vectors.shape
-index                   = AnnoyIndex(n_dimensions)
-</code></pre>
-
-
-<h4>2. Add each word vector to the AnnoyIndex</h4>
-
-<pre><code>from tqdm import tqdm
-for i, word in enumerate(tqdm(wv.index2word)):
-    index.add_item(i, wv[word])
-</code></pre>
-
-<h4>Build Euclidean/Cosine distance index with 15 trees</h4>
-
-<pre><code># Euclidean
-from tqdm import tqdm
-for i, word in enumerate(tqdm(wv.index2word)):
-    index.add_item(i, wv[word])
-
-index.build(n_trees)
-index.save('Word2vec_euc_index.ann')
-w2id = dict(zip(range(len(wv.vocab)), wv.vocab))
-
-# Cosine
-index_cos = AnnoyIndex(f=n_dimensions, metric='angular')
-
-for i, word in enumerate(wv.index2word):
-    if not i % 100_000:   # Another way to keep track of your progress.
-        print(f&quot;{i}: {word}&quot;)
-    index_cos.add_item(i, wv[word])
-
-# Increase the number of trees to get more accurate results.
-index_cos.build(30)
-index_cos.save('word2vec_cos_index.ann')
-</code></pre>
-
-
-
-<h4>Find Harry_Potter neighbors with AnnoyIndex</h4>
-
-<pre><code># Find Harry_Potter neighbors with AnnoyIndex.
-print(wv.vocab['Harry_Potter'].index)
-print(wv.vocab['Harry_Potter'].count)
-
-w2id = dict(zip(
-    wv.vocab, range(len(wv.vocab))
-))
-
-print(w2id['Harry_Potter'])
-
-# Get similar items to &quot;Harry_Potter&quot;.
-ids = index.get_nns_by_item(w2id['Harry_Potter'], 11)
-print(ids)
-
-print([wv.vocab[i] for i in ids])
-print([wv.index2word[i] for i in ids])
-</code></pre>
-
-</p></details>
-</p></details>
-</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+   </details>
+  </div>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

@@ -409,4 +409,139 @@ print([wv.index2word[i] for i in ids])
 ```
 </p></details>
 </p></details>
+
+<details><summary>Add <b> OUT_OF_SCOPE</b> label by filtering <b>thresholds</b></summary><p>
+<p><a href="https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/">threshold moving techniques for binary classification[must read]</a> </p>
+
+My way of adopting it to the multiclassification problem.<br>
+<b>NOTE:</b> ROC is not working properly.
+<pre><code>######################################################################################
+'''
+Description:
+    - This page includes determining the best threshold for each class based on
+      the confidence of the model on the validation set.
+    - To know more: (https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/)
+
+Author: Mosaab Muhammad (mosaab@dxwand.com)
+Creation Date: 
+Last Update Date: (12/1/2021)
+
+'''
+######################################################################################
+
+from intent_clf.config import config
+
+import joblib
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve, precision_recall_curve, accuracy_score
+from collections import defaultdict
+from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.utils.multiclass import unique_labels
+from sklearn.base import clone
+from collections import Counter
+from sklearn.model_selection import StratifiedKFold
+
+
+class ThresholdWrapper(BaseEstimator, ClassifierMixin):
+    def __init__(self, clf, threshold_method:str="prc"):
+        self.fitted_clf       = clf
+        self.refitted_clf     = clone(clf)
+        self.threshold_method = threshold_method # ["pcr", "roc"]
+        self.thresholds_dict  = defaultdict(int)
+        self.kf               = StratifiedKFold(n_splits=config.THRESHOLD_N_SPLITS,
+                                                shuffle=True,
+                                                random_state=config.SEED)  
+
+    def fit(self, X, y):
+        self.classes_ = unique_labels(y)
+        bin_labels = defaultdict(list)
+
+        for train_idxes, valid_idxes in self.kf.split(X=X, y=y):
+            X_train, X_valid = X.loc[train_idxes], X.loc[valid_idxes]
+            y_train, y_valid = y.loc[train_idxes], y.loc[valid_idxes]
+
+            for label in self.classes_:
+                bin_labels[label] = np.where(y_valid == label, 1, 0)
+
+            self.refitted_clf.fit(X_train, y_train)
+            ds = self.refitted_clf.decision_function(X_valid)
+            
+            if len(self.classes_) == 2:
+                ds = np.repeat(np.array([ds]), 2, axis=0).T
+                ds[:, 0] = ds[:, 0] * -1
+
+            if self.threshold_method == 'roc':
+                tpr, fpr, threshold = self.get_thresholds_curve_per_label(bin_labels, ds, roc_curve)
+                for label in self.classes_:
+                    gmeans = np.sqrt(tpr[label] * (1-fpr[label]))
+                    ix = np.argmax(gmeans)
+                    self.thresholds_dict[label] += threshold[label][ix]
+            else:
+                precision, recall, threshold = self.get_thresholds_curve_per_label(bin_labels, ds, precision_recall_curve)
+
+                for label in self.classes_:
+                    fscore = (2 * precision[label] * recall[label]) / (precision[label] + recall[label])
+                    ix = np.argmax(fscore)
+                    self.thresholds_dict[label] += threshold[label][ix]
+
+        def divide_by_n_splits(x): return x / config.THRESHOLD_N_SPLITS
+        self.thresholds_dict = dict(map(lambda x: (x[0], divide_by_n_splits(x[1])), self.thresholds_dict.items()))
+        return self
+
+    def predict(self, X, confidence=False, top_n:int=3):
+        '''
+            params:
+                X: (str, pd.Series, list) - the sample/s to be predicted. after reprocessed from the pipeline.
+                return_top_conf: (int) - 0 -> if you want to return only the label without using out_of_scope label.
+                                         n -> if you want to return the prediction of the label + using out_of_scope label.
+                                              and also returning the confidence for all the classes (only available for single prediction).
+        '''
+        if confidence:
+            # Handle the prediction of single and multiple samples.
+            if X.shape[0] > 1:
+                y_preds = X.apply(lambda x: self._predict_single_with_conf(x, top_n=top_n)[0], axis=1)
+                return y_preds
+            else:
+                return self._predict_single_with_conf(X, top_n=top_n)
+        else:
+            return self.fitted_clf.predict(X)
+
+    def score(self, X, y, use_out_of_scope=False):
+        y_preds = self.predict(X, confidence=use_out_of_scope)
+        acc = accuracy_score(y, y_preds)
+        return acc
+
+    def get_thresholds_curve_per_label(self, y_true_onehot, ds, curve_func):
+        probs_onehot, first, second, thresholds = [], defaultdict(list), defaultdict(list), defaultdict(list)
+
+        for i, _ in enumerate(ds):
+            probs_onehot.append(np.exp(ds[i]) / np.sum(np.exp(ds[i])))
+
+        probs_onehot = np.array(probs_onehot)
+        for i, label in enumerate(self.classes_):
+            first[label], second[label], thresholds[label] = curve_func(y_true_onehot[label], probs_onehot[:, i])
+        return first, second, thresholds
+
+    def _predict_single_with_conf(self, X, top_n=3):
+        if isinstance(X, pd.Series): X = X.values.reshape(1, -1)
+        pred_label   = self.fitted_clf.predict(X)
+        d            = self.fitted_clf.decision_function(X)[0]
+        if len(self.classes_) == 2:
+            d = np.repeat(np.array([[d]]), 2, axis=0).T
+            d[:, 0] = d[:, 0] * -1
+        probs        = np.exp(d) / np.sum(np.exp(d))
+        pred_label   = pred_label[0] if (np.max(probs) > self.thresholds_dict[pred_label[0]]) else config.OUT_OF_SCOPE_LABEL
+
+        if len(self.classes_) == 2:
+            classes_w_conf     = {key: val for key, val in zip(self.classes_, probs.ravel())}
+        else:
+            classes_w_conf     = {key: val for key, val in zip(self.classes_, probs)}
+        top_classes_w_conf = dict(Counter(classes_w_conf).most_common(top_n))
+        return (pred_label, top_classes_w_conf)
+
+</code></pre>
+
+</p></details>
 </div>
