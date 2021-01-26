@@ -150,4 +150,87 @@ gunicorn -w 4 -k uvicorn.workers.UvicornWorker packages.ml_api.run:application -
 </details>
 
 </ul></p></details>
+
+<details><summary style='font-size:20px;font-weight:bold'>Run Multiple cmds at the background</summary></p><ul>
+Example, one command that you are using multi-processing workers to handle your backend, and another one to make the frontend server up and running.<br>
+We are going to accomplish that with <b>supervisor</b> python package.
+<h4>Local environment</h4>
+<pre><code>
+# This file is called "supervisord.local.conf"
+# Change the pathes, and remove what is not needed.
+[supervisord]
+loglevel=info
+logfile=/tmp/supervisord.log
+#environment=data_storage="firestore",blob_storage="cloudstorage",blob_storage_bucket="blob_storage_bucket",GOOGLE_APPLICATION_CREDENTIALS="/vagrant/service_account.json"
+
+
+[unix_http_server]
+file=/tmp/supervisor.sock
+# username=admin
+# password=ndfu48f77husnmdf45bBSu89
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix:///tmp/supervisor.sock
+
+[program:be]
+priority=300
+stdout_logfile=/tmp/ingestbeout.log
+stderr_logfile=/tmp/ingestbeerr.log
+command=/home/vagrant/venv/bin/ingestiond --no_persistence --iproc_num 1 --oproc_num 2 --agg_cache_size 10
+autostart=true
+autorestart=true
+stopwaitsecs = 60
+
+[program:fe]
+priority=200
+stdout_logfile=/dev/stdout
+stderr_logfile=/dev/stderr
+command=/home/vagrant/venv/bin/gunicorn -b "0.0.0.0:8000" -w 1 -k uvicorn.workers.UvicornWorker ingest.frontend:app
+autostart=true
+autorestart=true
+stopwaitsecs = 30
+
+[program:web]
+priority=200
+stdout_logfile=/dev/stdout
+stderr_logfile=/dev/stderr
+command=/home/vagrant/venv/bin/gunicorn -b "0.0.0.0:8080" -w 1 "web.main:create_app()"
+autostart=true
+autorestart=true
+stopwaitsecs = 30
+
+[group:ingest]
+programs=fe,be
+</code></pre>
+
+
+Commands to use:
+<pre><code>
+# Must run first command to refer to the supervisord.local.conf that you have configured.
+supervisord -c supervisord.local.conf
+
+# see them running by htop, type "t" to see the actual commands.
+htop
+
+# See the status of the running dieamans
+supervisorctl -c supervisord.local.conf status
+
+# Run the interactive model by supervisorctl
+supervisorctl -c supervisord.local.conf
+# ? -> see the available options.
+# status all -> see the status of the commands.
+
+# Stop the dieamon from running
+supervisorctl -c supervisord.local.conf stop all
+
+# Start running the dieamans
+supervisorctl -c supervisord.local.conf start all
+
+# Check the last 30 lines in the log.
+tail -n 30 /tmp/ingestbeerr.log
+</code></pre>
+</ul></p></details>
 </div>
