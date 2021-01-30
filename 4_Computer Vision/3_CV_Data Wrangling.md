@@ -29,10 +29,22 @@ imshow(image)
 </p></details> 
 
 
-<details><summary>Convert to <b>Gray</b> colormap</summary><p><pre><code class="python language-python">gray_img = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+<details><summary>Convert to <b>Gray</b> colormap</summary><p>
+<h4>Using CV2</h4>
+<pre><code class="python language-python">gray_img = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
 plt.matshow(gray_img)
 plt.gray()
+</code></pre>
+
+<h4>Using skimage</h4>
+<pre><code class="python language-python">from skimage import color
+from skimage.io import imshow, imread
+
+# Converting image to grayscale.
+grayscale_image = color.rgb2gray(image)
+grayscale_image.shape
+imshow(grayscale_image)
 </code></pre>
 </p></details>
 <details><summary><b>Mask Out</b> Image</summary><p></ul>
