@@ -1,20 +1,68 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Visualization</h1>
-<div style='width:1000px;margin:auto;'>
-<details><summary>Visualizing <b>intermediate activations</b></summary>
-<p>This consists of displaying the feature maps that are output by various convolution and pooling layers in a network, given a certain input.<br><br>This gives a view into how an input is decomposed into the different filters learned by the network.</p>
-
-<h4>Load the model</h4>
-
-<pre><code># Or simply use the model that you have used recently.
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="visualization">
+   Visualization
+  </h1>
+  <div style="width:1000px;margin:auto;">
+   <details>
+    <summary>
+     <b>
+      Show
+     </b>
+     Multiple images
+    </summary>
+    nrows, ncols = 3, 4
+    <pre><code>fig, ax = plt.subplots(nrows=nrows, ncols=ncols, figsize=(30, 16))
+for col in range(ncols):
+    for row in range(nrows):
+        ax[row, col].imshow(train_images.loc[train_images.index[row*4+col]])
+        ax[row, col].set_xticks([])
+        ax[row, col].set_yticks([])
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Interpretation
+     </b>
+     of the decision by the model
+    </summary>
+    <details>
+     <summary>
+      Visualizing
+      <b>
+       intermediate activations
+      </b>
+     </summary>
+     <p>
+      This consists of displaying the feature maps that are output by various convolution and pooling layers in a network, given a certain input.
+      <br/>
+      <br/>
+      This gives a view into how an input is decomposed into the different filters learned by the network.
+     </p>
+     <h4>
+      Load the model
+     </h4>
+     <pre><code># Or simply use the model that you have used recently.
 from tensorflow.keras.models import load_model
 model = load_model()
 model.summary()
 </code></pre>
-
-
-<h4>Preprocessing a single image</h4>
-
-<pre><code>img_path = 'path/to/image.jpg'
+     <h4>
+      Preprocessing a single image
+     </h4>
+     <pre><code>img_path = 'path/to/image.jpg'
 
 from tensorflow.keras.preprocessing import image
 import numpy as np
@@ -27,22 +75,19 @@ img_tensor /= 255. # Remeber that the model is trained on inputs like that.
 print(img_tensor.shape)
 # ex. shape is (1, 150, 150, 3)
 </code></pre>
-
-
-<h4>Display hte test image</h4>
-
-<pre><code>import matplotlib.pyplot as plt
+     <h4>
+      Display hte test image
+     </h4>
+     <pre><code>import matplotlib.pyplot as plt
 
 plt.imshow(img_tensor[0])
 plt.show()
 </code></pre>
-
-<img src="imgs/20200828-135335.png" height=150 width=150>
-
-
-<h4>Instantiating a model with one input and multiple outputs (n_conv layers)</h4>
-
-<pre><code>from tensorflow.keras import models
+     <img height="150" src="imgs/20200828-135335.png" width="150"/>
+     <h4>
+      Instantiating a model with one input and multiple outputs (n_conv layers)
+     </h4>
+     <pre><code>from tensorflow.keras import models
 
 # Change the number of 8 based on n_layers in your model.
 layer_outputs = [layer.output for layer in model.layers[:8]]
@@ -51,11 +96,10 @@ activation_model = models.Model(inputs=model.input, outputs=layer_outputs)
 # Running the model in predict mode.
 activations = activation_model.predict(img_tensor)
 </code></pre>
-
-
-<h4>Show individual convolution</h4>
-
-<pre><code>first_layer_activation = activations[0]
+     <h4>
+      Show individual convolution
+     </h4>
+     <pre><code>first_layer_activation = activations[0]
 print(first_layer_activation.shape)
 # (1, 148, 148, 32)
 
@@ -64,13 +108,11 @@ plt.matshow(first_layer_activation[0, :, :, 4], cmap='viridis')
 
 # as you can see, this channel encode a diagonal edge detector.
 </code></pre>
-
-<img src="imgs/20200828-135902.png" height=150 width=150>
-
-
-<h4>Visualizing every channel in every intermediate activation</h4>
-
-<pre><code>layer_names = []
+     <img height="150" src="imgs/20200828-135902.png" width="150"/>
+     <h4>
+      Visualizing every channel in every intermediate activation
+     </h4>
+     <pre><code>layer_names = []
 for layer in model.layers[:8]:
     layer_name.append(layer.name)
 
@@ -107,26 +149,51 @@ plt.title(layer_name)
 plt.grid(False)
 plt.imshow(display_grid, aspect='auto', cmap='viridis')
 </code></pre>
-
-<img src="imgs/20200828-152955.png" height=300 width=200>
-
-<p>Things to note in here:</p>
-<ul>
-<li>The first layer acts as a collection of various edge detectors. At that stage, the activations retain almost all of the information present in the inital picture.</li>
-<li>As you go higher, the activations become increasingly abstract and less visually interpretable. They begin to encode higher-level concepts such as “cat ear” and “cat eye.” Higher presentations carry increasingly less information about the visual contents of the image, and increasingly more information related to the class of the image.</li>
-<li>The sparsity of the activations increases with the depth of the layer: in the first layer, all filters are activated by the input image; but in the following layers, more and more filters are blank. This means the pattern encoded by the filter isn’t found in the input image.</li>
-</details>
-
-
-<details><summary>Visualizing <b>Convnet Filters</b></summary>
-<p>This method displays the visual pattern that each filter is meant to respond to. This can be done with <b>gradient ascent in input space</b>: applying gradient descent to the value of the input image of a convent so as to maximize the response of a specific filter, starting from a blank input image. The resulting input image will be one that the chosen filter is maximally responsive to.</p>
-<p>The process as follows:</p>
-<ul><li>Build a loss function that maximizes the value of a given filter in a given convolution layer</li>
-<li>Use stochastic gradient descent to adjust the values of the input image so as to maximize this activation value</li></ul>
-
-<h4>Defining the loss tensor for filter visualization</h4>
-
-<pre><code>from tensorflow.keras.applications import VGG16
+     <img height="300" src="imgs/20200828-152955.png" width="200"/>
+     <p>
+      Things to note in here:
+     </p>
+     <ul>
+      <li>
+       The first layer acts as a collection of various edge detectors. At that stage, the activations retain almost all of the information present in the inital picture.
+      </li>
+      <li>
+       As you go higher, the activations become increasingly abstract and less visually interpretable. They begin to encode higher-level concepts such as “cat ear” and “cat eye.” Higher presentations carry increasingly less information about the visual contents of the image, and increasingly more information related to the class of the image.
+      </li>
+      <li>
+       The sparsity of the activations increases with the depth of the layer: in the first layer, all filters are activated by the input image; but in the following layers, more and more filters are blank. This means the pattern encoded by the filter isn’t found in the input image.
+      </li>
+     </ul>
+    </details>
+    <details>
+     <summary>
+      Visualizing
+      <b>
+       Convnet Filters
+      </b>
+     </summary>
+     <p>
+      This method displays the visual pattern that each filter is meant to respond to. This can be done with
+      <b>
+       gradient ascent in input space
+      </b>
+      : applying gradient descent to the value of the input image of a convent so as to maximize the response of a specific filter, starting from a blank input image. The resulting input image will be one that the chosen filter is maximally responsive to.
+     </p>
+     <p>
+      The process as follows:
+     </p>
+     <ul>
+      <li>
+       Build a loss function that maximizes the value of a given filter in a given convolution layer
+      </li>
+      <li>
+       Use stochastic gradient descent to adjust the values of the input image so as to maximize this activation value
+      </li>
+     </ul>
+     <h4>
+      Defining the loss tensor for filter visualization
+     </h4>
+     <pre><code>from tensorflow.keras.applications import VGG16
 from tensorflow.keras import backend as K
 
 model = VGG16(weights='imagenet', include_top=False)
@@ -136,30 +203,27 @@ filter_index = 0
 layer_output = model.get_layer(layer_name).output
 loss = K.mean(layer_output[:, :, :, filter_index])
 </code></pre>
-
-
-<h4>Obtaining the gradient of the loss with regard to the input</h4>
-
-<pre><code># The call to gradients returns a list of tensors (of size 1 in this case).
+     <h4>
+      Obtaining the gradient of the loss with regard to the input
+     </h4>
+     <pre><code># The call to gradients returns a list of tensors (of size 1 in this case).
 # Hence, you keep only the first element --- which is a tensor.
 grads = K.gradients(loss, model.input)[0]
 
 # a trick to use to help the gradient-descent go smoothly is to normalize the graident tensor by dividing it by its L2 norm (the square root of the average of the square of the values in the tensor). This ensures that the magnitude of the updates done to the input image is always within the same range.
 grads /= (K.sqrt(K.mean(K.square(grads))) + 1e-5)
 </code></pre>
-
-
-<h4>Fetching Numpy output values given Numpy input values</h4>
-
-<pre><code>iterate = K.function([model.input], [loss, grads])
+     <h4>
+      Fetching Numpy output values given Numpy input values
+     </h4>
+     <pre><code>iterate = K.function([model.input], [loss, grads])
 
 loss_value, grads_value = iterate([np.zeros((1, 150, 150, 3))])
 </code></pre>
-
-
-<h4>Loss maximization via stochastic gradient descent</h4>
-
-<pre><code>input_img_data = np.random.random((1, 150, 150, 3)) * 20 + 128.
+     <h4>
+      Loss maximization via stochastic gradient descent
+     </h4>
+     <pre><code>input_img_data = np.random.random((1, 150, 150, 3)) * 20 + 128.
 
 step = 1.
 # Run gradient ascent for 40 steps.
@@ -169,11 +233,10 @@ for i in range(40):
     # Adjusts the input image in the direction that maximizes the loss.
     input_img_data += grads_value * step
 </code></pre>
-
-
-<h4>Utility function to convert a tensor into a valid image</h4>
-
-<pre><code>def deprocess_image(x):
+     <h4>
+      Utility function to convert a tensor into a valid image
+     </h4>
+     <pre><code>def deprocess_image(x):
     x -= x.mean()
     x /= (x.std() + 1e-5)
     x *= .1
@@ -185,11 +248,10 @@ for i in range(40):
     x = np.clip(x, 0, 255).astype('uint8')
     return x
 </code></pre>
-
-
-<h4>Function to generate filter visualizations</h4>
-
-<pre><code>def generate_pattern(layer_name, filter_index, size=150):
+     <h4>
+      Function to generate filter visualizations
+     </h4>
+     <pre><code>def generate_pattern(layer_name, filter_index, size=150):
     # Builds a loss function that maximizes the activation of the nth filter of the layer under consideration.
     layer_output = model.get_layer(layer_name).output
     loss = K.mean(layer_output[:, :, :, filter_index])
@@ -215,13 +277,11 @@ for i in range(40):
 # Show some pattern
 plt.imshow(generate_pattern('block3_conv1', 0))
 </code></pre>
-
-<img src="imgs/20200828-161818.png" height=150 width=150>
-
-
-<h4>Generating a grid of all filter response patterns in a layer</h4>
-
-<pre><code>layer_name = 'block1_conv1'
+     <img height="150" src="imgs/20200828-161818.png" width="150"/>
+     <h4>
+      Generating a grid of all filter response patterns in a layer
+     </h4>
+     <pre><code>layer_name = 'block1_conv1'
 size = 64
 margin = 5
 
@@ -244,16 +304,30 @@ for i in range(8): # iterates over the rows of the results grid.
 plt.figure(figsize=(20, 20))
 plt.imshow(results)
 </code></pre>
-
-<img src="imgs/20200828-162701.png" height=150 width=150>
-</details>
-
-<details><summary>Visualizing <b>Heatmaps of class activation</b></summary>
-<p>This techiques is used for understanding which parts of a given image led a convnet to its final classification decision.<br>This general category of techiques is called <b>class activation map (CAM)</b> visualization.<br>We will implement "Grad-CAM", and it consists of taking the output feature map of a convolution layer, given an input image, and weighting every channel in that feature map by the gradient of the class with respect to the channel.</p>
-
-<h4>Loading model & process data</h4>
-
-<pre><code>from tensorflow.keras.applications.vgg16 import VGG16
+     <img height="150" src="imgs/20200828-162701.png" width="150"/>
+    </details>
+    <details>
+     <summary>
+      Visualizing
+      <b>
+       Heatmaps of class activation
+      </b>
+     </summary>
+     <p>
+      This techiques is used for understanding which parts of a given image led a convnet to its final classification decision.
+      <br/>
+      This general category of techiques is called
+      <b>
+       class activation map (CAM)
+      </b>
+      visualization.
+      <br/>
+      We will implement "Grad-CAM", and it consists of taking the output feature map of a convolution layer, given an input image, and weighting every channel in that feature map by the gradient of the class with respect to the channel.
+     </p>
+     <h4>
+      Loading model &amp; process data
+     </h4>
+     <pre><code>from tensorflow.keras.applications.vgg16 import VGG16
 
 # NOTE: we include the densely connected classifier on top.
 model = VGG16(weights='imagenet')
@@ -276,15 +350,14 @@ preds = model.predict(x)
 # take the index of the predicted class.
 class_idx = np.argmax(preds[0])
 </code></pre>
-
-
-<h4>Setting up Grad-CAM algorithm</h4>
-
-<pre><code>african_elephant_output = model.output[:, class_idx]
+     <h4>
+      Setting up Grad-CAM algorithm
+     </h4>
+     <pre><code>african_elephant_output = model.output[:, class_idx]
 # Select the LAST layer in the model.
 last_conv_layer = model.get_layer('block5_conv3')
 
-# Gradient of the &quot;African elephant&quot; class with regard to the output feature map to block5_conv3
+# Gradient of the "African elephant" class with regard to the output feature map to block5_conv3
 grads = K.gradients(african_elephant_output, last_conv_layer.output)[0]
 # Vector of shape (512,) where each entry is the mean intensity of the gradient over a specific feature-map channel.
 pooled_grads = K.mean(grads, axis=(0, 1, 2))
@@ -295,28 +368,25 @@ iterate = K.function([model.input], [pooled_grads, last_conv_layer.output[0]])
 # Values of these 2 quantities, as Numpy arrays, given the sample image of 2 elephants.
 pooled_grads_value, conv_layer_output_value = iterate([x])
 
-# Multiplies each channel in the feature-map array by &quot;how important this channel is&quot; with regard to the &quot;elepahnt&quot; class.
+# Multiplies each channel in the feature-map array by "how important this channel is" with regard to the "elepahnt" class.
 for i in range(512):
     conv_layer_output_value[:, :, i] *= pooled_grads_value[i]
 
 # the channel-wise mean of the resulting feature map is the heatmap of the class activation.
 heatmap = np.mean(conv_layer_output_value, axis=-1)
 </code></pre>
-
-
-<h4>Heatmap post-processing</h4>
-
-<pre><code>heatmap = np.maximum(heatmap, 0)
+     <h4>
+      Heatmap post-processing
+     </h4>
+     <pre><code>heatmap = np.maximum(heatmap, 0)
 heatmap /= np.max(heatmap)
 plt.matshow(heatmap)
 </code></pre>
-
-<img src="imgs/20200828-165956.png" height=150 width=150>
-
-
-<h4>Superimposing the heatmap with the original image</h4>
-
-<pre><code>import cv2
+     <img height="150" src="imgs/20200828-165956.png" width="150"/>
+     <h4>
+      Superimposing the heatmap with the original image
+     </h4>
+     <pre><code>import cv2
 img = cv2.imread(img_path)
 heatmap = cv2.resize(heatmap, (img.shape[1], img.shape[0]))
 heatmap = np.uint8(255*heatmap)
@@ -325,8 +395,19 @@ superimosed_img = heatmap * .4 + img
 
 cv2.imwrite('path/to/save/image.jpg', superimposed_img)
 </code></pre>
-
-<img src="imgs/20200828-170235.png" height=150 width=150>
-
-</details>
-</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+     <img height="150" src="imgs/20200828-170235.png" width="150"/>
+    </details>
+   </details>
+  </div>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>
