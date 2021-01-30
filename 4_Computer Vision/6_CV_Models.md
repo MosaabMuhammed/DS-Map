@@ -1,17 +1,15 @@
-# Models
+<h1 id="models">Models</h1>
 
 <div style='width:1000px;margin:auto;'>
 
-<details><summary><b>Bi-Directional LSTM</b> for Images</summary><p>
-```
-from keras.models import Model
+<details><summary><b>Bi-Directional LSTM</b> for Images</summary><p><pre><code>from keras.models import Model
 from keras.layers import Input, LSTM, GRU, Bidirectional, GlobalMaxPooling1D, Lambda, Concatenate, Dense
 import keras.backend as K
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-if len(K.tensorflow_backend._get_available_gpus()) > 0:
+if len(K.tensorflow_backend._get_available_gpus()) &gt; 0:
   from keras.layers import CuDNNLSTM as LSTM
   from keras.layers import CuDNNGRU as GRU
 
@@ -99,8 +97,7 @@ plt.plot(r.history['acc'], label='acc')
 plt.plot(r.history['val_acc'], label='val_acc')
 plt.legend()
 plt.show()
-
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>Transfer Learning</b></summary>
@@ -108,7 +105,7 @@ plt.show()
 <li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/25.%20Transfer%20Learning.html"><b>How to choose Transfer Learning Model</b></a> </p></li>
 
 <li><p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Deep%20Learning%20Nanodegree%20Program/Part%2003-Module%2001-Lesson%2002_Convolutional%20Neural%20Networks/26.%20Transfer%20Learning%20in%20Keras.html"><b>How to use Transfer Learning</b></a> </p></li>
-	
+
 <li><p><a href="https://github.com/alexisbcook/keras_transfer_cifar10/blob/master/Keras_Transfer_CIFAR10.ipynb"><b>1. Inception</b></a> </p></li></ul>
 
 <details><summary><b>2. VGG16</b></summary><p>
@@ -179,22 +176,18 @@ custom_model.compile(loss='categorical_crossentropy',
 Numpy array on disk, and then using this data as input to a standalone, densely connected classifier similar to those you saw in part 1 of this book. This solution is fast and cheap to run, because it only requires running the convolutional base once for every input image, and the convolutional base is by far the most expensive part of the pipeline. But for the same reason, this technique won’t allow you to use data augmentation.</li><br>
 
 <details><summary><b>Feature Extraction WITHOUT Data Augmentation</b></summary>
-<h4>Fetch the pretrained model</h4>
-```
-# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
+<h4>Fetch the pretrained model</h4><pre><code># you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
 from tensorflow.keras.applications import VGG16
 
 conv_base = VGG16(weights='imagenet',
-				 include_top=False,
-				 input_shape=(150, 150, 3))
+                 include_top=False,
+                 input_shape=(150, 150, 3))
 
 # weights: specifies the weight checkpoint from which to initialize the model.
 # include_top: refers to including (or not) the densely connected layers.
-# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
-```
-<h4>Extracting features using the pretrained convolutional base</h4>
-```
-import os
+# input_shape: is the shape of the image tensor that you'll feed to the network.  --&gt; This is purely OPTIONAL.
+</code></pre>
+<h4>Extracting features using the pretrained convolutional base</h4><pre><code>import os
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
@@ -207,42 +200,38 @@ datagen = ImageDataGenerator(rescale=1./255)
 batch_size = 20
 
 def extract_features(directory, sample_count):
-	# This is the final shape of the conv_base, you can check it by using
-	# conv_base.summary()
-	features = np.zeros(shape=(sample_count, 4, 4, 512))
-	labels     = np.zeros(shape=(sample_count))
-	generator = datagen.flow_from_directory(
-						directory,
-						target_size=(150, 150),
-						batch_size=batch_size,
-						class_mode='binary')
-	i = 0
-	for inputs_batch, labels_batch in generator:
-		features_batch = conv_base.predict(inputs_batch)
-		features[i*batch_size:(i+1)*batch_size] = features_batch
-		labels[i*batch_size:(i+1)*batch_size] = labels_batch
-		i += 1
-		if i * batch_size >= sample_count:
-			break
-	return features, labels
-	
+    # This is the final shape of the conv_base, you can check it by using
+    # conv_base.summary()
+    features = np.zeros(shape=(sample_count, 4, 4, 512))
+    labels     = np.zeros(shape=(sample_count))
+    generator = datagen.flow_from_directory(
+                        directory,
+                        target_size=(150, 150),
+                        batch_size=batch_size,
+                        class_mode='binary')
+    i = 0
+    for inputs_batch, labels_batch in generator:
+        features_batch = conv_base.predict(inputs_batch)
+        features[i*batch_size:(i+1)*batch_size] = features_batch
+        labels[i*batch_size:(i+1)*batch_size] = labels_batch
+        i += 1
+        if i * batch_size &gt;= sample_count:
+            break
+    return features, labels
+
 # generate features for training, validation, and testing.
 # 2000 is the number of training rows.
 train_features, train_labels = extract_features(train_dir, 2000)
 valid_features, valid_labels = extract_features(valid_dir, 1000)
 test_features, test_labels    = extract_features(test_dir, 1000)
-```
+</code></pre>
 
-<h4>Change the shape, to feed it to Dense layers</h4>
-```
-train_features = np.reshape(train_features, (2000, 4*4*512))
+<h4>Change the shape, to feed it to Dense layers</h4><pre><code>train_features = np.reshape(train_features, (2000, 4*4*512))
 valid_features = np.reshape(valid_features, (1000, 4*4*512))
 test_features  = np.reshape(test_features, (1000, 4*4*512))
-```
+</code></pre>
 
-<h4>Create the Dense layers</h4>
-```
-from tensorflow.keras import models, layers, optimizers
+<h4>Create the Dense layers</h4><pre><code>from tensorflow.keras import models, layers, optimizers
 
 mode = models.Sequential()
 model.add(layers.Dense(256, activation='relu', input_dim=4*4*512))
@@ -250,15 +239,15 @@ model.add(layers.Dropout(0.5))
 model.add(layers.Dense(1, activation='sigmoid'))
 
 model.compile(optimizer=optimizers.RMSprop(lr=2e-5),
-			loss='binary_crossentropy',
-			metrics=['accuracy'])
-			
+            loss='binary_crossentropy',
+            metrics=['accuracy'])
+
 history = model.fit(train_features, train_labels,
-			      epochs=30,
-			      batch_size=20,
-			      validation_data=(valid_features, valid_labels))
+                  epochs=30,
+                  batch_size=20,
+                  validation_data=(valid_features, valid_labels))
 # Training will be fast!
-```
+</code></pre>
 </details><br><br>
 <li>Extending the model you have (conv_base) by adding Dense layers on top, and
 running the whole thing end to end on the input data. This will allow you to use
@@ -267,80 +256,72 @@ base every time it’s seen by the model. But for the same reason, this techniqu
 far more expensive than the first.</li><br>
 
 <details><summary><b>Feature Extraction WITH Data Augmentation</b></summary>
-<h4>Fetch the pretrained model</h4>
-```
-# you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
+<h4>Fetch the pretrained model</h4><pre><code># you can choose from [Xception, Inception V3, ResNet50, VGG16, VGG19, MobileNet, ...]
 from tensorflow.keras.applications import VGG16
 
 conv_base = VGG16(weights='imagenet',
-				 include_top=False,
-				 input_shape=(150, 150, 3))
+                 include_top=False,
+                 input_shape=(150, 150, 3))
 
 # weights: specifies the weight checkpoint from which to initialize the model.
 # include_top: refers to including (or not) the densely connected layers.
-# input_shape: is the shape of the image tensor that you'll feed to the network.  --> This is purely OPTIONAL.
-```
+# input_shape: is the shape of the image tensor that you'll feed to the network.  --&gt; This is purely OPTIONAL.
+</code></pre>
 
-<h4>Adding a densly connected classifier on top of convolutional base</h4>
-```
-from tensorflow.keras import models, layers.
+<h4>Adding a densly connected classifier on top of convolutional base</h4><pre><code>from tensorflow.keras import models, layers.
 
 model = models.Sequential()
 model.add(conv_base)
 model.add(layers.Flatten())
 model.add(layers.Dense(254, activation='relu'))
 model.add(layers.Dense(1, activation='sigmoid'))
-```
+</code></pre>
 
-<h4>Freeze the convoluational base's weights</h4>
-```
-print(f"~> Number of trainable weights before freezing conv base: {len(model.trainable_weights}"))
+<h4>Freeze the convoluational base's weights</h4><pre><code>print(f"~&gt; Number of trainable weights before freezing conv base: {len(model.trainable_weights}"))
 
 conv_base.trainable = False
 
-print(f"~> Number of trainable weights After freezing conv base: {len(model.trainable_weights}"))
-```
+print(f"~&gt; Number of trainable weights After freezing conv base: {len(model.trainable_weights}"))
+</code></pre>
 
-<h4>Data Augmenation</h4>
-```
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+<h4>Data Augmenation</h4><pre><code>from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 
 train_datagen = ImageDataGenerator(
-					rescale=1./255,
-					rotation_range=40,
-					width_shift_range=.2,
-					height_shift_range=.2,
-					shear_range=.2,
-					zoom_range=.2,
-					horizontal_flip=True,
-					fill_mode='nearest')
-					
+                    rescale=1./255,
+                    rotation_range=40,
+                    width_shift_range=.2,
+                    height_shift_range=.2,
+                    shear_range=.2,
+                    zoom_range=.2,
+                    horizontal_flip=True,
+                    fill_mode='nearest')
+
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
-					train_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_model='binary')
-					
+                    train_dir,
+                    target_size=(150, 150),
+                    batch_size=20,
+                    class_model='binary')
+
 valid_generator = test_datagen.flow_from_directory(
-					valid_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_mode='binary')
-					
+                    valid_dir,
+                    target_size=(150, 150),
+                    batch_size=20,
+                    class_mode='binary')
+
 model.compile(loss='binary_crossentropy',
-			optimizer=optimizers.RMSprop(lr=2-e5),
-			metrics=['accuracy'])
-			
+            optimizer=optimizers.RMSprop(lr=2-e5),
+            metrics=['accuracy'])
+
 history = model.fit_generator(
-				train_generator,
-				steps_per_epoch=100,
-				epochs=30,
-				validation_data=validation_generator,
-				validation_steps=50)
-```
+                train_generator,
+                steps_per_epoch=100,
+                epochs=30,
+                validation_data=validation_generator,
+                validation_steps=50)
+</code></pre>
 </p></details></ul>
 <details><summary><b>Fine-Tunning</b> a Transfer learning mode</summary>
 <ol><li>Add your custom network on top of an already-trained base network</li>
@@ -349,50 +330,274 @@ history = model.fit_generator(
 <li>Unfreeze some layers in the base network.</li>
 <li>Jointly train both these layers and the part you added.</li></ol>
 
-<h4>Freezing all layers up to a specific point</h4>
-```
-# to know the name of the layers, do the following.
+<h4>Freezing all layers up to a specific point</h4><pre><code># to know the name of the layers, do the following.
 conv_base.summary()
 
 conv_base.trainable = True
 
 set_trainable = False
 for layer in conv_base.layers:
-	if layer.name == 'block5_conv1':
-		set_trainable = True
-	if set_trainable:
-		layer.trainable = True
-	else:
-		layer.trainable = False
-```
+    if layer.name == 'block5_conv1':
+        set_trainable = True
+    if set_trainable:
+        layer.trainable = True
+    else:
+        layer.trainable = False
+</code></pre>
 
-<h4>Fine-tuning the model</h4>
-```
-# Make sure to use a small learning rate, to avoid changing the weight too much.
+<h4>Fine-tuning the model</h4><pre><code># Make sure to use a small learning rate, to avoid changing the weight too much.
 model.compile(loss='binary_crossentropy',
-			optimizer=optimizers.RMSprop(lr=1e-5),
-			metrics=['accuracy'])
-			
-history = model.fit_generator(
-				train_generator,
-				steps_per_epoch=100,
-				epochs=100,
-				validation_data=validation_generator,
-				validation_steps=50)
-```
+            optimizer=optimizers.RMSprop(lr=1e-5),
+            metrics=['accuracy'])
 
-<h4>Test the model</h4>
-```
-test_generator = test_datagen.flow_from_directory(
-					test_dir,
-					target_size=(150, 150),
-					batch_size=20,
-					class_mode='binary')
-					
+history = model.fit_generator(
+                train_generator,
+                steps_per_epoch=100,
+                epochs=100,
+                validation_data=validation_generator,
+                validation_steps=50)
+</code></pre>
+
+<h4>Test the model</h4><pre><code>test_generator = test_datagen.flow_from_directory(
+                    test_dir,
+                    target_size=(150, 150),
+                    batch_size=20,
+                    class_mode='binary')
+
 test_loss, test_acc = model.evaluate_generator(test_generator, steps=50)
 print(f"test acc: {test_acc}")
-```
+</code></pre>
 </p></details>
+</p></details>
+<details><summary><b>DenseNet121</b></summary><p><pre><code>from tensorflow.keras.applications import DenseNet121
+
+def format_path(st):
+    return f'{GCS_DS_PATH}/images/{st}.jpg'
+
+test_paths  = test_data.image_id.apply(format_path).values
+train_paths = train_data.image_id.apply(format_path).values
+
+train_labels = np.float32(train_data.loc[:, 'healthy':'scab'].values)
+train_paths, valid_paths, train_labels, valid_labels =\
+    train_test_split(train_paths, train_labels, test_size=0.15, random_state=2020)
+
+def decode_image(filename, label=None, image_size=(512, 512)):
+    bits  = tf.io.read_file(filename)
+    image = tf.image.decode_jpeg(bits, channels=3)
+    image = tf.cast(image, tf.float32) / 255.0
+    image = tf.image.resize(image, image_size)
+
+    if label is None:
+        return image
+    else:
+        return image, label
+
+def data_augment(image, label=None):
+    image = tf.image.random_flip_left_right(image)
+    image = tf.image.random_flip_up_down(image)
+
+    if label is None:
+        return image
+    else:
+        return image, label
+</code></pre>
+
+<h4>Setup TPU Configurations</h4><pre><code>AUTO = tf.data.experimental.AUTOTUNE
+tpu  = tf.distribute.cluster_resolver.TPUClusterResolver()
+
+tf.config.experimental_connect_to_cluster(tpu)
+tf.tpu.experimental.initialize_tpu_system(tpu)
+strategy = tf.distribute.experimental.TPUStrategy(tpu)
+
+BATCH_SIZE  = 16 * strategy.num_replicas_in_sync
+GCS_DS_PATH = KaggleDatasets().get_gcs_path()
+</code></pre>
+
+<h4>Prepare the datasets</h4><pre><code>train_dataset = (
+    tf.data.Dataset
+    .from_tensor_slices((train_paths, train_labels))
+    .map(decode_image, num_parallel_calls=AUTO)
+    .map(data_augment, num_parallel_calls=AUTO)
+    .repeat()
+    .shuffle(512)
+    .batch(BATCH_SIZE)
+    .prefetch(AUTO)
+)
+
+valid_dataset = (
+    tf.data.Dataset
+    .from_tensor_slices((valid_paths, valid_labels))
+    .map(decode_image, num_parallel_calls=AUTO)
+    .batch(BATCH_SIZE)
+    .cache()
+    .prefetch(AUTO)
+)
+
+test_dataset = (
+    tf.data.Dataset
+    .from_tensor_slices(test_paths)
+    .map(decode_image, num_parallel_calls=AUTO)
+    .batch(BATCH_SIZE)
+
+)
+</code></pre>
+
+<h4>Prepare the learning rate strategy</h4><pre><code>def build_lrfn(lr_start=0.00001, lr_max=0.00005,
+               lr_min=0.00001,   lr_rampup_epochs=5,
+              lr_sustain_epochs=0, lr_exp_decay=.8):
+    lr_max = lr_max * strategy.num_replicas_in_sync
+
+    def lrfn(epoch):
+        if epoch &lt; lr_rampup_epochs:
+            lr = (lr_max - lr_start) / lr_rampup_epochs * epoch + lr_start
+        elif epoch &lt; lr_rampup_epochs + lr_sustain_epochs:
+            lr = lr_max
+        else:
+            lr = (lr_max - lr_min) *\
+                 lr_exp_decay**(epoch - lr_rampup_epochs\
+                               - lr_sustain_epochs) + lr_min
+        return lr
+    return lrfn
+
+lrfn            = build_lrfn()
+STEPS_PER_EPOCH = train_labels.shape[0] // BATCH_SIZE
+lr_schedule     = tf.keras.callbacks.LearningRateScheduler(lrfn, verbose=1)
+</code></pre>
+
+<h4>Build the model with TPU</h4><pre><code>with strategy.scope():
+    model = tf.keras.Sequential([
+        DenseNet121(input_shape=(512, 512, 3), weights="imagenet", include_top=False),
+        L.GlobalAveragePooling2D(),
+        L.Dense(train_labels.shape[1], activation="softmax")
+    ])
+
+    model.compile(optimizer="adam",
+                  loss="categorical_crossentropy",
+                  metrics=["categorical_accuracy"])
+    model.summary()
+
+history = model.fit(train_dataset,
+                    epochs=EPOCHS,
+                    callbacks=[lr_schedule],
+                    steps_per_epoch=STEPS_PER_EPOCH,
+                    validation_data=valid_dataset)
+</code></pre>
+</p></details>
+<details><summary><b>EfficientNet</b> [imagenet/noisy-student]</summary><p><pre><code>!pip install -q efficientnet
+import efficientnet.tfkeras as efn
+
+def format_path(st):
+    return f'{GCS_DS_PATH}/images/{st}.jpg'
+
+test_paths  = test_data.image_id.apply(format_path).values
+train_paths = train_data.image_id.apply(format_path).values
+
+train_labels = np.float32(train_data.loc[:, 'healthy':'scab'].values)
+train_paths, valid_paths, train_labels, valid_labels =\
+    train_test_split(train_paths, train_labels, test_size=0.15, random_state=2020)
+
+def decode_image(filename, label=None, image_size=(512, 512)):
+    bits  = tf.io.read_file(filename)
+    image = tf.image.decode_jpeg(bits, channels=3)
+    image = tf.cast(image, tf.float32) / 255.0
+    image = tf.image.resize(image, image_size)
+
+    if label is None:
+        return image
+    else:
+        return image, label
+
+def data_augment(image, label=None):
+    image = tf.image.random_flip_left_right(image)
+    image = tf.image.random_flip_up_down(image)
+
+    if label is None:
+        return image
+    else:
+        return image, label
+</code></pre>
+
+<h4>Setup TPU Configurations</h4><pre><code>AUTO = tf.data.experimental.AUTOTUNE
+tpu  = tf.distribute.cluster_resolver.TPUClusterResolver()
+
+tf.config.experimental_connect_to_cluster(tpu)
+tf.tpu.experimental.initialize_tpu_system(tpu)
+strategy = tf.distribute.experimental.TPUStrategy(tpu)
+
+BATCH_SIZE  = 16 * strategy.num_replicas_in_sync
+GCS_DS_PATH = KaggleDatasets().get_gcs_path()
+</code></pre>
+
+<h4>Prepare the datasets</h4><pre><code>train_dataset = (
+    tf.data.Dataset
+    .from_tensor_slices((train_paths, train_labels))
+    .map(decode_image, num_parallel_calls=AUTO)
+    .map(data_augment, num_parallel_calls=AUTO)
+    .repeat()
+    .shuffle(512)
+    .batch(BATCH_SIZE)
+    .prefetch(AUTO)
+)
+
+valid_dataset = (
+    tf.data.Dataset
+    .from_tensor_slices((valid_paths, valid_labels))
+    .map(decode_image, num_parallel_calls=AUTO)
+    .batch(BATCH_SIZE)
+    .cache()
+    .prefetch(AUTO)
+)
+
+test_dataset = (
+    tf.data.Dataset
+    .from_tensor_slices(test_paths)
+    .map(decode_image, num_parallel_calls=AUTO)
+    .batch(BATCH_SIZE)
+
+)
+</code></pre>
+
+<h4>Prepare the learning rate strategy</h4><pre><code>def build_lrfn(lr_start=0.00001, lr_max=0.00005,
+               lr_min=0.00001,   lr_rampup_epochs=5,
+              lr_sustain_epochs=0, lr_exp_decay=.8):
+    lr_max = lr_max * strategy.num_replicas_in_sync
+
+    def lrfn(epoch):
+        if epoch &lt; lr_rampup_epochs:
+            lr = (lr_max - lr_start) / lr_rampup_epochs * epoch + lr_start
+        elif epoch &lt; lr_rampup_epochs + lr_sustain_epochs:
+            lr = lr_max
+        else:
+            lr = (lr_max - lr_min) *\
+                 lr_exp_decay**(epoch - lr_rampup_epochs\
+                               - lr_sustain_epochs) + lr_min
+        return lr
+    return lrfn
+
+lrfn            = build_lrfn()
+STEPS_PER_EPOCH = train_labels.shape[0] // BATCH_SIZE
+lr_schedule     = tf.keras.callbacks.LearningRateScheduler(lrfn, verbose=1)
+</code></pre>
+
+<h4>Build the model with TPU</h4><pre><code># To use "noisy-student", change the weights parameters to "noisy-student".
+with strategy.scope():
+    model = tf.keras.Sequential([
+        efn.EfficientNetB7(input_shape=(512, 512, 3), weights="imagenet", include_top=False),
+        L.GlobalAveragePooling2D(),
+        L.Dense(train_labels.shape[1], activation="softmax")
+    ])
+
+    model.compile(optimizer="adam",
+                  loss="categorical_crossentropy",
+                  metrics=["categorical_accuracy"])
+    model.summary()
+
+history = model.fit(train_dataset,
+                    epochs=EPOCHS,
+                    callbacks=[lr_schedule],
+                    steps_per_epoch=STEPS_PER_EPOCH,
+                    validation_data=valid_dataset)
+</code></pre>
 </p></details>
 
 <div><a href="./notebooks/deepdream.html" style="color:#333;font-size:16px;font-weight:bold;padding:15px">DeepDream</a></div>

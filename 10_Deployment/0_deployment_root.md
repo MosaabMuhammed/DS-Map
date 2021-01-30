@@ -229,6 +229,9 @@ supervisorctl -c supervisord.local.conf stop all
 # Start running the dieamans
 supervisorctl -c supervisord.local.conf start all
 
+# Shutdown the running proesses.
+supervisorctl -c supervisord.local.conf shutdown
+
 # Check the last 30 lines in the log.
 tail -n 30 /tmp/ingestbeerr.log
 </code></pre>
