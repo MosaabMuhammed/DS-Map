@@ -271,6 +271,46 @@ images_aug = np.array([aug_pipeline.augment_image(image2) for _ in range(16)])
 </code></pre>
 </details></li>
 
+<li><details><summary><b>Albumentations</b></summary>
+Albumentations is a fast image augmentation library and easy to use wrapper around other libraries.It is based on numpy, OpenCV, imgaug picking the best from each of them.<br>It is written by Kagglers and was used to get top results in many DL competitions at Kaggle, topcoder, CVPR, MICCAI. Read more about it here: https://www.mdpi.com/2078-2489/11/2/125
+
+<pre><code>import albumentations as A
+
+# initialize augmentations
+horizontal_flip = A.HorizontalFlip(p=1)
+rotate = A.ShiftScaleRotate(p=1)
+gaus_noise = A.GaussNoise() # gaussian noise
+bright_contrast = A.RandomBrightnessContrast(p=1) # random brightness and contrast
+gamma = A.RandomGamma(p=1) # random gamma
+blur = A.Blur()
+
+# apply augmentations to images
+img_flip = horizontal_flip(image = image2)
+img_gaus = gaus_noise(image = image2)
+img_rotate = rotate(image = image2)
+img_bc = bright_contrast(image = image2)
+img_gamma = gamma(image = image2)
+img_blur = blur(image = image2)
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Augmentor</b></summary>
+<pre><code>!pip install augmentor
+import Augmentor 
+
+p = Augmentor.Pipeline(source_directory="/kaggle/input/plant-pathology-2020-fgvc7/images",
+                      output_directory="/kaggle/output")
+  
+# Defining augmentation parameters and generating 10 samples 
+p.flip_left_right(probability=0.4) 
+p.flip_top_bottom(probability=0.8)
+p.rotate(probability=0.5, max_left_rotation=5, max_right_rotation=10)
+p.skew(0.4, 0.5) 
+p.zoom(probability = 0.2, min_factor = 1.1, max_factor = 1.5) 
+p.sample(10)
+</code></pre>
+</details></li>
+
 <li><details><summary><b>Data Augmentation</b></summary>
 
 </details></li>
