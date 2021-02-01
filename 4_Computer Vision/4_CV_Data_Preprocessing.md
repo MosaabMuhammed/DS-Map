@@ -39,7 +39,9 @@ history = model.fit_generator(train_generator,
 - Use a pretrained Convent.
 </details>
 
-<details><summary><b>Data Augmentation</b></summary>
+<details><summary><b>Data Augmentation</b></summary><ul>
+
+<li><details><summary><b>Keras</b></summary>
 ```
 # Note: Validation & Test data shouldn't be augmented.
 datagen = ImageDataGenerator(
@@ -89,6 +91,132 @@ for batch in datagen.flow(x, batch_size=1):
 
 plt.show()
 ```
-</details>
+</details></li>
 
+
+<li><details><summary><b>Skimage</b></summary>
+<pre><code>from skimage.io import imshow, imread, imsave
+from skimage.transform import rotate, AffineTransform, warp,rescale, resize, downscale_local_mean
+from skimage import color,data
+from skimage.exposure import adjust_gamma
+from skimage.util import random_noise
+
+##### Flipping
+#Horizontally flipped
+hflipped_image= np.fliplr(image) #fliplr reverse the order of columns of pixels in matrix
+
+#Vertically flipped
+vflipped_image= np.flipud(image) #flipud reverse the order of rows of pixels in matrix
+
+##### Rotation
+# clockwise rotation
+rot_clockwise_image = rotate(image, angle=45) 
+# Anticlockwise rotation
+rot_anticlockwise_image = rotate(image, angle=-45)
+
+##### Cropping
+# source: https://www.kaggle.com/safavieh/image-augmentation-using-skimage
+import random
+import pylab as pl 
+def randRange(a, b):
+    '''
+    a utility function to generate random float values in desired range
+    '''
+    return pl.rand() * (b - a) + a
+def randomCrop(im):
+    '''
+    croping the image in the center from a random margin from the borders
+    '''
+    margin = 1/3.5
+    start = [int(randRange(0, im.shape[0] * margin)),
+             int(randRange(0, im.shape[1] * margin))]
+    end = [int(randRange(im.shape[0] * (1-margin), im.shape[0])), 
+           int(randRange(im.shape[1] * (1-margin), im.shape[1]))]
+    cropped_image = (im[start[0]:end[0], start[1]:end[1]])
+    return cropped_image
+    
+cropped_image = randomCrop(image)
+
+#####  Brightness Manipulation
+image_bright = adjust_gamma(image, gamma=0.5,gain=1)
+image_dark = adjust_gamma(image, gamma=2,gain=1)
+
+###### Scaling
+image_resized = resize(image, (image.shape[0] // 2, image.shape[1] // 2), anti_aliasing=True)
+#image_downscaled = downscale_local_mean(image, (4, 3))
+
+##### Noise Addition
+noisy_image= random_noise(image)
+</code></pre>
+</details></li>
+
+<li><details><summary><b>OpenCV-Python</b></summary>
+OpenCV essentially stands for Open Source Computer Vision Library. Although it is written in optimized C/C++, it has interfaces for Python and Java along with C++. 
+OpenCV-Python is the python API for OpenCV. You can think of it as a python wrapper around the C++ implementation of OpenCV. OpenCV-Python is not only fast (since the background consists of code written in C/C++) but is also easy to code and deploy(due to the Python wrapper in foreground). This makes it a great choice to perform computationally intensive programs.
+
+<pre><code>##### Flipping
+#The image is flipped according to the value of flipCode as follows:
+#flipcode = 0: flip vertically
+#flipcode > 0: flip horizontally
+#flipcode < 0: flip vertically and horizontally
+#vertical flip
+img_flip_ud = cv2.flip(image13, 0)
+plt.imshow(img_flip_ud)
+#horizontal flip
+img_flip_lr = cv2.flip(image13, 1)
+plt.imshow(img_flip_lr)
+
+######### Rotation.
+# The OpenCV function that rotates the image is cv2.rotate().The following three constants can be specified in rotateCode.
+#cv2.ROTATE_90_CLOCKWISE
+#cv2.ROTATE_90_COUNTERCLOCKWISE
+#cv2.ROTATE_180
+img_rotate_90_clockwise = cv2.rotate(image13, cv2.ROTATE_90_CLOCKWISE)
+img_rotate_90_counterclockwise = cv2.rotate(image13, cv2.ROTATE_90_COUNTERCLOCKWISE)
+img_rotate_180 = cv2.rotate(image13, cv2.ROTATE_180)
+
+########### Scaling.
+#RESIZE
+def resize_image(image,w,h):
+    resized_image = image=cv2.resize(image,(w,h))
+    return resized_image
+imshow(resize_image(image13, 500,500))
+
+########## Brightness Manipulation.
+def add_light(image, gamma):
+    invGamma = 1.0 / gamma
+    table = np.array([((i / 255.0) ** invGamma) * 255
+                      for i in np.arange(0, 256)]).astype("uint8")
+    image=cv2.LUT(image, table)
+    return image
+imshow(add_light(image13,2))
+
+########## Cropping.
+def crop_image(image,y1,y2,x1,x2):
+    image=image[y1:y2,x1:x2]
+    return image
+imshow(crop_image(image13,200,800,250,1500))
+
+############## Gaussian Blur.
+def gaussian_blur(image,blur):
+    image = cv2.GaussianBlur(image,(5,5),blur)
+    return image
+
+imshow(gaussian_blur(image13,0))
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Data Augmentation</b></summary>
+
+</details></li>
+
+<li><details><summary><b>Data Augmentation</b></summary>
+
+</details></li>
+
+<li><details><summary><b>Data Augmentation</b></summary>
+
+</details></li>
+
+</ul></details>
 </div>
