@@ -201,13 +201,74 @@ imshow(crop_image(image13,200,800,250,1500))
 def gaussian_blur(image,blur):
     image = cv2.GaussianBlur(image,(5,5),blur)
     return image
-
 imshow(gaussian_blur(image13,0))
 </code></pre>
 </details></li>
 
-<li><details><summary><b>Data Augmentation</b></summary>
+<li><details><summary><b>imgaug</b></summary>
+imgaug is a library for image augmentation in machine learning experiments. It supports a wide range of augmentation techniques, allows to easily combine these and to execute them in random order or on multiple CPU cores, has a simple yet powerful stochastic interface and can not only augment images, but also keypoints/landmarks, bounding boxes, heatmaps and segmentation maps.
 
+<pre><code># imgaug
+import imageio
+import imgaug as ia
+import imgaug.augmenters as iaa
+
+############ Flipping.
+hflip= iaa.Fliplr(p=1.0)
+hflipped_image2= hflip.augment_image(image2)
+
+#Vertically flipped
+vflip= iaa.Flipud(p=1.0) 
+vflipped_image2= vflip.augment_image(image2)
+
+############### Rotation.
+rot = iaa.Affine(rotate=(-25,25))
+rot_clockwise_image2 = rot.augment_image(image2)
+
+################### Cropping.
+crop = iaa.Crop(percent=(0, 0.2)) # crop image
+corp_image=crop.augment_image(image)
+
+#################### Brightness Manipulation.
+# bright
+contrast1=iaa.GammaContrast(gamma=0.5)
+brightened_image = contrast1.augment_image(image)
+
+#dark
+contrast2=iaa.GammaContrast(gamma=2)
+darkened_image = contrast2.augment_image(image)
+
+#################### Scaling.
+scale_im=iaa.Affine(scale={"x": (1.5, 1.0), "y": (0.5, 1.0)})
+scale_image =scale_im.augment_image(image)
+
+#################### Noise Addition.
+gaussian_noise=iaa.AdditiveGaussianNoise(15,20)
+noise_image=gaussian_noise.augment_image(image)
+</code></pre>
+2.7 Augmentation pipeline<br>
+The imgaug library provides a very useful feature called Augmentation pipeline. Such a pipeline is a sequence of steps that can be applied in a fixed or random order. This also gives the flexibility to apply certain transformations to a few images and other transformations to other images. In the following example, we are applying the flip, sharpen,crop etc transformations on some of the images. The blur and affline transformations will be applied sometimes and all these transformations will be applied in random order.
+
+<pre><code>
+# Defining a pipeline.
+# The example has been taken from the documentation
+aug_pipeline = iaa.Sequential([
+    iaa.SomeOf((0,3),[
+        iaa.Fliplr(1.0), # horizontally flip
+        iaa.Flipud(1.0),# Vertical flip
+        iaa.Sharpen(alpha=(0, 1.0), lightness=(0.75, 1.5)), # sharpen images
+        iaa.Crop(percent=(0, 0.4)),
+        iaa.Sometimes(0.5, iaa.Affine(rotate=5)),
+        iaa.Sometimes( 0.5,iaa.GaussianBlur(sigma=(0, 0.5))),
+        iaa.AdditiveGaussianNoise(loc=0, scale=(0.0, 0.05*255), per_channel=0.5),
+    ])
+], 
+random_order=True # apply the augmentations in random order
+)
+
+# apply augmentation pipeline to sample image
+images_aug = np.array([aug_pipeline.augment_image(image2) for _ in range(16)])
+</code></pre>
 </details></li>
 
 <li><details><summary><b>Data Augmentation</b></summary>
