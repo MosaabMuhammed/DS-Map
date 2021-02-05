@@ -1,32 +1,28 @@
-# 4. Data Preprocessing
+<h1 id="4datapreprocessing">4. Data Preprocessing</h1>
 
 <div style='width:1000px;margin:auto;'>
-<details><summary><b>Read Images</b> with <b>Keras Generator</b></summary><p>
-```
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+<details><summary><b>Read Images</b> with <b>Keras Generator</b></summary><p><pre><code>from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 train_datagen = ImageDataGenerator(rescale=1./255)
 test_datagen  = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
-										target_size=(150, 150), # Resize all images to 150x150
-										batch_size=20,
-										class_mode='binary')
-										
-valid_generator = test_datagen.flow_from_directory(valid_dir,
-										target_size=(150, 150), # Resize all images to 150x150
-										batch_size=20,
-										class_mode='binary')				
-```
+                                        target_size=(150, 150), # Resize all images to 150x150
+                                        batch_size=20,
+                                        class_mode='binary')
 
-<h4>When fitting the model with generators</h4>
-```
-history = model.fit_generator(train_generator,
-						steps_per_epoch=len(train_df)/batch_size,
-						epochs=30,
-						validation_data=valid_generator,
-						validation_steps=len(valid_df)/batch_size)
-```
+valid_generator = test_datagen.flow_from_directory(valid_dir,
+                                        target_size=(150, 150), # Resize all images to 150x150
+                                        batch_size=20,
+                                        class_mode='binary')                
+</code></pre>
+
+<h4>When fitting the model with generators</h4><pre><code>history = model.fit_generator(train_generator,
+                        steps_per_epoch=len(train_df)/batch_size,
+                        epochs=30,
+                        validation_data=valid_generator,
+                        validation_steps=len(valid_df)/batch_size)
+</code></pre>
 </p></details>
 <details><summary>Deal with <b>small images dataset</b> 2,000 images</b></summary>
 <p> if you start with a simple convnet architecuture, your model will overfit quickly, here's how you can mitigate that effect:</p>
@@ -41,32 +37,28 @@ history = model.fit_generator(train_generator,
 
 <details><summary><b>Data Augmentation</b></summary><ul>
 
-<li><details><summary><b>Keras</b></summary>
-```
-# Note: Validation & Test data shouldn't be augmented.
+<li><details><summary><b>Keras</b></summary><pre><code># Note: Validation &amp; Test data shouldn't be augmented.
 datagen = ImageDataGenerator(
-			rescale=1./255,
-			rotation_range=40,
-			width_shift_range=0.2,
-			height_shift_range=0.2,
-			shear_range=0.2,
-			zoom_range=0.2,
-			horizontal_flip=True,
-			fill_mode='nearest')
-			
+            rescale=1./255,
+            rotation_range=40,
+            width_shift_range=0.2,
+            height_shift_range=0.2,
+            shear_range=0.2,
+            zoom_range=0.2,
+            horizontal_flip=True,
+            fill_mode='nearest',
+            brightness_range = (0.5, 1.5))
+
 valid_datagen = ImageDataGenerator(rescale=1./255)
 
 # Read the folder of images.
 train_generator = datagen.flow_from_directory(
-					train_dir,
-					target_size=(150, 150),
-					batch_size=32,
-					class_mode='binary')
-
-```
-<h4> Display some images after augmenation</h4>
-```
-from tensorflow.keras.preprocessing import image
+                    train_dir,
+                    target_size=(150, 150),
+                    batch_size=32,
+                    class_mode='binary')
+</code></pre>
+<h4> Display some images after augmenation</h4><pre><code>from tensorflow.keras.preprocessing import image
 
 fnames = [os.path.join(train_cats_dir, fname) for fname in os.listdir(train_cats_dir)]
 
@@ -83,14 +75,26 @@ x = x.reshape((1,) + x.shape)
 
 i = 0
 for batch in datagen.flow(x, batch_size=1):
-	plt.figure(i)
-	imgplot = plt.imshow(image.array_to_img(batch[0]))
-	i += 1
-	if i % 4 == 0:
-		break
+    plt.figure(i)
+    imgplot = plt.imshow(image.array_to_img(batch[0]))
+    i += 1
+    if i % 4 == 0:
+        break
+
+#### OTHER options.
+i = 0
+for batch in datagen.flow(
+    img_arr,
+    batch_size=1,
+    save_to_dir='../output/keras_augmentations',
+    save_prefix='Augmented_image',
+    save_format='jpeg'):
+    i += 1
+    if i > 20: # create 20 augmented images
+        break  # otherwise the generator would loop indefinitely
 
 plt.show()
-```
+</code></pre>
 </details></li>
 
 
@@ -134,7 +138,7 @@ def randomCrop(im):
            int(randRange(im.shape[1] * (1-margin), im.shape[1]))]
     cropped_image = (im[start[0]:end[0], start[1]:end[1]])
     return cropped_image
-    
+
 cropped_image = randomCrop(image)
 
 #####  Brightness Manipulation
@@ -157,8 +161,8 @@ OpenCV-Python is the python API for OpenCV. You can think of it as a python wrap
 <pre><code>##### Flipping
 #The image is flipped according to the value of flipCode as follows:
 #flipcode = 0: flip vertically
-#flipcode > 0: flip horizontally
-#flipcode < 0: flip vertically and horizontally
+#flipcode &gt; 0: flip horizontally
+#flipcode &lt; 0: flip vertically and horizontally
 #vertical flip
 img_flip_ud = cv2.flip(image13, 0)
 plt.imshow(img_flip_ud)
@@ -300,7 +304,7 @@ import Augmentor
 
 p = Augmentor.Pipeline(source_directory="/kaggle/input/plant-pathology-2020-fgvc7/images",
                       output_directory="/kaggle/output")
-  
+
 # Defining augmentation parameters and generating 10 samples 
 p.flip_left_right(probability=0.4) 
 p.flip_top_bottom(probability=0.8)
@@ -311,12 +315,49 @@ p.sample(10)
 </code></pre>
 </details></li>
 
-<li><details><summary><b>Data Augmentation</b></summary>
+<li><details><summary><b>SOLT</b>: Streaming over lightweight data transformations</summary>
+SOLT is a fast data augmentation library, supporting arbitrary amount of images, segmentation masks, keypoints and data labels. It has OpenCV in its back-end, thus it works very fast.
 
-</details></li>
+<pre><code>
+stream = solt.Stream([
+    slt.Rotate(angle_range=(-90, 90), p=1, padding='r'),
+    slt.Flip(axis=1, p=0.5),
+    slt.Flip(axis=0, p=0.5),
+    slt.Shear(range_x=0.3, range_y=0.8, p=0.5, padding='r'),
+    slt.Scale(range_x=(0.8, 1.3), padding='r', range_y=(0.8, 1.3), same=False, p=0.5),
+    slt.Pad((w, h), 'r'),
+    slt.Crop((w, w), 'r'),
+    slt.CvtColor('rgb2gs', keep_dim=True, p=0.2),
+    slt.HSV((0, 10), (0, 10), (0, 10)),
+    slt.Blur(k_size=7, blur_type='m'),
+    solt.SelectiveStream([
+        slt.CutOut(40, p=1),
+        slt.CutOut(50, p=1),
+        slt.CutOut(10, p=1),
+        solt.Stream(),
+        solt.Stream(),
+    ], n=3),
+], ignore_fast_mode=True)
+</code></pre>
+<pre><code>
+fig = plt.figure(figsize=(16,16))
+n_augs = 6
 
-<li><details><summary><b>Data Augmentation</b></summary>
 
+random.seed(42)
+for i in range(n_augs):
+    img_aug = stream({'image': img}, return_torch=False, ).data[0].squeeze()
+
+    ax = fig.add_subplot(1,n_augs,i+1)
+    if i == 0:
+        ax.imshow(img)
+    else:
+        ax.imshow(img_aug)
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+plt.show()
+</code></pre>
 </details></li>
 
 </ul></details>
