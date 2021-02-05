@@ -136,6 +136,46 @@ tf.random.set_seed(SEED)
 %tensorboard --logdir runs
 </code></pre>
    </details>
+   <details>
+    <summary>
+     Configure
+     <b>
+      TPU/GPU
+     </b>
+    </summary>
+    <pre><code># TPU or GPU detection.
+# Detect hardware, return appropriate distribution strategy.
+try:
+    tpu = tf.distribute.cluster_resolver.TPUClusterResolver()
+    print(f"Running on TPU {tpu.master()}")
+except ValueError:
+    tpu = None
+
+if tpu:
+    tf.config.experimental_connect_to_cluster(tpu)
+    tf.tpu.experimental.initialize_tpu_system(tpu)
+    strategy = tf.distribute.experimental.TPUStrategy(tpu)
+else:
+    strategy = tf.distribute.get_strategy()
+
+def seed_everything(seed=0):
+    np.random.seed(seed)
+    tf.random.set_seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    os.environ['TF_DETERMINISTIC_OPS'] = '1'
+    return seed
+
+seed = seed_everything(seed=2048)
+print(f"REPLICAS: {strategy.num_replicas_in_sync}")
+
+# Data access.
+GCS_DS_PATH = KaggleDatasets().get_gcs_path()
+
+# Configuration.
+EPOCHS = 40
+BATCH_SIZE = 16 * strategy.num_replicas_in_sync
+</code></pre>
+   </details>
   </div>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
   </script>
