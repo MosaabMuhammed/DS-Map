@@ -376,6 +376,29 @@ print(rf_clf.oob_score_)
 </code></pre>
 </p></details></li>
 
+<li><details><summary><b>HistGradientBoostingClassifier</b></summary><p>
+<pre><code># explicitly require this experimental feature
+from sklearn.experimental import enable_hist_gradient_boosting  # noqa
+# now you can import normally from ensemble
+from sklearn.ensemble import HistGradientBoostingClassifier
+
+hgbc_model = HistGradientBoostingClassifier(
+	l2_regularization=1.766059063693552,
+	learning_rate=0.10675193678150449,
+	max_bins=128,
+	max_depth=31,
+	max_leaf_nodes=185,
+	random_state=2021
+)
+hgbc_model.fit(
+	hgbc_x_train,
+	y_train,
+)
+
+train_oof_preds = hgbc_model.predict_proba(hgbc_x_valid)[:,-1]
+</code></pre>
+</p></details></li>
+
 <li><details><summary><b>AdaBoost</b></summary><p><pre><code>from sklearn.ensemble import AdaBoostClassifier
 
 ada_clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
@@ -396,6 +419,10 @@ clf.fit(X_train, y_train)
 y_pred = ada_clf.predict(X_valid)
 print(accuracy_score(y_valid, y_pred))
 </code></pre>
+</p></details></li>
+
+<li><details><summary><b>Manual Stacking</b></summary><p>
+<a href="./12_ml_models/manual_stacking.html">notebook</a>
 </p></details></li>
 
 <li><details><summary><b>Average Ensemble</b></summary><p>

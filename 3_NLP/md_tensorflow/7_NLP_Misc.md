@@ -2,6 +2,19 @@
 
 <div style='width:1000px;margin:auto'>
 
+<details><summary><b style='font-size:23px'>Hands-on Tutorials</b> </summary><p><ul>
+<li>Char-RNN</li>
+<li>Stateful RNN</li>
+<li>Sentiment Analysis</li>
+<li>Reusing Pretrained Embeddings</li>
+<li>Automatic Translation</li>
+<li>Positional Encoding</li>
+<li>Seq2Seq</li>
+
+<a href="./0_notebooks/16_nlp_with_rnns_and_attention.html"><b>Text Generation with Neural Networks</b></a>
+
+</ul></p></details>
+
 <details><summary><b style='font-size:23px'>Python Text Handling</b> </summary><p><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Working-with-Text-Files"><b>Working with Text Files</b></a> </li> 
 

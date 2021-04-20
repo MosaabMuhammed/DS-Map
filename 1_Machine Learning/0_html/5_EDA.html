@@ -1,21 +1,93 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>4. Exploratory Data Analysis (EDA)</h1>
-<div style='width:1000px;margin:auto'>
-<details><summary><b>Tips & Tricks</b></summary>
-<p>
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="4exploratorydataanalysiseda">
+   4. Exploratory Data Analysis (EDA)
+  </h1>
+  <div style="width:1000px;margin:auto">
+   <details>
+    <summary>
+     <b>
+      Tips &amp; Tricks
+     </b>
+    </summary>
+    <details>
+     <summary>
+      <b>
+       Dark Mode
+      </b>
+     </summary>
+     <a href="./5_eda/EDA dark mode.html">
+      dark mode notebook
+     </a>
+    </details>
+    <details>
+     <summary>
+      How to make
+      <b>
+       beautiful Visualizations
+      </b>
+     </summary>
+     <a href="./5_eda/how to make clean visualizations.html">
+      Notebook
+     </a>
+    </details>
+    <details>
+     <summary>
+      Reduce
+      <b>
+       the labels
+      </b>
+      in any axis plot
+     </summary>
+     <pre>
+<code># count different values/levels
+cat10_freq = df_train.cat10.value_counts()
+print(cat10_freq)
 
-<details><summary>Plot a <b>Sparse</b> Matrix</summary><p>
-
-<pre><code>fig = plt.figure()
+# and plot frequency distribution using log scale
+fig, ax = plt.subplots(figsize=(12,4))
+ax.plot(np.log10(cat10_freq))
+ax.xaxis.set_major_locator(plt.MaxNLocator(20)) # reduce number of x-axis labels
+plt.title('cat10 - Frequencies')
+plt.ylabel('log10(Frequency)')
+plt.grid()
+plt.show()
+</code>
+</pre>
+    </details>
+    <details>
+     <summary>
+      Plot a
+      <b>
+       Sparse
+      </b>
+      Matrix
+     </summary>
+     <pre><code>fig = plt.figure()
 plt.spy(A, markersize=0.10, aspect = 'auto')
 fig.set_size_inches(8,6)
 fig.savefig('doc_term_matrix.png', dpi=800)
 </code></pre>
-
-</p></details>
-
-<details><summary><b>top & left ticks</b> in correlation matrix</summary><p>
-
-<pre><code>f = plt.figure(figsize=(19, 15))
+    </details>
+    <details>
+     <summary>
+      <b>
+       top &amp; left ticks
+      </b>
+      in correlation matrix
+     </summary>
+     <pre><code>f = plt.figure(figsize=(19, 15))
 corrmat = train_features.corr()
 plt.matshow(corrmat, fignum=f.number)
 plt.xticks(range(train_features.shape[1]), train_features.columns, fontsize=3, rotation=50)
@@ -23,21 +95,28 @@ plt.yticks(range(train_features.shape[1]), train_features.columns, fontsize=3)
 cb = plt.colorbar()
 cb.ax.tick_params(labelsize=14)
 </code></pre>
-
-</p></details>
-
-<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><p>
-
-<pre><code>plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
+    </details>
+    <details>
+     <summary>
+      Draw an
+      <b>
+       Arrow and Text
+      </b>
+      on the figure
+     </summary>
+     <pre><code>plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
              va='center', ha='left', arrowprops=dict(arrowstyle='simple',
                                                      connectionstyle='arc3, rad=0.1'))
 </code></pre>
-
-</p></details>
-
-<details><summary><b>Date Formatter</b> when plotting date feature</summary><p>
-
-<pre><code>fig, ax = plt.subplots(figsize=(20, 10));
+    </details>
+    <details>
+     <summary>
+      <b>
+       Date Formatter
+      </b>
+      when plotting date feature
+     </summary>
+     <pre><code>fig, ax = plt.subplots(figsize=(20, 10));
 fig = sns.countplot(df.timestamp, ax=ax, edgecolor='k', hue=df.label);
 X_dates = df['timestamp'].dt.strftime('%I:%M').sort_values().unique();
 ax.xaxis.set_major_formatter(plt.FixedFormatter(X_dates));
@@ -45,47 +124,63 @@ plt.title('How many records per minute?', y=1.05);
 plt.grid();
 plt.xticks(rotation=70);
 </code></pre>
-
-</p></details>
-
-<details><summary>Make <b>ylabel</b> Horizontal</summary>
-<p>
-
-<pre><code class="python">plt.ylabel('Count', rotation=0, labelpad=30)
+    </details>
+    <details>
+     <summary>
+      Make
+      <b>
+       ylabel
+      </b>
+      Horizontal
+     </summary>
+     <pre><code class="python language-python">plt.ylabel('Count', rotation=0, labelpad=30)
 </code></pre>
-
-</p>
-</details>
-
-<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary><p>
-
-<pre><code class="python">with plt.xkcd():
+    </details>
+    <details>
+     <summary>
+      Using
+      <b>
+       [xkcd]
+      </b>
+      Drawing plotting Style
+     </summary>
+     <pre><code class="python language-python">with plt.xkcd():
     plt.plot(roc_curve[0], roc_curve[1]);
     plt.plot([0,1], [0,1])
     plt.xlabel('FPR'); plt.ylabel('TPR'); plt.title('test AUC = %f' % (auc)); plt.axis([-0.05,1.05,-0.05,1.05]);
 </code></pre>
-
-</p></details>
-
-<details><summary><b>CDF</b> Plotting</summary>
-<p>
-
-<pre><code class="python">df['height'].plot.hist(bins=200,
+    </details>
+    <details>
+     <summary>
+      <b>
+       CDF
+      </b>
+      Plotting
+     </summary>
+     <pre><code class="python language-python">df['height'].plot.hist(bins=200,
                  range=(50, 80),
                  alpha=.3,
                  color='red',
                  cumulative=True,
                  normed=True)
 </code></pre>
-
-</p>
-</details>
-
-<details><summary><b>Greatter Matrix by mean</b> for <b>Feature Engineering</b></summary>
-<p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through"><b>Notebook</b></a> </p>
-
-<pre><code class="python">def autolabel(arrayA):
+    </details>
+    <details>
+     <summary>
+      <b>
+       Greatter Matrix by mean
+      </b>
+      for
+      <b>
+       Feature Engineering
+      </b>
+     </summary>
+     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through">
+      <b>
+       Notebook
+      </b>
+     </a>
+     <pre><code class="python language-python">def autolabel(arrayA):
     '''
     label each colored square with the corresponding data value.
     If value &gt; 20, the text is in black, else in white.
@@ -93,7 +188,7 @@ plt.xticks(rotation=70);
     arrayA = np.array(arrayA)
     for i in range(arrayA.shape[0]):
         for j in range(arrayA.shape[1]):
-            plt.text(j, i, &quot;%.2f&quot;%arrayA[i, j], ha='center', va='bottom', color='w')
+            plt.text(j, i, "%.2f"%arrayA[i, j], ha='center', va='bottom', color='w')
 
 
 def gt_matrix(df,feats,sz=16):
@@ -115,15 +210,14 @@ def gt_matrix(df,feats,sz=16):
     _ = plt.yticks(range(len(feats)),feats,rotation = 0)
     autolabel(a)
 </code></pre>
-
-</p>
-</details>
-
-<details><summary> <b>Better Correlation heatmap</b></summary>
-<p>
-
-<pre><code class="python">
-def heatmap(x, y, **kwargs):
+    </details>
+    <details>
+     <summary>
+      <b>
+       Better Correlation heatmap
+      </b>
+     </summary>
+     <pre><code class="python language-python">def heatmap(x, y, **kwargs):
     if 'color' in kwargs:
         color = kwargs['color']
     else:
@@ -134,7 +228,7 @@ def heatmap(x, y, **kwargs):
         n_colors = len(palette)
     else:
         n_colors = 256 # Use 256 colors for the diverging color palette
-        palette = sns.color_palette(&quot;Blues&quot;, n_colors) 
+        palette = sns.color_palette("Blues", n_colors) 
 
     if 'color_range' in kwargs:
         color_min, color_max = kwargs['color_range']
@@ -249,42 +343,59 @@ def corrplot(data, size_scale=500, marker='s'):
         y_order=data.columns[::-1],
         size_scale=size_scale
     )
-
-
 </code></pre>
-
-</p>
-</details>
-<details><summary> <b>Distrubtion of feature vs. row index</b></summary>
-<p>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Distribution-of-X8-along-with-row-index:"><b>Example</b></a> </p> 
-
-<h4> 1. Without Class labeling</h4>
-
-<pre><code class="python">plt.figure(figsize=(16, 10))
+    </details>
+    <details>
+     <summary>
+      <b>
+       Distrubtion of feature vs. row index
+      </b>
+     </summary>
+     <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Distribution-of-X8-along-with-row-index:">
+      <b>
+       Example
+      </b>
+     </a>
+     <h4>
+      1. Without Class labeling
+     </h4>
+     <pre><code class="python language-python">plt.figure(figsize=(16, 10))
 plt.plot(train.x8, '.')
 plt.xlabel('Row Index')
 plt.ylabel('X8 Values')
 plt.title('Distribution of X8 around row index')
 </code></pre>
-
-
-<h4> 2. With class labeling</h4>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Hue-with-Class-labels:"><b>Labeling example</b></a></p>
-
-<pre><code class="python">plt.figure(figsize=(16, 10))
+     <h4>
+      2. With class labeling
+     </h4>
+     <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Hue-with-Class-labels:">
+      <b>
+       Labeling example
+      </b>
+     </a>
+     <pre><code class="python language-python">plt.figure(figsize=(16, 10))
 plt.scatter(range(len(train.x8)), train.sort_values('y')['x8'], c=train.sort_values('y')['y'], cmap='viridis')
 </code></pre>
-
-</p>
-</details>
-
-<details><summary> <b>Features Grouping</b> for <b>Feature Engineering</b></summary>
-<p>
-<h4> 1. Clustering by KMeans</h4>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#With-Clustering:"><b>Notebook</b></a></p>
-
-<pre><code class="python">from sklearn.cluster import KMeans
+    </details>
+    <details>
+     <summary>
+      <b>
+       Features Grouping
+      </b>
+      for
+      <b>
+       Feature Engineering
+      </b>
+     </summary>
+     <h4>
+      1. Clustering by KMeans
+     </h4>
+     <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#With-Clustering:">
+      <b>
+       Notebook
+      </b>
+     </a>
+     <pre><code class="python language-python">from sklearn.cluster import KMeans
 
 X = train.copy()
 
@@ -300,62 +411,66 @@ for col in train.columns[train.dtypes == 'object']:
 kmeans = KMeans(n_clusters=7)
 y_pred = kmeans.fit_predict(X)
 </code></pre>
-
-
-
-<pre><code class="python">plt.figure(figsize=(16, 10))
+     <pre><code class="python language-python">plt.figure(figsize=(16, 10))
 sns.heatmap(X.corr(), cmap='viridis');
 </code></pre>
-
-
-<h4> 2. Clustering by Statistics</h4>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Clustering-Using-Statistics:"><b>Notebook</b></a></p>
-
-
-<pre><code class="python">plt.figure(figsize=(16, 8))
+     <h4>
+      2. Clustering by Statistics
+     </h4>
+     <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Clustering-Using-Statistics:">
+      <b>
+       Notebook
+      </b>
+     </a>
+     <pre><code class="python language-python">plt.figure(figsize=(16, 8))
 train.mean().sort_values().plot(style='.');
 </code></pre>
-
-</p>
-</details>
-
-
-<details><summary>From <b>Power Law Dist</b> to <b>Normal Disb.</b></summary>
-<p>
-
-<h4> Convert</h4>
-
-<pre><code class="python">#converting the values to log-values to chec for log-normal
+    </details>
+    <details>
+     <summary>
+      From
+      <b>
+       Power Law Dist
+      </b>
+      to
+      <b>
+       Normal Disb.
+      </b>
+     </summary>
+     <h4>
+      Convert
+     </h4>
+     <pre><code class="python language-python">#converting the values to log-values to chec for log-normal
 import math
 frame_with_durations_modified['log_times']=[math.log(i+1) for i in frame_with_durations_modified['trip_times'].values]
 </code></pre>
-
-
-<h4> Show the distribution</h4>
-
-<pre><code class="python">#pdf of log-values
+     <h4>
+      Show the distribution
+     </h4>
+     <pre><code class="python language-python">#pdf of log-values
 sns.FacetGrid(frame_with_durations_modified,size=6) \
-      .map(sns.kdeplot,&quot;log_times&quot;) \
+      .map(sns.kdeplot,"log_times") \
       .add_legend();
 plt.show();
 </code></pre>
-
-
-<h4> Check the Q-Q plot.</h4>
-
-<pre><code class="python">import scipy
+     <h4>
+      Check the Q-Q plot.
+     </h4>
+     <pre><code class="python language-python">import scipy
 #Q-Q plot for checking if trip-times is log-normal
 scipy.stats.probplot(frame_with_durations_modified['log_times'].values, plot=plt)
 plt.show()
 </code></pre>
-
-</p>
-</details>
-
-<details><summary>Plot <b>Two Categorical Features</b> with sizes</summary>
-<p>
-
-<pre><code class="python">def plot_categoricals(x, y, data, annotate=True):
+    </details>
+    <details>
+     <summary>
+      Plot
+      <b>
+       Two Categorical Features
+      </b>
+      with sizes
+     </summary>
+     <pre><code class="python language-python">def plot_categoricals(x, y, data, annotate=True):
     '''
     Plot counts of 2 categorical.
     Size is raw count for each grouping.
@@ -389,7 +504,7 @@ plt.show()
             # Put text with appropriate offsets
             plt.annotate(xy=(row[x] - (1/counts[x].nunique()),
                              row[y] - (.15/counts[y].nunique())),
-                         color='navy', s=f&quot;{round(row['percent'], 1)}%&quot;)
+                         color='navy', s=f"{round(row['percent'], 1)}%")
     # Set tick marks
     plt.yticks(counts[y].unique())
     plt.xticks(counts[x].unique())
@@ -423,23 +538,23 @@ plt.show()
     plt.ylim((counts[y].min() - (4 / counts[y].nunique()), 
               counts[y].max() + (4 / counts[y].nunique())))
     plt.grid(None)
-    plt.xlabel(f&quot;{x}&quot;); plt.ylabel(f&quot;{y}&quot;); plt.title(f&quot;{y} vs {x}&quot;);
+    plt.xlabel(f"{x}"); plt.ylabel(f"{y}"); plt.title(f"{y} vs {x}");
 </code></pre>
-
-
-<h4> 2. Example.</h4>
-
-<pre><code class="python">plot_categoricals('rez_esc', 'Target', data)
+     <h4>
+      2. Example.
+     </h4>
+     <pre><code class="python language-python">plot_categoricals('rez_esc', 'Target', data)
 </code></pre>
-
-</p>
-</details>
-
-
-<details><summary>Plot <b>How many Unique Values</b> In each column</summary>
-<p>
-
-<pre><code class="python">color = sns.color_palette()[0]
+    </details>
+    <details>
+     <summary>
+      Plot
+      <b>
+       How many Unique Values
+      </b>
+      In each column
+     </summary>
+     <pre><code class="python language-python">color = sns.color_palette()[0]
 ax = train.select_dtypes(np.int64)\
      .nunique()\
      .value_counts()\
@@ -447,51 +562,68 @@ ax = train.select_dtypes(np.int64)\
      .plot.bar(color=color, figsize=(8, 6), edgecolor='black', linewidth=2)
 show_annotation(ax)
 </code></pre>
-
-</p>
-</details>
-
-<details><summary>Plot <b>Quantiles</b> on line chart</summary>
-<p>
-<p><img src="imgs/20191030-123738.png" width="1000" height='500' /></p>
-
-<pre><code class="python">plt.plot(tag_counts[:100], c='b')
+    </details>
+    <details>
+     <summary>
+      Plot
+      <b>
+       Quantiles
+      </b>
+      on line chart
+     </summary>
+     <img height="500" src="imgs/20191030-123738.png" width="1000"/>
+     <pre><code class="python language-python">plt.plot(tag_counts[:100], c='b')
 plt.scatter(x=list(range(0, 100, 5)), y=tag_counts[0:100:5], c='orange', label='Quantiles with .05 intervals.')
 plt.scatter(x=list(range(0,100,25)), y=tag_counts[0:100:25], c='m', label='Quantiles with .25 intevals.')
 
 for x, y in zip(list(range(0, 100, 25)), tag_counts[0:100:25]):
-    plt.annotate(s=&quot;{}, {})&quot;.format(x, y), xy=(x, y), xytext=(x-.05, y+500))
+    plt.annotate(s="{}, {})".format(x, y), xy=(x, y), xytext=(x-.05, y+500))
 </code></pre>
-
-</p>
-</details>
-
-<details><summary><b>Histogram</b> For all Numerical Values</summary>
-<p>
-
-<pre><code class="python">train_df.hist(bins='auto', figsize=(18, 22), layout=(5, 2));
+    </details>
+    <details>
+     <summary>
+      <b>
+       Histogram
+      </b>
+      For all Numerical Values
+     </summary>
+     <pre><code class="python language-python">train_df.hist(bins='auto', figsize=(18, 22), layout=(5, 2));
 </code></pre>
-
-</p>
-</details>
-
-<details><summary> Add <b>Spaces</b> b/w <b>height</b> and <b>width</b> for subplots</summary>
-<p>
-
-<pre><code class="python">plt.subplots_adjust(wspace=.5, hspace=.5)
+    </details>
+    <details>
+     <summary>
+      Add
+      <b>
+       Spaces
+      </b>
+      b/w
+      <b>
+       height
+      </b>
+      and
+      <b>
+       width
+      </b>
+      for subplots
+     </summary>
+     <pre><code class="python language-python">plt.subplots_adjust(wspace=.5, hspace=.5)
 </code></pre>
-
-</p>
-</details>
-
-<details><summary> Plot <b>3D</b> figures </summary>
-<p style="margin: 0">
-
-<pre><code class="python">from mpl_toolkits.mplot3d import Axes3D
+    </details>
+    <details>
+     <summary>
+      Plot
+      <b>
+       3D
+      </b>
+      figures
+     </summary>
+     <p style="margin: 0">
+     </p>
+     <pre><code class="python language-python">from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
 def plot_3d(x, y, z, df, cmap = plt.cm.seismic_r):
-    &quot;&quot;&quot;3D scatterplot of data in df&quot;&quot;&quot;
+    """3D scatterplot of data in df"""
 
     fig = plt.figure(figsize = (10, 10))
 
@@ -512,15 +644,22 @@ def plot_3d(x, y, z, df, cmap = plt.cm.seismic_r):
 
 plot_3d('learning_rate', 'n_estimators', 'score', opt_hyp)
 </code></pre>
-
-</p>
-</details>
-
-
-<details><summary> Show <b>Annotations</b> on <b>bar chart [Horizontal, Vertical]</b> </summary><p>
-<h4> Vertical Bar</h4>
-
-<pre><code class="python">def show_annotation(dist, n=5, total=None):
+    </details>
+    <details>
+     <summary>
+      Show
+      <b>
+       Annotations
+      </b>
+      on
+      <b>
+       bar chart [Horizontal, Vertical]
+      </b>
+     </summary>
+     <h4>
+      Vertical Bar
+     </h4>
+     <pre><code class="python language-python">def show_annotation(dist, n=5, total=None):
     sizes = [] # Get highest value in y
     for p in dist.patches:
         height = p.get_height()
@@ -532,10 +671,10 @@ plot_3d('learning_rate', 'n_estimators', 'score', opt_hyp)
                ha='center', fontsize=14) 
     dist.set_ylim(0, max(sizes) * 1.15); # set y limit based on highest heights
 </code></pre>
-
-<h4> Example:</h4>
-
-<pre><code class="python">total = len(train)
+     <h4>
+      Example:
+     </h4>
+     <pre><code class="python language-python">total = len(train)
 plt.figure(figsize=(12, 6))
 
 color = sns.color_palette()[0]
@@ -546,11 +685,10 @@ g.set_ylabel('Count', fontsize=15)
 
 show_annotation(g)
 </code></pre>
-
-
-<h4> Horizontal Bar</h4>
-
-<pre><code>def show_annotations_horizontal(ax):
+     <h4>
+      Horizontal Bar
+     </h4>
+     <pre><code>def show_annotations_horizontal(ax):
     sizes = []
     for p in ax.patches:
         width = p.get_width()
@@ -561,75 +699,74 @@ show_annotation(g)
         ax.annotate(percentage, (x, y))
         ax.set_xlim(0, max(sizes) * 1.15); # set x limit based on highest width
 </code></pre>
-
-</p>
-</details>
-
-<details><summary> <b>Increase Size of (plt.title)</b> </summary>
-<p>
-
-
-<pre><code class="python">plt.title('Title here', size=20, y=1.06)
+    </details>
+    <details>
+     <summary>
+      <b>
+       Increase Size of (plt.title)
+      </b>
+     </summary>
+     <pre><code class="python language-python">plt.title('Title here', size=20, y=1.06)
 </code></pre>
-
-
-<pre><code class="python">plt.suptitle('Title here', fontsize=20)
+     <pre><code class="python language-python">plt.suptitle('Title here', fontsize=20)
 </code></pre>
-
-
-<h4> OOP Version</h4>
-
-<pre><code class="python">color = sns.color_palette()[0]
+     <h4>
+      OOP Version
+     </h4>
+     <pre><code class="python language-python">color = sns.color_palette()[0]
 g = sns.countplot(x='target', data=train, color=color)
 g.set_title('Target Distribution', fontsize=20)
 g.set_xlabel('Target Values', fontsize=15)
 g.set_ylabel('Count', fontsize=15)
 </code></pre>
-
-</p>
-</details>
-
-<details><summary> <b>Change Font Size of all plots</b> </summary>
-<p>
-
-
-<pre><code class="python">plt.rcParams['font.size'] = 22
+    </details>
+    <details>
+     <summary>
+      <b>
+       Change Font Size of all plots
+      </b>
+     </summary>
+     <pre><code class="python language-python">plt.rcParams['font.size'] = 22
 </code></pre>
-
-</p>
-</details>
-
-
-
-<details><summary> <b>Color the edge of bar chart</b> </summary>
-<p>
-
-<pre><code class="python">(app_train['DAYS_BIRTH']/-365).plot.hist(edgecolor='k', bins=30);
+    </details>
+    <details>
+     <summary>
+      <b>
+       Color the edge of bar chart
+      </b>
+     </summary>
+     <pre><code class="python language-python">(app_train['DAYS_BIRTH']/-365).plot.hist(edgecolor='k', bins=30);
 </code></pre>
-
-
-<pre><code class="python">plt.rcParams['font.size'] = 18
+     <pre><code class="python language-python">plt.rcParams['font.size'] = 18
 plt.rcParams['patch.edgecolor'] = 'k'
 </code></pre>
-
-</p>
-</details>
-
-<details><summary> Make <b>grid behind bar charts</b> </summary>
-<p>
-
-
-<pre><code class="python">ax.grid(zorder=0)
+    </details>
+    <details>
+     <summary>
+      Make
+      <b>
+       grid behind bar charts
+      </b>
+     </summary>
+     <pre><code class="python language-python">ax.grid(zorder=0)
 ax.bar(range(len(y)), y, width=0.3, align='center', color='skyblue', zorder=3)
 </code></pre>
-
-</p>
-</details>
-
-<details><summary><b>KDE</b> plot b/w <b>feature</b> and <b>TARGET</b></summary>
-<p>
-
-<pre><code class="python"># Modify it to be sutable for your needs.
+    </details>
+    <details>
+     <summary>
+      <b>
+       KDE
+      </b>
+      plot b/w
+      <b>
+       feature
+      </b>
+      and
+      <b>
+       TARGET
+      </b>
+     </summary>
+     <pre><code class="python language-python"># Modify it to be sutable for your needs.
 def kde_target(var_name, df):
 
     # Calculate the correlation coefficient between the new variable and the target
@@ -653,123 +790,261 @@ def kde_target(var_name, df):
     print('~&gt; The median value for loan that was not repaid = %.4f' % avg_not_repaid)
     print('~&gt; The median value for loan that was repaid = %.4f' % avg_repaid)
 </code></pre>
-
-</p></details>
-
-<details><summary>Show the <b>Legend</b> outside of the plot</summary>
-<p>
-
-<pre><code class="python"># To relocate the legend
+    </details>
+    <details>
+     <summary>
+      Show the
+      <b>
+       Legend
+      </b>
+      outside of the plot
+     </summary>
+     <pre><code class="python language-python"># To relocate the legend
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 # Note:
 # ncol=1 (default) is another parameter, you can tweak to change the number of columns to fill in a raw in the legend.
 </code></pre>
-
-</p></details>
-<details><summary>Add <b>Vertical</b> or <b>Horizontal</b> line in a plot</summary><p>
-
-<pre><code># Vertical Line.
-plt.axvline(x=np.mean(df.weight), color=&quot;red&quot;, label=&quot;mean&quot;)
+    </details>
+    <details>
+     <summary>
+      Add
+      <b>
+       Vertical
+      </b>
+      or
+      <b>
+       Horizontal
+      </b>
+      line in a plot
+     </summary>
+     <pre><code># Vertical Line.
+plt.axvline(x=np.mean(df.weight), color="red", label="mean")
 
 # Horizontal Line.
-plt.axhline(y=.5, color=&quot;red&quot;, label=&quot;something&quot;)
+plt.axhline(y=.5, color="red", label="something")
 </code></pre>
-
-</p></details>
-
-</p></details>
-
-<hr>
-
-<details><summary><b>Pandas</b></summary><p><ul>
-<li><b>df.plot.hist()</b>     histogram</li>
-
-<li><b>df.plot.bar()</b>      bar chart</li>
-
-<li><b>df.plot.barh()</b>     horizontal bar chart</li>
-
-<li><b>df.plot.line()</b>     line chart</li>
-
-<li><b>df.plot.area()</b>     area chart</li>
-
-<li><b>df.plot.scatter()</b>  scatter plot</li>
-
-<li><b>df.plot.box()</b>      box plot</li>
-
-<li><b>df.plot.kde()</b>      kde plot</li>
-
-<li><b>df.plot.hexbin()</b>   hexagonal bin plot</li>
-
-<li><b>df.plot.pie()</b>      pie chart</li>
-</ul>
-
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types"><b>Built-in Visualization</b></a> </p>
-</p></details>
-
-<details><summary><b>Matplotlib</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture"><b>1. Matplotlib Concepts</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture"><b>2. Advanced Concepts</b></a></li>
-</ul>
-
-</p>
-</details>
-
-<details><summary><b>Seaborn</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/1_Distribution%20Plots.html#Distribution-Plots"><b>1. Distrubtion Plots</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/2_Categorical%20Plots.html#Categorical-Data-Plots"><b>2. Categorical Data Plots</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/3_Matrix%20Plots.html#Matrix-Plots"><b>3. Matrix Plots</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/4_Regression%20Plots.html#Regression-Plots"><b>4. Regression Plots</b></a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/5_Grids.html#Grids"><b>5. Grids</b></a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/6_Style%20and%20Color.html#Style-and-Color"><b>6. Styles &amp; Coloring</b></a></li>
-
-
-</ul>
-
-</p>
-</details>
-
-<details><summary><b>Plotly</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks"><b>Plotly &amp; Cufflinks</b></a> </li>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/10_Plotly_tutorials/Notebook.html#INTRODUCTION"><b>Plotly Tutorials</b></a> </li> 
-
-<li><details><summary><b>Scatter plot</b> - Plotly Express</summary><p>
-
-<pre><code>import plotly.express as px
+    </details>
+   </details>
+   <hr/>
+   <details>
+    <summary>
+     <b>
+      Pandas
+     </b>
+    </summary>
+    <ul>
+     <li>
+      <b>
+       df.plot.hist()
+      </b>
+      histogram
+     </li>
+     <li>
+      <b>
+       df.plot.bar()
+      </b>
+      bar chart
+     </li>
+     <li>
+      <b>
+       df.plot.barh()
+      </b>
+      horizontal bar chart
+     </li>
+     <li>
+      <b>
+       df.plot.line()
+      </b>
+      line chart
+     </li>
+     <li>
+      <b>
+       df.plot.area()
+      </b>
+      area chart
+     </li>
+     <li>
+      <b>
+       df.plot.scatter()
+      </b>
+      scatter plot
+     </li>
+     <li>
+      <b>
+       df.plot.box()
+      </b>
+      box plot
+     </li>
+     <li>
+      <b>
+       df.plot.kde()
+      </b>
+      kde plot
+     </li>
+     <li>
+      <b>
+       df.plot.hexbin()
+      </b>
+      hexagonal bin plot
+     </li>
+     <li>
+      <b>
+       df.plot.pie()
+      </b>
+      pie chart
+     </li>
+    </ul>
+    <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types">
+     <b>
+      Built-in Visualization
+     </b>
+    </a>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Matplotlib
+     </b>
+    </summary>
+    <ul>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture">
+       <b>
+        1. Matplotlib Concepts
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture">
+       <b>
+        2. Advanced Concepts
+       </b>
+      </a>
+     </li>
+    </ul>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Seaborn
+     </b>
+    </summary>
+    <ul>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/1_Distribution%20Plots.html#Distribution-Plots">
+       <b>
+        1. Distrubtion Plots
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/2_Categorical%20Plots.html#Categorical-Data-Plots">
+       <b>
+        2. Categorical Data Plots
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/3_Matrix%20Plots.html#Matrix-Plots">
+       <b>
+        3. Matrix Plots
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/4_Regression%20Plots.html#Regression-Plots">
+       <b>
+        4. Regression Plots
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/5_Grids.html#Grids">
+       <b>
+        5. Grids
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/6_Style%20and%20Color.html#Style-and-Color">
+       <b>
+        6. Styles &amp; Coloring
+       </b>
+      </a>
+     </li>
+    </ul>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Plotly
+     </b>
+    </summary>
+    <ul>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks">
+       <b>
+        Plotly &amp; Cufflinks
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/10_Plotly_tutorials/Notebook.html#INTRODUCTION">
+       <b>
+        Plotly Tutorials
+       </b>
+      </a>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         Scatter plot
+        </b>
+        - Plotly Express
+       </summary>
+       <pre><code>import plotly.express as px
 
 # Create a scatter plot.
 fig = px.scatter(data, x='gdp', y='co2', animation_frame='year', animation_group='country', color='region', hover_name='country', facet_col='region', width=1579, height=400, log_x=True, size_max=45, range_x=[xmin, xmax], range_y=[ymin, ymax])
 
 fig.show()
 </code></pre>
-
-</p></details></li>
-<li><details><summary><b>Geographic</b> - Code 3 Alpha</summary><p>
-
-<pre><code>import plotly.express as px
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         Geographic
+        </b>
+        - Code 3 Alpha
+       </summary>
+       <pre><code>import plotly.express as px
 fig = px.choropleth(internet_usage_2016,
-                    locations=&quot;Code&quot;,
-                    color=&quot;Individuals using the Internet (% of population)&quot;,
-                    hover_name=&quot;Country&quot;,
+                    locations="Code",
+                    color="Individuals using the Internet (% of population)",
+                    hover_name="Country",
                     color_continuous_scale=px.colors.sequential.Plasma)
 fig.update_layout(
-    title_text=&quot;Internet Usage across the world (% population) - 2016&quot;,
+    title_text="Internet Usage across the world (% population) - 2016",
     # geo_scope='africa'
     geo = dict(projection={'type': 'natural earth'})
 )
 fig.show()
 </code></pre>
-
-</p></details></li>
-<li><details><summary><b>Geographic</b> - Lat & Lon - Scatter</summary><p>
-
-<pre><code>import plotly.graph_objects as go
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         Geographic
+        </b>
+        - Lat &amp; Lon - Scatter
+       </summary>
+       <pre><code>import plotly.graph_objects as go
 
 fig = go.Figure(data=go.Scattergeo(
                  lon=df['LON'],
@@ -781,138 +1056,431 @@ fig.update_layout(title='Walmart stores across world',
                 geo_scope='usa')
 fig.show()
 </code></pre>
-
-</p></details></li>
-</ul></p></details>
-
-<details><summary><b>Bokeh</b></summary><p><ul>
-There are files inside eda_file, wait until you read the book about bokeh, then start documenting.
-</ul></p></details>
-
-<details><summary><b>Altair</b></summary><p><ul>
-<li><a href="./5_eda/01-alt-Iris-Demo.html"><b>IRIS Demo</b></a> </li>
-<li><a href="./5_eda/01-Cars-Demo.html"><b>Car Demo</b></a> </li>
-<li><a href="./5_eda/02-Simple-Charts.html"><b></b>Simple Charts</a> </li>
-<li><a href="./5_eda/03-Binning-and-aggregation.html"><b>Binning & Aggregation</b></a> </li>
-<li><a href="./5_eda/04-Compound-charts.html"><b>Compound Charts</b></a> </li>
-<li><a href="./5_eda/06-Selections.html"><b>Selections</b></a> </li>
-<li><a href="./5_eda/07-Transformations.html"><b>Transformations</b></a> </li>
-<li><a href="./5_eda/08-Configuration.html"><b>Configuration</b></a> </li>
-<li><a href="./5_eda/09-Geographic-plots.html"><b>Geographic Plots</b></a> </li>
-</ul></p></details>
-<hr>
-
-<details><summary><b>Data Scientist ND</b></summary>
-<p>
-<h4>1. Uni-Variate Visualization:</h4> 
-
-<ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart"><b>Bar</b> Chart</a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/2_Pie%20Chart.html#Pie-Chart"><b>Pie</b> Chart</a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/3_Histograms.html#Histograms-Using-Matplotlib"><b>Histograms</b> Using Matplotlib</a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/16.%20Extra%20Kernel%20Density%20Estimation.html"><b>Kernal Density Estimation (KDE)</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/17.%20Extra%20Waffle%20Plots.html"><b>Waffle</b> Plots</a> </li>
-</ul>
-
-<h4>2. Bi-Variate Visualization:</h4>
-
-<ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/1_Scatter%20Plot.html#Scatter-Plot-using-Matplotlib"><b>Scatter</b> Plot.</a></li>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/2_HeatMap.html#Heat-Map-using-Matplotlib"><b>Heat Map</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/3_Violin%20Plot.html#Violin-Plot-using-Seaborn"><b>Violin</b> Plot</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/4_Box%20Plot.html#Box-Plot-vs.-Violin-Plot"><b>Box</b> Plot</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/5_Clustered%20Bar%20Chart.html#Clustered-Bar-+-Heatmap"><b>Clustered Bar</b> Chart</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/6_Facet%20Grid.html#Faced-Grid"><b>Facet Grid</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Pairs-Plot"><b>Sweet Pair Grid</b></a></li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/7_Adapted%20Bar%20Chart.html#Adapted-Bar-Chart"><b>Adapted Bar</b> Chart,  <b>Point</b> Chart</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/16.%20Extra%20Q-Q%20Plots.html"><b>Q-Q</b> Plot: Used to check normal distribution.</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html"><b>Swarm</b> Plot</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html"><b>Rug</b> and <b>Strip</b> Plot</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html"><b>Stacked</b> Plots</a></li>
-
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html"><b>Ridgeline</b> Plot</a></li>
-
-<li><details><summary><b>catplot</b></summary><p>
-
-<pre><code># Used as countplot for categorical feature with its count.
-sns.catplot(&quot;cut&quot;, data=df, aspect=1.5, kind=&quot;count&quot;, color=&quot;b&quot;)
+      </details>
+     </li>
+    </ul>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Bokeh
+     </b>
+    </summary>
+    <ul>
+     There are files inside eda_file, wait until you read the book about bokeh, then start documenting.
+    </ul>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Altair
+     </b>
+    </summary>
+    <ul>
+     <li>
+      <a href="./5_eda/01-alt-Iris-Demo.html">
+       <b>
+        IRIS Demo
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/01-Cars-Demo.html">
+       <b>
+        Car Demo
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/02-Simple-Charts.html">
+       <b>
+       </b>
+       Simple Charts
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/03-Binning-and-aggregation.html">
+       <b>
+        Binning &amp; Aggregation
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/04-Compound-charts.html">
+       <b>
+        Compound Charts
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/06-Selections.html">
+       <b>
+        Selections
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/07-Transformations.html">
+       <b>
+        Transformations
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/08-Configuration.html">
+       <b>
+        Configuration
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="./5_eda/09-Geographic-plots.html">
+       <b>
+        Geographic Plots
+       </b>
+      </a>
+     </li>
+    </ul>
+   </details>
+   <hr/>
+   <details>
+    <summary>
+     <b>
+      Data Scientist ND
+     </b>
+    </summary>
+    <h4>
+     1. Uni-Variate Visualization:
+    </h4>
+    <ul>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart">
+       <b>
+        Bar
+       </b>
+       Chart
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/2_Pie%20Chart.html#Pie-Chart">
+       <b>
+        Pie
+       </b>
+       Chart
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/1_Univariate%20Visualization/3_Histograms.html#Histograms-Using-Matplotlib">
+       <b>
+        Histograms
+       </b>
+       Using Matplotlib
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/16.%20Extra%20Kernel%20Density%20Estimation.html">
+       <b>
+        Kernal Density Estimation (KDE)
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2003_Univariate%20Exploration%20of%20Data/17.%20Extra%20Waffle%20Plots.html">
+       <b>
+        Waffle
+       </b>
+       Plots
+      </a>
+     </li>
+    </ul>
+    <h4>
+     2. Bi-Variate Visualization:
+    </h4>
+    <ul>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/1_Scatter%20Plot.html#Scatter-Plot-using-Matplotlib">
+       <b>
+        Scatter
+       </b>
+       Plot.
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/2_HeatMap.html#Heat-Map-using-Matplotlib">
+       <b>
+        Heat Map
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/3_Violin%20Plot.html#Violin-Plot-using-Seaborn">
+       <b>
+        Violin
+       </b>
+       Plot
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/4_Box%20Plot.html#Box-Plot-vs.-Violin-Plot">
+       <b>
+        Box
+       </b>
+       Plot
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/5_Clustered%20Bar%20Chart.html#Clustered-Bar-+-Heatmap">
+       <b>
+        Clustered Bar
+       </b>
+       Chart
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/6_Facet%20Grid.html#Faced-Grid">
+       <b>
+        Facet Grid
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Pairs-Plot">
+       <b>
+        Sweet Pair Grid
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/2_Bivariate%20Visualization/7_Adapted%20Bar%20Chart.html#Adapted-Bar-Chart">
+       <b>
+        Adapted Bar
+       </b>
+       Chart,
+       <b>
+        Point
+       </b>
+       Chart
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/16.%20Extra%20Q-Q%20Plots.html">
+       <b>
+        Q-Q
+       </b>
+       Plot: Used to check normal distribution.
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/17.%20Extra%20Swarm%20Plots.html">
+       <b>
+        Swarm
+       </b>
+       Plot
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/18.%20Extra%20Rug%20and%20Strip%20Plots.html">
+       <b>
+        Rug
+       </b>
+       and
+       <b>
+        Strip
+       </b>
+       Plot
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/19.%20Extra%20Stacked%20Plots.html">
+       <b>
+        Stacked
+       </b>
+       Plots
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html">
+       <b>
+        Ridgeline
+       </b>
+       Plot
+      </a>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         catplot
+        </b>
+       </summary>
+       <pre><code># Used as countplot for categorical feature with its count.
+sns.catplot("cut", data=df, aspect=1.5, kind="count", color="b")
 </code></pre>
-
-</p></details></li>
-
-<li><details><summary><b>lineplot</b></summary><p>
-<p>The solid line represent the mean of the y axis feature at the corresponding x coordinate.<br>The shaded area around the line plot shows the confidence interval for the y axis feature. (by default, seaborn set this to 95% confidence interval)<br><br>Line plots are great visualization techniques for scenarios where we have data that changes over time.</p>
-
-<pre><code>ax = sns.lineplot(x=&quot;cat_col&quot;, y=&quot;num_col&quot;, data=df, ci=68)
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         lineplot
+        </b>
+       </summary>
+       The solid line represent the mean of the y axis feature at the corresponding x coordinate.
+       <br/>
+       The shaded area around the line plot shows the confidence interval for the y axis feature. (by default, seaborn set this to 95% confidence interval)
+       <br/>
+       <br/>
+       Line plots are great visualization techniques for scenarios where we have data that changes over time.
+       <pre><code>ax = sns.lineplot(x="cat_col", y="num_col", data=df, ci=68)
 </code></pre>
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         clustermap
+        </b>
+       </summary>
+       We can can determine the similarity(distance) metrics by using (metric) parameter, and the possible values ["euclidean"(default), "manhattan", "correlation", ...]
+       <pre><code>pd_pivoted = df.pivot("month", "year", "passenegers")
 
-</p></details></li>
-
-<li><details><summary><b>clustermap</b></summary><p>
-We can can determine the similarity(distance) metrics by using (metric) parameter, and the possible values ["euclidean"(default), "manhattan", "correlation", ...]
-
-<pre><code>pd_pivoted = df.pivot(&quot;month&quot;, &quot;year&quot;, &quot;passenegers&quot;)
-
-# We can cluster by &quot;year&quot; (row_cluster=False, col_cluster=True).
-# We can cluster them by both &quot;year&quot; and &quot;month&quot;.
-# The following is clustered by &quot;month&quot;.
-ax = sns.clustermap(df_pivoted, col_cluster=False, row_cluster=True, metric=&quot;euclidean&quot;)
+# We can cluster by "year" (row_cluster=False, col_cluster=True).
+# We can cluster them by both "year" and "month".
+# The following is clustered by "month".
+ax = sns.clustermap(df_pivoted, col_cluster=False, row_cluster=True, metric="euclidean")
 </code></pre>
-
-
-<p>Appling linkage in Heatmaps:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- If we define the distance b/w 2 clusters as the distance b/w the 2 points across the clusters <b>closest</b> to each other, the rule is called <b>single linkage</b>.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- If the rule is to define the distance b/w 2 clusters as the distance b/w the points <b>farthest</b> from each other, it is called <b>complete linkage</b>.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- If the rule is to define the distance as the <b>average</b> of all possible pairs of rows in the 2 clusters, it's called <b>average linkage</b>.</p>
-
-<pre><code>sns.clustermap(df_pivoted, row_cluster=False, metric=&quot;correlation&quot;, method=&quot;single&quot;)
+       Appling linkage in Heatmaps:
+       <br/>
+       - If we define the distance b/w 2 clusters as the distance b/w the 2 points across the clusters
+       <b>
+        closest
+       </b>
+       to each other, the rule is called
+       <b>
+        single linkage
+       </b>
+       .
+       <br/>
+       - If the rule is to define the distance b/w 2 clusters as the distance b/w the points
+       <b>
+        farthest
+       </b>
+       from each other, it is called
+       <b>
+        complete linkage
+       </b>
+       .
+       <br/>
+       - If the rule is to define the distance as the
+       <b>
+        average
+       </b>
+       of all possible pairs of rows in the 2 clusters, it's called
+       <b>
+        average linkage
+       </b>
+       .
+       <pre><code>sns.clustermap(df_pivoted, row_cluster=False, metric="correlation", method="single")
 </code></pre>
-
-</p></details></li>
-</ul>
-
-<h4>3. Multi-Variate Visualization:</h4>
-
-<ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/1_Shape-Size-Color.html#1.-Shape"><b>Shape</b>, <b>Size</b>, and <b>Color</b></a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/2_Facet%202d.html#Faceting-in-col"><b>Facet 2d</b> Chart</a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/3_Adaption%20of%20Bivariate.html#Adaption-of-Bi-Variate-Plots"><b>Adaption Bi-variante</b> Charts</a> </li>
-
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/4_Plot%20Matices.html#Pair-Grid"><b>Plot Metrices</b></a> </li>
-</ul>
-</p></details>
-
-<hr>
-
-<details><summary><b>NOTES</b></summary><ul>
-<details><summary><b>KDE</b></summary>
-<p>The kernel density estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. Usually, a KDE doesn't tell us anything more than what we can infer from the histogram itself. However, it is
-helpful when comparing multiple histograms on the same plot.</p>
-</p></details>
-
-<details><summary><b>Histogram</b></summary>
-
-<ul>Three observations are important in a histogram:
-<li>Which feature values are more frequent in the dataset. you may log() the data in order to inspect better.</li>
-<li>How many peaks exist in the data (the peaks need to be further inspected for possible causes in the context of the data).</li>
-<li>Whether there are any outliers in the data</li>
-<li>df.hist() & sns.distplot()</li></ul>
-</p></details>
-</ul></p></details>
-</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+      </details>
+     </li>
+    </ul>
+    <h4>
+     3. Multi-Variate Visualization:
+    </h4>
+    <ul>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/1_Shape-Size-Color.html#1.-Shape">
+       <b>
+        Shape
+       </b>
+       ,
+       <b>
+        Size
+       </b>
+       , and
+       <b>
+        Color
+       </b>
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/2_Facet%202d.html#Faceting-in-col">
+       <b>
+        Facet 2d
+       </b>
+       Chart
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/3_Adaption%20of%20Bivariate.html#Adaption-of-Bi-Variate-Plots">
+       <b>
+        Adaption Bi-variante
+       </b>
+       Charts
+      </a>
+     </li>
+     <li>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/4_Plot%20Matices.html#Pair-Grid">
+       <b>
+        Plot Metrices
+       </b>
+      </a>
+     </li>
+    </ul>
+   </details>
+   <hr/>
+   <details>
+    <summary>
+     <b>
+      NOTES
+     </b>
+    </summary>
+    <ul>
+     <details>
+      <summary>
+       <b>
+        KDE
+       </b>
+      </summary>
+      The kernel density estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. Usually, a KDE doesn't tell us anything more than what we can infer from the histogram itself. However, it is
+helpful when comparing multiple histograms on the same plot.
+     </details>
+     <details>
+      <summary>
+       <b>
+        Histogram
+       </b>
+      </summary>
+      <ul>
+       Three observations are important in a histogram:
+       <li>
+        Which feature values are more frequent in the dataset. you may log() the data in order to inspect better.
+       </li>
+       <li>
+        How many peaks exist in the data (the peaks need to be further inspected for possible causes in the context of the data).
+       </li>
+       <li>
+        Whether there are any outliers in the data
+       </li>
+       <li>
+        df.hist() &amp; sns.distplot()
+       </li>
+      </ul>
+     </details>
+    </ul>
+   </details>
+  </div>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

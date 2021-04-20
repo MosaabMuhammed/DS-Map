@@ -1,6 +1,26 @@
 # Data Preprocessing
 
 <div style="width:1000px;margin:auto">
+
+<details><summary><b>tf.Data & tf.Transform</b> in Tensorflow</summary><p><ul>
+<li>Split the California dataset to multiple CSV files</li>
+<li>Building an Input Pipeline with tf.data</li>
+<li>The TFRecord binary format</li>
+<li>A Brief Intro to Protocol Buffers</li>
+<li>TensorFlow Protobufs</li>
+<li>Putting Images in TFRecords</li>
+<li>Putting Tensors and Sparse Tensors in TFRecords</li>
+<li>Handling Sequential Data Using SequenceExample</li>
+<li>The Features API</li>
+<li>Using Feature Columns for Parsing</li>
+<li>TF Transform</li>
+<li>TensorFlow Datasets</li>
+<li>TensorFlow Hub</li>
+<li>More</li>
+</ul>
+<a href="./notebooks/13_loading_and_preprocessing_data.html">Notebook</a>
+</p></details>
+
 <details><summary><b>One-Hot Encoding (to_categorical)</b></summary><p>
 ```
 from keras.utils.np_utils import to_categorical

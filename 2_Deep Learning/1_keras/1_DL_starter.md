@@ -180,4 +180,8 @@ with strategy.scope():
     model.summary()
 </code></pre>
 </details>
+
+<details><summary>Deal with<b> TFRecords</b></summary>
+<a href="./notebooks/TFRecords.html">kaggle notebooks</a>
+</details>
 </div>

@@ -1,89 +1,97 @@
-# 4. Exploratory Data Analysis (EDA)
-
+<h1 id="4exploratorydataanalysiseda">4. Exploratory Data Analysis (EDA)</h1>
 
 <div style='width:1000px;margin:auto'>
 <details><summary><b>Tips & Tricks</b></summary>
-<p>
 
-<details><summary>Plot a <b>Sparse</b> Matrix</summary><p>
-```
-fig = plt.figure()
+<details><summary> <b>Dark Mode</b></summary>
+<a href="./5_eda/EDA dark mode.html">dark mode notebook</a>
+</details>
+
+<details><summary>How to make <b>beautiful Visualizations</b></summary>
+<a href="./5_eda/how to make clean visualizations.html">Notebook</a>
+</details>
+
+<details><summary>Reduce  <b>the labels </b> in any axis plot</summary>
+<pre>
+<code># count different values/levels
+cat10_freq = df_train.cat10.value_counts()
+print(cat10_freq)
+
+# and plot frequency distribution using log scale
+fig, ax = plt.subplots(figsize=(12,4))
+ax.plot(np.log10(cat10_freq))
+ax.xaxis.set_major_locator(plt.MaxNLocator(20)) # reduce number of x-axis labels
+plt.title('cat10 - Frequencies')
+plt.ylabel('log10(Frequency)')
+plt.grid()
+plt.show()
+</code>
+</pre>
+</details>
+
+<details><summary>Plot a <b>Sparse</b> Matrix</summary><pre><code>fig = plt.figure()
 plt.spy(A, markersize=0.10, aspect = 'auto')
 fig.set_size_inches(8,6)
 fig.savefig('doc_term_matrix.png', dpi=800)
-```
-</p></details>
+</code></pre>
+</details>
 
-<details><summary><b>top & left ticks</b> in correlation matrix</summary><p>
-```
-f = plt.figure(figsize=(19, 15))
+<details><summary><b>top & left ticks</b> in correlation matrix</summary><pre><code>f = plt.figure(figsize=(19, 15))
 corrmat = train_features.corr()
 plt.matshow(corrmat, fignum=f.number)
 plt.xticks(range(train_features.shape[1]), train_features.columns, fontsize=3, rotation=50)
 plt.yticks(range(train_features.shape[1]), train_features.columns, fontsize=3)
 cb = plt.colorbar()
 cb.ax.tick_params(labelsize=14)
-```
-</p></details>
+</code></pre>
+</details>
 
-<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><p>
-```
-plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
+<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><pre><code>plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
              va='center', ha='left', arrowprops=dict(arrowstyle='simple',
                                                      connectionstyle='arc3, rad=0.1'))
-```
-</p></details>
+</code></pre>
+</details>
 
-<details><summary><b>Date Formatter</b> when plotting date feature</summary><p>
-```
-fig, ax = plt.subplots(figsize=(20, 10));
+<details><summary><b>Date Formatter</b> when plotting date feature</summary><pre><code>fig, ax = plt.subplots(figsize=(20, 10));
 fig = sns.countplot(df.timestamp, ax=ax, edgecolor='k', hue=df.label);
 X_dates = df['timestamp'].dt.strftime('%I:%M').sort_values().unique();
 ax.xaxis.set_major_formatter(plt.FixedFormatter(X_dates));
 plt.title('How many records per minute?', y=1.05);
 plt.grid();
 plt.xticks(rotation=70);
-```
-</p></details>
-
-<details><summary>Make <b>ylabel</b> Horizontal</summary>
-<p>
-~~~python
-plt.ylabel('Count', rotation=0, labelpad=30)
-~~~
-</p>
+</code></pre>
 </details>
 
-<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary><p>
-~~~python
-with plt.xkcd():
+<details><summary>Make <b>ylabel</b> Horizontal</summary>
+<pre><code class="python language-python">plt.ylabel('Count', rotation=0, labelpad=30)
+</code></pre>
+
+</details>
+
+<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary><pre><code class="python language-python">with plt.xkcd():
     plt.plot(roc_curve[0], roc_curve[1]);
     plt.plot([0,1], [0,1])
     plt.xlabel('FPR'); plt.ylabel('TPR'); plt.title('test AUC = %f' % (auc)); plt.axis([-0.05,1.05,-0.05,1.05]);
-~~~
-</p></details>
+</code></pre>
+</details>
 
 <details><summary><b>CDF</b> Plotting</summary>
-<p>
-~~~python
-df['height'].plot.hist(bins=200,
-				 range=(50, 80),
-				 alpha=.3,
-				 color='red',
-				 cumulative=True,
-				 normed=True)
-~~~
-</p>
+<pre><code class="python language-python">df['height'].plot.hist(bins=200,
+                 range=(50, 80),
+                 alpha=.3,
+                 color='red',
+                 cumulative=True,
+                 normed=True)
+</code></pre>
+
 </details>
 
 <details><summary><b>Greatter Matrix by mean</b> for <b>Feature Engineering</b></summary>
-<p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through"><b>Notebook</b></a> </p>
-~~~python
-def autolabel(arrayA):
+
+<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through"><b>Notebook</b></a> <pre><code class="python language-python">def autolabel(arrayA):
     '''
     label each colored square with the corresponding data value.
-    If value > 20, the text is in black, else in white.
+    If value &gt; 20, the text is in black, else in white.
     '''
     arrayA = np.array(arrayA)
     for i in range(arrayA.shape[0]):
@@ -96,11 +104,11 @@ def gt_matrix(df,feats,sz=16):
     for i,c1 in enumerate(feats):
         b = [] 
         for j,c2 in enumerate(feats):
-            mask = (~df[c1].isnull()) & (~df[c2].isnull())
-            if i>=j:
-                b.append((df.loc[mask,c1].values>=df.loc[mask,c2].values).mean())
+            mask = (~df[c1].isnull()) &amp; (~df[c2].isnull())
+            if i&gt;=j:
+                b.append((df.loc[mask,c1].values&gt;=df.loc[mask,c2].values).mean())
             else:
-                b.append((df.loc[mask,c1].values>df.loc[mask,c2].values).mean())
+                b.append((df.loc[mask,c1].values&gt;df.loc[mask,c2].values).mean())
 
         a.append(b)
 
@@ -109,15 +117,12 @@ def gt_matrix(df,feats,sz=16):
     _ = plt.xticks(range(len(feats)),feats,rotation = 90)
     _ = plt.yticks(range(len(feats)),feats,rotation = 0)
     autolabel(a)
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary> <b>Better Correlation heatmap</b></summary>
-<p>
-~~~python
-
-def heatmap(x, y, **kwargs):
+<pre><code class="python language-python">def heatmap(x, y, **kwargs):
     if 'color' in kwargs:
         color = kwargs['color']
     else:
@@ -190,7 +195,7 @@ def heatmap(x, y, **kwargs):
         marker=marker,
         s=[value_to_size(v) for v in size], 
         c=[value_to_color(v) for v in color],
-        <b>kwargs_pass_on
+        &lt;b&gt;kwargs_pass_on
     )
     ax.set_xticks([v for k,v in x_to_num.items()])
     ax.set_xticklabels([k for k in x_to_num], rotation=45, horizontalalignment='right')
@@ -207,7 +212,7 @@ def heatmap(x, y, **kwargs):
     ax.set_facecolor('#F1F1F1')
 
     # Add color legend on the right side of the plot
-    if color_min < color_max:
+    if color_min &lt; color_max:
         ax = plt.subplot(plot_grid[:,-1]) # Use the rightmost column of the plot
 
         col_x = [0]*len(palette) # Fixed x coordinate for the bars
@@ -243,39 +248,31 @@ def corrplot(data, size_scale=500, marker='s'):
         y_order=data.columns[::-1],
         size_scale=size_scale
     )
+</code></pre>
 
-
-~~~
-</p>
 </details>
 <details><summary> <b>Distrubtion of feature vs. row index</b></summary>
-<p>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Distribution-of-X8-along-with-row-index:"><b>Example</b></a> </p> 
 
-<h4> 1. Without Class labeling</h4>
-~~~python
-plt.figure(figsize=(16, 10))
+<a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Distribution-of-X8-along-with-row-index:"><b>Example</b></a>  
+
+<h4> 1. Without Class labeling</h4><pre><code class="python language-python">plt.figure(figsize=(16, 10))
 plt.plot(train.x8, '.')
 plt.xlabel('Row Index')
 plt.ylabel('X8 Values')
 plt.title('Distribution of X8 around row index')
-~~~
+</code></pre>
 
 <h4> 2. With class labeling</h4>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Hue-with-Class-labels:"><b>Labeling example</b></a></p>
-~~~python
-plt.figure(figsize=(16, 10))
+<a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Hue-with-Class-labels:"><b>Labeling example</b></a><pre><code class="python language-python">plt.figure(figsize=(16, 10))
 plt.scatter(range(len(train.x8)), train.sort_values('y')['x8'], c=train.sort_values('y')['y'], cmap='viridis')
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary> <b>Features Grouping</b> for <b>Feature Engineering</b></summary>
-<p>
+
 <h4> 1. Clustering by KMeans</h4>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#With-Clustering:"><b>Notebook</b></a></p>
-~~~python
-from sklearn.cluster import KMeans
+<a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#With-Clustering:"><b>Notebook</b></a><pre><code class="python language-python">from sklearn.cluster import KMeans
 
 X = train.copy()
 
@@ -290,83 +287,71 @@ for col in train.columns[train.dtypes == 'object']:
 
 kmeans = KMeans(n_clusters=7)
 y_pred = kmeans.fit_predict(X)
-~~~
-
-~~~python
-plt.figure(figsize=(16, 10))
+</code></pre>
+<pre><code class="python language-python">plt.figure(figsize=(16, 10))
 sns.heatmap(X.corr(), cmap='viridis');
-~~~
+</code></pre>
 
 <h4> 2. Clustering by Statistics</h4>
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Clustering-Using-Statistics:"><b>Notebook</b></a></p>
-
-~~~python
-plt.figure(figsize=(16, 8))
+<a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Clustering-Using-Statistics:"><b>Notebook</b></a>
+<pre><code class="python language-python">plt.figure(figsize=(16, 8))
 train.mean().sort_values().plot(style='.');
-~~~
-</p>
+</code></pre>
+
 </details>
 
 
 <details><summary>From <b>Power Law Dist</b> to <b>Normal Disb.</b></summary>
-<p>
 
-<h4> Convert</h4>
-~~~python
-#converting the values to log-values to chec for log-normal
+
+<h4> Convert</h4><pre><code class="python language-python">#converting the values to log-values to chec for log-normal
 import math
 frame_with_durations_modified['log_times']=[math.log(i+1) for i in frame_with_durations_modified['trip_times'].values]
-~~~
+</code></pre>
 
-<h4> Show the distribution</h4>
-~~~python
-#pdf of log-values
+<h4> Show the distribution</h4><pre><code class="python language-python">#pdf of log-values
 sns.FacetGrid(frame_with_durations_modified,size=6) \
       .map(sns.kdeplot,"log_times") \
       .add_legend();
 plt.show();
-~~~
+</code></pre>
 
-<h4> Check the Q-Q plot.</h4>
-~~~python
-import scipy
+<h4> Check the Q-Q plot.</h4><pre><code class="python language-python">import scipy
 #Q-Q plot for checking if trip-times is log-normal
 scipy.stats.probplot(frame_with_durations_modified['log_times'].values, plot=plt)
 plt.show()
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary>Plot <b>Two Categorical Features</b> with sizes</summary>
-<p>
-~~~python
-def plot_categoricals(x, y, data, annotate=True):
+<pre><code class="python language-python">def plot_categoricals(x, y, data, annotate=True):
     '''
     Plot counts of 2 categorical.
     Size is raw count for each grouping.
     Percentages are for a given value of y.
     '''
-    
+
     # Raw counts.
     raw_counts = pd.DataFrame(data.groupby(y)[x].value_counts(normalize=False))
     raw_counts = raw_counts.rename(columns={x: 'raw_count'})
-    
+
     # Calculate counts for each group of x and y.
     counts = pd.DataFrame(data.groupby(y)[x].value_counts(normalize=True))
-    
+
     # Rename the column and reset the index.
     counts = counts.rename(columns={x: 'normalized_count'}).reset_index()
     counts['percent'] = 100 * counts['normalized_count']
-    
+
     # Add the raw count
     counts['raw_count'] = list(raw_counts['raw_count'])
-    
+
     plt.figure(figsize=(14, 10))
     # Scatter plot sized by percent.
     plt.scatter(counts[x], counts[y], edgecolor='k', color='lightgreen',
                 s=100*np.sqrt(counts.raw_count), marker='o',
                 alpha=.6, linewidth=1.5)
-    
+
     # Annotate:
     if annotate:
         # Annotate the plot with text.
@@ -378,30 +363,30 @@ def plot_categoricals(x, y, data, annotate=True):
     # Set tick marks
     plt.yticks(counts[y].unique())
     plt.xticks(counts[x].unique())
-    
+
     # Transform min and max to evenly space in square root domain.
     sqr_min = int(np.sqrt(raw_counts.raw_count.min()))
     sqr_max = int(np.sqrt(raw_counts.raw_count.max()))
-    
+
     # 5 sizes for legend
     msizes = list(range(sqr_min, sqr_max,
                         int((sqr_max - sqr_min)/5)))
     markers = []
-    
+
     # Markers for legend
     for size in msizes:
         markers.append(plt.scatter([], [], s=100*size,
                                    label=f'{int(round(np.square(size)/100)*100)}',
                                    color='lightgreen',
                                    alpha=.6, edgecolor='k', linewidth=1.5))
-    
+
     # Legend and formatting
     plt.legend(handles=markers, title='Counts',
                labelspacing=3, handletextpad=2,
                fontsize=16, loc=(1.10, .19))
     plt.annotate(f'* Size represents raw count while % for a given y value.',
                  xy=(0,1), xycoords='figure points', size=10)
-    
+
     # Adjust axes limits.
     plt.xlim((counts[x].min() - (6 / counts[x].nunique()),
               counts[x].max() + (6 / counts[x].nunique())))
@@ -409,73 +394,61 @@ def plot_categoricals(x, y, data, annotate=True):
               counts[y].max() + (4 / counts[y].nunique())))
     plt.grid(None)
     plt.xlabel(f"{x}"); plt.ylabel(f"{y}"); plt.title(f"{y} vs {x}");
-~~~
+</code></pre>
 
-<h4> 2. Example.</h4>
-~~~python
-plot_categoricals('rez_esc', 'Target', data)
-~~~
-</p>
+<h4> 2. Example.</h4><pre><code class="python language-python">plot_categoricals('rez_esc', 'Target', data)
+</code></pre>
+
 </details>
 
 
 <details><summary>Plot <b>How many Unique Values</b> In each column</summary>
-<p>
-~~~python
-color = sns.color_palette()[0]
+<pre><code class="python language-python">color = sns.color_palette()[0]
 ax = train.select_dtypes(np.int64)\
      .nunique()\
      .value_counts()\
      .sort_index()\
      .plot.bar(color=color, figsize=(8, 6), edgecolor='black', linewidth=2)
 show_annotation(ax)
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary>Plot <b>Quantiles</b> on line chart</summary>
-<p>
-<p><img src="imgs/20191030-123738.png" width="1000" height='500' /></p>
-~~~python
-plt.plot(tag_counts[:100], c='b')
+
+<img src="imgs/20191030-123738.png" width="1000" height='500' /><pre><code class="python language-python">plt.plot(tag_counts[:100], c='b')
 plt.scatter(x=list(range(0, 100, 5)), y=tag_counts[0:100:5], c='orange', label='Quantiles with .05 intervals.')
 plt.scatter(x=list(range(0,100,25)), y=tag_counts[0:100:25], c='m', label='Quantiles with .25 intevals.')
 
 for x, y in zip(list(range(0, 100, 25)), tag_counts[0:100:25]):
     plt.annotate(s="{}, {})".format(x, y), xy=(x, y), xytext=(x-.05, y+500))
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary><b>Histogram</b> For all Numerical Values</summary>
-<p>
-~~~python
-train_df.hist(bins='auto', figsize=(18, 22), layout=(5, 2));
-~~~
-</p>
+<pre><code class="python language-python">train_df.hist(bins='auto', figsize=(18, 22), layout=(5, 2));
+</code></pre>
+
 </details>
 
 <details><summary> Add <b>Spaces</b> b/w <b>height</b> and <b>width</b> for subplots</summary>
-<p>
-~~~python
-plt.subplots_adjust(wspace=.5, hspace=.5)
-~~~
-</p>
+<pre><code class="python language-python">plt.subplots_adjust(wspace=.5, hspace=.5)
+</code></pre>
+
 </details>
 
 <details><summary> Plot <b>3D</b> figures </summary>
-<p style="margin: 0">
-~~~python
-from mpl_toolkits.mplot3d import Axes3D
+<p style="margin: 0"><pre><code class="python language-python">from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
 def plot_3d(x, y, z, df, cmap = plt.cm.seismic_r):
     """3D scatterplot of data in df"""
 
     fig = plt.figure(figsize = (10, 10))
-    
+
     ax = fig.add_subplot(111, projection='3d')
-    
+
     # 3d scatterplot
     ax.scatter(df[x], df[y],
                df[z], c = df[z], 
@@ -488,17 +461,15 @@ def plot_3d(x, y, z, df, cmap = plt.cm.seismic_r):
 
     plt.title('{} as function of {} and {}'.format(
                z, x, y), size = 18);
-    
+
 plot_3d('learning_rate', 'n_estimators', 'score', opt_hyp)
-~~~
-</p>
+</code></pre>
+
 </details>
 
 
-<details><summary> Show <b>Annotations</b> on <b>bar chart [Horizontal, Vertical]</b> </summary><p>
-<h4> Vertical Bar</h4>
-~~~python
-def show_annotation(dist, n=5, total=None):
+<details><summary> Show <b>Annotations</b> on <b>bar chart [Horizontal, Vertical]</b> </summary>
+<h4> Vertical Bar</h4><pre><code class="python language-python">def show_annotation(dist, n=5, total=None):
     sizes = [] # Get highest value in y
     for p in dist.patches:
         height = p.get_height()
@@ -509,10 +480,8 @@ def show_annotation(dist, n=5, total=None):
                '{:1.2f}%'.format(height*100/total) if total else '{}'.format(height), # Set the text to be written
                ha='center', fontsize=14) 
     dist.set_ylim(0, max(sizes) * 1.15); # set y limit based on highest heights
-~~~
-<h4> Example:</h4>
-~~~python
-total = len(train)
+</code></pre>
+<h4> Example:</h4><pre><code class="python language-python">total = len(train)
 plt.figure(figsize=(12, 6))
 
 color = sns.color_palette()[0]
@@ -522,11 +491,9 @@ g.set_xlabel('Target Values', fontsize=15)
 g.set_ylabel('Count', fontsize=15)
 
 show_annotation(g)
-~~~
+</code></pre>
 
-<h4> Horizontal Bar</h4>
-```
-def show_annotations_horizontal(ax):
+<h4> Horizontal Bar</h4><pre><code>def show_annotations_horizontal(ax):
     sizes = []
     for p in ax.patches:
         width = p.get_width()
@@ -536,118 +503,98 @@ def show_annotations_horizontal(ax):
         y = p.get_y() + p.get_height()/2
         ax.annotate(percentage, (x, y))
         ax.set_xlim(0, max(sizes) * 1.15); # set x limit based on highest width
-```
-</p>
+</code></pre>
+
 </details>
 
 <details><summary> <b>Increase Size of (plt.title)</b> </summary>
-<p>
 
-~~~python
-plt.title('Title here', size=20, y=1.06)
-~~~
-~~~python
-plt.suptitle('Title here', fontsize=20)
-~~~
+<pre><code class="python language-python">plt.title('Title here', size=20, y=1.06)
+</code></pre><pre><code class="python language-python">plt.suptitle('Title here', fontsize=20)
+</code></pre>
 
-<h4> OOP Version</h4>
-~~~python
-color = sns.color_palette()[0]
+<h4> OOP Version</h4><pre><code class="python language-python">color = sns.color_palette()[0]
 g = sns.countplot(x='target', data=train, color=color)
 g.set_title('Target Distribution', fontsize=20)
 g.set_xlabel('Target Values', fontsize=15)
 g.set_ylabel('Count', fontsize=15)
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary> <b>Change Font Size of all plots</b> </summary>
-<p>
 
-~~~python
-plt.rcParams['font.size'] = 22
-~~~
-</p>
+<pre><code class="python language-python">plt.rcParams['font.size'] = 22
+</code></pre>
+
 </details>
 
 
 
 <details><summary> <b>Color the edge of bar chart</b> </summary>
-<p>
-~~~python
-(app_train['DAYS_BIRTH']/-365).plot.hist(edgecolor='k', bins=30);
-~~~
-~~~python
-plt.rcParams['font.size'] = 18
+<pre><code class="python language-python">(app_train['DAYS_BIRTH']/-365).plot.hist(edgecolor='k', bins=30);
+</code></pre><pre><code class="python language-python">plt.rcParams['font.size'] = 18
 plt.rcParams['patch.edgecolor'] = 'k'
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary> Make <b>grid behind bar charts</b> </summary>
-<p>
 
-~~~python
-ax.grid(zorder=0)
+<pre><code class="python language-python">ax.grid(zorder=0)
 ax.bar(range(len(y)), y, width=0.3, align='center', color='skyblue', zorder=3)
-~~~
-</p>
+</code></pre>
+
 </details>
 
 <details><summary><b>KDE</b> plot b/w <b>feature</b> and <b>TARGET</b></summary>
-<p>
-~~~python
-# Modify it to be sutable for your needs.
+<pre><code class="python language-python"># Modify it to be sutable for your needs.
 def kde_target(var_name, df):
-    
+
     # Calculate the correlation coefficient between the new variable and the target
     corr = df['TARGET'].corr(df[var_name])
-    
+
     avg_repaid     = df.ix[df['TARGET']==0, var_name].median()
     avg_not_repaid = df.ix[df['TARGET']==1, var_name].median()
-    
+
     plt.figure(figsize=(12, 6))
-    
+
     sns.kdeplot(df.ix[df['TARGET']==0, var_name], label='target == 0', shade=True)
     sns.kdeplot(df[df['TARGET']==1][var_name], label='target == 1', shade=True)
-    
+
     # LABEL THE PLOT
     plt.xlabel(var_name)
     plt.ylabel('Density')
     plt.title('%s Distribution' % var_name)
     plt.legend();
-    
-    print('~> The correlation between %s and the TARGET is %.4f' % (var_name, corr))
-    print('~> The median value for loan that was not repaid = %.4f' % avg_not_repaid)
-    print('~> The median value for loan that was repaid = %.4f' % avg_repaid)
-~~~
-</p></details>
+
+    print('~&gt; The correlation between %s and the TARGET is %.4f' % (var_name, corr))
+    print('~&gt; The median value for loan that was not repaid = %.4f' % avg_not_repaid)
+    print('~&gt; The median value for loan that was repaid = %.4f' % avg_repaid)
+</code></pre>
+</details>
 
 <details><summary>Show the <b>Legend</b> outside of the plot</summary>
-<p>
-~~~python
-# To relocate the legend
+<pre><code class="python language-python"># To relocate the legend
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 # Note:
 # ncol=1 (default) is another parameter, you can tweak to change the number of columns to fill in a raw in the legend.
-~~~
-</p></details>
-<details><summary>Add <b>Vertical</b> or <b>Horizontal</b> line in a plot</summary><p>
-```
-# Vertical Line.
+</code></pre>
+</details>
+<details><summary>Add <b>Vertical</b> or <b>Horizontal</b> line in a plot</summary><pre><code># Vertical Line.
 plt.axvline(x=np.mean(df.weight), color="red", label="mean")
 
 # Horizontal Line.
 plt.axhline(y=.5, color="red", label="something")
-```
-</p></details>
+</code></pre>
+</details>
 
-</p></details>
+</details>
 
 <hr>
 
-<details><summary><b>Pandas</b></summary><p><ul>
+<details><summary><b>Pandas</b></summary><ul>
 <li><b>df.plot.hist()</b>     histogram</li>
 
 <li><b>df.plot.bar()</b>      bar chart</li>
@@ -669,19 +616,19 @@ plt.axhline(y=.5, color="red", label="something")
 <li><b>df.plot.pie()</b>      pie chart</li>
 </ul>
 
-<p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types"><b>Built-in Visualization</b></a> </p>
-</p></details>
+<a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udemy/[%20FreeCourseWeb.com%20]%20Udemy%20-%20Python%20for%20Time%20Series%20Data%20Analysis/01.%20Introduction/UDEMY_TSA_FINAL/03-Pandas-Visualization/00-Pandas%20Built-in%20Data%20Visualization.html#Plot-Types"><b>Built-in Visualization</b></a> 
+</details>
 
-<details><summary><b>Matplotlib</b></summary><p><ul>
+<details><summary><b>Matplotlib</b></summary><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture"><b>1. Matplotlib Concepts</b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture"><b>2. Advanced Concepts</b></a></li>
 </ul>
 
-</p>
+
 </details>
 
-<details><summary><b>Seaborn</b></summary><p><ul>
+<details><summary><b>Seaborn</b></summary><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/1_Distribution%20Plots.html#Distribution-Plots"><b>1. Distrubtion Plots</b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/4_Seaborn%20/2_Categorical%20Plots.html#Categorical-Data-Plots"><b>2. Categorical Data Plots</b></a></li>
@@ -697,26 +644,22 @@ plt.axhline(y=.5, color="red", label="something")
 
 </ul>
 
-</p>
+
 </details>
 
-<details><summary><b>Plotly</b></summary><p><ul>
+<details><summary><b>Plotly</b></summary><ul>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/6_Plotly%20&amp;%20Cufflinks%20-%20Data%20Visualization/1_Plotly%20and%20Cufflinks.html#Plotly-and-Cufflinks"><b>Plotly &amp; Cufflinks</b></a> </li>
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/10_Plotly_tutorials/Notebook.html#INTRODUCTION"><b>Plotly Tutorials</b></a> </li> 
 
-<li><details><summary><b>Scatter plot</b> - Plotly Express</summary><p>
-```
-import plotly.express as px
+<li><details><summary><b>Scatter plot</b> - Plotly Express</summary><pre><code>import plotly.express as px
 
 # Create a scatter plot.
 fig = px.scatter(data, x='gdp', y='co2', animation_frame='year', animation_group='country', color='region', hover_name='country', facet_col='region', width=1579, height=400, log_x=True, size_max=45, range_x=[xmin, xmax], range_y=[ymin, ymax])
 
 fig.show()
-```
-</p></details></li>
-<li><details><summary><b>Geographic</b> - Code 3 Alpha</summary><p>
-```
-import plotly.express as px
+</code></pre>
+</details></li>
+<li><details><summary><b>Geographic</b> - Code 3 Alpha</summary><pre><code>import plotly.express as px
 fig = px.choropleth(internet_usage_2016,
                     locations="Code",
                     color="Individuals using the Internet (% of population)",
@@ -728,30 +671,28 @@ fig.update_layout(
     geo = dict(projection={'type': 'natural earth'})
 )
 fig.show()
-```
-</p></details></li>
-<li><details><summary><b>Geographic</b> - Lat & Lon - Scatter</summary><p>
-```
-import plotly.graph_objects as go
+</code></pre>
+</details></li>
+<li><details><summary><b>Geographic</b> - Lat & Lon - Scatter</summary><pre><code>import plotly.graph_objects as go
 
 fig = go.Figure(data=go.Scattergeo(
-				 lon=df['LON'],
-				 lat=df['LAT'],
-				 text=df['street_addr'], # Value to be displied when hovering
-				 mode='markers',
-				 ))
+                 lon=df['LON'],
+                 lat=df['LAT'],
+                 text=df['street_addr'], # Value to be displied when hovering
+                 mode='markers',
+                 ))
 fig.update_layout(title='Walmart stores across world',
-			    geo_scope='usa')
+                geo_scope='usa')
 fig.show()
-```
-</p></details></li>
-</ul></p></details>
+</code></pre>
+</details></li>
+</ul></details>
 
-<details><summary><b>Bokeh</b></summary><p><ul>
+<details><summary><b>Bokeh</b></summary><ul>
 There are files inside eda_file, wait until you read the book about bokeh, then start documenting.
-</ul></p></details>
+</ul></details>
 
-<details><summary><b>Altair</b></summary><p><ul>
+<details><summary><b>Altair</b></summary><ul>
 <li><a href="./5_eda/01-alt-Iris-Demo.html"><b>IRIS Demo</b></a> </li>
 <li><a href="./5_eda/01-Cars-Demo.html"><b>Car Demo</b></a> </li>
 <li><a href="./5_eda/02-Simple-Charts.html"><b></b>Simple Charts</a> </li>
@@ -761,11 +702,11 @@ There are files inside eda_file, wait until you read the book about bokeh, then 
 <li><a href="./5_eda/07-Transformations.html"><b>Transformations</b></a> </li>
 <li><a href="./5_eda/08-Configuration.html"><b>Configuration</b></a> </li>
 <li><a href="./5_eda/09-Geographic-plots.html"><b>Geographic Plots</b></a> </li>
-</ul></p></details>
+</ul></details>
 <hr>
 
 <details><summary><b>Data Scientist ND</b></summary>
-<p>
+
 <h4>1. Uni-Variate Visualization:</h4> 
 
 <ul>
@@ -808,39 +749,31 @@ There are files inside eda_file, wait until you read the book about bokeh, then 
 
 <li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2008-Module%2001-Lesson%2004_Bivariate%20Exploration%20of%20Data/20.%20Extra%20Ridgeline%20Plots.html"><b>Ridgeline</b> Plot</a></li>
 
-<li><details><summary><b>catplot</b></summary><p>
-```
-# Used as countplot for categorical feature with its count.
+<li><details><summary><b>catplot</b></summary><pre><code># Used as countplot for categorical feature with its count.
 sns.catplot("cut", data=df, aspect=1.5, kind="count", color="b")
-```
-</p></details></li>
+</code></pre>
+</details></li>
 
-<li><details><summary><b>lineplot</b></summary><p>
-<p>The solid line represent the mean of the y axis feature at the corresponding x coordinate.<br>The shaded area around the line plot shows the confidence interval for the y axis feature. (by default, seaborn set this to 95% confidence interval)<br><br>Line plots are great visualization techniques for scenarios where we have data that changes over time.</p>
-```
-ax = sns.lineplot(x="cat_col", y="num_col", data=df, ci=68)
-```
-</p></details></li>
+<li><details><summary><b>lineplot</b></summary>
+The solid line represent the mean of the y axis feature at the corresponding x coordinate.<br>The shaded area around the line plot shows the confidence interval for the y axis feature. (by default, seaborn set this to 95% confidence interval)<br><br>Line plots are great visualization techniques for scenarios where we have data that changes over time.<pre><code>ax = sns.lineplot(x="cat_col", y="num_col", data=df, ci=68)
+</code></pre>
+</details></li>
 
-<li><details><summary><b>clustermap</b></summary><p>
-We can can determine the similarity(distance) metrics by using (metric) parameter, and the possible values ["euclidean"(default), "manhattan", "correlation", ...]
-```
-pd_pivoted = df.pivot("month", "year", "passenegers")
+<li><details><summary><b>clustermap</b></summary>
+We can can determine the similarity(distance) metrics by using (metric) parameter, and the possible values ["euclidean"(default), "manhattan", "correlation", ...]<pre><code>pd_pivoted = df.pivot("month", "year", "passenegers")
 
 # We can cluster by "year" (row_cluster=False, col_cluster=True).
 # We can cluster them by both "year" and "month".
 # The following is clustered by "month".
 ax = sns.clustermap(df_pivoted, col_cluster=False, row_cluster=True, metric="euclidean")
-```
+</code></pre>
 
-<p>Appling linkage in Heatmaps:<br>
+Appling linkage in Heatmaps:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- If we define the distance b/w 2 clusters as the distance b/w the 2 points across the clusters <b>closest</b> to each other, the rule is called <b>single linkage</b>.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- If the rule is to define the distance b/w 2 clusters as the distance b/w the points <b>farthest</b> from each other, it is called <b>complete linkage</b>.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- If the rule is to define the distance as the <b>average</b> of all possible pairs of rows in the 2 clusters, it's called <b>average linkage</b>.</p>
-```
-sns.clustermap(df_pivoted, row_cluster=False, metric="correlation", method="single")
-```
-</p></details></li>
+&nbsp;&nbsp;&nbsp;&nbsp;- If the rule is to define the distance as the <b>average</b> of all possible pairs of rows in the 2 clusters, it's called <b>average linkage</b>.<pre><code>sns.clustermap(df_pivoted, row_cluster=False, metric="correlation", method="single")
+</code></pre>
+</details></li>
 </ul>
 
 <h4>3. Multi-Variate Visualization:</h4>
@@ -854,15 +787,15 @@ sns.clustermap(df_pivoted, row_cluster=False, metric="correlation", method="sing
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Scientist%20ND/html/3_Multivariate%20Visualization/4_Plot%20Matices.html#Pair-Grid"><b>Plot Metrices</b></a> </li>
 </ul>
-</p></details>
+</details>
 
 <hr>
 
 <details><summary><b>NOTES</b></summary><ul>
 <details><summary><b>KDE</b></summary>
-<p>The kernel density estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. Usually, a KDE doesn't tell us anything more than what we can infer from the histogram itself. However, it is
-helpful when comparing multiple histograms on the same plot.</p>
-</p></details>
+The kernel density estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. Usually, a KDE doesn't tell us anything more than what we can infer from the histogram itself. However, it is
+helpful when comparing multiple histograms on the same plot.
+</details>
 
 <details><summary><b>Histogram</b></summary>
 
@@ -871,6 +804,6 @@ helpful when comparing multiple histograms on the same plot.</p>
 <li>How many peaks exist in the data (the peaks need to be further inspected for possible causes in the context of the data).</li>
 <li>Whether there are any outliers in the data</li>
 <li>df.hist() & sns.distplot()</li></ul>
-</p></details>
-</ul></p></details>
+</details>
+</ul></details>
 </div>
