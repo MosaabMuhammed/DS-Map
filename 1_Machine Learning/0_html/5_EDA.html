@@ -24,6 +24,37 @@
     <details>
      <summary>
       <b>
+       Correlation of Continous Features with target
+      </b>
+      pd.corrwith()
+     </summary>
+     <pre><code># Thanks a lot @dwin183287 for sharing this amazinf function!
+background_color = "#f6f5f5"
+
+fig = plt.figure(figsize=(12, 8), facecolor=background_color)
+gs = fig.add_gridspec(1, 1)
+ax0 = fig.add_subplot(gs[0, 0])
+
+ax0.set_facecolor(background_color)
+ax0.text(-1.1, 0.26, 'Correlation of Continuous Features with Target', fontsize=20, fontweight='bold', fontfamily='serif')
+ax0.text(-1.1, 0.24, 'There is no features that pass 0.22 correlation with target', fontsize=13, fontweight='light', fontfamily='serif')
+
+chart_df = pd.DataFrame(train_df[numerical_columns].corrwith(train_df['target']))
+chart_df.columns = ['corr']
+sns.barplot(x=chart_df.index, y=chart_df['corr'], ax=ax0, color=primary_blue, zorder=3, edgecolor='black', linewidth=1.5)
+ax0.grid(which='major', axis='y', zorder=0, color='gray', linestyle=':', dashes=(1,5))
+ax0.set_ylabel('')
+
+for s in ["top","right", 'left']:
+    ax0.spines[s].set_visible(False)
+
+plt.show()
+</code></pre>
+     <img src="./imgs/20210423-165108.png"/>
+    </details>
+    <details>
+     <summary>
+      <b>
        Dark Mode
       </b>
      </summary>
