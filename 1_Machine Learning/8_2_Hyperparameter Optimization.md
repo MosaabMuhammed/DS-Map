@@ -690,7 +690,10 @@ if __name__ == "__main__":
 </code></pre>
 </p></details></li>
 
-<li><details><summary> <b>LightGBM</b></summary><p><pre><code>from sklearn.model_selection import KFold, StratifiedKFold
+
+<li><details><summary><b>LightGBM</b></summary>
+<a href="./13_hyperparameter_opt/Optuna_LGBM.html">Another Notebook with plot_optimization_history</a>
+<pre><code>from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.metrics import log_loss
 
 import lightgbm as lgb
