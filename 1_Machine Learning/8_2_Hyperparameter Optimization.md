@@ -776,6 +776,11 @@ def objective(trial):
 # study = optuna.create_study(direction='minimize')
 # study.optimize(objective, n_trials=100)
 # study.best_trial
+
+# most 10 important features for lgb model
+from optuna.integration import lightgbm as lgb
+lgb.plot_importance(model, max_num_features=10, figsize=(10,10))
+plt.show()
 </code></pre>
 </p></details></li>
 
