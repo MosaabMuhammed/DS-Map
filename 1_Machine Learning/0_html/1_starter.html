@@ -36,6 +36,51 @@
    <details>
     <summary>
      <b>
+      Read CSV files with csv package
+     </b>
+    </summary>
+    <pre><code>import csv
+
+##### Load data.
+def load_data(filepath, skip_already_labeled=False):
+    # CSV format: [ID, TEXT, LABEL, SAMPLING_STRATEGY, CONFIDENCE]
+    with open(filepath, 'r') as csvfile:
+        data = []
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if skip_already_labeled and row[0] in already_labeled: continue
+
+            if len(row) &lt; 3: row.append("") # Add empty col for LABEL to add later.
+            if len(row) &lt; 4: row.append("") # Add empty col for SAMPLING_STRATEGY to add later.
+            if len(row) &lt; 5: row.append(0)  # Add empty col for CONFIDENCE to add later.
+
+            data.append(row)
+            label = str(row[2])
+            if row[2] != "":
+                textid = row[0]
+                already_labeled[textid] = label
+
+    csvfile.close()
+    return data
+
+##### Append rows to existing csv file.
+def append_data(filepath, data):
+    with open(filepath, "a", errors="replace") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(data)
+    csvfile.close()
+
+####### Overwrite the existing csv file.
+def write_data(filepath, data):
+    with open(filepath, "w", errors="replace") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(data)
+    csvfile.close()
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
       Macros
      </b>
     </summary>

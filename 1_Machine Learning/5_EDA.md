@@ -3,149 +3,14 @@
 <div style='width:1000px;margin:auto'>
 <details><summary><b>Tips & Tricks</b></summary>
 
-<details><summary> <b>Correlation of Continous Features with target</b> pd.corrwith() </summary>
-<pre><code># Thanks a lot @dwin183287 for sharing this amazinf function!
-background_color = "#f6f5f5"
+<details><summary>Multiple ways to get <b>Correlation of Continous Features with target</b> </summary>
 
-fig = plt.figure(figsize=(12, 8), facecolor=background_color)
-gs = fig.add_gridspec(1, 1)
-ax0 = fig.add_subplot(gs[0, 0])
-
-ax0.set_facecolor(background_color)
-ax0.text(-1.1, 0.26, 'Correlation of Continuous Features with Target', fontsize=20, fontweight='bold', fontfamily='serif')
-ax0.text(-1.1, 0.24, 'There is no features that pass 0.22 correlation with target', fontsize=13, fontweight='light', fontfamily='serif')
-
-chart_df = pd.DataFrame(train_df[numerical_columns].corrwith(train_df['target']))
-chart_df.columns = ['corr']
-sns.barplot(x=chart_df.index, y=chart_df['corr'], ax=ax0, color=primary_blue, zorder=3, edgecolor='black', linewidth=1.5)
-ax0.grid(which='major', axis='y', zorder=0, color='gray', linestyle=':', dashes=(1,5))
-ax0.set_ylabel('')
-
-for s in ["top","right", 'left']:
-    ax0.spines[s].set_visible(False)
-
-plt.show()
+<details><summary><b>Generate a colored table for correlation</b></summary>
+<pre><code>#Features correlation
+corr = train[continous_cols+['target']].corr()
+corr.style.background_gradient(cmap='coolwarm').set_precision(2)
 </code></pre>
-<img src="./imgs/20210423-165108.png">
-</details>
-
-
-<details><summary> <b>Dark Mode</b></summary>
-<a href="./5_eda/EDA dark mode.html">dark mode notebook</a>
-</details>
-
-<details><summary>How to make <b>beautiful Visualizations</b></summary>
-<a href="./5_eda/how to make clean visualizations.html">Notebook</a>
-</details>
-
-<details><summary>Reduce  <b>the labels </b> in any axis plot</summary>
-<pre>
-<code># count different values/levels
-cat10_freq = df_train.cat10.value_counts()
-print(cat10_freq)
-
-# and plot frequency distribution using log scale
-fig, ax = plt.subplots(figsize=(12,4))
-ax.plot(np.log10(cat10_freq))
-ax.xaxis.set_major_locator(plt.MaxNLocator(20)) # reduce number of x-axis labels
-plt.title('cat10 - Frequencies')
-plt.ylabel('log10(Frequency)')
-plt.grid()
-plt.show()
-</code>
-</pre>
-</details>
-
-<details><summary>Plot a <b>Sparse</b> Matrix</summary><pre><code>fig = plt.figure()
-plt.spy(A, markersize=0.10, aspect = 'auto')
-fig.set_size_inches(8,6)
-fig.savefig('doc_term_matrix.png', dpi=800)
-</code></pre>
-</details>
-
-<details><summary><b>top & left ticks</b> in correlation matrix</summary><pre><code>f = plt.figure(figsize=(19, 15))
-corrmat = train_features.corr()
-plt.matshow(corrmat, fignum=f.number)
-plt.xticks(range(train_features.shape[1]), train_features.columns, fontsize=3, rotation=50)
-plt.yticks(range(train_features.shape[1]), train_features.columns, fontsize=3)
-cb = plt.colorbar()
-cb.ax.tick_params(labelsize=14)
-</code></pre>
-</details>
-
-<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><pre><code>plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
-             va='center', ha='left', arrowprops=dict(arrowstyle='simple',
-                                                     connectionstyle='arc3, rad=0.1'))
-</code></pre>
-</details>
-
-<details><summary><b>Date Formatter</b> when plotting date feature</summary><pre><code>fig, ax = plt.subplots(figsize=(20, 10));
-fig = sns.countplot(df.timestamp, ax=ax, edgecolor='k', hue=df.label);
-X_dates = df['timestamp'].dt.strftime('%I:%M').sort_values().unique();
-ax.xaxis.set_major_formatter(plt.FixedFormatter(X_dates));
-plt.title('How many records per minute?', y=1.05);
-plt.grid();
-plt.xticks(rotation=70);
-</code></pre>
-</details>
-
-<details><summary>Make <b>ylabel</b> Horizontal</summary>
-<pre><code class="python language-python">plt.ylabel('Count', rotation=0, labelpad=30)
-</code></pre>
-
-</details>
-
-<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary><pre><code class="python language-python">with plt.xkcd():
-    plt.plot(roc_curve[0], roc_curve[1]);
-    plt.plot([0,1], [0,1])
-    plt.xlabel('FPR'); plt.ylabel('TPR'); plt.title('test AUC = %f' % (auc)); plt.axis([-0.05,1.05,-0.05,1.05]);
-</code></pre>
-</details>
-
-<details><summary><b>CDF</b> Plotting</summary>
-<pre><code class="python language-python">df['height'].plot.hist(bins=200,
-                 range=(50, 80),
-                 alpha=.3,
-                 color='red',
-                 cumulative=True,
-                 normed=True)
-</code></pre>
-
-</details>
-
-<details><summary><b>Greatter Matrix by mean</b> for <b>Feature Engineering</b></summary>
-
-<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through"><b>Notebook</b></a> <pre><code class="python language-python">def autolabel(arrayA):
-    '''
-    label each colored square with the corresponding data value.
-    If value &gt; 20, the text is in black, else in white.
-    '''
-    arrayA = np.array(arrayA)
-    for i in range(arrayA.shape[0]):
-        for j in range(arrayA.shape[1]):
-            plt.text(j, i, "%.2f"%arrayA[i, j], ha='center', va='bottom', color='w')
-
-
-def gt_matrix(df,feats,sz=16):
-    a = []
-    for i,c1 in enumerate(feats):
-        b = [] 
-        for j,c2 in enumerate(feats):
-            mask = (~df[c1].isnull()) &amp; (~df[c2].isnull())
-            if i&gt;=j:
-                b.append((df.loc[mask,c1].values&gt;=df.loc[mask,c2].values).mean())
-            else:
-                b.append((df.loc[mask,c1].values&gt;df.loc[mask,c2].values).mean())
-
-        a.append(b)
-
-    plt.figure(figsize = (sz,sz))
-    plt.imshow(a, interpolation = 'None', cmap='Spectral')
-    _ = plt.xticks(range(len(feats)),feats,rotation = 90)
-    _ = plt.yticks(range(len(feats)),feats,rotation = 0)
-    autolabel(a)
-</code></pre>
-
+<p><img src="imgs/20210428-225608.png" alt="" /></p>
 </details>
 
 <details><summary> <b>Better Correlation heatmap</b></summary>
@@ -278,6 +143,154 @@ def corrplot(data, size_scale=500, marker='s'):
 </code></pre>
 
 </details>
+
+<details><summary> <b>Correlation of Continous Features with target</b> pd.corrwith() </summary>
+<pre><code># Thanks a lot @dwin183287 for sharing this amazinf function!
+background_color = "#f6f5f5"
+
+fig = plt.figure(figsize=(12, 8), facecolor=background_color)
+gs = fig.add_gridspec(1, 1)
+ax0 = fig.add_subplot(gs[0, 0])
+
+ax0.set_facecolor(background_color)
+ax0.text(-1.1, 0.26, 'Correlation of Continuous Features with Target', fontsize=20, fontweight='bold', fontfamily='serif')
+ax0.text(-1.1, 0.24, 'There is no features that pass 0.22 correlation with target', fontsize=13, fontweight='light', fontfamily='serif')
+
+chart_df = pd.DataFrame(train_df[numerical_columns].corrwith(train_df['target']))
+chart_df.columns = ['corr']
+sns.barplot(x=chart_df.index, y=chart_df['corr'], ax=ax0, color=primary_blue, zorder=3, edgecolor='black', linewidth=1.5)
+ax0.grid(which='major', axis='y', zorder=0, color='gray', linestyle=':', dashes=(1,5))
+ax0.set_ylabel('')
+
+for s in ["top","right", 'left']:
+    ax0.spines[s].set_visible(False)
+
+plt.show()
+</code></pre>
+<img src="./imgs/20210423-165108.png">
+</details>
+
+</details>
+
+<details><summary> <b>Dark Mode</b></summary>
+<a href="./5_eda/EDA dark mode.html">dark mode notebook</a>
+</details>
+
+<details><summary>How to make <b>beautiful Visualizations</b></summary>
+<a href="./5_eda/how to make clean visualizations.html">Notebook</a>
+</details>
+
+<details><summary>Reduce  <b>the labels </b> in any axis plot</summary>
+<pre>
+<code># count different values/levels
+cat10_freq = df_train.cat10.value_counts()
+print(cat10_freq)
+
+# and plot frequency distribution using log scale
+fig, ax = plt.subplots(figsize=(12,4))
+ax.plot(np.log10(cat10_freq))
+ax.xaxis.set_major_locator(plt.MaxNLocator(20)) # reduce number of x-axis labels
+plt.title('cat10 - Frequencies')
+plt.ylabel('log10(Frequency)')
+plt.grid()
+plt.show()
+</code>
+</pre>
+</details>
+
+<details><summary>Plot a <b>Sparse</b> Matrix</summary><pre><code>fig = plt.figure()
+plt.spy(A, markersize=0.10, aspect = 'auto')
+fig.set_size_inches(8,6)
+fig.savefig('doc_term_matrix.png', dpi=800)
+</code></pre>
+</details>
+
+<details><summary><b>top & left ticks</b> in correlation matrix</summary><pre><code>f = plt.figure(figsize=(19, 15))
+corrmat = train_features.corr()
+plt.matshow(corrmat, fignum=f.number)
+plt.xticks(range(train_features.shape[1]), train_features.columns, fontsize=3, rotation=50)
+plt.yticks(range(train_features.shape[1]), train_features.columns, fontsize=3)
+cb = plt.colorbar()
+cb.ax.tick_params(labelsize=14)
+</code></pre>
+</details>
+
+<details><summary>Draw an <b>Arrow and Text</b> on the figure</summary><pre><code>plt.annotate('Stationary Activities', xy=(-0.956, 17), xytext=(-0.9, 23), size=20, 
+             va='center', ha='left', arrowprops=dict(arrowstyle='simple',
+                                                     connectionstyle='arc3, rad=0.1'))
+</code></pre>
+</details>
+
+<details><summary><b>Date Formatter</b> when plotting date feature</summary><pre><code>fig, ax = plt.subplots(figsize=(20, 10));
+fig = sns.countplot(df.timestamp, ax=ax, edgecolor='k', hue=df.label);
+X_dates = df['timestamp'].dt.strftime('%I:%M').sort_values().unique();
+ax.xaxis.set_major_formatter(plt.FixedFormatter(X_dates));
+plt.title('How many records per minute?', y=1.05);
+plt.grid();
+plt.xticks(rotation=70);
+</code></pre>
+</details>
+
+<details><summary>Make <b>ylabel</b> Horizontal</summary>
+<pre><code class="python language-python">plt.ylabel('Count', rotation=0, labelpad=30)
+</code></pre>
+
+</details>
+
+<details><summary>Using <b>[xkcd]</b> Drawing plotting Style</summary><pre><code class="python language-python">with plt.xkcd():
+    plt.plot(roc_curve[0], roc_curve[1]);
+    plt.plot([0,1], [0,1])
+    plt.xlabel('FPR'); plt.ylabel('TPR'); plt.title('test AUC = %f' % (auc)); plt.axis([-0.05,1.05,-0.05,1.05]);
+</code></pre>
+</details>
+
+<details><summary><b>CDF</b> Plotting</summary>
+<pre><code class="python language-python">df['height'].plot.hist(bins=200,
+                 range=(50, 80),
+                 alpha=.3,
+                 color='red',
+                 cumulative=True,
+                 normed=True)
+</code></pre>
+
+</details>
+
+<details><summary><b>Greatter Matrix by mean</b> for <b>Feature Engineering</b></summary>
+
+<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/5_SpringLeaf%20Competition/EDA_Springleaf_screencast.html#Go-through"><b>Notebook</b></a> <pre><code class="python language-python">def autolabel(arrayA):
+    '''
+    label each colored square with the corresponding data value.
+    If value &gt; 20, the text is in black, else in white.
+    '''
+    arrayA = np.array(arrayA)
+    for i in range(arrayA.shape[0]):
+        for j in range(arrayA.shape[1]):
+            plt.text(j, i, "%.2f"%arrayA[i, j], ha='center', va='bottom', color='w')
+
+
+def gt_matrix(df,feats,sz=16):
+    a = []
+    for i,c1 in enumerate(feats):
+        b = [] 
+        for j,c2 in enumerate(feats):
+            mask = (~df[c1].isnull()) &amp; (~df[c2].isnull())
+            if i&gt;=j:
+                b.append((df.loc[mask,c1].values&gt;=df.loc[mask,c2].values).mean())
+            else:
+                b.append((df.loc[mask,c1].values&gt;df.loc[mask,c2].values).mean())
+
+        a.append(b)
+
+    plt.figure(figsize = (sz,sz))
+    plt.imshow(a, interpolation = 'None', cmap='Spectral')
+    _ = plt.xticks(range(len(feats)),feats,rotation = 90)
+    _ = plt.yticks(range(len(feats)),feats,rotation = 0)
+    autolabel(a)
+</code></pre>
+
+</details>
+
+
 <details><summary> <b>Distrubtion of feature vs. row index</b></summary>
 
 <a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&amp;%20Visualization.html#Distribution-of-X8-along-with-row-index:"><b>Example</b></a>  
