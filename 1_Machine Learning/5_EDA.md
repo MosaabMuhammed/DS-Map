@@ -634,6 +634,19 @@ plt.axhline(y=.5, color="red", label="something")
 
 <hr>
 
+<details><summary>Common Palettes for coloring</summary>
+<pre><code>### Print the colors in the palette
+def custom_palette(custom_colors):
+    customPalette = sns.set_palette(sns.color_palette(custom_colors))
+    sns.palplot(sns.color_palette(custom_colors),size=0.8)
+    plt.tick_params(axis='both', labelsize=0, length = 0)
+    
+pink = ["#861388","#E15A97","#EEABC4","#C799A6","#4B2840"]
+blue = ["#C6EBBE","#A9DBB8","#5887FF","#55C1FF","#E9D2F4"]
+custom_palette(pink)
+
+</code></pre>
+</details><br>
 <details><summary><b>Pandas</b></summary><ul>
 <li><b>df.plot.hist()</b>     histogram</li>
 
