@@ -4,7 +4,7 @@
 <details><summary><b>Tips & Tricks</b></summary>
 
 <details><summary>Multiple ways to get <b>Correlation of Continous Features with target</b> </summary>
-
+<br>
 <details><summary><b>Generate a colored table for correlation</b></summary>
 <pre><code>#Features correlation
 corr = train[continous_cols+['target']].corr()
@@ -169,6 +169,61 @@ plt.show()
 </code></pre>
 <img src="./imgs/20210423-165108.png">
 </details>
+
+<details><summary>Plot the <b>Correlation b/w featues</b> in a <b>Graph</b> </summary>
+<pre><code># Take the correlation b/w features
+corr=train_p.corr()
+indices = corr.index.values
+cor_matrix = np.asmatrix(corr)
+G = nx.from_numpy_matrix(cor_matrix)
+G = nx.relabel_nodes(G,lambda x: indices[x])
+G.edges(data=True)
+
+### The Function to draw the graph
+def corr_network(G, corr_direction, min_correlation):
+    H = G.copy()
+
+    for s1, s2, weight in G.edges(data=True):       
+        if corr_direction == "positive":
+            if weight["weight"] < 0 or weight["weight"] < min_correlation:
+                H.remove_edge(s1, s2)
+        else:
+            if weight["weight"] >= 0 or weight["weight"] > min_correlation:
+                H.remove_edge(s1, s2)
+                
+    edges,weights = zip(*nx.get_edge_attributes(H,'weight').items())
+    
+    weights = tuple([(1+abs(x))**2 for x in weights])
+   
+    d = dict(nx.degree(H))
+    nodelist=d.keys()
+    node_sizes=d.values()
+    
+    positions=nx.circular_layout(H)
+    
+    plt.figure(figsize=(15,15))
+
+    nx.draw_networkx_nodes(H,positions,node_color='#d100d1',nodelist=nodelist,
+                       node_size=tuple([x**3 for x in node_sizes]),alpha=0.8)
+
+    nx.draw_networkx_labels(H, positions, font_size=8)
+
+    if corr_direction == "positive":
+        edge_colour = plt.cm.cool 
+    else:
+        edge_colour = plt.cm.Wistia
+        
+    nx.draw_networkx_edges(H, positions, edgelist=edges,style='solid',
+                          width=weights, edge_color = weights, edge_cmap = edge_colour,
+                          edge_vmin = min(weights), edge_vmax=max(weights))
+    plt.axis('off')
+    plt.show() 
+    
+### To Use the graph
+corr_network(G, corr_direction="positive",min_correlation = 0.5)
+</code></pre>
+<p><img src="imgs/20210429-225028.png" alt="" /></p>
+</details><br>
 
 </details>
 
