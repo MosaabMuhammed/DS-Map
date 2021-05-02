@@ -484,7 +484,7 @@ timer(start_time) # timing ends here for "start_time" variable
 </p>
 </details> 
 
-<details><summary> <b>Profile Reporting</b> </summary>
+<details><summary> <b>Profile Reporting</b>  [Dataset Overview]</summary>
 <p><pre><code>import pandas_profiling as pp
 
 # Generate a report in HTML
@@ -493,6 +493,19 @@ profile.to_file("output.html")
 
 # For command line.
 !pandas_profiling train.csv output.html
+</code></pre>
+</p>
+</details>
+
+<details><summary> <b>SweetVis</b> [Dataset Overview]</summary>
+<a href="https://github.com/fbdesignpro/sweetviz">Github</a>
+<p><pre><code># pip install sweetviz
+
+# Check the link above to more info.
+import sweetviz as sv
+my_report = sv.analyze(train)
+#my_report.show_html()
+my_report.show_notebook(w="100%", h="full")
 </code></pre>
 </p>
 </details>
