@@ -3,6 +3,43 @@
 <div style='width:1000px;margin:auto'>
 <details><summary><b>Tips & Tricks</b></summary>
 
+<details><summary><b>AutoViz</b></summary>
+<a href="https://github.com/AutoViML/AutoViz">Github</a>
+<pre><code>conda create -n <your_env_name> python=3.7 anaconda
+conda activate <your_env_name> # ON WINDOWS: `source activate <your_env_name>`
+pip install autoviz
+</code></pre>
+<pre><code>from autoviz.AutoViz_Class import AutoViz_Class
+AV = AutoViz_Class()
+
+filename = ""
+sep = ","
+dft = AV.AutoViz(
+    filename,
+    sep=",",
+    depVar="",
+    dfte=None,
+    header=0,
+    verbose=0,
+    lowess=False,
+    chart_format="svg",
+    max_rows_analyzed=150000,
+    max_cols_analyzed=30,
+)
+'''
+Notes:
+
+AutoViz will visualize any sized file using a statistically valid sample.
+COMMA is assumed as default separator in file. But you can change it.
+Assumes first row as header in file but you can change it.
+verbose option
+if 0, display minimal information but displays charts on your notebook
+if 1, print extra information on the notebook and also display charts
+if 2, will not display any charts, it will simply save them in your local machine under AutoViz_Plots directory
+'''
+</code></pre>
+ </details>
+
 <details><summary>Multiple ways to get <b>Correlation of Continous Features with target</b> </summary>
 <br>
 <details><summary><b>Generate a colored table for correlation</b></summary>

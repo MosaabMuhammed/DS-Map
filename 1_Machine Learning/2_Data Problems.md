@@ -176,6 +176,7 @@ def reduce_mem_usage(df):
 <details><summary><b>Entity Embedding for Cat Features</b></summary><ul>
 <li><a href="./2_data_problems/Entity_Embedding.html"><b>for ONLY Categorical Features</b></a> </li>
 <li><a href="./2_data_problems/entity_embedding_mixed_df.html"><b>for Mixed Features</b></a> </li>
+<li><a href="./2_data_problems/entity_embedding_num_converted_to_cat.html"><b>Num converted to Cat</b></a> </li>
 </ul></details>
 
 <details><summary> <b>OneHotEncoding [Nominal]</b> </summary><p>
