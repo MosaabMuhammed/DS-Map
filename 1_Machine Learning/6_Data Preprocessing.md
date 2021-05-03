@@ -314,6 +314,19 @@ test_st   = pipeline.transform(test_set)
 </code></pre>
 </p></details>
 
+<details><summary> <b>Pipeline on specific columns</b> </summary><p>
+<pre><code>from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+
+col_transform = ColumnTransformer(transformers=[['ohe', OneHotEncoder(), ['C', 'D']]], remainder="passthrough")
+# The result will be in numpy.
+X = col_transform.fit_transform(X)
+
+# TO make again in pandas.
+pd.DataFrame(X, columns=col_transform.get_feature_names())
+</code></pre>
+</p></details>
+
 <details><summary> <b>Custom Transformer</b> </summary><p><pre><code>from sklearn.base import BaseEstimator, TransformerMixin
 
 rooms_ix, bedrooms_ix, population_ix, households_ix = 3, 4, 5, 6
