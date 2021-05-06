@@ -167,6 +167,20 @@ np.expand_dims(x, 0)
 
 <details><summary><b>DataFrame</b></summary><p>
 
+<details><summary><b>Correlation b/w 2 categorical cols using Chi-Square</b></summary>
+<pre><code>for i in categorical_variables:
+    ct = pd.crosstab(columns=data[i],index=data["target"])
+    stat, p, dof, expected = chi2_contingency(ct) 
+    print(f"\n{'-'*len(f'Chi-Square test between {i} & Target')}")
+    print(f'Chi-Square test between {i} & Target')
+    print(f"{'-'*len(f'Chi-Square test between {i} & Target')}")
+    print(f"\nH0: THERE IS NO RELATIONSHIP BETWEEN TARGET & {i.upper()}\nH1: THERE IS RELATIONSHIP BETWEEN TARGET & {i.upper()}")
+    print(f"\nP-VALUE: {np.round(p,2)}")
+    print("REJECT H0" if p<0.05 else "FAILED TO REJECT H0")
+
+</code></pre>
+</details>
+
 <details><summary>Best-Practices when working with <b>DataFrame</b></summary><p><ul>
 <li>Column-Selector.</li>
 <li>Iterating over rows. [apply(), iterrows(), itertuples(), df->row-majior]</li>
