@@ -1,8 +1,29 @@
-# 4. Feature Engineering
- 
-<div style='width:1000px;margin:auto'>
-<details><summary>Train on the <b>actual</b> audio data (1D)</summary>
-<pre><code># Source: https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="4-feature-engineering">
+   4. Feature Engineering
+  </h1>
+  <div style="width:1000px;margin:auto">
+   <details>
+    <summary>
+     Train on the
+     <b>
+      actual
+     </b>
+     audio data (1D)
+    </summary>
+    <pre><code># Source: https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data
 import librosa
 import numpy as np
 import scipy
@@ -14,7 +35,7 @@ from keras.layers import (Convolution1D, Dense, Dropout, GlobalAveragePooling1D,
                           GlobalMaxPool1D, Input, MaxPool1D, concatenate)
 from keras.utils import Sequence, to_categorical
 </code></pre>
-<pre><code>class Config(object):
+    <pre><code>class Config(object):
     def __init__(self,
                  sampling_rate=16000, audio_duration=2, n_classes=41,
                  use_mfcc=False, n_folds=10, learning_rate=0.0001, 
@@ -35,7 +56,7 @@ from keras.utils import Sequence, to_categorical
             self.dim = (self.audio_length, 1)
 
 </code></pre>
-<pre><code>class DataGenerator(Sequence):
+    <pre><code>class DataGenerator(Sequence):
     def __init__(self, config, data_dir, list_IDs, labels=None, 
                  batch_size=64, preprocessing_fn=lambda x: x):
         self.config = config
@@ -65,24 +86,24 @@ from keras.utils import Sequence, to_categorical
         input_length = self.config.audio_length
         for i, ID in enumerate(list_IDs_temp):
             file_path = self.data_dir + ID
-            
+
             # Read and Resample the audio
             data, _ = librosa.core.load(file_path, sr=self.config.sampling_rate,
                                         res_type='kaiser_fast')
 
             # Random offset / Padding
-            if len(data) > input_length:
+            if len(data) &gt; input_length:
                 max_offset = len(data) - input_length
                 offset = np.random.randint(max_offset)
                 data = data[offset:(input_length+offset)]
             else:
-                if input_length > len(data):
+                if input_length &gt; len(data):
                     max_offset = input_length - len(data)
                     offset = np.random.randint(max_offset)
                 else:
                     offset = 0
                 data = np.pad(data, (offset, input_length - len(data) - offset), "constant")
-                
+
             # Normalization + Other Preprocessing
             if self.config.use_mfcc:
                 data = librosa.feature.mfcc(data, sr=self.config.sampling_rate,
@@ -101,34 +122,34 @@ from keras.utils import Sequence, to_categorical
             return X
 
 </code></pre>
-<pre><code>def audio_norm(data):
+    <pre><code>def audio_norm(data):
     max_data = np.max(data)
     min_data = np.min(data)
     data = (data-min_data)/(max_data-min_data+1e-6)
     return data-0.5
 </code></pre>
-<pre><code>
+    <pre><code>
 def get_1d_conv_model(config):
-    
+
     nclass = config.n_classes
     input_length = config.audio_length
-    
+
     inp = Input(shape=(input_length,1))
     x = Convolution1D(16, 9, activation=relu, padding="valid")(inp)
     x = Convolution1D(16, 9, activation=relu, padding="valid")(x)
     x = MaxPool1D(16)(x)
     x = Dropout(rate=0.1)(x)
-    
+
     x = Convolution1D(32, 3, activation=relu, padding="valid")(x)
     x = Convolution1D(32, 3, activation=relu, padding="valid")(x)
     x = MaxPool1D(4)(x)
     x = Dropout(rate=0.1)(x)
-    
+
     x = Convolution1D(32, 3, activation=relu, padding="valid")(x)
     x = Convolution1D(32, 3, activation=relu, padding="valid")(x)
     x = MaxPool1D(4)(x)
     x = Dropout(rate=0.1)(x)
-    
+
     x = Convolution1D(256, 3, activation=relu, padding="valid")(x)
     x = Convolution1D(256, 3, activation=relu, padding="valid")(x)
     x = GlobalMaxPool1D()(x)
@@ -144,7 +165,7 @@ def get_1d_conv_model(config):
     model.compile(optimizer=opt, loss=losses.categorical_crossentropy, metrics=['acc'])
     return model
 </code></pre>
-<pre><code>LABELS = list(train.label.unique())
+    <pre><code>LABELS = list(train.label.unique())
 label_idx = {label: i for i, label in enumerate(LABELS)}
 train.set_index("fname", inplace=True)
 test.set_index("fname", inplace=True)
@@ -157,7 +178,7 @@ config = Config(sampling_rate=16000, audio_duration=2, n_folds=10, learning_rate
 if not COMPLETE_RUN:
     config = Config(sampling_rate=100, audio_duration=1, n_folds=2, max_epochs=1)
 </code></pre>
-<pre><code>PREDICTION_FOLDER = "predictions_1d_conv"
+    <pre><code>PREDICTION_FOLDER = "predictions_1d_conv"
 if not os.path.exists(PREDICTION_FOLDER):
     os.mkdir(PREDICTION_FOLDER)
 if os.path.exists('logs/' + PREDICTION_FOLDER):
@@ -213,7 +234,7 @@ for i, (train_split, val_split) in enumerate(skf):
     test[['label']].to_csv(PREDICTION_FOLDER + "/predictions_%d.csv"%i)
 
 </code></pre>
-<pre><code>pred_list = []
+    <pre><code>pred_list = []
 for i in range(10):
     pred_list.append(np.load("../input/freesound-prediction-file/test_predictions_%d.npy"%i))
 prediction = np.ones_like(pred_list[0])
@@ -227,33 +248,41 @@ test = pd.read_csv('../input/freesound-audio-tagging/sample_submission.csv')
 test['label'] = predicted_labels
 test[['fname', 'label']].to_csv("1d_conv_ensembled_submission.csv", index=False)
 </code></pre>
-</details>
-
-<details><summary>Train on <b>MFCC</b> of audio data (2D)</summary>
-As we have seen in the previous section, our Deep Learning models are powerful enough to classify sounds from the raw audio. We do not require any complex feature engineering. But before the Deep Learning era, people developed techniques to extract features from audio signals. It turns out that these techniques are still useful. One such technique is computing the MFCC (Mel Frquency Cepstral Coefficients) from the raw audio. Before we jump to MFCC, let's talk about extracting features from the sound. <br><br>
-
-If we just want to classify some sound, we should build features that are speaker independent. Any feature that only gives information about the speaker (like the pitch of their voice) will not be helpful for classification. In other words, we should extract features that depend on the "content" of the audio rather than the nature of the speaker. Also, a good feature extraction technique should mimic the human speech perception. We don't hear loudness on a linear scale. If we want to double the perceived loudness of a sound, we have to put 8 times as much energy into it. Instead of a linear scale, our perception system uses a log scale. <br><br>
-
-Taking these things into account, Davis and Mermelstein came up with MFCC in the 1980's. MFCC mimics the logarithmic perception of loudness and pitch of human auditory system and tries to eliminate speaker dependent characteristics by excluding the fundamental frequency and their harmonics. 
-<pre><code>import librosa
+   </details>
+   <details>
+    <summary>
+     Train on
+     <b>
+      MFCC
+     </b>
+     of audio data (2D)
+    </summary>
+    As we have seen in the previous section, our Deep Learning models are powerful enough to classify sounds from the raw audio. We do not require any complex feature engineering. But before the Deep Learning era, people developed techniques to extract features from audio signals. It turns out that these techniques are still useful. One such technique is computing the MFCC (Mel Frquency Cepstral Coefficients) from the raw audio. Before we jump to MFCC, let's talk about extracting features from the sound.
+    <br/>
+    <br/>
+    If we just want to classify some sound, we should build features that are speaker independent. Any feature that only gives information about the speaker (like the pitch of their voice) will not be helpful for classification. In other words, we should extract features that depend on the "content" of the audio rather than the nature of the speaker. Also, a good feature extraction technique should mimic the human speech perception. We don't hear loudness on a linear scale. If we want to double the perceived loudness of a sound, we have to put 8 times as much energy into it. Instead of a linear scale, our perception system uses a log scale.
+    <br/>
+    <br/>
+    Taking these things into account, Davis and Mermelstein came up with MFCC in the 1980's. MFCC mimics the logarithmic perception of loudness and pitch of human auditory system and tries to eliminate speaker dependent characteristics by excluding the fundamental frequency and their harmonics.
+    <pre><code>import librosa
 SAMPLE_RATE = 44100
 fname = '../input/freesound-audio-tagging/audio_train/' + '00044347.wav'   # Hi-hat
 wav, _ = librosa.core.load(fname, sr=SAMPLE_RATE)
 wav = wav[:2*44100]
 </code></pre>
-<pre><code>mfcc = librosa.feature.mfcc(wav, sr = SAMPLE_RATE, n_mfcc=40)
+    <pre><code>mfcc = librosa.feature.mfcc(wav, sr = SAMPLE_RATE, n_mfcc=40)
 mfcc.shape
 plt.imshow(mfcc, cmap='hot', interpolation='nearest');
 </code></pre>
-<pre><code>from keras.layers import (Convolution2D, GlobalAveragePooling2D, BatchNormalization, Flatten,
+    <pre><code>from keras.layers import (Convolution2D, GlobalAveragePooling2D, BatchNormalization, Flatten,
                           GlobalMaxPool2D, MaxPool2D, concatenate, Activation)
 from keras.utils import Sequence, to_categorical
 from keras import backend as K
 </code></pre>
-<pre><code>def get_2d_dummy_model(config):
-    
+    <pre><code>def get_2d_dummy_model(config):
+
     nclass = config.n_classes
-    
+
     inp = Input(shape=(config.dim[0],config.dim[1],1))
     x = GlobalMaxPool2D()(inp)
     out = Dense(nclass, activation=softmax)(x)
@@ -266,25 +295,25 @@ from keras import backend as K
 
 
 def get_2d_conv_model(config):
-    
+
     nclass = config.n_classes
-    
+
     inp = Input(shape=(config.dim[0],config.dim[1],1))
     x = Convolution2D(32, (4,10), padding="same")(inp)
     x = BatchNormalization()(x)
     x = Activation("relu")(x)
     x = MaxPool2D()(x)
-    
+
     x = Convolution2D(32, (4,10), padding="same")(x)
     x = BatchNormalization()(x)
     x = Activation("relu")(x)
     x = MaxPool2D()(x)
-    
+
     x = Convolution2D(32, (4,10), padding="same")(x)
     x = BatchNormalization()(x)
     x = Activation("relu")(x)
     x = MaxPool2D()(x)
-    
+
     x = Convolution2D(32, (4,10), padding="same")(x)
     x = BatchNormalization()(x)
     x = Activation("relu")(x)
@@ -302,13 +331,13 @@ def get_2d_conv_model(config):
     model.compile(optimizer=opt, loss=losses.categorical_crossentropy, metrics=['acc'])
     return model
 </code></pre>
-<pre><code>config = Config(sampling_rate=44100, audio_duration=2, n_folds=10, 
+    <pre><code>config = Config(sampling_rate=44100, audio_duration=2, n_folds=10, 
                 learning_rate=0.001, use_mfcc=True, n_mfcc=40)
 if not COMPLETE_RUN:
     config = Config(sampling_rate=44100, audio_duration=2, n_folds=2, 
                     max_epochs=1, use_mfcc=True, n_mfcc=40)
 </code></pre>
-<pre><code>def prepare_data(df, config, data_dir):
+    <pre><code>def prepare_data(df, config, data_dir):
     X = np.empty(shape=(df.shape[0], config.dim[0], config.dim[1], 1))
     input_length = config.audio_length
     for i, fname in enumerate(df.index):
@@ -317,12 +346,12 @@ if not COMPLETE_RUN:
         data, _ = librosa.core.load(file_path, sr=config.sampling_rate, res_type="kaiser_fast")
 
         # Random offset / Padding
-        if len(data) > input_length:
+        if len(data) &gt; input_length:
             max_offset = len(data) - input_length
             offset = np.random.randint(max_offset)
             data = data[offset:(input_length+offset)]
         else:
-            if input_length > len(data):
+            if input_length &gt; len(data):
                 max_offset = input_length - len(data)
                 offset = np.random.randint(max_offset)
             else:
@@ -333,19 +362,19 @@ if not COMPLETE_RUN:
         data = np.expand_dims(data, axis=-1)
         X[i,] = data
     return X
-    
+
  X_train = prepare_data(train, config, '../input/freesound-audio-tagging/audio_train/')
 X_test = prepare_data(test, config, '../input/freesound-audio-tagging/audio_test/')
 y_train = to_categorical(train.label_idx, num_classes=config.n_classes)
 </code></pre>
-<pre><code># Normalization
+    <pre><code># Normalization
 mean = np.mean(X_train, axis=0)
 std = np.std(X_train, axis=0)
 
 X_train = (X_train - mean)/std
 X_test = (X_test - mean)/std
 </code></pre>
-<pre><code>PREDICTION_FOLDER = "predictions_2d_conv"
+    <pre><code>PREDICTION_FOLDER = "predictions_2d_conv"
 if not os.path.exists(PREDICTION_FOLDER):
     os.mkdir(PREDICTION_FOLDER)
 if os.path.exists('logs/' + PREDICTION_FOLDER):
@@ -380,7 +409,7 @@ for i, (train_split, val_split) in enumerate(skf):
     test['label'] = predicted_labels
     test[['label']].to_csv(PREDICTION_FOLDER + "/predictions_%d.csv"%i)
 </code></pre>
-<pre><code>pred_list = []
+    <pre><code>pred_list = []
 for i in range(10):
     pred_list.append(np.load("../input/freesound-prediction-data-2d-conv-reduced-lr/test_predictions_%d.npy"%i))
 prediction = np.ones_like(pred_list[0])
@@ -394,10 +423,26 @@ test = pd.read_csv('../input/freesound-audio-tagging/sample_submission.csv')
 test['label'] = predicted_labels
 test[['fname', 'label']].to_csv("2d_conv_ensembled_submission.csv", index=False)
 </code></pre>
-</details>
-
-<details><summary>Train on <b>Melspectogram</b> of audio data (2D)</summary>
-
-</details>
-
-</div>
+   </details>
+   <details>
+    <summary>
+     Train on
+     <b>
+      Melspectogram
+     </b>
+     of audio data (2D)
+    </summary>
+   </details>
+  </div>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>
