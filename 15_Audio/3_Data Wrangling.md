@@ -24,5 +24,18 @@ print("Sampling (frame) rate = ", rate)
 print("Total samples (frames) = ", data.shape)
 print(data)
 </code></pre>
+<pre><code># Using librosa package
+audio_path = '../input/birdsong-recognition/train_audio/aldfly/XC181484.mp3'
+
+y, sr = librosa.load(audio_path, sr=22050)
+
+print("Audio Intially")
+ipd.Audio(y,rate=sr)
+</code></pre>
+</details>
+
+<details><summary><b>Data Augmentation<b> using <b>Albumentations</b></summary>
+
+<a href="./0_notebooks/audio-albumentations-transform-your-audio.html">Notebook</a>
 </details>
  </div>

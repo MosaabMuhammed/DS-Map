@@ -576,6 +576,12 @@ os.environ['KAGGLE_KEY'] = "bb6e0cba518df4df2fca479e86c7903a" # key from the jso
 # if file ends with .7z
 !sudo apt install p7zip-full
 !7za -bd -y -so x {path}/train-jpg.tar.7z | tar xf - -C {path.as_posix()}
+
+# if file ends with .tgz [Python]
+import tarfile
+tar = tarfile.open(Path('../input') / 'fsd2018extra' / 'fsd2018_extra.tgz')
+tar.extractall()
+tar.close()
 </code></pre>
 </p></details>
 
