@@ -9,6 +9,11 @@
 <a href="./0_notebooks/RMS_Energy_and_Zero-Crossing_Rate.html">Notebook</a>
 </details>
 
+<details><summary><b>Fourier Transform</b></summary>
+<a href="./0_notebooks/Fourier Transform .html">Notebook</a>
+</details>
+
+
 <details><summary>Train on the <b>actual</b> audio data (1D)</summary>
 <pre><code># Source: https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data
 import librosa
