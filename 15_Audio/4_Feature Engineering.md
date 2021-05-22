@@ -13,6 +13,9 @@
 <a href="./0_notebooks/Fourier Transform .html">Notebook</a>
 </details>
 
+<details><summary> Calculate <b> Spectogram</b></summary>
+<a href="./0_notebooks/Extracting Spectrograms from Audio with Python.html">Notebook</a>
+</details>
 
 <details><summary>Train on the <b>actual</b> audio data (1D)</summary>
 <pre><code># Source: https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data
