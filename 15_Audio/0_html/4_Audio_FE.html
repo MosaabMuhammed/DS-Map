@@ -18,6 +18,33 @@
    <details>
     <summary>
      <b>
+      Basic Statistics
+     </b>
+    </summary>
+    <pre><code>def wavfile_stats(fname, root):
+    try:
+        data, fs = librosa.core.load(root + fname, sr=None)
+        mean = np.mean(data)
+        minimum = np.min(data)
+        maximum = np.max(data)
+        std = np.std(data)
+        length = len(data)
+        rms = np.sqrt(np.mean(data**2))
+        skewness = skew(data)
+        kurt = kurtosis(data)
+
+        return pd.Series([length, mean, minimum, maximum, std, rms, skewness, kurt])
+    except ValueError:
+        print("Bad file at {}".format(fname))
+        return pd.Series([0, 0, 0, 0, 0, 0, 0, 0])
+
+train_df[['length', 'data_mean', 'data_min', 'data_max', 'data_std', 'data_rms', 'skewness', 'kurtosis']] = \
+        train_df['fname'].progress_apply(wavfile_stats, root=train_root)
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
       Amplitude Evelope
      </b>
     </summary>
