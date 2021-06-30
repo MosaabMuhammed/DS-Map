@@ -917,6 +917,7 @@ data.isnull().mean()
 </code></pre><pre><code>plt.figure(figsize=(12, 8))
 sns.heatmap(train.isnull(), cmap='viridis', yticklabels=False, cbar=False)
 </code></pre>
+<pre><code>test_df[pd.isnull(test_df).any(axis=1)].head()</code></pre>
 </p>
 </details>
 
