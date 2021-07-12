@@ -10,7 +10,8 @@
 
 <details><summary>Using <b>BERT</b>/<b>DistilBERT</b> as Embeddings [Arabic/English]</summary>
 Use BERT for embedding and sklearn model after it.
-<a href="./0_notebooks/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.html"><b >notebook</b></a>
+<a href="./0_notebooks/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.html"><b >notebook</b></a><br>
+<a href="./0_notebooks/3.03. Generating BERT embedding .html"><b >Another Detailed Notebook</b></a>
 </details>
 
 </ul></details>
