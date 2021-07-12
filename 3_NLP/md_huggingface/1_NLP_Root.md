@@ -12,6 +12,8 @@
 Use BERT for embedding and sklearn model after it.
 <a href="./0_notebooks/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.html"><b >notebook</b></a><br>
 <a href="./0_notebooks/3.03. Generating BERT embedding .html"><b >Another Detailed Notebook</b></a>
+<br>
+<a href="./0_notebooks/3.04. Extracting embeddings from all encoder layers of BERT.html"><b >Extract Embedding from any encoder in Bert</b></a>
 </details>
 
 </ul></details>
