@@ -16,6 +16,10 @@ Use BERT for embedding and sklearn model after it.
 <a href="./0_notebooks/3.04. Extracting embeddings from all encoder layers of BERT.html"><b >Extract Embedding from any encoder in Bert</b></a>
 </details>
 
+<details><summary>Fine-tune BERT for Text Classification</summary>
+<a href="./0_notebooks/3.06. Text classification.html"><b >notebook</b></a><br>
+</details>
+
 </ul></details>
 
 <details><summary> <b style="font-size:20px">Tokenizers</b></summary><ul>
