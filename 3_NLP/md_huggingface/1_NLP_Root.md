@@ -24,6 +24,9 @@ Use BERT for embedding and sklearn model after it.
 
 <details><summary>Extract Embeddings from <b>Albert</b> </summary>
 <a href="./0_notebooks/4.03. Extracting embeddings with ALBERT.html"><b >notebook</b></a><br></details>
+
+<details><summary>Extract Embeddings from <b>RoBERTa</b> </summary>
+<a href="./0_notebooks/4.05. Exploring the RoBERTa tokenizer .html"><b >notebook</b></a><br></details>
 </ul></details>
 
 <details><summary> <b style="font-size:20px">Tokenizers</b></summary><ul>
