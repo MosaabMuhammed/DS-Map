@@ -167,6 +167,14 @@ np.expand_dims(x, 0)
 
 <details><summary><b>DataFrame</b></summary><p>
 
+<details><summary>From <b>value_counts</b> to <b>DataFrame</b></summary>
+<pre><code>df = train_data.lang.value_counts().rename_axis("Lang").reset_index(name="Count")
+
+# Lang is the name of the first column.
+# Count is the name of the second column.
+</code></pre>
+</details>
+
 <details><summary><b>Correlation b/w 2 categorical cols using Chi-Square</b></summary>
 <pre><code>for i in categorical_variables:
     ct = pd.crosstab(columns=data[i],index=data["target"])
