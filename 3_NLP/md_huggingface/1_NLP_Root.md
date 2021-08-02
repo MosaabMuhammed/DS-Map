@@ -27,7 +27,11 @@ Use BERT for embedding and sklearn model after it.
 
 <details><summary>Extract Embeddings from <b>RoBERTa</b> </summary>
 <a href="./0_notebooks/4.05. Exploring the RoBERTa tokenizer .html"><b >notebook</b></a><br></details>
+
+<a href="./0_notebooks/transformer_on_text_classification.html"><b>Different Arch. for text classification problem</b></a>
 </ul></details>
+
+
 
 <details><summary> <b style="font-size:20px">Tokenizers</b></summary><ul>
  <b>BERT</b>/<b>DistilBERT</b>/<b>Electra</b> uses <i>WordPiece</i>.<br>
@@ -86,8 +90,6 @@ tokenizer.tokenize("كيف حالك اليوم؟ و حال أولادك يا ع�
 <details><summary>How to use <b>pipelines</b> [ner, sent_ana, text_extraction, ...]</summary>
 <a href="./0_notebooks/03_pipelines.html">notebook</a>
 </details>
-
-
 </ul></details>
 
 </div>
