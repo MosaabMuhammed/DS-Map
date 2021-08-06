@@ -26,6 +26,11 @@
 <hr>
 
 <ul>
+<li><a href="./17_Algorithms/0_html/0_Algo_Root.html"><font color='#333'><b style='font-size:27px'>Algorithms</b></font></a></li>
+</ul>
+
+<li><a href="./16_Git/0_html/0_Git_Root.html"><font color='#333'><b style='font-size:27px'>Git</b></font></a></li>
+
 <li><a href="./6_R%20Language/0_html/0_R_Root.html"><font color='#333'><b style='font-size:27px'>R Language</b></font></a></li>
 
 <li><a href="./7_SQL/0_html/0_SQL_Root.html"><font color='#333'><b style='font-size:27px'>SQL</b></font></a></li>

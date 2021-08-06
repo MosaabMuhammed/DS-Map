@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 style="color:darkcyan;text-decoration:underline">
+   Algorithms
+  </h1>
+  <div style="width:1000px;margin:auto">
+   <details>
+    <summary>
+     <b>
+      Binary Search
+     </b>
+    </summary>
+    The list must be sorted before using Binary Search.
+    <br/>
+    <details>
+     <summary>
+      Iterative
+     </summary>
+     <pre><code>
+# It returns location of x in given array arr
+# if present, else returns -1
+def binarySearch(arr, l, r, x):
+    while l &lt;= r:
+        mid = l + (r - l) // 2;     
+        # Check if x is present at mid
+        if arr[mid] == x:
+            return mid
+
+        # If x is greater, ignore left half
+        elif arr[mid] &lt; x:
+            l = mid + 1
+
+        # If x is smaller, ignore right half
+        else:
+            r = mid - 1
+
+    # If we reach here, then the element
+    # was not present
+    return -1
+
+# Driver Code
+arr = [ 2, 3, 4, 10, 40 ]
+x = 10
+
+# Function call
+result = binarySearch(arr, 0, len(arr)-1, x)
+
+if result != -1:
+    print ("Element is present at index % d" % result)
+else:
+    print ("Element is not present in array")
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      Recursive
+     </summary>
+     <pre><code># Returns index of x in arr if present, else -1
+def binarySearch (arr, l, r, x):
+    # Check base case
+    if r &gt;= l:
+        mid = l + (r - l) // 2
+
+        # If element is present at the middle itself
+        if arr[mid] == x:
+            return mid
+
+        # If element is smaller than mid, then it
+        # can only be present in left subarray
+        elif arr[mid] &gt; x:
+            return binarySearch(arr, l, mid-1, x)
+
+        # Else the element can only be present
+        # in right subarray
+        else:
+            return binarySearch(arr, mid + 1, r, x)
+    else:
+        # Element is not present in the array
+        return -1
+
+# Driver Code
+arr = [ 2, 3, 4, 10, 40 ]
+x = 10
+# Function call
+result = binarySearch(arr, 0, len(arr)-1, x)
+
+if result != -1:
+    print ("Element is present at index % d" % result)
+else:
+    print ("Element is not present in array")
+</code></pre>
+    </details>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Insertion Sort
+     </b>
+    </summary>
+    <pre><code># Function to do insertion sort
+def insertionSort(arr):
+    # Traverse through 1 to len(arr)
+    for i in range(1, len(arr)):
+        key = arr[i]
+        # Move elements of arr[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
+        j = i-1
+        while j &gt;=0 and key &lt; arr[j] :
+                arr[j+1] = arr[j]
+                j -= 1
+        arr[j+1] = key
+
+# Driver code to test above
+arr = [12, 11, 13, 5, 6]
+insertionSort(arr)
+print ("Sorted array is:")
+for i in range(len(arr)):
+    print ("%d" %arr[i])</code></pre>
+   </details>
+  </div>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>
