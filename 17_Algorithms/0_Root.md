@@ -1,6 +1,7 @@
 <h1 style='color:darkcyan;text-decoration:underline'>Algorithms</h1>
 <div style='width:1000px;margin:auto'>
 
+<details><summary><b>Search</b></summary>
 <details><summary><b>Binary Search</b></summary>
 The list must be sorted before using Binary Search.<br>
 <details><summary>Iterative</summary>
@@ -76,6 +77,32 @@ else:
 </code></pre>
 </details>
 </details>
+</details>
+
+<details><summary><b>Sort</b></summary>
+<details><summary><b>Bubble Sort</b></summary>
+<pre><code>def bubbleSort(arr):
+n = len(arr)
+    # Traverse through all array elements
+    for i in range(n-1):
+    # range(n) also work but outer loop will repeat one time more than needed.
+        # Last i elements are already in place
+        for j in range(0, n-i-1):
+            # traverse the array from 0 to n-i-1
+            # Swap if the element found is greater
+            # than the next element
+            if arr[j] > arr[j + 1] :
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+  
+# Driver code to test above
+arr = [64, 34, 25, 12, 22, 11, 90]
+  
+bubbleSort(arr)
+print ("Sorted array is:")
+for i in range(len(arr)):
+    print ("% d" % arr[i]), 
+</code></pre>
+</details>
 
 <details><summary><b>Insertion Sort</b></summary>
 <pre><code># Function to do insertion sort
@@ -98,6 +125,7 @@ insertionSort(arr)
 print ("Sorted array is:")
 for i in range(len(arr)):
     print ("%d" %arr[i])</code></pre>
+</details>
 </details>
 
 </div>

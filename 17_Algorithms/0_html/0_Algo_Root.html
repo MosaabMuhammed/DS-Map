@@ -18,16 +18,22 @@
    <details>
     <summary>
      <b>
-      Binary Search
+      Search
      </b>
     </summary>
-    The list must be sorted before using Binary Search.
-    <br/>
     <details>
      <summary>
-      Iterative
+      <b>
+       Binary Search
+      </b>
      </summary>
-     <pre><code>
+     The list must be sorted before using Binary Search.
+     <br/>
+     <details>
+      <summary>
+       Iterative
+      </summary>
+      <pre><code>
 # It returns location of x in given array arr
 # if present, else returns -1
 def binarySearch(arr, l, r, x):
@@ -61,12 +67,12 @@ if result != -1:
 else:
     print ("Element is not present in array")
 </code></pre>
-    </details>
-    <details>
-     <summary>
-      Recursive
-     </summary>
-     <pre><code># Returns index of x in arr if present, else -1
+     </details>
+     <details>
+      <summary>
+       Recursive
+      </summary>
+      <pre><code># Returns index of x in arr if present, else -1
 def binarySearch (arr, l, r, x):
     # Check base case
     if r &gt;= l:
@@ -100,15 +106,50 @@ if result != -1:
 else:
     print ("Element is not present in array")
 </code></pre>
+     </details>
     </details>
    </details>
    <details>
     <summary>
      <b>
-      Insertion Sort
+      Sort
      </b>
     </summary>
-    <pre><code># Function to do insertion sort
+    <details>
+     <summary>
+      <b>
+       Bubble Sort
+      </b>
+     </summary>
+     <pre><code>def bubbleSort(arr):
+n = len(arr)
+    # Traverse through all array elements
+    for i in range(n-1):
+    # range(n) also work but outer loop will repeat one time more than needed.
+        # Last i elements are already in place
+        for j in range(0, n-i-1):
+            # traverse the array from 0 to n-i-1
+            # Swap if the element found is greater
+            # than the next element
+            if arr[j] &gt; arr[j + 1] :
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+# Driver code to test above
+arr = [64, 34, 25, 12, 22, 11, 90]
+
+bubbleSort(arr)
+print ("Sorted array is:")
+for i in range(len(arr)):
+    print ("% d" % arr[i]), 
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      <b>
+       Insertion Sort
+      </b>
+     </summary>
+     <pre><code># Function to do insertion sort
 def insertionSort(arr):
     # Traverse through 1 to len(arr)
     for i in range(1, len(arr)):
@@ -128,6 +169,7 @@ insertionSort(arr)
 print ("Sorted array is:")
 for i in range(len(arr)):
     print ("%d" %arr[i])</code></pre>
+    </details>
    </details>
   </div>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
