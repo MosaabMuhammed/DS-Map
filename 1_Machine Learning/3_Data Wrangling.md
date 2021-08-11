@@ -110,6 +110,19 @@ np.intersect1d(a, b)       # array([4, 5])
 a + b           
 </code></pre>
 </p></details>
+<details><summary> <b>Difference</b> & <b>Intersection</b> b/w Counter()</summary><p><pre><code>from collections import Counter
+
+cnt1, cnt2 = Counter("cool"), Counter("not cool")
+
+# Union
+cnt1 + cnt2
+
+# Difference
+cnt1.subtract(cnt2)
+# NOTE: cnt1 will be overwritten.
+</code></pre>
+</p></details>
+
 <details><summary> <b>Partial Function</b> [python 3] </summary><p><pre><code>from functools import partial 
 
 # A normal function 
@@ -166,6 +179,12 @@ np.expand_dims(x, 0)
 </p></details><hr>
 
 <details><summary><b>DataFrame</b></summary><p>
+
+<details><summary>Replicate rows in a dataframe</summary>
+<pre><code>df_try= df[df['A'] == 1]
+df.append([df_try]*5,ignore_index=True)
+</code></pre>
+</details>
 
 <details><summary>From <b>value_counts</b> to <b>DataFrame</b></summary>
 <pre><code>df = train_data.lang.value_counts().rename_axis("Lang").reset_index(name="Count")
