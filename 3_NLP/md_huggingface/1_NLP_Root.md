@@ -28,6 +28,9 @@ Use BERT for embedding and sklearn model after it.
 <details><summary>Extract Embeddings from <b>RoBERTa</b> </summary>
 <a href="./0_notebooks/4.05. Exploring the RoBERTa tokenizer .html"><b >notebook</b></a><br></details>
 
+<details><summary>How to use M-BERT</summary>
+<a href="./0_notebooks/7.01. Understanding multilingual BERT .html"><b >notebook</b></a><br><br></details>
+
 <a href="./0_notebooks/transformer_on_text_classification.html"><b>Different Arch. for text classification problem</b></a>
 </ul></details>
 
