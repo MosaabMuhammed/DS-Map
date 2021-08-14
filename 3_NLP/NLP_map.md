@@ -8,4 +8,8 @@
 
 <li><a href="./html_huggingface/1_NLP_Root.html"><b style='font-size:20px;color:#333'>HuggingFace</b></a></li>
 
+<li><a href="./html_ktrain/1_NLP_Root.html"><b style='font-size:20px;color:#333'>ktrain</b></a></li>
+
+<li><a href="./html_bert_as_service/1_NLP_Root.html"><b style='font-size:20px;color:#333'>Bert-As-Service</b></a></li>
+
 </div>

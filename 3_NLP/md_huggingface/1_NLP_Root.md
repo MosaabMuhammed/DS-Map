@@ -31,6 +31,15 @@ Use BERT for embedding and sklearn model after it.
 <details><summary>How to use M-BERT</summary>
 <a href="./0_notebooks/7.01. Understanding multilingual BERT .html"><b >notebook</b></a><br><br></details>
 
+<details><summary>Get Embedding of Sentence with SentenceBERT</summary>
+<a href="./0_notebooks/8.03. Exploring sentence-transformers library .html"><b >notebook</b></a><br><br></details>
+
+<details><summary>Cosine Similarity for SentenceBERT</summary>
+<a href="./0_notebooks/8.05. Computing sentence similarity .html"><b >notebook</b></a><br><br></details>
+
+<details><summary>Text Summarization with BART</summary>
+<a href="./0_notebooks/9.05. Performing text summarization with BART .html"><b >notebook</b></a><br><br></details>
+
 <a href="./0_notebooks/transformer_on_text_classification.html"><b>Different Arch. for text classification problem</b></a>
 </ul></details>
 
