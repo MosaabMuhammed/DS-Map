@@ -7,6 +7,22 @@
 <li><a href="./1_starter//21_debugging.html"><b><span style='color:#333'>Debugger</span></b></a> </li>
 
 
+<details><summary> <b>Parallize apply() in Pandas</b> </summary>
+<pre><code>$ pip install pandarallel
+# Import
+from pandarallel import pandarallel
+
+# Initialization
+pandarallel.initialize(nb_workers=2, progress_bar=True)
+
+# Standard pandas apply
+df.apply(func)
+
+# Parallel apply
+df.parallel_apply(func)
+</code></pre>
+</details>
+
 <details><summary> <b>Read CSV files with csv package</b> </summary>
 <pre><code>import csv
 
