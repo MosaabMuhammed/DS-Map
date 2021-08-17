@@ -15,6 +15,24 @@
 </details><br>
 </details>
 
+<details><summary>Remote</summary>
+<details><summary>Check all available remote links</summary>
+<pre><code>git remote -v</code></pre>
+</details>
+
+<details><summary>Add a remote git link</summary>
+<pre><code>git remote add name_of_link git_link.git</code></pre>
+</details>
+
+<details><summary>Push code to the remote repository</summary>
+<pre><code>git push -u azure_postmuseum_deploy master</code></pre>
+</details>
+
+<details><summary>Force Push code to the remote repository</summary>
+<pre><code>git push -f azure_postmuseum_deploy master</code></pre>
+</details><br>
+</details>
+
 <details><summary>Show all aliases</summary>
 <pre><code>git config --global -l</code></pre>
 </details>
