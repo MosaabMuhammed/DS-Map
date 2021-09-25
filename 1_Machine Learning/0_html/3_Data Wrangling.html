@@ -338,6 +338,18 @@ np.expand_dims(x, 0)
     <p>
      <details>
       <summary>
+       return
+       <b>
+        multiple columns
+       </b>
+       from apply()
+      </summary>
+      <pre><code>appiled_df = df.apply(lambda row: fn(row.text), axis='columns', result_type='expand')
+df = pd.concat([df, appiled_df], axis='columns')
+</code></pre>
+     </details>
+     <details>
+      <summary>
        Replicate rows in a dataframe
       </summary>
       <pre><code>df_try= df[df['A'] == 1]

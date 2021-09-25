@@ -531,6 +531,11 @@ g.print_scc()
 </details>
 </details>
 
+<details><summary><b>Misc</b></summary>
+<details><summary><b>Two Pointers Technique</b></summary>
+requires sorted array - O(N)
+</details>
+</details>
 </div>
 
 

@@ -17,7 +17,8 @@ Use BERT for embedding and sklearn model after it.
 </details>
 
 <details><summary>Fine-tune BERT for Text Classification</summary>
-<a href="./0_notebooks/3.06. Text classification.html"><b >notebook</b></a><br></details>
+<a href="./0_notebooks/3.06. Text classification.html"><b >notebook</b></a><br>
+<a href="./0_notebooks/BERT_Fine_Tuning_Sentence_Classification_DR.html"><b >notebook</b></a></details>
 
 <details><summary>BERT on Question-Answering</summary>
 <a href="./0_notebooks/3.09. Q&A with finetuned BERT .html"><b >notebook</b></a><br></details>

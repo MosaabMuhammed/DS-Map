@@ -12,6 +12,10 @@
 
 <details><summary>Force Deleting a Branch</summary>
 <pre><code>git branch -D name_of_branch</code></pre>
+</details>
+
+<details><summary>Abort a Merge</summary>
+<pre><code>git merge --abort</code></pre>
 </details><br>
 </details>
 
