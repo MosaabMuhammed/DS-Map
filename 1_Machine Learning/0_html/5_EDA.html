@@ -1198,6 +1198,72 @@ fig.show()
       <details>
        <summary>
         <b>
+         Funnel
+        </b>
+        Chart
+       </summary>
+       <pre><code>from plotly import graph_objs as go
+import plotly.express as px
+import plotly.figure_factory as ff
+
+temp = train.groupby('sentiment').count()['text'].reset_index().sort_values(by='text',ascending=False)
+temp.style.background_gradient(cmap='Purples')
+
+fig = go.Figure(go.Funnelarea(
+    text =temp.sentiment,
+    values = temp.text,
+    title = {"position": "top center", "text": "Funnel-Chart of Sentiment Distribution"}
+    ))
+fig.show()
+</code></pre>
+       <img src="imgs/20210927-143811.png"/>
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         Bar
+        </b>
+        Chart [Horizonatl/Vertical]
+       </summary>
+       <pre><code>from plotly import graph_objs as go
+import plotly.express as px
+import plotly.figure_factory as ff
+
+fig = px.bar(temp, x="count", y="common_words",
+            title="Common Words in selected_text",
+            orientation="h",
+            width=700, height=700,
+            color="common_words")
+fig.show()
+</code></pre>
+       <img src="imgs/20210927-160852.png"/>
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         Treemap
+        </b>
+        Chart
+       </summary>
+       <pre><code>from plotly import graph_objs as go
+import plotly.express as px
+import plotly.figure_factory as ff
+
+fig = px.treemap(temp, path=['common_words'], values='count',
+                title="Tree of Most Common Words")
+fig.show()
+</code></pre>
+       <img src="imgs/20210927-161425.png"/>
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
          Geographic
         </b>
         - Code 3 Alpha

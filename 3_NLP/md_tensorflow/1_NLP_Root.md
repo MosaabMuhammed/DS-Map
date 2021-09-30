@@ -22,5 +22,6 @@
 
 <li><a href="./8_NLP_Deep_Learning.html"><b style='font-size:20px;color:#333'>Models</b></a></li>
 
+<li><a href="./9_NLP_Metrics.html"><b style='font-size:20px;color:#333'>Metrics</b></a></li>
  
 </div>

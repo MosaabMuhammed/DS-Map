@@ -8,6 +8,10 @@
 <a href="./0_notebooks/02_transformers.html">notebook</a>
 </details>
 
+<details><summary>Pretraining <b>RoBERTa</b>  from Scratch</summary>
+<a href="./0_notebooks/KantaiBERT.html">notebook</a>
+</details>
+
 <details><summary>Using <b>BERT</b>/<b>DistilBERT</b> as Embeddings [Arabic/English]</summary>
 Use BERT for embedding and sklearn model after it.
 <a href="./0_notebooks/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.html"><b >notebook</b></a><br>
