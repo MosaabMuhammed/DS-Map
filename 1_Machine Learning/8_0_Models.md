@@ -938,7 +938,7 @@ visualizer.poof()
 </code></pre>
 </details></li>
 
-<li><details><summary><b>Self-Learning</b></summary>
+<li><details><summary><b>Self-Training</b></summary>
 Read <b>master ML book</b> - Page: 87<pre><code>nb_samples = X.shape[0]
 nb_labeled = 20
 nb_unlabeled = nb_samples - nb_labeled
@@ -967,7 +967,58 @@ while X_train.shape[0] &lt;= nb_samples:
 </details></li>
 
 <li><details><summary><b>Co-Training</b></summary>
+<pre><code>from sklearn.datasets import load_wine
+from sklearn.utils import shuffle
+wine = load_wine()
+X, Y = shuffle(wine['data'], wine['target'], random_state=1000)
+</code></pre>
+<pre><code>nb_samples = X.shape[0]
+nb_labeled = 20
+nb_unlabeled = nb_samples - nb_labeled
+nb_unlabeled_samples = 2
+feature_cut = 7
+X_unlabeled = X[-nb_unlabeled:]
+X_labeled = X[:nb_labeled]
+Y_labeled = Y[:nb_labeled]
+X_labeled_1 = X_labeled[:, 0:feature_cut]
+X_labeled_2 = X_labeled[:, feature_cut:]
+</code></pre>
+<pre><code>from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import classification_report
+nb0 = GaussianNB()
+nb0.fit(X_labeled, Y_labeled)
+print(classification_report(Y, nb0.predict(X), target_names=wine['target_names']))
+</code></pre>
+<pre><code>import numpy as np
+from sklearn.naive_bayes import GaussianNB
+nb1 = None
+    nb2 = None
+    while X_labeled_1.shape[0] <= nb_samples:
+        nb1 = GaussianNB()
+        nb1.fit(X_labeled_1, Y_labeled)
+        nb2 = GaussianNB()
+        nb2.fit(X_labeled_2, Y_labeled)
+        if X_labeled_1.shape[0] == nb_samples:
+            break
+        probs1 = nb1.predict_proba(X_unlabeled[:, 0:feature_cut])
+        top_confidence_idxs1 = np.argsort(np.max(probs1, axis=1))[::-1]
+        selected_idxs1 = top_confidence_idxs1[0:nb_unlabeled_samples]
+        probs2 = nb2.predict_proba(X_unlabeled[:, feature_cut:])
+        top_confidence_idxs2 = np.argsort(np.max(probs2, axis=1))[::-1]
+        selected_idxs2 = top_confidence_idxs2[0:nb_unlabeled_samples]
+        selected_idxs = list(selected_idxs1) + list(selected_idxs2)
+        X_new_labeled = X_unlabeled[selected_idxs]
+        X_new_labeled_1 = X_unlabeled[selected_idxs1, 0:feature_cut]
+        X_new_labeled_2 = X_unlabeled[selected_idxs2, feature_cut:]
+        Y_new_labeled_1 = nb1.predict(X_new_labeled_1)
+        Y_new_labeled_2 = nb2.predict(X_new_labeled_2)
+        X_labeled_1 = np.concatenate((X_labeled_1, X_new_labeled[:, 0:feature_cut]), axis=0)
+        X_labeled_2 = np.concatenate((X_labeled_2, X_new_labeled[:, feature_cut:]), axis=0)
+        Y_labeled = np.concatenate((Y_labeled, Y_new_labeled_1, Y_new_labeled_2), axis=0)
+        X_unlabeled = np.delete(X_unlabeled, selected_idxs, axis=0)
 
+print(classification_report(Y, nb1.predict(X[:, 0:feature_cut]), target_names=wine['target_names']))
+</code></pre>
 </details></li>
 
 <li><details><summary><b>Contrastive Pessimistic Likelihood Estimation (CPLE)</b></summary>
@@ -1070,10 +1121,293 @@ print(final_semi_cv_scores)
 </details></li>
 
 <li><details><summary><b>Semi-Supervised Support Vector Machines (S3VM)</b></summary>
+See the equation from the book Mastering ML expert view
+<pre><code>from sklearn.datasets import make_classification
+nb_samples   = 100
+nb_unlabeled = 50
+nb_labeled   = nb_samples - nb_unlabeled
 
+X, y    = make_classification(n_samples=nb_samples, n_features=2, n_redundant=0, random_state=1000)
+y[y==0] = -1 # because svm deals with +1 for 1st class and -1 for the 2nd class.
+y[nb_labeled:] = 0
+</code></pre>
+<pre><code># we need to initialize all variables required for the optimization problem:
+import numpy as np
+
+w   = np.random.uniform(-0.1, 0.1, size=X.shape[1])
+eta = np.random.uniform(0.0, 0.1, size=nb_labeled)
+xi  = np.random.uniform(0.0, 0.1, size=nb_unlabeled)
+zi  = np.random.uniform(0.0, 0.1, size=nb_unlabeled)
+b   = np.random.uniform(-0.1, 0.1, size=1)
+C   = 1.0
+print(w.shape, eta.shape, xi.shape, zi.shape, b.shape)
+# (2,) (50,) (50,) (50,) (1,)
+
+# Since the optimization algorithm requires a single array, 
+# we've stacked all vectors into a horizontal array
+theta0 = np.hstack((w, eta, xi, zi, b))
+</code></pre>
+<pre><code># We also need to vectorize the min() function in order to apply it to arrays:
+vmin = np.vectorize(lambda x1, x2: x1 if x1 <= x2 else x2)
+</code></pre>
+<pre><code># Now, we can define the objective function:
+def svm_target(theta, Xd, Yd):
+    wt = theta[:2].reshape((Xd.shape[1], 1))
+
+    s_eta = np.sum(theta[2:2+nb_labeled])
+    s_min_xi_zi = np.sum(vmin(theta[2+nb_labeled:2+nb_samples],
+                              theta[2+nb_samples:2+nb_samples+nb_unlabeled]))
+
+    # The dot product of w has been multiplied by 0.5 to keep the conventional notation used for supervised SVMs. 
+    # The constant can be omitted without any impact.
+    return C * (s_eta + s_min_xi_zi) + 0.5 * np.dot(wt.T, wt)
+</code></pre>
+<pre><code># At this point, we need to define all the constraints, 
+# since they are based on the slack variables; 
+# each function (which shares the same parameters of the objectives) is parametrized with an index, idx.
+def labeled_constraint(theta, Xd, Yd, idx):
+    wt = theta[:2].reshape((Xd.shape[1], 1))
+    c  = Yd[idx] * (np.dot(Xd[idx], wt) + theta[-1]) + \
+         theta[2:2+nb_labeled][idx] - 1.0
+
+    return (c >= 0)[0]
+
+# The unlabeled constraints
+def unlabeled_constraint_1(theta, Xd, idx):
+    wt = theta[:2].reshape((Xd.shape[1], 1))
+
+    c = np.dot(Xd[idx], wt) - theta[-1] + \
+        theta[2+nb_labeled:2+nb_samples][idx-nb_samples+nb_unlabeled] - 1.0
+
+    return (c >= 0)[0]
+
+def unlabeled_constraint_2(theta, Xd, idx):
+    wt = theta[:2].reshape((Xd.shape[1], 1))
+
+    c = -(np.dot(Xd[idx], wt) - theta[-1]) + \
+        theta[2+nb_samples:2+nb_samples+nb_unlabeled][idx-nb_samples+nb_unlabeled] - 1.0
+
+    return (c >= 0)[0]
+</code></pre>
+<pre><code># We also need to include the constraints for each slack variable (≥ 0):
+def eta_constraint(theta, idx):
+    return theta[2:2+nb_samples-nb_unlabeled][idx] >= 0
+
+def xi_constraint(theta, idx):
+    return theta[2+nb_samples-nb_unlabeled:2+nb_samples][idx-nb_samples+nb_unlabeled] >= 0
+
+def zi_constraint(theta, idx):
+    return theta[2+nb_samples:2+nb_samples+nb_unlabeled][idx-nb_samples+nb_unlabeled] >= 0
+</code></pre>
+<pre><code># We can now set up the problem using the SciPy convention:
+# Each constraint is represented by a dictionary, 
+# where type is set to ineq to indicate that it is an inequality, 
+# fun points to the callable object, 
+# and args contains all extra arguments (theta is the main x variable and it's automatically added).
+svm_constraints = []
+
+for i in range(nb_samples - nb_unlabeled):
+    svm_constraints.append({
+        'type': 'ineq',
+        'fun': labeled_constraint,
+        'args': (X, y, i)
+    })
+
+    svm_constraints.append({
+        'type': 'ineq',
+        'fun': eta_constraint,
+        'args': (i,)
+    })
+
+for i in range(nb_samples-nb_unlabeled, nb_samples):
+    svm_constraints.append({
+        'type': 'ineq',
+        'fun': unlabeled_constraint_1,
+        'args': (X, i)
+    })
+
+    svm_constraints.append({
+        'type': 'ineq',
+        'fun': unlabeled_constraint_2,
+        'args': (X, i)
+    })
+
+    svm_constraints.append({
+        'type': 'ineq',
+        'fun': xi_constraint,
+        'args': (i,)
+    })
+
+    svm_constraints.append({
+        'type': 'ineq',
+        'fun': zi_constraint,
+        'args': (i,)
+    })
+</code></pre>
+<pre><code># Using SciPy, it's possible to minimize the objective using either 
+# the Sequential Least Squares Programming (SLSQP) or 
+# Constraint Optimization by Linear Approximation (COBYLA) algorithms. 
+# We've chosen the latter, but the reader is free to employ any other method or library. 
+# In order to limit the number of iterations, we've also set the optional dictionary parameter 'maxiter': 5000:
+from scipy.optimize import minimize
+
+result = minimize(fun=svm_target,
+                  x0=theta0,
+                  constraints=svm_constraints,
+                  args=(X, y),
+                  method='COBYLA',
+                  tol=0.0001,
+                  options={'maxiter': 5000})
+
+# After the training process is complete, 
+# we can compute the labels for the unlabeled points
+theta_end = result['x']
+w = theta_end[0:2]
+b = theta_end[-1]
+Xu = X[nb_labeled:nb_samples]
+yu = -np.sign(np.dot(Xu, w) + b)
+</code></pre>
 </details></li>
 
 <li><details><summary><b>Transductive Support Vector Machines (TSVM)</b></summary>
+<p><img src="imgs/20220131-142106.png" alt="" / width=600 height=200></p>
+<p><img src="imgs/20220131-142152.png" alt="" /></p>
+<pre><code>from sklearn.datasets import make_classification
+nb_samples = 200
+nb_unlabeled = 150
+
+X, Y = make_classification(n_samples=nb_samples,
+                           n_features=2,
+                           n_redundant=0,
+                           random_state=1000)
+
+Y[Y==0] = -1
+Y[nb_samples - nb_unlabeled:nb_samples] = 0
+</code></pre>
+<pre><code># First of all, we need to initialize our variables:
+import numpy as np
+
+w             = np.random.uniform(-0.1, 0.1, size=X.shape[1])
+eta_labeled   = np.random.uniform(0.0, 0.1, size=nb_samples-nb_unlabeled)
+eta_unlabeled = np.random.uniform(0.0, 0.1, size=nb_unlabeled)
+y_unlabeled   = np.random.uniform(-1.0, 1.0, size=nb_unlabeled)
+b             = np.random.uniform(-0.1, 0.1, size=1)
+C_labeled     = 2.0
+C_unlabeled   = 0.1
+theta0        = np.hstack((w, eta_labeled, y_unlabeled, b))
+
+# In this case, we also need to define the y_unlabeled vector for variable labels. 
+# I also suggest using two C constants (C_labeled and C_unlabeled),
+# in order to be able to weight the misclassification of labeled and unlabeled samples differently. 
+# We used a value of 2.0 for C_labeled and 0.1 for C_unlabled, 
+# because we want to accept the guidance of the labeled samples more than the structure of the unlabeled ones. 
+# In a further example, we'll compare the results with an opposite scenario.
+</code></pre>
+<pre><code>
+# The objective function to optimize is as follows:
+def svm_target(theta, Xd, Yd):
+    wt              = theta[0:2].reshape((Xd.shape[1], 1))
+    s_eta_labeled   = np.sum(theta[2:2+nb_samples-nb_unlabeled])
+    s_eta_unlabeled = np.sum(theta[2+nb_samples-nb_unlabeled:2+nb_samples])
+
+    return (C_labeled * s_eta_labeled) + (C_unlabeled * s_eta_unlabeled) + (0.5 * np.dot(wt.T, wt))
+</code></pre>
+<pre><code>
+# While the labeled and unlabeled constraints are as follows:
+def labeled_constraint(theta, Xd, Yd, idx):
+    wt = theta[0:2].reshape((Xd.shape[1], 1))
+    c = Yd[idx] * (np.dot(Xd[idx], wt) + theta[-1]) + \
+    theta[2:2 + nb_samples - nb_unlabeled][idx] - 1.0
+    
+    return int((c >= 0)[0])
+    
+def unlabeled_constraint(theta, Xd, idx):
+    wt = theta[0:2].reshape((Xd.shape[1], 1))
+    c = theta[2 + nb_samples:2 + nb_samples + nb_unlabeled][idx - nb_samples + nb_unlabeled] * \
+        (np.dot(Xd[idx], wt) + theta[-1]) + \
+        theta[2 + nb_samples - nb_unlabeled:2 + nb_samples][idx - nb_samples + nb_unlabeled] - 1.0
+    
+    return int((c >= 0)[0])
+</code></pre>
+<pre><code># In this example, we want to employ the SLSQP algorithm to optimize the objective. 
+# This method computes the Jacobian (that is, the matrix containing the first partial derivatives) of all constraints (including the Boolean ones) and in NumPy 1.8+ the difference operator (-) between Boolean arrays has been deprecated and must be replaced with a logical XOR.
+# Unfortunately, this can cause incompatibilities with SciPy; since that's the case, 
+# we've transformed all Boolean outputs into integer values (0 and 1). 
+# This substitution doesn't affect either the performance or the final result. 
+# At this point, we can introduce the constraints for both labeled and unlabeled samples:
+def eta_labeled_constraint(theta, idx):
+    return int(theta[2:2 + nb_samples - nb_unlabeled][idx] >= 0)
+def eta_unlabeled_constraint(theta, idx):
+    return int(theta[2 + nb_samples - nb_unlabeled:2 + nb_samples][idx - nb_samples + nb_unlabeled] >= 0)
+</code></pre>
+<pre><code># As in the previous example, we can create the constraint dictionary needed by SciPy:
+svm_constraints = []
+for i in range(nb_samples - nb_unlabeled):
+    svm_constraints.append({
+            'type': 'ineq',
+            'fun': labeled_constraint,
+            'args': (X, Y, i)
+        })
+    svm_constraints.append({
+            'type': 'ineq',
+            'fun': eta_labeled_constraint,
+            'args': (i,)
+        })
+    
+for i in range(nb_samples - nb_unlabeled, nb_samples):
+    svm_constraints.append({
+            'type': 'ineq',
+            'fun': unlabeled_constraint,
+            'args': (X, i)
+        })
+    svm_constraints.append({
+            'type': 'ineq',
+            'fun': eta_unlabeled_constraint,
+            'args': (i,)
+        })
+</code></pre>
+<pre><code># After having defined all the constraints, we can minimize the objective function using method='SLSQP' and the dictionary option 'maxiter': 2000. 
+# In general, convergence is achieved in a smaller number of iterations, 
+# but here we've made assumptions as though we're working in a more general scenario:
+from scipy.optimize import minimize
+result = minimize(fun=svm_target, 
+                  x0=theta0, 
+                  constraints=svm_constraints, 
+                  args=(X, Y), 
+                  method='SLSQP', 
+                  tol=0.0001, 
+                  options={'maxiter': 2000})
+print(result['message'])
+#### Optimization terminated successfully.
+</code></pre>
+<pre><code># Such a message confirms that SLSQP successfully found a minimum. 
+# I always check the output of the optimization function, to make sure that nothing went wrong during the procedure, and I recommend that you do too. 
+# In particular, when using methods like COBYLA, it's important that all constraints are differentiable. 
+# When some of them are not, the algorithm can stop working properly, because the approximations of the Jacobian become unreliable.
+# When the process is complete, we can compute the labels for the unlabeled samples and compare the plots:
+theta_end = result['x']
+w = theta_end[0:2]
+b = theta_end[-1]
+Xu= X[nb_samples - nb_unlabeled:nb_samples]
+yu = -np.sign(np.dot(Xu, w) + b)
+</code></pre>
+<pre><code>### Analysis of different TSVM configurations
+# It's interesting to evaluate different combinations of the C parameters, 
+# starting from a standard supervised linear SVM. 
+# The dataset is smaller, with a large number of unlabeled samples:
+nb_samples = 100
+nb_unlabeled = 90
+X, Y = make_classification(n_samples=nb_samples, n_features=2, n_redundant=0, random_state=100)
+Y[Y==0] = -1
+Y[nb_samples - nb_unlabeled:nb_samples] = 0
+
+# We use the standard SVM implementation provided by scikit-learn (the SVC() class) with a linear kernel and C=1.0:
+from sklearn.svm import SVC
+svc = SVC(kernel='linear', C=1.0)
+svc.fit(X[Y != 0], Y[Y != 0])
+Xu_svc= X[nb_samples - nb_unlabeled:nb_samples]
+yu_svc = svc.predict(Xu_svc)
+</code></pre>
 
 </details></li>
 

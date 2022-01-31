@@ -1,50 +1,66 @@
 <h1 style='text-decoration:underline'>SQL</h1>
-<h2 style='width:500px;margin:auto'>Declarative Programming Language</h2><br>
+
+<h2 style='width:500px;margin:auto'>Declarative Programming Language</h2>
+
+<p><br></p>
 
 <div style='width:1000px;margin:auto'>
 
 <a href="1_SQL_Interview_Questions.html" style="font-weight:bold;font-size:17px">SQL Interview Questions</a>
 <hr>
-<details><summary>1. Start <b>MySQL</b> in the <b>Command Line</b></summary><p>
-~~~
-mysql -u root -p
+<details><summary>Start <b>MySQL</b> in the <b>Command Line</b></summary><p><pre><code>mysql -u root -p
 
 # Then write your password "root"
 # -u: used to use the username
 # root: the name of the user
 # -p: means I'll give the password.
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>2. Create <b>Database</b></summary><p>
-<h4>Database can have multiple tables</h4>
-~~~sql
-CREATE DATABASE name_of_database;
+<details><summary>Create <b>Database</b></summary><p>
+<h4>Database can have multiple tables</h4><pre><code class="sql language-sql">CREATE DATABASE name_of_database;
 
 # Add semi-colon at the end to finish your command.
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>3. Use Specific <b>Database</b></summary><p>
-~~~
-USE name_of_db;
+<details><summary><b>Show All Available Databases</b> in Database</summary><p><pre><code>SHOW DATABASES;
+</code></pre>
+</p></details>
+
+<details><summary>Use Specific <b>Database</b></summary><p><pre><code>USE name_of_db;
 
 ####### OUTPUT #########
 Database Changed.
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>4. <b>Import/Source</b> Existing database into MySQL</summary><p>
-~~~
-# NOTE: you need to create an empty database first, the use it, then source the existing database.
+<details><summary>Create <b>Table</b></summary><p>
+<pre><code class="sql language-sql">CREATE TABLE student ( 
+    student_id INT PRIMARY KEY, 
+    name VARCHAR(20), 
+    major VARCHAR(20)
+);
+
+# OR
+CREATE TABLE student ( 
+    student_id INT, 
+    name VARCHAR(20), 
+    major VARCHAR(20),
+    PRIMARY KEY(student)
+);
+
+# Add semi-colon at the end to finish your command.
+</code></pre>
+</p></details>
+
+<details><summary><b>Import/Source</b> Existing database into MySQL</summary><p><pre><code># NOTE: you need to create an empty database first, the use it, then source the existing database.
 
 SOURCE path/to/database.sql;
-~~~
+</code></pre>
 </p></details><br>
 
-<details><summary>5. <b>Show All Available Tables</b> in Database</summary><p>
-~~~
-SHOW TABLES;
+<details><summary><b>Show All Available Tables</b> in Database</summary><p><pre><code>SHOW TABLES;
 
 ##### Output ####
 +------------------+
@@ -59,13 +75,10 @@ SHOW TABLES;
 | roles            |
 +------------------+
 7 rows in set (0.00 sec)
-
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>6. Show <b>Description & Columns</b> in a Table</summary><p>
-~~~
-DESCRIBE <table_name>;
+<details><summary>Show <b>Description & Columns</b> in a Table</summary><p><pre><code>DESCRIBE &lt;table_name&gt;;
 
 ##### Output ######
 +------------+--------------+------+-----+---------+-------+
@@ -84,40 +97,53 @@ DESCRIBE <table_name>;
 # Key: whether it's Primary or MULtiple (means one value can occur many times)
 # Default: means default value of no value is assigned.
 # Extra:
-~~~
+</code></pre>
 </p></details><br>
 
-<details><summary>7. <b>SELECT</b>: to see values of columns</summary><p>
-```sql
-# Show all row for all columns, since "*" means all columns
-SELECT * FROM <table_name>;
+<details><summary>7. <b>SELECT</b>: to see values of columns</summary><p><pre><code class="sql language-sql"># Show all row for all columns, since "*" means all columns
+SELECT * FROM &lt;table_name&gt;;
 
 # Select specific columns from table.
-SELECT <col_name>, <col_name> FROM <table_name>; 
+SELECT &lt;col_name&gt;, &lt;col_name&gt; FROM &lt;table_name&gt;; 
 
 # The output is called "Result-set" and it's actually a table contains a set of rows with column names.
 # NOTE: Always use specific columns to select because it will be much faster than collecting all the data.
 #result-set: a set of rows that form the result of a query along with column-names and meta-data.
 # SELECT will select the rows with the same order in the table.
-```
+</code></pre>
 </p></details>
 
-<details><summary>8. <b>LIMIT/OFFSET</b>: to make selecting rows flexiable</summary><p>
-~~~sql
-# 1. Using Limit: will limit the number of rows to the number assigned in the command.
+<details><summary><b>LIMIT/OFFSET</b>: to make selecting rows flexiable</summary><p><pre><code class="sql language-sql"># 1. Using Limit: will limit the number of rows to the number assigned in the command.
 # In this example, select only the first 20 rows
-SELECT <col_name>, <col_name> FROM <table_name> LIMIT 20
+SELECT &lt;col_name&gt;, &lt;col_name&gt; FROM &lt;table_name&gt; LIMIT 20
 
 # 2. Using OFFSET: will make MySQL start selecting from row numbered that offset.
 # In this example, select 20 rows starting from offset 20
-SELECT <col_name>, <col_name> FROM <table_name> LIMIT 20 OFFSET 20
-~~~
+SELECT &lt;col_name&gt;, &lt;col_name&gt; FROM &lt;table_name&gt; LIMIT 20 OFFSET 20
+</code></pre>
 </p></details>
 
-<details><summary>9. <b>ORDER BY:</b> to order the selected rows</summary><p>
-~~~sql
-# NOTE: the default ordering is Ascending (from low to high)
-SELECT <col_name>, <col_name> FROM <table_name> ORDER BY <col_name> DESC/ASC LIMIT 5;
+<details><summary><b>AS</b></summary><p><pre><code class="sql language-sql">SELECT first_name AS forename, last_name AS surname FROM employee;
+
++----------+----------+
+| forename | surname  |
++----------+----------+
+| David    | Wallace  |
+| Jan      | Levinson |
+| Michael  | Scott    |
+| Angela   | Martin   |
+| Kelly    | Kapoor   |
+| Stanley  | Hudson   |
+| Josh     | Porter   |
+| Andy     | Bernard  |
+| Jim      | Halpert  |
++----------+----------+
+
+</code></pre>
+</p></details>
+
+<details><summary><b>ORDER BY:</b> to order the selected rows</summary><p><pre><code class="sql language-sql"># NOTE: the default ordering is Ascending (from low to high)
+SELECT &lt;col_name&gt;, &lt;col_name&gt; FROM &lt;table_name&gt; ORDER BY &lt;col_name&gt; DESC/ASC LIMIT 5;
 
 # Output
 +---------------------+-----------+------+
@@ -130,82 +156,107 @@ SELECT <col_name>, <col_name> FROM <table_name> ORDER BY <col_name> DESC/ASC LIM
 | Caicedo (with Pole) |      NULL | 1894 |
 +---------------------+-----------+------+
 5 rows in set (0.13 sec)
-
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>10. <b>DISTINCT</b>: to show unique values in a column</summary><p>
-~~~
-# Show Unique values in a column
-SELECT DISTINCT <col_name> FROM <table_name>;
+<details><summary><b>WildCards</b></summary><p><pre><code class="sql language-sql">-- % = any # characters, _ = one character
+
+-- Find any client's who are an LLC
+SELECT *
+FROM client
+WHERE client_name LIKE '%LLC';
+
+-- Find any branch suppliers who are in the label business
+SELECT *
+FROM branch_supplier
+WHERE supplier_name LIKE '% Label%';
+
+-- Find any employee born on the 10th day of the month
+SELECT *
+FROM employee
+WHERE birth_day LIKE '_____10%';
+
+-- Find any clients who are schools
+SELECT *
+FROM client
+WHERE client_name LIKE '%Highschool%';
+</code></pre>
+</p></details>
+
+<details><summary><b>Unions</b></summary><p><pre><code class="sql language-sql">-- Find a list of employee and branch names
+SELECT employee.first_name AS Employee_Branch_Names
+FROM employee
+UNION
+SELECT branch.branch_name
+FROM branch;
+
+-- Find a list of all clients & branch suppliers' names
+SELECT client.client_name AS Non-Employee_Entities, client.branch_id AS Branch_ID
+FROM client
+UNION
+SELECT branch_supplier.supplier_name, branch_supplier.branch_id
+FROM branch_supplier;
+
+</code></pre>
+</p></details>
+
+
+<details><summary><b>DISTINCT</b>: to show unique values in a column</summary><p><pre><code># Show Unique values in a column
+SELECT DISTINCT &lt;col_name&gt; FROM &lt;table_name&gt;;
 
 # Select Unique combination between multiple columns
-SELECT DISTINCT <col_name>, <col_name> FROM <table_name>;
-~~~
+SELECT DISTINCT &lt;col_name&gt;, &lt;col_name&gt; FROM &lt;table_name&gt;;
+</code></pre>
 </p></details>
 
-<details><summary>11. <b>WHERE</b>: to apply condition/filter on the selected data</summary><p>
-~~~
-# list all movies with rankscore>9
-SELECT <col_name>, <col_name>, <col_name> FROM <table_name> WHERE <col_name> > 9 ;
+<details><summary><b>WHERE</b>: to apply condition/filter on the selected data</summary><p><pre><code># list all movies with rankscore&gt;9
+SELECT &lt;col_name&gt;, &lt;col_name&gt;, &lt;col_name&gt; FROM &lt;table_name&gt; WHERE &lt;col_name&gt; &gt; 9 ;
 
 # Condition's outputs: TRUE, FALSE, NULL
 
 # Comparison Operators:
 # =: equals
-# <> or !=: Not Equals
-#  <: Less than
-# <=: Less than or equal
-# >: Greater than
-# >= : Greater than or equal
+# &lt;&gt; or !=: Not Equals
+#  &lt;: Less than
+# &lt;=: Less than or equal
+# &gt;: Greater than
+# &gt;= : Greater than or equal
 
-SELECT * FROM <table_name> WHERE <col_name> = 'Comedy';
+SELECT * FROM &lt;table_name&gt; WHERE &lt;col_name&gt; = 'Comedy';
 
-SELECT * FROM <table_name> WHERE <col_name> <> 'Horror';
+SELECT * FROM &lt;table_name&gt; WHERE &lt;col_name&gt; &lt;&gt; 'Horror';
 
 #### BIG NOTE #####
-# NULL => doesnot-exist/unknown/missing
+# NULL =&gt; doesnot-exist/unknown/missing
 
 # "=" doesnot work with NULL, will give you an empty result-set.
 # Instead we use "IS NULL" or "IS NOT NULL"
-SELECT <col_name>,<col_name>,<col_name> FROM <table_name> WHERE <col_name> = NULL;
+SELECT &lt;col_name&gt;,&lt;col_name&gt;,&lt;col_name&gt; FROM &lt;table_name&gt; WHERE &lt;col_name&gt; = NULL;
 
 
-SELECT <col_name>,<col_name>,<col_name> FROM <table_name> WHERE <col_name> IS NULL LIMIT 20;
+SELECT &lt;col_name&gt;,&lt;col_name&gt;,&lt;col_name&gt; FROM &lt;table_name&gt; WHERE &lt;col_name&gt; IS NULL LIMIT 20;
 
-SELECT name,year,rankscore FROM <table_name> WHERE rankscore IS NOT NULL LIMIT 20;
-~~~
+SELECT name,year,rankscore FROM &lt;table_name&gt; WHERE rankscore IS NOT NULL LIMIT 20;
+</code></pre>
 </p></details>
 
-<details><summary>12. <b>Logical Operators</b></summary><p>
-<h4>1. Using AND:</h4>
-~~~
-SELECT name,year,rankscore FROM movies WHERE rankscore>9 AND year>2000;
-~~~
-<h4>2. Using OR:</h4>
-~~~mysql
-SELECT name,year,rankscore FROM movies WHERE rankscore>9 OR year>2007;
-~~~
-<h4>3. Using NOT:</h4>
-~~~
-SELECT name,year,rankscore FROM movies WHERE NOT year<=2000 LIMIT 20;
-~~~
-<h4>4. Using BETWEEN:</h4>
-~~~
-SELECT name,year,rankscore FROM movies WHERE year BETWEEN 1999 AND 2000;
-#inclusive: year>=1999 and year<=2000
+<details><summary><b>Logical Operators</b></summary><p>
+<h4>1. Using AND:</h4><pre><code>SELECT name,year,rankscore FROM movies WHERE rankscore&gt;9 AND year&gt;2000;
+</code></pre>
+<h4>2. Using OR:</h4><pre><code class="mysql language-mysql">SELECT name,year,rankscore FROM movies WHERE rankscore&gt;9 OR year&gt;2007;
+</code></pre>
+<h4>3. Using NOT:</h4><pre><code>SELECT name,year,rankscore FROM movies WHERE NOT year&lt;=2000 LIMIT 20;
+</code></pre>
+<h4>4. Using BETWEEN:</h4><pre><code>SELECT name,year,rankscore FROM movies WHERE year BETWEEN 1999 AND 2000;
+#inclusive: year&gt;=1999 and year&lt;=2000
 # Both 1999 and 2000 are included.
 #### BIG NOTE: if the first number is larger than the second number, this command won't work.
-~~~
-<h4>5. Using IN:</h4>
-~~~
-SELECT director_id, genre FROM directors_genres WHERE genre IN ('Comedy','Horror');
+</code></pre>
+<h4>5. Using IN:</h4><pre><code>SELECT director_id, genre FROM directors_genres WHERE genre IN ('Comedy','Horror');
 # same as genre='Comedy' OR genre='Horror'
-~~~
-<h4>6. Using LIKE:</h4>
-~~~
-SELECT name,year,rankscore FROM movies WHERE name LIKE 'Tis%';
-# % => wildcard character to imply zero or more characters
+</code></pre>
+<h4>6. Using LIKE:</h4><pre><code>SELECT name,year,rankscore FROM movies WHERE name LIKE 'Tis%';
+# % =&gt; wildcard character to imply zero or more characters
 
 
 SELECT first_name, last_name FROM actors WHERE first_name LIKE '%es';
@@ -224,39 +275,31 @@ SELECT first_name, last_name FROM actors WHERE first_name LIKE 'Agn_s';
 
 
 SELECT first_name, last_name FROM actors WHERE first_name LIKE 'L%' AND first_name NOT LIKE 'Li%';
-~~~
+</code></pre>
 </p></details> 
 
 <details><summary>13. <b>Aggregate Functions</b></summary><p>
-<h4>1. COUNT</h4>
-~~~
-SELECT COUNT(*) FROM movies;
+<h4>1. COUNT</h4><pre><code>SELECT COUNT(*) FROM movies;
 
-SELECT COUNT(*) FROM movies where year>2000;
+SELECT COUNT(*) FROM movies where year&gt;2000;
 
 SELECT COUNT(year) FROM movies;
-~~~
+</code></pre>
 
-<h4>2. MIN & MAX</h4>
-~~~
-SELECT MIN(year) FROM movies;
+<h4>2. MIN & MAX</h4><pre><code>SELECT MIN(year) FROM movies;
 
 
 SELECT MAX(year) FROM movies;
-~~~
+</code></pre>
 
-<h4>3. SUM & AVG</h4>
-~~~
-SELECT SUM(price) FROM movies;
+<h4>3. SUM & AVG</h4><pre><code>SELECT SUM(price) FROM movies;
 
 
 SELECT AVG(price) FROM movies;
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>14. <b>GROUP BY</b></summary><p>
-~~~
-# find number of movies released per year
+<details><summary>14. <b>GROUP BY</b></summary><p><pre><code># find number of movies released per year
 
 SELECT year, COUNT(year) FROM movies GROUP BY year;
 
@@ -268,14 +311,12 @@ SELECT year, COUNT(year) year_count FROM movies GROUP BY year ORDER BY year_coun
 
 # often used with COUNT, MIN, MAX or SUM.
 # if grouping columns contain NULL values, all null values are grouped together.
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>15. <b>HAVING</b></summary><p>
-~~~
-# Print years which have >1000 movies in our DB [Data Scientist for Analysis]
+<details><summary>15. <b>HAVING</b></summary><p><pre><code># Print years which have &gt;1000 movies in our DB [Data Scientist for Analysis]
 
-SELECT year, COUNT(year) year_count FROM movies GROUP BY year HAVING year_count>1000;
+SELECT year, COUNT(year) year_count FROM movies GROUP BY year HAVING year_count&gt;1000;
 # specify a condition on groups using HAVING.
 
 
@@ -287,23 +328,21 @@ Order of execution:
 
 # often used along with GROUP BY. Not Mandatory.
 
-SELECT name, year  FROM movies HAVING year>2000;
+SELECT name, year  FROM movies HAVING year&gt;2000;
 # HAVING without GROUP BY is same as WHERE
 
 
 
-SELECT year, COUNT(year) year_count FROM movies WHERE rankscore>9 GROUP BY year HAVING year_count>20;
+SELECT year, COUNT(year) year_count FROM movies WHERE rankscore&gt;9 GROUP BY year HAVING year_count&gt;20;
 
 # HAVING vs WHERE
 ## WHERE is applied on individual rows while HAVING is applied on groups.
 ## HAVING is applied after grouping while WHERE is used before grouping.
-~~~
+</code></pre>
 </p></details>
 
 <details><summary>16. <b>Keyword Order</b></summary><p>
-<p><a href="https://dev.mysql.com/doc/refman/8.0/en/select.html"><b>Ref</b></a> </p>
-~~~
-SELECT
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/select.html"><b>Ref</b></a> </p><pre><code>SELECT
     [ALL | DISTINCT | DISTINCTROW ]
       [HIGH_PRIORITY]
       [STRAIGHT_JOIN]
@@ -327,14 +366,12 @@ SELECT
       | INTO var_name [, var_name]]
     [FOR {UPDATE | SHARE} [OF tbl_name [, tbl_name] ...] [NOWAIT | SKIP LOCKED] 
       | LOCK IN SHARE MODE]]
-~~~
+</code></pre>
 </p></details>
 
 <details><summary>17. <b>JOIN...ON</b>: combine data from multiple tables</summary><p>
 <p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Web/www.w3schools.com/www.w3schools.com/sql/sql_join.html"><b>W3School on JOIN</b></a> </p>
-<h4>1. Natural Join</h4> 
-~~~
-# natural join: a join where we have the same column-names across two tables.
+<h4>1. Natural Join</h4> <pre><code># natural join: a join where we have the same column-names across two tables.
 #T1: C1, C2
 #T2: C1, C3, C4
 
@@ -344,60 +381,48 @@ SELECT * FROM T1 JOIN T2 USING (C1);
 
 # returns C1,C2,C3,C4
 # no need to use the keyword "ON"
-~~~
+</code></pre>
 
-<h4>2. Inner Join</h4>
-~~~
-# For each movie, print name and the genres
+<h4>2. Inner Join</h4><pre><code># For each movie, print name and the genres
 SELECT m.name, g.genre from movies m  JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
 
 # table aliases: m and g
-~~~
+</code></pre>
 
-<h4>3. Left Outer Join</h4>
-~~~
-SELECT m.name, g.genre from movies m  LEFT JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
+<h4>3. Left Outer Join</h4><pre><code>SELECT m.name, g.genre from movies m  LEFT JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
 
 #LEFT JOIN or LEFT OUTER JOIN
 #RIGHT JOIN or RIGHT OUTER JOIN
 #FULL JOIN or FULL OUTER JOIN
 #JOIN or INNER JOIN
-~~~
+</code></pre>
 
-<h4>4. Right Outer Join</h4>
-~~~
-SELECT m.name, g.genre from movies m  RIGHT JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
+<h4>4. Right Outer Join</h4><pre><code>SELECT m.name, g.genre from movies m  RIGHT JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
 
 #LEFT JOIN or LEFT OUTER JOIN
 #RIGHT JOIN or RIGHT OUTER JOIN
 #FULL JOIN or FULL OUTER JOIN
 #JOIN or INNER JOIN
-~~~
+</code></pre>
 
-<h4>5. Full Outer Join</h4>
-~~~
-SELECT m.name, g.genre from movies m  FULL JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
+<h4>5. Full Outer Join</h4><pre><code>SELECT m.name, g.genre from movies m  FULL JOIN movies_genres g ON m.id=g.movie_id LIMIT 20;
 
 #LEFT JOIN or LEFT OUTER JOIN
 #RIGHT JOIN or RIGHT OUTER JOIN
 #FULL JOIN or FULL OUTER JOIN
 #JOIN or INNER JOIN
-~~~
+</code></pre>
 
-<h4>6. K-ways Join</h4>
-~~~
-# NULL for missing counterpart rows.
+<h4>6. K-ways Join</h4><pre><code># NULL for missing counterpart rows.
 
 # 3-way joins and k-way joins
 SELECT a.first_name, a.last_name FROM actors a JOIN roles r ON a.id=r.actor_id JOIN movies m on m.id=r.movie_id AND m.name='Officer 444';
 
 #Practical note about joins: Joins can be expensive computationally when we have large tables.
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>18. <b>Nested Queries</b></summary><p>
-~~~
-# Sub-Queries or Nested Queries or Inner Queries
+<details><summary>18. <b>Nested Queries</b></summary><p><pre><code># Sub-Queries or Nested Queries or Inner Queries
 
 # Examble:
 
@@ -406,9 +431,9 @@ SELECT a.first_name, a.last_name FROM actors a JOIN roles r ON a.id=r.actor_id J
 
 
 SELECT first_name, last_name from actors WHERE id IN 
-	( SELECT actor_id from roles WHERE movie_id IN 
-			(SELECT id FROM movies where name='Schindler's List)
-	);
+    ( SELECT actor_id from roles WHERE movie_id IN 
+            (SELECT id FROM movies where name='Schindler's List)
+    );
 
 
 
@@ -431,17 +456,15 @@ WHERE  column_name OPERATOR
 
 
 
-SELECT * FROM movies where rankscore >= ALL (SELECT MAX(rankscore) from movies);
+SELECT * FROM movies where rankscore &gt;= ALL (SELECT MAX(rankscore) from movies);
 # get all movies whose rankscore is same as the maximum rankscore.
 
-# e.g: rankscore <> ALL(...)
-~~~
+# e.g: rankscore &lt;&gt; ALL(...)
+</code></pre>
 </p></details><br>
 
 <details><summary>19. <b>Data Manipulation</b>: SELECT, INSERT, UPDATE, DELETE</summary><p>
-<h4>2. INSERT</h4>
-~~~
-# Data Manupulation Language: SELECT, INSERT, UPDATE, DELETE
+<h4>2. INSERT</h4><pre><code># Data Manupulation Language: SELECT, INSERT, UPDATE, DELETE
 
 INSERT INTO movies(id, name, year, rankscore) VALUES (412321, 'Thor', 2011, 7);
 
@@ -449,33 +472,27 @@ INSERT INTO movies(id, name, year, rankscore) VALUES (412321, 'Thor', 2011, 7), 
 
 
 # INSERT FROM one table to annother using nnested sub query: https://en.wikipedia.org/wiki/Insert_(SQL)#Copying_rows_from_other_tables
-~~~
+</code></pre>
 
-<h4>3. UPDATE</h4>
-~~~
-UPDATE <TableName> SET col1=val1, col2=val2 WHERE condition
+<h4>3. UPDATE</h4><pre><code>UPDATE &lt;TableName&gt; SET col1=val1, col2=val2 WHERE condition
 
 UPDATE movies SET rankscore=9 where id=412321;
 
 # Update multiple rows also.
 # Can be used along with Sub-queries.
-~~~
+</code></pre>
 
-<h4>4. DELETE</h4>
-~~~
-DELETE FROM movies WHERE id=412321;
+<h4>4. DELETE</h4><pre><code>DELETE FROM movies WHERE id=412321;
 
 # Remove all rows: TRUNCATE TABLE TableName; 
 # Same as selete without a WHERE Clause.
-~~~
+</code></pre>
 </p></details>
 
 <details><summary>20. <b>Data Definition Language:</b> to define/modify tables.</summary><p>
 <ul>
 <li><a href="https://www.journaldev.com/16774/sql-data-types"><b>DataTypes</b></a></li>
-<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Web/www.w3schools.com/www.w3schools.com/sql/sql_constraints.html"><b>Constraints</b></a></li></ul>
-~~~
-CREATE TABLE language  ( id INT PRIMARY, lang VARCHAR(50) NOT NULL);
+<li><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Web/www.w3schools.com/www.w3schools.com/sql/sql_constraints.html"><b>Constraints</b></a></li></ul><pre><code>CREATE TABLE language  ( id INT PRIMARY, lang VARCHAR(50) NOT NULL);
 
 
 # NOT NULL - Ensures that a column cannot have a NULL value
@@ -485,24 +502,32 @@ CREATE TABLE language  ( id INT PRIMARY, lang VARCHAR(50) NOT NULL);
 # CHECK - Ensures that all values in a column satisfies a specific condition
 # DEFAULT - Sets a default value for a column when no value is specified
 # INDEX - Used to create and retrieve data from the database very quickly
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>21. <b>ALTER:</b> ADD, MODIFY, DROP columns in a table</summary><p>
-~~~
-# ALTER: ADD, MODIFY, DROP
+<details><summary><b>ALTER:</b> ADD, MODIFY, DROP columns in a table</summary><p><pre><code># ALTER: ADD, MODIFY, DROP
 
 ALTER TABLE language ADD country VARCHAR(50);
 
 ALTER TABLE language MODIFY country VARCHAR(60);
 
 ALTER TABLE langauge DROP country;
-~~~
+</code></pre>
 </p></details>
 
-<details><summary>22. <b>DROP:</b> to drop tables</summary><p>
-~~~
-# Removes both the table and all of the data permanently.
+<details><summary><b>Add Foriegn key</b></summary><p><pre><code># Create foreign key where the referenced table is already created.
+CREATE TABLE branch ( branch_id INT PRIMARY KEY, branch_name VARCHAR(40), mgr_id INT, mgr_start_date DATE, FOREIGN KEY(mgr_id) REFERENCES employee(emp_id) ON DELETE SET NULL);
+
+# Create foreign key before creating the referenced table.
+# super_id is foriegn key to the same table.
+# branch_id is foriegn key to 'branch' table.
+create table employee ( emp_id INT PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), birth_date DATE, sex VARCHAR(1), salary INT, super_id INT, branch_id INT);
+
+ALTER TABLE employee ADD FOREIGN KEY(branch_id) REFERENCES branch(branch_id) ON DELETE SET NULL;
+</code></pre>
+</p></details>
+
+<details><summary><b>DROP:</b> to drop tables</summary><p><pre><code># Removes both the table and all of the data permanently.
 DROP TABLE Tablename;
 
 DROP TABLE TableName IF EXISTS;
@@ -512,47 +537,14 @@ DROP TABLE TableName IF EXISTS;
 TRUNCATE TABLE TableName;
 
 # as discussed earlier same as DELETE FROM TableName;
-~~~
+</code></pre>
 </p></details><br>
 
 <details><summary>24. <b>Data Control Language</b> for DB Admins.
-</summary><p>
-~~~
-https://en.wikipedia.org/wiki/Data_control_language
+</summary><p><pre><code>https://en.wikipedia.org/wiki/Data_control_language
 https://dev.mysql.com/doc/refman/8.0/en/grant.html
 https://dev.mysql.com/doc/refman/8.0/en/revoke.html
-~~~
+</code></pre>
 </p></details>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

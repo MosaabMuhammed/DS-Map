@@ -19,16 +19,15 @@
 
 <li><a href="./10_Deployment/0_html/0_deployment_root.html"><font color='#333'><b style='font-size:27px'>Deployment</b></font></a> </li>
 
-<li><a href="./13_Azure_ML_SDK/0_html/azure_root.html"><font color='#333'><b style='font-size:27px'>Azure ML SDK</b></font></a> </li>
+<li><a href="./18_Tests/0_html/0_root.html"><font color='#333'><b style='font-size:27px'>Unit Testing</b></font></a> </li>
 
 </ul>
 
 <hr>
 
 <ul>
+<li><a href="./13_Azure_ML_SDK/0_html/azure_root.html"><font color='#333'><b style='font-size:27px'>Azure ML SDK</b></font></a> </li>
 <li><a href="./17_Algorithms/0_html/0_Algo_Root.html"><font color='#333'><b style='font-size:27px'>Algorithms</b></font></a></li>
-</ul>
-
 <li><a href="./16_Git/0_html/0_Git_Root.html"><font color='#333'><b style='font-size:27px'>Git</b></font></a></li>
 
 <li><a href="./6_R%20Language/0_html/0_R_Root.html"><font color='#333'><b style='font-size:27px'>R Language</b></font></a></li>

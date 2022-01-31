@@ -768,6 +768,18 @@ custom_palette(pink)
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/1_Matplotlib%20Concepts%20Lecture.html#Matplotlib-Overview-Lecture"><b>1. Matplotlib Concepts</b></a></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/3_Matplotlib%20/2_Advanced%20Matplotlib%20Concepts.html#Advanced-Matplotlib-Concepts-Lecture"><b>2. Advanced Concepts</b></a></li>
+
+<li><details><summary><b>Donut Plot</b></summary><pre><code>from palettable.colorbrewer.qualitative import Pastel1_7
+plt.figure(figsize=(16,10))
+my_circle=plt.Circle((0,0), 0.7, color='white')
+plt.pie(Unique_Neutral['count'], labels=Unique_Neutral.words, colors=Pastel1_7.hex_colors)
+p=plt.gcf()
+p.gca().add_artist(my_circle)
+plt.title('DoNut Plot Of Unique Neutral Words')
+plt.show()
+</code></pre>
+<img src="imgs/20211005-145457.png"></img>
+</details></li>
 </ul>
 
 
@@ -802,6 +814,19 @@ custom_palette(pink)
 fig = px.scatter(data, x='gdp', y='co2', animation_frame='year', animation_group='country', color='region', hover_name='country', facet_col='region', width=1579, height=400, log_x=True, size_max=45, range_x=[xmin, xmax], range_y=[ymin, ymax])
 
 fig.show()
+</code></pre>
+</details></li>
+
+<li><details><summary><b>Multiple</b> Chart</summary><pre><code>from plotly.subplots import make_subplots
+import plotly.graph_objs as go
+import plotly.offline as py
+py.init_notebook_mode(connected=True)
+
+fig=make_subplots(1,2,subplot_titles=('Train set','Test set'))
+x=train.sentiment.value_counts()
+fig.add_trace(go.Bar(x=x.index,y=x.values,marker_color=['blue','green','red'],name='train'),row=1,col=1)
+x=test.sentiment.value_counts()
+fig.add_trace(go.Bar(x=x.index,y=x.values,marker_color=['blue','green','red'],name='test'),row=1,col=2)
 </code></pre>
 </details></li>
 

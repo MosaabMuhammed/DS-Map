@@ -1,4 +1,4 @@
-# Modeling
+<h1 id="modeling">Modeling</h1>
 
 <div style='width:1000px;margin:auto'>
 
@@ -9,14 +9,12 @@
 
 <details><summary><b>LSTM & GRU & Bi-Directional</b></summary><p>
 <li><a href='./0_notebooks/LSTM_Toxic.html'>LSTM with Text</a></li>
-<h4>Note: For Bi-Directional, do the following:</h4>
-```
-# you have 2 options:
+<h4>Note: For Bi-Directional, do the following:</h4><pre><code># you have 2 options:
 # 1. return a sequence, then select the max features among them.
 # 2. Don't return a sequence, just return the last value, and here there's no neet for GlobalMaxPool1D
 x = Bidirectional(LSTM(15, return_sequences=True))(x)
 x = GlobalMaxPool1D()(x)
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>BERT</b></summary><p>
@@ -25,32 +23,26 @@ x = GlobalMaxPool1D()(x)
 <li><a href='./0_notebooks/BERT using simple transformers.html'>BERT using simpleTransformers</a></li>
 </p></details>
 
-<details><summary><b>Sentiment Analysis</b> using <b>Rule-based</b></summary><p>
-```
-# !pip install vaderSentiment
+<details><summary><b>Sentiment Analysis</b> using <b>Rule-based</b></summary><p><pre><code># !pip install vaderSentiment
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 sa = SentimentIntensityAnalyzer()
-# sa.lexicon --> Print the lexicons
+# sa.lexicon --&gt; Print the lexicons
 
 sa.polarity_scores(text="Python is very readable and it's great for NLP.")
-```
-```
-corpus = ["Absolutely perfect! Love it! :-) :-) :-)",
+</code></pre><pre><code>corpus = ["Absolutely perfect! Love it! :-) :-) :-)",
           "Horrible! Completely useless. :(",
           "It was OK. some good and some bad things."]
 
 for doc in corpus:
     scores = sa.polarity_scores(doc)
     print(f"{scores['compound']:+}: {doc}")
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>Latent Discriminant Analysis</b></summary><p>
 <p>NOTE: you can use it in sklearn. (sklearn.discriminant_analysis.LinearDiscriminantAnalysis), but here we show the manual calculations on spam filter.</p>
 <p>LDA is very useful when we have more columns and less rows, specially in text analysis</p>
-
-```
-# 1. Calculate the TF-IDF
+<pre><code># 1. Calculate the TF-IDF
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.tokenize.casual import casual_tokenize
 tfidf_model = TfidfVectorizer(tokenizer=casual_tokenize)
@@ -68,15 +60,13 @@ spamminess_score.round(2)
 # 4. Normalize to predict.
 from sklearn.preprocessing import MinMaxScaler
 sms["lda_score"]   = MinMaxScaler().fit_transform(spamminess_score.reshape(-1, 1))
-sms["lda_predict"] = (sms.lda_score > .5).astype(int)
+sms["lda_predict"] = (sms.lda_score &gt; .5).astype(int)
 sms["spam lda_predict lda_score".split()].round(2).head(6)~~~~
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>Language Model</b></summary><p>
-<h4>1. Load the corpus</h4>
-```
-import nltk
+<h4>1. Load the corpus</h4><pre><code>import nltk
 nltk.download("gutenberg")
 from nltk.corpus import gutenberg
 gutenberg.fileids()
@@ -92,11 +82,9 @@ char_indices = dict((c, i) for i, c in enumerate(chars))
 indices_char = dict((i, c) for i, c in enumerate(chars))
 
 print(f"corpus length: {bg(len(text))}, total chars: {bg(len(chars))}")
-```
+</code></pre>
 
-<h4>2. Prepare the input & output</h4>
-```
-maxlen = 40
+<h4>2. Prepare the input & output</h4><pre><code>maxlen = 40
 step   = 3
 sentences  = []
 next_chars = []
@@ -106,22 +94,18 @@ for i in range(0, len(text) - maxlen, step):
     next_chars.append(text[i+maxlen])
 
 print(f"nb sequences: {bg(len(sentences))}, {bg(len(next_chars))}")
-```
+</code></pre>
 
-<h4>3. Create One-Hot encoding</h4>
-```
-X = np.zeros((len(sentences), maxlen, len(chars)), dtype=np.bool)
+<h4>3. Create One-Hot encoding</h4><pre><code>X = np.zeros((len(sentences), maxlen, len(chars)), dtype=np.bool)
 y = np.zeros((len(sentences), len(chars)), dtype=np.bool)
 
 for i, sentence in enumerate(sentences):
     for t, char in enumerate(sentence):
         X[i, t, char_indices[char]] = 1
     y[i, char_indices[next_chars[i]]] = 1
-```
+</code></pre>
 
-<h4>3. Create the model</h4>
-```
-import tensorflow as tf
+<h4>3. Create the model</h4><pre><code>import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation
 from tensorflow.keras.layers import LSTM
@@ -148,11 +132,9 @@ for i in range(5):
               batch_size=batch_size,
               epochs=epochs)
     model.save_weights(f"shakes_lstm_weights_{i+1}.h5")
-```
+</code></pre>
 
-<h4>4. Predict the next n characters with temperature</h4>
-```
-import random
+<h4>4. Predict the next n characters with temperature</h4><pre><code>import random
 def sample(preds, temprature=1.0):
     preds     = np.asarray(preds).astype('float64')
     preds     = np.log(preds) / temprature
@@ -160,7 +142,7 @@ def sample(preds, temprature=1.0):
     preds     = exp_preds / np.sum(exp_preds)
     probas    = np.random.multinomial(1, preds, 1)
     return np.argmax(probas)
-    
+
 import sys
 start_index = random.randint(0, len(text)-maxlen-1)
 for diversity in [.2, .5, 1.]:
@@ -171,7 +153,7 @@ for diversity in [.2, .5, 1.]:
     generated += sentence
     print(f"---------- Generating with seed: {sentence}")
     sys.stdout.write(generated)
-    
+
     for i in range(400):
         x = np.zeros((1, maxlen, len(chars)))
         for t, char in enumerate(sentence):
@@ -185,13 +167,11 @@ for diversity in [.2, .5, 1.]:
         sys.stdout.flush()
 
     print()
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>Seq2Seq</b></summary><p>
-<h4>1. Prepare the data</h4>
-```
-# !pip install nlpia
+<h4>1. Prepare the data</h4><pre><code># !pip install nlpia
 from nlpia.loaders import get_data
 df = get_data("moviedialog")
 input_texts, target_texts = [], []
@@ -212,10 +192,8 @@ for input_text, target_text in zip(df.statement, df.reply):
     for char in target_text:
         if char not in output_vocab:
             output_vocab.add(char)
-```
-
-```
-input_vocab  = sorted(input_vocab)
+</code></pre>
+<pre><code>input_vocab  = sorted(input_vocab)
 output_vocab = sorted(output_vocab)
 
 input_vocab_size  = len(input_vocab)
@@ -229,10 +207,8 @@ target_token_index = dict([(char, i) for i, char in enumerate(output_vocab)])
 
 reverse_input_char_index  = dict((i, char) for char, i in input_token_index.items())
 reverse_target_char_index = dict((i, char) for char, i in target_token_index.items())
-```
-
-```
-encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_length, input_vocab_size),
+</code></pre>
+<pre><code>encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_length, input_vocab_size),
                               dtype='float32')
 decoder_input_data = np.zeros((len(input_texts), max_decoder_seq_length, output_vocab_size),
                               dtype="float32")
@@ -242,16 +218,14 @@ decoder_target_data = np.zeros((len(input_texts), max_decoder_seq_length, output
 for i, (input_text, target_text) in enumerate(zip(input_texts, target_texts)):
     for t, char in enumerate(input_text):
         encoder_input_data[i, t, input_token_index[char]] = 1.
-    
+
     for t, char in enumerate(target_text):
         decoder_input_data[i, t, target_token_index[char]] = 1.
-        if t > 0:
+        if t &gt; 0:
             decoder_target_data[i, t-1, target_token_index[char]] = 1
-```
+</code></pre>
 
-<h4>2. Build the Model</h4>
-```
-from tensorflow.keras.models import Model
+<h4>2. Build the Model</h4><pre><code>from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, LSTM, Dense
 
 batch_size  = 64
@@ -277,9 +251,7 @@ model.fit([encoder_input_data, decoder_input_data],
           batch_size=batch_size,
           epochs=epochs,
           validation_split=.1)
-```
-```
-encoder_model = Model(encoder_inputs, encoder_states)
+</code></pre><pre><code>encoder_model = Model(encoder_inputs, encoder_states)
 thought_input = [Input(shape=(num_neurons,)),
                  Input(shape=(num_neurons,))]
 decoder_outputs, state_h, state_c = decoder_lstm(decoder_inputs,
@@ -290,11 +262,9 @@ decoder_model   = Model(
     inputs=[decoder_inputs] + thought_input,
     outputs=[decoder_outputs] + decoder_states
 )
-```
+</code></pre>
 
-<h4>3. Response </h4>
-```
-def decode_sequence(input_seq):
+<h4>3. Response </h4><pre><code>def decode_sequence(input_seq):
     thought = encoder_model.predict(input_seq)
 
     target_seq = np.zeros((1, 1, output_vocab_size))
@@ -309,24 +279,22 @@ def decode_sequence(input_seq):
         generated_token_idx = np.argmax(output_tokens[0, -1, :])
         generated_char      = reverse_target_char_index[generated_token_idx]
         generated_sequence += generated_char
-        if (generated_char == stop_token or len(generated_sequence) > max_decoder_seq_length):
+        if (generated_char == stop_token or len(generated_sequence) &gt; max_decoder_seq_length):
             stop_condition = True
             target_seq = np.zeros((1, 1, output_vocab_size))
             target_seq[0, 0, generated_token_idx] = 1.
             thought = [h, c]
-    
+
     return generated_sequence
-```
-```
-def response(input_text):
+</code></pre><pre><code>def response(input_text):
     input_seq = np.zeros((1, max_encoder_seq_length, input_vocab_size), dtype="float32")
     for t, char in enumerate(input_text):
         input_seq[0, t, input_token_index[char]] = 1.
     decoded_sentence = decode_sequence(input_seq)
     print(f"Bot Reply: {decoded_sentence}")
-    
+
 respone("what is the internet?")
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>Approximate Nearest Neighbors (ANN) Search</b> Libraries</summary><p><ul>
@@ -348,28 +316,22 @@ nmslib/blob/master/similarity_search/include/factory/method/hnsw.h"> github</a><
 
 <details><summary>Using <b>Annoy</b> on word-vectors</summary><p>
 NOTE: Read Page 409 in nlp in action book.
-<h4>1. Load WordVectors using gensim (wv), Annoy</h4>
-```
-!pip install annoy
+<h4>1. Load WordVectors using gensim (wv), Annoy</h4><pre><code>!pip install annoy
 from annoy import AnnoyIndex
 
 n_words, n_dimensions = wv.vectors.shape
 index                   = AnnoyIndex(n_dimensions)
-```
+</code></pre>
 
-<h4>2. Add each word vector to the AnnoyIndex</h4>
-```
+<h4>2. Add each word vector to the AnnoyIndex</h4><pre><code>from tqdm import tqdm
+for i, word in enumerate(tqdm(wv.index2word)):
+    index.add_item(i, wv[word])
+</code></pre>
+<h4>Build Euclidean/Cosine distance index with 15 trees</h4><pre><code># Euclidean
 from tqdm import tqdm
 for i, word in enumerate(tqdm(wv.index2word)):
     index.add_item(i, wv[word])
-```
-<h4>Build Euclidean/Cosine distance index with 15 trees</h4>
-```
-# Euclidean
-from tqdm import tqdm
-for i, word in enumerate(tqdm(wv.index2word)):
-    index.add_item(i, wv[word])
-    
+
 index.build(n_trees)
 index.save('Word2vec_euc_index.ann')
 w2id = dict(zip(range(len(wv.vocab)), wv.vocab))
@@ -385,12 +347,10 @@ for i, word in enumerate(wv.index2word):
 # Increase the number of trees to get more accurate results.
 index_cos.build(30)
 index_cos.save('word2vec_cos_index.ann')
-```
+</code></pre>
 
 
-<h4>Find Harry_Potter neighbors with AnnoyIndex</h4>
-```
-# Find Harry_Potter neighbors with AnnoyIndex.
+<h4>Find Harry_Potter neighbors with AnnoyIndex</h4><pre><code># Find Harry_Potter neighbors with AnnoyIndex.
 print(wv.vocab['Harry_Potter'].index)
 print(wv.vocab['Harry_Potter'].count)
 
@@ -406,7 +366,7 @@ print(ids)
 
 print([wv.vocab[i] for i in ids])
 print([wv.index2word[i] for i in ids])
-```
+</code></pre>
 </p></details>
 </p></details>
 
@@ -467,7 +427,7 @@ class ThresholdWrapper(BaseEstimator, ClassifierMixin):
 
             self.refitted_clf.fit(X_train, y_train)
             ds = self.refitted_clf.decision_function(X_valid)
-            
+
             if len(self.classes_) == 2:
                 ds = np.repeat(np.array([ds]), 2, axis=0).T
                 ds[:, 0] = ds[:, 0] * -1
@@ -494,13 +454,13 @@ class ThresholdWrapper(BaseEstimator, ClassifierMixin):
         '''
             params:
                 X: (str, pd.Series, list) - the sample/s to be predicted. after reprocessed from the pipeline.
-                return_top_conf: (int) - 0 -> if you want to return only the label without using out_of_scope label.
-                                         n -> if you want to return the prediction of the label + using out_of_scope label.
+                return_top_conf: (int) - 0 -&gt; if you want to return only the label without using out_of_scope label.
+                                         n -&gt; if you want to return the prediction of the label + using out_of_scope label.
                                               and also returning the confidence for all the classes (only available for single prediction).
         '''
         if confidence:
             # Handle the prediction of single and multiple samples.
-            if X.shape[0] > 1:
+            if X.shape[0] &gt; 1:
                 y_preds = X.apply(lambda x: self._predict_single_with_conf(x, top_n=top_n)[0], axis=1)
                 return y_preds
             else:
@@ -532,7 +492,7 @@ class ThresholdWrapper(BaseEstimator, ClassifierMixin):
             d = np.repeat(np.array([[d]]), 2, axis=0).T
             d[:, 0] = d[:, 0] * -1
         probs        = np.exp(d) / np.sum(np.exp(d))
-        pred_label   = pred_label[0] if (np.max(probs) > self.thresholds_dict[pred_label[0]]) else config.OUT_OF_SCOPE_LABEL
+        pred_label   = pred_label[0] if (np.max(probs) &gt; self.thresholds_dict[pred_label[0]]) else config.OUT_OF_SCOPE_LABEL
 
         if len(self.classes_) == 2:
             classes_w_conf     = {key: val for key, val in zip(self.classes_, probs.ravel())}
@@ -544,4 +504,140 @@ class ThresholdWrapper(BaseEstimator, ClassifierMixin):
 </code></pre>
 
 </p></details>
+
+<details><summary><b>Custom NER SpaCy</b> model</summary>
+<pre><code>def save_model(output_dir, nlp, new_model_name):
+    '''
+    This function saves the model to the given output directory
+    '''
+    output_dir = f"../working/{output_dir}"
+    if output_dir:
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        nlp.meta["name"] = new_model_name
+        nlp.to_disk(output_dir)
+        print(f"Saved '{new_model_name}' to {output_dir}")
+</code></pre>
+<pre><code>def get_training_data(sentiment):
+    '''
+    Returns training_data in the format needed by the NER model.
+    '''
+    train_data = []
+    for index, row in df_train.iterrows():
+        if row.sentiment == sentiment:
+            selected_text = row.selected_text
+            text          = row.text
+            start         = text.find(selected_text)
+            end           = start + len(selected_text)
+            train_data.append((text, {"entities": [[start, end, selected_text]]}))
+    return train_data
+</code></pre>
+<pre><code>def get_model_out_path(sentiment):
+    '''
+    returns Model output path based on sentiment.
+    '''
+    model_out_path = None
+    if sentiment == "positive":
+        model_out_path = "models/model_pos"
+    elif sentiment == "negative":
+        model_out_path = "models/model_neg"
+    return model_out_path
+</code></pre>
+
+<pre><code>def train(train_data, output_dir, n_iter=20, model=None):
+    '''
+    Load the model, set up the pipeline and train the NER model.
+    '''
+    # 1. Load/Create the model.
+    if model:
+        nlp = spacy.load(output_dir) # load existing SpaCy model.
+    else:
+        nlp = spacy.blank("en") # create a new blank Language Class.
+        print("Created a new blank 'en' model!")
+
+    # 2.  Create the built-in pipeline components and add them to the pipeline.
+    if "ner" not in nlp.pipe_names:
+        ner = nlp.create_pipe("ner")
+        nlp.add_pipe(ner, last=True)
+    else:
+        ner = nlp.get_pipe("ner")
+
+    # 3. add the labels.
+    for _, annotations in train_data:
+        for ent in annotations.get("entities"):
+            ner.add_label(ent[2])
+
+    # 4. Get names of other pipes to disable them during training.
+    other_pipes = [pipe for pipe in nlp.pipe_names if pipe != "ner"]
+    with nlp.disable_pipes(*other_pipes): # Only train NER
+        if model is None:
+            nlp.begin_training()
+        else:
+            nlp.resume_training()
+
+        for itn in tqdm(range(n_iter)):
+            random.shuffle(train_data)
+            # number of samples in a batch will start with 4 and continue increasing till 500.
+            batches = minibatch(train_data, size=compounding(4, 500, 1.001))
+            losses = {}
+            for batch in batches:
+                texts, annotations = zip(*batch)
+                nlp.update(texts,
+                           annotations,
+                           drop=0.5,
+                           losses=losses)
+            print(f"Losses: {losses}")
+    save_model(output_dir, nlp, "st_ner")
+</code></pre>
+
+<pre><code>sentiment = "positive"
+
+train_data = get_training_data(sentiment)
+model_path = get_model_out_path(sentiment)
+train(train_data, model_path, n_iter=3, model=None)
+
+sentiment = "negative"
+
+train_data = get_training_data(sentiment)
+model_path = get_model_out_path(sentiment)
+train(train_data, model_path, n_iter=3, model=None)
+</code></pre>
+
+<pre><code>def predict_entities(text, model):
+    doc = model(text)
+    ent_arry = []
+    for ent in doc.ents:
+        start   = text.find(ent.text)
+        end     = start + len(ent.text)
+        new_int = [start, end, ent.label_]
+        if new_int not in ent_array:
+            ent_arry.append(new_int)
+    selected_text = text[ent_array[0][0]:ent_array[0][1]] if len(ent_array) else text
+    return selected_text
+</code></pre>
+
+<pre><code>selected_texts = []
+MODELS_BASE_PATH = "../input/tse-spacy-model/models/"
+
+if MODELS_BASE_PATH is not None:
+    print(f"Loading models from {MODELS_BASE_PATH}")
+    model_pos = spacy.load(MODELS_BASE_PATH + "model_pos")
+    model_neg = spacy.load(MODELS_BASE_PATH + "model_neg")
+
+    for idx, row in df_test.iterrows():
+        text = row.text
+        output_str = ""
+        if row.sentiment == "neutral" or len(text.split()) &lt;= 2:
+            selected_texts.append(text)
+        elif row.sentiment == "positive":
+            selected_texts.append(predict_entities(text, model_pos))
+        else:
+            selected_texts.append(predict_entities(text, model_neg))
+
+df_test['selected_text'] = selected_texts
+
+df_submission['selected_text'] = df_test['selected_text']
+df_submission.to_csv("submission.csv", index=False)
+df_submission.head(10)
+</code></pre>
 </div>

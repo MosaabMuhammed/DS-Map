@@ -1,33 +1,55 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>EDA</h1>
-<div style='width:1000px;margin:auto'>
-
-<details><summary><b style="font-size:20px">n-gram Viewer with Time</b></summary>
-
-
-<pre><code>fig, ax = plt.subplots(figsize=(9,6))
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="eda">
+   EDA
+  </h1>
+  <div style="width:1000px;margin:auto">
+   <details>
+    <summary>
+     <b>
+      n-gram Viewer with Time
+     </b>
+    </summary>
+    <pre><code>fig, ax = plt.subplots(figsize=(9,6))
 
 for term in terms:
     data[term].plot(ax=ax)
 
-ax.set_title(&quot;Token Frequency over Time&quot;)
-ax.set_ylabel(&quot;word count&quot;)
-ax.set_xlabel(&quot;publication date&quot;)
-ax.set_xlim((&quot;2016-02-29&quot;,&quot;2016-05-25&quot;))
+ax.set_title("Token Frequency over Time")
+ax.set_ylabel("word count")
+ax.set_xlabel("publication date")
+ax.set_xlim(("2016-02-29","2016-05-25"))
 ax.legend()
 plt.show()
 
 # NOTE: If you don't have time column, you can display it with index, but convert it to bag-of-words first.
 </code></pre>
-
-<p><img src="imgs/20200606-153159.png" alt="" /></p>
-</details>
-
-<details><summary><b style="font-size:20px">Network Visualization</b></summary>
-
-Visualize the relationship between each pair of words.
-<h4>1. Create the corpus</h4>
-
-<pre><code>import itertools
+    <p>
+     <img alt="" src="imgs/20200606-153159.png"/>
+    </p>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Network Visualization
+     </b>
+    </summary>
+    Visualize the relationship between each pair of words.
+    <h4>
+     1. Create the corpus
+    </h4>
+    <pre><code>import itertools
 
 corpus = []
 for sentence in df['sample'].values:
@@ -43,13 +65,13 @@ def cooccurrence(corpus):
 
 pairs = cooccurrence(corpus)
 </code></pre>
-
-<h4>2. Create the network</h4>
-
-<pre><code>import networkx as nx
+    <h4>
+     2. Create the network
+    </h4>
+    <pre><code>import networkx as nx
 
 G = nx.Graph()
-G.name = &quot;The Social Network of tokens&quot;
+G.name = "The Social Network of tokens"
 
 # pairs = cooccurrence(corpus)
 for pair, wgt in pairs.items():
@@ -58,23 +80,30 @@ for pair, wgt in pairs.items():
 
 # Make some the center!
 # TODO: WRITE YOUR WORD OF INTEREST HERE!!
-D = nx.ego_graph(G, &quot;corona&quot;)
-edges, weights = zip(*nx.get_edge_attributes(D, &quot;weight&quot;).items())
+D = nx.ego_graph(G, "corona")
+edges, weights = zip(*nx.get_edge_attributes(D, "weight").items())
 
 # Push nodes away that are less related to that specific word.
 pos = nx.spring_layout(D, k=.5, iterations=40)
-nx.draw(D, pos, node_color=&quot;gold&quot;, node_size=50, edgelist=edges,
-        width=.5, edge_color=&quot;orange&quot;, with_labels=True, font_size=12)
+nx.draw(D, pos, node_color="gold", node_size=50, edgelist=edges,
+        width=.5, edge_color="orange", with_labels=True, font_size=12)
 plt.show()
 </code></pre>
-
-</details>
-
-<details><summary><b style="font-size:20px">Heatmap</b> b/w <b style="font-size:20px">Tokens</b></summary>
-
-<h4>1. Create the Matrix</h4>
-
-<pre><code>specific_tokens = ['kill', 'corona', 'viris', 'hi', 'symptoms', 'the', 'treatment']
+   </details>
+   <details>
+    <summary>
+     <b>
+      Heatmap
+     </b>
+     b/w
+     <b style="font-size:20px">
+      Tokens
+     </b>
+    </summary>
+    <h4>
+     1. Create the Matrix
+    </h4>
+    <pre><code>specific_tokens = ['kill', 'corona', 'viris', 'hi', 'symptoms', 'the', 'treatment']
 
 corpus = []
 for sentence in df['sample'].values:
@@ -91,11 +120,11 @@ def cooccurrence_mtx(corpus, specific_tokens=None, sort_alpha=False):
                 cooccurring[pair] += 1
 
     pairs = cooccurring.copy()
-    mtx = pd.DataFrame(columns=[&quot;p1&quot;, &quot;p2&quot;, &quot;count&quot;])
+    mtx = pd.DataFrame(columns=["p1", "p2", "count"])
     for pair, weight in pairs.items():
-        mtx = mtx.append({&quot;p1&quot;:    pair[0],
-                        &quot;p2&quot;:    pair[1],
-                        &quot;count&quot;: float(weight)}, ignore_index=True)
+        mtx = mtx.append({"p1":    pair[0],
+                        "p2":    pair[1],
+                        "count": float(weight)}, ignore_index=True)
 
     mtx = pd.pivot(mtx, index='p1', columns='p2', values='count')
     mtx.fillna(.0, inplace=True)
@@ -106,14 +135,13 @@ mtx = cooccurrence_mtx(corpus, specific_tokens, True)
 
 mtx.sample(5)
 </code></pre>
-
-
-<h4>2. Show Heatmap</h4>
-
-<pre><code>import matplotlib
+    <h4>
+     2. Show Heatmap
+    </h4>
+    <pre><code>import matplotlib
 
 fig, ax = plt.subplots()
-fig.suptitle(&quot;Co-occurrence of Tokens&quot;, fontsize=12)
+fig.suptitle("Co-occurrence of Tokens", fontsize=12)
 fig.subplots_adjust(wspace=.75)
 
 n = len(specific_tokens)
@@ -126,29 +154,28 @@ ax1.set_yticks(y_tick_marks)
 ax1.set_xticklabels(specific_tokens, fontsize=8, rotation=90)
 ax1.set_yticklabels(specific_tokens, fontsize=8)
 ax1.xaxis.tick_top()
-ax1.set_xlabel(&quot;By Frequency&quot;)
-sns.heatmap(mtx, cmap=&quot;viridis&quot;)
+ax1.set_xlabel("By Frequency")
+sns.heatmap(mtx, cmap="viridis")
 
 # And alphabetically
 alpha_cast = sorted(specific_tokens)
 alpha_mtx  = 
 </code></pre>
-
-</details>
-
-<details><summary><b style="font-size:20px">POS Tagging Coloring</b></summary>
-
-<pre><code># Import required libraries.
+   </details>
+   <details>
+    <summary>
+     <b>
+      POS Tagging Coloring
+     </b>
+    </summary>
+    <pre><code># Import required libraries.
 import nltk
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 from nltk import pos_tag, word_tokenize
 from yellowbrick.text.postag import PosTagVisualizer
 </code></pre>
-
-
-
-<pre><code>pie = &quot;&quot;&quot;
+    <pre><code>pie = """
 In a small saucepan, combine sugar and eggs
 until well blended. Cook over low heat, stirring
 constantly, until mixture reaches 160° and coats
@@ -163,7 +190,7 @@ confectioners' sugar; beat until stiff peaks form.
 Fold into chocolate mixture. Pour into crust. Chill
 for at least 6 hours before serving. Garnish with
 whipped cream and chocolate curls if desired.
-&quot;&quot;&quot;
+"""
 
 tokens = word_tokenize(pie)
 tagged = pos_tag(tokens)
@@ -171,22 +198,24 @@ tagged = pos_tag(tokens)
 visualizer = PosTagVisualizer()
 visualizer.transform(tagged)
 
-print(&quot; &quot;.join((visualizer.colorize(token, color)
+print(" ".join((visualizer.colorize(token, color)
                 for color, token in visualizer.tagged)))
-print(&quot;\n&quot;)
+print("\n")
 </code></pre>
-
-</details>
-
-<details><summary><b style="font-size:20px">Frequency Distribution</b></summary>
-
-<pre><code>from yellowbrick.text.freqdist import FreqDistVisualizer
+   </details>
+   <details>
+    <summary>
+     <b>
+      Frequency Distribution
+     </b>
+    </summary>
+    <pre><code>from yellowbrick.text.freqdist import FreqDistVisualizer
 from sklearn.feature_extraction.text import CountVectorizer
 
-# &quot;stop_words&quot; parameter removes stopwords.
+# "stop_words" parameter removes stopwords.
 # Remove the parameter, if you prefer another thing.
-vectorizer = CountVectorizer(stop_words=&quot;english&quot;)
-docs       = vectorizer.fit_transform(df[&quot;sample&quot;].values)
+vectorizer = CountVectorizer(stop_words="english")
+docs       = vectorizer.fit_transform(df["sample"].values)
 features   = vectorizer.get_feature_names()
 
 plt.figure(figsize=(15, 8))
@@ -194,51 +223,55 @@ visualizer = FreqDistVisualizer(features=features)
 visualizer.fit(docs)
 visualizer.poof()
 </code></pre>
-
-</details>
-
-<details><summary><b style="font-size:20px">t-SNE Visualizer</b></summary>
-<p><b>yellowbrick</b> applies a decomosition first (SVD with 50 components by defaults), then performs the t-SNE embedding</p>
-
-<pre><code>from yellowbrick.text import TSNEVisualizer
+   </details>
+   <details>
+    <summary>
+     <b>
+      t-SNE Visualizer
+     </b>
+    </summary>
+    <p>
+     <b>
+      yellowbrick
+     </b>
+     applies a decomosition first (SVD with 50 components by defaults), then performs the t-SNE embedding
+    </p>
+    <pre><code>from yellowbrick.text import TSNEVisualizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # We could use any vectorization technique and not specifically TF-IDF.
 tfidf = TfidfVectorizer()
-docs  = tfidf.fit_transform(df[&quot;sample&quot;].values)
+docs  = tfidf.fit_transform(df["sample"].values)
 
-# We could try PCA instead of SVD, by passing &quot;decompose=&quot;pca&quot;&quot; into TSNEVisualizer().
+# We could try PCA instead of SVD, by passing "decompose="pca"" into TSNEVisualizer().
 tsne = TSNEVisualizer()
-tsne.fit(docs, y=df[&quot;intent&quot;].values)
+tsne.fit(docs, y=df["intent"].values)
 tsne.poof()
 </code></pre>
-
-
-
-<pre><code># Apply clustering instead of class names.
+    <pre><code># Apply clustering instead of class names.
 from sklearn.cluster import KMeans
 clusters = KMeans(n_clusters=5)
 clusters.fit(docs)
 
 tsne = TSNEVisualizer()
-tsne.fit(docs, [&quot;c{}&quot;.format(c) for c in clusters.labels_])
+tsne.fit(docs, ["c{}".format(c) for c in clusters.labels_])
 tsne.poof()
-
 </code></pre>
-
-</details>
-
-<details><summary><b style="font-size:20px">Classification Report - Visualizer</b></summary>
-
-
-<pre><code>from sklearn.naive_bayes import GaussianNB
+   </details>
+   <details>
+    <summary>
+     <b>
+      Classification Report - Visualizer
+     </b>
+    </summary>
+    <pre><code>from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
 from yellowbrick.classifier import ClassificationReport
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 
-docs   = TfidfVectorizer().fit_transform(df[&quot;sample&quot;].values)
-labels = LabelEncoder().fit_transform(df[&quot;intent&quot;].values)
+docs   = TfidfVectorizer().fit_transform(df["sample"].values)
+labels = LabelEncoder().fit_transform(df["intent"].values)
 
 
 X_train, X_test, y_train, y_test = train_test_split(
@@ -246,34 +279,175 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 plt.figure(figsize=(15, 8))
-visualizer = ClassificationReport(GaussianNB(), classes=df[&quot;intent&quot;].unique())
+visualizer = ClassificationReport(GaussianNB(), classes=df["intent"].unique())
 visualizer.fit(X_train, y_train)
 visualizer.score(docs.toarray(), labels)
 visualizer.poof()
-
 </code></pre>
-
-</details>
-
-<details><summary><b style="font-size:20px">Confusion Matrix - Visualizer</b></summary>
-
-<pre><code>from sklearn.naive_bayes import GaussianNB
+   </details>
+   <details>
+    <summary>
+     <b>
+      Confusion Matrix - Visualizer
+     </b>
+    </summary>
+    <pre><code>from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
 from yellowbrick.classifier import ConfusionMatrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 
-samples = TfidfVectorizer().fit_transform(df[&quot;sample&quot;].values)
-# intents = LabelEncoder().fit_transform(df[&quot;intent&quot;].values)
+samples = TfidfVectorizer().fit_transform(df["sample"].values)
+# intents = LabelEncoder().fit_transform(df["intent"].values)
 
 X_train, X_test, y_train, y_test = train_test_split(
-    samples.toarray(), df[&quot;intent&quot;].values, test_size=.2
+    samples.toarray(), df["intent"].values, test_size=.2
 )
 
-visualizer = ConfusionMatrix(GaussianNB(), classes=df[&quot;intent&quot;].unique())
+visualizer = ConfusionMatrix(GaussianNB(), classes=df["intent"].unique())
 visualizer.fit(X_train, y_train)
 visualizer.score(X_test, y_test)
 visualizer.poof()
 </code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Get Frequency of Top n-grams
+     </b>
+    </summary>
+    <pre><code>def get_top_ngram(corpus, n=None):
+    vec = CountVectorizer(ngram_range=(n, n),stop_words=stop).fit(corpus)
+    bag_of_words = vec.transform(corpus)
+    sum_words = bag_of_words.sum(axis=0) 
+    words_freq = [(word, sum_words[0, idx]) for word, idx in vec.vocabulary_.items()]
+    words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
+    return words_freq[:20]
 
-</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+
+fig,ax=plt.subplots(1,2,figsize=(15,10))
+for i in range(2):
+    new=df[df['sentiment']==sent[i+1]]['selected_text']
+    top_n_bigrams=get_top_ngram(new,2)[:20]
+    x,y=map(list,zip(*top_n_bigrams))
+    sns.barplot(x=y,y=x,ax=ax[i],color=colors[i+1])
+    ax[i].set_title(sent[i+1])
+
+fig.suptitle("Common bigrams in selected text")
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Flesch reading-ease score (FRES) test
+     </b>
+    </summary>
+    Readability is the ease with which a reader can understand a written text. In natural language processing, the readability of text depends on its content. It focuses on the words we choose, and how we put them into sentences and paragraphs for the readers to comprehend. 9.1 The Flesch Reading Ease formula
+    <br/>
+    In the Flesch reading-ease test, higher scores indicate material that is easier to read; lower numbers mark passages that are more difficult to read. The formula for the Flesch reading-ease score (FRES) test is
+    <br/>
+    <img src="./imgs/readability.png"/>
+    <br/>
+    90-100 - Very Easy
+    <br/>
+    80-89 - Easy
+    <br/>
+    70-79 - Fairly Easy
+    <br/>
+    60-69 - Standard
+    <br/>
+    50-59 - Fairly Difficult
+    <br/>
+    30-49 - Difficult
+    <br/>
+    0-29 - Very Confusing
+    <br/>
+    <pre><code>#utility functions:
+def plot_readability(a,b,c,title,bins=0.4,colors=colors):
+    trace1 = ff.create_distplot([a,b,c],sent, bin_size=bins, colors=colors, show_rug=False)
+    trace1['layout'].update(title=title)
+    py.iplot(trace1, filename='Distplot')
+    table_data= [["Statistical Measures","neu",'pos','neg'],
+                ["Mean",mean(a),mean(b),mean(c)],
+                ["Standard Deviation",pstdev(a),pstdev(b),pstdev(c)],
+                ["Variance",pvariance(a),pvariance(b),pvariance(c)],
+                ["Median",median(a),median(b),median(c)],
+                ["Maximum value",max(a),max(b),max(c)],
+                ["Minimum value",min(a),min(b),min(c)]]
+    trace2 = ff.create_table(table_data)
+    py.iplot(trace2, filename='Table')
+
+</code></pre>
+    <pre><code>!pip install textstat
+import textstat
+from tqdm import tqdm
+
+tqdm.pandas()
+fre_neu = np.array(df["text"][df["sentiment"] == sent[0]].progress_apply(textstat.flesch_reading_ease))
+fre_pos = np.array(df["text"][df["sentiment"] == sent[1]].progress_apply(textstat.flesch_reading_ease))
+fre_neg = np.array(df["text"][df["sentiment"] == sent[2]].progress_apply(textstat.flesch_reading_ease))
+
+plot_readability(fre_neu,fre_pos,fre_neg,"Flesch Reading Ease",20)
+
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Jaccard Score
+     </b>
+    </summary>
+    <pre><code>def jaccard(str1, str2): 
+    a = set(str(str1).lower().split()) 
+    b = set(str(str2).lower().split())
+    c = a.intersection(b)
+    return float(len(c)) / (len(a) + len(b) - len(c))
+
+def plot_jaccard(sentiment,ax):
+    jacc=[]
+    text=train[train['sentiment']==sentiment].dropna()['text'].values.tolist()
+    selected=train[train['sentiment']==sentiment].dropna()['selected_text'].values.tolist()
+    for i,k in zip(text,selected):
+        jacc.append(jaccard(i,k))
+    ax.hist(jacc,bins=10,color='blue',alpha=0.4)
+    ax.set_title(sentiment)
+
+fig,(ax1,ax2,ax3)=plt.subplots(1,3,figsize=(15,5))
+plot_jaccard('positive',ax=ax1)
+plot_jaccard('negative',ax2)
+plot_jaccard('neutral',ax3)
+fig.suptitle('jaccard similarity of text and selected text')
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Polarity
+     </b>
+    </summary>
+    <pre><code>from textblob import TextBlob
+
+def get_sent(text):
+    testimonial = TextBlob(str(text))
+    return testimonial.sentiment.polarity
+
+plt.figure(figsize=(10,7))
+train['polarity']=train['selected_text'].apply(lambda x : get_sent(x))
+sns.boxplot(x='sentiment', y='polarity', data=train)
+plt.gca().set_title('Sentiment vs Polarity of selected text')
+plt.show()
+</code></pre>
+   </details>
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+   </script>
+   <script>
+    hljs.initHighlightingOnLoad();
+   </script>
+   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+   </script>
+   <script type="text/javascript">
+    MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+   </script>
+  </div>
+ </body>
+</html>

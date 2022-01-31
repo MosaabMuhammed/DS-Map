@@ -16,12 +16,12 @@ values, keys
 </code></pre><pre><code>word_counts = {"a": 12, "b":23, "c": 1, "d":2}
 
 # Sort by keys from small to large.
-new_dict = sorted(word_counts, key=lambda val: val[0], reverse=False)
+new_dict = dict(sorted(word_counts.items(), key=lambda val: val[0], reverse=False)
 # [('a', 12), ('b', 23), ('c', 1), ('d', 2)]
 
 
 # Sort by values from small to large.
-new_dict = sorted(word_counts, key=lambda val: val[1], reverse=False)
+new_dict = dict(sorted(word_counts.items(), key=lambda val: val[1], reverse=False)
 # [('c', 1), ('d', 2), ('a', 12), ('b', 23)]
 </code></pre>
 </p></details>
