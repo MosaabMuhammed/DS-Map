@@ -588,5 +588,15 @@ bisect.insort_left(li2, 5)
 </details>
 </details>
 
+<details><summary><b>String</b></summary>
+<pre><code>txt = "cooL"
+txt[0].islower() # True
+txt[0].isupper() # False
+txt[0].isdigit() # False
+
+</code></pre>
+</details>
+
+
 </ul></details>
 </div>

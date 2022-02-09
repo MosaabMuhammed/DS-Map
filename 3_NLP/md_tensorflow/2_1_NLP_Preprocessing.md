@@ -318,6 +318,10 @@ vocab = dict(enumerate(set(words)))
 </code></pre>
 </details>
 
+<details><summary><b style="font-size:20px">Word Weights</b></summary>
+<a href="../notebooks/a-simple-solution-using-only-word-counts.html">Make predictions or features based on word counts [Unsupervised Approach]</a>
+</details>
+
 <details><summary><b style="font-size:20px">Frequency List</b> [UNIX]</summary>
 <pre><code>tr -sc ’A-Za-z’ ’\n’ < sh.txt | tr A-Z a-z | sort | uniq -c | sort -n -r
 </code></pre>
