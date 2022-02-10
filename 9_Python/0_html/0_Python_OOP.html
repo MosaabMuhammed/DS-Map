@@ -709,6 +709,57 @@ print(f'Finished in {round(finish-start, 2)} second(s)')
     </summary>
     <details>
      <summary>
+      Sort Dictionary easily by
+      <b>
+       keys
+      </b>
+      or
+      <b>
+       values
+      </b>
+     </summary>
+     <p>
+     </p>
+     <pre><code>sorting = {1: 23, 2: 24, 4: 51, 10: 1, "cool": 20}
+
+# to sort by values, put it first.
+values, keys = zip(*sorted(zip(sorting.values(), sorting.keys())))
+values, keys
+
+# OUTPUT
+((1, 20, 23, 24, 51), (10, 'cool', 1, 2, 4))
+</code></pre>
+     <pre><code>word_counts = {"a": 12, "b":23, "c": 1, "d":2}
+
+# Sort by keys from small to large.
+new_dict = dict(sorted(word_counts.items(), key=lambda val: val[0], reverse=False)
+# [('a', 12), ('b', 23), ('c', 1), ('d', 2)]
+
+
+# Sort by values from small to large.
+new_dict = dict(sorted(word_counts.items(), key=lambda val: val[1], reverse=False)
+# [('c', 1), ('d', 2), ('a', 12), ('b', 23)]
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      Sort
+      <b>
+       Lists
+      </b>
+     </summary>
+     <p>
+     </p>
+     <pre><code>x = [4, 1, 2, 3]
+y = sorted(x)  # x is unchanged.
+x.sort()            # x is changed and sorted.
+
+# Sort the list by absolute values from largest to smallest.
+x = sorted([-4, 1, -2, 3], key=abs, reverse=True)
+</code></pre>
+    </details>
+    <details>
+     <summary>
       <b>
        Custom Comparator (sorting)
       </b>
@@ -875,6 +926,7 @@ bisect.insort_left(li2, 5)
 ## 1 3 4 4 4 5 6 
 </code></pre>
     </details>
+    <br/>
    </details>
    <details>
     <summary>
@@ -882,13 +934,251 @@ bisect.insort_left(li2, 5)
       String
      </b>
     </summary>
-    <pre><code>txt = "cooL"
+    <details>
+     <summary>
+      <b>
+       f-Literal
+      </b>
+     </summary>
+     <p>
+     </p>
+     <p>
+      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">
+       Formatted String Literal
+      </a>
+     </p>
+    </details>
+    <details>
+     <summary>
+      <b>
+       Check if char islower(), isupper(), isdigit()
+      </b>
+     </summary>
+     <p>
+     </p>
+     <pre><code>txt = "cooL"
 txt[0].islower() # True
 txt[0].isupper() # False
 txt[0].isdigit() # False
 
 </code></pre>
+    </details>
+    <details>
+     <summary>
+      <b>
+       Remove/Replace char/s
+      </b>
+     </summary>
+     <p>
+     </p>
+     <pre><code># Remove a char from a string.
+txt = 'abc12321cba'
+txt.replace('a', '')
+txt.translate({ord('a'): None})
+
+# Remove multiple characters.
+s = 'abc12321cba'
+print(s.translate({ord(i): None for i in 'abc'}))
+# 12321
+
+## Remove specified number of times
+s = 'abababab'
+print(s.replace('a', 'A', 2))
+# AbAbabab
+</code></pre>
+    </details>
+    <br/>
    </details>
+   <details>
+    <summary>
+     <b>
+      Random
+     </b>
+    </summary>
+    <p>
+    </p>
+    <pre><code>import random
+random.seed(42)
+
+# random.random() produces numbers uniformly between 0 and 1 it's the random function we'll use most often
+four_uniform_randoms = [random.random() for _ in range(4)]
+#[0.8444218515250481,
+# 0.7579544029403025,
+# 0.420571580830845,
+# 0.25891675029296335]
+
+# Take random between range of numbers.
+random.randrange(10) # choose randomly from [0, ..., 9]
+random.randrange(3, 6) # choose randomly from [3, 4, 5]
+
+# Shuffle given list.
+lst= range(10)
+random.shuffle(lst)
+print(lst)
+# [2, 5, 1, 8, ...]
+
+# Pick random element from a list.
+myPick = random.choice(['Alice', "bob", "charlie"])
+
+# Pick a sublist of elements without duplication.
+lottery_nums = range(60)
+winning_numbers = random.sample(lottery_numbers, 6)
+# [16, 36, 10, 6, 25, 9]
+
+# Pick a sublist of elements WITH duplication.
+sublst = [random.choice(range(10)) for _ in range(4)]
+# [9, 3, 3, 2]
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Regex
+     </b>
+    </summary>
+    <p>
+    </p>
+    <pre><code>import re
+
+re.match("a", "cat") # --&gt; cat doesn't start with a
+re.search("a", "cat") # --&gt; cat has an "a" in it.
+re.split("[ab]", "carbs") # --&gt; split on a or b to ["c", "r", "s"]
+re.sub("[0-9]", "-", "R2D2") # --&gt; replace digits with dashes.
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      List
+     </b>
+    </summary>
+    <p>
+     <details>
+      <summary>
+       From
+       <b>
+        list of lists
+       </b>
+       to
+       <b>
+        list of items
+       </b>
+      </summary>
+      <p>
+      </p>
+      <pre><code>list_of_lists = [[1, 2, 3, 4], [5, 6, 76], [123, 12, 123, 123,124123,123,123]]
+list_elements = sum(terms, [])
+</code></pre>
+     </details>
+    </p>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Difference
+     </b>
+     &amp;
+     <b>
+      Intersection
+     </b>
+     &amp;
+     <b>
+      Combination
+     </b>
+     b/w lists
+    </summary>
+    <p>
+    </p>
+    <pre><code>a = [1, 2, 3, 4, 5]
+b = [4, 5, 5, 6, 5, 6]
+
+### 1. Existing in (a) but NOT in (b)
+# Returns a set.
+set(a).difference(b) # {1, 2, 3}
+set(a) - set(b)          # {1, 2, 3}
+# Returns array
+np.setdiff1d(a, b)     # array([1, 2, 3])
+
+### 2. Intersection b/w (a) and (b)
+# Returns a set.
+set(a).intersection(b)     # {4, 5}
+
+# Returns an array.
+np.intersect1d(a, b)       # array([4, 5])
+
+### 3. All of them together.
+a + b           
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      File
+     </b>
+    </summary>
+    <p>
+     <details>
+      <summary>
+       <b>
+        See Files in Current Directory
+       </b>
+      </summary>
+      <p>
+      </p>
+      <pre><code>import os
+print(os.listdir("../input"))
+</code></pre>
+     </details>
+    </p>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Difference
+     </b>
+     &amp;
+     <b>
+      Intersection
+     </b>
+     b/w Counter()
+    </summary>
+    <p>
+    </p>
+    <pre><code>from collections import Counter
+
+cnt1, cnt2 = Counter("cool"), Counter("not cool")
+
+# Union
+cnt1 + cnt2
+
+# Difference
+cnt1.subtract(cnt2)
+# NOTE: cnt1 will be overwritten.
+</code></pre>
+   </details>
+   <details>
+    <summary>
+     <b>
+      Partial Function
+     </b>
+     [python 3]
+    </summary>
+    <p>
+    </p>
+    <pre><code>from functools import partial 
+
+# A normal function 
+def add(a, b, c): 
+    return 100 * a + 10 * b + c 
+
+# A partial function with b = 1 and c = 2 
+add_part = partial(add, c = 2, b = 1) 
+
+# Calling partial function 
+print(add_part(3)) 
+</code></pre>
+   </details>
+   <hr/>
   </div>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
   </script>

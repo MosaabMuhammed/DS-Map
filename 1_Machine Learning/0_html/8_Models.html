@@ -1927,6 +1927,97 @@ yu_svc = svc.predict(Xu_svc)
 </code></pre>
       </details>
      </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         Label Propagation
+        </b>
+       </summary>
+       <pre><code>from sklearn.datasets import make_classification
+nb_samples = 100
+nb_unlabeled = 75
+X, Y = make_classification(n_samples=nb_samples, n_features=2, n_informative=2, n_redundant=0, random_state=1000)
+Y[Y==0] = -1
+Y[nb_samples - nb_unlabeled:nb_samples] = 0
+</code></pre>
+       <pre><code>from sklearn.neighbors import kneighbors_graph
+nb_neighbors = 2
+W_knn_sparse = kneighbors_graph(X, n_neighbors=nb_neighbors, mode='connectivity', include_self=True)
+W_knn = W_knn_sparse.toarray()
+
+# The KNN matrix is obtained using the scikit-learn function kneighbors_graph() with the parameters n_neighbors=2 and mode='connectivity'; 
+# the alternative is distance, which returns the distances instead of 0 and 1 to indicate the absence/presence of an edge. 
+# The include_self=True parameter is useful, as we want to have Wii = 1.
+</code></pre>
+       <pre><code># For the RBF matrix, we need to define it manually:
+import numpy as np
+def rbf(x1, x2, gamma=10.0):
+    n = np.linalg.norm(x1 - x2, ord=1)
+    return np.exp(-gamma * np.power(n, 2))
+W_rbf = np.zeros((nb_samples, nb_samples))
+for i in range(nb_samples):
+    for j in range(nb_samples):
+        W_rbf[i, j] = rbf(X[i], X[j])
+</code></pre>
+       <pre><code># Now, we can compute the degree matrix and its inverse. As the procedure is identical, from this point on, we continue using the RBF affinity matrix:
+D_rbf = np.diag(np.sum(W_rbf, axis=1))
+D_rbf_inv = np.linalg.inv(D_rbf)
+</code></pre>
+       <pre><code># Ideally, it's possible to set a double stop criterion based on the threshold and a maximum number of iterations:
+tolerance = 0.01
+Yt = Y.copy()
+Y_prev = np.zeros((nb_samples,))
+iterations = 0
+while np.linalg.norm(Yt - Y_prev, ord=1) &gt; tolerance:
+    P = np.dot(D_rbf_inv, W_rbf)
+    Y_prev = Yt.copy()
+    Yt = np.dot(P, Yt)
+    Yt[0:nb_samples - nb_unlabeled] = Y[0:nb_samples - nb_unlabeled]
+Y_final = np.sign(Yt)
+</code></pre>
+       <pre><code># As it's possible to see, in the original dataset, there's a round dot surrounded by square ones (-0.9, -1). 
+# As this algorithm keeps the original labels, we find the same situation after the propagation of labels. 
+# This condition could be acceptable, even if both the smoothness and clustering assumptions are contradicted. 
+# Assuming that it's reasonable (that is, the initial labeling can be considered as flexible and there are no explicit constraints), 
+# it's possible to force a correction by relaxing the algorithm:
+
+tolerance = 0.01
+Yt = Y.copy()
+Y_prev = np.zeros((nb_samples,))
+iterations = 0
+while np.linalg.norm(Yt - Y_prev, ord=1) &gt; tolerance:
+    P = np.dot(D_rbf_inv, W_rbf)
+    Yt = np.dot(P, Yt)
+    Y_prev = Yt.copy()
+Y_final = np.sign(Yt)
+
+# With this modification, the original labels are not clamped anymore, and the propagation algorithm is allowed to change all those values that disagree with the neighborhood.
+</code></pre>
+      </details>
+     </li>
+     <li>
+      <details>
+       <summary>
+        <b>
+         Label Propagation [Sklearn]
+        </b>
+       </summary>
+       Scikit-learn implements a slightly different algorithm proposed by Zhu and Ghahramani (in the aforementioned paper) that is equivalent in terms of results but has a slightly different internal dynamic based on a Markov random walk through the graph until a stationary configuration is found (that is, the labels don't change anymore).
+       <pre><code>
+from sklearn.datasets import make_classification
+nb_samples = 1000
+nb_unlabeled = 750
+X, Y = make_classification(n_samples=nb_samples, n_features=2, n_informative=2, n_redundant=0, random_state=100)
+Y[nb_samples - nb_unlabeled:nb_samples] = -1
+</code></pre>
+       <pre><code>from sklearn.semi_supervised import LabelPropagation
+lp = LabelPropagation(kernel='rbf', gamma=10.0)
+lp.fit(X, Y)
+Y_final = lp.predict(X)
+</code></pre>
+      </details>
+     </li>
     </ul>
    </details>
   </div>
