@@ -951,7 +951,7 @@ bisect.insort_left(li2, 5)
     <details>
      <summary>
       <b>
-       Check if char islower(), isupper(), isdigit()
+       Check if char islower(), isupper(), isdigit(), islapha()
       </b>
      </summary>
      <p>
@@ -960,8 +960,32 @@ bisect.insort_left(li2, 5)
 txt[0].islower() # True
 txt[0].isupper() # False
 txt[0].isdigit() # False
-
+txt[0].isalpha() # True
 </code></pre>
+    </details>
+    <details>
+     <summary>
+      <b>
+       str.index()
+      </b>
+      : Get index of substring
+     </summary>
+     <p>
+     </p>
+     <pre><code> 'coolcool'[0]
+#'c'
+s = 'coolcool'
+s.index('c')
+#0
+s.index('c', 1)
+#4
+s.index('c', 1, 2)
+#Traceback (most recent call last):
+#  File "<stdin>", line 1, in <module>
+#ValueError: substring not found
+s.index('c', 1, 5)
+#4
+</module></stdin></code></pre>
     </details>
     <details>
      <summary>
@@ -985,6 +1009,22 @@ print(s.translate({ord(i): None for i in 'abc'}))
 s = 'abababab'
 print(s.replace('a', 'A', 2))
 # AbAbabab
+</code></pre>
+    </details>
+    <details>
+     <summary>
+      <b>
+       ord() / chr()
+      </b>
+      : get unicode index
+     </summary>
+     <p>
+     </p>
+     <pre><code># ord() function takes string argument of a single Unicode character 
+# and return its integer Unicode code point value.
+print(ord('a')) # 97
+
+print(chr(97)) # 'a'
 </code></pre>
     </details>
     <br/>

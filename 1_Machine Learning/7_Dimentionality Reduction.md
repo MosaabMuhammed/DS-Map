@@ -1,4 +1,4 @@
-# 7. Feature Reduction
+<h1 id="7featurereduction">7. Feature Reduction</h1>
 
 <div style='width:1000px;margin:auto'>
 
@@ -13,7 +13,7 @@
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/8_Dimensionality%20Reduction/mnist_loadData_pca_tsne.html">PCA vs. t-SNE</a></li>
 </ul>
- 
+
  <details><summary><b>PCA</b> & <b>ICA</b> & <b>t-SNE</b> & <b>UMAP</b></summary>
 <p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a></p>
@@ -28,7 +28,7 @@
 </ul>
 
 <h4>1. Importing Libraries</h4>
-~~~python
+~~~
 from umap import UMAP
 from sklearn.decomposition import PCA, FastICA
 from sklearn.manifold import TSNE
@@ -42,26 +42,26 @@ tsne = TSNE(n_components=n_components)
 ~~~
 
 <h4> 2. Fitting and Transforming</h4>
-~~~python
+~~~
 train_df = train_selected.copy()
 test_df = test_selected.copy()
 
 for method, name in zip([umap, pca, ica, tsne], 
                         ['umap', 'pca', 'ica', 'tsne']):
-    
+
     # TSNE has no transform method
     if name == 'tsne':
         start = timer()
         reduction = method.fit_transform(train_selected)
         end = timer()
-    
+
     else:
         start = timer()
         reduction = method.fit_transform(train_selected)
         end = timer()
-        
+
         test_reduction = method.transform(test_selected)
-    
+
         # Add components to test data
         test_df['%s_c1' % name] = test_reduction[:, 0]
         test_df['%s_c2' % name] = test_reduction[:, 1]
@@ -71,12 +71,12 @@ for method, name in zip([umap, pca, ica, tsne],
     train_df['%s_c1' % name] = reduction[:, 0]
     train_df['%s_c2' % name] = reduction[:, 1]
     train_df['%s_c3' % name] = reduction[:, 2]
-    
+
     print(f'Method: {name} {round(end - start, 2)} seconds elapsed.')
 ~~~
 
 <h4> 3. Plot it 3D</h4>
-~~~python
+~~~
 from mpl_toolkits.mplot3d import Axes3D
 
 def discrete_cmap(N, base_cmap=None):
@@ -93,28 +93,28 @@ cmap = discrete_cmap(4, base_cmap = plt.cm.RdYlBu)
 train_df['label'] = train_labels
 ~~~
 
-~~~python
+~~~
 # Plot each method
 for method, name in zip([umap, pca, ica, tsne], 
                         ['umap', 'pca', 'ica', 'tsne']):
-    
+
     fig = plt.figure(figsize = (8, 8))
     ax = fig.add_subplot(111, projection='3d')
-    
+
     p = ax.scatter(train_df['%s_c1' % name], train_df['%s_c2'  % name], train_df['%s_c3'  % name], 
                    c = train_df['label'].astype(int), cmap = cmap)
-    
+
     plt.title(f'{name.capitalize()}', size = 22)
     fig.colorbar(p, aspect = 4, ticks = [1, 2, 3, 4])
 ~~~
 </p>
 </details>
- 
+
 <details><summary><b>PCA</b></summary><p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.decomposition.PCA.html#sklearn-decomposition-pca"><b>Docs</b></a> </p>
- 
+
 <h4> PCA inside a pipeline</h4>
-~~~python
+~~~
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import Imputer
 from sklearn.pipeline import Pipeline
@@ -140,7 +140,7 @@ test_pca = pipeline.transform(test)
 ~~~
 
 <h4> CDF for # of principle componets</h4>
-~~~python
+~~~
 # Extract the pca object
 pca = pipeline.named_steps['pca']
 
@@ -153,7 +153,7 @@ plt.title('Cumulative Variance Explained with PCA');
 ~~~
 
 <h4> Visualizing the 2 components</h4>
-~~~python
+~~~
 # Dataframe of pca results
 pca_df = pd.DataFrame({'pc_1': train_pca[:, 0], 'pc_2': train_pca[:, 1], 'target': train_labels})
 
@@ -163,28 +163,24 @@ plt.title('PC2 vs PC1 by Target');
 ~~~
 
 <h4> How much those components preserve from the data</h4>
-~~~python
+~~~
 print('2 principal components account for {:.4f}% of the variance.'.format(100 * np.sum(pca.explained_variance_ratio_[:2])))
 ~~~
 </p></details>
 
 <details><summary><b>Incremental PCA</b></summary><p>
-<h4>1. Using np.array_split()</h4>
-```
-from sklearn.decomposition import IncrementalPCA
+<h4>1. Using np.array_split()</h4><pre><code>from sklearn.decomposition import IncrementalPCA
 
 n_batches = 100
 inc_pca = IncrementalPCA(n_componenets=154)
 
 for X_batch in np.array_split(X_train, n_batches):
-	inc_pca.partial_fit(X_batch)
-	
-X_reduced = inc_pca.transform(X_train)
-```
+    inc_pca.partial_fit(X_batch)
 
-<h4>2. Using np.memmap()</h4>
-```
-# np.memmap allows you to manipulate a large
+X_reduced = inc_pca.transform(X_train)
+</code></pre>
+
+<h4>2. Using np.memmap()</h4><pre><code># np.memmap allows you to manipulate a large
 # array store in a binary file on disk as if it were entirely in memory;
 # The class loads only the data it needs in memory, when it needs it.
 # 1. Let's create the memmap() structure and copy MNIST data into it. This would typically be done by a first program.
@@ -203,23 +199,21 @@ X_mm = np.memmap(filename, dtype="float32", mode="readonly", shape=(m, n))
 batch_size = m // n_batches
 inc_pca = IncrementalPCA(n_components=154, batch_size=batch_size)
 inc_pca.fit(X_mm)
-```
+</code></pre>
 </p></details>
 
-<details><summary><b>Kernel PCA</b></summary><p>
-```
-from sklearn.model_selection import GridSearchCV
+<details><summary><b>Kernel PCA</b></summary><p><pre><code>from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
 clf = Pipeline([
-	("kpca", KernelPCA(n_components=2)),
-	("log_reg", LogisticRegression())
+    ("kpca", KernelPCA(n_components=2)),
+    ("log_reg", LogisticRegression())
 ])
 
 param_grid = [{
-	"kpca__gamma": np.linspace(0.03, .05, 10),
-	"kpca__kernel": ["rbf", "sigmoid"]
+    "kpca__gamma": np.linspace(0.03, .05, 10),
+    "kpca__kernel": ["rbf", "sigmoid"]
 }]
 
 grid_search = GridSearchCV(clf, param_grid, cv=3)
@@ -227,22 +221,18 @@ grid_search.fit(X, y)
 
 # Print the best hyperparameters.
 print(grid_search.best_params_)
-```
+</code></pre>
 </p></details>
 
-<details><summary><b>LLE</b> [LocallyLinearEmbedding]</summary><p>
-```
-from sklearn.manifold import LocallyLinearEmbedding
+<details><summary><b>LLE</b> [LocallyLinearEmbedding]</summary><p><pre><code>from sklearn.manifold import LocallyLinearEmbedding
 
 lle = LocallyLinearEmbedding(n_components=2, n_neighbors=10)
 X_reduced = lle.fit_transform(X)
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>KMeans</b></summary><p>
-<p>Clustering can be an efficient approach to dimensionality reduction, in particular as a preprocessing step before a supervised learning algorithm</p>
-```
-from sklearn.pipeline import Pipeline
+<p>Clustering can be an efficient approach to dimensionality reduction, in particular as a preprocessing step before a supervised learning algorithm</p><pre><code>from sklearn.pipeline import Pipeline
 from sklearn.cluster import KMeans
 
 pipeline = Pipeline([
@@ -251,11 +241,9 @@ pipeline = Pipeline([
 ])
 pipeline.fit(X_train, y_train)
 pipeline.score(X_test, y_test)
-```
+</code></pre>
 
-<h4>Using GridSearch</h4>
-```
-from sklearn.pipeline import Pipeline
+<h4>Using GridSearch</h4><pre><code>from sklearn.pipeline import Pipeline
 from sklearn.cluster import KMeans
 
 pipeline = Pipeline([
@@ -264,13 +252,11 @@ pipeline = Pipeline([
 ])
 pipeline.fit(X_train, y_train)
 pipeline.score(X_test, y_test)~~~~
-```
+</code></pre>
 </p></details>
 
 <details><summary><b>t-SNE</b></summary><p>
-<h4>1. Faster Wrapper for t-SNE</h4>
-```
-# !pip install tsne
+<h4>1. Faster Wrapper for t-SNE</h4><pre><code># !pip install tsne
 from tsne import bh_sne
 
 X_2d = bh_sne(train.drop(['subject', 'Activity', 'ActivityName'], axis=1))
@@ -279,11 +265,9 @@ X_2d = bh_sne(train.drop(['subject', 'Activity', 'ActivityName'], axis=1))
 plt.figure(figsize=(12, 8))
 sns.scatterplot(x=X_2d[:, 0], y=X_2d[:, 1], hue=train['ActivityName'], alpha=0.5)
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0);
-``` 
+</code></pre> 
 
-<h4>2. Sklearn Wrapper</h4>
-```
-# Performing t-SNE with sklearn-wrapper
+<h4>2. Sklearn Wrapper</h4><pre><code># Performing t-SNE with sklearn-wrapper
 from sklearn.manifold import TSNE
 
 def perform_tsne(X_data, y_data, perplexities, n_iter=1000, img_name_prefix='t-sne'):
@@ -300,22 +284,20 @@ def perform_tsne(X_data, y_data, perplexities, n_iter=1000, img_name_prefix='t-s
         sns.lmplot(data=df, x='x', y='y', hue='label', fit_reg=False, size=8, palette='Set1')
         plt.title(f'Perplexity: {perplexity} and max_iterations: {n_iter}')
         plt.show()
-```
-```
-# Perform the t-SNE function
+</code></pre><pre><code># Perform the t-SNE function
 X_pre_tsne = train.drop(['subject', 'Activity', 'ActivityName'], axis=1)
 y_pre_tsne = train['ActivityName']
 perform_tsne(X_pre_tsne, y_pre_tsne, perplexities=[2, 5, 10, 10, 50])
-```
+</code></pre>
 </p></details>
- 
+
 <details><summary><b>Random Projection</b></summary><p>
 <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection"><b>SparseRandomProjection</b></a> </p>
 
 <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection"><b>Gaussian Random Projection</b></a> </p>
- 
+
 <h4> Sparse Random Projection.</h4>
-~~~python
+~~~
 import numpy as np
 from sklearn.random_projection import SparseRandomProjection
 rng = np.random.RandomState(42)
@@ -329,7 +311,7 @@ np.mean(transformer.components_ != 0)
 ~~~
 
 <h4> Gaussian Random Projection.</h4>
-~~~python
+~~~
 import numpy as np
 from sklearn.random_projection import GaussianRandomProjection
 rng = np.random.RandomState(42)
@@ -341,9 +323,7 @@ X_new.shape
 </p></details>
 
 <details><summary><b>Multiple Correspondence Analysis (MCA)</b></summary><p>
-<h4>It's like PCA for categorical features</h4>
-```
-!pip install prince
+<h4>It's like PCA for categorical features</h4><pre><code>!pip install prince
 import prince
 
 # Let's try drawing first by extracting only 2 components
@@ -352,9 +332,7 @@ mca.fit(X_train_org[:1000])
 
 # Transform the data
 X_train_mca = mca.transform(X_train_org[:1000])
-```
-```
-# Let's plot the generated data
+</code></pre><pre><code># Let's plot the generated data
 ax = mca.plot_coordinates(
     X=X_train_org[:100],
     ax=None,
@@ -370,8 +348,7 @@ ax = mca.plot_coordinates(
 
 # To relocate the legend
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.);
-
-```
+</code></pre>
 </p></details>
 
 - ICA
@@ -390,16 +367,14 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.);
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.3_Quasi-constant_features.html#Quasi-constant-features"><b>Quasi-Constant Features</b></a> </li>
 
 <li><details><summary>Duplicate Features</summary><p>
-<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.4_Duplicated_features.html#Duplicated-features"><b>Duplicated Features</b></a>
-```
-# For big data
+<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.4_Duplicated_features.html#Duplicated-features"><b>Duplicated Features</b></a><pre><code># For big data
 from itertools import combinations
 
 duplicated_feats = []
 for idx, (col_1, col_2) in enumerate(combinations(train.columns, 2)):
     if train[col_1].equals(train[col_2]):
         duplicated_feats.append(col_2)
-```
+</code></pre>
 </p></details></li>
 
 <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.5_Basic_methods_review.html#Filter-Methods---Basics"><b>Basic Methods Pipeline</b></a> </li>
@@ -467,7 +442,7 @@ for idx, (col_1, col_2) in enumerate(combinations(train.columns, 2)):
 <details><summary>1. Remove <b>Highly Correlated</b> Features</summary>
 <p>
 <h4> Identify Highly Correlated Features</h4>
-~~~python
+~~~
 # Threshold for removing correlated variables
 threshold = 0.9
 
@@ -476,7 +451,7 @@ corr_matrix = train.corr().abs()
 corr_matrix.head()
 ~~~
 <h4> Drop the columns</h4>
-~~~python
+~~~
 # Create correlation matrix
 corr_matrix = df.corr().abs()
 
@@ -500,7 +475,7 @@ df.drop(df[to_drop], axis=1)
 <p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.feature_selection.RFECV.html#sklearn-feature-selection-rfecv"><span style='color:#333'><b> 2. Recursive Feature Elimination method</b></span></a></p>
 
-~~~python
+~~~
 from sklearn.feature_selection import RFECV
 
 # Create a model for feature selection
@@ -510,23 +485,23 @@ estimator = RandomForestClassifier(random_state = 10, n_estimators = 100,  n_job
 selector = RFECV(estimator, step = 1, cv = 3, scoring= scorer, n_jobs = -1)
 ~~~
 
-~~~python
+~~~
 selector.fit(train_set, train_labels)
 ~~~
 
-~~~python
+~~~
 plt.plot(selector.grid_scores_);
 
 plt.xlabel('Number of Features'); plt.ylabel('Macro F1 Score'); plt.title('Feature Selection Scores');
 selector.n_features_
 ~~~
 
-~~~python
+~~~
 rankings = pd.DataFrame({'feature': list(train_set.columns), 'rank': list(selector.ranking_)}).sort_values('rank')
 rankings.head(10)
 ~~~
 
-~~~python
+~~~
 train_selected = selector.transform(train_set)
 test_selected = selector.transform(test_set)
 # Convert back to dataframe

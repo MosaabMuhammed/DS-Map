@@ -623,12 +623,29 @@ bisect.insort_left(li2, 5)
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">Formatted String Literal</a> </p>
 </p></details>
 
-<details><summary><b>Check if char islower(), isupper(), isdigit()</b></summary><p>
+<details><summary><b>Check if char islower(), isupper(), isdigit(), islapha()</b></summary><p>
 <pre><code>txt = "cooL"
 txt[0].islower() # True
 txt[0].isupper() # False
 txt[0].isdigit() # False
+txt[0].isalpha() # True
+</code></pre>
+</p></details>
 
+<details><summary><b>str.index()</b>: Get index of substring</summary><p>
+<pre><code> 'coolcool'[0]
+#'c'
+s = 'coolcool'
+s.index('c')
+#0
+s.index('c', 1)
+#4
+s.index('c', 1, 2)
+#Traceback (most recent call last):
+#  File "<stdin>", line 1, in <module>
+#ValueError: substring not found
+s.index('c', 1, 5)
+#4
 </code></pre>
 </p></details>
 
@@ -649,6 +666,16 @@ print(s.replace('a', 'A', 2))
 # AbAbabab
 </code></pre>
 </p></details>
+
+<details><summary><b>ord() / chr()</b>: get unicode index</summary><p>
+<pre><code># ord() function takes string argument of a single Unicode character 
+# and return its integer Unicode code point value.
+print(ord('a')) # 97
+
+print(chr(97)) # 'a'
+</code></pre>
+</p></details>
+
 <br></details>
 
 
