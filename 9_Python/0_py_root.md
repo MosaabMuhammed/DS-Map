@@ -1,6 +1,6 @@
-<h1>Python</h1>
 
 <div style='width:1000px;margin:auto'>
+<h1>Python</h1>
 
 <details><summary><b>OOP</b></summary><ul>
 <li><a style='color:#333;font-weight:bold' href='OOP.html#Class-Variables:'>Class Variables</a></li>
