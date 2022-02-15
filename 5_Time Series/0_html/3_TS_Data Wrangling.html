@@ -27,6 +27,16 @@
             </summary>
             <pre class="language-python"><code>df_example = df_example.asfreq(freq='1D')</code></pre>
         </details>
+
+        <details>
+            <summary>Fill <b>Missing</b> Data</summary>
+            <pre class="language-python"><code>humidity = humidity.fillna(method="ffill")
+
+# other possible values: ffill - bfill
+# ffill: propagate last valid observation forward to next valid
+# bfill: use next valid observation to fill gap.</code></pre>
+        </details>
+
         <details>
             <summary>
                 Let
@@ -38,6 +48,7 @@
 register_matplotlib_converters()
 </code></pre>
         </details>
+
         <details>
             <summary>
                 <b>
@@ -60,24 +71,7 @@ register_matplotlib_converters()
     </a>
         </details>
     </div>
-    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-    </script>
-    <script>
-        hljs.initHighlightingOnLoad();
-    </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-    </script>
-    <script type="text/javascript">
-        MathJax.Hub.Config({
-            "showProcessingMessages": false,
-            "messageStyle": "none",
-            "tex2jax": {
-                inlineMath: [
-                    ["$", "$"]
-                ]
-            }
-        });
-    </script> -->
+
     <script src="../../prism.js"></script>
 </body>
 
