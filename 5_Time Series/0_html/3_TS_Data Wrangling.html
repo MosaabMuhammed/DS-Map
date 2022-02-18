@@ -14,6 +14,7 @@
         3. TS - Data Wrangling
     </h1>
     <div style="width:1000px;margin:auto">
+<!-- ---------------------------------------------------------------------------- -->
         <details>
             <summary>Read <b>Date</b> data [pandas]</summary>
             <pre class="language-python"><code>google = pd.read_csv('sample.csv', index_col='Date', parse_dates=['Date'])</code></pre>
@@ -27,7 +28,7 @@
             </summary>
             <pre class="language-python"><code>df_example = df_example.asfreq(freq='1D')</code></pre>
         </details>
-
+<!-- ---------------------------------------------------------------------------- -->
         <details>
             <summary>Fill <b>Missing</b> Data</summary>
             <pre class="language-python"><code>humidity = humidity.fillna(method="ffill")
@@ -36,7 +37,60 @@
 # ffill: propagate last valid observation forward to next valid
 # bfill: use next valid observation to fill gap.</code></pre>
         </details>
+<!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Timestamp</b> & <b>Period</b> - Conversion</summary>
+            <pre class="language-python"><code># Creating a Timestamp
+timestamp = pd.Timestamp(2017, 1, 1, 12)
+# Timestamp('2017-01-01 12:00:00')
 
+# Creating a period
+period = pd.Period('2017-01-01')
+# Period('2017-01-01', 'D')
+
+# Checking if the given timestamp exists in the given period
+period.start_time < timestamp < period.end_time
+# True</code></pre>
+<pre class="language-python"><code># Converting timestamp to period
+new_period = timestamp.to_period(freq='H')
+# Period('2017-01-01 12:00', 'H')
+
+# Converting period to timestamp
+new_timestamp = period.to_timestamp(freq='H', how='start')
+# Timestamp('2017-01-01 00:00:00')</code></pre>
+        </details>
+<!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>pd.date_range</b></summary>
+            <p>date_range is a method that returns a fixed frequency datetimeindex. <br>
+                It is quite useful when creating your own time series attribute for pre-existing data or 
+                arranging the whole data around the time series attribute created by you.</p>
+
+            <pre class="language-python"><code># Creating a datetimeindex with daily frequency
+dr1 = pd.date_range(start='1/1/18', end='1/9/18')
+# DatetimeIndex(['2018-01-01', '2018-01-02', '2018-01-03', '2018-01-04',
+#                '2018-01-05', '2018-01-06', '2018-01-07', '2018-01-08',
+#                '2018-01-09'],
+#                dtype='datetime64[ns]', freq='D')
+
+# Creating a datetimeindex with monthly frequency
+dr2 = pd.date_range(start='1/1/18', end='1/1/19', freq='M')
+# DatetimeIndex(['2018-01-31', '2018-02-28', '2018-03-31', '2018-04-30',
+#                '2018-05-31', '2018-06-30', '2018-07-31', '2018-08-31',
+#                '2018-09-30', '2018-10-31', '2018-11-30', '2018-12-31'],
+#                dtype='datetime64[ns]', freq='M')
+
+# Creating a datetimeindex without specifying start date and using periods
+dr3 = pd.date_range(end='1/4/2014', periods=8)
+# DatetimeIndex(['2013-12-28', '2013-12-29', '2013-12-30', '2013-12-31',
+#                '2014-01-01', '2014-01-02', '2014-01-03', '2014-01-04'],
+#                dtype='datetime64[ns]', freq='D')
+
+# Creating a datetimeindex specifying start date , end date and periods
+dr4 = pd.date_range(start='2013-04-24', end='2014-11-27', periods=3)
+# DatetimeIndex(['2013-04-24', '2014-02-09', '2014-11-27'], dtype='datetime64[ns]', freq=None)</code></pre>
+        </details>
+<!-- ---------------------------------------------------------------------------- -->
         <details>
             <summary>
                 Let
@@ -48,7 +102,7 @@
 register_matplotlib_converters()
 </code></pre>
         </details>
-
+<!-- ---------------------------------------------------------------------------- -->
         <details>
             <summary>
                 <b>
@@ -59,6 +113,7 @@ register_matplotlib_converters()
      notebook
     </a>
         </details>
+<!-- ---------------------------------------------------------------------------- -->
         <details>
             <summary>
                 <b>
@@ -70,8 +125,8 @@ register_matplotlib_converters()
      notebook
     </a>
         </details>
+<!-- ---------------------------------------------------------------------------- -->
     </div>
-
     <script src="../../prism.js"></script>
 </body>
 
