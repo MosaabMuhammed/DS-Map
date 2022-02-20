@@ -1,79 +1,143 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1 id="mlmodels">
-   ML Models
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <details>
-    <summary style="font-size:18px;color:darkcyan">
-     <b>
-      Important Functions
-     </b>
-    </summary>
-    <p>
-     <details>
-      <summary>
-       <b>
-        Random Model
-       </b>
-      </summary>
-      <p>
-       wzxhzdk:0
-      </p>
-     </details>
-     <details>
-      <summary>
-       Plot
-       <b>
-        Features Importance
-       </b>
-      </summary>
-      <p>
-      </p>
-      <p>
-       <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Model-Interpretation:-Feature-Importances">
-        <b>
-         Result
-        </b>
-       </a>
-      </p>
-      <p>
-       <a href="https://www.kaggle.com/willkoehrsen/a-complete-introduction-and-walkthrough">
-        <b>
-         Best Notebook
-        </b>
-       </a>
-      </p>
-      wzxhzdk:1
-     </details>
-    </p>
-   </details>
-   <li>
-    <p>
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.8-Bonus-Machine-Learning-Algorithms-Overview.html" style="font-weight:bold">
-      Models Comparsion
-     </a>
-    </p>
-   </li>
-   <hr/>
-   <details>
-    <summary>
-     <b style="font-size:25px">
-      Custom Model
-     </b>
-    </summary>
-    <pre><code>from sklearn.base import BaseEstimator, ClassifierMixin
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Models
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <h1 id="mlmodels">ML Models</h1>
+
+    <div style='width:1000px;margin:auto'>
+
+        <details>
+            <summary style='font-size:18px;color:darkcyan'> <b>Important Functions</b> </summary>
+            <p>
+
+            <details>
+                <summary><b>Random Model</b></summary>
+                <p>
+                <pre class="language-python"><code class="python language-python"># Random model.
+def RandomModel(y_test, numOfClasses):
+    '''
+    This function builds a random model that predicts the class labels randomly.
+    INPUT:
+        - y_test: (Series) the series which we want to predict.
+        - numOfClasses: (int) number of class labels in our dataset.
+    OUTPUT:
+        - y_pred: (array) contains the probability for each class, and it will be helpful if
+        we have metric like 'log loss'.
+    '''
+    len_y = len(y_test)
+    y_pred = np.zeros((len_y, numOfClasses))
+    for i in range(len_y):
+        rand_probs = np.random.rand(1, numOfClasses)
+        y_pred[i] = ((rand_probs/sum(sum(rand_probs)))[0])
+    return y_pred
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary>Plot <b>Features Importance</b></summary>
+                <p>
+                <p><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Model-Interpretation:-Feature-Importances"><b>Result</b></a>
+                </p>
+
+                <p><a href="https://www.kaggle.com/willkoehrsen/a-complete-introduction-and-walkthrough"><b>Best
+                            Notebook</b></a> </p>
+                <pre class="language-python">"<code class="python language-python"># Take the important features from the model.
+feature_importance_values = rf.feature_importances_
+feature_importance = pd.DataFrame({'feature': features, 'importance': feature_importance_values})
+
+def plot_feature_importances(df, n = 10, threshold = None):
+    """Plots n most important features. Also plots the cumulative importance if
+    threshold is specified and prints the number of features needed to reach threshold cumulative importance.
+    Intended for use with any tree-based feature importances. 
+
+    Args:
+        df (dataframe): Dataframe of feature importances. Columns must be "feature" and "importance".
+
+        n (int): Number of most important features to plot. Default is 15.
+
+        threshold (float): Threshold for cumulative importance plot. If not provided, no plot is made. Default is None.
+
+    Returns:
+        df (dataframe): Dataframe ordered by feature importances with a normalized column (sums to 1) 
+                        and a cumulative importance column
+
+    Note:
+
+        * Normalization in this case means sums to 1. 
+        * Cumulative importance is calculated by summing features from most to least important
+        * A threshold of 0.9 will show the most important features needed to reach 90% of cumulative importance
+
+    """
+    plt.style.use('fivethirtyeight')
+
+    # Sort features with most important at the head
+    df = df.sort_values('importance', ascending = False).reset_index(drop = True)
+
+    # Normalize the feature importances to add up to one and calculate cumulative importance
+    df['importance_normalized'] = df['importance'] / df['importance'].sum()
+    df['cumulative_importance'] = np.cumsum(df['importance_normalized'])
+
+    plt.rcParams['font.size'] = 12
+
+    # Bar plot of n most important features
+    df.loc[:n, :].plot.barh(y = 'importance_normalized', 
+                            x = 'feature', color = 'darkgreen', 
+                            edgecolor = 'k', figsize = (12, 8),
+                            legend = False, linewidth = 2)
+
+    plt.xlabel('Normalized Importance', size = 18); plt.ylabel(''); 
+    plt.title(f'{n} Most Important Features', size = 18)
+    plt.gca().invert_yaxis()
+
+
+    if threshold:
+        # Cumulative importance plot
+        plt.figure(figsize = (8, 6))
+        plt.plot(list(range(len(df))), df['cumulative_importance'], 'b-')
+        plt.xlabel('Number of Features', size = 16); plt.ylabel('Cumulative Importance', size = 16); 
+        plt.title('Cumulative Feature Importance', size = 18);
+
+        # Number of features needed for threshold cumulative importance
+        # This is the index (will need to add 1 for the actual number)
+        importance_index = np.min(np.where(df['cumulative_importance'] &gt; threshold))
+
+        # Add vertical line to plot
+        plt.vlines(importance_index + 1, ymin = 0, ymax = 1.05, linestyles = '--', colors = 'red')
+        plt.show();
+
+        print('{} features required for {:.0f}% of cumulative importance.'.format(importance_index + 1, 
+                                                                                  100 * threshold))
+
+    return df
+
+# Call the function
+feature_importance_sorted = plot_feature_importance(feature_importance)
+</code></pre>
+                </p>
+            </details>
+
+            </p>
+        </details>
+
+        <li>
+            <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Engineering%20for%20Machine%20Learning/0_code/Section-03-Variable-Characteristics/03.8-Bonus-Machine-Learning-Algorithms-Overview.html"
+                    style='font-weight:bold'>Models Comparsion</a> </p>
+        </li>
+        <hr>
+
+        <details>
+            <summary><b style="font-size:25px">Custom Model</b></summary>
+            <pre class="language-python">"<code>from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
 from collections import defaultdict, Counter
@@ -149,75 +213,46 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
 
         return score
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b style="font-size:25px">
-      Binary Classification:
-     </b>
-    </summary>
-    <p>
-    </p>
-    <ul>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Logistic%20Regression.html">
-       <b>
-        Logistic Regression/SGDClassifier
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Random%20Forest.html">
-       <b>
-        Random Forest
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/LightGBM.html">
-       <b>
-        LightGBM
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/BaggingClassifier.html">
-       <b>
-        Bagging Classifier
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Stacking.html">
-       <b>
-        Stacking
-       </b>
-      </a>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Linear SVM
-        </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         A smaller "C" value leads to a wider street but more margin violations.
-        </li>
-        <li>
-         If you SVM model is overfitting, you can try to regularize it by reducing "C".
-        </li>
-        <li>
-         Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
-        </li>
-        <li>
-         Make sure to set "dual = False", unless there are more features than training instances.
-        </li>
-       </ul>
-       <pre><code>import numpy as np
+        </details>
+
+        <details>
+            <summary><b style="font-size:25px">Binary Classification:</b></summary>
+            <p>
+
+            <ul>
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Logistic%20Regression.html"><b>Logistic
+                            Regression/SGDClassifier</b></a> </li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Random%20Forest.html"><b>Random
+                            Forest</b></a> </li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/LightGBM.html"><b>LightGBM</b></a>
+                </li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/BaggingClassifier.html"><b>Bagging
+                            Classifier</b></a></li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Stacking.html"><b>Stacking</b></a>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Linear SVM</b></summary>
+                        <p>
+                        <ul>
+                            <li>A smaller "C" value leads to a wider street but more margin violations.</li>
+                            <li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+                            <li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
+                            </li>
+                            <li>Make sure to set "dual = False", unless there are more features than training instances.
+                            </li>
+                        </ul>
+                        <pre class="language-python">"<code>import numpy as np
 from sklearn import datasets
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -235,7 +270,7 @@ svm_clf = Pipeline([
 
 svm_clf.fit(X, y)
 </code></pre>
-       <pre><code># For a huge dataset.
+                        <pre class="language-python">"<code># For a huge dataset.
 # Supports out-of-core learning.
 from sklearn.linear_model import SGDClassifier
 
@@ -246,32 +281,23 @@ svm_clf = Pipeline([
 
 svm_clf.fit(X, y)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Non-Linear SVM
-        </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         A smaller "C" value leads to a wider street but more margin violations.
-        </li>
-        <li>
-         If you SVM model is overfitting, you can try to regularize it by reducing "C".
-        </li>
-        <li>
-         Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
-        </li>
-        <li>
-         Make sure to set "dual = False", unless there are more features than training instances.
-        </li>
-       </ul>
-       <pre><code>from sklearn.datasets import make_moons
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Non-Linear SVM</b></summary>
+                        <p>
+                        <ul>
+                            <li>A smaller "C" value leads to a wider street but more margin violations.</li>
+                            <li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+                            <li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
+                            </li>
+                            <li>Make sure to set "dual = False", unless there are more features than training instances.
+                            </li>
+                        </ul>
+                        <pre class="language-python">"<code>from sklearn.datasets import make_moons
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import PolynomialFeatures
 
@@ -283,38 +309,25 @@ poly_svm_clf = Pipeline([
 
 poly_svm_clf.fit(X, y)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Polynomial Kernel SVM
-        </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         A smaller "C" value leads to a wider street but more margin violations.
-        </li>
-        <li>
-         If you SVM model is overfitting, you can try to regularize it by reducing "C".
-        </li>
-        <li>
-         Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
-        </li>
-        <li>
-         Make sure to set "dual = False", unless there are more features than training instances.
-        </li>
-        <li>
-         <b>
-          coef0
-         </b>
-         controls how much the model is influenced by high-degree polynomials versus low-degree polynomials.
-        </li>
-       </ul>
-       <pre><code>from sklearn.pipeline import Pipeline
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Polynomial Kernel SVM</b></summary>
+                        <p>
+                        <ul>
+                            <li>A smaller "C" value leads to a wider street but more margin violations.</li>
+                            <li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+                            <li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
+                            </li>
+                            <li>Make sure to set "dual = False", unless there are more features than training instances.
+                            </li>
+                            <li><b>coef0</b> controls how much the model is influenced by high-degree polynomials versus
+                                low-degree polynomials.</li>
+                        </ul>
+                        <pre class="language-python">"<code>from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.svm import SVC
 
@@ -325,29 +338,21 @@ poly_kernel_svm_clf = Pipeline([
 
 poly_kernel_svm_clf.fit(X, y)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Gaussian RBF Kernel SVM
-        </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         If you training set is very large, you end up with an equally large number of features.
-        </li>
-        <li>
-         <b>
-          gamma
-         </b>
-         acts like a regularization hyperparameter: if your model is overfitting, you should reduce it, and if it's underfitting, you should increase it (similar to C hyperparameter).
-        </li>
-       </ul>
-       <pre><code>from sklearn.pipeline import Pipeline
+                        </p>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Gaussian RBF Kernel SVM</b></summary>
+                        <p>
+                        <ul>
+                            <li>If you training set is very large, you end up with an equally large number of features.
+                            </li>
+                            <li><b>gamma</b> acts like a regularization hyperparameter: if your model is overfitting,
+                                you should reduce it, and if it's underfitting, you should increase it (similar to C
+                                hyperparameter).</li>
+                        </ul>
+                        <pre class="language-python">"<code>from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.svm import SVC
 
@@ -358,44 +363,27 @@ rbf_kernel_svm_clf = Pipeline([
 
 rbf_kernel_svm_clf.fit(X, y)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         RuleFit
-        </b>
-        [Skope-Rules]
-       </summary>
-       <p>
-        <a href="./9_pipelines/demo_titanic.html">
-         <b>
-          Titanic Example
-         </b>
-        </a>
-       </p>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Voting Classifier
-        </b>
-       </summary>
-       <p>
-       </p>
-       <p>
-        <b>
-         NOTE:
-        </b>
-        When all models can `predict_proba`, you can set voting to `soft`, otherwise set it to `hard`.
-       </p>
-       <p>
-        For `SVC` to turn on his `predict_proba`, set `probability` to True.
-       </p>
-       <pre><code>from sklearn.datasets import make_moons
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>RuleFit</b> [Skope-Rules]</summary>
+                        <p>
+                            <a href="./9_pipelines/demo_titanic.html"><b>Titanic Example</b></a>
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Voting Classifier</b></summary>
+                        <p>
+                        <p><b>NOTE:</b> When all models can `predict_proba`, you can set voting to `soft`, otherwise set
+                            it to `hard`.</p>
+                        <p>For `SVC` to turn on his `predict_proba`, set `probability` to True.</p>
+                        <pre class="language-python">"<code>from sklearn.datasets import make_moons
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
@@ -424,42 +412,23 @@ for clf in (log_clf, rf_clf, svm_clf, voting_clf):
     y_pred = clf.predict(X_valid)
     print(clf.__class__.__name__, accuracy_score(y_valid, y_pred))
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Bagging
-        </b>
-        and
-        <b>
-         Pasting
-        </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         <b>
-          Pasting
-         </b>
-         is like `Bagging` but without bootstrapping, so to use it, set `bootstrap` to False.
-        </li>
-        <li>
-         <b>
-          Random Patches Method
-         </b>
-         Samples both training instances and features.
-        </li>
-        <li>
-         <b>
-          Random Subspaces Method
-         </b>
-         keeps all training instances (i.e. bootstrap=False and max_samples=1.0) but sampling features (i.e. bootstrap_features=True and/or max_features=smaller than 1.0)
-        </li>
-       </ul>
-       <pre><code>from sklearn.ensemble import BaggingClassifier
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Bagging</b> and <b>Pasting</b></summary>
+                        <p>
+                        <ul>
+                            <li><b>Pasting</b> is like `Bagging` but without bootstrapping, so to use it, set
+                                `bootstrap` to False.</li>
+                            <li><b>Random Patches Method</b> Samples both training instances and features.</li>
+                            <li><b>Random Subspaces Method</b> keeps all training instances (i.e. bootstrap=False and
+                                max_samples=1.0) but sampling features (i.e. bootstrap_features=True and/or
+                                max_features=smaller than 1.0)</li>
+                        </ul>
+                        <pre class="language-python">"<code>from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 
 bag_clf = BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
@@ -469,18 +438,15 @@ y_pred = bag_clf.predict(X_valid)
 print(accuracy_score(y_valid, y_pred))
 print(bag_clf.oob_score_)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Random Forest
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>from sklearn.ensemble import RandomForestClassifier
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Random Forest</b></summary>
+                        <p>
+                        <pre class="language-python">"<code>from sklearn.ensemble import RandomForestClassifier
 
 rf_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1, oob_score=True)
 rf_clf.fit(X_train, y_train)
@@ -489,27 +455,21 @@ y_pred = rf_clf.predict(X_valid)
 print(accuracy_score(y_valid, y_pred))
 print(rf_clf.oob_score_)
 </code></pre>
-       <h4>
-        Feature Importance
-       </h4>
-       <pre><code>for name, score in zip(iris["feature_names"], rf_clf.feature_importances_):
+
+                        <h4>Feature Importance</h4>
+                        <pre class="language-python">"<code>for name, score in zip(iris["feature_names"], rf_clf.feature_importances_):
     print(name, score)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Extra-Trees
-        </b>
-       </summary>
-       <p>
-       </p>
-       <p>
-        In each tree, RF tries to choose the best feature to split on, but Extra-Trees chooses the features at random.
-       </p>
-       <pre><code>from sklearn.ensemble import ExtraTreesClassifier
+                        </p>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Extra-Trees</b></summary>
+                        <p>
+                        <p>In each tree, RF tries to choose the best feature to split on, but Extra-Trees chooses the
+                            features at random.</p>
+                        <pre class="language-python">"<code>from sklearn.ensemble import ExtraTreesClassifier
 
 rf_clf = ExtraTreesClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1, bootstrap=True, oob_score=True)
 rf_clf.fit(X_train, y_train)
@@ -518,18 +478,15 @@ y_pred = rf_clf.predict(X_valid)
 print(accuracy_score(y_valid, y_pred))
 print(rf_clf.oob_score_)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         HistGradientBoostingClassifier
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># explicitly require this experimental feature
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>HistGradientBoostingClassifier</b></summary>
+                        <p>
+                        <pre class="language-python">"<code># explicitly require this experimental feature
 from sklearn.experimental import enable_hist_gradient_boosting  # noqa
 # now you can import normally from ensemble
 from sklearn.ensemble import HistGradientBoostingClassifier
@@ -549,18 +506,15 @@ hgbc_model.fit(
 
 train_oof_preds = hgbc_model.predict_proba(hgbc_x_valid)[:,-1]
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         AdaBoost
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>from sklearn.ensemble import AdaBoostClassifier
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>AdaBoost</b></summary>
+                        <p>
+                        <pre class="language-python">"<code>from sklearn.ensemble import AdaBoostClassifier
 
 ada_clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
                              n_estimators=200,
@@ -570,55 +524,41 @@ ada_clf.fit(X_train, y_train)
 y_pred = ada_clf.predict(X_valid)
 print(accuracy_score(y_valid, y_pred))
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         MultinomialNB
-        </b>
-       </summary>
-       <p>
-        <b>
-         MultinomialNB
-        </b>
-        is more suitable for text classification
-       </p>
-       <pre><code>from sklearn.naive_bayes import MultinomialNB
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>MultinomialNB</b></summary>
+                        <p>
+                            <b>MultinomialNB</b> is more suitable for text classification</b>
+                        <pre class="language-python">"<code>from sklearn.naive_bayes import MultinomialNB
 
 clf = MultinomialNB(alpha=0.0, class_prior=[0.4, 0.6])
 clf.fit(X_train, y_train)
 y_pred = ada_clf.predict(X_valid)
 print(accuracy_score(y_valid, y_pred))
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Manual Stacking
-        </b>
-       </summary>
-       <p>
-        <a href="./12_ml_models/manual_stacking.html">
-         notebook
-        </a>
-       </p>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Average Ensemble
-        </b>
-       </summary>
-       <p>
-        you always create folds before starting with ensembling.
-       </p>
-       <pre><code># A class to choose the best weights for each model.
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Manual Stacking</b></summary>
+                        <p>
+                            <a href="./12_ml_models/manual_stacking.html">notebook</a>
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Average Ensemble</b></summary>
+                        <p>
+                            you always create folds before starting with ensembling.
+                        <pre class="language-python">"<code># A class to choose the best weights for each model.
 import numpy as np
 from functools import partial
 from scipy.optimize import fmin
@@ -668,7 +608,7 @@ class OptimizeAUC:
         predictions = np.sum(x_coef, axis=1)
         return predictions
 </code></pre>
-       <pre><code># How to use it.
+                        <pre class="language-python">"<code># How to use it.
 import xgboost as xgb
 from sklearn.datasets import make_classification
 from sklearn import ensemble
@@ -772,67 +712,55 @@ auc = metrics.roc_auc_score(yfold1, opt_preds_fold1)
 print(f"Optimized AUC, Fold 1 = {auc}")
 print(f"Coefficients = {opt.coef_}")
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b style="font-size:25px">
-      Multi-Class Classification:
-     </b>
-    </summary>
-    <p>
-     <b>
-      NOTE:
-     </b>
-     Sklearn detects when you try to use a binary classification algorithm for a multi-class classification task, and it automatically runs OvA (except for SVM classifiers for which it uses OvO).
-    </p>
-    <details>
-     <summary>
-      <b>
-       One Vs. All
-      </b>
-     </summary>
-     <pre><code>from sklearn.multiclass import OneVsAllClassifier
+                        </p>
+                    </details>
+                </li>
+
+            </ul>
+        </details>
+
+        <details>
+            <summary><b style="font-size:25px">Multi-Class Classification:</b></summary>
+            </p>
+            <p><b>NOTE:</b> Sklearn detects when you try to use a binary classification algorithm for a multi-class
+                classification task, and it automatically runs OvA (except for SVM classifiers for which it uses OvO).
+            </p>
+            <details>
+                <summary><b>One Vs. All</b></summary>
+                </p>
+                <pre class="language-python">"<code>from sklearn.multiclass import OneVsAllClassifier
 
 ova_clf = OneVsAll(SVC(random_state=42))
 ova_clf.fit(X_train, y_train)
 </code></pre>
-    </details>
-    <details>
-     <summary>
-      <b>
-       One Vs. One
-      </b>
-     </summary>
-     <pre><code>from sklearn.multiclass import OneVsOneClassifier
+                </p>
+            </details>
+
+            <details>
+                <summary><b>One Vs. One</b></summary>
+                </p>
+                <pre class="language-python">"<code>from sklearn.multiclass import OneVsOneClassifier
 
 ovo_clf = OneVsOneClassifier(SGDClassifier(random_state=42))
 ovo_clf.fit(X_train, y_train)
 ovo_clf.predict([some_digit])
 </code></pre>
-    </details>
-   </details>
-   <details>
-    <summary>
-     <b style="font-size:25px">
-      Regression:
-     </b>
-    </summary>
-    <p>
-    </p>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Linear Regression
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># Fast when we have large training instance.
+                </p>
+            </details>
+
+            </p>
+        </details>
+
+        <details>
+            <summary><b style="font-size:25px">Regression:</b></summary>
+            <p>
+            <ul>
+
+                <li>
+                    <details>
+                        <summary><b>Linear Regression</b></summary>
+                        <p>
+                        <pre class="language-python">"<code># Fast when we have large training instance.
 # Slow when we have large numer of features.
 # Doesn't require scaling!!
 from sklearn.linear_models import LinearRegression
@@ -843,18 +771,15 @@ lin_reg.fit(X, y)
 print(lin_reg.intercept_)
 print(lin_reg.coef_)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         SGD Regressor
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># Fast when we have large training instances.
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>SGD Regressor</b></summary>
+                        <p>
+                        <pre class="language-python">"<code># Fast when we have large training instances.
 # Fast when we have large number of features too!
 # Change the thetas at each instance.
 # gives a better thetas than GD, but not the best!
@@ -865,10 +790,9 @@ sgd_reg = SGDRegressor(max_iter=1000, tol=1e-3, penalty=None, eta0=0.1)
 sgd_reg.fit(X, y.ravel())
 sgd_reg.intercept_, sgd_reg.coef_
 </code></pre>
-       <h4>
-        SGD with Early Stopping
-       </h4>
-       <pre><code>from sklearn.base import clone
+
+                        <h4>SGD with Early Stopping</h4>
+                        <pre class="language-python">"<code>from sklearn.base import clone
 from sklearn.preprocessing import StandardScaler
 
 # Prepare the data.
@@ -896,18 +820,15 @@ for epoch in range(1000):
     if valid_error &lt; minimum_valid_error:
         minimum_valid_error, best_epoch, best_model = valid_error, epoch, clone(sgd_reg)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Polynomial Regressor
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># Create the polynomial features.
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Polynomial Regressor</b></summary>
+                        <p>
+                        <pre class="language-python">"<code># Create the polynomial features.
 # WATCH THE NUMBER OF FEATURES = (n + d)!/d! * n!
 # where n = number of features.
 # where d = degree.
@@ -922,25 +843,16 @@ poly_model = Pipeline([
 
 poly_model.fit(X, y)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Ridge Regressor
-        </b>
-        [L2 Regulaizer]
-       </summary>
-       <p>
-       </p>
-       <p>
-        <b>
-         NOTE:
-        </b>
-        Requires Scalling and you can make it polynomial as Linear Regression.
-       </p>
-       <pre><code># Also called "Tikhonov Regularization", L2.
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Ridge Regressor</b> [L2 Regulaizer]</summary>
+                        <p>
+                        <p><b>NOTE:</b> Requires Scalling and you can make it polynomial as Linear Regression.</p>
+                        <pre class="language-python">"<code># Also called "Tikhonov Regularization", L2.
 # if alpha = 0, the Ridge Regression is just a Linear Regression.
 # if alpha = v.large, then all weights end up v.close to zero.
 # 1. Ridge using Closed-form solution.
@@ -957,25 +869,17 @@ sgd_reg = SGDRegressor(penalty="l2")
 sgd_reg.fit(X, y.ravel())
 sgd_reg.predict([[1.5]])
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Lasso Regressor
-        </b>
-        [L1 Regulaizer]
-       </summary>
-       <p>
-       </p>
-       <p>
-        <b>
-         NOTE:
-        </b>
-        Requires Scalling and you can make it polynomial as Linear Regression.
-       </p>
-       <pre><code># 1. Lasso using Closed-form solution.
+                        </p>
+                    </details>
+                </li>
+
+
+                <li>
+                    <details>
+                        <summary><b>Lasso Regressor</b> [L1 Regulaizer]</summary>
+                        <p>
+                        <p><b>NOTE:</b> Requires Scalling and you can make it polynomial as Linear Regression.</p>
+                        <pre class="language-python">"<code># 1. Lasso using Closed-form solution.
 from sklearn.linear_model import Lasso
 
 lasso_reg = Lasso(alpha=0.1)
@@ -989,25 +893,16 @@ sgd_reg = SGDRegressor(penalty="l1")
 sgd_reg.fit(X, y.ravel())
 sgd_reg.predict([[1.5]])
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Elastic Net
-        </b>
-        [L1 + L2 Regulaizer]
-       </summary>
-       <p>
-       </p>
-       <p>
-        <b>
-         NOTE:
-        </b>
-        Requires Scalling and you can make it polynomial as Linear Regression.
-       </p>
-       <pre><code># when r = 0, Elastic Net = Ridge Regression.
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Elastic Net</b> [L1 + L2 Regulaizer]</summary>
+                        <p>
+                        <p><b>NOTE:</b> Requires Scalling and you can make it polynomial as Linear Regression.</p>
+                        <pre class="language-python">"<code># when r = 0, Elastic Net = Ridge Regression.
 # when r = 1, Elastic Net = Lasso Regression.
 # 1. ElasticNet using Closed-form solution.
 from sklearn.linear_model import ElasticNet
@@ -1016,19 +911,23 @@ elastic_net = ElasticNet(alpha=.1, l1_ratio=.5)
 elastic_net.fit(X, y)
 elastic_net.predict([[1.5]])
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         RuleFit
-        </b>
-       </summary>
-       <p>
-        The algorithm can be used for predicting an output vector y given an input matrix X. In the first step a tree ensemble is generated with gradient boosting. The trees are then used to form rules, where the paths to each node in each tree form one rule. A rule is a binary decision if an observation is in a given node, which is dependent on the input features that were used in the splits. The ensemble of rules together with the original input features are then being input in a L1-regularized linear model, also called Lasso, which estimates the effects of each rule on the output target but at the same time estimating many of those effects to zero.
-       </p>
-       <pre><code># pip install git+git://github.com/christophM/rulefit.git
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>RuleFit</b></summary>
+                        <p>
+                            The algorithm can be used for predicting an output vector y given an input matrix X. In the
+                            first step a tree ensemble is generated with gradient boosting. The trees are then used to
+                            form rules, where the paths to each node in each tree form one rule. A rule is a binary
+                            decision if an observation is in a given node, which is dependent on the input features that
+                            were used in the splits. The ensemble of rules together with the original input features are
+                            then being input in a L1-regularized linear model, also called Lasso, which estimates the
+                            effects of each rule on the output target but at the same time estimating many of those
+                            effects to zero.
+                        <pre class="language-python">"<code># pip install git+git://github.com/christophM/rulefit.git
 
 # TRAIN the Model.
 import numpy as np
@@ -1046,14 +945,14 @@ X = X.as_matrix()
 rf = RuleFit()
 rf.fit(X, y, feature_names=features)
 </code></pre>
-       <pre><code># If you want to have influence on the tree generator you can pass the generator as argument:
+                        <pre class="language-python">"<code># If you want to have influence on the tree generator you can pass the generator as argument:
 from sklearn.ensemble import GradientBoostingRegressor
 gb = GradientBoostingRegressor(n_estimators=500, max_depth=10, learning_rate=0.01)
 rf = RuleFit(gb)
 
 rf.fit(X, y, feature_names=features)
 </code></pre>
-       <pre><code># Predict:
+                        <pre class="language-python">"<code># Predict:
 rf.predict(X)
 
 # Inspect Rules:
@@ -1062,79 +961,59 @@ rules = rf.get_rules()
 rules = rules[rules.coef != 0].sort_values("support", ascending=False)
 rules.head()
 </code></pre>
-       You can create new features with these rules, and then apply linear models or other models and see the result.
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Linear SVM
-        </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         A smaller "C" value leads to a wider street but more margin violations.
-        </li>
-        <li>
-         If you SVM model is overfitting, you can try to regularize it by reducing "C".
-        </li>
-        <li>
-         Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
-        </li>
-        <li>
-         Make sure to set "dual = False", unless there are more features than training instances.
-        </li>
-       </ul>
-       <pre><code>from sklearn.svm import LinearSVR
+                        You can create new features with these rules, and then apply linear models or other models and
+                        see the result.
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Linear SVM</b></summary>
+                        <p>
+                        <ul>
+                            <li>A smaller "C" value leads to a wider street but more margin violations.</li>
+                            <li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+                            <li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
+                            </li>
+                            <li>Make sure to set "dual = False", unless there are more features than training instances.
+                            </li>
+                        </ul>
+                        <pre class="language-python">"<code>from sklearn.svm import LinearSVR
 
 svm_reg = LinearSVR(epsilon=1.5)
 svm_reg.fit(X, y)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Kernel SVM
-        </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         A smaller "C" value leads to a wider street but more margin violations.
-        </li>
-        <li>
-         If you SVM model is overfitting, you can try to regularize it by reducing "C".
-        </li>
-        <li>
-         Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
-        </li>
-        <li>
-         Make sure to set "dual = False", unless there are more features than training instances.
-        </li>
-       </ul>
-       <pre><code>from sklearn.svm import SVR
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Kernel SVM</b></summary>
+                        <p>
+                        <ul>
+                            <li>A smaller "C" value leads to a wider street but more margin violations.</li>
+                            <li>If you SVM model is overfitting, you can try to regularize it by reducing "C".</li>
+                            <li>Unlike Logistic Regression, SVM classifier do not output probabilites for each class.
+                            </li>
+                            <li>Make sure to set "dual = False", unless there are more features than training instances.
+                            </li>
+                        </ul>
+                        <pre class="language-python">"<code>from sklearn.svm import SVR
 
 svm_poly_reg = SVR(kernel="poly", degree=2, C=100, epsilon=.1)
 svm_poly_reg.fit(X, y)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Gradient Boosting
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># GBDT with early stopping but run all the iterations.
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Gradient Boosting</b></summary>
+                        <p>
+                        <pre class="language-python">"<code># GBDT with early stopping but run all the iterations.
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn import metrics
 
@@ -1151,7 +1030,7 @@ gbrt_best.fit(X_train, y_train)
 y_pred = gbrt_best.predict(X_valid)
 print(metrics.mean_absolute_error(y_valid, y_pred))
 </code></pre>
-       <pre><code># Early Stopping but breaks when there's no improvment.
+                        <pre class="language-python">"<code># Early Stopping but breaks when there's no improvment.
 gbrt = GradientBoostingRegressor(max_depth=2, warm_start=True)
 
 min_valid_error = float("inf")
@@ -1163,25 +1042,22 @@ for n_estimators in range(1, 120):
     y_pred = gbrt.predict(X_valid)
     valid_error = metrics.mean_squared_error(y_valid, y_pred)
 
-    if valid_error &lt; min_valid_error:
+    if valid_error &amp;lt; min_valid_error:
         min_valid_error, error_going_up = valid_error, 0
     else:
         error_going_up += 1
         if error_going_up == 5:
             break   # Early Stopping
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         XGBoost
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>import xgboost 
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>XGBoost</b></summary>
+                        <p>
+                        <pre class="language-python">"<code>import xgboost 
 
 xgb_reg = xgboost.XGBRegressor(n_estimators=200, max_depth=4)
 xgb_reg.fit(X_train, y_train,
@@ -1190,18 +1066,15 @@ xgb_reg.fit(X_train, y_train,
 y_pred = xgb_reg.predict(X_valid)
 print(metrics.mean_absolute_error(y_valid, y_pred))
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Stacking
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>X_val_predictions = np.empty((len(X_val), len(estimators)), dtype=np.float32)
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Stacking</b></summary>
+                        <p>
+                        <pre class="language-python">"<code>X_val_predictions = np.empty((len(X_val), len(estimators)), dtype=np.float32)
 
 for index, estimator in enumerate(estimators):
     X_val_predictions[:, index] = estimator.predict(X_val)
@@ -1218,80 +1091,59 @@ for index, estimator in enumerate(estimators):
 
 y_pred = rnd_forest_blender.predict(X_test_predictions)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/KNN.html">
-       <b>
-        K Nearest Neighbors
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/Decision%20Tree.html">
-       <b>
-        Decision Tree
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/Random%20Forest.html">
-       <b>
-        Random Forest
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/BaggingRegressor.html">
-       <b>
-        Bagging Regressor
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Stacking.html">
-       <b>
-        Stacking
-       </b>
-      </a>
-     </li>
-     <li>
-      Regression Splines - NOT COMPLETE
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b style="font-size:25px">
-      Clustering:
-     </b>
-    </summary>
-    <p>
-    </p>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        K-Means
-       </summary>
-       <p>
-        <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/KMeans.html">
-         <b>
-          K-means
-         </b>
-        </a>
-       </p>
-       <h4>
-        Beside Elbow method, we can use silhouette coefficient too
-       </h4>
-       <p>
-        The silhouette coefficient is used when the ground-truth about the dataset is unknown, instead computing the density of clusters produced by the model. A silhouette score can then be calculated by averaging the silhouette coefficient for each sample, computed as the difference between the average intracluster distance and the mean nearest-cluster distance for each sample, normalized by the maximum value.
-        <br/>
-        <br/>
-        This produces a score between 1 and -1, where 1 is highly dense clusters, -1 is completely incorrect clustering, and values near zero indicate overlapping clusters. The higher the score the better, because the clusters are denser and more separate. Negative values imply that samples have been assigned to the wrong cluster, and positive
-values mean that there are discrete clusters. The scores can then be plotted to display a measure of how close each point in one cluster is to points in the neighboring clusters.
-       </p>
-       <pre><code># silhouette = (b - a) / max(a, b)
+                        </p>
+                    </details>
+                </li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/KNN.html"><b>K
+                            Nearest Neighbors</b></a> </li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/Decision%20Tree.html"><b>Decision
+                            Tree</b></a></li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/0_Code/Random%20Forest.html"><b>Random
+                            Forest</b></a></li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/BaggingRegressor.html"><b>Bagging
+                            Regressor</b></a></li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Stacking.html"><b>Stacking</b></a>
+                </li>
+
+                <li>Regression Splines - NOT COMPLETE</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><b style="font-size:25px">Clustering:</b></summary>
+            <p>
+            <ul>
+
+                <li>
+                    <details>
+                        <summary>K-Means</summary>
+                        <p>
+                            <a
+                                href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/KMeans.html"><b>K-means</b></a>
+
+                        <h4>Beside Elbow method, we can use silhouette coefficient too</h4>
+                        <p>The silhouette coefficient is used when the ground-truth about the dataset is unknown,
+                            instead computing the density of clusters produced by the model. A silhouette score can then
+                            be calculated by averaging the silhouette coefficient for each sample, computed as the
+                            difference between the average intracluster distance and the mean nearest-cluster distance
+                            for each sample, normalized by the maximum value.<br><br>
+                            This produces a score between 1 and -1, where 1 is highly dense clusters, -1 is completely
+                            incorrect clustering, and values near zero indicate overlapping clusters. The higher the
+                            score the better, because the clusters are denser and more separate. Negative values imply
+                            that samples have been assigned to the wrong cluster, and positive
+                            values mean that there are discrete clusters. The scores can then be plotted to display a
+                            measure of how close each point in one cluster is to points in the neighboring clusters.</p>
+                        <pre class="language-python">"<code># silhouette = (b - a) / max(a, b)
 # a = mean distance to the other instances in the same cluster.
 # b = mean nearest-cluster distance.
 # silhouette varies from -1 to +1, +1 means the instance is well inside its own cluster and far from othe clusters, and 0 means it's close to a cluster boundary, and -1 means that the instance may have been assigned to the wrong cluster.
@@ -1311,7 +1163,7 @@ plt.axis([1.8, 8.5, 0.55, 0.7])
 save_fig("silhouette_score_vs_k_plot")
 plt.show()
 </code></pre>
-       <pre><code>from sklearn.cluster import KMeans
+                        <pre class="language-python">"<code>from sklearn.cluster import KMeans
 from yellowbrick.cluster import SilhouetteVisualizer
 
 # Instantiate the clustering model and visualizer
@@ -1319,112 +1171,80 @@ visualizer = SilhouetteVisualizer(KMeans(n_clusters=6))
 visualizer.fit(docs)
 visualizer.poof()
 </code></pre>
-       <h4>
-        Elbow Methods using Yellowbrick
-       </h4>
-       <pre><code>from sklearn.cluster import KMeans
+
+                        <h4>Elbow Methods using Yellowbrick</h4>
+                        <pre class="language-python">"<code>from sklearn.cluster import KMeans
 from yellowbrick.cluster import KElbowVisualizer
 # Instantiate the clustering model and visualizer
 visualizer = KElbowVisualizer(KMeans(), metric='silhouette', k=[4,10])
 visualizer.fit(docs)
 visualizer.poof()
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html">
-       <b>
-        AgglomerativeClustering
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/DBSCAN.html">
-       <b>
-        DBSCAN
-       </b>
-      </a>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b style="font-size:27px;">
-      Auto ML
-     </b>
-    </summary>
-    <p>
-    </p>
-    <ul>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/auto-sklearn.html#auto-sklearn">
-       <b>
-        <span style="color:#333">
-         Auto-Sklearn
-        </span>
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Titanic_Kaggle.html#Data-Analysis-using-TPOT">
-       <b>
-        <span style="color:#333">
-         TPOT
-        </span>
-       </b>
-      </a>
-     </li>
-     <li>
-      <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/automl_binary_classification_product_backorders.html#H2O-AutoML-Binary-Classification-Demo">
-       <b>
-        <span style="color:#333">
-         H2O
-        </span>
-       </b>
-      </a>
-     </li>
-    </ul>
-   </details>
-   <p>
-    <a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/">
-     <b>
-      <span style="font-size:25px;color:#333">
-       Multi-Label Classification
-      </span>
-     </b>
-    </a>
-   </p>
-   <details>
-    <summary>
-     <b style="font-size:25px">
-      Semi-Supervised Learning Models
-     </b>
-    </summary>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Gaussian Mixture
-        </b>
-       </summary>
-       <pre><code>class sklearn.mixture.GaussianMixture(n_components=1, *, covariance_type='full', tol=0.001, reg_covar=1e-06, max_iter=100, n_init=1, init_params='kmeans', weights_init=None, means_init=None, precisions_init=None, random_state=None, warm_start=False, verbose=0, verbose_interval=10)[source]
+                        </p>
+                    </details>
+                </li>
+
+                <li>
+                    <details><summary><b>K-Nearest Neighbors</b></summary>
+                    <pre class="language-python"><code>from sklearn.neighbors import NearestNeighbors
+# you can choose different algorithm ball_tree, k-d tree, knn.
+knn = NearestNeighbors(n_neighbors=50,
+                        leaf_size=30, 
+                        algorithm='ball_tree')
+knn.fit(X_train)</code></pre>
+                    </details>
+                </li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html"><b>AgglomerativeClustering</b></a>
+                </li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/DBSCAN.html"><b>DBSCAN</b></a>
+                </li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><b style='font-size:27px;'>Auto ML</b></summary>
+            <p>
+            <ul>
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/auto-sklearn.html#auto-sklearn"><b><span
+                                style='color:#333'>Auto-Sklearn</span></b></a></li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Titanic_Kaggle.html#Data-Analysis-using-TPOT"><b><span
+                                style='color:#333'>TPOT</span></b></a></li>
+
+                <li><a
+                        href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/automl_binary_classification_product_backorders.html#H2O-AutoML-Binary-Classification-Demo"><b><span
+                                style='color:#333'>H2O</span></b></a></li>
+
+            </ul>
+            </p>
+        </details>
+
+        <p><a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/"><b><span
+                        style='font-size:25px;color:#333'>Multi-Label Classification</span></b></a> </p>
+
+        <details>
+            <summary><b style="font-size:25px">Semi-Supervised Learning Models</b></summary>
+            <ul>
+
+                <li>
+                    <details>
+                        <summary><b>Gaussian Mixture</b></summary>
+                        <pre class="language-python">"<code>class sklearn.mixture.GaussianMixture(n_components=1, *, covariance_type='full', tol=0.001, reg_covar=1e-06, max_iter=100, n_init=1, init_params='kmeans', weights_init=None, means_init=None, precisions_init=None, random_state=None, warm_start=False, verbose=0, verbose_interval=10)[source]
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Self-Training
-        </b>
-       </summary>
-       Read
-       <b>
-        master ML book
-       </b>
-       - Page: 87
-       <pre><code>nb_samples = X.shape[0]
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Self-Training</b></summary>
+                        Read <b>master ML book</b> - Page: 87
+                        <pre class="language-python">"<code>nb_samples = X.shape[0]
 nb_labeled = 20
 nb_unlabeled = nb_samples - nb_labeled
 nb_unlabeled_samples = 2
@@ -1432,9 +1252,9 @@ X_train = X[:nb_labeled]
 Y_train = Y[:nb_labeled]
 X_unlabeled = X[nb_labeled:]
 </code></pre>
-       <pre><code>import numpy as np
+                        <pre class="language-python">"<code>import numpy as np
 from sklearn.naive_bayes import GaussianNB
-while X_train.shape[0] &lt;= nb_samples:
+while X_train.shape[0] &amp;lt;= nb_samples:
     nb = GaussianNB()
     nb.fit(X_train, Y_train)
     if X_train.shape[0] == nb_samples:
@@ -1449,21 +1269,18 @@ while X_train.shape[0] &lt;= nb_samples:
     Y_train = np.concatenate((Y_train, Y_new_train), axis=0)
     X_unlabeled = np.delete(X_unlabeled, selected_idxs, axis=0)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Co-Training
-        </b>
-       </summary>
-       <pre><code>from sklearn.datasets import load_wine
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Co-Training</b></summary>
+                        <pre class="language-python">"<code>from sklearn.datasets import load_wine
 from sklearn.utils import shuffle
 wine = load_wine()
 X, Y = shuffle(wine['data'], wine['target'], random_state=1000)
 </code></pre>
-       <pre><code>nb_samples = X.shape[0]
+                        <pre class="language-python">"<code>nb_samples = X.shape[0]
 nb_labeled = 20
 nb_unlabeled = nb_samples - nb_labeled
 nb_unlabeled_samples = 2
@@ -1474,13 +1291,13 @@ Y_labeled = Y[:nb_labeled]
 X_labeled_1 = X_labeled[:, 0:feature_cut]
 X_labeled_2 = X_labeled[:, feature_cut:]
 </code></pre>
-       <pre><code>from sklearn.naive_bayes import GaussianNB
+                        <pre class="language-python">"<code>from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import classification_report
 nb0 = GaussianNB()
 nb0.fit(X_labeled, Y_labeled)
 print(classification_report(Y, nb0.predict(X), target_names=wine['target_names']))
 </code></pre>
-       <pre><code>import numpy as np
+                        <pre class="language-python">"<code>import numpy as np
 from sklearn.naive_bayes import GaussianNB
 nb1 = None
     nb2 = None
@@ -1510,27 +1327,14 @@ nb1 = None
 
 print(classification_report(Y, nb1.predict(X[:, 0:feature_cut]), target_names=wine['target_names']))
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Contrastive Pessimistic Likelihood Estimation (CPLE)
-        </b>
-       </summary>
-       <p>
-        Read page:
-        <b>
-         104
-        </b>
-        - Book:
-        <b>
-         Mastering Machine Learning Algorithms
-        </b>
-        [Expert Insight]
-       </p>
-       <pre><code>from sklearn.datasets import load_digits
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Contrastive Pessimistic Likelihood Estimation (CPLE)</b></summary>
+                        <p>Read page: <b>104</b> - Book: <b>Mastering Machine Learning Algorithms</b> [Expert Insight]
+                        <pre class="language-python">"<code>from sklearn.datasets import load_digits
 import numpy as np
 
 X_a, Y_a = load_digits(return_X_y=True)
@@ -1546,7 +1350,8 @@ unlabeled_idx = np.random.choice(np.arange(0, nb_samples, 1), replace=False, siz
 Y_true = Y[unlabeled_idx].copy()
 Y[unlabeled_idx] = -1
 </code></pre>
-       <pre><code>from sklearn.linear_model import LogisticRegression
+
+                        <pre class="language-python">"<code>from sklearn.linear_model import LogisticRegression
 
 lr_test = LogisticRegression(solver="lbfgs",
                              max_iter=10_000,
@@ -1557,21 +1362,24 @@ lr_test.fit(X[Y.squeeze() != -1], Y[Y.squeeze() != -1].squeeze())
 unlabeled_score = lr_test.score(X[Y.squeeze() == -1], Y_true)
 # 0.573333333333
 </code></pre>
-       <pre><code>from sklearn.model_selection import cross_val_score
+
+                        <pre class="language-python">"<code>from sklearn.model_selection import cross_val_score
 
 total_cv_scores = cross_val_score(LogisticRegression(solver="lbfgs", max_iter=10_000, multi_class="auto", random_state=1000), X, Y.squeeze(), cv=10, n_jobs=-1)
 
 print(total_cv_scores)
 </code></pre>
-       <pre><code># Implement CPLE
+
+                        <pre class="language-python">"<code># Implement CPLE
 lr = LogisticRegression(solver="lbfgs", max_iter=10_000,
 multi_class="auto",
 random_state=1000)
 
 q0 = np.random.uniform(0, 1, size=nb_unlabeled)
-trh = np.vectorize(lambda x: 0.0 if x &lt; 0.5 else 1.0)
+trh = np.vectorize(lambda x: 0.0 if x &amp;lt; 0.5 else 1.0)
 </code></pre>
-       <pre><code>def weighted_log_loss(yt, p, w=None, eps=1e-15):
+
+                        <pre class="language-python">"<code>def weighted_log_loss(yt, p, w=None, eps=1e-15):
     if w is None:
         w_t = np.ones((yt.shape[0], 2))
     else:
@@ -1580,7 +1388,8 @@ trh = np.vectorize(lambda x: 0.0 if x &lt; 0.5 else 1.0)
     L_t = np.sum(w_t * Y_t * np.log(np.clip(p, eps, 1. - eps)), axis=1)
     return np.mean(L_t)
 </code></pre>
-       <pre><code>def build_dataset(q):
+
+                        <pre class="language-python">"<code>def build_dataset(q):
     Y_unlabeled = trh(q)
 
     X_n = np.zeros((nb_samples, nb_dimensions))
@@ -1605,7 +1414,8 @@ def log_likelihood(q):
 
     return l_semi - l_sup
 </code></pre>
-       <pre><code>from scipy.optimize import fmin_bfgs
+
+                        <pre class="language-python">"<code>from scipy.optimize import fmin_bfgs
 q_end = fmin_bfgs(f=log_likelihood, x0=q0, maxiter=1000, disp=False)
 
 X_n, Y_n = build_dataset(q_end)
@@ -1619,17 +1429,14 @@ print(final_semi_cv_scores)
 # [0.97297297 0.86486486 0.94594595 0.86486486 0.89189189 0.88571429
 # 0.48571429 0.91428571 0.88571429 0.48571429]
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Semi-Supervised Support Vector Machines (S3VM)
-        </b>
-       </summary>
-       See the equation from the book Mastering ML expert view
-       <pre><code>from sklearn.datasets import make_classification
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Semi-Supervised Support Vector Machines (S3VM)</b></summary>
+                        See the equation from the book Mastering ML expert view
+                        <pre class="language-python">"<code>from sklearn.datasets import make_classification
 nb_samples   = 100
 nb_unlabeled = 50
 nb_labeled   = nb_samples - nb_unlabeled
@@ -1638,7 +1445,7 @@ X, y    = make_classification(n_samples=nb_samples, n_features=2, n_redundant=0,
 y[y==0] = -1 # because svm deals with +1 for 1st class and -1 for the 2nd class.
 y[nb_labeled:] = 0
 </code></pre>
-       <pre><code># we need to initialize all variables required for the optimization problem:
+                        <pre class="language-python">"<code># we need to initialize all variables required for the optimization problem:
 import numpy as np
 
 w   = np.random.uniform(-0.1, 0.1, size=X.shape[1])
@@ -1654,10 +1461,10 @@ print(w.shape, eta.shape, xi.shape, zi.shape, b.shape)
 # we've stacked all vectors into a horizontal array
 theta0 = np.hstack((w, eta, xi, zi, b))
 </code></pre>
-       <pre><code># We also need to vectorize the min() function in order to apply it to arrays:
+                        <pre class="language-python">"<code># We also need to vectorize the min() function in order to apply it to arrays:
 vmin = np.vectorize(lambda x1, x2: x1 if x1 &lt;= x2 else x2)
 </code></pre>
-       <pre><code># Now, we can define the objective function:
+                        <pre class="language-python">"<code># Now, we can define the objective function:
 def svm_target(theta, Xd, Yd):
     wt = theta[:2].reshape((Xd.shape[1], 1))
 
@@ -1669,7 +1476,7 @@ def svm_target(theta, Xd, Yd):
     # The constant can be omitted without any impact.
     return C * (s_eta + s_min_xi_zi) + 0.5 * np.dot(wt.T, wt)
 </code></pre>
-       <pre><code># At this point, we need to define all the constraints, 
+                        <pre class="language-python">"<code># At this point, we need to define all the constraints, 
 # since they are based on the slack variables; 
 # each function (which shares the same parameters of the objectives) is parametrized with an index, idx.
 def labeled_constraint(theta, Xd, Yd, idx):
@@ -1696,7 +1503,7 @@ def unlabeled_constraint_2(theta, Xd, idx):
 
     return (c &gt;= 0)[0]
 </code></pre>
-       <pre><code># We also need to include the constraints for each slack variable (≥ 0):
+                        <pre class="language-python">"<code># We also need to include the constraints for each slack variable (≥ 0):
 def eta_constraint(theta, idx):
     return theta[2:2+nb_samples-nb_unlabeled][idx] &gt;= 0
 
@@ -1706,7 +1513,7 @@ def xi_constraint(theta, idx):
 def zi_constraint(theta, idx):
     return theta[2+nb_samples:2+nb_samples+nb_unlabeled][idx-nb_samples+nb_unlabeled] &gt;= 0
 </code></pre>
-       <pre><code># We can now set up the problem using the SciPy convention:
+                        <pre class="language-python">"<code># We can now set up the problem using the SciPy convention:
 # Each constraint is represented by a dictionary, 
 # where type is set to ineq to indicate that it is an inequality, 
 # fun points to the callable object, 
@@ -1751,7 +1558,7 @@ for i in range(nb_samples-nb_unlabeled, nb_samples):
         'args': (i,)
     })
 </code></pre>
-       <pre><code># Using SciPy, it's possible to minimize the objective using either 
+                        <pre class="language-python">"<code># Using SciPy, it's possible to minimize the objective using either 
 # the Sequential Least Squares Programming (SLSQP) or 
 # Constraint Optimization by Linear Approximation (COBYLA) algorithms. 
 # We've chosen the latter, but the reader is free to employ any other method or library. 
@@ -1774,22 +1581,15 @@ b = theta_end[-1]
 Xu = X[nb_labeled:nb_samples]
 yu = -np.sign(np.dot(Xu, w) + b)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Transductive Support Vector Machines (TSVM)
-        </b>
-       </summary>
-       <p>
-        <img alt="" height="200" src="imgs/20220131-142106.png" width="600"/>
-       </p>
-       <p>
-        <img alt="" src="imgs/20220131-142152.png"/>
-       </p>
-       <pre><code>from sklearn.datasets import make_classification
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Transductive Support Vector Machines (TSVM)</b></summary>
+                        <p><img src="imgs/20220131-142106.png" alt="" / width=600 height=200></p>
+                        <p><img src="imgs/20220131-142152.png" alt="" /></p>
+                        <pre class="language-python">"<code>from sklearn.datasets import make_classification
 nb_samples = 200
 nb_unlabeled = 150
 
@@ -1801,7 +1601,7 @@ X, Y = make_classification(n_samples=nb_samples,
 Y[Y==0] = -1
 Y[nb_samples - nb_unlabeled:nb_samples] = 0
 </code></pre>
-       <pre><code># First of all, we need to initialize our variables:
+                        <pre class="language-python">"<code># First of all, we need to initialize our variables:
 import numpy as np
 
 w             = np.random.uniform(-0.1, 0.1, size=X.shape[1])
@@ -1820,7 +1620,7 @@ theta0        = np.hstack((w, eta_labeled, y_unlabeled, b))
 # because we want to accept the guidance of the labeled samples more than the structure of the unlabeled ones. 
 # In a further example, we'll compare the results with an opposite scenario.
 </code></pre>
-       <pre><code>
+                        <pre class="language-python">"<code>
 # The objective function to optimize is as follows:
 def svm_target(theta, Xd, Yd):
     wt              = theta[0:2].reshape((Xd.shape[1], 1))
@@ -1829,7 +1629,7 @@ def svm_target(theta, Xd, Yd):
 
     return (C_labeled * s_eta_labeled) + (C_unlabeled * s_eta_unlabeled) + (0.5 * np.dot(wt.T, wt))
 </code></pre>
-       <pre><code>
+                        <pre class="language-python">"<code>
 # While the labeled and unlabeled constraints are as follows:
 def labeled_constraint(theta, Xd, Yd, idx):
     wt = theta[0:2].reshape((Xd.shape[1], 1))
@@ -1846,7 +1646,7 @@ def unlabeled_constraint(theta, Xd, idx):
 
     return int((c &gt;= 0)[0])
 </code></pre>
-       <pre><code># In this example, we want to employ the SLSQP algorithm to optimize the objective. 
+                        <pre class="language-python">"<code># In this example, we want to employ the SLSQP algorithm to optimize the objective. 
 # This method computes the Jacobian (that is, the matrix containing the first partial derivatives) of all constraints (including the Boolean ones) and in NumPy 1.8+ the difference operator (-) between Boolean arrays has been deprecated and must be replaced with a logical XOR.
 # Unfortunately, this can cause incompatibilities with SciPy; since that's the case, 
 # we've transformed all Boolean outputs into integer values (0 and 1). 
@@ -1857,7 +1657,7 @@ def eta_labeled_constraint(theta, idx):
 def eta_unlabeled_constraint(theta, idx):
     return int(theta[2 + nb_samples - nb_unlabeled:2 + nb_samples][idx - nb_samples + nb_unlabeled] &gt;= 0)
 </code></pre>
-       <pre><code># As in the previous example, we can create the constraint dictionary needed by SciPy:
+                        <pre class="language-python">"<code># As in the previous example, we can create the constraint dictionary needed by SciPy:
 svm_constraints = []
 for i in range(nb_samples - nb_unlabeled):
     svm_constraints.append({
@@ -1883,7 +1683,7 @@ for i in range(nb_samples - nb_unlabeled, nb_samples):
             'args': (i,)
         })
 </code></pre>
-       <pre><code># After having defined all the constraints, we can minimize the objective function using method='SLSQP' and the dictionary option 'maxiter': 2000. 
+                        <pre class="language-python">"<code># After having defined all the constraints, we can minimize the objective function using method='SLSQP' and the dictionary option 'maxiter': 2000. 
 # In general, convergence is achieved in a smaller number of iterations, 
 # but here we've made assumptions as though we're working in a more general scenario:
 from scipy.optimize import minimize
@@ -1897,7 +1697,7 @@ result = minimize(fun=svm_target,
 print(result['message'])
 #### Optimization terminated successfully.
 </code></pre>
-       <pre><code># Such a message confirms that SLSQP successfully found a minimum. 
+                        <pre class="language-python">"<code># Such a message confirms that SLSQP successfully found a minimum. 
 # I always check the output of the optimization function, to make sure that nothing went wrong during the procedure, and I recommend that you do too. 
 # In particular, when using methods like COBYLA, it's important that all constraints are differentiable. 
 # When some of them are not, the algorithm can stop working properly, because the approximations of the Jacobian become unreliable.
@@ -1908,7 +1708,7 @@ b = theta_end[-1]
 Xu= X[nb_samples - nb_unlabeled:nb_samples]
 yu = -np.sign(np.dot(Xu, w) + b)
 </code></pre>
-       <pre><code>### Analysis of different TSVM configurations
+                        <pre class="language-python">"<code>### Analysis of different TSVM configurations
 # It's interesting to evaluate different combinations of the C parameters, 
 # starting from a standard supervised linear SVM. 
 # The dataset is smaller, with a large number of unlabeled samples:
@@ -1925,23 +1725,20 @@ svc.fit(X[Y != 0], Y[Y != 0])
 Xu_svc= X[nb_samples - nb_unlabeled:nb_samples]
 yu_svc = svc.predict(Xu_svc)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Label Propagation
-        </b>
-       </summary>
-       <pre><code>from sklearn.datasets import make_classification
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Label Propagation</b></summary>
+                        <pre class="language-python">"<code>from sklearn.datasets import make_classification
 nb_samples = 100
 nb_unlabeled = 75
 X, Y = make_classification(n_samples=nb_samples, n_features=2, n_informative=2, n_redundant=0, random_state=1000)
 Y[Y==0] = -1
 Y[nb_samples - nb_unlabeled:nb_samples] = 0
 </code></pre>
-       <pre><code>from sklearn.neighbors import kneighbors_graph
+                        <pre class="language-python">"<code>from sklearn.neighbors import kneighbors_graph
 nb_neighbors = 2
 W_knn_sparse = kneighbors_graph(X, n_neighbors=nb_neighbors, mode='connectivity', include_self=True)
 W_knn = W_knn_sparse.toarray()
@@ -1950,7 +1747,7 @@ W_knn = W_knn_sparse.toarray()
 # the alternative is distance, which returns the distances instead of 0 and 1 to indicate the absence/presence of an edge. 
 # The include_self=True parameter is useful, as we want to have Wii = 1.
 </code></pre>
-       <pre><code># For the RBF matrix, we need to define it manually:
+                        <pre class="language-python">"<code># For the RBF matrix, we need to define it manually:
 import numpy as np
 def rbf(x1, x2, gamma=10.0):
     n = np.linalg.norm(x1 - x2, ord=1)
@@ -1960,11 +1757,11 @@ for i in range(nb_samples):
     for j in range(nb_samples):
         W_rbf[i, j] = rbf(X[i], X[j])
 </code></pre>
-       <pre><code># Now, we can compute the degree matrix and its inverse. As the procedure is identical, from this point on, we continue using the RBF affinity matrix:
+                        <pre class="language-python">"<code># Now, we can compute the degree matrix and its inverse. As the procedure is identical, from this point on, we continue using the RBF affinity matrix:
 D_rbf = np.diag(np.sum(W_rbf, axis=1))
 D_rbf_inv = np.linalg.inv(D_rbf)
 </code></pre>
-       <pre><code># Ideally, it's possible to set a double stop criterion based on the threshold and a maximum number of iterations:
+                        <pre class="language-python">"<code># Ideally, it's possible to set a double stop criterion based on the threshold and a maximum number of iterations:
 tolerance = 0.01
 Yt = Y.copy()
 Y_prev = np.zeros((nb_samples,))
@@ -1976,7 +1773,7 @@ while np.linalg.norm(Yt - Y_prev, ord=1) &gt; tolerance:
     Yt[0:nb_samples - nb_unlabeled] = Y[0:nb_samples - nb_unlabeled]
 Y_final = np.sign(Yt)
 </code></pre>
-       <pre><code># As it's possible to see, in the original dataset, there's a round dot surrounded by square ones (-0.9, -1). 
+                        <pre class="language-python">"<code># As it's possible to see, in the original dataset, there's a round dot surrounded by square ones (-0.9, -1). 
 # As this algorithm keeps the original labels, we find the same situation after the propagation of labels. 
 # This condition could be acceptable, even if both the smoothness and clustering assumptions are contradicted. 
 # Assuming that it's reasonable (that is, the initial labeling can be considered as flexible and there are no explicit constraints), 
@@ -1994,42 +1791,39 @@ Y_final = np.sign(Yt)
 
 # With this modification, the original labels are not clamped anymore, and the propagation algorithm is allowed to change all those values that disagree with the neighborhood.
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Label Propagation [Sklearn]
-        </b>
-       </summary>
-       Scikit-learn implements a slightly different algorithm proposed by Zhu and Ghahramani (in the aforementioned paper) that is equivalent in terms of results but has a slightly different internal dynamic based on a Markov random walk through the graph until a stationary configuration is found (that is, the labels don't change anymore).
-       <pre><code>
+
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Label Propagation [Sklearn]</b></summary>
+                        Scikit-learn implements a slightly different algorithm proposed by Zhu and Ghahramani (in the
+                        aforementioned paper) that is equivalent in terms of results but has a slightly different
+                        internal dynamic based on a Markov random walk through the graph until a stationary
+                        configuration is found (that is, the labels don't change anymore).
+                        <pre class="language-python">"<code>
 from sklearn.datasets import make_classification
 nb_samples = 1000
 nb_unlabeled = 750
 X, Y = make_classification(n_samples=nb_samples, n_features=2, n_informative=2, n_redundant=0, random_state=100)
 Y[nb_samples - nb_unlabeled:nb_samples] = -1
 </code></pre>
-       <pre><code>from sklearn.semi_supervised import LabelPropagation
+                        <pre class="language-python">"<code>from sklearn.semi_supervised import LabelPropagation
 lp = LabelPropagation(kernel='rbf', gamma=10.0)
 lp.fit(X, Y)
 Y_final = lp.predict(X)
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+
+                    </details>
+                </li>
+
+            </ul>
+        </details>
+
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
 </html>

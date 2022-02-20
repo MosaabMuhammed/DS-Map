@@ -5,9 +5,7 @@
 <details><summary style='font-size:18px;color:darkcyan'> <b>Important Functions</b> </summary>
 <p>
 
-<details><summary><b>Random Model</b></summary><p>
-~~~python
-# Random model.
+<details><summary><b>Random Model</b></summary><p><pre><code class="python language-python"># Random model.
 def RandomModel(y_test, numOfClasses):
     '''
     This function builds a random model that predicts the class labels randomly.
@@ -24,16 +22,14 @@ def RandomModel(y_test, numOfClasses):
         rand_probs = np.random.rand(1, numOfClasses)
         y_pred[i] = ((rand_probs/sum(sum(rand_probs)))[0])
     return y_pred
-~~~
+</code></pre>
 </p></details> 
 
 <details><summary>Plot <b>Features Importance</b></summary>
 <p>
 <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Model-Interpretation:-Feature-Importances"><b>Result</b></a> </p>
 
-<p><a href="https://www.kaggle.com/willkoehrsen/a-complete-introduction-and-walkthrough"><b>Best Notebook</b></a> </p>
-~~~python
-# Take the important features from the model.
+<p><a href="https://www.kaggle.com/willkoehrsen/a-complete-introduction-and-walkthrough"><b>Best Notebook</b></a> </p><pre><code class="python language-python"># Take the important features from the model.
 feature_importance_values = rf.feature_importances_
 feature_importance = pd.DataFrame({'feature': features, 'importance': feature_importance_values})
 
@@ -91,7 +87,7 @@ def plot_feature_importances(df, n = 10, threshold = None):
 
         # Number of features needed for threshold cumulative importance
         # This is the index (will need to add 1 for the actual number)
-        importance_index = np.min(np.where(df['cumulative_importance'] > threshold))
+        importance_index = np.min(np.where(df['cumulative_importance'] &gt; threshold))
 
         # Add vertical line to plot
         plt.vlines(importance_index + 1, ymin = 0, ymax = 1.05, linestyles = '--', colors = 'red')
@@ -104,7 +100,7 @@ def plot_feature_importances(df, n = 10, threshold = None):
 
 # Call the function
 feature_importance_sorted = plot_feature_importance(feature_importance)
-~~~
+</code></pre>
 </p></details> 
 
 </p></details> 
@@ -127,7 +123,7 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
         self.label_counter          = defaultdict(Counter)
         self.unique_words_per_label = defaultdict(list)
         self.verbose                = verbose
-    
+
     def fit(self, X, y):
         self.classes_     = unique_labels(y)
         self._X, self._y  = X, y
@@ -144,7 +140,7 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
                 if label1 == label2: continue
                 temp_lst.extend(list(self.label_counter[label2]))
             self.unique_words_per_label[label1] = list(set(self.label_counter[label1]).difference(set(temp_lst)))[:self.limit]
-            
+
             if len(self.unique_words_per_label[label1]) == 0 and self.verbose:
                 print(f"[{label1}] has no unique words, so it won't be predicted!")
         return self
@@ -185,7 +181,7 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
         for word in X.split():
             for label in self.classes_:
                 score[label] += self.label_counter[label][word]
-        
+
         return score
 </code></pre>
 </details>
@@ -383,16 +379,16 @@ from sklearn.experimental import enable_hist_gradient_boosting  # noqa
 from sklearn.ensemble import HistGradientBoostingClassifier
 
 hgbc_model = HistGradientBoostingClassifier(
-	l2_regularization=1.766059063693552,
-	learning_rate=0.10675193678150449,
-	max_bins=128,
-	max_depth=31,
-	max_leaf_nodes=185,
-	random_state=2021
+    l2_regularization=1.766059063693552,
+    learning_rate=0.10675193678150449,
+    max_bins=128,
+    max_depth=31,
+    max_leaf_nodes=185,
+    random_state=2021
 )
 hgbc_model.fit(
-	hgbc_x_train,
-	y_train,
+    hgbc_x_train,
+    y_train,
 )
 
 train_oof_preds = hgbc_model.predict_proba(hgbc_x_valid)[:,-1]
@@ -818,7 +814,7 @@ for n_estimators in range(1, 120):
     y_pred = gbrt.predict(X_valid)
     valid_error = metrics.mean_squared_error(y_valid, y_pred)
 
-    if valid_error &lt; min_valid_error:
+    if valid_error &amp;lt; min_valid_error:
         min_valid_error, error_going_up = valid_error, 0
     else:
         error_going_up += 1
@@ -949,7 +945,7 @@ X_unlabeled = X[nb_labeled:]
 </code></pre>
 <pre><code>import numpy as np
 from sklearn.naive_bayes import GaussianNB
-while X_train.shape[0] &lt;= nb_samples:
+while X_train.shape[0] &amp;lt;= nb_samples:
     nb = GaussianNB()
     nb.fit(X_train, Y_train)
     if X_train.shape[0] == nb_samples:
@@ -993,7 +989,7 @@ print(classification_report(Y, nb0.predict(X), target_names=wine['target_names']
 from sklearn.naive_bayes import GaussianNB
 nb1 = None
     nb2 = None
-    while X_labeled_1.shape[0] <= nb_samples:
+    while X_labeled_1.shape[0] &lt;= nb_samples:
         nb1 = GaussianNB()
         nb1.fit(X_labeled_1, Y_labeled)
         nb2 = GaussianNB()
@@ -1065,7 +1061,7 @@ multi_class="auto",
 random_state=1000)
 
 q0 = np.random.uniform(0, 1, size=nb_unlabeled)
-trh = np.vectorize(lambda x: 0.0 if x &lt; 0.5 else 1.0)
+trh = np.vectorize(lambda x: 0.0 if x &amp;lt; 0.5 else 1.0)
 </code></pre>
 
 <pre><code>def weighted_log_loss(yt, p, w=None, eps=1e-15):
@@ -1148,7 +1144,7 @@ print(w.shape, eta.shape, xi.shape, zi.shape, b.shape)
 theta0 = np.hstack((w, eta, xi, zi, b))
 </code></pre>
 <pre><code># We also need to vectorize the min() function in order to apply it to arrays:
-vmin = np.vectorize(lambda x1, x2: x1 if x1 <= x2 else x2)
+vmin = np.vectorize(lambda x1, x2: x1 if x1 &lt;= x2 else x2)
 </code></pre>
 <pre><code># Now, we can define the objective function:
 def svm_target(theta, Xd, Yd):
@@ -1170,7 +1166,7 @@ def labeled_constraint(theta, Xd, Yd, idx):
     c  = Yd[idx] * (np.dot(Xd[idx], wt) + theta[-1]) + \
          theta[2:2+nb_labeled][idx] - 1.0
 
-    return (c >= 0)[0]
+    return (c &gt;= 0)[0]
 
 # The unlabeled constraints
 def unlabeled_constraint_1(theta, Xd, idx):
@@ -1179,7 +1175,7 @@ def unlabeled_constraint_1(theta, Xd, idx):
     c = np.dot(Xd[idx], wt) - theta[-1] + \
         theta[2+nb_labeled:2+nb_samples][idx-nb_samples+nb_unlabeled] - 1.0
 
-    return (c >= 0)[0]
+    return (c &gt;= 0)[0]
 
 def unlabeled_constraint_2(theta, Xd, idx):
     wt = theta[:2].reshape((Xd.shape[1], 1))
@@ -1187,17 +1183,17 @@ def unlabeled_constraint_2(theta, Xd, idx):
     c = -(np.dot(Xd[idx], wt) - theta[-1]) + \
         theta[2+nb_samples:2+nb_samples+nb_unlabeled][idx-nb_samples+nb_unlabeled] - 1.0
 
-    return (c >= 0)[0]
+    return (c &gt;= 0)[0]
 </code></pre>
 <pre><code># We also need to include the constraints for each slack variable (≥ 0):
 def eta_constraint(theta, idx):
-    return theta[2:2+nb_samples-nb_unlabeled][idx] >= 0
+    return theta[2:2+nb_samples-nb_unlabeled][idx] &gt;= 0
 
 def xi_constraint(theta, idx):
-    return theta[2+nb_samples-nb_unlabeled:2+nb_samples][idx-nb_samples+nb_unlabeled] >= 0
+    return theta[2+nb_samples-nb_unlabeled:2+nb_samples][idx-nb_samples+nb_unlabeled] &gt;= 0
 
 def zi_constraint(theta, idx):
-    return theta[2+nb_samples:2+nb_samples+nb_unlabeled][idx-nb_samples+nb_unlabeled] >= 0
+    return theta[2+nb_samples:2+nb_samples+nb_unlabeled][idx-nb_samples+nb_unlabeled] &gt;= 0
 </code></pre>
 <pre><code># We can now set up the problem using the SciPy convention:
 # Each constraint is represented by a dictionary, 
@@ -1318,16 +1314,16 @@ def labeled_constraint(theta, Xd, Yd, idx):
     wt = theta[0:2].reshape((Xd.shape[1], 1))
     c = Yd[idx] * (np.dot(Xd[idx], wt) + theta[-1]) + \
     theta[2:2 + nb_samples - nb_unlabeled][idx] - 1.0
-    
-    return int((c >= 0)[0])
-    
+
+    return int((c &gt;= 0)[0])
+
 def unlabeled_constraint(theta, Xd, idx):
     wt = theta[0:2].reshape((Xd.shape[1], 1))
     c = theta[2 + nb_samples:2 + nb_samples + nb_unlabeled][idx - nb_samples + nb_unlabeled] * \
         (np.dot(Xd[idx], wt) + theta[-1]) + \
         theta[2 + nb_samples - nb_unlabeled:2 + nb_samples][idx - nb_samples + nb_unlabeled] - 1.0
-    
-    return int((c >= 0)[0])
+
+    return int((c &gt;= 0)[0])
 </code></pre>
 <pre><code># In this example, we want to employ the SLSQP algorithm to optimize the objective. 
 # This method computes the Jacobian (that is, the matrix containing the first partial derivatives) of all constraints (including the Boolean ones) and in NumPy 1.8+ the difference operator (-) between Boolean arrays has been deprecated and must be replaced with a logical XOR.
@@ -1336,9 +1332,9 @@ def unlabeled_constraint(theta, Xd, idx):
 # This substitution doesn't affect either the performance or the final result. 
 # At this point, we can introduce the constraints for both labeled and unlabeled samples:
 def eta_labeled_constraint(theta, idx):
-    return int(theta[2:2 + nb_samples - nb_unlabeled][idx] >= 0)
+    return int(theta[2:2 + nb_samples - nb_unlabeled][idx] &gt;= 0)
 def eta_unlabeled_constraint(theta, idx):
-    return int(theta[2 + nb_samples - nb_unlabeled:2 + nb_samples][idx - nb_samples + nb_unlabeled] >= 0)
+    return int(theta[2 + nb_samples - nb_unlabeled:2 + nb_samples][idx - nb_samples + nb_unlabeled] &gt;= 0)
 </code></pre>
 <pre><code># As in the previous example, we can create the constraint dictionary needed by SciPy:
 svm_constraints = []
@@ -1353,7 +1349,7 @@ for i in range(nb_samples - nb_unlabeled):
             'fun': eta_labeled_constraint,
             'args': (i,)
         })
-    
+
 for i in range(nb_samples - nb_unlabeled, nb_samples):
     svm_constraints.append({
             'type': 'ineq',
@@ -1446,7 +1442,7 @@ tolerance = 0.01
 Yt = Y.copy()
 Y_prev = np.zeros((nb_samples,))
 iterations = 0
-while np.linalg.norm(Yt - Y_prev, ord=1) > tolerance:
+while np.linalg.norm(Yt - Y_prev, ord=1) &gt; tolerance:
     P = np.dot(D_rbf_inv, W_rbf)
     Y_prev = Yt.copy()
     Yt = np.dot(P, Yt)
@@ -1463,7 +1459,7 @@ tolerance = 0.01
 Yt = Y.copy()
 Y_prev = np.zeros((nb_samples,))
 iterations = 0
-while np.linalg.norm(Yt - Y_prev, ord=1) > tolerance:
+while np.linalg.norm(Yt - Y_prev, ord=1) &gt; tolerance:
     P = np.dot(D_rbf_inv, W_rbf)
     Yt = np.dot(P, Yt)
     Y_prev = Yt.copy()
