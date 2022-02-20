@@ -251,7 +251,7 @@ walmart_store_count_series.resample('BQ').mean().plot(style=':', title=&quot;Val
 google['Change'].plot(figsize=(20,8))</code></pre>
                         <img src="./imgs/percent_change.png" alt="">
                     </details></li>
-<!-- - --------------------------------------- -->
+<!-- =============================================== -->
                     <li><details><summary>Stock Returns</summary>
                         <pre class="language-python"><code>google['Return'] = google.Change.sub(1).mul(100)
 google['Return'].plot(figsize=(20,8))
@@ -260,12 +260,12 @@ google.High.pct_change().mul(100).plot(figsize=(20,6)) # Another way to calculat
 </code></pre>
                         <img src="./imgs/percent_change.png" alt="">
                     </details></li>
-<!-- - --------------------------------------- -->
+<!-- =============================================== -->
                     <li><details><summary>Absolute Changes in successive days</summary>
                         <pre class="language-python"><code>google.High.diff().plot(figsize=(20,6))</code></pre>
                         <img src="./imgs/diff.png" alt="">
                     </details></li>
-<!-- - --------------------------------------- -->
+<!-- =============================================== -->
                     <li><details><summary>Comparing 2 or more time series</summary>
                         <p>We will compare 2 time series by normalizing them. This is achieved by dividing each time series element of all time series by the first element.<br>
                             This way both series start at the same point and can be easily compared.</p>
@@ -281,7 +281,7 @@ plt.show()
 # You can clearly see how google outperforms microsoft over time.</code></pre>
                         <img src="./imgs/compare.png" alt="">
                     </details></li>
-<!-- - --------------------------------------- -->
+<!-- =============================================== -->
                     <li><details><summary>Window Functions <b>rolling</b>, <b>exapnding</b></summary>
                         <p>In rolling function the window size remain constant whereas in the expanding function it changes.</p>
                         <pre class="language-python"><code># Rolling window functions
@@ -302,7 +302,7 @@ plt.legend(['High','Expanding Mean','Expanding Standard Deviation'])
 plt.show()</code></pre>
                         <img src="./imgs/expanding.png" alt="">
                     </details></li>
-<!-- - --------------------------------------- -->
+<!-- =============================================== -->
                     <li><details><summary>OHLC charts</summary>
                         <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
 init_notebook_mode(connected=True)
@@ -318,7 +318,7 @@ data = [trace]
 iplot(data, filename='simple_ohlc')</code></pre>
                         <img src="./imgs/OHLC.png" alt="">
                     </details></li>
-<!-- - --------------------------------------- -->
+<!-- =============================================== -->
                     <li><details><summary>Candle charts</summary>
                         <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
 init_notebook_mode(connected=True)
@@ -334,13 +334,41 @@ data = [trace]
 iplot(data, filename='simple_candlestick')</code></pre>
                         <img src="./imgs/candle.png" alt="">
                     </details></li>
-<!-- - --------------------------------------- -->
-
+<!-- =============================================== -->
                 </ul>
         </details>
+<!-- - --------------------------------------- -->
+        </ul></details>
 
-        </ul>
+        <details>
+            <summary><b>Tests</b></summary>
+            <ul>
+                <li><details><summary>Autocorrelation</summary>
+                <p>The autocorrelation function (ACF) measures how a series is correlated with itself at different lags.</p>
+                <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+                    
+# Autocorrelation of humidity of San Diego
+plot_acf(humidity["San Diego"], lags=25, title="San Diego")
+plt.show()
+
+# As all lags are either close to 1 or at least greater than the confidence interval, they are statistically significant.</code></pre>
+                <img src="./imgs/autocorrelation.png" alt="">
+                </details></li>
+<!-- =============================================== -->
+                <li><details><summary>Partial Autocorrelation</summary>
+                    <p>The partial autocorrelation function can be interpreted as a regression of the series against its past lags. <br>The terms can be interpreted the same way as a standard linear regression, that is the contribution of a change in that particular lag while holding others constant.</p>
+                    <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+                        
+# Partial Autocorrelation of humidity of San Diego
+plot_pacf(humidity["San Diego"],lags=25)
+plt.show()
+# Though it is statistically signficant, partial autocorrelation after first 2 lags is very low.
+</code></pre>
+                    <img src="./imgs/partial_autocorrelation.png" alt="">
+                    </details></li>
+            </ul>
         </details>
+
     </div>
     <script src="../../prism.js"></script>
 </body>
