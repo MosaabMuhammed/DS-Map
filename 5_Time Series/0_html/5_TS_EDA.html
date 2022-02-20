@@ -281,9 +281,29 @@ plt.show()
 # You can clearly see how google outperforms microsoft over time.</code></pre>
                         <img src="./imgs/compare.png" alt="">
                     </details></li>
+                    <li><details><summary>Window Functions <b>rolling</b>, <b>exapnding</b></summary>
+                        <p>In rolling function the window size remain constant whereas in the expanding function it changes.</p>
+                        <pre class="language-python"><code># Rolling window functions
+rolling_google = google.High.rolling('90D').mean()
+google.High.plot()
+rolling_google.plot()
+plt.legend(['High','Rolling Mean'])
+# Plotting a rolling mean of 90 day window with original High attribute of google stocks
+plt.show()</code></pre>
+                        <img src="./imgs/rolling.png" alt="">
+                        <pre class="language-python"><code># Expanding window functions
+microsoft_mean = microsoft.High.expanding().mean()
+microsoft_std = microsoft.High.expanding().std()
+microsoft.High.plot()
+microsoft_mean.plot()
+microsoft_std.plot()
+plt.legend(['High','Expanding Mean','Expanding Standard Deviation'])
+plt.show()</code></pre>
+                        <img src="./imgs/expanding.png" alt="">
+                    </details></li>
                 </ul>
         </details>
-
+<!-- - --------------------------------------- -->
     </div>
     <script src="../../prism.js"></script>
 </body>
