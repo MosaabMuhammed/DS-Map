@@ -145,11 +145,11 @@ walmart_store_count_series.resample('BQ').mean().plot(style=':', title=&quot;Val
         </details>
 
         <hr>
-
+<!-- - --------------------------------------- -->
         <details>
             <summary><b>Time-Series Analysis Course</b></summary>
             <p>
-
+<!-- - --------------------------------------- -->
             <details>
                 <summary><b>Time-Series with Pandas</b></summary>
                 <p>
@@ -207,7 +207,7 @@ walmart_store_count_series.resample('BQ').mean().plot(style=':', title=&quot;Val
                 </ul>
                 </p>
             </details>
-
+<!-- - --------------------------------------- -->
             <details>
                 <summary><b>Statsmodel for Time-Series Analysis</b></summary>
                 <p>
@@ -251,7 +251,7 @@ walmart_store_count_series.resample('BQ').mean().plot(style=':', title=&quot;Val
 google['Change'].plot(figsize=(20,8))</code></pre>
                         <img src="./imgs/percent_change.png" alt="">
                     </details></li>
-
+<!-- - --------------------------------------- -->
                     <li><details><summary>Stock Returns</summary>
                         <pre class="language-python"><code>google['Return'] = google.Change.sub(1).mul(100)
 google['Return'].plot(figsize=(20,8))
@@ -260,12 +260,12 @@ google.High.pct_change().mul(100).plot(figsize=(20,6)) # Another way to calculat
 </code></pre>
                         <img src="./imgs/percent_change.png" alt="">
                     </details></li>
-
+<!-- - --------------------------------------- -->
                     <li><details><summary>Absolute Changes in successive days</summary>
                         <pre class="language-python"><code>google.High.diff().plot(figsize=(20,6))</code></pre>
                         <img src="./imgs/diff.png" alt="">
                     </details></li>
-
+<!-- - --------------------------------------- -->
                     <li><details><summary>Comparing 2 or more time series</summary>
                         <p>We will compare 2 time series by normalizing them. This is achieved by dividing each time series element of all time series by the first element.<br>
                             This way both series start at the same point and can be easily compared.</p>
@@ -281,6 +281,7 @@ plt.show()
 # You can clearly see how google outperforms microsoft over time.</code></pre>
                         <img src="./imgs/compare.png" alt="">
                     </details></li>
+<!-- - --------------------------------------- -->
                     <li><details><summary>Window Functions <b>rolling</b>, <b>exapnding</b></summary>
                         <p>In rolling function the window size remain constant whereas in the expanding function it changes.</p>
                         <pre class="language-python"><code># Rolling window functions
@@ -301,9 +302,45 @@ plt.legend(['High','Expanding Mean','Expanding Standard Deviation'])
 plt.show()</code></pre>
                         <img src="./imgs/expanding.png" alt="">
                     </details></li>
+<!-- - --------------------------------------- -->
+                    <li><details><summary>OHLC charts</summary>
+                        <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
+init_notebook_mode(connected=True)
+import plotly.graph_objs as go
+
+# OHLC chart of June 2008
+trace = go.Ohlc(x=google['06-2008'].index,
+                open=google['06-2008'].Open,
+                high=google['06-2008'].High,
+                low=google['06-2008'].Low,
+                close=google['06-2008'].Close)
+data = [trace]
+iplot(data, filename='simple_ohlc')</code></pre>
+                        <img src="./imgs/OHLC.png" alt="">
+                    </details></li>
+<!-- - --------------------------------------- -->
+                    <li><details><summary>Candle charts</summary>
+                        <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
+init_notebook_mode(connected=True)
+import plotly.graph_objs as go
+
+# Candlestick chart of march 2008
+trace = go.Candlestick(x=google['03-2008'].index,
+                open=google['03-2008'].Open,
+                high=google['03-2008'].High,
+                low=google['03-2008'].Low,
+                close=google['03-2008'].Close)
+data = [trace]
+iplot(data, filename='simple_candlestick')</code></pre>
+                        <img src="./imgs/candle.png" alt="">
+                    </details></li>
+<!-- - --------------------------------------- -->
+
                 </ul>
         </details>
-<!-- - --------------------------------------- -->
+
+        </ul>
+        </details>
     </div>
     <script src="../../prism.js"></script>
 </body>
