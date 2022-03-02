@@ -3,178 +3,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>
-        Made with Remarkable!
-    </title>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet" />
-    <style type="text/css">
-        body,
-        table tr {
-            background-color: #fff
-        }
-        
-        table tr td,
-        table tr th {
-            border: 1px solid #ccc;
-            text-align: left;
-            padding: 6px 13px;
-            margin: 0
-        }
-        
-        pre code,
-        table,
-        table tr {
-            padding: 0
-        }
-        
-        hr,
-        pre code {
-            background: 0 0
-        }
-        
-        body {
-            font: 16px Helvetica, Arial, sans-serif;
-            line-height: 1.4;
-            color: #333;
-            word-wrap: break-word;
-            padding: 10px 15px
-        }
-        
-        strong,
-        table tr th {
-            font-weight: 700
-        }
-        
-        h1 {
-            font-size: 2em;
-            margin: .67em 0;
-            text-align: center
-        }
-        
-        h2 {
-            font-size: 1.75em
-        }
-        
-        h3 {
-            font-size: 1.5em
-        }
-        
-        h4 {
-            font-size: 1.25em
-        }
-        
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-weight: 700;
-            position: relative;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            line-height: 1.1
-        }
-        
-        h1,
-        h2 {
-            border-bottom: 1px solid #eee
-        }
-        
-        hr {
-            height: 0;
-            margin: 15px 0;
-            overflow: hidden;
-            border: 0;
-            border-bottom: 1px solid #ddd
-        }
-        
-        a {
-            color: #4183C4
-        }
-        
-        a.absent {
-            color: #c00
-        }
-        
-        ol,
-        ul {
-            padding-left: 15px;
-            margin-left: 5px
-        }
-        
-        ol {
-            list-style-type: lower-roman
-        }
-        
-        table tr {
-            border-top: 1px solid #ccc;
-            margin: 0
-        }
-        
-        table tr:nth-child(2n) {
-            background-color: #aaa
-        }
-        
-        table tr td :first-child,
-        table tr th :first-child {
-            margin-top: 0
-        }
-        
-        table tr td:last-child,
-        table tr th :last-child {
-            margin-bottom: 0
-        }
-        
-        img {
-            max-width: 100%
-        }
-        
-        blockquote {
-            padding: 0 15px;
-            border-left: 4px solid #ccc
-        }
-        
-        code,
-        tt {
-            margin: 0 2px;
-            padding: 0 5px;
-            white-space: nowrap;
-            border: 1px solid #eaeaea;
-            background-color: #f8f8f8;
-            border-radius: 3px
-        }
-        
-        pre code {
-            margin: 0;
-            white-space: pre;
-            border: none
-        }
-        
-        .highlight pre,
-        pre {
-            background-color: #f8f8f8;
-            border: 1px solid #ccc;
-            font-size: 13px;
-            line-height: 19px;
-            overflow: auto;
-            padding: 6px 10px;
-            border-radius: 3px
-        }
-    </style>
+    <title>Made with Remarkable!</title>
+    <link rel="stylesheet" href="../../prism.css">
 </head>
 
 <body>
-    <h1>
-        Python
-    </h1>
+    <h1>Python</h1>
     <div style="width:1000px;margin:auto">
         <details>
-            <summary>
-                <b>
-      OOP
-     </b>
-            </summary>
+            <summary><b>OOP</b></summary>
             <ul>
                 <li>
                     <a href="OOP.html#Class-Variables:" style="color:#333;font-weight:bold">
@@ -257,7 +94,7 @@
         Looping over a collection
        </b>
                     </summary>
-                    <pre><code>colors = ["green", "red", "blue", "black"]
+                    <pre class="language-python"><code>colors = ["green", "red", "blue", "black"]
 
 for color in colors:
     print(color)
@@ -269,7 +106,7 @@ for color in colors:
         Looping Backwards
        </b>
                     </summary>
-                    <pre><code>colors = ["green", "red", "blue", "black"]
+                    <pre class="language-python"><code>colors = ["green", "red", "blue", "black"]
 
 # Ugly
 for i in range(len(colors)-1, -1, -1):
@@ -286,7 +123,7 @@ for color in reversed(colors):
         Looping over a collection and indices
        </b>
                     </summary>
-                    <pre><code>colors = ["green", "red", "blue", "black"]
+                    <pre class="language-python"><code>colors = ["green", "red", "blue", "black"]
 
 # Ugly
 for i in range(len(colors)):
@@ -303,7 +140,7 @@ for i, color in enumerate(colors):
         Looping over 2 collections
        </b>
                     </summary>
-                    <pre><code>colors = ["green", "red", "blue", "black"]
+                    <pre class="language-python"><code>colors = ["green", "red", "blue", "black"]
 names = ["raymond", "rachel", "matthew"]
 
 # Ugly
@@ -340,7 +177,7 @@ for name, color in zip(names, colors):
         </b> list.sort() ""in-place""
                         </li>
                     </ul>
-                    <pre><code>colors = ["green", "red", "blue", "black"]
+                    <pre class="language-python"><code>colors = ["green", "red", "blue", "black"]
 
 # Pythonic
 # Asceding
@@ -358,7 +195,7 @@ for color in sorted(colors, reverse=True):
         Custom Sort Order
        </b>
                     </summary>
-                    <pre><code>colors = ["green", "red", "blue", "black"]
+                    <pre class="language-python"><code>colors = ["green", "red", "blue", "black"]
 
 # Pythonic
 print(sorted(colors, key=len))
@@ -370,7 +207,7 @@ print(sorted(colors, key=len))
         Distinguishing multiple exit points in loops
        </b> [for-else]
                     </summary>
-                    <pre><code>colors = ["green", "red", "blue", "black"]
+                    <pre class="language-python"><code>colors = ["green", "red", "blue", "black"]
 
 # Ugly
 def find(seq, target):
@@ -401,7 +238,7 @@ def find(seq, target):
         Looping Over dictionary Keys
        </b>
                     </summary>
-                    <pre><code>d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
+                    <pre class="language-python"><code>d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
 
 #Ugly
 for k in d:
@@ -421,7 +258,7 @@ d = {k: d[k] for k in d}
         Looping Over dictionary Keys nad Values
        </b>
                     </summary>
-                    <pre><code>d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
+                    <pre class="language-python"><code>d = {'mathew': 'blue', 'rachel': 'green', 'raymond': 'red'}
 
 #Ugly
 for k in d:
@@ -438,7 +275,7 @@ for k, v in d.items():
         Construct a dictionary from pairs
        </b>
                     </summary>
-                    <pre><code>names = ['raymond', 'rachel', 'meatthew']
+                    <pre class="language-python"><code>names = ['raymond', 'rachel', 'meatthew']
 colors = ['red', 'blue', 'black']
 
 d = dict(zip(names, colors))
@@ -450,7 +287,7 @@ d = dict(zip(names, colors))
         Counting with dictionaries
        </b>
                     </summary>
-                    <pre><code>colors = ['red', 'red', 'green', 'blue', 'blue', 'green', 'red', 'blue']
+                    <pre class="language-python"><code>colors = ['red', 'red', 'green', 'blue', 'blue', 'green', 'red', 'blue']
 
 # Basic
 d = {}
@@ -478,7 +315,7 @@ for color in colors:
         Grouping with dictionaries
        </b>
                     </summary>
-                    <pre><code>names = ['mosaab', 'cool', 'hany', 'shady', 'muhamed', 'raymond']
+                    <pre class="language-python"><code>names = ['mosaab', 'cool', 'hany', 'shady', 'muhamed', 'raymond']
 
 # Basic
 d = {}
@@ -509,7 +346,7 @@ for name in names:
         Linking dictionaries
        </b>
                     </summary>
-                    <pre><code>d1 = {'mosaab': 'blue', 'hany': 'black', 'sally': 'purple'}
+                    <pre class="language-python"><code>d1 = {'mosaab': 'blue', 'hany': 'black', 'sally': 'purple'}
 d2 = {'shaker': 'yellow', 'hoda': 'brown'}
 
 # Basic
@@ -528,7 +365,7 @@ totalDict = ChainMap(d1, d2)
         Improving Clarity
        </b>
                     </summary>
-                    <pre><code># 1. Clarify function calls with keyword arguments. (It might slow you some milliseconds, but it's worth it).
+                    <pre class="language-python"><code># 1. Clarify function calls with keyword arguments. (It might slow you some milliseconds, but it's worth it).
 # Ugly
 twitter_search('@obama', False, 20, True)
 
@@ -542,7 +379,7 @@ twitter_search('@obama', retweets=False, numtweets=20, popular=True)
         Name Tuple
        </b>
                     </summary>
-                    <pre><code># 2. Clarify multiple return values with named tuples.
+                    <pre class="language-python"><code># 2. Clarify multiple return values with named tuples.
 # Ugly
 doctest.testmode()
 # (0, 4)
@@ -564,7 +401,7 @@ print(p.x, p.y)
         Unpacking Sequences
        </b>
                     </summary>
-                    <pre><code>p = 'Raymond', 'Hettinger', 0x30, 'python@example.com'
+                    <pre class="language-python"><code>p = 'Raymond', 'Hettinger', 0x30, 'python@example.com'
 
 # Ugly
 fname = p[0]
@@ -582,7 +419,7 @@ fname, lname, age, email = p
         Updating Sequences
        </b> [deque]
                     </summary>
-                    <pre><code>names = ['raymond', 'rachel', 'matthew', 'roger', 'betty']
+                    <pre class="language-python"><code>names = ['raymond', 'rachel', 'matthew', 'roger', 'betty']
 
 # Ugly
 del names[0]
@@ -655,7 +492,7 @@ names.appendleft('mark')
         Print Logging
        </b> by its level
                     </summary>
-                    <pre><code>import logging
+                    <pre class="language-python"><code>import logging
 
 num_1 = 20
 num_2 = 10
@@ -690,7 +527,7 @@ logging.critical('Div: {} / {} = {}'.format(num_1, num_2, div_result))
                     <a href="https://docs.python.org/3/library/logging.html#logrecord-attributes">
        Check different formatters
       </a>
-                    <pre><code>import logging
+                    <pre class="language-python"><code>import logging
 # Working with the root logger.
 logging.basicConfig(filename='test.log', level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(message)s')
@@ -705,7 +542,7 @@ logging.basicConfig(filename='test.log', level=logging.DEBUG,
         Set Specifi Logger
        </b>
                     </summary>
-                    <pre><code>import logging
+                    <pre class="language-python"><code>import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -735,7 +572,7 @@ logger.addHandler(stream_handler)
             <h4>
                 Old way
             </h4>
-            <pre><code>import threading, time
+            <pre class="language-python"><code>import threading, time
 
 start = time.perf_counter()
 
@@ -761,7 +598,7 @@ print(f"Finished in {round(finish-start, 2)} seconds.")
             <h4>
                 Better way
             </h4>
-            <pre><code>import concurrent.futures
+            <pre class="language-python"><code>import concurrent.futures
 import time
 
 start = time.perf_counter()
@@ -795,7 +632,7 @@ print(f'Finished in {round(finish-start, 2)} second(s)')
             <h4>
                 Old way
             </h4>
-            <pre><code>import multiprocess, time
+            <pre class="language-python"><code>import multiprocess, time
 
 start = time.perf_counter()
 
@@ -821,7 +658,7 @@ print(f"Finished in {round(finish-start, 2)} seconds.")
             <h4>
                 Better way
             </h4>
-            <pre><code>import concurrent.futures
+            <pre class="language-python"><code>import concurrent.futures
 import time
 
 start = time.perf_counter()
@@ -863,7 +700,7 @@ print(f'Finished in {round(finish-start, 2)} second(s)')
                 </summary>
                 <p>
                 </p>
-                <pre><code>sorting = {1: 23, 2: 24, 4: 51, 10: 1, "cool": 20}
+                <pre class="language-python"><code>sorting = {1: 23, 2: 24, 4: 51, 10: 1, "cool": 20}
 
 # to sort by values, put it first.
 values, keys = zip(*sorted(zip(sorting.values(), sorting.keys())))
@@ -872,7 +709,7 @@ values, keys
 # OUTPUT
 ((1, 20, 23, 24, 51), (10, 'cool', 1, 2, 4))
 </code></pre>
-                <pre><code>word_counts = {"a": 12, "b":23, "c": 1, "d":2}
+                <pre class="language-python"><code>word_counts = {"a": 12, "b":23, "c": 1, "d":2}
 
 # Sort by keys from small to large.
 new_dict = dict(sorted(word_counts.items(), key=lambda val: val[0], reverse=False)
@@ -893,7 +730,7 @@ new_dict = dict(sorted(word_counts.items(), key=lambda val: val[1], reverse=Fals
                 </summary>
                 <p>
                 </p>
-                <pre><code>x = [4, 1, 2, 3]
+                <pre class="language-python"><code>x = [4, 1, 2, 3]
 y = sorted(x)  # x is unchanged.
 x.sort()            # x is changed and sorted.
 
@@ -901,6 +738,7 @@ x.sort()            # x is changed and sorted.
 x = sorted([-4, 1, -2, 3], key=abs, reverse=True)
 </code></pre>
             </details>
+
             <details>
                 <summary>
                     <b>
@@ -910,7 +748,7 @@ x = sorted([-4, 1, -2, 3], key=abs, reverse=True)
                 You have to check at least a.score versus b.score, and in the case of a tie, a.name versus b.name.
                 <br/> For an ascending sort, return -1, 0, 1 for a &lt; b, a = b and a &gt; b.
                 <br/> For descending, return 1, 0, -1 for a &lt; b, a = b and a &gt; b.
-                <pre><code>from functools import cmp_to_key
+                <pre class="language-python"><code>from functools import cmp_to_key
 class Player:
     def __init__(self, name, score):
         self.name  = name
@@ -952,7 +790,7 @@ for i in data:
                 This function returns the position in the sorted list, where the number passed in argument can be placed so as to maintain the resultant list in sorted order. If the element is already present in the list, the right most position where element has to
                 be inserted is returned.
                 <br/> This function takes 4 arguments, list which has to be worked with, number to insert, starting position in list to consider, ending position which has to be considered.
-                <pre><code># O(log(n)) -&gt; Bisect method works on the concept of binary search
+                <pre class="language-python"><code># O(log(n)) -&gt; Bisect method works on the concept of binary search
 # importing "bisect" for bisection operations
 import bisect
 
@@ -981,7 +819,7 @@ print (bisect.bisect_right(li, 4, 0, 4))
                 This function returns the position in the sorted list, where the number passed in argument can be placed so as to maintain the resultant list in sorted order.
                 <br/> If the element is already present in the list, the left most position where element has to be inserted is returned.
                 <br/> This function takes 4 arguments, list which has to be worked with, number to insert, starting position in list to consider, ending position which has to be considered.
-                <pre><code># O(log(n)) -&gt; Bisect method works on the concept of binary search
+                <pre class="language-python"><code># O(log(n)) -&gt; Bisect method works on the concept of binary search
 # Python code to demonstrate the working of
 # bisect(), bisect_left() and bisect_right()
 
@@ -1006,7 +844,7 @@ print (bisect.bisect_left(li, 4))
                 </summary>
                 This function returns the sorted list after inserting number in appropriate position, if the element is already present in the list, the element is inserted at the rightmost possible position.
                 <br/> This function takes 4 arguments, list which has to be worked with, number to insert, starting position in list to consider, ending position which has to be considered.
-                <pre><code># O(n) -&gt; Inserting an element in sorted array requires traversal
+                <pre class="language-python"><code># O(n) -&gt; Inserting an element in sorted array requires traversal
 import bisect
 
 # initializing list
@@ -1048,7 +886,7 @@ The list after inserting new element using insort_right() is :
                 </summary>
                 This function returns the sorted list after inserting number in appropriate position, if the element is already present in the list, the element is inserted at the leftmost possible position.
                 <br/> This function takes 4 arguments, list which has to be worked with, number to insert, starting position in list to consider, ending position which has to be considered.
-                <pre><code># O(n) -&gt; Inserting an element in sorted array requires traversal
+                <pre class="language-python"><code># O(n) -&gt; Inserting an element in sorted array requires traversal
 # importing "bisect" for bisection operations
 import bisect
 
@@ -1067,47 +905,51 @@ bisect.insort_left(li2, 5)
         </details>
         <details>
             <summary>
-                <b>
-      String
-     </b>
+                <b>String</b>
             </summary>
-            <details>
-                <summary>
-                    <b>
+            <ul>
+                <details>
+                    <summary>
+                        <b>
        f-Literal
       </b>
-                </summary>
-                <p>
-                </p>
-                <p>
-                    <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">
+                    </summary>
+                    <p>
+                    </p>
+                    <p>
+                        <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/NLP%20with%20Python%20-%20Udemy/00-Python-Text-Basics/00-Working-with-Text-Files.html#Formatted-String-Literals-(f-strings)">
        Formatted String Literal
       </a>
-                </p>
-            </details>
-            <details>
-                <summary>
-                    <b>
+                    </p>
+                </details>
+                <details>
+                    <summary>
+                        <b>
        Check if char islower(), isupper(), isdigit(), islapha()
       </b>
-                </summary>
-                <p>
-                </p>
-                <pre><code>txt = "cooL"
+                    </summary>
+                    <p>
+                    </p>
+                    <pre class="language-python"><code>txt = "cooL"
 txt[0].islower() # True
 txt[0].isupper() # False
 txt[0].isdigit() # False
 txt[0].isalpha() # True
 </code></pre>
-            </details>
-
-            <details>
-                <summary>
-                    <b>Remove Duplicates</b>
-                </summary>
-                <p>
-                </p>
-                <pre><code>
+                </details>
+                <details>
+                    <summary><b>ascii_letters</b></summary>
+                    <pre class="language-python"><code>from string import ascii_letters
+    print(ascii_letters) # abcde..
+    </code></pre>
+                </details>
+                <details>
+                    <summary>
+                        <b>Remove Duplicates</b>
+                    </summary>
+                    <p>
+                    </p>
+                    <pre class="language-python"><code>
 # Remove duplicates from string without using regex (Order Doesn't Matter).
 "".join(set(foo))
 
@@ -1121,17 +963,17 @@ repl = r'\1'        # replace it once
 text = 'shhhhh!!!
 re.sub(pattern,repl,text)
     </code></pre>
-            </details>
+                </details>
 
-            <details>
-                <summary>
-                    <b>
+                <details>
+                    <summary>
+                        <b>
        str.index()
       </b> : Get index of substring
-                </summary>
-                <p>
-                </p>
-                <pre><code> 'coolcool'[0]
+                    </summary>
+                    <p>
+                    </p>
+                    <pre class="language-python"><code> 'coolcool'[0]
 #'c'
 s = 'coolcool'
 s.index('c')
@@ -1145,16 +987,16 @@ s.index('c', 1, 2)
 s.index('c', 1, 5)
 #4
 </module></stdin></code></pre>
-            </details>
-            <details>
-                <summary>
-                    <b>
+                </details>
+                <details>
+                    <summary>
+                        <b>
        Remove/Replace char/s
       </b>
-                </summary>
-                <p>
-                </p>
-                <pre><code># Remove a char from a string.
+                    </summary>
+                    <p>
+                    </p>
+                    <pre class="language-python"><code># Remove a char from a string.
 txt = 'abc12321cba'
 txt.replace('a', '')
 txt.translate({ord('a'): None})
@@ -1169,23 +1011,24 @@ s = 'abababab'
 print(s.replace('a', 'A', 2))
 # AbAbabab
 </code></pre>
-            </details>
-            <details>
-                <summary>
-                    <b>
+                </details>
+                <details>
+                    <summary>
+                        <b>
        ord() / chr()
       </b> : get unicode index
-                </summary>
-                <p>
-                </p>
-                <pre><code># ord() function takes string argument of a single Unicode character 
+                    </summary>
+                    <p>
+                    </p>
+                    <pre class="language-python"><code># ord() function takes string argument of a single Unicode character 
 # and return its integer Unicode code point value.
 print(ord('a')) # 97
 
 print(chr(97)) # 'a'
 </code></pre>
-            </details>
-            <br/>
+                </details>
+                <br/>
+            </ul>
         </details>
         <details>
             <summary>
@@ -1195,7 +1038,7 @@ print(chr(97)) # 'a'
             </summary>
             <p>
             </p>
-            <pre><code>import random
+            <pre class="language-python"><code>import random
 random.seed(42)
 
 # random.random() produces numbers uniformly between 0 and 1 it's the random function we'll use most often
@@ -1236,7 +1079,7 @@ sublst = [random.choice(range(10)) for _ in range(4)]
             </summary>
             <p>
             </p>
-            <pre><code>import re
+            <pre class="language-python"><code>import re
 
 re.match("a", "cat") # --&gt; cat doesn't start with a
 re.search("a", "cat") # --&gt; cat has an "a" in it.
@@ -1263,7 +1106,7 @@ re.sub("[0-9]", "-", "R2D2") # --&gt; replace digits with dashes.
                     </summary>
                     <p>
                     </p>
-                    <pre><code>list_of_lists = [[1, 2, 3, 4], [5, 6, 76], [123, 12, 123, 123,124123,123,123]]
+                    <pre class="language-python"><code>list_of_lists = [[1, 2, 3, 4], [5, 6, 76], [123, 12, 123, 123,124123,123,123]]
 list_elements = sum(terms, [])
 </code></pre>
                 </details>
@@ -1283,7 +1126,7 @@ list_elements = sum(terms, [])
             </summary>
             <p>
             </p>
-            <pre><code>a = [1, 2, 3, 4, 5]
+            <pre class="language-python"><code>a = [1, 2, 3, 4, 5]
 b = [4, 5, 5, 6, 5, 6]
 
 ### 1. Existing in (a) but NOT in (b)
@@ -1319,7 +1162,7 @@ a + b
                     </summary>
                     <p>
                     </p>
-                    <pre><code>import os
+                    <pre class="language-python"><code>import os
 print(os.listdir("../input"))
 </code></pre>
                 </details>
@@ -1336,7 +1179,7 @@ print(os.listdir("../input"))
             </summary>
             <p>
             </p>
-            <pre><code>from collections import Counter
+            <pre class="language-python"><code>from collections import Counter
 
 cnt1, cnt2 = Counter("cool"), Counter("not cool")
 
@@ -1356,7 +1199,7 @@ cnt1.subtract(cnt2)
             </summary>
             <p>
             </p>
-            <pre><code>from functools import partial 
+            <pre class="language-python"><code>from functools import partial 
 
 # A normal function 
 def add(a, b, c): 
@@ -1389,7 +1232,7 @@ print(add_part(3))
             }
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="../../prism.js"></script>
 </body>
 
 </html>
