@@ -87,7 +87,11 @@ result.plot_predict(start=900, end=1010)
 plt.show()
 </code></pre>
                     <img src="../0_html/imgs/ar-forecast.png" alt="" width="600" height="400">
-
+                    <pre class="language-python"><code>rmse = math.sqrt(mean_squared_error(sim1[900:1011], result.predict(start=900,end=999)))
+print("The root mean squared error is {}.".format(rmse))
+# The root mean squared error is 1.0408054544358292.
+# y is predicted plot. Quite neat!
+                </code></pre>
                 </details>
             </ul>
         </details>

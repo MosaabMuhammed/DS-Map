@@ -736,6 +736,90 @@ print(completeness_score(digits['target'], Y))
                 </code></pre>
                     </details>
                 </li>
+
+                <li>
+                    <details>
+                        <summary><b>Adjusted Rand Index</b></summary>
+                        <p>This score is useful to compare the original label distribution with the clustering prediction.</p>
+                        <img src="../0_html/imgs/rand_index.png" alt="">
+                        <pre class="language-python"><code>from sklearn.metrics import adjusted_rand_score
+print(adjusted_rand_score(digits['target'], Y))
+# 0.666766395716
+# This value confirms that the algorithm is working well (because it's positive), 
+# but it can be further optimized by trying to reduce the number of incorrect assignments. </code></pre>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Silhouette Score</b></summary>
+                        <p>his measure doesn't need to know the ground truth and can be used to check, at the same time, the intra-cluster cohesion and the inter-cluster separation.</p>
+                        <p>Score Range between -1 (worst) to +1 (Best).</p>
+                        <p>the Silhouette score isn't a cumulative function and must be computed for each sample. A feasible strategy is to analyze the average value, but in this way, it's not possible to determine which clusters have the highest impact
+                            on the result. Another approach (the most common), is based on Silhouette plots, which display the score for each cluster in descending order. In the following snippet, we create plots for four different values of n_clusters
+                            (3, 5, 10, and 12):</p>
+                        <pre class="language-python"><code>import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import seaborn as sns
+import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_samples
+sns.set()
+
+fig, ax = plt.subplots(2, 2, figsize=(15, 10))
+nb_clusters = [3, 5, 10, 12]
+mapping = [(0, 0), (0, 1), (1, 0), (1, 1)]
+
+for i, n in enumerate(nb_clusters):
+    km = KMeans(n_clusters=n, random_state=1000)
+    Y = km.fit_predict(X_train)
+    silhouette_values = silhouette_samples(X_train, Y)
+    ax[mapping[i]].set_xticks(
+                [-0.15, 0.0, 0.25, 0.5, 0.75, 1.0])
+    ax[mapping[i]].set_yticks([])
+    ax[mapping[i]].set_title("{} clusters".format(n), 
+                                fontsize=16)
+    ax[mapping[i]].set_xlim([-0.15, 1])
+    ax[mapping[i]].grid(True)
+    y_lower = 20
+
+    for t in range(n):
+        ct_values = silhouette_values[Y == t]
+        ct_values.sort()
+        y_upper = y_lower + ct_values.shape[0]
+        color = cm.Accent(float(t) / n)
+        ax[mapping[i]].fill_betweenx(
+            np.arange(y_lower, y_upper), 0, 
+            ct_values, 
+            facecolor=color, 
+            edgecolor=color)
+        y_lower = y_upper + 20</code></pre>
+                        <img src="../0_html/imgs/silhouette.png" alt="" width="500">
+
+                        <details>
+                            <summary>Intepretation of the plot</summary>
+                            <p>
+                                The analysis of a Silhouette plot should follow some common guidelines:
+                                <li>The width of each block must be proportional to the number of samples that are expected to belong to the corresponding cluster. If the label distribution is uniform, all the blocks must have a similar width. If the cluster
+                                    distribution is originally balanced, any asymmetry indicates incorrect assignments. Of course, this is not true if the classes are intrinsically unbalanced. For example, in our case, we know that the right number of
+                                    clusters is 10, but a couple of blocks are thinner than the other ones. This means that a cluster contains fewer samples than expected and the remaining ones have been assigned to incorrect partitions. On the contrary,
+                                    if, for example, 50% of our dataset was zeros, a larger silhouette for this class would be perfectly fine. The correct interpretation of this plot requires background knowledge about the data-generating process. If
+                                    such knowledge is missing (because, for example, the problem has never been studied), looking for symmetric silhouettes is generally good practice (particularly when the other scores confirm the result to be valid).
+                                </li>
+                                <li>The shape of a block shouldn't be sharp and peaked (like a knife) because it means that many samples have a low Silhouette score. The ideal (realistic) scenario is made up of shapes similar to cigars with a minimal difference
+                                    between the highest and lowest values. Unfortunately, this is not always possible to achieve, but it's always preferable to tune up the algorithm if the shapes are like the ones plotted in the first diagram (three clusters).
+                                </li>
+                                <li>The maximum Silhouette score should be close to 1. Lower values (like in our example) indicate the presence of partial overlaps and wrong assignments. Negative values must be absolutely avoided (or limited to a very small
+                                    number of samples) because they show a failure in the clustering process. Moreover, it's possible to prove that convex clusters (such as K-means hyperspheres) lead to higher values. This is due to the properties of
+                                    the common distance functions (such as the Euclidean distance) that can suggest a low internal cohesion whenever the shape of a cluster is concave (think about a circle compared to a half-moon). In this case, the process
+                                    of embedding the shape into a convex geometry leads to a lower density, and this negatively affects the Silhouette score. </li>
+                                <li>In our particular case, we cannot accept having anything other than 10 clusters. However, the corresponding Silhouette plot is not perfect. We know the reasons for such imperfections (the structure of the samples and the
+                                    high similarity of different digits) and it's quite difficult to avoid them using an algorithm such as K-means. The reader can try to improve the performance by increasing the number of iterations, but in these cases,
+                                    if the result doesn't meet the requirements, it's preferable to adopt another method (such as the spectral clustering method described in the next chapter, which can manage asymmetric clusters and more complex geometries).</li>
+                            </p>
+                        </details>
+                    </details>
+                </li>
             </ul>
         </details>
     </div>
