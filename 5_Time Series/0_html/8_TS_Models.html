@@ -93,6 +93,178 @@ print("The root mean squared error is {}.".format(rmse))
 # y is predicted plot. Quite neat!
                 </code></pre>
                 </details>
+
+                <details>
+                    <summary>MA Model</summary>
+                    <p>The moving-average (MA) model is a common approach for modeling univariate time series. <br>The moving-average model specifies that the output variable depends linearly on the current and various past values of a stochastic (imperfectly
+                        predictable) term.<br> MA(1) model <br> Rt = μ + ϵt1 + θϵt-1 <br>It translates to Today's returns = mean + today's noise + yesterday's noise</p>
+                    <pre class="language-python"><code># Create a simulated process.
+# AR(1) model
+# Rt = μ + ϕRt-1 + εt
+# As RHS has only one lagged value(Rt-1)this is called AR model of order 1 where μ is mean and ε is noise at time t
+# AR(1) MA(1) model:AR parameter = +0.9
+from statsmodels.tsa.arima_model import ARMA
+from statsmodels.tsa.arima_process import ArmaProcess
+from statsmodels.tsa.arima_model import ARIMA
+import math
+from sklearn.metrics import mean_squared_error
+
+rcParams['figure.figsize'] = 16, 6
+ar1 = np.array([1])
+ma1 = np.array([1, -0.5])
+MA1 = ArmaProcess(ar1, ma1)
+sim1 = MA1.generate_sample(nsample=1000)
+plt.plot(sim1)
+</code></pre>
+                    <img src="../0_html/imgs/ma.png" alt="">
+                    <pre class="language-python"><code># Forecasting and predicting montreal humidity
+model = ARMA(humidity["Montreal"].diff().iloc[1:].values, order=(0,3))
+result = model.fit()
+print(result.summary())
+print("μ={} ,θ={}".format(result.params[0],result.params[1]))
+result.plot_predict(start=1000, end=1100)
+plt.show()
+                                ARMA Model Results                              
+==============================================================================
+Dep. Variable:                      y   No. Observations:                45251
+Model:                     ARMA(0, 3)   Log Likelihood             -153516.982
+Method:                       css-mle   S.D. of innovations              7.197
+Date:                Thu, 02 Aug 2018   AIC                         307043.965
+Time:                        14:43:32   BIC                         307087.564
+Sample:                             0   HQIC                        307057.686
+                                                                                
+==============================================================================
+                    coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0008      0.031     -0.025      0.980      -0.061       0.060
+ma.L1.y       -0.1621      0.005    -34.507      0.000      -0.171      -0.153
+ma.L2.y        0.0386      0.005      8.316      0.000       0.030       0.048
+ma.L3.y        0.0357      0.005      7.446      0.000       0.026       0.045
+                                    Roots                                    
+=============================================================================
+                    Real           Imaginary           Modulus         Frequency
+-----------------------------------------------------------------------------
+MA.1            1.4520           -2.2191j            2.6519           -0.1578
+MA.2            1.4520           +2.2191j            2.6519            0.1578
+MA.3           -3.9867           -0.0000j            3.9867           -0.5000
+-----------------------------------------------------------------------------
+μ=-0.0007772680242180366 ,θ=-0.16209499431431182
+</code></pre>
+                    <img src="../0_html/imgs/forcast_ma.png" alt="" width="600" height="400">
+                    <pre class="language-python"><code>rmse = math.sqrt(mean_squared_error(humidity["Montreal"].diff().iloc[1000:1101].values, result.predict(start=1000,end=1100)))
+print("The root mean squared error is {}.".format(rmse))
+# The root mean squared error is 11.345129665763626.
+</code></pre>
+                </details>
+
+                <details>
+                    <summary>ARMA Model</summary>
+                    <p>Autoregressive–moving-average (ARMA) models provide a parsimonious description of a (weakly) stationary stochastic process in terms of two polynomials, one for the autoregression and the second for the moving average.<br>It's the fusion
+                        of AR and MA models.</p>
+                    <p>ARMA(1,1) model <br> Rt = μ + ϕRt-1 + ϵt + θϵt-1 <br>Basically, Today's return = mean + Yesterday's return + noise + yesterday's noise.</p>
+                    <pre class="language-python"><code>
+from statsmodels.tsa.arima_model import ARMA
+from statsmodels.tsa.arima_process import ArmaProcess
+from statsmodels.tsa.arima_model import ARIMA
+import math
+from sklearn.metrics import mean_squared_error
+
+# Forecasting and predicting microsoft stocks volume
+model = ARMA(microsoft["Volume"].diff().iloc[1:].values, order=(3,3))
+result = model.fit()
+print(result.summary())
+print("μ={}, ϕ={}, θ={}".format(result.params[0],result.params[1],result.params[2]))
+result.plot_predict(start=1000, end=1100)
+plt.show()
+
+ARMA Model Results                              
+==============================================================================
+Dep. Variable:                      y   No. Observations:                 3018
+Model:                     ARMA(3, 3)   Log Likelihood              -55408.974
+Method:                       css-mle   S.D. of innovations       22751607.792
+Date:                Thu, 02 Aug 2018   AIC                         110833.948
+Time:                        14:43:52   BIC                         110882.047
+Sample:                             0   HQIC                        110851.244
+                                                                              
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const       -2.03e+04   9914.912     -2.047      0.041   -3.97e+04    -864.350
+ar.L1.y        0.2053      0.160      1.287      0.198      -0.107       0.518
+ar.L2.y        0.7297      0.179      4.080      0.000       0.379       1.080
+ar.L3.y       -0.1413      0.057     -2.467      0.014      -0.254      -0.029
+ma.L1.y       -0.8117      0.157     -5.165      0.000      -1.120      -0.504
+ma.L2.y       -0.7692      0.258     -2.978      0.003      -1.275      -0.263
+ma.L3.y        0.5853      0.130      4.494      0.000       0.330       0.841
+                                    Roots                                    
+=============================================================================
+                 Real           Imaginary           Modulus         Frequency
+-----------------------------------------------------------------------------
+AR.1           -1.1772           +0.0000j            1.1772            0.5000
+AR.2            1.1604           +0.0000j            1.1604            0.0000
+AR.3            5.1820           +0.0000j            5.1820            0.0000
+MA.1           -1.1579           +0.0000j            1.1579            0.5000
+MA.2            1.0075           +0.0000j            1.0075            0.0000
+MA.3            1.4647           +0.0000j            1.4647            0.0000
+-----------------------------------------------------------------------------
+μ=-20297.220687001212, ϕ=0.2053008905725337, θ=0.7296681716172797
+</code></pre>
+                    <pre class="language-python"><code>rmse = math.sqrt(mean_squared_error(microsoft["Volume"].diff().iloc[1000:1101].values, result.predict(start=1000,end=1100)))
+print("The root mean squared error is {}.".format(rmse))
+The root mean squared error is 38038241.66905847.
+ARMA model shows much better results than AR and MA models.
+</code></pre>
+                </details>
+
+                <details>
+                    <summary>ARIMA Model</summary>
+                    <p>Autoregressive–moving-average (ARMA) models provide a parsimonious description of a (weakly) stationary stochastic process in terms of two polynomials, one for the autoregression and the second for the moving average.<br>It's the fusion
+                        of AR and MA models.</p>
+                    <p>ARMA(1,1) model <br> Rt = μ + ϕRt-1 + ϵt + θϵt-1 <br>Basically, Today's return = mean + Yesterday's return + noise + yesterday's noise.</p>
+                    <pre class="language-python"><code>
+from statsmodels.tsa.arima_model import ARMA
+from statsmodels.tsa.arima_process import ArmaProcess
+from statsmodels.tsa.arima_model import ARIMA
+import math
+from sklearn.metrics import mean_squared_error
+
+# Predicting the microsoft stocks volume
+rcParams['figure.figsize'] = 16, 6
+model = ARIMA(microsoft["Volume"].diff().iloc[1:].values, order=(2,1,0))
+result = model.fit()
+print(result.summary())
+result.plot_predict(start=700, end=1000)
+plt.show()
+
+ARIMA Model Results                              
+==============================================================================
+Dep. Variable:                    D.y   No. Observations:                 3017
+Model:                 ARIMA(2, 1, 0)   Log Likelihood              -56385.467
+Method:                       css-mle   S.D. of innovations       31647215.014
+Date:                Thu, 02 Aug 2018   AIC                         112778.933
+Time:                        14:44:02   BIC                         112802.981
+Sample:                             1   HQIC                        112787.581
+                                                                              
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const       9984.0302   2.48e+05      0.040      0.968   -4.75e+05    4.95e+05
+ar.L1.D.y     -0.8716      0.016    -53.758      0.000      -0.903      -0.840
+ar.L2.D.y     -0.4551      0.016    -28.071      0.000      -0.487      -0.423
+                                    Roots                                    
+=============================================================================
+                 Real           Imaginary           Modulus         Frequency
+-----------------------------------------------------------------------------
+AR.1           -0.9575           -1.1315j            1.4823           -0.3618
+AR.2           -0.9575           +1.1315j            1.4823            0.3618
+-----------------------------------------------------------------------------
+
+rmse = math.sqrt(mean_squared_error(microsoft["Volume"].diff().iloc[700:1001].values, result.predict(start=700,end=1000)))
+print("The root mean squared error is {}.".format(rmse))
+# The root mean squared error is 61937593.98493614.
+</code></pre>
+                    <img src="../0_html/imgs/ARIMA.png" alt="" width="600" height="400">
+                </details>
             </ul>
         </details>
 
