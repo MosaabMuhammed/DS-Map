@@ -1209,10 +1209,64 @@ print('Membership degrees: {}'.format(Wn.T))
                         </details>
                     </li>
 
-                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html"><b>AgglomerativeClustering</b></a>
+                    <li>
+                        <details>
+                            <summary><b>Spectral Clustering</b></summary>
+                            <pre class="language-python"><code>from sklearn.cluster import SpectralClustering
+sc = SpectralClustering(n_clusters=2, 
+                        affinity='nearest_neighbors',
+                        n_neighbors=20, 
+                        random_state=1000)
+Y_sc = sc.fit_predict(Xs)</code></pre>
+                        </details>
                     </li>
 
-                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/DBSCAN.html"><b>DBSCAN</b></a>
+                    <li>
+                        <details>
+                            <summary><b>DBSCAN</b></summary>
+                            <pre class="language-python"><code># Create a dataset
+from sklearn.cluster import DBSCAN
+from sklearn.metrics import calinski_harabasz_score 
+from sklearn.metrics import davies_bouldin_score
+import numpy as np
+
+ch = []
+db = []
+no = []
+
+for e in np.arange(0.1, 0.5, 0.02):
+    dbscan = DBSCAN(eps=e, min_samples=8, leaf_size=50)
+    Y = dbscan.fit_predict(X)
+    ch.append(calinski_harabasz_score(X, Y))
+    db.append(davies_bouldin_score(X, Y))
+    no.append(np.sum(Y == -1)) </code></pre>
+                            <img src="../0_html/imgs/dbscan.png" alt="">
+                            <pre class="language-python"><code>from sklearn.cluster import DBSCAN
+dbscan = DBSCAN(eps=0.2, min_samples=8, leaf_size=50)
+Y = dbscan.fit_predict(X)
+print("No. clusters: {}".format(np.unique(dbscan.labels_).shape))
+print("No. noisy points: {}".format(np.sum(Y == -1)))
+print("CH = {}".format(calinski_harabasz_score(X, Y)))
+print("DB = {}".format(davies_bouldin_score(X, Y)))
+
+# No. clusters: (54,)
+# No. noisy points: 2098
+# CH = 100.91669074221588
+# DB = 1.4949468861242001</code></pre>
+                            <details>
+                                <summary>Observation:</summary>
+                                <p>Let's start with the number of noisy points. As expected, the function monotonically decreases because larger values yield less cohesive clusters. However, there are two important considerations. The first one is that we
+                                    need to assume a moderate number of noisy points because of the geographical structure of the map (that is, there are always suburbs or low-density areas around the centers). The second is that the function has a clear
+                                    slope reduction in the range (0.2, 0.3). This indicates that, after a threshold, the number of noisy points almost stabilizes to a limit value corresponding to the total number of points that can be incorporated into
+                                    clusters only when they become extremely overlapped. This is also confirmed by the Davies-Bouldin score, which increases abruptly in the same range. On the other hand, the Calinski-Harabasz score is at a maximum when
+                                    and the Davies-Bouldin score is at a minimum at the same value. Therefore, also thanks to the considerations about the noisy points, we can accept as the optimal value and perform clustering with nmin = 8 and a leaf
+                                    size equal to a reasonable value of </p>
+                            </details>
+                        </details>
+                    </li>
+
+
+                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html"><b>AgglomerativeClustering</b></a>
                     </li>
                 </ul>
         </details>

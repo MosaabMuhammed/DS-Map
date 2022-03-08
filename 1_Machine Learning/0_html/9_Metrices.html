@@ -820,6 +820,60 @@ for i, n in enumerate(nb_clusters):
                         </details>
                     </details>
                 </li>
+
+                <li>
+                    <details>
+                        <summary><b>Calinski-Harabasz score</b></summary>
+                        <p>This score doesn't need the ground truth and evaluates the result of a clustering procedure according to the double principle of maximum cohesion and maximum separation.</p>
+                        <p>The first factor is a normalization term, while the second one measures the level of separation and cohesion at the same time. The values of CH have no upper bound (even if there's always a theoretical one, given the structure
+                            of X), hence, a larger CH indicates a better clustering result ( large separation and low internal dispersion).</p>
+                        <p>between-cluster-dispersion (BCD)<br> within-cluster-dispersion (WCD)</p>
+                        <p>The Higher, the Better</p>
+                        <img src="../0_html/imgs/caliski.png" alt="">
+                        <pre class="language-python"><code>from sklearn.cluster import DBSCAN
+from sklearn.metrics import calinski_harabasz_score 
+from sklearn.metrics import davies_bouldin_score
+import numpy as np
+
+ch = []
+db = []
+no = []
+
+for e in np.arange(0.1, 0.5, 0.02):
+    dbscan = DBSCAN(eps=e, min_samples=8, leaf_size=50)
+    Y = dbscan.fit_predict(X)
+    ch.append(calinski_harabasz_score(X, Y))
+    db.append(davies_bouldin_score(X, Y))
+    no.append(np.sum(Y == -1)) </code></pre>
+                        <img src="../0_html/imgs/dbscan.png" alt="">
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Davies-Bouldin score</b></summary>
+                        <p>More interested to evaluate the separation of the clusters more than their internal cohesion.</p>
+                        <p>The Lower, The Better.</p>
+                        <p>Every value Dij measures the amount of separation existing between Ci and Cj. In fact, a large Dij means that the sum of diameters is larger than the distance of the centroids, therefore the clusters are partially overlapped.</p>
+                        <img src="../0_html/imgs/davies.png" alt="">
+                        <pre class="language-python"><code>from sklearn.cluster import DBSCAN
+from sklearn.metrics import calinski_harabasz_score 
+from sklearn.metrics import davies_bouldin_score
+import numpy as np
+
+ch = []
+db = []
+no = []
+
+for e in np.arange(0.1, 0.5, 0.02):
+    dbscan = DBSCAN(eps=e, min_samples=8, leaf_size=50)
+    Y = dbscan.fit_predict(X)
+    ch.append(calinski_harabasz_score(X, Y))
+    db.append(davies_bouldin_score(X, Y))
+    no.append(np.sum(Y == -1)) </code></pre>
+                        <img src="../0_html/imgs/dbscan.png" alt="">
+                    </details>
+                </li>
             </ul>
         </details>
     </div>
