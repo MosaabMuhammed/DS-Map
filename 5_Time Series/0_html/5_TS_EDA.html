@@ -15,13 +15,13 @@
             <summary><b>Tips & Tricks</b></summary>
             <p>
 
-            <details>
-                <summary><b>Heatmap</b> for <b>Daily</b> usage</summary>
-                <p>
-                    <a href='./5_EDA/Heatmap_daily_time_series.html#Sales-Heatmap-Calendar'>How to use (Notebook)</a>
-                <h4>Code</h4>
+                <details>
+                    <summary><b>Heatmap</b> for <b>Daily</b> usage</summary>
+                    <p>
+                        <a href='./5_EDA/Heatmap_daily_time_series.html#Sales-Heatmap-Calendar'>How to use (Notebook)</a>
+                        <h4>Code</h4>
 
-                <pre class="language-python"><code class="python"># ----------------------------------------------------------------------------
+                        <pre class="language-python"><code class="python"># ----------------------------------------------------------------------------
 # Author:  Nicolas P. Rougier
 # License: BSD
 # ----------------------------------------------------------------------------
@@ -75,200 +75,199 @@ def calmap(ax, year, data):
               cmap=&quot;RdYlBu_r&quot;, origin=&quot;lower&quot;, alpha=.75)
 </code></pre>
 
-                </p>
-            </details>
+                    </p>
+                </details>
 
-            <details>
-                <summary><b>Upsampling</b></summary>
-                <p><b>Upsampling</b> Chaning the time from, for example, <b>minutes to seconds</b>.
-                    <br><b>Upsampling</b> helps us to visualize and analyze data in more detail, and these fine-grained
-                    observations are calculated using <b>interpolation</b>.<br>
-                <h5>Pitfalls:</h5>
-                <b>Upsampling</b> leads to <b>NaN</b> values. the methods used in <b>interpolation</b> are linear or
-                cubic splines for imputing <b>NaN</b> values. This might not represent the original data, so the
-                analysis & visualization might be misleading.</p>
+                <details>
+                    <summary><b>Upsampling</b></summary>
+                    <p><b>Upsampling</b> Chaning the time from, for example, <b>minutes to seconds</b>.
+                        <br><b>Upsampling</b> helps us to visualize and analyze data in more detail, and these fine-grained observations are calculated using <b>interpolation</b>.<br>
+                        <h5>Pitfalls:</h5>
+                        <b>Upsampling</b> leads to <b>NaN</b> values. the methods used in <b>interpolation</b> are linear or cubic splines for imputing <b>NaN</b> values. This might not represent the original data, so the analysis & visualization might
+                        be misleading.</p>
 
 
-                <pre class="language-python"><code># Aggregate dataframe by year since we have a yearly time-series dataframe.
+                    <pre class="language-python"><code># Aggregate dataframe by year since we have a yearly time-series dataframe.
 walmart_store_count = walmart_stores.groupby(&quot;YEAR&quot;)[[&quot;storenum&quot;]].agg(&quot;count&quot;).rename(columns={&quot;storenum&quot;: &quot;store_count&quot;})
 </code></pre>
 
 
 
-                <pre class="language-python"><code># Convert the frequecy to 2 days (Upsampling):
+                    <pre class="language-python"><code># Convert the frequecy to 2 days (Upsampling):
 walmart_store_count_series = walmart_store_count_series.asfreq('2D')
 # And this will generated NaNs, and we will fill it with interpolation.
 </code></pre>
 
 
 
-                <pre class="language-python"><code># Imputing NaNs with interpolation.
+                    <pre class="language-python"><code># Imputing NaNs with interpolation.
 walmart_store_count_series = walmart_store_count_series.interpolate(method=&quot;spline&quot;, order=2)
 
 # Then plot it.
 walmart_store_count_series.plot(style=&quot;:&quot;)
 </code></pre>
 
-                <img src="./imgs/upsampling.png">
-            </details>
+                    <img src="./imgs/upsampling.png">
+                </details>
 
-            <details>
-                <summary><b>Downsampling</b></summary>
-                <p><b>Downsampling</b> Chaning the time from, for example, <b>months to years</b>.
-                    <br><b>Downsampling</b> helps summarize and get a general sense of trends in data.<br>
-                <h5>Pitfalls:</h5>
-                <b>Downsampling</b> aggregates the observation over sample frequency, where we provide a frequency to
-                function as an argument, so we might lose information.</p>
+                <details>
+                    <summary><b>Downsampling</b></summary>
+                    <p><b>Downsampling</b> Chaning the time from, for example, <b>months to years</b>.
+                        <br><b>Downsampling</b> helps summarize and get a general sense of trends in data.<br>
+                        <h5>Pitfalls:</h5>
+                        <b>Downsampling</b> aggregates the observation over sample frequency, where we provide a frequency to function as an argument, so we might lose information.</p>
 
 
-                <pre class="language-python"><code># After aggreation, we will smooth out the plot using downsampling with a frequency of BA(business year).
+                    <pre class="language-python"><code># After aggreation, we will smooth out the plot using downsampling with a frequency of BA(business year).
 plt.figure(figsize=(12, 8))
 plt.ylabel(&quot;Interpolated Values&quot;)
 plt.plot(walmart_store_count_series)
 walmart_store_count_series.resample('BA').mean().plot(style=':', title=&quot;Values Smoothen by Business Year Frequency&quot;) #BA stands for Business Year
 </code></pre>
 
-                <img src="./imgs/downsampling_1.png">
+                    <img src="./imgs/downsampling_1.png">
 
 
-                <pre class="language-python"><code># Downsample with a frequency of BQ(business quarter) to observe higher granularity.
+                    <pre class="language-python"><code># Downsample with a frequency of BQ(business quarter) to observe higher granularity.
 plt.figure(figsize=(12,8))
 plt.ylabel(&quot;Interpolated Values&quot;)
 walmart_store_count_series.plot(alpha=0.5, style='-')
 walmart_store_count_series.resample('BQ').mean().plot(style=':', title=&quot;Values Smoothen by Business Quarter Frequency&quot;)#BQ stands for Business quarter
 </code></pre>
 
-                <img src="./imgs/downsampling_2.png">
-            </details>
+                    <img src="./imgs/downsampling_2.png">
+                </details>
 
             </p>
         </details>
 
         <hr>
-<!-- - --------------------------------------- -->
+        <!-- - --------------------------------------- -->
         <details>
             <summary><b>Time-Series Analysis Course</b></summary>
             <ul>
-<!-- - --------------------------------------- -->
-            <li><details>
-                <summary><b>Time-Series with Pandas</b></summary>
-                <p>
+                <!-- - --------------------------------------- -->
+                <li>
+                    <details>
+                        <summary><b>Time-Series with Pandas</b></summary>
+                        <p>
 
-                <ul>
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review"><b>1.
+                            <ul>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review"><b>1.
                                     Datetime Index</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#Import-the-data"><b>2.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#Import-the-data"><b>2.
                                     Making Datetime as index and parse it as datetime64</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#resample()"><b>3.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#resample()"><b>3.
                                     Resample</b> (making aggregation over time)</a></p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/02-Time-Shifting.html#Time-Shifting"><b>4.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/02-Time-Shifting.html#Time-Shifting"><b>4.
                                     Time Shifting</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/03-Rolling-and-Expanding.html#Rolling-and-Expanding"><b>5.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/03-Rolling-and-Expanding.html#Rolling-and-Expanding"><b>5.
                                     Rolling &amp; Expanding</b></a></p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/04-Visualizing-Time-Series-Data.html#Visualizing-Time-Series-Data"><b>6.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/04-Visualizing-Time-Series-Data.html#Visualizing-Time-Series-Data"><b>6.
                                     Visualizing Time-Series Data</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/06-Pandas-Time-Series-Exercises-SET-ONE-Solutions.html"><b>From
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/06-Pandas-Time-Series-Exercises-SET-ONE-Solutions.html"><b>From
                                     month as number to String</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/08-Time-Series-with-Pandas-Project-Exercise-SET-TWO-Solutions.html"><b>Extensive
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/08-Time-Series-with-Pandas-Project-Exercise-SET-TWO-Solutions.html"><b>Extensive
                                     Time-Series EDA</b></a>
+                                    </p>
                         </p>
+                        </li>
+                        </ul>
                         </p>
-                    </li>
-                </ul>
-                </p>
-            </details></li>
-<!-- - --------------------------------------- -->
-            <li><details>
-                <summary><b>Statsmodel for Time-Series Analysis</b></summary>
-                <p>
+                    </details>
+                </li>
+                <!-- - --------------------------------------- -->
+                <li>
+                    <details>
+                        <summary><b>Statsmodel for Time-Series Analysis</b></summary>
+                        <p>
 
-                <ul>
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/00-Introduction-to-Statsmodels.html"><b>1.
+                            <ul>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/00-Introduction-to-Statsmodels.html"><b>1.
                                     Hodrick-Prescott filter</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/01-ETS-Decomposition.html"><b>2.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/01-ETS-Decomposition.html"><b>2.
                                     ETS Decomposition</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/02-EWMA-Exponentially-Weighted-Moving-Average.html"><b>3.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/02-EWMA-Exponentially-Weighted-Moving-Average.html"><b>3.
                                     EWMA (Exponantially Weighted Moving Average)</b></a> </p>
-                    </li>
+                                </li>
 
-                    <li>
-                        <p><a
-                                href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/03-Holt-Winters-Methods.html#Holt-Winters-Methods"><b>4.
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/03-Holt-Winters-Methods.html#Holt-Winters-Methods"><b>4.
                                     Holt-Winters Smoothing (Simple, Double, Triple)</b></a> </p>
-                    </li>
-                </ul>
-                </p>
-            </details></li>
+                                </li>
+                            </ul>
+                        </p>
+                    </details>
+                </li>
 
-        </ul>
+            </ul>
         </details>
-<!-- - --------------------------------------- -->
+        <!-- - --------------------------------------- -->
         <details>
             <summary><b>Finance</b></summary>
-                <ul>
-                    <li><details><summary>Change percent</summary>
+            <ul>
+                <li>
+                    <details>
+                        <summary>Change percent</summary>
                         <pre class="language-python"><code>google['Change'] = google.High.div(google.High.shift())
 google['Change'].plot(figsize=(20,8))</code></pre>
                         <img src="./imgs/percent_change.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                    <li><details><summary>Stock Returns</summary>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Stock Returns</summary>
                         <pre class="language-python"><code>google['Return'] = google.Change.sub(1).mul(100)
 google['Return'].plot(figsize=(20,8))
 
 google.High.pct_change().mul(100).plot(figsize=(20,6)) # Another way to calculate returns
 </code></pre>
                         <img src="./imgs/percent_change.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                    <li><details><summary>Absolute Changes in successive days</summary>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Absolute Changes in successive days</summary>
                         <pre class="language-python"><code>google.High.diff().plot(figsize=(20,6))</code></pre>
                         <img src="./imgs/diff.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                    <li><details><summary>Comparing 2 or more time series</summary>
-                        <p>We will compare 2 time series by normalizing them. This is achieved by dividing each time series element of all time series by the first element.<br>
-                            This way both series start at the same point and can be easily compared.</p>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Comparing 2 or more time series</summary>
+                        <p>We will compare 2 time series by normalizing them. This is achieved by dividing each time series element of all time series by the first element.<br> This way both series start at the same point and can be easily compared.</p>
                         <pre class="language-python"><code># Normalizing and comparison
 # Both stocks start from 100
 normalized_google = google.High.div(google.High.iloc[0]).mul(100)
@@ -280,9 +279,12 @@ plt.show()
 
 # You can clearly see how google outperforms microsoft over time.</code></pre>
                         <img src="./imgs/compare.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                    <li><details><summary>Window Functions <b>rolling</b>, <b>exapnding</b></summary>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Window Functions <b>rolling</b>, <b>exapnding</b></summary>
                         <p>In rolling function the window size remain constant whereas in the expanding function it changes.</p>
                         <pre class="language-python"><code># Rolling window functions
 rolling_google = google.High.rolling('90D').mean()
@@ -301,9 +303,12 @@ microsoft_std.plot()
 plt.legend(['High','Expanding Mean','Expanding Standard Deviation'])
 plt.show()</code></pre>
                         <img src="./imgs/expanding.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                    <li><details><summary>OHLC charts</summary>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>OHLC charts</summary>
                         <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
 init_notebook_mode(connected=True)
 import plotly.graph_objs as go
@@ -317,9 +322,12 @@ trace = go.Ohlc(x=google['06-2008'].index,
 data = [trace]
 iplot(data, filename='simple_ohlc')</code></pre>
                         <img src="./imgs/OHLC.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                    <li><details><summary>Candle charts</summary>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Candle charts</summary>
                         <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
 init_notebook_mode(connected=True)
 import plotly.graph_objs as go
@@ -333,30 +341,36 @@ trace = go.Candlestick(x=google['03-2008'].index,
 data = [trace]
 iplot(data, filename='simple_candlestick')</code></pre>
                         <img src="./imgs/candle.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                </ul>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+            </ul>
         </details>
-<!-- - --------------------------------------- -->
-        </ul></details>
+        <!-- - --------------------------------------- -->
+        </ul>
+        </details>
 
         <details>
             <summary><b>Tests</b></summary>
             <ul>
-                <li><details><summary>Autocorrelation</summary>
-                <p>The autocorrelation function (ACF) measures how a series is correlated with itself at different lags.</p>
-                <details><summary>statsmodels</summary>
-                    <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+                <li>
+                    <details>
+                        <summary>Autocorrelation</summary>
+                        <p>The autocorrelation function (ACF) measures how a series is correlated with itself at different lags.</p>
+                        <details>
+                            <summary>statsmodels</summary>
+                            <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 
 # Autocorrelation of humidity of San Diego
 plot_acf(humidity["San Diego"], lags=25, title="San Diego")
 plt.show()
 
 # As all lags are either close to 1 or at least greater than the confidence interval, they are statistically significant.</code></pre>
-                    <img src="./imgs/autocorrelation.png" alt="">
-                </details>
-                <details><summary>pandas</summary>
-                    <pre class="language-python"><code>from random import seed
+                            <img src="./imgs/autocorrelation.png" alt="">
+                        </details>
+                        <details>
+                            <summary>pandas</summary>
+                            <pre class="language-python"><code>from random import seed
 from random import random
 from matplotlib import pyplot
 from pandas.plotting import autocorrelation_plot
@@ -369,41 +383,101 @@ for i in range(1, 1000):
     random_walk.append(value)
 autocorrelation_plot(random_walk)
 pyplot.show()</code></pre>
-                    <img src="./imgs/autocorrelation_2.png" alt="" width="400" height="400">
-                </details><br>
-                </details></li>
-<!-- =============================================== -->
-                <li><details><summary>Partial Autocorrelation</summary>
-                    <p>The partial autocorrelation function can be interpreted as a regression of the series against its past lags. <br>The terms can be interpreted the same way as a standard linear regression, that is the contribution of a change in that particular lag while holding others constant.</p>
-                    <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+                            <img src="./imgs/autocorrelation_2.png" alt="" width="400" height="400">
+                        </details><br>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Partial Autocorrelation</summary>
+                        <p>The partial autocorrelation function can be interpreted as a regression of the series against its past lags. <br>The terms can be interpreted the same way as a standard linear regression, that is the contribution of a change in
+                            that particular lag while holding others constant.</p>
+                        <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
                         
 # Partial Autocorrelation of humidity of San Diego
 plot_pacf(humidity["San Diego"],lags=25)
 plt.show()
 # Though it is statistically signficant, partial autocorrelation after first 2 lags is very low.
 </code></pre>
-                    <img src="./imgs/partial_autocorrelation.png" alt="">
-                    </details></li>
-<!-- =============================================== -->
-                <li><details><summary>ETS Decomposition</summary>
-                    <pre>These are the components of a time series
-    <b>Trend</b> - Consistent upwards or downwards slope of a time series
-    <b>Seasonality</b> - Clear periodic pattern of a time series(like sine funtion)
-    <b>Noise</b> - Outliers or missing values</pre>
-                    <pre class="language-python"><code>import statsmodels.api as sm
+                        <img src="./imgs/partial_autocorrelation.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>ETS Decomposition</summary>
+                        <details>
+                            <summary>Classic seasonal_decompose()</summary>
+                            <pre>These are the components of a time series
+        <b>Trend</b> - Consistent upwards or downwards slope of a time series
+        <b>Seasonality</b> - Clear periodic pattern of a time series(like sine funtion)
+        <b>Noise</b> - Outliers or missing values</pre>
+                            <pre class="language-python"><code>import statsmodels.api as sm
 
-# Now, for decomposition...
-rcParams['figure.figsize'] = 11, 9
-decomposed_google_volume = sm.tsa.seasonal_decompose(google["High"],freq=360) # The frequncy is annual
-figure = decomposed_google_volume.plot()
-plt.show()
-# There is clearly an upward trend in the above plot.
-# You can also see the uniform seasonal change.
-# Non-uniform noise that represent outliers and missing values
-</code></pre>
-                    <img src="./imgs/decomposition.png" alt="" weigth="200" height="400">
-                    </details></li>
-<!-- =============================================== -->
+    # Now, for decomposition...
+    rcParams['figure.figsize'] = 11, 9
+    decomposed_google_volume = sm.tsa.seasonal_decompose(google["High"],freq=360) # The frequncy is annual
+    figure = decomposed_google_volume.plot()
+    plt.show()
+    # There is clearly an upward trend in the above plot.
+    # You can also see the uniform seasonal change.
+    # Non-uniform noise that represent outliers and missing values
+    </code></pre>
+                            <img src="./imgs/decomposition.png" alt="" weigth="200" height="400">
+                        </details>
+
+                        <details>
+                            <summary>Additive seasonal_decompose()</summary>
+                            <pre class="language-python"><code># Additive model
+res = sm.tsa.seasonal_decompose(ts.values,freq=12,model="additive")
+#plt.figure(figsize=(16,12))
+fig = res.plot()
+#fig.show()</code></pre>
+                            <img src="./imgs/decompose.png" alt="" weigth="200" height="400">
+                        </details>
+
+                        <details>
+                            <summary>Multiplictive seasonal_decompose()</summary>
+                            <pre class="language-python"><code>import statsmodels.api as sm
+# multiplicative
+res = sm.tsa.seasonal_decompose(ts.values,freq=12,model="multiplicative")
+#plt.figure(figsize=(16,12))
+fig = res.plot()
+#fig.show()</code></pre>
+                            <img src="./imgs/decompose.png" alt="" weigth="200" height="400">
+                        </details>
+
+                        <details>
+                            <summary>STL</summary>
+                            <p>
+                                The STL approach to time series decomposition has the following advantages over the X11 aproach: <br>It handles any type of seasonality. <br>The user can control the rate of change of the seasonal component.<br> It is robust
+                                to outliers.
+                            </p>
+                            <p>We can change the smoothness of the trend-cycle and the seasonal components by passing an integer into the trend and seasonal arguments in the STL function. The seasonal argument is set to 7 by default (it is also recommended
+                                that you use a seasonal smoother greater than or equal to 7).</p>
+                            <p>The choice of the seasonal smoother is up to you. The larger is the integer, the more ‘smooth’ your seasonal component becomes. This causes less of the variation in your data to be attributed to its seasonal component. Thus,
+                                you must decide how much variation in your data can be reasonably attributed to the seasonal component.</p>
+                            <pre class="language-python"><code>from statsmodels.tsa.seasonal import STL
+import matplotlib.pyplot as plt
+import pandas as pd
+df = df[:len(df) - 1] # Removes the last row in the data set
+columns = ['Month', 'Passengers']
+df.columns = columns
+df.head()
+
+df = df.set_index('Month') # Set the index to datetime object.
+df = df.asfreq('MS') # Set frequency
+# Set robust to True to handle outliers
+res = STL(df, robust = True).fit() 
+res.plot()
+plt.show()</code></pre>
+
+                            <img src="./imgs/stl_decompose.png" alt="" weigth="200" height="400">
+                        </details>
+                </li>
+                </details>
+                <!-- =============================================== -->
             </ul>
         </details>
 
