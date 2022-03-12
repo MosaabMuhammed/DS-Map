@@ -1265,6 +1265,58 @@ print("DB = {}".format(davies_bouldin_score(X, Y)))
                         </details>
                     </li>
 
+                    <li>
+                        <details>
+                            <summary><b>Spectral Biclustering</b></summary>
+                            <p>Biclustering is a family of methods that operate on matrices whose rows and columns represent different features connected with a precise rationale.</p>
+                            <pre class="language-python"><code>import numpy as np
+nb_users = 100
+nb_products = 100
+items = [i for i in range(nb_products)]
+transactions = []
+ratings = np.zeros(shape=(nb_users, nb_products),
+                        dtype=np.int)
+for i in range(nb_users):
+        n_items = np.random.randint(2, 60)
+        transaction = tuple(
+            np.random.choice(items,
+                            replace=False,
+                            size=n_items))
+        transactions.append(
+            list(map(lambda x: "P{}".format(x + 1),
+                    transaction)))
+        for t in transaction:
+            rating = np.random.randint(1, 11)
+            ratings[i, t] = rating</code></pre>
+                            <img src="../0_html/imgs/biclustering1.png" alt="">
+                            <p>The matrix is sparse (when the dimensionality is larger, I suggest employing SciPy sparse matrices to save space), but every user has rated at least 2 products, with an approximate average of 30. In this example, we are interested
+                                in discovering the segments of user/product mixes characterized by the same rating. As each rating is in the range (1, 10), also considering the non-rating segment, there are 10 different possible biclusters with immediate
+                                semantics. <br>At this point, we can train the model using n_best=5 to indicate that we want to project the dataset onto the top five singular vectors and svd_solver="arpack", which is a very accurate SVD algorithm suitable
+                                for small/medium-sized matrices:</p>
+                            <pre class="language-python"><code>from sklearn.cluster.bicluster import SpectralBiclustering
+sbc = SpectralBiclustering(n_clusters=10, n_best=5,
+                            svd_method="arpack",
+                            n_jobs=-1,
+                            random_state=1000)
+sbc.fit(ratings)
+rc = np.outer(np.sort(sbc.row_labels_) + 1, 
+              np.sort(sbc.column_labels_) + 1)
+                            </code></pre>
+                            <p>Before showing the final result, we want to demonstrate how to find the mixes. Let's suppose that we are interested in determining the group of users {ui, uj, …, ut} that rated a group of eight products {pi, pj, …, pt} in order
+                                to send a periodical newsletter containing tailored recommendations. This operation can be easily achieved by selecting all the rows and columns associated with the biclusters with an index of 8 (remember that 0 corresponds
+                                to the absence of a rating):</p>
+                            <pre class="language-python"><code>import numpy as np
+print("Users: {}".format(
+        np.where(sbc.rows_[8, :] == True)))
+print("Product: {}".format(
+        np.where(sbc.columns_[8, :] == True)))
+    
+# Users: (array([30, 35, 40, 54, 61, 86, 87, 91, 94], dtype=int64),)
+# Product: (array([49, 68, 93], dtype=int64),)
+# Therefore, we can check the family of the products {49, 68, 93}, select some similar items, 
+# and send them in the suggestion part of the newsletter to the users {30, 35, 40, 54, 61, 86, 87, 91, 94}.</code></pre>
+                        </details>
+                    </li>
 
                     <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html"><b>AgglomerativeClustering</b></a>
                     </li>
