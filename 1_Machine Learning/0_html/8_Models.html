@@ -1318,30 +1318,99 @@ print("Product: {}".format(
                         </details>
                     </li>
 
+                    <li>
+                        <details>
+                            <summary><b>Apriori Algorithm</b></summary>
+                            <p>Suppose you have a transaction of products, Apriori Algorithm determines which combinations of producted are got purchased together. So you can use it to recommand to users in the next time. Example: A user could buy a phone,
+                                cover, and a head-set.</p>
+                            <pre class="language-python"><code># pip install -U efficient-apriori
+from efficient_apriori import apriori
+
+_, rules = apriori(transactions,
+                    min_support=0.15,
+                    min_confidence=0.75,
+                    max_length=3,
+                    verbosity=1)
+
+# The output of the previous snippet is:
+
+# Generating itemsets.
+#    Counting itemsets of length 1.
+#    Found 100 candidate itemsets of length 1.
+#    Found 100 large itemsets of length 1.
+#    Counting itemsets of length 2.
+#    Found 4950 candidate itemsets of length 2.
+#    Found 1156 large itemsets of length 2.
+#    Counting itemsets of length 3.
+#    Found 6774 candidate itemsets of length 3.
+#    Found 9 large itemsets of length 3.
+# Itemset generation terminated.
+# Generating rules from itemsets.
+#     Generating rules of size 2.
+#    Generating rules of size 3.
+# Rule generation terminated.
+                            </code></pre>
+                            <pre class="language-python"><code>print("No. rules: {}".format(len(rules)))
+for r in rules:
+    print(r)
+
+# The output is as follows:
+# No. rules: 22
+
+# {P31, P79} -> {P100} (conf: 0.789, supp: 0.150, lift: 2.024, conv: 2.897)
+# {P100, P79} -> {P31} (conf: 0.789, supp: 0.150, lift: 2.134, conv: 2.992)
+# {P66, P68} -> {P100} (conf: 0.789, supp: 0.150, lift: 2.024, conv: 2.897)
+# {P100, P68} -> {P66} (conf: 0.750, supp: 0.150, lift: 2.419, conv: 2.760)
+# {P11, P97} -> {P55} (conf: 0.750, supp: 0.150, lift: 2.143, conv: 2.600)
+# {P11, P55} -> {P97} (conf: 0.789, supp: 0.150, lift: 2.024, conv: 2.897)
+# {P21, P7} -> {P15} (conf: 0.789, supp: 0.150, lift: 2.134, conv: 2.992)
+# {P15, P7} -> {P21} (conf: 0.750, supp: 0.150, lift: 2.206, conv: 2.640)
+# {P15, P21} -> {P7} (conf: 0.750, supp: 0.150, lift: 2.027, conv: 2.520)
+# {P46, P83} -> {P15} (conf: 0.789, supp: 0.150, lift: 2.134, conv: 2.992)
+# {P15, P83} -> {P46} (conf: 0.750, supp: 0.150, lift: 1.974, conv: 2.480)
+# {P15, P46} -> {P83} (conf: 0.789, supp: 0.150, lift: 2.322, conv: 3.135)
+# {P59, P65} -> {P15} (conf: 0.750, supp: 0.150, lift: 2.027, conv: 2.520)
+# {P15, P65} -> {P59} (conf: 0.789, supp: 0.150, lift: 2.078, conv: 2.945)
+# {P55, P68} -> {P36} (conf: 0.750, supp: 0.150, lift: 2.419, conv: 2.760)
+# {P36, P68} -> {P55} (conf: 0.789, supp: 0.150, lift: 2.256, conv: 3.087)
+# {P36, P55} -> {P68} (conf: 0.789, supp: 0.150, lift: 2.024, conv: 2.897)
+# {P4, P97} -> {P55} (conf: 0.842, supp: 0.160, lift: 2.406, conv: 4.117)
+# {P4, P55} -> {P97} (conf: 0.800, supp: 0.160, lift: 2.051, conv: 3.050)
+# {P56, P79} -> {P47} (conf: 0.762, supp: 0.160, lift: 2.116, conv: 2.688)
+# {P47, P79} -> {P56} (conf: 0.842, supp: 0.160, lift: 2.216, conv: 3.927)
+# {P47, P56} -> {P79} (conf: 0.842, supp: 0.160, lift: 2.477, conv: 4.180)</code></pre>
+                            <p>it's extremely easy to associate the lift with the probability of finding the product in a random transaction. In most real cases, a lift in the range (1.5, 2.5) is quite reasonable, while rules with, for example, a lift corresponding
+                                to S(B)
+                                < 0.05 cannot be considered solid enough to be trusted even if the confidence is large. On the other hand, a support S(B) close to 1 is associated with a trivial rule, because most of the transactions contain that product (for example, a convenience store
+                                    could have accidently included the shopping bags in the transactions, and therefore their lift is often close to 1, but it doesn 't make sense to recommend them). The optimal threshold for lift depends on the context and, contrary to confidence, it is better to define an interval because low and high values are both negative indicators for all affected rules.</p>
+                        </details>
+                    </li>
+
+
                     <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Agglomerative%20Clustering.html"><b>AgglomerativeClustering</b></a>
                     </li>
                 </ul>
         </details>
 
         <details>
-            <summary><b style='font-size:27px;'>Auto ML</b></summary>
+            <summary><b style='font-size:27px; '>Auto ML</b></summary>
             <p>
                 <ul>
                     <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/auto-sklearn.html#auto-sklearn"><b><span
-                                style='color:#333'>Auto-Sklearn</span></b></a></li>
+                                style='color:#333 '>Auto-Sklearn</span></b></a></li>
 
                     <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Titanic_Kaggle.html#Data-Analysis-using-TPOT"><b><span
-                                style='color:#333'>TPOT</span></b></a></li>
+                                style='color:#333 '>TPOT</span></b></a></li>
 
                     <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/automl_binary_classification_product_backorders.html#H2O-AutoML-Binary-Classification-Demo"><b><span
-                                style='color:#333'>H2O</span></b></a></li>
+                                style='color:#333 '>H2O</span></b></a></li>
 
                 </ul>
             </p>
         </details>
 
         <p><a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/"><b><span
-                        style='font-size:25px;color:#333'>Multi-Label Classification</span></b></a> </p>
+                        style='font-size:25px;color:#333 '>Multi-Label Classification</span></b></a> </p>
 
         <details>
             <summary><b style="font-size:25px">Semi-Supervised Learning Models</b></summary>
@@ -1350,7 +1419,7 @@ print("Product: {}".format(
                 <li>
                     <details>
                         <summary><b>Gaussian Mixture</b></summary>
-                        <pre class="language-python">"<code>class sklearn.mixture.GaussianMixture(n_components=1, *, covariance_type='full', tol=0.001, reg_covar=1e-06, max_iter=100, n_init=1, init_params='kmeans', weights_init=None, means_init=None, precisions_init=None, random_state=None, warm_start=False, verbose=0, verbose_interval=10)[source]
+                        <pre class="language-python">"<code>class sklearn.mixture.GaussianMixture(n_components=1, *, covariance_type='full ', tol=0.001, reg_covar=1e-06, max_iter=100, n_init=1, init_params='kmeans ', weights_init=None, means_init=None, precisions_init=None, random_state=None, warm_start=False, verbose=0, verbose_interval=10)[source]
 </code></pre>
                     </details>
                 </li>
@@ -1393,7 +1462,7 @@ while X_train.shape[0] &amp;lt;= nb_samples:
                         <pre class="language-python">"<code>from sklearn.datasets import load_wine
 from sklearn.utils import shuffle
 wine = load_wine()
-X, Y = shuffle(wine['data'], wine['target'], random_state=1000)
+X, Y = shuffle(wine['data '], wine['target '], random_state=1000)
 </code></pre>
                         <pre class="language-python">"<code>nb_samples = X.shape[0]
 nb_labeled = 20
@@ -1410,7 +1479,7 @@ X_labeled_2 = X_labeled[:, feature_cut:]
 from sklearn.metrics import classification_report
 nb0 = GaussianNB()
 nb0.fit(X_labeled, Y_labeled)
-print(classification_report(Y, nb0.predict(X), target_names=wine['target_names']))
+print(classification_report(Y, nb0.predict(X), target_names=wine['target_names ']))
 </code></pre>
                         <pre class="language-python">"<code>import numpy as np
 from sklearn.naive_bayes import GaussianNB
@@ -1440,7 +1509,7 @@ nb1 = None
         Y_labeled = np.concatenate((Y_labeled, Y_new_labeled_1, Y_new_labeled_2), axis=0)
         X_unlabeled = np.delete(X_unlabeled, selected_idxs, axis=0)
 
-print(classification_report(Y, nb1.predict(X[:, 0:feature_cut]), target_names=wine['target_names']))
+print(classification_report(Y, nb1.predict(X[:, 0:feature_cut]), target_names=wine['target_names ']))
 </code></pre>
                     </details>
                 </li>
@@ -1573,13 +1642,12 @@ print(w.shape, eta.shape, xi.shape, zi.shape, b.shape)
 # (2,) (50,) (50,) (50,) (1,)
 
 # Since the optimization algorithm requires a single array, 
-# we've stacked all vectors into a horizontal array
-theta0 = np.hstack((w, eta, xi, zi, b))
-</code></pre>
-                        <pre class="language-python">"<code># We also need to vectorize the min() function in order to apply it to arrays:
+# we've stacked all vectors into a horizontal array theta0=n p.hstack((w, eta, xi, zi, b)) </code>
+                                    </pre>
+                                    <pre class="language-python">"<code># We also need to vectorize the min() function in order to apply it to arrays:
 vmin = np.vectorize(lambda x1, x2: x1 if x1 &lt;= x2 else x2)
 </code></pre>
-                        <pre class="language-python">"<code># Now, we can define the objective function:
+                                    <pre class="language-python">"<code># Now, we can define the objective function:
 def svm_target(theta, Xd, Yd):
     wt = theta[:2].reshape((Xd.shape[1], 1))
 
@@ -1591,7 +1659,7 @@ def svm_target(theta, Xd, Yd):
     # The constant can be omitted without any impact.
     return C * (s_eta + s_min_xi_zi) + 0.5 * np.dot(wt.T, wt)
 </code></pre>
-                        <pre class="language-python">"<code># At this point, we need to define all the constraints, 
+                                    <pre class="language-python">"<code># At this point, we need to define all the constraints, 
 # since they are based on the slack variables; 
 # each function (which shares the same parameters of the objectives) is parametrized with an index, idx.
 def labeled_constraint(theta, Xd, Yd, idx):
@@ -1618,7 +1686,7 @@ def unlabeled_constraint_2(theta, Xd, idx):
 
     return (c &gt;= 0)[0]
 </code></pre>
-                        <pre class="language-python">"<code># We also need to include the constraints for each slack variable (≥ 0):
+                                    <pre class="language-python">"<code># We also need to include the constraints for each slack variable (≥ 0):
 def eta_constraint(theta, idx):
     return theta[2:2+nb_samples-nb_unlabeled][idx] &gt;= 0
 
@@ -1628,7 +1696,7 @@ def xi_constraint(theta, idx):
 def zi_constraint(theta, idx):
     return theta[2+nb_samples:2+nb_samples+nb_unlabeled][idx-nb_samples+nb_unlabeled] &gt;= 0
 </code></pre>
-                        <pre class="language-python">"<code># We can now set up the problem using the SciPy convention:
+                                    <pre class="language-python">"<code># We can now set up the problem using the SciPy convention:
 # Each constraint is represented by a dictionary, 
 # where type is set to ineq to indicate that it is an inequality, 
 # fun points to the callable object, 
@@ -1673,7 +1741,7 @@ for i in range(nb_samples-nb_unlabeled, nb_samples):
         'args': (i,)
     })
 </code></pre>
-                        <pre class="language-python">"<code># Using SciPy, it's possible to minimize the objective using either 
+                                    <pre class="language-python">"<code># Using SciPy, it's possible to minimize the objective using either 
 # the Sequential Least Squares Programming (SLSQP) or 
 # Constraint Optimization by Linear Approximation (COBYLA) algorithms. 
 # We've chosen the latter, but the reader is free to employ any other method or library. 
@@ -1696,15 +1764,15 @@ b = theta_end[-1]
 Xu = X[nb_labeled:nb_samples]
 yu = -np.sign(np.dot(Xu, w) + b)
 </code></pre>
-                    </details>
-                </li>
+                        </details>
+                    </li>
 
-                <li>
-                    <details>
-                        <summary><b>Transductive Support Vector Machines (TSVM)</b></summary>
-                        <p><img src="imgs/20220131-142106.png" alt="" / width=600 height=200></p>
-                        <p><img src="imgs/20220131-142152.png" alt="" /></p>
-                        <pre class="language-python">"<code>from sklearn.datasets import make_classification
+                    <li>
+                        <details>
+                            <summary><b>Transductive Support Vector Machines (TSVM)</b></summary>
+                            <p><img src="imgs/20220131-142106.png" alt="" / width=600 height=200></p>
+                            <p><img src="imgs/20220131-142152.png" alt="" /></p>
+                            <pre class="language-python">"<code>from sklearn.datasets import make_classification
 nb_samples = 200
 nb_unlabeled = 150
 
@@ -1716,7 +1784,7 @@ X, Y = make_classification(n_samples=nb_samples,
 Y[Y==0] = -1
 Y[nb_samples - nb_unlabeled:nb_samples] = 0
 </code></pre>
-                        <pre class="language-python">"<code># First of all, we need to initialize our variables:
+                            <pre class="language-python">"<code># First of all, we need to initialize our variables:
 import numpy as np
 
 w             = np.random.uniform(-0.1, 0.1, size=X.shape[1])
@@ -1735,7 +1803,7 @@ theta0        = np.hstack((w, eta_labeled, y_unlabeled, b))
 # because we want to accept the guidance of the labeled samples more than the structure of the unlabeled ones. 
 # In a further example, we'll compare the results with an opposite scenario.
 </code></pre>
-                        <pre class="language-python">"<code>
+                            <pre class="language-python">"<code>
 # The objective function to optimize is as follows:
 def svm_target(theta, Xd, Yd):
     wt              = theta[0:2].reshape((Xd.shape[1], 1))
@@ -1744,7 +1812,7 @@ def svm_target(theta, Xd, Yd):
 
     return (C_labeled * s_eta_labeled) + (C_unlabeled * s_eta_unlabeled) + (0.5 * np.dot(wt.T, wt))
 </code></pre>
-                        <pre class="language-python">"<code>
+                            <pre class="language-python">"<code>
 # While the labeled and unlabeled constraints are as follows:
 def labeled_constraint(theta, Xd, Yd, idx):
     wt = theta[0:2].reshape((Xd.shape[1], 1))
@@ -1761,7 +1829,7 @@ def unlabeled_constraint(theta, Xd, idx):
 
     return int((c &gt;= 0)[0])
 </code></pre>
-                        <pre class="language-python">"<code># In this example, we want to employ the SLSQP algorithm to optimize the objective. 
+                            <pre class="language-python">"<code># In this example, we want to employ the SLSQP algorithm to optimize the objective. 
 # This method computes the Jacobian (that is, the matrix containing the first partial derivatives) of all constraints (including the Boolean ones) and in NumPy 1.8+ the difference operator (-) between Boolean arrays has been deprecated and must be replaced with a logical XOR.
 # Unfortunately, this can cause incompatibilities with SciPy; since that's the case, 
 # we've transformed all Boolean outputs into integer values (0 and 1). 
@@ -1772,7 +1840,7 @@ def eta_labeled_constraint(theta, idx):
 def eta_unlabeled_constraint(theta, idx):
     return int(theta[2 + nb_samples - nb_unlabeled:2 + nb_samples][idx - nb_samples + nb_unlabeled] &gt;= 0)
 </code></pre>
-                        <pre class="language-python">"<code># As in the previous example, we can create the constraint dictionary needed by SciPy:
+                            <pre class="language-python">"<code># As in the previous example, we can create the constraint dictionary needed by SciPy:
 svm_constraints = []
 for i in range(nb_samples - nb_unlabeled):
     svm_constraints.append({
@@ -1798,7 +1866,7 @@ for i in range(nb_samples - nb_unlabeled, nb_samples):
             'args': (i,)
         })
 </code></pre>
-                        <pre class="language-python">"<code># After having defined all the constraints, we can minimize the objective function using method='SLSQP' and the dictionary option 'maxiter': 2000. 
+                            <pre class="language-python">"<code># After having defined all the constraints, we can minimize the objective function using method='SLSQP' and the dictionary option 'maxiter': 2000. 
 # In general, convergence is achieved in a smaller number of iterations, 
 # but here we've made assumptions as though we're working in a more general scenario:
 from scipy.optimize import minimize
@@ -1812,7 +1880,7 @@ result = minimize(fun=svm_target,
 print(result['message'])
 #### Optimization terminated successfully.
 </code></pre>
-                        <pre class="language-python">"<code># Such a message confirms that SLSQP successfully found a minimum. 
+                            <pre class="language-python">"<code># Such a message confirms that SLSQP successfully found a minimum. 
 # I always check the output of the optimization function, to make sure that nothing went wrong during the procedure, and I recommend that you do too. 
 # In particular, when using methods like COBYLA, it's important that all constraints are differentiable. 
 # When some of them are not, the algorithm can stop working properly, because the approximations of the Jacobian become unreliable.
@@ -1823,7 +1891,7 @@ b = theta_end[-1]
 Xu= X[nb_samples - nb_unlabeled:nb_samples]
 yu = -np.sign(np.dot(Xu, w) + b)
 </code></pre>
-                        <pre class="language-python">"<code>### Analysis of different TSVM configurations
+                            <pre class="language-python">"<code>### Analysis of different TSVM configurations
 # It's interesting to evaluate different combinations of the C parameters, 
 # starting from a standard supervised linear SVM. 
 # The dataset is smaller, with a large number of unlabeled samples:
@@ -1840,20 +1908,20 @@ svc.fit(X[Y != 0], Y[Y != 0])
 Xu_svc= X[nb_samples - nb_unlabeled:nb_samples]
 yu_svc = svc.predict(Xu_svc)
 </code></pre>
-                    </details>
-                </li>
+                        </details>
+                    </li>
 
-                <li>
-                    <details>
-                        <summary><b>Label Propagation</b></summary>
-                        <pre class="language-python">"<code>from sklearn.datasets import make_classification
+                    <li>
+                        <details>
+                            <summary><b>Label Propagation</b></summary>
+                            <pre class="language-python">"<code>from sklearn.datasets import make_classification
 nb_samples = 100
 nb_unlabeled = 75
 X, Y = make_classification(n_samples=nb_samples, n_features=2, n_informative=2, n_redundant=0, random_state=1000)
 Y[Y==0] = -1
 Y[nb_samples - nb_unlabeled:nb_samples] = 0
 </code></pre>
-                        <pre class="language-python">"<code>from sklearn.neighbors import kneighbors_graph
+                            <pre class="language-python">"<code>from sklearn.neighbors import kneighbors_graph
 nb_neighbors = 2
 W_knn_sparse = kneighbors_graph(X, n_neighbors=nb_neighbors, mode='connectivity', include_self=True)
 W_knn = W_knn_sparse.toarray()
@@ -1862,7 +1930,7 @@ W_knn = W_knn_sparse.toarray()
 # the alternative is distance, which returns the distances instead of 0 and 1 to indicate the absence/presence of an edge. 
 # The include_self=True parameter is useful, as we want to have Wii = 1.
 </code></pre>
-                        <pre class="language-python">"<code># For the RBF matrix, we need to define it manually:
+                            <pre class="language-python">"<code># For the RBF matrix, we need to define it manually:
 import numpy as np
 def rbf(x1, x2, gamma=10.0):
     n = np.linalg.norm(x1 - x2, ord=1)
@@ -1872,11 +1940,11 @@ for i in range(nb_samples):
     for j in range(nb_samples):
         W_rbf[i, j] = rbf(X[i], X[j])
 </code></pre>
-                        <pre class="language-python">"<code># Now, we can compute the degree matrix and its inverse. As the procedure is identical, from this point on, we continue using the RBF affinity matrix:
+                            <pre class="language-python">"<code># Now, we can compute the degree matrix and its inverse. As the procedure is identical, from this point on, we continue using the RBF affinity matrix:
 D_rbf = np.diag(np.sum(W_rbf, axis=1))
 D_rbf_inv = np.linalg.inv(D_rbf)
 </code></pre>
-                        <pre class="language-python">"<code># Ideally, it's possible to set a double stop criterion based on the threshold and a maximum number of iterations:
+                            <pre class="language-python">"<code># Ideally, it's possible to set a double stop criterion based on the threshold and a maximum number of iterations:
 tolerance = 0.01
 Yt = Y.copy()
 Y_prev = np.zeros((nb_samples,))
@@ -1888,7 +1956,7 @@ while np.linalg.norm(Yt - Y_prev, ord=1) &gt; tolerance:
     Yt[0:nb_samples - nb_unlabeled] = Y[0:nb_samples - nb_unlabeled]
 Y_final = np.sign(Yt)
 </code></pre>
-                        <pre class="language-python">"<code># As it's possible to see, in the original dataset, there's a round dot surrounded by square ones (-0.9, -1). 
+                            <pre class="language-python">"<code># As it's possible to see, in the original dataset, there's a round dot surrounded by square ones (-0.9, -1). 
 # As this algorithm keeps the original labels, we find the same situation after the propagation of labels. 
 # This condition could be acceptable, even if both the smoothness and clustering assumptions are contradicted. 
 # Assuming that it's reasonable (that is, the initial labeling can be considered as flexible and there are no explicit constraints), 
@@ -1908,31 +1976,31 @@ Y_final = np.sign(Yt)
 </code></pre>
 
 
-                    </details>
-                </li>
+                        </details>
+                    </li>
 
-                <li>
-                    <details>
-                        <summary><b>Label Propagation [Sklearn]</b></summary>
-                        Scikit-learn implements a slightly different algorithm proposed by Zhu and Ghahramani (in the aforementioned paper) that is equivalent in terms of results but has a slightly different internal dynamic based on a Markov random walk through the graph until
-                        a stationary configuration is found (that is, the labels don't change anymore).
-                        <pre class="language-python">"<code>
+                    <li>
+                        <details>
+                            <summary><b>Label Propagation [Sklearn]</b></summary>
+                            Scikit-learn implements a slightly different algorithm proposed by Zhu and Ghahramani (in the aforementioned paper) that is equivalent in terms of results but has a slightly different internal dynamic based on a Markov random walk through the graph until
+                            a stationary configuration is found (that is, the labels don't change anymore).
+                            <pre class="language-python">"<code>
 from sklearn.datasets import make_classification
 nb_samples = 1000
 nb_unlabeled = 750
 X, Y = make_classification(n_samples=nb_samples, n_features=2, n_informative=2, n_redundant=0, random_state=100)
 Y[nb_samples - nb_unlabeled:nb_samples] = -1
 </code></pre>
-                        <pre class="language-python">"<code>from sklearn.semi_supervised import LabelPropagation
+                            <pre class="language-python">"<code>from sklearn.semi_supervised import LabelPropagation
 lp = LabelPropagation(kernel='rbf', gamma=10.0)
 lp.fit(X, Y)
 Y_final = lp.predict(X)
 </code></pre>
 
-                    </details>
-                </li>
+                        </details>
+                    </li>
 
-            </ul>
+                </ul>
         </details>
 
     </div>
