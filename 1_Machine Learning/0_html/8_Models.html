@@ -845,6 +845,17 @@ poly_model.fit(X, y)
 
                     <li>
                         <details>
+                            <summary><b>Isotonic Regression</b></summary>
+                            <p>An isotonic regression assumes the monotonicity of the dependent variable and tries to find a set of N weights, wi, so as to minimize the weighted least-square loss</p>
+                            <pre class="language-python"><code>from sklearn.isotonic import IsotonicRegression
+ir = IsotonicRegression()
+ir.fit(x, y)
+</code></pre>
+                        </details>
+                    </li>
+
+                    <li>
+                        <details>
                             <summary><b>Ridge Regressor</b> [L2 Regulaizer]</summary>
                             <p>
                                 <p><b>NOTE:</b> Requires Scalling and you can make it polynomial as Linear Regression.</p>
