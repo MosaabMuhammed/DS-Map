@@ -66,6 +66,31 @@ new_timestamp = period.to_timestamp(freq='H', how='start')
         </details>
         <!-- ---------------------------------------------------------------------------- -->
         <details>
+            <summary>Find the best order of <b>AR</b> and <b>MA</b></summary>
+            <pre class="language-python"><code># pick best order by aic 
+# smallest aic value wins
+best_aic = np.inf 
+best_order = None
+best_mdl = None
+
+rng = range(5)
+for i in rng:
+    for j in rng:
+        try:
+            tmp_mdl = smt.ARMA(arma22, order=(i, j)).fit(method='mle', trend='nc')
+            tmp_aic = tmp_mdl.aic
+            if tmp_aic < best_aic:
+                best_aic = tmp_aic
+                best_order = (i, j)
+                best_mdl = tmp_mdl
+        except: continue
+
+print('aic: {:6.5f} | order: {}'.format(best_aic, best_order))
+# aic: 15326.68109 | order: (2, 2)
+# Simply use best_mdl.predict() to predict the next values</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
             <summary><b>pd.date_range</b></summary>
             <p>date_range is a method that returns a fixed frequency datetimeindex. <br> It is quite useful when creating your own time series attribute for pre-existing data or arranging the whole data around the time series attribute created by you.</p>
 

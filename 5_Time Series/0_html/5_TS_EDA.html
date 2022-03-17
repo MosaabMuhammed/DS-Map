@@ -138,6 +138,47 @@ walmart_store_count_series.resample('BQ').mean().plot(style=':', title=&quot;Val
                     <img src="./imgs/downsampling_2.png">
                 </details>
 
+                <details>
+                    <summary><b>Autocorrelation, Partial Autocorrelation, other</b> in one plot</summary>
+                    <pre class="language-python"><code>def tsplot(y, lags=None, figsize=(10, 8), style='bmh',title=''):
+if not isinstance(y, pd.Series):
+    y = pd.Series(y)
+with plt.style.context(style):    
+    fig = plt.figure(figsize=figsize)
+    #mpl.rcParams['font.family'] = 'Ubuntu Mono'
+    layout = (3, 2)
+    ts_ax = plt.subplot2grid(layout, (0, 0), colspan=2)
+    acf_ax = plt.subplot2grid(layout, (1, 0))
+    pacf_ax = plt.subplot2grid(layout, (1, 1))
+    qq_ax = plt.subplot2grid(layout, (2, 0))
+    pp_ax = plt.subplot2grid(layout, (2, 1))
+    
+    y.plot(ax=ts_ax)
+    ts_ax.set_title(title)
+    smt.graphics.plot_acf(y, lags=lags, ax=acf_ax, alpha=0.5)
+    smt.graphics.plot_pacf(y, lags=lags, ax=pacf_ax, alpha=0.5)
+    sm.qqplot(y, line='s', ax=qq_ax)
+    qq_ax.set_title('QQ Plot')        
+    scs.probplot(y, sparams=(y.mean(), y.std()), plot=pp_ax)
+
+    plt.tight_layout()
+return </code></pre>
+
+                    <pre class="language-python"><code># Simulate an AR(1) process with alpha = 0.6
+np.random.seed(1)
+n_samples = int(1000)
+a = 0.6
+x = w = np.random.normal(size=n_samples)
+
+for t in range(n_samples):
+    x[t] = a*x[t-1] + w[t]
+limit=12    
+_ = tsplot(x, lags=limit,title="AR(1)process")</code></pre>
+                    <img src="../0_html/imgs/tsplot.png" alt="">
+                    <h3>How to analyize ACF:</h3>
+                    <img src="../0_html/imgs/acf_analysis.png" alt="">
+                </details>
+
             </p>
         </details>
 
@@ -357,6 +398,9 @@ iplot(data, filename='simple_candlestick')</code></pre>
                     <details>
                         <summary>Autocorrelation</summary>
                         <p>The autocorrelation function (ACF) measures how a series is correlated with itself at different lags.</p>
+                        <p>In any case, given a lag, a large absolute autocorrelation means that the process tends to maintain an internal similarity, while a small value indicates that the evolution has removed most of the memory. In terms of prediction,
+                            a large autocorrelation implies a simple prediction given the preceding instants, while a small autocorrelation (as in the case of the noise process) informs us that the value yt receives a very small influence from the previous
+                            values (that is, in a white noise process the outputs are uncorrelated; therefore, the prediction is theoretically impossible).</p>
                         <details>
                             <summary>statsmodels</summary>
                             <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
@@ -367,6 +411,8 @@ plt.show()
 
 # As all lags are either close to 1 or at least greater than the confidence interval, they are statistically significant.</code></pre>
                             <img src="./imgs/autocorrelation.png" alt="">
+                            <h3>How to analyize ACF:</h3>
+                            <img src="../0_html/imgs/acf_analysis.png" alt="">
                         </details>
                         <details>
                             <summary>pandas</summary>
@@ -384,6 +430,9 @@ for i in range(1, 1000):
 autocorrelation_plot(random_walk)
 pyplot.show()</code></pre>
                             <img src="./imgs/autocorrelation_2.png" alt="" width="400" height="400">
+                            <h3>How to analyize ACF:</h3>
+                            <img src="../0_html/imgs/acf_analysis.png" alt="">
+
                         </details><br>
                     </details>
                 </li>
