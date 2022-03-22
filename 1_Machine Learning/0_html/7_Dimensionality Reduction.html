@@ -1,34 +1,47 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>7. Feature Reduction</h1>
-<div style='width:1000px;margin:auto'>
+<!doctype HTML>
+<html>
 
-<details><summary style='font-size:23px;text-decoration:underline'><b>Dimensionality Reduction:</b></summary>
-<p>
+<head>
+    <meta charset="utf-8">
+    <title>Made with Remarkable!</title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
 
-<ul>
-<li><a href="https://scikit-learn.org/stable/modules/decomposition.html"><b>Linear Methods for Dimensionality Reduction</b></a></li>
+<body>
+    <h1>7. Feature Reduction</h1>
+    <div style='width:1000px;margin:auto'>
 
-<li><a href="https://scikit-learn.org/stable/auto_examples/manifold/plot_compare_methods.html"><b>Non-Linear Methods for Dimensionality Reduction</b></a> 
-<br></li>
+        <details>
+            <summary style='font-size:23px;text-decoration:underline'><b>Dimensionality Reduction:</b></summary>
+            <p>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/8_Dimensionality%20Reduction/mnist_loadData_pca_tsne.html">PCA vs. t-SNE</a></li>
-</ul>
+                <ul>
+                    <li><a href="https://scikit-learn.org/stable/modules/decomposition.html"><b>Linear Methods for Dimensionality Reduction</b></a></li>
 
- <details><summary><b>PCA</b> & <b>ICA</b> & <b>t-SNE</b> & <b>UMAP</b></summary>
-<p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a></p>
-<ul>
-<li><b>PCA:</b> Principal Components Analysis. Finds the dimensions of greatest variation in the data</li>
+                    <li><a href="https://scikit-learn.org/stable/auto_examples/manifold/plot_compare_methods.html"><b>Non-Linear Methods for Dimensionality Reduction</b></a>
+                        <br></li>
 
-<li><b>ICA:</b> Independent Components Analysis. Attempts to separate a mutltivariate signal into independent signals.</li>
+                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/8_Dimensionality%20Reduction/mnist_loadData_pca_tsne.html">PCA vs. t-SNE</a></li>
+                </ul>
 
-<li><b>TSNE:</b> T-distributed Stochastic Neighbor Embedding. Maps high-dimensional data to a low-dimensional manifold attempting to maintain the local structure within the data. It is a non-linear technique and generally only used for visualization.</li>
+                <details>
+                    <summary><b>PCA</b> & <b>ICA</b> & <b>t-SNE</b> & <b>UMAP</b></summary>
+                    <p>
+                        <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html"><b>Notebook</b></a></p>
+                        <ul>
+                            <li><b>PCA:</b> Principal Components Analysis. Finds the dimensions of greatest variation in the data</li>
 
-<li><b>UMAP:</b> Uniform Manifold Approximation and Projection: A relatively new technique that also maps data to a low-dimensional manifold but tries to preserve more global structure than TSNE.</li>
-</ul>
+                            <li><b>ICA:</b> Independent Components Analysis. Attempts to separate a mutltivariate signal into independent signals.</li>
 
-<h4>1. Importing Libraries</h4>
+                            <li><b>TSNE:</b> T-distributed Stochastic Neighbor Embedding. Maps high-dimensional data to a low-dimensional manifold attempting to maintain the local structure within the data. It is a non-linear technique and generally only
+                                used for visualization.</li>
 
-<pre><code class="python">from umap import UMAP
+                            <li><b>UMAP:</b> Uniform Manifold Approximation and Projection: A relatively new technique that also maps data to a low-dimensional manifold but tries to preserve more global structure than TSNE.</li>
+                        </ul>
+
+                        <h4>1. Importing Libraries</h4>
+
+                        <pre class="language-python"><code class="python">from umap import UMAP
 from sklearn.decomposition import PCA, FastICA
 from sklearn.manifold import TSNE
 
@@ -41,9 +54,9 @@ tsne = TSNE(n_components=n_components)
 </code></pre>
 
 
-<h4> 2. Fitting and Transforming</h4>
+                        <h4> 2. Fitting and Transforming</h4>
 
-<pre><code class="python">train_df = train_selected.copy()
+                        <pre class="language-python"><code class="python">train_df = train_selected.copy()
 test_df = test_selected.copy()
 
 for method, name in zip([umap, pca, ica, tsne], 
@@ -76,9 +89,9 @@ for method, name in zip([umap, pca, ica, tsne],
 </code></pre>
 
 
-<h4> 3. Plot it 3D</h4>
+                        <h4> 3. Plot it 3D</h4>
 
-<pre><code class="python">from mpl_toolkits.mplot3d import Axes3D
+                        <pre class="language-python"><code class="python">from mpl_toolkits.mplot3d import Axes3D
 
 def discrete_cmap(N, base_cmap=None):
     &quot;&quot;&quot;Create an N-bin discrete colormap from the specified input map
@@ -96,7 +109,7 @@ train_df['label'] = train_labels
 
 
 
-<pre><code class="python"># Plot each method
+                        <pre class="language-python"><code class="python"># Plot each method
 for method, name in zip([umap, pca, ica, tsne], 
                         ['umap', 'pca', 'ica', 'tsne']):
 
@@ -110,15 +123,99 @@ for method, name in zip([umap, pca, ica, tsne],
     fig.colorbar(p, aspect = 4, ticks = [1, 2, 3, 4])
 </code></pre>
 
-</p>
-</details>
+                    </p>
+                </details>
 
-<details><summary><b>PCA</b></summary><p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.decomposition.PCA.html#sklearn-decomposition-pca"><b>Docs</b></a> </p>
+                <details>
+                    <summary><b>Factor Analysis</b></summary>
 
-<h4> PCA inside a pipeline</h4>
+                    <pre class="language-python"><code># Import required libraries
+import pandas as pd
+from sklearn.datasets import load_iris
+from factor_analyzer import FactorAnalyzer
+import matplotlib.pyplot as plt
+                </code></pre>
+                    <h3>Adequacy Test:</h3>
+                    <p>
+                        Adequacy Test Before you perform factor analysis, you need to evaluate the “factorability” of our dataset. Factorability means "can we found the factors in the dataset?". There are two methods to check the factorability or sampling adequacy: Bartlett’s
+                        Test Kaiser-Meyer-Olkin Test Bartlett’s test of sphericity checks whether or not the observed variables intercorrelate at all using the observed correlation matrix against the identity matrix. If the test found statistically insignificant,
+                        you should not employ a factor analysis.
+                    </p>
+                    <pre class="language-python"><code>from factor_analyzer.factor_analyzer import calculate_bartlett_sphericity
+chi_square_value,p_value=calculate_bartlett_sphericity(df)
+chi_square_value, p_value
+# (18146.065577234807, 0.0)
+# In this Bartlett ’s test, the p-value is 0. The test was statistically significant, indicating that the observed correlation matrix is not an identity matrix.
+                    </code></pre>
+                    <p>
+                        Kaiser-Meyer-Olkin (KMO) Test measures the suitability of data for factor analysis. It determines the adequacy for each observed variable and for the complete model. KMO estimates the proportion of variance among all the observed variable. Lower proportion
+                        id more suitable for factor analysis. KMO values range between 0 and 1. Value of KMO less than 0.6 is considered inadequate. </p>
+                    <pre class="language-python"><code>from factor_analyzer.factor_analyzer import calculate_kmo
+kmo_all,kmo_model=calculate_kmo(df)
+kmo_model
+# 0.8486452309468382
+# The overall KMO for our data is 0.84, which is excellent. This value indicates that you can proceed with your planned factor analysis.
+                    </code></pre>
+                    <h3>Choose the number of Factors:</h3>
+                    <pre class="language-python"><code># For choosing the number of factors, you can use the Kaiser criterion and scree plot. Both are based on eigenvalues.
+# Create factor analysis object and perform factor analysis
+fa = FactorAnalyzer()
+fa.analyze(df, 25, rotation=None)
+# Check Eigenvalues
+ev, v = fa.get_eigenvalues()
+ev
+# 0	5.134311
+# 1	2.751887
+# 2	2.142702
+# 3	1.852328
+# 4	1.548163
+# 5	1.073582</code></pre>
+                    <p>
+                        Here, you can see only for 6-factors eigenvalues are greater than one. It means we need to choose only 6 factors (or unobserved variables).
+                    </p>
+                    <pre class="language-python"><code># Create scree plot using matplotlib
+plt.scatter(range(1,df.shape[1]+1),ev)
+plt.plot(range(1,df.shape[1]+1),ev)
+plt.title('Scree Plot')
+plt.xlabel('Factors')
+plt.ylabel('Eigenvalue')
+plt.grid()
+plt.show()</code></pre>
+                    <h3>Performing Factor Analysis</h3>
+                    <pre class="language-python"><code># Create factor analysis object and perform factor analysis
+fa = FactorAnalyzer()
+fa.analyze(df, 6, rotation="varimax")
+fa.loadings
+Factor1	Factor2	Factor3	Factor4	Factor5	Factor6
+A1	0.040783	0.095220	0.048734	-0.113057	-0.530987	0.161216
+A2	0.235538	0.033131	0.133714	0.063734	0.661141	-0.006244
+A3	0.343008	-0.009621	0.121353	0.033990	0.605933	0.160106
+</code></pre>
+                    <p>
+                        Factor 1 has high factor loadings for E1,E2,E3,E4, and E5 (Extraversion) <br> Factor 2 has high factor loadings for N1,N2,N3,N4, and N5 (Neuroticism) <br> Factor 3 has high factor loadings for C1,C2,C3,C4, and C5 (Conscientiousness)
+                        <br> Factor 4 has high factor loadings for O1,O2,O3,O4, and O5 (Opennness) <br> Factor 5 has high factor loadings for A1,A2,A3,A4, and A5 (Agreeableness) <br> Factor 6 has none of the high loagings for any variable and is not easily
+                        interpretable. Its good if we take only five factors.
+                    </p>
+                    <h3>Get variance for each factor:</h3>
+                    <pre class="language-python"><code># Get variance of each factors
+fa.get_factor_variance()
 
-<pre><code class="python">from sklearn.decomposition import PCA
+Factor1	Factor2	Factor3	Factor4	Factor5
+SS Loadings	2.473090	2.709633	2.041106	1.522153	1.844498
+Proportion Var	0.098924	0.108385	0.081644	0.060886	0.073780
+Cumulative Var	0.098924	0.207309	0.288953	0.349839	0.423619
+
+# Total 42% cumulative Variance explained by the 5 factors.</code></pre>
+                </details>
+
+                <details>
+                    <summary><b>PCA</b></summary>
+                    <p>
+                        <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.decomposition.PCA.html#sklearn-decomposition-pca"><b>Docs</b></a> </p>
+
+                        <h4> PCA inside a pipeline</h4>
+
+                        <pre class="language-python"><code class="python">from sklearn.decomposition import PCA
 from sklearn.preprocessing import Imputer
 from sklearn.pipeline import Pipeline
 
@@ -143,9 +240,9 @@ test_pca = pipeline.transform(test)
 </code></pre>
 
 
-<h4> CDF for # of principle componets</h4>
+                        <h4> CDF for # of principle componets</h4>
 
-<pre><code class="python"># Extract the pca object
+                        <pre class="language-python"><code class="python"># Extract the pca object
 pca = pipeline.named_steps['pca']
 
 # Plot the cumulative variance explained
@@ -157,9 +254,9 @@ plt.title('Cumulative Variance Explained with PCA');
 </code></pre>
 
 
-<h4> Visualizing the 2 components</h4>
+                        <h4> Visualizing the 2 components</h4>
 
-<pre><code class="python"># Dataframe of pca results
+                        <pre class="language-python"><code class="python"># Dataframe of pca results
 pca_df = pd.DataFrame({'pc_1': train_pca[:, 0], 'pc_2': train_pca[:, 1], 'target': train_labels})
 
 # Plot pc2 vs pc1 colored by target
@@ -168,17 +265,20 @@ plt.title('PC2 vs PC1 by Target');
 </code></pre>
 
 
-<h4> How much those components preserve from the data</h4>
+                        <h4> How much those components preserve from the data</h4>
 
-<pre><code class="python">print('2 principal components account for {:.4f}% of the variance.'.format(100 * np.sum(pca.explained_variance_ratio_[:2])))
+                        <pre class="language-python"><code class="python">print('2 principal components account for {:.4f}% of the variance.'.format(100 * np.sum(pca.explained_variance_ratio_[:2])))
 </code></pre>
 
-</p></details>
+                    </p>
+                </details>
 
-<details><summary><b>Incremental PCA</b></summary><p>
-<h4>1. Using np.array_split()</h4>
+                <details>
+                    <summary><b>Incremental PCA</b></summary>
+                    <p>
+                        <h4>1. Using np.array_split()</h4>
 
-<pre><code>from sklearn.decomposition import IncrementalPCA
+                        <pre class="language-python"><code>from sklearn.decomposition import IncrementalPCA
 
 n_batches = 100
 inc_pca = IncrementalPCA(n_componenets=154)
@@ -190,9 +290,9 @@ X_reduced = inc_pca.transform(X_train)
 </code></pre>
 
 
-<h4>2. Using np.memmap()</h4>
+                        <h4>2. Using np.memmap()</h4>
 
-<pre><code># np.memmap allows you to manipulate a large
+                        <pre class="language-python"><code># np.memmap allows you to manipulate a large
 # array store in a binary file on disk as if it were entirely in memory;
 # The class loads only the data it needs in memory, when it needs it.
 # 1. Let's create the memmap() structure and copy MNIST data into it. This would typically be done by a first program.
@@ -213,11 +313,14 @@ inc_pca = IncrementalPCA(n_components=154, batch_size=batch_size)
 inc_pca.fit(X_mm)
 </code></pre>
 
-</p></details>
+                    </p>
+                </details>
 
-<details><summary><b>Kernel PCA</b></summary><p>
+                <details>
+                    <summary><b>Kernel PCA</b></summary>
+                    <p>
 
-<pre><code>from sklearn.model_selection import GridSearchCV
+                        <pre class="language-python"><code>from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
@@ -238,22 +341,28 @@ grid_search.fit(X, y)
 print(grid_search.best_params_)
 </code></pre>
 
-</p></details>
+                    </p>
+                </details>
 
-<details><summary><b>LLE</b> [LocallyLinearEmbedding]</summary><p>
+                <details>
+                    <summary><b>LLE</b> [LocallyLinearEmbedding]</summary>
+                    <p>
 
-<pre><code>from sklearn.manifold import LocallyLinearEmbedding
+                        <pre class="language-python"><code>from sklearn.manifold import LocallyLinearEmbedding
 
 lle = LocallyLinearEmbedding(n_components=2, n_neighbors=10)
 X_reduced = lle.fit_transform(X)
 </code></pre>
 
-</p></details>
+                    </p>
+                </details>
 
-<details><summary><b>t-SNE</b></summary><p>
-<h4>1. Faster Wrapper for t-SNE</h4>
+                <details>
+                    <summary><b>t-SNE</b></summary>
+                    <p>
+                        <h4>1. Faster Wrapper for t-SNE</h4>
 
-<pre><code># !pip install tsne
+                        <pre class="language-python"><code># !pip install tsne
 from tsne import bh_sne
 
 X_2d = bh_sne(train.drop(['subject', 'Activity', 'ActivityName'], axis=1))
@@ -265,9 +374,9 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0);
 </code></pre>
 
 
-<h4>2. Sklearn Wrapper</h4>
+                        <h4>2. Sklearn Wrapper</h4>
 
-<pre><code># Performing t-SNE with sklearn-wrapper
+                        <pre class="language-python"><code># Performing t-SNE with sklearn-wrapper
 from sklearn.manifold import TSNE
 
 def perform_tsne(X_data, y_data, perplexities, n_iter=1000, img_name_prefix='t-sne'):
@@ -287,22 +396,25 @@ def perform_tsne(X_data, y_data, perplexities, n_iter=1000, img_name_prefix='t-s
 </code></pre>
 
 
-<pre><code># Perform the t-SNE function
+                        <pre class="language-python"><code># Perform the t-SNE function
 X_pre_tsne = train.drop(['subject', 'Activity', 'ActivityName'], axis=1)
 y_pre_tsne = train['ActivityName']
 perform_tsne(X_pre_tsne, y_pre_tsne, perplexities=[2, 5, 10, 10, 50])
 </code></pre>
 
-</p></details>
+                    </p>
+                </details>
 
-<details><summary><b>Random Projection</b></summary><p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection"><b>SparseRandomProjection</b></a> </p>
+                <details>
+                    <summary><b>Random Projection</b></summary>
+                    <p>
+                        <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection"><b>SparseRandomProjection</b></a> </p>
 
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection"><b>Gaussian Random Projection</b></a> </p>
+                        <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection"><b>Gaussian Random Projection</b></a> </p>
 
-<h4> Sparse Random Projection.</h4>
+                        <h4> Sparse Random Projection.</h4>
 
-<pre><code class="python">import numpy as np
+                        <pre class="language-python"><code class="python">import numpy as np
 from sklearn.random_projection import SparseRandomProjection
 rng = np.random.RandomState(42)
 X = rng.rand(100, 10000)
@@ -315,9 +427,9 @@ np.mean(transformer.components_ != 0)
 </code></pre>
 
 
-<h4> Gaussian Random Projection.</h4>
+                        <h4> Gaussian Random Projection.</h4>
 
-<pre><code class="python">import numpy as np
+                        <pre class="language-python"><code class="python">import numpy as np
 from sklearn.random_projection import GaussianRandomProjection
 rng = np.random.RandomState(42)
 X = rng.rand(100, 10000)
@@ -326,12 +438,15 @@ X_new = transformer.fit_transform(X)
 X_new.shape
 </code></pre>
 
-</p></details>
+                    </p>
+                </details>
 
-<details><summary><b>Multiple Correspondence Analysis (MCA)</b></summary><p>
-<h4>It's like PCA for categorical features</h4>
+                <details>
+                    <summary><b>Multiple Correspondence Analysis (MCA)</b></summary>
+                    <p>
+                        <h4>It's like PCA for categorical features</h4>
 
-<pre><code>!pip install prince
+                        <pre class="language-python"><code>!pip install prince
 import prince
 
 # Let's try drawing first by extracting only 2 components
@@ -343,7 +458,7 @@ X_train_mca = mca.transform(X_train_org[:1000])
 </code></pre>
 
 
-<pre><code># Let's plot the generated data
+                        <pre class="language-python"><code># Let's plot the generated data
 ax = mca.plot_coordinates(
     X=X_train_org[:100],
     ax=None,
@@ -362,27 +477,33 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.);
 
 </code></pre>
 
-</p></details>
+                    </p>
+                </details>
 
-- ICA
-- t-SNE
-- LLE
-- UMAP
-- SVD
-</p></details>
+                - ICA - t-SNE - LLE - UMAP - SVD
+            </p>
+        </details>
 
 
-<details><summary style='font-size:23px;text-decoration:underline'><b>Feature Selection:</b></summary><p>
+        <details>
+            <summary style='font-size:23px;text-decoration:underline'><b>Feature Selection:</b></summary>
+            <p>
 
-<details><summary><b>Filter Methods</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.2_Constant_features.html#Constant-features"><b>Constant Features</b></a> </li>
+                <details>
+                    <summary><b>Filter Methods</b></summary>
+                    <p>
+                        <ul>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.2_Constant_features.html#Constant-features"><b>Constant Features</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.3_Quasi-constant_features.html#Quasi-constant-features"><b>Quasi-Constant Features</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.3_Quasi-constant_features.html#Quasi-constant-features"><b>Quasi-Constant Features</b></a>                                </li>
 
-<li><details><summary>Duplicate Features</summary><p>
-<a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.4_Duplicated_features.html#Duplicated-features"><b>Duplicated Features</b></a>
+                            <li>
+                                <details>
+                                    <summary>Duplicate Features</summary>
+                                    <p>
+                                        <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.4_Duplicated_features.html#Duplicated-features"><b>Duplicated Features</b></a>
 
-<pre><code># For big data
+                                        <pre class="language-python"><code># For big data
 from itertools import combinations
 
 duplicated_feats = []
@@ -391,75 +512,106 @@ for idx, (col_1, col_2) in enumerate(combinations(train.columns, 2)):
         duplicated_feats.append(col_2)
 </code></pre>
 
-</p></details></li>
+                                    </p>
+                                </details>
+                            </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.5_Basic_methods_review.html#Filter-Methods---Basics"><b>Basic Methods Pipeline</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/03.5_Basic_methods_review.html#Filter-Methods---Basics"><b>Basic Methods Pipeline</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.2_Correlation.html#Correlation"><b>Correlation</b></a> </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.3_Basic_methods_plus_correlation_pipeline.html#Basic-methods-plus-correlation-pipeline"><b>Basic Methods + Correlation Pipeline</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/04.3_Basic_methods_plus_correlation_pipeline.html#Basic-methods-plus-correlation-pipeline"><b>Basic Methods + Correlation Pipeline</b></a>                                </li>
 
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.2_Information_gain.html#Information-gain---mutual-information"><b>Mutual Information</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.2_Information_gain.html#Information-gain---mutual-information"><b>Mutual Information</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.3_Fisher_score.html#Fisher-Score---chi-square-implementation-in-sklearn"><b>Fisher Score - Chi-Square</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.3_Fisher_score.html#Fisher-Score---chi-square-implementation-in-sklearn"><b>Fisher Score - Chi-Square</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.4_Univariate_selection.html#Univariate-feature-selection"><b>Univariate Feature Selection (ANOVA)</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.4_Univariate_selection.html#Univariate-feature-selection"><b>Univariate Feature Selection (ANOVA)</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.5_Univariate_roc_auc.html#Univariate-roc-auc-or-mse"><b>Univariate ROC-AUC or MSE</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.5_Univariate_roc_auc.html#Univariate-roc-auc-or-mse"><b>Univariate ROC-AUC or MSE</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.6_Basic_methods_correlation_univariate_rocauc_review.html#Filter-Methods---Basics---Correlations---Univariate-ROC-AUC"><b>Basic Methods + Correlation + others Pipeline</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.6_Basic_methods_correlation_univariate_rocauc_review.html#Filter-Methods---Basics---Correlations---Univariate-ROC-AUC"><b>Basic Methods + Correlation + others Pipeline</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.7_Bonus_method_used_in_KDD_competition.html#Bonus:-Method-used-in-KDD-2009-competition"><b>Method used in KDD 2009 competition</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/05.7_Bonus_method_used_in_KDD_competition.html#Bonus:-Method-used-in-KDD-2009-competition"><b>Method used in KDD 2009 competition</b></a>                                </li>
 
-</ul></p></details>
+                        </ul>
+                    </p>
+                </details>
 
-<details><summary><b>Wrapper Methods</b></summary><p><ul>
+                <details>
+                    <summary><b>Wrapper Methods</b></summary>
+                    <p>
+                        <ul>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.1_Step_forward.html#Step-forward-feature-selection"><b>Step Forward Feature Selection</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.2_Step_backward.html#Step-backward-feature-selection"><b>Step Backward Feature Selection</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.2_Step_backward.html#Step-backward-feature-selection"><b>Step Backward Feature Selection</b></a>                                </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.3_Exhaustive_feature_selection.html#Exhaustive-feature-selection"><b>Exhaustive Feature Selection</b></a> </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/06.3_Exhaustive_feature_selection.html#Exhaustive-feature-selection"><b>Exhaustive Feature Selection</b></a>                                </li>
 
-</ul></p></details>
+                        </ul>
+                    </p>
+                </details>
 
-<details><summary><b>Embedded Methods</b></summary><p>
+                <details>
+                    <summary><b>Embedded Methods</b></summary>
+                    <p>
 
-<details><summary><b>Linear Models</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/07.3_Lasso.html#Lasso-regularisation"><b>LASSO Regularization</b></a> </li>
+                        <details>
+                            <summary><b>Linear Models</b></summary>
+                            <p>
+                                <ul>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/07.3_Lasso.html#Lasso-regularisation"><b>LASSO Regularization</b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.2_Logistic_regression_coefficients.html#Logistic-Regression-Coefficients"><b>Logistic Regression Coefficients</b></a> </li>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.2_Logistic_regression_coefficients.html#Logistic-Regression-Coefficients"><b>Logistic Regression Coefficients</b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.3_Regression_coefficients_and_regularisation.html#Regression-Coefficients-are-affected-by-regularisation"><b>Regression Coefficients are affected by regularisation</b></a> </li>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.3_Regression_coefficients_and_regularisation.html#Regression-Coefficients-are-affected-by-regularisation"><b>Regression Coefficients are affected by regularisation</b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.4_Linear_Regression_coefficients.html#Linear-Regression-Coefficients"><b>Linear Regression Coefficients</b></a> </li>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.4_Linear_Regression_coefficients.html#Linear-Regression-Coefficients"><b>Linear Regression Coefficients</b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.5_Feature_selection_with_linear_models_review.html#Feature-selection-with-linear-models,-review"><b>Linear Model Pipeline</b></a> </li>
-</ul></p></details>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/08.5_Feature_selection_with_linear_models_review.html#Feature-selection-with-linear-models,-review"><b>Linear Model Pipeline</b></a>                                        </li>
+                                </ul>
+                            </p>
+                        </details>
 
-<details><summary><b>Tree-based Models</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.2_Random_forest_importance.html#Random-Forest-importance"><b>Random Forest importance</b></a> </li>
+                        <details>
+                            <summary><b>Tree-based Models</b></summary>
+                            <p>
+                                <ul>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.2_Random_forest_importance.html#Random-Forest-importance"><b>Random Forest importance</b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.4_GradientBoosting_importance.html#Gradient-Boosted-trees-importance"><b>Gradient Boosted trees importance</b></a> </li>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.4_GradientBoosting_importance.html#Gradient-Boosted-trees-importance"><b>Gradient Boosted trees importance</b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.5_Feature_selection_with_decision_trees_review.html#Feature-selection-with-decision-trees,-review"><b>Tree Models - Pipeline/b></a> </li>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.5_Feature_selection_with_decision_trees_review.html#Feature-selection-with-decision-trees,-review"><b>Tree Models - Pipeline/b></a>                                        </li>
 
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a> </li>
-</ul></p></details>
+                                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a>                                        </li>
+                                </ul>
+                            </p>
+                        </details>
 
-</p></details><details><summary><b>Hybrid Methods</b></summary><p><ul>
-<li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.01_Feature_shuffling.html#Feature-selection-by-random-shuffling"><b>Random Shuffling</b></a> </li><li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.02_Hybrid_Recursive_feature_elimination.html#Hybrid-method:-Recursive-feature-elimination"><b>Recursive Feature Elimination</b></a> </li><li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.03_Hybrid_Recursive_feature_addition.html#Hybrid-method:-Recursive-feature-addition"><b>Recursive Feature Addition</b></a> </li>
-</ul></p></details>
+                    </p>
+                </details>
+                <details>
+                    <summary><b>Hybrid Methods</b></summary>
+                    <p>
+                        <ul>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.01_Feature_shuffling.html#Feature-selection-by-random-shuffling"><b>Random Shuffling</b></a>                                </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.02_Hybrid_Recursive_feature_elimination.html#Hybrid-method:-Recursive-feature-elimination"><b>Recursive Feature Elimination</b></a>                                </li>
+                            <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Feature%20Selection%20for%20Machine%20Learning/Feature-selection-notebooks/11.03_Hybrid_Recursive_feature_addition.html#Hybrid-method:-Recursive-feature-addition"><b>Recursive Feature Addition</b></a>                                </li>
+                        </ul>
+                    </p>
+                </details>
 
-<hr>
-<details><summary>1. Remove <b>Highly Correlated</b> Features</summary>
-<p>
-<h4> Identify Highly Correlated Features</h4>
+                <hr>
+                <details>
+                    <summary>1. Remove <b>Highly Correlated</b> Features</summary>
+                    <p>
+                        <h4> Identify Highly Correlated Features</h4>
 
-<pre><code class="python"># Threshold for removing correlated variables
+                        <pre class="language-python"><code class="python"># Threshold for removing correlated variables
 threshold = 0.9
 
 # Absolute value correlation matrix
@@ -467,9 +619,9 @@ corr_matrix = train.corr().abs()
 corr_matrix.head()
 </code></pre>
 
-<h4> Drop the columns</h4>
+                        <h4> Drop the columns</h4>
 
-<pre><code class="python"># Create correlation matrix
+                        <pre class="language-python"><code class="python"># Create correlation matrix
 corr_matrix = df.corr().abs()
 
 # Select upper triangle of correlation matrix
@@ -485,16 +637,17 @@ df.drop(df[to_drop], axis=1)
 </code></pre>
 
 
-</p>
-</details>
+                    </p>
+                </details>
 
 
-<details><summary><b>Recursive Feature Elimination CV</b></summary>
-<p>
-<p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.feature_selection.RFECV.html#sklearn-feature-selection-rfecv"><span style='color:#333'><b> 2. Recursive Feature Elimination method</b></span></a></p>
+                <details>
+                    <summary><b>Recursive Feature Elimination CV</b></summary>
+                    <p>
+                        <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.feature_selection.RFECV.html#sklearn-feature-selection-rfecv"><span style='color:#333'><b> 2. Recursive Feature Elimination method</b></span></a></p>
 
 
-<pre><code class="python">from sklearn.feature_selection import RFECV
+                        <pre class="language-python"><code class="python">from sklearn.feature_selection import RFECV
 
 # Create a model for feature selection
 estimator = RandomForestClassifier(random_state = 10, n_estimators = 100,  n_jobs = -1)
@@ -505,12 +658,12 @@ selector = RFECV(estimator, step = 1, cv = 3, scoring= scorer, n_jobs = -1)
 
 
 
-<pre><code class="python">selector.fit(train_set, train_labels)
+                        <pre class="language-python"><code class="python">selector.fit(train_set, train_labels)
 </code></pre>
 
 
 
-<pre><code class="python">plt.plot(selector.grid_scores_);
+                        <pre class="language-python"><code class="python">plt.plot(selector.grid_scores_);
 
 plt.xlabel('Number of Features'); plt.ylabel('Macro F1 Score'); plt.title('Feature Selection Scores');
 selector.n_features_
@@ -518,13 +671,13 @@ selector.n_features_
 
 
 
-<pre><code class="python">rankings = pd.DataFrame({'feature': list(train_set.columns), 'rank': list(selector.ranking_)}).sort_values('rank')
+                        <pre class="language-python"><code class="python">rankings = pd.DataFrame({'feature': list(train_set.columns), 'rank': list(selector.ranking_)}).sort_values('rank')
 rankings.head(10)
 </code></pre>
 
 
 
-<pre><code class="python">train_selected = selector.transform(train_set)
+                        <pre class="language-python"><code class="python">train_selected = selector.transform(train_set)
 test_selected = selector.transform(test_set)
 # Convert back to dataframe
 selected_features = train_set.columns[np.where(selector.ranking_==1)]
@@ -532,17 +685,26 @@ train_selected = pd.DataFrame(train_selected, columns = selected_features)
 test_selected = pd.DataFrame(test_selected, columns = selected_features)
 </code></pre>
 
-</p>
-</details>
+                    </p>
+                </details>
 
-<ul>
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Step%20Forward%20Feature%20Selection_%20A%20Practical%20Example%20in%20Python.html"><span style='color:#333'><b>3. Forward Feature  Selection<b></span></a> </p></li>
+                <ul>
+                    <li>
+                        <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/Step%20Forward%20Feature%20Selection_%20A%20Practical%20Example%20in%20Python.html"><span style='color:#333'><b>3. Forward Feature  Selection<b></span></a>                            </p>
+                    </li>
 
-<li><p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/compute_KNN_features.html#Load-data"><span style='color:#333'><b>4. Nearest Neighbors for Feature Extraction<b></span></a></p></li>
-</ul>
+                    <li>
+                        <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/How%20to%20win%20a%20Data%20Science%20Competition/compute_KNN_features.html#Load-data"><span style='color:#333'><b>4. Nearest Neighbors for Feature Extraction<b></span></a></p>
+                    </li>
+                </ul>
 
 
-</p>
-</details>
+            </p>
+        </details>
 
-</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+    </div>
+    <script src="../../prism.js"></script>
+
+</body>
+
+</html>
