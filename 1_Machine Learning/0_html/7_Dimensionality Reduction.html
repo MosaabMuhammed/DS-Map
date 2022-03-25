@@ -345,6 +345,21 @@ print(grid_search.best_params_)
                 </details>
 
                 <details>
+                    <summary><b>Fact ICA</b></summary>
+                    <p>
+
+                        <pre class="language-python"><code>from sklearn.decomposition import FastICA
+fastica = FastICA(n_components=64,
+                    max_iter=5000,
+                    random_state=1000)
+fastica.fit(X)
+</code></pre>
+
+                    </p>
+                </details>
+
+
+                <details>
                     <summary><b>LLE</b> [LocallyLinearEmbedding]</summary>
                     <p>
 

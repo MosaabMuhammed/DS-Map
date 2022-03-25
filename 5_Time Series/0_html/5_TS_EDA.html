@@ -180,46 +180,6 @@ _ = tsplot(x, lags=limit,title="AR(1)process")</code></pre>
                 </details>
 
 
-                <details>
-                    <summary><b>Moving Average</summary>
-                    <pre class="language-python"><code>def plotMovingAverage(series, window, plot_intervals=False, scale=1.96, plot_anomalies=False):
-        """
-            series - dataframe with timeseries
-            window - rolling window size 
-            plot_intervals - show confidence intervals
-            plot_anomalies - show anomalies 
-        
-        """
-        rolling_mean = series.rolling(window=window).mean()
-        
-        plt.figure(figsize=(15,5))
-        plt.title("Moving average\n window size = {}".format(window))
-        plt.plot(rolling_mean, "g", label="Rolling mean trend")
-        
-        # Plot confidence intervals for smoothed values
-        if plot_intervals:
-            mae = mean_absolute_error(series[window:], rolling_mean[window:])
-            deviation = np.std(series[window:] - rolling_mean[window:])
-            lower_bond = rolling_mean - (mae + scale * deviation)
-            upper_bond = rolling_mean + (mae + scale * deviation)
-            plt.plot(upper_bond, "r--", label="Upper Bond / Lower Bond")
-            plt.plot(lower_bond, "r--")
-            
-            # Having the intervals, find abnormal values
-            if plot_anomalies:
-                anomalies = pd.DataFrame(index=series.index, columns=series.columns)
-                anomalies[series<lower_bond] = series[series<lower_bond]
-                anomalies[series>upper_bond] = series[series>upper_bond]
-                plt.plot(anomalies, "ro", markersize=10)
-            
-        plt.plot(series[window:], label="Actual values")
-        plt.legend(loc="upper left")
-        plt.grid(True)
-        
-        # plotMovingAverage(ads_anomaly, 4, plot_intervals=True, plot_anomalies=True)</code></pre>
-
-                    <img src="../0_html/imgs/moving_avg.png" alt="">
-                </details>
             </p>
         </details>
 
@@ -230,130 +190,130 @@ _ = tsplot(x, lags=limit,title="AR(1)process")</code></pre>
         <!-- - --------------------------------------- -->
         <details>
             <summary><b>Time-Series Analysis Course</b></summary>
-                    <ul>
-                        <!-- - --------------------------------------- -->
-                        <li>
-                            <details>
-                                <summary><b>Time-Series with Pandas</b></summary>
-                                <p>
+            <ul>
+                <!-- - --------------------------------------- -->
+                <li>
+                    <details>
+                        <summary><b>Time-Series with Pandas</b></summary>
+                        <p>
 
-                                    <ul>
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review"><b>1.
+                            <ul>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/00-Datetime-Index.html#Python-Datetime-Review"><b>1.
                                     Datetime Index</b></a> </p>
-                                        </li>
-
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#Import-the-data"><b>2.
-                                    Making Datetime as index and parse it as datetime64</b></a> </p>
-                                        </li>
-
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#resample()"><b>3.
-                                    Resample</b> (making aggregation over time)</a></p>
-                                        </li>
-
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/02-Time-Shifting.html#Time-Shifting"><b>4.
-                                    Time Shifting</b></a> </p>
-                                        </li>
-
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/03-Rolling-and-Expanding.html#Rolling-and-Expanding"><b>5.
-                                    Rolling &amp; Expanding</b></a></p>
-                                        </li>
-
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/04-Visualizing-Time-Series-Data.html#Visualizing-Time-Series-Data"><b>6.
-                                    Visualizing Time-Series Data</b></a> </p>
-                                        </li>
-
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/06-Pandas-Time-Series-Exercises-SET-ONE-Solutions.html"><b>From
-                                    month as number to String</b></a> </p>
-                                        </li>
-
-                                        <li>
-                                            <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/08-Time-Series-with-Pandas-Project-Exercise-SET-TWO-Solutions.html"><b>Extensive
-                                    Time-Series EDA</b></a>
-                                            </p>
-                                </p>
                                 </li>
-                                </ul>
-            </p>
-            </details>
-            </li>
-            <!-- - --------------------------------------- -->
-            <li>
-                <details>
-                    <summary><b>Statsmodel for Time-Series Analysis</b></summary>
-                    <p>
 
-                        <ul>
-                            <li>
-                                <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/00-Introduction-to-Statsmodels.html"><b>1.
-                                    Hodrick-Prescott filter</b></a> </p>
-                            </li>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#Import-the-data"><b>2.
+                                    Making Datetime as index and parse it as datetime64</b></a> </p>
+                                </li>
 
-                            <li>
-                                <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/01-ETS-Decomposition.html"><b>2.
-                                    ETS Decomposition</b></a> </p>
-                            </li>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/01-Time-Resampling.html#resample()"><b>3.
+                                    Resample</b> (making aggregation over time)</a></p>
+                                </li>
 
-                            <li>
-                                <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/02-EWMA-Exponentially-Weighted-Moving-Average.html"><b>3.
-                                    EWMA (Exponantially Weighted Moving Average)</b></a> </p>
-                            </li>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/02-Time-Shifting.html#Time-Shifting"><b>4.
+                                    Time Shifting</b></a> </p>
+                                </li>
 
-                            <li>
-                                <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/03-Holt-Winters-Methods.html#Holt-Winters-Methods"><b>4.
-                                    Holt-Winters Smoothing (Simple, Double, Triple)</b></a> </p>
-                            </li>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/03-Rolling-and-Expanding.html#Rolling-and-Expanding"><b>5.
+                                    Rolling &amp; Expanding</b></a></p>
+                                </li>
+
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/04-Visualizing-Time-Series-Data.html#Visualizing-Time-Series-Data"><b>6.
+                                    Visualizing Time-Series Data</b></a> </p>
+                                </li>
+
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/06-Pandas-Time-Series-Exercises-SET-ONE-Solutions.html"><b>From
+                                    month as number to String</b></a> </p>
+                                </li>
+
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/04-Time-Series-with-Pandas/08-Time-Series-with-Pandas-Project-Exercise-SET-TWO-Solutions.html"><b>Extensive
+                                    Time-Series EDA</b></a>
+                                    </p>
+                        </p>
+                        </li>
                         </ul>
-                    </p>
-                </details>
-            </li>
+                        </p>
+                    </details>
+                </li>
+                <!-- - --------------------------------------- -->
+                <li>
+                    <details>
+                        <summary><b>Statsmodel for Time-Series Analysis</b></summary>
+                        <p>
+
+                            <ul>
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/00-Introduction-to-Statsmodels.html"><b>1.
+                                    Hodrick-Prescott filter</b></a> </p>
+                                </li>
+
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/01-ETS-Decomposition.html"><b>2.
+                                    ETS Decomposition</b></a> </p>
+                                </li>
+
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/02-EWMA-Exponentially-Weighted-Moving-Average.html"><b>3.
+                                    EWMA (Exponantially Weighted Moving Average)</b></a> </p>
+                                </li>
+
+                                <li>
+                                    <p><a href="./5_EDA/UDEMY_TSA_FINAL/05-Time-Series-Analysis-with-Statsmodels/03-Holt-Winters-Methods.html#Holt-Winters-Methods"><b>4.
+                                    Holt-Winters Smoothing (Simple, Double, Triple)</b></a> </p>
+                                </li>
+                            </ul>
+                        </p>
+                    </details>
+                </li>
 
             </ul>
-            </details>
-            <!-- - --------------------------------------- -->
-            <details>
-                <summary><b>Finance</b></summary>
-                <ul>
-                    <li>
-                        <details>
-                            <summary>Change percent</summary>
-                            <pre class="language-python"><code>google['Change'] = google.High.div(google.High.shift())
+        </details>
+        <!-- - --------------------------------------- -->
+        <details>
+            <summary><b>Finance</b></summary>
+            <ul>
+                <li>
+                    <details>
+                        <summary>Change percent</summary>
+                        <pre class="language-python"><code>google['Change'] = google.High.div(google.High.shift())
 google['Change'].plot(figsize=(20,8))</code></pre>
-                            <img src="./imgs/percent_change.png" alt="">
-                        </details>
-                    </li>
-                    <!-- =============================================== -->
-                    <li>
-                        <details>
-                            <summary>Stock Returns</summary>
-                            <pre class="language-python"><code>google['Return'] = google.Change.sub(1).mul(100)
+                        <img src="./imgs/percent_change.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Stock Returns</summary>
+                        <pre class="language-python"><code>google['Return'] = google.Change.sub(1).mul(100)
 google['Return'].plot(figsize=(20,8))
 
 google.High.pct_change().mul(100).plot(figsize=(20,6)) # Another way to calculate returns
 </code></pre>
-                            <img src="./imgs/percent_change.png" alt="">
-                        </details>
-                    </li>
-                    <!-- =============================================== -->
-                    <li>
-                        <details>
-                            <summary>Absolute Changes in successive days</summary>
-                            <pre class="language-python"><code>google.High.diff().plot(figsize=(20,6))</code></pre>
-                            <img src="./imgs/diff.png" alt="">
-                        </details>
-                    </li>
-                    <!-- =============================================== -->
-                    <li>
-                        <details>
-                            <summary>Comparing 2 or more time series</summary>
-                            <p>We will compare 2 time series by normalizing them. This is achieved by dividing each time series element of all time series by the first element.<br> This way both series start at the same point and can be easily compared.</p>
-                            <pre class="language-python"><code># Normalizing and comparison
+                        <img src="./imgs/percent_change.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Absolute Changes in successive days</summary>
+                        <pre class="language-python"><code>google.High.diff().plot(figsize=(20,6))</code></pre>
+                        <img src="./imgs/diff.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Comparing 2 or more time series</summary>
+                        <p>We will compare 2 time series by normalizing them. This is achieved by dividing each time series element of all time series by the first element.<br> This way both series start at the same point and can be easily compared.</p>
+                        <pre class="language-python"><code># Normalizing and comparison
 # Both stocks start from 100
 normalized_google = google.High.div(google.High.iloc[0]).mul(100)
 normalized_microsoft = microsoft.High.div(microsoft.High.iloc[0]).mul(100)
@@ -363,23 +323,23 @@ plt.legend(['Google','Microsoft'])
 plt.show()
 
 # You can clearly see how google outperforms microsoft over time.</code></pre>
-                            <img src="./imgs/compare.png" alt="">
-                        </details>
-                    </li>
-                    <!-- =============================================== -->
-                    <li>
-                        <details>
-                            <summary>Window Functions <b>rolling</b>, <b>exapnding</b></summary>
-                            <p>In rolling function the window size remain constant whereas in the expanding function it changes.</p>
-                            <pre class="language-python"><code># Rolling window functions
+                        <img src="./imgs/compare.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Window Functions <b>rolling</b>, <b>exapnding</b></summary>
+                        <p>In rolling function the window size remain constant whereas in the expanding function it changes.</p>
+                        <pre class="language-python"><code># Rolling window functions
 rolling_google = google.High.rolling('90D').mean()
 google.High.plot()
 rolling_google.plot()
 plt.legend(['High','Rolling Mean'])
 # Plotting a rolling mean of 90 day window with original High attribute of google stocks
 plt.show()</code></pre>
-                            <img src="./imgs/rolling.png" alt="">
-                            <pre class="language-python"><code># Expanding window functions
+                        <img src="./imgs/rolling.png" alt="">
+                        <pre class="language-python"><code># Expanding window functions
 microsoft_mean = microsoft.High.expanding().mean()
 microsoft_std = microsoft.High.expanding().std()
 microsoft.High.plot()
@@ -387,14 +347,14 @@ microsoft_mean.plot()
 microsoft_std.plot()
 plt.legend(['High','Expanding Mean','Expanding Standard Deviation'])
 plt.show()</code></pre>
-                            <img src="./imgs/expanding.png" alt="">
-                        </details>
-                    </li>
-                    <!-- =============================================== -->
-                    <li>
-                        <details>
-                            <summary>OHLC charts</summary>
-                            <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
+                        <img src="./imgs/expanding.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>OHLC charts</summary>
+                        <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
 init_notebook_mode(connected=True)
 import plotly.graph_objs as go
 
@@ -406,14 +366,14 @@ trace = go.Ohlc(x=google['06-2008'].index,
                 close=google['06-2008'].Close)
 data = [trace]
 iplot(data, filename='simple_ohlc')</code></pre>
-                            <img src="./imgs/OHLC.png" alt="">
-                        </details>
-                    </li>
-                    <!-- =============================================== -->
-                    <li>
-                        <details>
-                            <summary>Candle charts</summary>
-                            <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
+                        <img src="./imgs/OHLC.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Candle charts</summary>
+                        <pre class="language-python"><code>from plotly.offline import init_notebook_mode, iplot
 init_notebook_mode(connected=True)
 import plotly.graph_objs as go
 
@@ -425,14 +385,14 @@ trace = go.Candlestick(x=google['03-2008'].index,
                 close=google['03-2008'].Close)
 data = [trace]
 iplot(data, filename='simple_candlestick')</code></pre>
-                            <img src="./imgs/candle.png" alt="">
-                        </details>
-                    </li>
-                    <!-- =============================================== -->
-                </ul>
-            </details>
-            <!-- - --------------------------------------- -->
+                        <img src="./imgs/candle.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
             </ul>
+        </details>
+        <!-- - --------------------------------------- -->
+        </ul>
         </details>
 
         <details>
@@ -571,6 +531,93 @@ plt.show()</code></pre>
                 </li>
                 </details>
                 <!-- =============================================== -->
+            </ul>
+        </details>
+
+        <details>
+            <summary><b>Smoothing</b></summary>
+            <ul>
+                <li>
+                    <details>
+                        <summary><b>Moving Average</b></summary>
+                        <pre class="language-python"><code>def plotMovingAverage(series, window, plot_intervals=False, scale=1.96, plot_anomalies=False):
+"""
+    series - dataframe with timeseries
+    window - rolling window size 
+    plot_intervals - show confidence intervals
+    plot_anomalies - show anomalies 
+
+"""
+rolling_mean = series.rolling(window=window).mean()
+
+plt.figure(figsize=(15,5))
+plt.title("Moving average\n window size = {}".format(window))
+plt.plot(rolling_mean, "g", label="Rolling mean trend")
+
+# Plot confidence intervals for smoothed values
+if plot_intervals:
+    mae = mean_absolute_error(series[window:], rolling_mean[window:])
+    deviation = np.std(series[window:] - rolling_mean[window:])
+    lower_bond = rolling_mean - (mae + scale * deviation)
+    upper_bond = rolling_mean + (mae + scale * deviation)
+    plt.plot(upper_bond, "r--", label="Upper Bond / Lower Bond")
+    plt.plot(lower_bond, "r--")
+    
+    # Having the intervals, find abnormal values
+    if plot_anomalies:
+        anomalies = pd.DataFrame(index=series.index, columns=series.columns)
+        anomalies[series<lower_bond] = series[series<lower_bond]
+        anomalies[series>upper_bond] = series[series>upper_bond]
+        plt.plot(anomalies, "ro", markersize=10)
+    
+plt.plot(series[window:], label="Actual values")
+plt.legend(loc="upper left")
+plt.grid(True)
+
+# plotMovingAverage(ads_anomaly, 4, plot_intervals=True, plot_anomalies=True)</code></pre>
+
+                        <img src="../0_html/imgs/moving_avg.png" alt="">
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Exponential smoothing</b></summary>
+                        <p>y^t=α⋅yt+(1−α)⋅y^t−1</p>
+                        <p>Here the model value is a weighted average between the current true value and the previous model values. The α weight is called a smoothing factor. It defines how quickly we will "forget" the last available true observation. The
+                            smaller α is, the more influence the previous observations have and the smoother the series is.</p>
+                        <pre class="language-python"><code>def exponential_smoothing(series, alpha):
+    """
+        series - dataset with timestamps
+        alpha - float [0.0, 1.0], smoothing parameter
+    """
+    result = [series[0]] # first value is same as series
+    for n in range(1, len(series)):
+        result.append(alpha * series[n] + (1 - alpha) * result[n-1])
+    return result</code></pre>
+                        <pre class="language-python"><code>def plotExponentialSmoothing(series, alphas):
+        """
+            Plots exponential smoothing with different alphas
+            
+            series - dataset with timestamps
+            alphas - list of floats, smoothing parameters
+            
+        """
+        with plt.style.context('seaborn-white'):    
+            plt.figure(figsize=(15, 7))
+            for alpha in alphas:
+                plt.plot(exponential_smoothing(series, alpha), label="Alpha {}".format(alpha))
+            plt.plot(series.values, "c", label = "Actual")
+            plt.legend(loc="best")
+            plt.axis('tight')
+            plt.title("Exponential Smoothing")
+            plt.grid(True);
+
+    plotExponentialSmoothing(ads.Ads, [0.3, 0.05])
+                        </code></pre>
+                        <img src="../0_html/imgs/exp_smoothing.png" alt="">
+                    </details>
+                </li>
             </ul>
         </details>
 
