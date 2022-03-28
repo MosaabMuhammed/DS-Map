@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Time Series - Data Wrangling
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <h1 id="3-data-wrangling">
+        3. TS - Data Wrangling
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary>Read <b>Date</b> data [pandas]</summary>
+            <pre class="language-python"><code>google = pd.read_csv('sample.csv', index_col='Date', parse_dates=['Date'])</code></pre>
+        </details>
+        <details>
+            <summary>
+                Set the
+                <b>
+      Frequency
+     </b> of date
+            </summary>
+            <pre class="language-python"><code>df_example = df_example.asfreq(freq='1D')</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary>Fill <b>Missing</b> Data</summary>
+            <pre class="language-python"><code>humidity = humidity.fillna(method="ffill")
+
+# other possible values: ffill - bfill
+# ffill: propagate last valid observation forward to next valid
+# bfill: use next valid observation to fill gap.</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary>From <b>Non-Stationary</b> to <b>Stationary</b></summary>
+            <pre class="language-python"><code>decomposed_google_volume.trend.diff()</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Timestamp</b> & <b>Period</b> - Conversion</summary>
+            <pre class="language-python"><code># Creating a Timestamp
+timestamp = pd.Timestamp(2017, 1, 1, 12)
+# Timestamp('2017-01-01 12:00:00')
+
+# Creating a period
+period = pd.Period('2017-01-01')
+# Period('2017-01-01', 'D')
+
+# Checking if the given timestamp exists in the given period
+period.start_time < timestamp < period.end_time
+# True</code></pre>
+            <pre class="language-python"><code># Converting timestamp to period
+new_period = timestamp.to_period(freq='H')
+# Period('2017-01-01 12:00', 'H')
+
+# Converting period to timestamp
+new_timestamp = period.to_timestamp(freq='H', how='start')
+# Timestamp('2017-01-01 00:00:00')</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary>Find the best order of <b>AR</b> and <b>MA</b></summary>
+            <pre class="language-python"><code># pick best order by aic 
+# smallest aic value wins
+best_aic = np.inf 
+best_order = None
+best_mdl = None
+
+rng = range(5)
+for i in rng:
+    for j in rng:
+        try:
+            tmp_mdl = smt.ARMA(arma22, order=(i, j)).fit(method='mle', trend='nc')
+            tmp_aic = tmp_mdl.aic
+            if tmp_aic < best_aic:
+                best_aic = tmp_aic
+                best_order = (i, j)
+                best_mdl = tmp_mdl
+        except: continue
+
+print('aic: {:6.5f} | order: {}'.format(best_aic, best_order))
+# aic: 15326.68109 | order: (2, 2)
+# Simply use best_mdl.predict() to predict the next values</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>pd.date_range</b></summary>
+            <p>date_range is a method that returns a fixed frequency datetimeindex. <br> It is quite useful when creating your own time series attribute for pre-existing data or arranging the whole data around the time series attribute created by you.</p>
+
+            <pre class="language-python"><code># Creating a datetimeindex with daily frequency
+dr1 = pd.date_range(start='1/1/18', end='1/9/18')
+# DatetimeIndex(['2018-01-01', '2018-01-02', '2018-01-03', '2018-01-04',
+#                '2018-01-05', '2018-01-06', '2018-01-07', '2018-01-08',
+#                '2018-01-09'],
+#                dtype='datetime64[ns]', freq='D')
+
+# Creating a datetimeindex with monthly frequency
+dr2 = pd.date_range(start='1/1/18', end='1/1/19', freq='M')
+# DatetimeIndex(['2018-01-31', '2018-02-28', '2018-03-31', '2018-04-30',
+#                '2018-05-31', '2018-06-30', '2018-07-31', '2018-08-31',
+#                '2018-09-30', '2018-10-31', '2018-11-30', '2018-12-31'],
+#                dtype='datetime64[ns]', freq='M')
+
+# Creating a datetimeindex without specifying start date and using periods
+dr3 = pd.date_range(end='1/4/2014', periods=8)
+# DatetimeIndex(['2013-12-28', '2013-12-29', '2013-12-30', '2013-12-31',
+#                '2014-01-01', '2014-01-02', '2014-01-03', '2014-01-04'],
+#                dtype='datetime64[ns]', freq='D')
+
+# Creating a datetimeindex specifying start date , end date and periods
+dr4 = pd.date_range(start='2013-04-24', end='2014-11-27', periods=3)
+# DatetimeIndex(['2013-04-24', '2014-02-09', '2014-11-27'], dtype='datetime64[ns]', freq=None)</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary>
+                Let
+                <b>
+      Matplotlib
+     </b> understand dates
+            </summary>
+            <pre class="language-python"><code>from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
+</code></pre>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Tests</b></summary>
+            <ul>
+                <li>
+                    <details>
+                        <summary><b>Augmented Dickey-Fuller (ADF) test</b></summary>
+                        <p>for detecting stationarity<br>A stationary time series is one where the values are not a function of time.</p>
+                        <p>We can convert a non-stationary data to stationary one with taking the first, second, .. difference.</p>
+                        <pre class="language-python"><code>from random import seed
+from random import random
+from statsmodels.tsa.stattools import adfuller
+# generate random walk
+seed(1)
+random_walk = list()
+random_walk.append(-1 if random() < 0.5 else 1)
+for i in range(1, 1000):
+    movement = -1 if random() < 0.5 else 1
+    value = random_walk[i-1] + movement
+    random_walk.append(value)
+
+# statistical test
+result = adfuller(random_walk)
+print('ADF Statistic: %f' % result[0])
+print('p-value: %f' % result[1])
+print('Critical Values:')
+for key, value in result[4].items():
+    print('\t%s: %.3f' % (key, value))
+    
+# Running the example, we can see that the test statistic value was 0.341605. 
+# This is larger than all of the critical values at the 1%, 5%, and 10% confidence levels. 
+# Therefore, we can say that the time series does appear to be non-stationary with a low likelihood of the result being a statistical fluke.
+
+ADF Statistic: 0.341605
+p-value: 0.979175
+Critical Values:
+    5%: -2.864
+    1%: -3.437
+    10%: -2.568
+                </code></pre>
+                        <pre class="language-python"><code># Augmented Dickey-Fuller test on volume of google and microsoft stocks 
+adf = adfuller(microsoft["Volume"])
+print("p-value of microsoft: {}".format(float(adf[1])))
+adf = adfuller(google["Volume"])
+print("p-value of google: {}".format(float(adf[1])))
+# p-value of microsoft: 0.0003201525277652073
+# p-value of google: 6.51071960576848e-07
+# As microsoft has p-value 0.0003201525 which is less than 0.05, null hypothesis is rejected and this is not a random walk.
+# Now google has p-value 0.0000006510 which is more than 0.05, null hypothesis is rejected and this is not a random walk.
+                </code></pre>
+                    </details>
+                </li>
+                <!-- ---------------------------------------------------------------------------- -->
+                <li>
+                    <details>
+                        <summary><b>Ljung-Box test</b></summary>
+                        A quick way to verify whether the first-order differencing has stationarized a time series is to plot the ACF function and run the Ljung-Box test for the differenced series.
+                        <a href="./3_Data_Wragling/Chapter_2_First_Order_Differencing.html">notebook</a>
+                    </details>
+                </li>
+            </ul>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
+</html>

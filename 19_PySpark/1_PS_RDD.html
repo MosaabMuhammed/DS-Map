@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Time Series - Data Wrangling
+    </title>
+    <link rel="stylesheet" href="../prism.css">
+</head>
+
+<body>
+    <h1 id="3-data-wrangling">
+        3. TS - Data Wrangling
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary>Create a <b>SparkSession</b></summary>
+            <p>SparkSession is an entry point to PySpark and creating a SparkSession instance would be the first statement you would write to program with RDD, DataFrame, and Dataset.</p>
+            <pre class="language-python"><code>import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.master("local[1]") \
+                    .appName('SparkByExamples.com') \
+                    .getOrCreate()</code></pre>
+            <p>
+                master() – If you are running it on the cluster you need to use your master name as an argument to master(). usually, it would be either yarn or mesos depends on your cluster setup. <br> Use local[x] when running in Standalone mode. x
+                should be an integer value and should be greater than 0; this represents how many partitions it should create when using RDD, DataFrame, and Dataset. Ideally, x value should be the number of CPU cores you have. <br> appName() – Used to
+                set your application name. <br> getOrCreate() – This returns a SparkSession object if already exists, creates new one if not exists. <br>
+            </p>
+
+            <details>
+                <summary><b>SparkSession Commonly Used Methods:</b></summary>
+                <ul>
+                    <b>version()</b> – Returns Spark version where your application is running, probably the Spark version you cluster is configured with.
+
+                    <b>createDataFrame()</b> – This creates a DataFrame from a collection and an RDD <br>
+
+                    <b>getActiveSession()</b> – returns an active Spark session. <br>
+
+                    <b>read()</b> – Returns an instance of DataFrameReader class, this is used to read records from csv, parquet, avro and more file formats into DataFrame. <br>
+
+                    <b>readStream()</b> – Returns an instance of DataStreamReader class, this is used to read streaming data. that can be used to read streaming data into DataFrame. <br>
+
+                    <b>sparkContext()</b> – Returns a SparkContext. <br>
+
+                    <b>sql()</b> – Returns a DataFrame after executing the SQL mentioned. <br>
+
+                    <b>sqlContext()</b> – Returns SQLContext. <br>
+
+                    <b>stop()</b> – Stop the current SparkContext. <br>
+
+                    <b>table()</b> – Returns a DataFrame of a table or view. <br>
+
+                    <b>udf()</b> – Creates a PySpark UDF to use it on DataFrame, Dataset, and SQL. <br>
+                </ul>
+            </details>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+    </div>
+    <script src="../prism.js"></script>
+</body>
+
+</html>
