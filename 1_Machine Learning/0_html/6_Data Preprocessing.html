@@ -1,32 +1,30 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1 id="datapreprocessing">
-   Data Preprocessing
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <details>
-    <summary>
-     <b>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        ML Data Preprocessing
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <h1 id="datapreprocessing">
+        Data Preprocessing
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <details>
+            <summary>
+                <b>
       Train Test Split (Stratified)
-     </b>
-     [Categorical]
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <p>
-     1)
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">
+     </b> [Categorical]
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <p>
+                1)
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Test-Train-Split-and-Cross-Validation-methods">
       Explanation for
       <b>
        Train
@@ -36,20 +34,19 @@
        Split
       </b>
      </a>
-     <br/>
-     2)
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Train-Test-Split">
+                <br/> 2)
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Train-Test-Split">
       Train Test Split notebook
      </a>
-    </p>
-    <pre><code>from sklearn.model_selection import train_test_split
+            </p>
+            <pre class="language-python"><code>from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(
     df_feat, y, test_size=0.4, stratify=y, random_state=42)
 </code></pre>
-    <p>
-     Another way to split, by hashing the unique identifier of each row, to make sure that at the next run, the training and test sets will be the same
-    </p>
-    <pre><code>from zlib import crc32
+            <p>
+                Another way to split, by hashing the unique identifier of each row, to make sure that at the next run, the training and test sets will be the same
+            </p>
+            <pre class="language-python"><code>from zlib import crc32
 
 def test_set_check(identifier, test_ratio):
     return crc32(np.int64(identifier)) &amp; 0xffffffff &lt; test_ratio * 2**32
@@ -64,59 +61,58 @@ train_set, test_set = split_train_test_by_id(housing_with_id, 0.2, "index")
 
 print(len(train_set)/housing.shape[0], len(test_set)/housing.shape[0])
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Train Test Split (Stratified)
-     </b>
-     [Regression]
-    </summary>
-    <p>
-     <details>
-      <summary>
-       <b>
+     </b> [Regression]
+            </summary>
+            <p>
+                <details>
+                    <summary>
+                        <b>
         Manually Chosen bins
        </b>
-      </summary>
-      <p>
-      </p>
-      <h5>
-       Descritize the target column into n bins.
-      </h5>
-      <pre><code>housing['income_cat'] = pd.cut(housing['median_income'],
+                    </summary>
+                    <p>
+                    </p>
+                    <h5>
+                        Descritize the target column into n bins.
+                    </h5>
+                    <pre class="language-python"><code>housing['income_cat'] = pd.cut(housing['median_income'],
                                bins=[0., 1.5, 3., 4.5, 6., np.inf],
                                labels=[1, 2, 3, 4, 5])
 </code></pre>
-      <h5>
-       Split based on the new categorical binned column
-      </h5>
-      <pre><code>from sklearn.model_selection import StratifiedShuffleSplit
+                    <h5>
+                        Split based on the new categorical binned column
+                    </h5>
+                    <pre class="language-python"><code>from sklearn.model_selection import StratifiedShuffleSplit
 
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
 for train_index, test_index in split.split(housing, housing['income_cat']):
     strat_train_set = housing.loc[train_index]
     strat_test_set  = housing.loc[test_index]
 </code></pre>
-      <h5>
-       Then, remove the binned column.
-      </h5>
-      <pre><code># Remove the "income_cat".
+                    <h5>
+                        Then, remove the binned column.
+                    </h5>
+                    <pre class="language-python"><code># Remove the "income_cat".
 for set_ in (strat_train_set , strat_test_set):
     set_.drop("income_cat", axis=1, inplace=True)
 </code></pre>
-     </details>
-    </p>
-   </details>
-   <details>
-    <summary>
-     <b>
+                </details>
+            </p>
+        </details>
+        <details>
+            <summary>
+                <b>
       Bins chosen by Sturge's rule
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>from sklearn import model_selection 
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>from sklearn import model_selection 
 
 def create_folds(data):
     # Create a new column called kfold and fill it with -1.
@@ -145,16 +141,16 @@ def create_folds(data):
 
     return data
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Temporal Splitting (Time Based  Splitting)
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>split_train = int(len(data) * .8)
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>split_train = int(len(data) * .8)
 split_test  = int(len(data) * .2)
 
 X_train = data[:split_train]
@@ -163,16 +159,59 @@ y_train = data[:split_train]['Target']
 X_test = data[-split_test:]
 y_test = data[-split_test:]['Target']
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+
+        <details>
+            <summary>
+                <b>
+      Time Series Splitting
+     </b>
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>from sklearn.model_selection import TimeSeriesSplit # you have everything done for you
+def timeseriesCVscore(params, series, loss_function=mean_squared_error, slen=24):
+    """
+        Returns error on CV  
+        
+        params - vector of parameters for optimization
+        series - dataset with timeseries
+        slen - season length for Holt-Winters model
+    """
+    # errors array
+    errors = []
+    
+    values = series.values
+    alpha, beta, gamma = params
+    
+    # set the number of folds for cross-validation
+    tscv = TimeSeriesSplit(n_splits=3) 
+    
+    # iterating over folds, train model on each, forecast and calculate error
+    for train, test in tscv.split(values):
+
+        model = HoltWinters(series=values[train], slen=slen, 
+                            alpha=alpha, beta=beta, gamma=gamma, n_preds=len(test))
+        model.triple_exponential_smoothing()
+        
+        predictions = model.result[-len(test):]
+        actual = values[test]
+        error = loss_function(predictions, actual)
+        errors.append(error)
+        
+    return np.mean(np.array(errors))
+</code></pre>
+        </details>
+
+        <details>
+            <summary>
+                <b>
       Leave-One-Out
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>import numpy as np
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>import numpy as np
 from sklearn.model_selection import LeaveOneOut
 X = np.array([[1, 2], [3, 4]])
 y = np.array([1, 2])
@@ -192,16 +231,16 @@ for train_index, test_index in loo.split(X):
 # TRAIN: [0] TEST: [1]
 # [[1 2]] [[3 4]] [1] [2]
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Random K-Fold CV
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code># We can use this method with almost all kinds of datasets.
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code># We can use this method with almost all kinds of datasets.
 from sklearn import model_selection
 
 # Create a new column called kfold and fill it with -1.
@@ -220,16 +259,16 @@ for fold, (trn_, val_) in enumerate(kf.split(X=df)):
 # Save the new csv with kfold column.
 df.to_csv("train_folds.csv", index=False)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Stratified K-Fold CV
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code># Using Custom Stratified K-folds
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code># Using Custom Stratified K-folds
 def Stratified_kfolds(alg, X, y):
     score_valid = 0
     skf = StratifiedKFold(n_splits=2, shuffle=True, random_state=33)
@@ -266,10 +305,10 @@ def Stratified_kfolds(alg, X, y):
 
     return score_valid/skf.n_splits
 </code></pre>
-    <h4>
-     Another simple solution
-    </h4>
-    <pre><code># We can use this method with almost all kinds of datasets.
+            <h4>
+                Another simple solution
+            </h4>
+            <pre class="language-python"><code># We can use this method with almost all kinds of datasets.
 from sklearn import model_selection
 
 # Create a new column called kfold and fill it with -1.
@@ -289,25 +328,25 @@ for fold, (trn_, val_) in enumerate(kf.split(X=df, y=y)):
 # Save the new csv with kfold column.
 df.to_csv("train_folds.csv", index=False)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Group K-Fold CV
      </b>
-    </summary>
-    <p>
-    </p>
-    <p>
-     K-fold iterator variant with non-overlapping groups.
-    </p>
-    <p>
-     The same group will not appear in two different folds (the number of distinct groups has to be at least equal to the number of folds).
-    </p>
-    <p>
-     The folds are approximately balanced in the sense that the number of distinct groups is approximately the same in each fold.
-    </p>
-    <pre><code>import numpy as np
+            </summary>
+            <p>
+            </p>
+            <p>
+                K-fold iterator variant with non-overlapping groups.
+            </p>
+            <p>
+                The same group will not appear in two different folds (the number of distinct groups has to be at least equal to the number of folds).
+            </p>
+            <p>
+                The folds are approximately balanced in the sense that the number of distinct groups is approximately the same in each fold.
+            </p>
+            <pre class="language-python"><code>import numpy as np
 from sklearn.model_selection import GroupKFold
 X = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
 y = np.array([1, 2, 3, 4])
@@ -333,16 +372,16 @@ TRAIN: [2 3] TEST: [0 1]
  [7 8]] [[1 2]
  [3 4]] [3 4] [1 2]
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Multi-Label Stratified K-Fold CV
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>from iterstart.ml_startifiers import MultilabelStratifiedKFold
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>from iterstart.ml_startifiers import MultilabelStratifiedKFold
 
 df.loc[:, "kfold"] = -1
 df = df.sample(frac=1).reset_index(drop=True)
@@ -353,32 +392,32 @@ for fold_, (trn_, val_) in enumerate(mskf.split(X=df, y=targets)):
 
 df.to_csv("train_folds.csv", index=False)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Cross_val_score
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>model = RF(n_estimators=100, n_jobs=-1)
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>model = RF(n_estimators=100, n_jobs=-1)
 
 # 10 Fold cross validation
 cv_results = cross_val_score(model, train_set, train_labels, cv=10, scoring=scorer)
 
 print(f'~&gt; 10 Fold Cross Validation F1 Score = {bg(round(cv_results.mean(), 4), "s")} with std = {bg(round(cv_results.std(), 4), "s")}')
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       cross_val_predict
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code># Returns the predictions 
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code># Returns the predictions 
 y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, verbose=1, method="predict")
 
 # Predict Proba
@@ -387,31 +426,30 @@ y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, v
 # Predict decision function
 y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, n_jobs=-1, verbose=1, method="decision_function")
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       GridSearchCV
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <p>
-     1)
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Hyper-Parameter-optimization">
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <p>
+                1)
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Hyper-Parameter-optimization">
       Explanation of
       <b>
        GridSearch
       </b>
       .
      </a>
-     <br/>
-     2)
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Hyperparameter-Tunning-&amp;-Cross-Validation">
+                <br/> 2)
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Hyperparameter-Tunning-&amp;-Cross-Validation">
       Hyperparameter Tunning &amp; Cross validation
      </a>
-    </p>
-    <code>
+            </p>
+            <code>
      # Load the model
 from sklearn.model_selection import GridSearchCV
 
@@ -438,24 +476,24 @@ results.sort_values('rank_test_score')
 # Get the best model.
 knn_cv.best_estimator_
     </code>
-   </details>
-   <details>
-    <summary>
-     Create a
-     <b>
+        </details>
+        <details>
+            <summary>
+                Create a
+                <b>
       Pipeline
      </b>
-    </summary>
-    <p>
-    </p>
-    <p>
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html">
-      <b>
+            </summary>
+            <p>
+            </p>
+            <p>
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/5_Cargo%20Rican%20HouseHold/1_Costa%20Rican%20Household%20Poverty%20Level%20Prediction.html">
+                    <b>
        Notebook
       </b>
-     </a>
-    </p>
-    <pre><code>from sklearn.preprocessing import Imputer, MinMaxScaler
+                </a>
+            </p>
+            <pre class="language-python"><code>from sklearn.preprocessing import Imputer, MinMaxScaler
 from sklearn.pipeline import Pipeline
 
 pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
@@ -465,16 +503,16 @@ pipeline = Pipeline([('imputer', Imputer(strategy='meadian')),
 train_set = pipeline.fit_transform(train_set)
 test_st   = pipeline.transform(test_set)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Pipeline on specific columns
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>from sklearn.compose import ColumnTransformer
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 
 col_transform = ColumnTransformer(transformers=[['ohe', OneHotEncoder(), ['C', 'D']]], remainder="passthrough")
@@ -484,16 +522,16 @@ X = col_transform.fit_transform(X)
 # TO make again in pandas.
 pd.DataFrame(X, columns=col_transform.get_feature_names())
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Custom Transformer
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>from sklearn.base import BaseEstimator, TransformerMixin
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code>from sklearn.base import BaseEstimator, TransformerMixin
 
 rooms_ix, bedrooms_ix, population_ix, households_ix = 3, 4, 5, 6
 
@@ -517,24 +555,23 @@ class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
 attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False)
 housing_extra_attribs = attr_adder.transform(housing.values)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Custom Steps
-     </b>
-     in Pipeline
-    </summary>
-    <p>
-    </p>
-    <p>
-     <a href="./6_data_processing/custom_pipelines.html">
-      <b>
+     </b> in Pipeline
+            </summary>
+            <p>
+            </p>
+            <p>
+                <a href="./6_data_processing/custom_pipelines.html">
+                    <b>
        Notebook
       </b>
-     </a>
-    </p>
-    <pre><code>from sklearn.preprocessing import FunctionTransformer
+                </a>
+            </p>
+            <pre class="language-python"><code>from sklearn.preprocessing import FunctionTransformer
 from sklearn.compose import ColumnTransformer
 from sklearn.base import BaseEstimator, TransformerMixin
 play_data = dataset.drop(['intent', 'family_1', 'family_2', 'family_3'], axis=1).copy()
@@ -592,38 +629,38 @@ pipeline = Pipeline([
 play_data = pipeline.fit_transform(play_data)
 dd(play_data)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Make Scorer
      </b>
-    </summary>
-    <p>
-    </p>
-    <p>
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer">
-      <b>
+            </summary>
+            <p>
+            </p>
+            <p>
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Sklearn/sklearn.metrics.make_scorer.html#sklearn-metrics-make-scorer">
+                    <b>
        Sklearn Docs
       </b>
-     </a>
-    </p>
-    <pre><code>
+                </a>
+            </p>
+            <pre class="language-python"><code>
 from sklearn.metrics import f1_score, make_scorer
 
 scorer = make_scorer(f1_score, greater_is_better=True, average='macro')
 
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Paralleism
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code># Prepare the logging.
+            </summary>
+            <p>
+            </p>
+            <pre class="language-python"><code># Prepare the logging.
 import logging
 
 # Logging configuration.
@@ -635,7 +672,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 </code></pre>
-    <pre><code># Prepare Timing function.
+            <pre class="language-python"><code># Prepare Timing function.
 from functools import wraps
 import time
 
@@ -647,7 +684,7 @@ def timeit(func):
         return result, time.time() - start
     return wrapper
 </code></pre>
-    <pre><code># Prepare validation strategy.
+            <pre class="language-python"><code># Prepare validation strategy.
 from sklearn.externals import joblib
 from sklearn.model_selection import cross_val_score
 
@@ -670,7 +707,7 @@ def train_model(path, model, saveto=None, cv=2):
     # Return scores as well as training time via decorator.
     return scores
 </code></pre>
-    <pre><code># Prepare model.s
+            <pre class="language-python"><code># Prepare model.s
 from sklearn.pipeline import Pipeline
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
@@ -725,7 +762,7 @@ def fit_multilayer_perceptron(path, saveto=None, cv=2):
         f" with an average score of {scores.mean():.3f}"
     ))
 </code></pre>
-    <pre><code># Paralleism.
+            <pre class="language-python"><code># Paralleism.
 import multiprocessing as mp
 
 def run_parallel(path):
@@ -749,17 +786,9 @@ def run_parallel(path):
 
 run_parallel("./")
 </code></pre>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+        </details>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
 </html>
