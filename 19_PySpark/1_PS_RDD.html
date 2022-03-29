@@ -57,6 +57,40 @@ spark = SparkSession.builder.master("local[1]") \
             </details>
         </details>
         <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Load Data in RDD</b></summary>
+            <p>For production applications, we mostly create RDD by using external storage systems like HDFS, S3, HBase e.t.c. To make it simple for this PySpark RDD tutorial we are using files from the local system or loading it from the python list to
+                create RDD.</p>
+
+            <details>
+                <summary><b>Read data from already loaded data</b></summary>
+                <pre class="language-python"><code>#Create RDD from parallelize
+import pyspark
+rdd = pyspark.SparkContext().parallelize([1, 2, 3, 4, 5, 6, 7])</code></pre>
+
+            </details>
+            <details>
+                <summary><b>Read text file into RDD</b></summary>
+                <pre class="language-python"><code>import pyspark    
+rdd = pyspark.SparkContext().textFile("/path/file.txt")</code></pre>
+            </details>
+
+            <details>
+                <summary><b>Read text files into RDD of Tuple into RDD</b></summary>
+                <p>sparkContext.wholeTextFiles() reads a text file into PairedRDD of type RDD[(String,String)] with the key being the file path and value being contents of the file. This method also takes the path as an argument and optionally takes a number
+                    of partitions as the second argument.</p>
+                <pre class="language-python"><code>import pyspark    
+rdd = pyspark.SparkContext().wholeTextFiles("/path/textFile.txt")</code></pre>
+            </details>
+
+            <details>
+                <summary><b>Reading multiple files at a time into RDD</b></summary>
+                <p>When you know the names of the multiple files you would like to read, just input all file names with comma separator and just a folder if you want to read all files from a folder in order to create an RDD and both methods mentioned above
+                    supports this.</p>
+                <pre class="language-python"><code>import pyspark    
+rdd = pyspark.SparkContext().textFile("src/main/resources/csv/text01.txt," + "src/main/resources/csv/text02.txt")</code></pre>
+            </details>
+        </details>
     </div>
     <script src="../prism.js"></script>
 </body>
