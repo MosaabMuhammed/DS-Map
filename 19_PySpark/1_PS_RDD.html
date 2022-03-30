@@ -4,14 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        Time Series - Data Wrangling
+        PySpark RDD
     </title>
     <link rel="stylesheet" href="../prism.css">
 </head>
 
 <body>
     <h1 id="3-data-wrangling">
-        3. TS - Data Wrangling
+        PySpark RDD
     </h1>
     <div style="width:1000px;margin:auto">
         <!-- ---------------------------------------------------------------------------- -->
@@ -33,25 +33,15 @@ spark = SparkSession.builder.master("local[1]") \
                 <summary><b>SparkSession Commonly Used Methods:</b></summary>
                 <ul>
                     <b>version()</b> – Returns Spark version where your application is running, probably the Spark version you cluster is configured with.
-
                     <b>createDataFrame()</b> – This creates a DataFrame from a collection and an RDD <br>
-
                     <b>getActiveSession()</b> – returns an active Spark session. <br>
-
                     <b>read()</b> – Returns an instance of DataFrameReader class, this is used to read records from csv, parquet, avro and more file formats into DataFrame. <br>
-
                     <b>readStream()</b> – Returns an instance of DataStreamReader class, this is used to read streaming data. that can be used to read streaming data into DataFrame. <br>
-
                     <b>sparkContext()</b> – Returns a SparkContext. <br>
-
                     <b>sql()</b> – Returns a DataFrame after executing the SQL mentioned. <br>
-
                     <b>sqlContext()</b> – Returns SQLContext. <br>
-
                     <b>stop()</b> – Stop the current SparkContext. <br>
-
                     <b>table()</b> – Returns a DataFrame of a table or view. <br>
-
                     <b>udf()</b> – Creates a PySpark UDF to use it on DataFrame, Dataset, and SQL. <br>
                 </ul>
             </details>
@@ -72,7 +62,9 @@ rdd = pyspark.SparkContext().parallelize([1, 2, 3, 4, 5, 6, 7])</code></pre>
             <details>
                 <summary><b>Read text file into RDD</b></summary>
                 <pre class="language-python"><code>import pyspark    
-rdd = pyspark.SparkContext().textFile("/path/file.txt")</code></pre>
+rdd = pyspark.SparkContext.getOrCreate().textFile(r"C:\Users\MosaabMuhammed\Desktop\text1.txt.txt")
+print(rdd.collect())
+# ['one,1', 'two,2', 'three,3']</code></pre>
             </details>
 
             <details>
@@ -80,7 +72,10 @@ rdd = pyspark.SparkContext().textFile("/path/file.txt")</code></pre>
                 <p>sparkContext.wholeTextFiles() reads a text file into PairedRDD of type RDD[(String,String)] with the key being the file path and value being contents of the file. This method also takes the path as an argument and optionally takes a number
                     of partitions as the second argument.</p>
                 <pre class="language-python"><code>import pyspark    
-rdd = pyspark.SparkContext().wholeTextFiles("/path/textFile.txt")</code></pre>
+rdd = pyspark.SparkContext.getOrCreate().wholeTextFiles(r"C:\Users\MosaabMuhammed\Desktop\text1.txt.txt")
+print(rdd.collect())
+# [('file:/C:/Users/MosaabMuhammed/Desktop/text1.txt.txt', 'one,1\r\ntwo,2\r\nthree,3')]
+</code></pre>
             </details>
 
             <details>
@@ -88,8 +83,84 @@ rdd = pyspark.SparkContext().wholeTextFiles("/path/textFile.txt")</code></pre>
                 <p>When you know the names of the multiple files you would like to read, just input all file names with comma separator and just a folder if you want to read all files from a folder in order to create an RDD and both methods mentioned above
                     supports this.</p>
                 <pre class="language-python"><code>import pyspark    
-rdd = pyspark.SparkContext().textFile("src/main/resources/csv/text01.txt," + "src/main/resources/csv/text02.txt")</code></pre>
+rdd = pyspark.SparkContext.getOrCreate().textFile(r"C:\Users\MosaabMuhammed\Desktop\text1.txt.txt" + r",C:\Users\MosaabMuhammed\Desktop\text2.txt.txt")
+print(rdd.collect())
+# ['one,1', 'two,2', 'three,3', 'four', 'fix', 'five', 'six']
+
+rdd = pyspark.SparkContext.getOrCreate().wholeTextFiles(r"C:\Users\MosaabMuhammed\Desktop\text1.txt.txt" + r",C:\Users\MosaabMuhammed\Desktop\text2.txt.txt")
+print(rdd.collect())
+# [('file:/C:/Users/MosaabMuhammed/Desktop/text1.txt.txt',
+# 'one,1\r\ntwo,2\r\nthree,3'),
+# ('file:/C:/Users/MosaabMuhammed/Desktop/text2.txt.txt',
+# 'four\r\nfix\r\nfive\r\nsix')]
+</code></pre>
             </details>
+
+            <details>
+                <summary><b>Create empty RDD</b></summary>
+                <pre class="language-python"><code>import pyspark    
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+rdd   = spark.sparkContext.emptyRDD
+</code></pre>
+            </details>
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Partitioning</b></summary>
+            <p>When we use parallelize() or textFile() or wholeTextFiles() methods of SparkContxt to initiate RDD, it automatically splits the data into partitions based on resource availability. when you run it on a laptop it would create partitions as
+                the same number of cores available on your system.</p>
+            <pre class="language-python"><code># parallelize()
+import pyspark
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+# default value is 1 parition.
+rdd   = spark.sparkContext.parallelize([], 10)
+print(rdd.getNumPartitions())</code></pre>
+
+            <p>Some times we may need to repartition the RDD, PySpark provides two ways to repartition; first using repartition() method which shuffles data from all nodes also called full shuffle and second coalesce() method which shuffle data from minimum
+                nodes, for examples if you have data in 4 partitions and doing coalesce(2) moves data from just 2 nodes. <br> Both of the functions take the number of partitions to repartition rdd as shown below. Note that repartition() method is a very
+                expensive operation as it shuffles data from all nodes in a cluster. </p>
+
+            <pre class="language-python"><code>spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+rdd   = spark.sparkContext.parallelize([1, 2, 3, 4, 5, 6], 2)
+print(rdd.getNumPartitions())
+rdd = rdd.repartition(4)
+print(rdd.getNumPartitions())
+# 2
+# 4</code></pre>
+
+        </details>
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Trasnformations</b></summary>
+            <p>Transformations on PySpark RDD returns another RDD and transformations are lazy meaning they don’t execute until you call an action on RDD. Some transformations on RDD’s are flatMap(), map(), reduceByKey(), filter(), sortByKey() and return
+                new RDD instead of updating the current.</p>
+
+            <details>
+                <summary><b>flatMap()</b></summary>
+                <p>flatMap() transformation flattens the RDD after applying the function and returns a new RDD. On the below example, first, it splits each record by space in an RDD and finally flattens it. Resulting RDD consists of a single word on each
+                    record.
+                </p>
+                <pre class="language-python"><code>rdd = spark.sparkContext.textFile(r"C:\Users\MosaabMuhammed\Desktop\test.txt")
+print(rdd.collect()[:5])
+# ['Project Gutenberg’s', 'Alice’s Adventures in Wonderland', 'by Lewis Carroll', 'This eBook is for the use', 'of anyone anywhere']
+rdd2 = rdd.flatMap(lambda x: x.split())
+print(rdd2.collect()[:5])
+# ['Project', 'Gutenberg’s', 'Alice’s', 'Adventures', 'in']</code></pre>
+            </details>
+
+
+            <details>
+                <summary><b>map()</b></summary>
+                <p>map() transformation is used the apply any complex operations like adding a column, updating a column e.t.c, the output of map transformations would always have the same number of records as input.</p>
+                <pre class="language-python"><code>rdd = spark.sparkContext.textFile(r"C:\Users\MosaabMuhammed\Desktop\test.txt")
+print(rdd.collect()[:5])
+# ['Project Gutenberg’s', 'Alice’s Adventures in Wonderland', 'by Lewis Carroll', 'This eBook is for the use', 'of anyone anywhere']
+rdd3 = rdd.map(lambda x: x.split())
+print(rdd3.collect()[:5])
+# [['Project', 'Gutenberg’s'], ['Alice’s', 'Adventures', 'in', 'Wonderland'], ['by', 'Lewis', 'Carroll'], ['This', 'eBook', 'is', 'for', 'the', 'use'], ['of', 'anyone', 'anywhere']]
+</code></pre>
+            </details>
+
         </details>
     </div>
     <script src="../prism.js"></script>
