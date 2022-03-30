@@ -21,11 +21,6 @@
         </details>
         <!-- --------------------------- ----------------------------- -->
         <details>
-            <summary><b>ACF and PACF</b></summary>
-            <a href="./9_models/01-ACF-and-PACF.html"><strong>ACF - PACF - Autocorrelations - more</strong></a>
-        </details>
-        <!-- --------------------------- ----------------------------- -->
-        <details>
             <summary><b>ARIMA Models</b></summary>
             <ul>
                 <details>
@@ -265,6 +260,138 @@ print("The root mean squared error is {}.".format(rmse))
 </code></pre>
                     <img src="../0_html/imgs/ARIMA.png" alt="" width="600" height="400">
                 </details>
+
+                <details>
+                    <summary>SARIMA Model</summary>
+                    <p>Adding this letter to the four gives us the ARIMA model which can handle non-stationary data with the help of nonseasonal differences. Great, one more letter to go! <br> S(s) - this is responsible for seasonality and equals the season
+                        period length of the series <br> With this, we have three parameters: (P,D,Q) <br> P - order of autoregression for the seasonal component of the model, which can be derived from PACF. But you need to look at the number of significant
+                        lags, which are the multiples of the season period length. For example, if the period equals 24 and we see the 24-th and 48-th lags are significant in the PACF, that means the initial P should be 2. <br> Q - similar logic using
+                        the ACF plot instead. <br> D - order of seasonal integration. This can be equal to 1 or 0, depending on whether seasonal differeces were applied or not.</p>
+                    <pre class="language-python"><code># setting initial values and some bounds for them
+ps = range(2, 5)
+d=1 
+qs = range(2, 5)
+Ps = range(0, 2)
+D=1 
+Qs = range(0, 2)
+s = 24 # season length is still 24
+
+# creating list with all the possible combinations of parameters
+parameters = product(ps, qs, Ps, Qs)
+parameters_list = list(parameters)
+len(parameters_list)
+</code></pre>
+                    <pre class="language-python"><code>def optimizeSARIMA(parameters_list, d, D, s):
+    """
+        Return dataframe with parameters and corresponding AIC
+        
+        parameters_list - list with (p, q, P, Q) tuples
+        d - integration order in ARIMA model
+        D - seasonal integration order 
+        s - length of season
+    """
+    
+    results = []
+    best_aic = float("inf")
+
+    for param in tqdm_notebook(parameters_list):
+        # we need try-except because on some combinations model fails to converge
+        try:
+            model=sm.tsa.statespace.SARIMAX(ads.Ads, order=(param[0], d, param[1]), 
+                                            seasonal_order=(param[2], D, param[3], s)).fit(disp=-1)
+        except:
+            continue
+        aic = model.aic
+        # saving best model, AIC and parameters
+        if aic < best_aic:
+            best_model = model
+            best_aic = aic
+            best_param = param
+        results.append([param, model.aic])
+
+    result_table = pd.DataFrame(results)
+    result_table.columns = ['parameters', 'aic']
+    # sorting in ascending order, the lower AIC is - the better
+    result_table = result_table.sort_values(by='aic', ascending=True).reset_index(drop=True)
+    
+    return result_table
+
+result_table = optimizeSARIMA(parameters_list, d, D, s)
+result_table.head()
+# 	parameters	aic
+# 0	(2, 3, 1, 1)	3888.642174
+# 1	(3, 2, 1, 1)	3888.763568
+# 2	(4, 2, 1, 1)	3890.279740
+# 3	(3, 3, 1, 1)	3890.513196
+# 4	(2, 4, 1, 1)	3892.302849
+</code></pre>
+                    <pre class="language-python"><code># set the parameters that give the lowest AIC
+p, q, P, Q = result_table.parameters[0]
+
+best_model=sm.tsa.statespace.SARIMAX(ads.Ads, order=(p, d, q), 
+                                        seasonal_order=(P, D, Q, s)).fit(disp=-1)
+print(best_model.summary())
+#                                  Statespace Model Results                                 
+# ==========================================================================================
+# Dep. Variable:                                Ads   No. Observations:                  216
+# Model:             SARIMAX(2, 1, 3)x(1, 1, 1, 24)   Log Likelihood               -1936.321
+# Date:                            Mon, 04 Jan 2021   AIC                           3888.642
+# Time:                                    00:06:39   BIC                           3914.660
+# Sample:                                09-13-2017   HQIC                          3899.181
+#                                      - 09-21-2017                                         
+# Covariance Type:                              opg                                         
+# ==============================================================================
+#                  coef    std err          z      P>|z|      [0.025      0.975]
+# ------------------------------------------------------------------------------
+# ar.L1          0.7913      0.270      2.928      0.003       0.262       1.321
+# ar.L2         -0.5503      0.306     -1.799      0.072      -1.150       0.049
+# ma.L1         -0.7316      0.262     -2.793      0.005      -1.245      -0.218
+# ma.L2          0.5651      0.282      2.005      0.045       0.013       1.118
+# ma.L3         -0.1811      0.092     -1.964      0.049      -0.362      -0.000
+# ar.S.L24       0.3312      0.076      4.351      0.000       0.182       0.480
+# ma.S.L24      -0.7635      0.104     -7.361      0.000      -0.967      -0.560
+# sigma2      4.574e+07   5.61e-09   8.15e+15      0.000    4.57e+07    4.57e+07
+# ===================================================================================
+# Ljung-Box (Q):                       43.70   Jarque-Bera (JB):                10.56
+# Prob(Q):                              0.32   Prob(JB):                         0.01
+# Heteroskedasticity (H):               0.65   Skew:                            -0.28
+# Prob(H) (two-sided):                  0.09   Kurtosis:                         4.00
+# ===================================================================================
+</code></pre>
+                    <pre class="language-python"><code>def plotSARIMA(series, model, n_steps):
+    """
+        Plots model vs predicted values
+        
+        series - dataset with timeseries
+        model - fitted SARIMA model
+        n_steps - number of steps to predict in the future
+        
+    """
+    # adding model values
+    data = series.copy()
+    data.columns = ['actual']
+    data['arima_model'] = model.fittedvalues
+    # making a shift on s+d steps, because these values were unobserved by the model
+    # due to the differentiating
+    data['arima_model'][:s+d] = np.NaN
+    
+    # forecasting on n_steps forward 
+    forecast = model.predict(start = data.shape[0], end = data.shape[0]+n_steps)
+    forecast = data.arima_model.append(forecast)
+    # calculate error, again having shifted on s+d steps from the beginning
+    error = mean_absolute_percentage_error(data['actual'][s+d:], data['arima_model'][s+d:])
+
+    plt.figure(figsize=(15, 7))
+    plt.title("Mean Absolute Percentage Error: {0:.2f}%".format(error))
+    plt.plot(forecast, color='r', label="model")
+    plt.axvspan(data.index[-1], forecast.index[-1], alpha=0.5, color='lightgrey')
+    plt.plot(data.actual, label="actual")
+    plt.legend()
+    plt.grid(True);
+plotSARIMA(ads, best_model, 50)</code></pre>
+
+                </details>
+
             </ul>
         </details>
 

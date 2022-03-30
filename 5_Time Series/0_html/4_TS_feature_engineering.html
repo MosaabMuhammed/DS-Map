@@ -18,8 +18,7 @@
             <summary>
                 <b>
                     Lags
-                </b>
-                &amp;
+                </b> &amp;
                 <b>
                     Rolling Window
                 </b>
@@ -35,43 +34,32 @@
                     <li>
                         <b>
                             lag_7:
-                        </b>
-                        sales shifted 7 steps downwards for each group. The example above focuses on one group only as
-                        an example. That is why the first value appears on the 7th index.
+                        </b> sales shifted 7 steps downwards for each group. The example above focuses on one group only as an example. That is why the first value appears on the 7th index.
                     </li>
                     <li>
                         <b>
                             lag_28:
-                        </b>
-                        sales shifted 28 steps downwads. That is why the first value appears on the 28th index.
+                        </b> sales shifted 28 steps downwads. That is why the first value appears on the 28th index.
                     </li>
                     <li>
                         <b>
                             rmean_7_7:
-                        </b>
-                        rolling mean sales of a window size of 7 over column lag_7. First value (0.2857) appears on the
-                        13th index because means including nan are nan.
+                        </b> rolling mean sales of a window size of 7 over column lag_7. First value (0.2857) appears on the 13th index because means including nan are nan.
                     </li>
                     <li>
                         <b>
                             rmean_7_28:
-                        </b>
-                        rolling mean sales of a window size of 7 over column lag_28. First value (0.357) appears on the
-                        34th index because that is the first time the mean formula gets all 7 non-nan values.
+                        </b> rolling mean sales of a window size of 7 over column lag_28. First value (0.357) appears on the 34th index because that is the first time the mean formula gets all 7 non-nan values.
                     </li>
                     <li>
                         <b>
                             rmean_28_7:
-                        </b>
-                        rolling mean sales of a window size of 28 over column lag_7. First value (0.2857) appears on the
-                        3th index because it is the first time the mean formula gets 28 non-nan values.
+                        </b> rolling mean sales of a window size of 28 over column lag_7. First value (0.2857) appears on the 3th index because it is the first time the mean formula gets 28 non-nan values.
                     </li>
                     <li>
                         <b>
                             rmean_28_28:
-                        </b>
-                        rolling mean sales of a window size of 28 over column lag_28. First value appears on 55th index
-                        because that is the first time the formula here all non-nan values.
+                        </b> rolling mean sales of a window size of 28 over column lag_28. First value appears on 55th index because that is the first time the formula here all non-nan values.
                     </li>
                 </ul>
                 <br />
@@ -81,16 +69,11 @@
                 <br />
                 <ul>
                     <li>
-                        1. Captures the week-on-week similarity and that too of just the past week. In other words,
-                        people are likely to shop this monday similar to the last monday (except it is some special
-                        occassion).
+                        1. Captures the week-on-week similarity and that too of just the past week. In other words, people are likely to shop this monday similar to the last monday (except it is some special occassion).
                     </li>
                     <li>
-                        2. Captures the weekly similarity from a month-to-month perspective. Example: people in the 1st
-                        weekend of a month shop more so that weekend looks more similar to first weeks of other months
-                        than the previous weekend. (Though 28 is arguable here. A month is generally 30. Interesting
-                        would be a variable window depending on when the comparative week starts. Dealing with edge
-                        cases like week divided into 2 months will be tricky).
+                        2. Captures the weekly similarity from a month-to-month perspective. Example: people in the 1st weekend of a month shop more so that weekend looks more similar to first weeks of other months than the previous weekend. (Though 28 is arguable here. A month
+                        is generally 30. Interesting would be a variable window depending on when the comparative week starts. Dealing with edge cases like week divided into 2 months will be tricky).
                     </li>
                     <br />
                     <b>
@@ -100,28 +83,20 @@
                     <br />
                     <br />
                     <li>
-                        3. Captures the information regarding the sales of the whole previous week ending 7 days in the
-                        past i.e. if we are at day 14, then the average is of sales from days 1-7 NOT days 7-14. This
-                        provides the information about the whole week and not just a single day sale comparison like
-                        lag_7 to bring the lag_7 value into "better weekly context".
+                        3. Captures the information regarding the sales of the whole previous week ending 7 days in the past i.e. if we are at day 14, then the average is of sales from days 1-7 NOT days 7-14. This provides the information about the whole week and not just a
+                        single day sale comparison like lag_7 to bring the lag_7 value into "better weekly context".
                     </li>
                     <li>
-                        4. Captures the information regarding the sales of the entire previous 4 weeks ending 7 days in
-                        the past i.e. if we are at day 35, then the average is sales from days 1-28.
+                        4. Captures the information regarding the sales of the entire previous 4 weeks ending 7 days in the past i.e. if we are at day 35, then the average is sales from days 1-28.
                     </li>
                     <li>
-                        5. Captures the information regarding the sales of the whole week ending 4 weeks ago i.e. if we
-                        are on day 35, then the average is of sales from day 1-7. (Assuming for simplicity the month is
-                        28 days), this provides the information of not just a month-to-month comparison of the same day
-                        (day 7 of month one vs day 7 of month two), but the entire week leading up to day 7. Again the
-                        idea I believe is to capture the whole week and not just a single day sale comparison like
-                        lag_28 to bring the lag_28 value into "better weekly context".
+                        5. Captures the information regarding the sales of the whole week ending 4 weeks ago i.e. if we are on day 35, then the average is of sales from day 1-7. (Assuming for simplicity the month is 28 days), this provides the information of not just a month-to-month
+                        comparison of the same day (day 7 of month one vs day 7 of month two), but the entire week leading up to day 7. Again the idea I believe is to capture the whole week and not just a single day sale comparison like lag_28 to bring
+                        the lag_28 value into "better weekly context".
                     </li>
                     <li>
-                        6. Captures the information regarding the sales of the entire previous 4 weeks ending 4 weeks in
-                        the past i.e. if we are at day 56, then the average is of days 1-28. (Assuming for simplicity
-                        the month is 28 days), the idea again is to bring the point value of lag_28 into a better
-                        context (i.e. of day 28 when being compared to day 56) into a "better monthly context".
+                        6. Captures the information regarding the sales of the entire previous 4 weeks ending 4 weeks in the past i.e. if we are at day 56, then the average is of days 1-28. (Assuming for simplicity the month is 28 days), the idea again is to bring the point
+                        value of lag_28 into a better context (i.e. of day 28 when being compared to day 56) into a "better monthly context".
                     </li>
                 </ul>
                 <br />
@@ -134,14 +109,11 @@
                         Hey let's see how the sales were last friday compared to this friday?
                     </li>
                     <li>
-                        Hey let's see how the sales were first weekend of the last month compared to first weekend of
-                        this month?
+                        Hey let's see how the sales were first weekend of the last month compared to first weekend of this month?
                     </li>
                     <li>
-                        May be comparing last saturday to this saturday is too specific. Week-on-week same day trends
-                        are more likely to be similar if the prior week went similar too. It would make sense to not
-                        just have the last saturday but also the mean of the whole week leading upto that day to give
-                        the model the "hint" how normal the whole week was.
+                        May be comparing last saturday to this saturday is too specific. Week-on-week same day trends are more likely to be similar if the prior week went similar too. It would make sense to not just have the last saturday but also the mean of the whole week
+                        leading upto that day to give the model the "hint" how normal the whole week was.
                     </li>
                 </ul>
             </details>
@@ -161,7 +133,7 @@ for lag, lag_col in zip(lags, lag_cols):
 </code></pre>
             </details>
         </details>
-<!-- -------------------------------------------------------- -->
+        <!-- -------------------------------------------------------- -->
         <details>
             <summary>
                 <b>
@@ -175,7 +147,7 @@ daily = df['Chemical conc.'].resample('D')
 daily_mean = daily.mean()
 </code></pre>
         </details>
-<!-- -------------------------------------------------------- -->
+        <!-- -------------------------------------------------------- -->
         <details>
             <summary>
                 <b>
@@ -188,7 +160,7 @@ monthly_stats.reset_index(inplace=True)
 monthly_stats.head(10)
 </code></pre>
         </details>
-<!-- -------------------------------------------------------- -->
+        <!-- -------------------------------------------------------- -->
         <details>
             <summary>
                 <b>
@@ -204,6 +176,39 @@ monthly_moving_average = df['Mean temparature'].rolling(30).mean()
 #Let's caluclate the weekly and monthly avergaes with a stride of length 2
 weekly_moving_average_2stride = df['Mean temparature'].rolling(7).mean()[::2]
 monthly_moving_average_2stride = df['Mean temparature'].rolling(30).mean()[::2]
+</code></pre>
+        </details>
+
+        <!-- -------------------------------------------------------- -->
+        <details>
+            <summary>
+                <b>
+                            Date, Time features
+                        </b>
+            </summary>
+            <pre class="language-python"><code># datetime features
+data.index = pd.to_datetime(data.index)
+data["hour"] = data.index.hour
+data["weekday"] = data.index.weekday
+data['is_weekend'] = data.weekday.isin([5,6])*1
+        </code></pre>
+        </details>
+        <!-- -------------------------------------------------------- -->
+        <details>
+            <summary>
+                <b>Target encoding for Date, Time features</b>
+            </summary>
+            <pre class="language-python"><code>def code_mean(data, cat_feature, real_feature):
+    """
+    Returns a dictionary where keys are unique categories of the cat_feature,
+    and values are means over real_feature
+    """
+    return dict(data.groupby(cat_feature)[real_feature].mean())
+</code></pre>
+            <pre class="language-python"><code># calculate averages on train set only
+test_index = int(len(data.dropna())*(1-test_size))
+data['weekday_average'] = list(map(code_mean(data[:test_index], 'weekday', "y").get, data.weekday))
+data["hour_average"] = list(map(code_mean(data[:test_index], 'hour', "y").get, data.hour))
 </code></pre>
         </details>
     </div>

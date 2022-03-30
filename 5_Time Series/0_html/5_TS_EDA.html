@@ -407,6 +407,7 @@ iplot(data, filename='simple_candlestick')</code></pre>
                             a large autocorrelation implies a simple prediction given the preceding instants, while a small autocorrelation (as in the case of the noise process) informs us that the value yt receives a very small influence from the previous
                             values (that is, in a white noise process the outputs are uncorrelated; therefore, the prediction is theoretically impossible).</p>
                         <p>Helps determine the order of MA.</p>
+                        <a href="./9_models/01-ACF-and-PACF.html"><strong>ACF - PACF - Autocorrelations - more</strong></a><br>
                         <details>
                             <summary>statsmodels</summary>
                             <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
@@ -456,6 +457,8 @@ pyplot.show()</code></pre>
                             that particular lag while holding others constant.</p>
                         <p>We can drive the order of autoregression for the seasonal component of the model, using PACF. But you need to look at the number of significant lags, which are the multiples of the season period length. For example, if the period
                             equals 24 and we see the 24-th and 48-th lags are significant in the PACF, that means the initial P should be 2.</p>
+                        <a href="./9_models/01-ACF-and-PACF.html"><strong>ACF - PACF - Autocorrelations - more</strong></a><br>
+
                         <pre class="language-python"><code>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
                         
 # Partial Autocorrelation of humidity of San Diego
