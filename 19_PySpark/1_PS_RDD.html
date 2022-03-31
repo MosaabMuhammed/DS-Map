@@ -136,6 +136,22 @@ print(rdd.getNumPartitions())
                 new RDD instead of updating the current.</p>
 
             <details>
+                <summary><b>Types of Transformations</b></summary>
+                <ul>
+                    <li><b>Narrow Transformation:</b> <br>
+                        <p> Narrow transformations are the result of map() and filter() functions and these compute data that live on a single partition meaning there will not be any data movement between partitions to execute narrow transformations.
+                        </p>
+                        <p>Functions such as map(), mapPartition(), flatMap(), filter(), union() are some examples of narrow transformation.</p>
+                    </li>
+                    <li><b>Wider Transformation:</b> <br>
+                        <p>Wider transformations are the result of groupByKey() and reduceByKey() functions and these compute data that live on many partitions meaning there will be data movements between partitions to execute wider transformations. Since
+                            these shuffles the data, they also called shuffle transformations.</p>
+                        <p>Functions such as groupByKey(), aggregateByKey(), aggregate(), join(), repartition() are some examples of a wider transformations.</p>
+                    </li>
+                </ul>
+            </details>
+
+            <details>
                 <summary><b>flatMap()</b></summary>
                 <p>flatMap() transformation flattens the RDD after applying the function and returns a new RDD. On the below example, first, it splits each record by space in an RDD and finally flattens it. Resulting RDD consists of a single word on each
                     record.
@@ -195,6 +211,321 @@ for element in rdd2.collect():
 </code></pre>
             </details>
 
+            <details>
+                <summary><b>sortByKey()</b></summary>
+                <p>sortByKey() transformation is used to sort RDD elements on key. In our example, first, we convert RDD[(String,Int]) to RDD[(Int, String]) using map transformation and apply sortByKey which ideally does sort on an integer value. And finally,
+                    foreach with println statements returns all words in RDD and their count as key-value pair</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+
+data = [('Project', 1),
+('Gutenberg’s', 1),
+('Alice’s', 1),
+('Adventures', 1),
+('in', 1),
+('Wonderland', 1),
+('Project', 1),
+('Gutenberg’s', 1),
+('Adventures', 1),
+('in', 1),
+('Wonderland', 1),
+('Project', 1),
+('Gutenberg’s', 1)]
+
+rdd=spark.sparkContext.parallelize(data)
+
+rdd.map(lambda x: (x[1], x[0])).sortByKey(ascending=True).values().collect()
+# ['Project',
+#  'Gutenberg’s',
+#  'Alice’s',
+#  'Adventures',
+#  'in',
+#  'Wonderland',
+#  'Project',
+#  'Gutenberg’s',
+#  'Adventures',
+#  'in',
+#  'Wonderland',
+#  'Project',
+#  'Gutenberg’s']
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>filter()</b></summary>
+                <p>filter() transformation is used to filter the records in an RDD. In our example we are filtering all words starts with “a”.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+
+data = [('Project', 1),
+('Gutenberg’s', 1),
+('Alice’s', 1),
+('Adventures', 1),
+('in', 1),
+('Wonderland', 1),
+('Project', 1),
+('Gutenberg’s', 1),
+('Adventures', 1),
+('in', 1),
+('Wonderland', 1),
+('Project', 1),
+('Gutenberg’s', 1)]
+
+rdd=spark.sparkContext.parallelize(data)
+
+rdd.filter(lambda x: 'a' in x[0]).collect()
+# [('Wonderland', 1), ('Wonderland', 1)]
+</code></pre>
+            </details>
+
+        </details>
+
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Actions</b></summary>
+            <p>RDD actions are PySpark operations that return the values to the driver program. Any function on RDD that returns other than RDD is considered as an action in PySpark programming.</p>
+            <p>Action functions trigger the transformations to execute. As mentioned in RDD Transformations, all transformations are lazy evaluation meaning they do not get executed right away, and action trigger them to execute.</p>
+
+            <details>
+                <summary><b>aggregate(zeroValue, seqOp, combOp)</b></summary>
+                <p>Aggregate the elements of each partition, and then the results for all the partitions, using a given combine functions “combOp” and a neutral “zero value.” <br> The first function (seqOp) can return a different result type, U, than the
+                    type of this RDD. Thus, we need one operation for merging a T into an U and one operation for merging two U
+                </p>
+                <pre class="language-python"><code>import pyspark
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+rdd   = spark.sparkContext.parallelize([1, 2, 3, 4, 5, 6, 2, 3, 8])
+
+seqOp = lambda x, y: x + y
+combOp = lambda x, y: x + y
+print(rdd.aggregate(0, seqOp, combOp))
+# 34
+
+seqOp2 = (lambda x, y: (x[0] + y, x[1] + 1))
+combOp2 = (lambda x, y: (x[0] + y[0], x[1] + y[1]))
+agg2=rdd.aggregate((0, 0), seqOp2, combOp2)
+print(agg2)
+# (34, 9)</code></pre>
+            </details>
+
+
+            <details>
+                <summary><b>treeAggregate(zeroValue, seqOp, combOp, depth=2)</b></summary>
+                <p>treeAggregate() – Aggregates the elements of this RDD in a multi-level tree pattern. The output of this function will be similar to the aggregate function.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+                    
+#treeAggregate. This is similar to aggregate
+seqOp = (lambda x, y: x + y)
+combOp = (lambda x, y: x + y)
+agg=listRdd.treeAggregate(0, seqOp, combOp)
+print(agg) # output 20</code></pre>
+            </details>
+
+            <details>
+                <summary><b>fold()</b></summary>
+                <p>fold() – Aggregate the elements of each partition, and then the results for all the partitions.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+                    
+#fold
+from operator import add
+foldRes=listRdd.fold(0, add)
+print(foldRes)
+# 20
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>reduce()</b></summary>
+                <p>reduce() – Reduces the elements of the dataset using the specified binary operator.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+                    
+#reduce
+redRes=listRdd.reduce(add)
+print(redRes) # output 20
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>treeReduce()</b></summary>
+                <p>Reduces the elements of this RDD in a multi-level tree pattern.or.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+                    
+#treeReduce. This is similar to reduce
+add = lambda x, y: x + y
+redRes=listRdd.treeReduce(add)
+print(redRes) # output 20
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>collect()</b></summary>
+                <p>Return the complete dataset as an Array.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+   
+#Collect
+data = listRdd.collect()
+print(data)
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>count(), countApprox(), countApproxDistinct()</b></summary>
+                <p>count() – Return the count of elements in the dataset.</p>
+                <p>countApprox() – Return approximate count of elements in the dataset, this method returns incomplete when execution time meets timeout.</p>
+                <p>countApproxDistinct() – Return an approximate number of distinct elements in the dataset.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+#count, countApprox, countApproxDistinct
+print("Count : "+str(listRdd.count()))
+#Output: Count : 20
+print("countApprox : "+str(listRdd.countApprox(1200)))
+#Output: countApprox : (final: [7.000, 7.000])
+print("countApproxDistinct : "+str(listRdd.countApproxDistinct()))
+#Output: countApproxDistinct : 5
+print("countApproxDistinct : "+str(inputRDD.countApproxDistinct()))
+#Output: countApproxDistinct : 5
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>countByValue(), countByValueApprox()</b></summary>
+                <p>Return Map[T,Long] key representing each unique value in dataset and value represents count each value present.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+#countByValue, countByValueApprox
+print("countByValue :  "+str(listRdd.countByValue()))
+# countByValue :  defaultdict(<class 'int'>, {1: 1, 2: 2, 3: 2, 4: 1, 5: 1})
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>first()</b></summary>
+                <p>Return the first element in the dataset.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+#first
+print("first :  "+str(listRdd.first()))
+#Output: first :  1
+print("first :  "+str(inputRDD.first()))
+#Output: first :  (Z,1)
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>top()</b></summary>
+                <p>Return top n elements from the dataset sorted ascendingly. <br> Note: Use this method only when the resulting array is small, as all the data is loaded into the driver’s memory.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+#top
+print("top : "+str(listRdd.top(2)))
+#Output: take : 5,4
+print("top : "+str(inputRDD.top(2)))
+#Output: take : (Z,1),(C,40)
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>min()</b></summary>
+                <p>min() – Return the minimum value from the dataset.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+#min
+print("min :  "+str(listRdd.min()))
+#Output: min :  1
+print("min :  "+str(inputRDD.min()))
+#Output: min :  (A,20)  
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>max()</b></summary>
+                <p>max() – Return the maximum value from the dataset.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+#max
+print("max :  "+str(listRdd.max()))
+#Output: max :  5
+print("max :  "+str(inputRDD.max()))
+#Output: max :  (Z,1)
+</code></pre>
+            </details>
+
+            <details>
+                <summary><b>take(), takeOrdered(), takeSample()</b></summary>
+                <p>take() – Return the first num elements of the dataset.</p>
+                <p>takeOrdered() – Return the first num (smallest) elements from the dataset and this is the opposite of the take() action. Note: Use this method only when the resulting array is small, as all the data is loaded into the driver’s memory.</p>
+                <p>takeSample() – Return the subset of the dataset in an Array. Note: Use this method only when the resulting array is small, as all the data is loaded into the driver’s memory.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+#take, takeOrdered, takeSample
+print("take : "+str(listRdd.take(2)))
+#Output: take : 1,2
+print("takeOrdered : "+ str(listRdd.takeOrdered(2)))
+#Output: takeOrdered : 1,2
+print("take : "+str(listRdd.takeSample()))
+</code></pre>
+            </details>
+
+
+            <details>
+                <summary><b>saveAsTextFile()</b></summary>
+                <p> Using saveAsTestFile action, we can write the RDD to a text file.</p>
+                <pre class="language-python"><code>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+data=[("Z", 1),("A", 20),("B", 30),("C", 40),("B", 30),("B", 60)]
+inputRDD = spark.sparkContext.parallelize(data)
+listRdd = spark.sparkContext.parallelize([1,2,3,4,5,3,2])
+
+rdd6.saveAsTextFile("/tmp/wordCount")
+</code></pre>
+            </details>
         </details>
     </div>
     <script src="../prism.js"></script>
