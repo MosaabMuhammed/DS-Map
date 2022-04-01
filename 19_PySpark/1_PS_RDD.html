@@ -527,6 +527,132 @@ rdd6.saveAsTextFile("/tmp/wordCount")
 </code></pre>
             </details>
         </details>
+
+        <details>
+            <summary><b>Types of RDD</b></summary>
+            <ul>
+                <li>PairRDDFunctions or PairRDD – Pair RDD is a key-value pair This is mostly used RDD type</li>
+                <li>ShuffledRDD</li>
+                <li>DoubleRDD</li>
+                <li>SequenceFileRDD</li>
+                <li>HadoopRDD</li>
+                <li>ParallelCollectionRDD</li>
+            </ul>
+        </details>
+
+
+        <details>
+            <summary><b>Persistence</b></summary>
+            <p>Though PySpark provides computation 100 x times faster than traditional Map Reduce jobs, If you have not designed the jobs to reuse the repeating computations you will see degrade in performance when you are dealing with billions or trillions
+                of data. Hence, we need to look at the computations and use optimization techniques as one of the ways to improve performance. <br> Using cache() and persist() methods, PySpark provides an optimization mechanism to store the intermediate
+                computation of an RDD so they can be reused in subsequent actions.</p>
+            <details>
+                <summary><b>Functions</b></summary>
+                <ul>
+                    <li>
+                        <details>
+                            <summary><b>cache()</b></summary>
+                            <p>PySpark RDD cache() method by default saves RDD computation to storage level `MEMORY_ONLY` meaning it will store the data in the JVM heap as unserialized objects. <br> PySpark cache() method in RDD class internally calls persist()
+                                method which in turn uses sparkSession.sharedState.cacheManager.cacheQuery to cache the result set of RDD. Let’s look at an example.</p>
+                            <pre class="language-python"><code>cachedRdd = rdd.cache()</code></pre>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary><b>persist()</b></summary>
+                            <p>PySpark persist() method is used to store the RDD to one of the storage levels MEMORY_ONLY,MEMORY_AND_DISK, MEMORY_ONLY_SER, MEMORY_AND_DISK_SER, DISK_ONLY, MEMORY_ONLY_2,MEMORY_AND_DISK_2 and more. <br> PySpark persist has
+                                two signature first signature doesn’t take any argument which by default saves it to <strong>MEMORY_ONLY</strong> storage level and the second signature which takes StorageLevel as an argument to store it to different storage
+                                levels.
+                            </p>
+                            <pre class="language-python"><code>import pyspark
+dfPersist = rdd.persist(pyspark.StorageLevel.MEMORY_ONLY)
+dfPersist.show(false)
+                            </code></pre>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary><b>unpresist()</b></summary>
+                            <p>PySpark automatically monitors every persist() and cache() calls you make and it checks usage on each node and drops persisted data if not used or by using least-recently-used (LRU) algorithm. You can also manually remove using
+                                unpersist() method. unpersist() marks the RDD as non-persistent, and remove all blocks for it from memory and disk.</p>
+                            <pre class="language-python"><code>rddPersist2 = rddPersist.unpersist()</code></pre>
+                        </details>
+                    </li>
+
+                </ul>
+            </details>
+        </details>
+
+
+        <details>
+            <summary><b>Shared Variables</b></summary>
+            <p>When PySpark executes transformation using map() or reduce() operations, It executes the transformations on a remote node by using the variables that are shipped with the tasks and these variables are not sent back to PySpark Driver hence
+                there is no capability to reuse and sharing the variables across tasks. PySpark shared variables solve this problem using the below two techniques.</p>
+            <details>
+                <summary><b>Types</b></summary>
+                <ul>
+                    <li>
+                        <details>
+                            <summary><b>Broadcast read-only Variables</b></summary>
+                            <p>In PySpark RDD and DataFrame, Broadcast variables are read-only shared variables that are cached and available on all nodes in a cluster in-order to access or use by the tasks. Instead of sending this data along with every
+                                task, PySpark distributes broadcast variables to the workers using efficient broadcast algorithms to reduce communication costs.</p>
+                            <pre class="language-python"><code># Let me explain with an example when to use broadcast variables, assume you are getting a two-letter country state code in a file and you wanted to transform it to full state name, (for example CA to California, NY to New York e.t.c) by doing a lookup to reference mapping. In some instances, this data could be large and you may have many such lookups (like zip code e.t.c).
+# Instead of distributing this information along with each task over the network (overhead and time consuming), we can use the broadcast variable to cache this lookup info on each machine and tasks use this cached info while executing the transformations.
+
+
+import pyspark
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+
+states = {"NY":"New York", "CA":"California", "FL":"Florida"}
+broadcastStates = spark.sparkContext.broadcast(states)
+
+data = [("James","Smith","USA","CA"),
+    ("Michael","Rose","USA","NY"),
+    ("Robert","Williams","USA","CA"),
+    ("Maria","Jones","USA","FL")
+  ]
+
+rdd = spark.sparkContext.parallelize(data)
+
+def state_convert(code):
+    return broadcastStates.value[code]
+
+result = rdd.map(lambda x: (x[0],x[1],x[2],state_convert(x[3]))).collect()
+print(result)
+</code></pre>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary><b>Accumulator variable</b></summary>
+                            <p>Spark Accumulators are shared variables which are only “added” through an associative and commutative operation and are used to perform counters (Similar to Map-reduce counters) or sum operations</p>
+                            <p>Spark by default supports to create an accumulators of any numeric type and provide a capability to add custom accumulator types. </p>
+                            <pre class="language-python"><code>accum = sc.longAccumulator("SumAccumulator")
+sc.parallelize([1, 2, 3]).foreach(lambda x: accum.add(x))</code></pre>
+                        </details>
+                    </li>
+                </ul>
+            </details>
+        </details>
+
+        <details>
+            <summary><b>Advanced APIs</b></summary>
+            <details>
+                <summary><b>Creating RDD from DataFrame and vice-versa</b></summary>
+                <pre class="language-python"><code># Converts RDD to DataFrame
+dfFromRDD1 = rdd.toDF()
+# Converts RDD to DataFrame with column names
+dfFromRDD2 = rdd.toDF("col1","col2")
+# using createDataFrame() - Convert DataFrame to RDD
+df = spark.createDataFrame(rdd).toDF("col1","col2")
+# Convert DataFrame to RDD
+rdd = df.rdd
+</code></pre>
+            </details>
+
+        </details>
     </div>
     <script src="../prism.js"></script>
 </body>

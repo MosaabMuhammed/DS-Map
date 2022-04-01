@@ -4,25 +4,51 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        Time Series - Data Wrangling
+        PySpark DataFrame
     </title>
     <link rel="stylesheet" href="../prism.css">
 </head>
 
 <body>
     <h1 id="3-data-wrangling">
-        3. TS - Data Wrangling
+        PySpark DataFrame
     </h1>
     <div style="width:1000px;margin:auto">
         <!-- ---------------------------------------------------------------------------- -->
         <details>
-            <summary><b>Load Data into DF</b></summary>
-            <pre class="language-python"><code>import pyspark
+            <summary><b>Load Data into DataFrame</b></summary>
+
+            <details>
+                <summary><b>createDataFrame()</b></summary>
+                <pre class="language-python"><code>import pyspark
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.master("local[1]") \
                     .appName('SparkByExamples.com') \
-                    .getOrCreate()</code></pre>
+                    .getOrCreate()
+                
+data = [('James','','Smith','1991-04-01','M',3000),
+('Michael','Rose','','2000-05-19','M',4000),
+('Robert','','Williams','1978-09-05','M',4000),
+('Maria','Anne','Jones','1967-12-01','F',4000),
+('Jen','Mary','Brown','1980-02-17','F',-1)
+]
+
+columns = ["firstname","middlename","lastname","dob","gender","salary"]
+df = spark.createDataFrame(data=data, schema = columns)
+df.show()
++---------+----------+--------+----------+------+------+
+# |firstname|middlename|lastname|dob       |gender|salary|
+# +---------+----------+--------+----------+------+------+
+# |James    |          |Smith   |1991-04-01|M     |3000  |
+# |Michael  |Rose      |        |2000-05-19|M     |4000  |
+# |Robert   |          |Williams|1978-09-05|M     |4000  |
+# |Maria    |Anne      |Jones   |1967-12-01|F     |4000  |
+# |Jen      |Mary      |Brown   |1980-02-17|F     |-1    |
+# +---------+----------+--------+----------+------+------+
+</code></pre>
+            </details>
         </details>
+
     </div>
     <script src="../prism.js"></script>
 </body>
