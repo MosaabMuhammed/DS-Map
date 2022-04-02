@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        Made with Remarkable!
+        EDA
     </title>
     <link rel="stylesheet" href="../../prism.css">
 </head>
@@ -1483,6 +1483,38 @@ iplot(fig)
                             Waffle
                         </b> Plots
                     </a>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>ECDF</b> Empirical Cumulative Distribution Function</summary>
+                        <p>Used instead of Histogram.</p>
+                        <p>It shows how many percent of values less than or equal to a specific value.</p>
+                        <details>
+                            <summary><b>statsmodel</b></summary>
+                            <pre class="language-python"><code>from statsmodels.distributions.empirical_distribution import ECDF
+sns.set(style = "ticks")# to format into seaborn 
+c = '#386B7F' # basic color for plots
+plt.figure(figsize = (12, 6))
+
+plt.subplot(311)
+cdf = ECDF(train['Sales'])
+plt.plot(cdf.x, cdf.y, label = "statmodels", color = c);
+plt.xlabel('Sales'); plt.ylabel('ECDF');
+</code></pre>
+                        </details>
+                        <details>
+                            <summary><b>manual</b></summary>
+                            <pre class="language-python"><code>def ECDF(data):
+    x = np.sort(data)
+    y = np.arange(1, len(data)+1)/len(data)
+    plt.plot(x, y, linestyle="none", marker=".")
+    plt.xlabel('Data Distribution')
+    plt.ylabel('Cumaltive Probability')
+    plt.title("ECDF");
+                                </code></pre>
+                        </details>
+                        <img src="../0_html/imgs/ecdf.png" alt="">
+                    </details>
                 </li>
             </ul>
             <h4>
