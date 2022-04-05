@@ -221,6 +221,312 @@ df.toDF(*newColumns).printSchema()
 
                     </details>
                 </li>
+
+                <li>
+                    <details>
+                        <summary><b>Change DataType using PySpark withColumn()</b></summary>
+                        <pre class="language-python"><code>import pyspark
+from pyspark.sql.functions import col
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+
+data = [('James','','Smith','1991-04-01','M',3000),
+('Michael','Rose','','2000-05-19','M',4000),
+('Robert','','Williams','1978-09-05','M',4000),
+('Maria','Anne','Jones','1967-12-01','F',4000),
+('Jen','Mary','Brown','1980-02-17','F',-1)
+]
+
+columns = ["firstname", "middlename", "lastname", "dob", "gender", "salary"]
+df = spark.createDataFrame(data=data, schema=columns)
+df.printSchema()
+
+df.withColumn("salary", col("salary").cast("Integer")).show()
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Update The Value of an Existing Column</b></summary>
+                        <pre class="language-python"><code>import pyspark
+from pyspark.sql.functions import col
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+
+data = [('James','','Smith','1991-04-01','M',3000),
+('Michael','Rose','','2000-05-19','M',4000),
+('Robert','','Williams','1978-09-05','M',4000),
+('Maria','Anne','Jones','1967-12-01','F',4000),
+('Jen','Mary','Brown','1980-02-17','F',-1)
+]
+
+columns = ["firstname", "middlename", "lastname", "dob", "gender", "salary"]
+df = spark.createDataFrame(data=data, schema=columns)
+df.printSchema()
+
+df.withColumn("salary", col("salary")*100).show()
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Create a Column from an Existing Column</b></summary>
+                        <pre class="language-python"><code>import pyspark
+from pyspark.sql.functions import col
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+
+data = [('James','','Smith','1991-04-01','M',3000),
+('Michael','Rose','','2000-05-19','M',4000),
+('Robert','','Williams','1978-09-05','M',4000),
+('Maria','Anne','Jones','1967-12-01','F',4000),
+('Jen','Mary','Brown','1980-02-17','F',-1)
+]
+
+columns = ["firstname", "middlename", "lastname", "dob", "gender", "salary"]
+df = spark.createDataFrame(data=data, schema=columns)
+df.printSchema()
+
+df.withColumn("CopiedSalary", col("salary")*-1).show()
+# +---------+----------+--------+----------+------+------+------------+
+# |firstname|middlename|lastname|       dob|gender|salary|CopiedSalary|
+# +---------+----------+--------+----------+------+------+------------+
+# |    James|          |   Smith|1991-04-01|     M|  3000|       -3000|
+# |  Michael|      Rose|        |2000-05-19|     M|  4000|       -4000|
+# |   Robert|          |Williams|1978-09-05|     M|  4000|       -4000|
+# |    Maria|      Anne|   Jones|1967-12-01|     F|  4000|       -4000|
+# |      Jen|      Mary|   Brown|1980-02-17|     F|    -1|           1|
+# +---------+----------+--------+----------+------+------+------------+
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Add a New Column using withColumn()</b></summary>
+                        <pre class="language-python"><code>#  PySpark lit() function is used to add a constant value to a DataFrame column.
+import pyspark
+from pyspark.sql.functions import col, lit
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+
+data = [('James','','Smith','1991-04-01','M',3000),
+('Michael','Rose','','2000-05-19','M',4000),
+('Robert','','Williams','1978-09-05','M',4000),
+('Maria','Anne','Jones','1967-12-01','F',4000),
+('Jen','Mary','Brown','1980-02-17','F',-1)
+]
+
+columns = ["firstname", "middlename", "lastname", "dob", "gender", "salary"]
+df = spark.createDataFrame(data=data, schema=columns)
+df.printSchema()
+
+df.withColumn("Country", lit("USA")) \
+  .withColumn("anotherCountry", lit("Egypt")) \
+  .show()
+# +---------+----------+--------+----------+------+------+-------+--------------+
+# |firstname|middlename|lastname|       dob|gender|salary|Country|anotherCountry|
+# +---------+----------+--------+----------+------+------+-------+--------------+
+# |    James|          |   Smith|1991-04-01|     M|  3000|    USA|         Egypt|
+# |  Michael|      Rose|        |2000-05-19|     M|  4000|    USA|         Egypt|
+# |   Robert|          |Williams|1978-09-05|     M|  4000|    USA|         Egypt|
+# |    Maria|      Anne|   Jones|1967-12-01|     F|  4000|    USA|         Egypt|
+# |      Jen|      Mary|   Brown|1980-02-17|     F|    -1|    USA|         Egypt|
+# +---------+----------+--------+----------+------+------+-------+--------------+
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Drop Column From PySpark DataFrame</b></summary>
+                        <pre class="language-python"><code>#  PySpark lit() function is used to add a constant value to a DataFrame column.
+import pyspark
+from pyspark.sql.functions import col, lit
+spark = pyspark.sql.SparkSession.builder.appName("hello_world").getOrCreate()
+
+data = [('James','','Smith','1991-04-01','M',3000),
+('Michael','Rose','','2000-05-19','M',4000),
+('Robert','','Williams','1978-09-05','M',4000),
+('Maria','Anne','Jones','1967-12-01','F',4000),
+('Jen','Mary','Brown','1980-02-17','F',-1)
+]
+
+columns = ["firstname", "middlename", "lastname", "dob", "gender", "salary"]
+df = spark.createDataFrame(data=data, schema=columns)
+df.printSchema()
+
+df.drop("salary").show()
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>filter() with Column Condition</b></summary>
+                        <pre class="language-python"><code># Using equals condition
+df.filter(df.state == "OH").show(truncate=False)
+
++----------------------+------------------+-----+------+
+# |name                  |languages         |state|gender|
+# +----------------------+------------------+-----+------+
+# |[James, , Smith]      |[Java, Scala, C++]|OH   |M     |
+# |[Julia, , Williams]   |[CSharp, VB]      |OH   |F     |
+# |[Mike, Mary, Williams]|[Python, VB]      |OH   |M     |
+# +----------------------+------------------+-----+------+
+
+# not equals condition
+df.filter(df.state != "OH") \
+    .show(truncate=False) 
+df.filter(~(df.state == "OH")) \
+    .show(truncate=False)
+
+#Using SQL col() function
+from pyspark.sql.functions import col
+df.filter(col("state") == "OH") \
+    .show(truncate=False) 
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>filter() with SQL Expression</b></summary>
+                        <pre class="language-python"><code>#Using SQL Expression
+df.filter("gender == 'M'").show()
+#For not equal
+df.filter("gender != 'M'").show()
+df.filter("gender <> 'M'").show()
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Filter Based on List Values</b></summary>
+                        <pre class="language-python"><code>#Filter IS IN List values
+li=["OH","CA","DE"]
+df.filter(df.state.isin(li)).show()
++--------------------+------------------+-----+------+
+|                name|         languages|state|gender|
++--------------------+------------------+-----+------+
+|    [James, , Smith]|[Java, Scala, C++]|   OH|     M|
+| [Julia, , Williams]|      [CSharp, VB]|   OH|     F|
+|[Mike, Mary, Will...|      [Python, VB]|   OH|     M|
++--------------------+------------------+-----+------+
+
+# Filter NOT IS IN List values
+#These show all records with NY (NY is not part of the list)
+df.filter(~df.state.isin(li)).show()
+df.filter(df.state.isin(li)==False).show()
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Filter with Multiple Conditions</b></summary>
+                        <pre class="language-python"><code>//Filter multiple condition
+df.filter( (df.state  == "OH") & (df.gender  == "M") ) \
+    .show(truncate=False)  
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Filter Based on Starts With, Ends With, Contains</b></summary>
+                        <pre class="language-python"><code># Using startswith
+df.filter(df.state.startswith("N")).show()
++--------------------+------------------+-----+------+
+|                name|         languages|state|gender|
++--------------------+------------------+-----+------+
+|      [Anna, Rose, ]|[Spark, Java, C++]|   NY|     F|
+|[Maria, Anne, Jones]|      [CSharp, VB]|   NY|     M|
+|  [Jen, Mary, Brown]|      [CSharp, VB]|   NY|     M|
++--------------------+------------------+-----+------+
+
+#using endswith
+df.filter(df.state.endswith("H")).show()
+
+#contains
+df.filter(df.state.contains("H")).show()
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Filter like and rlike</b></summary>
+                        <pre class="language-python"><code>data2 = [(2,"Michael Rose"),(3,"Robert Williams"),
+        (4,"Rames Rose"),(5,"Rames rose")
+    ]
+df2 = spark.createDataFrame(data = data2, schema = ["id","name"])
+
+# like - SQL LIKE pattern
+df2.filter(df2.name.like("%rose%")).show()
++---+----------+
+| id|      name|
++---+----------+
+|  5|Rames rose|
++---+----------+
+
+# rlike - SQL RLIKE pattern (LIKE with Regex)
+#This check case insensitive
+df2.filter(df2.name.rlike("(?i)^*rose$")).show()
++---+------------+
+| id|        name|
++---+------------+
+|  2|Michael Rose|
+|  4|  Rames Rose|
+|  5|  Rames rose|               
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Filter on an Array column</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import array_contains
+df.filter(array_contains(df.languages,"Java")) \
+    .show(truncate=False)     
+
++----------------+------------------+-----+------+
+# |name            |languages         |state|gender|
+# +----------------+------------------+-----+------+
+# |[James, , Smith]|[Java, Scala, C++]|OH   |M     |
+# |[Anna, Rose, ]  |[Spark, Java, C++]|NY   |F     |
+# +----------------+------------------+-----+------+
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Filtering on Nested Struct columns</b></summary>
+                        <pre class="language-python"><code>## Struct condition
+df.filter(df.name.lastname == "Williams") \
+    .show(truncate=False) 
++----------------------+------------+-----+------+
+|name                  |languages   |state|gender|
++----------------------+------------+-----+------+
+|[Julia, , Williams]   |[CSharp, VB]|OH   |F     |
+|[Mike, Mary, Williams]|[Python, VB]|OH   |M     |
++----------------------+------------+-----+------+  
+</code></pre>
+
+                    </details>
+                </li>
             </ul>
         </details>
     </div>
