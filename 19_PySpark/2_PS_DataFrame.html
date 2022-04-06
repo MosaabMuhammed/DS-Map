@@ -527,6 +527,176 @@ df.filter(df.name.lastname == "Williams") \
 
                     </details>
                 </li>
+
+                <li>
+                    <details>
+                        <summary><b>DataFrame sorting using the sort() function</b></summary>
+                        <pre class="language-python"><code>df.sort("department","state").show(truncate=False)
+df.sort(col("department"),col("state")).show(truncate=False)
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>sorting using orderBy() function</b></summary>
+                        <pre class="language-python"><code>df.orderBy("department","state").show(truncate=False)
+df.orderBy(col("department"),col("state")).show(truncate=False)
+
+# Sort by Ascending (ASC)
+df.sort(df.department.asc(),df.state.asc()).show(truncate=False)
+df.sort(col("department").asc(),col("state").asc()).show(truncate=False)
+df.orderBy(col("department").asc(),col("state").asc()).show(truncate=False)
+
+# Sort by Descending (DESC)
+df.sort(df.department.asc(),df.state.desc()).show(truncate=False)
+df.sort(col("department").asc(),col("state").desc()).show(truncate=False)
+df.orderBy(col("department").asc(),col("state").desc()).show(truncate=False)
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>sort using Raw SQL</b></summary>
+                        <pre class="language-python"><code>df.createOrReplaceTempView("EMP")
+spark.sql("select employee_name,department,state,salary,age,bonus from EMP ORDER BY department asc").show(truncate=False)      
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>explode array and map columns to rows</b></summary>
+                        <pre class="language-python"><code># Create data
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName('pyspark-by-examples').getOrCreate()
+
+arrayData = [
+        ('James',['Java','Scala'],{'hair':'black','eye':'brown'}),
+        ('Michael',['Spark','Java',None],{'hair':'brown','eye':None}),
+        ('Robert',['CSharp',''],{'hair':'red','eye':''}),
+        ('Washington',None,None),
+        ('Jefferson',['1','2'],{})
+
+df = spark.createDataFrame(data=arrayData, schema = ['name','knownLanguages','properties'])
+df.printSchema()
+df.show()                      
+</code></pre>
+                        <h3>explode array or map column to rows</h3>
+                        <p>used to explode or create array or map columns to rows. <br> When an array is passed to this function, it creates a new default column “col1” and it contains all array elements. <br> When a map is passed, it creates two new columns
+                            one for key and one for value and each element in map split into the rows.</p>
+                        <pre class="language-python"><code># explode array or map column to rows
+from pyspark.sql.functions import explode
+df2 = df.select(df.name,explode(df.knownLanguages))
+df3 = df.select(df.name,explode(df.properties))
+df2.show()
++---------+------+
+# |     name|   col|
+# +---------+------+
+# |    James|  Java|
+# |    James| Scala|
+# |  Michael| Spark|
+# |  Michael|  Java|
+# |  Michael|  null|
+# |   Robert|CSharp|
+# |   Robert|      |
+# |Jefferson|     1|
+# |Jefferson|     2|
+# +---------+------+
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>explode_outer – Create rows for each element in an array or map</b></summary>
+                        <p>PySpark SQL explode_outer(e: Column) function is used to create a row for each element in the array or map column. Unlike explode, if the array or map is null or empty, explode_outer returns null.
+                            <pre class="language-python"><code>from pyspark.sql.functions import explode_outer
+""" with array """
+df.select(df.name,explode_outer(df.knownLanguages)).show()
+""" with map """
+df.select(df.name,explode_outer(df.properties)).show()
+# +----------+------+
+# |      name|   col|
+# +----------+------+
+# |     James|  Java|
+# |     James| Scala|
+# |   Michael| Spark|
+# |   Michael|  Java|
+# |   Michael|  null|
+# |    Robert|CSharp|
+# |    Robert|      |
+# |Washington|  null|
+# | Jefferson|     1|
+# | Jefferson|     2|
+# +----------+------+
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>posexplode – explode array or map elements to rows</b></summary>
+                        <p>creates a row for each element in the array and creates two columns “pos’ to hold the position of the array element and the ‘col’ to hold the actual array value. And when the input column is a map, posexplode function creates 3
+                            columns “pos” to hold the position of the map element, “key” and “value” columns.</p>
+                        <p>This will ignore elements that have null or empty. Since the Washington and Jefferson have null or empty values in array and map, the following snippet out does not contain these.</p>
+                        <pre class="language-python"><code>from pyspark.sql.functions import posexplode
+""" with array """
+df.select(df.name,posexplode(df.knownLanguages)).show()
+""" with map """
+df.select(df.name,posexplode(df.properties)).show()
+# +---------+---+------+
+# |     name|pos|   col|
+# +---------+---+------+
+# |    James|  0|  Java|
+# |    James|  1| Scala|
+# |  Michael|  0| Spark|
+# |  Michael|  1|  Java|
+# |  Michael|  2|  null|
+# |   Robert|  0|CSharp|
+# |   Robert|  1|      |
+# |Jefferson|  0|     1|
+# |Jefferson|  1|     2|
+# +---------+---+------+
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>posexplode_outer – explode array or map columns to rows</b></summary>
+                        <p>creates a row for each element in the array and creates two columns “pos’ to hold the position of the array element and the ‘col’ to hold the actual array value. Unlike posexplode, if the array or map is null or empty, posexplode_outer
+                            function returns null, null for pos and col columns. Similarly for the map, it returns rows with nulls.</p>
+                        <pre class="language-python"><code>from pyspark.sql.functions import posexplode_outer
+""" with array """
+df.select($"name",posexplode_outer($"knownLanguages")).show()
+
+""" with map """
+df.select(df.name,posexplode_outer(df.properties)).show()
+# +----------+----+----+-----+
+# |      name| pos| key|value|
+# +----------+----+----+-----+
+# |     James|   0| eye|brown|
+# |     James|   1|hair|black|
+# |   Michael|   0| eye| null|
+# |   Michael|   1|hair|brown|
+# |    Robert|   0| eye|     |
+# |    Robert|   1|hair|  red|
+# |Washington|null|null| null|
+# | Jefferson|null|null| null|
+# +----------+----+----+-----+
+</code></pre>
+
+                    </details>
+                </li>
             </ul>
         </details>
     </div>
