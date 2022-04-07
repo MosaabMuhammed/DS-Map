@@ -195,7 +195,38 @@ ax[0].set_xlim([date(2009, 1, 1), date(2020, 6, 30)])</code></pre>
                     <img src="../0_html/imgs/plot_nan.png" alt="">
                 </details>
 
+                <details>
+                    <summary>plot <b>options of filling missing values</b></summary>
+                    <pre class="language-python"><code>f, ax = plt.subplots(nrows=4, ncols=1, figsize=(15, 12))
+sns.lineplot(x=df['date'], y=df['drainage_volume'].fillna(0), ax=ax[0], color='darkorange', label = 'modified')
+sns.lineplot(x=df['date'], y=df['drainage_volume'].fillna(np.inf), ax=ax[0], color='dodgerblue', label = 'original')
+ax[0].set_title('Fill NaN with 0', fontsize=14)
+ax[0].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
 
+mean_drainage = df['drainage_volume'].mean()
+sns.lineplot(x=df['date'], y=df['drainage_volume'].fillna(mean_drainage), ax=ax[1], color='darkorange', label = 'modified')
+sns.lineplot(x=df['date'], y=df['drainage_volume'].fillna(np.inf), ax=ax[1], color='dodgerblue', label = 'original')
+ax[1].set_title(f'Fill NaN with Mean Value ({mean_drainage:.0f})', fontsize=14)
+ax[1].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
+
+sns.lineplot(x=df['date'], y=df['drainage_volume'].ffill(), ax=ax[2], color='darkorange', label = 'modified')
+sns.lineplot(x=df['date'], y=df['drainage_volume'].fillna(np.inf), ax=ax[2], color='dodgerblue', label = 'original')
+ax[2].set_title(f'FFill', fontsize=14)
+ax[2].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
+
+sns.lineplot(x=df['date'], y=df['drainage_volume'].interpolate(), ax=ax[3], color='darkorange', label = 'modified')
+sns.lineplot(x=df['date'], y=df['drainage_volume'].fillna(np.inf), ax=ax[3], color='dodgerblue', label = 'original')
+ax[3].set_title(f'Interpolate', fontsize=14)
+ax[3].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
+
+for i in range(4):
+    ax[i].set_xlim([date(2019, 5, 1), date(2019, 10, 1)])
+    
+plt.tight_layout()
+plt.show()</code></pre>
+
+                    <img src="../0_html/imgs/filling_nan.png" alt="">
+                </details>
             </p>
         </details>
 
