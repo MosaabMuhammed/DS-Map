@@ -20,6 +20,19 @@
                     Tips &amp; Tricks
                 </b>
             </summary>
+
+            <details>
+                <summary><b>Plot the rows where it has nan missing values</b></summary>
+                <pre class="language-python"><code>f, ax = plt.subplots(nrows=1, ncols=1, figsize=(16,5))
+sns.heatmap(df.T.isna(), cmap='Blues')
+ax.set_title('Missing Values', fontsize=16)
+
+for tick in ax.yaxis.get_major_ticks():
+    tick.label.set_fontsize(14)
+plt.show()</code></pre>
+                <img src="../0_html/imgs/nan_rows.png" alt="">
+            </details>
+
             <details>
                 <summary>Change the <b>color</b> of xticks [global/local]</summary>
                 <pre class="language-python"><code># global
@@ -35,8 +48,6 @@ plt.yticks(color="white")
 # For other variables, run:
 mpl.rcParams.keys()</code></pre>
             </details>
-
-
 
             <details>
                 <summary>

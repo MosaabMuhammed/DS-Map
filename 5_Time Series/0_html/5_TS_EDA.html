@@ -180,6 +180,21 @@ _ = tsplot(x, lags=limit,title="AR(1)process")</code></pre>
                     <img src="../0_html/imgs/acf_analysis.png" alt="">
                 </details>
 
+                <details>
+                    <summary><b>plot the missing nan values </b></summary>
+                    <pre class="language-python"><code>f, ax = plt.subplots(nrows=1, ncols=1, figsize=(15, 15))
+old_hydrometry = df['river_hydrometry'].copy()
+df['river_hydrometry'] = df['river_hydrometry'].replace(0, np.nan)
+
+sns.lineplot(x=df['date'], y=old_hydrometry, ax=ax[0], color='darkorange', label='original')
+sns.lineplot(x=df['date'], y=df['river_hydrometry'].fillna(np.inf), ax=ax[0], color='dodgerblue', label='modified')
+ax[0].set_title('Feature: Hydrometry', fontsize=14)
+ax[0].set_ylabel(ylabel='Hydrometry', fontsize=14)
+ax[0].set_xlim([date(2009, 1, 1), date(2020, 6, 30)])</code></pre>
+
+                    <img src="../0_html/imgs/plot_nan.png" alt="">
+                </details>
+
 
             </p>
         </details>
