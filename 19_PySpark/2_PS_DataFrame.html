@@ -777,13 +777,177 @@ df.select("name", pyspark.sql.functions.flatten("subjects")).show(truncate=False
 
 df2.write.mode('overwrite').csv("/tmp/spark_output/zipcodes")
 ## you can also use this
-df2.write.format("csv").mode('overwrite').save("/tmp/spark_output/zipcodes")
+df2.write.format("csv").mode('overwrite').save("/tmp/spark_output/zipcodes")         
+</code></pre>
+                    </details>
+                </li>
 
-                            
+                <li>
+                    <details>
+                        <summary><b>Group by [min, max, avg, sum, mean, agg]</b></summary>
+                        <p>
+                            When we perform groupBy() on PySpark Dataframe, it returns GroupedData object which contains below aggregate functions. <br> count() - Returns the count of rows for each group. <br> mean() - Returns the mean of values for each
+                            group. <br> max() - Returns the maximum of values for each group. <br> min() - Returns the minimum of values for each group. <br> sum() - Returns the total for values for each group. <br> avg() - Returns the average for values
+                            for each group. <br> agg() - Using agg() function, we can calculate more than one aggregate at a time. <br>
+                        </p>
+                        <pre class="language-python"><code>df.groupBy("department").sum("salary").show(truncate=False)
+df.groupBy("department").count()
+df.groupBy("department").min("salary")
+df.groupBy("department").max("salary")
+df.groupBy("department").avg( "salary")
+df.groupBy("department").mean( "salary") 
+
+## GroupBy on multiple columns
+df.groupBy("department","state") \
+    .sum("salary","bonus") \
+    .show(false)
+
+# Running more aggregates at a time   
+df.groupBy("department") \
+    .agg(sum("salary").alias("sum_salary"), \
+         avg("salary").alias("avg_salary"), \
+         sum("bonus").alias("sum_bonus"), \
+         max("bonus").alias("max_bonus") \
+     ) \
+    .show(truncate=False)
+
+# using filter on grouped by data.
+df.groupBy("department") \
+    .agg(sum("salary").alias("sum_salary"), \
+      avg("salary").alias("avg_salary"), \
+      sum("bonus").alias("sum_bonus"), \
+      max("bonus").alias("max_bonus")) \
+    .where(col("sum_bonus") >= 50000) \
+    .show(truncate=False)
 </code></pre>
 
                     </details>
                 </li>
+
+                <li>
+                    <details>
+                        <summary><b>Get number of distinct labels in a column</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import approx_count_distinct, countDistinct
+
+print(str(df.select(approx_count_distinct("department")).collect()[0][0]))
+# 3
+
+# for a composite row.
+df.select(countDistinct("department", "state")).collect()[0][0]
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Get the average of numerical column</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import avg
+
+# avg
+print("avg: " + str(df.select(avg("salary")).collect()[0][0]))
+# Prints avg: 3400.0
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Get all values from an input column with duplicates to list</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import collect_list
+df.select(collect_list("salary")).collect()[0][0]
+# [3000, 4600, 4100, 3000, 3000, 3300, 3900, 3000, 2000, 4100]
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Returns the number of distinct elements in a columns</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import collect_set
+df.select(collect_list("salary")).collect()[0][0]
+# [4600, 3000, 3900, 4100, 3300, 2000]
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Get number of elements in a column</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import count
+print("count: "+str(df.select(count("salary")).collect()[0]))
+# Prints county: 10
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Get the first/last element in a column</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import first, last
+# first() function returns the first element in a column when ignoreNulls is set to true, it returns the first non-null element.
+df.select(first("salary")).show(truncate=False)
+# +--------------------+
+# |first(salary, false)|
+# +--------------------+
+# |3000                |
+# +--------------------+
+
+df.select(last("salary")).show(truncate=False)
++-------------------+
+|last(salary, false)|
++-------------------+
+|4100               |
++-------------------+
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Get kurtosis/max/min/mean/sum/skewness of a column</b></summary>
+                        <pre class="language-python"><code>from pyspark.sql.functions import kurtosis, max, min, mean, sum, skewness, sumDistinct
+
+df.select(kurtosis("salary")).show(truncate=False)
+df.select(max("salary")).show(truncate=False)
+df.select(min("salary")).show(truncate=False)
+df.select(mean("salary")).show(truncate=False)
+df.select(skewness("salary")).show(truncate=False)
+df.select(sum("salary")).show(truncate=False)
+df.select(sumDistinct("salary")).show(truncate=False)
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Get standard deviation std of a column</b></summary>
+                        <p>
+                            stddev() alias for stddev_samp. <br> stddev_samp() function returns the sample standard deviation of values in a column. <br> stddev_pop() function returns the population standard deviation of the values in a column. <br>
+                        </p>
+                        <pre class="language-python"><code>from pyspark.sql.functions import stddev, stddev_samp, stddev_pop
+df.select(stddev("salary"), stddev_samp("salary"), \
+stddev_pop("salary")).show(truncate=False)
+
+# +-------------------+-------------------+------------------+
+# |stddev_samp(salary)|stddev_samp(salary)|stddev_pop(salary)|
+# +-------------------+-------------------+------------------+
+# |765.9416862050705  |765.9416862050705  |726.636084983398  |
+# +-------------------+-------------------+------------------+
+</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary><b>Get Variance of a column</b></summary>
+                        <p>
+                            variance() alias for var_samp <br> var_samp() function returns the unbiased variance of the values in a column. <br> var_pop() function returns the population variance of the values in a column. <br>
+                        </p>
+                        <pre class="language-python"><code>from pyspark.sql.functions import variance, var_samp, var_pop
+df.select(variance("salary"),var_samp("salary"),var_pop("salary")) \
+.show(truncate=False)
+
+# +-----------------+-----------------+---------------+
+# |var_samp(salary) |var_samp(salary) |var_pop(salary)|
+# +-----------------+-----------------+---------------+
+# |586666.6666666666|586666.6666666666|528000.0       |
+# +-----------------+-----------------+---------------+
+</code></pre>
+                    </details>
+                </li>
+
             </ul>
         </details>
     </div>
