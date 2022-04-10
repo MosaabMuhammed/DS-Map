@@ -182,15 +182,29 @@ monthly_moving_average_2stride = df['Mean temparature'].rolling(30).mean()[::2]
         <!-- -------------------------------------------------------- -->
         <details>
             <summary>
-                <b>
-                            Date, Time features
-                        </b>
+                <b>Date, Time features</b>
             </summary>
             <pre class="language-python"><code># datetime features
 data.index = pd.to_datetime(data.index)
 data["hour"] = data.index.hour
 data["weekday"] = data.index.weekday
 data['is_weekend'] = data.weekday.isin([5,6])*1
+
+df['year'] = pd.DatetimeIndex(df['date']).year
+df['month'] = pd.DatetimeIndex(df['date']).month
+df['day'] = pd.DatetimeIndex(df['date']).day
+df['day_of_year'] = pd.DatetimeIndex(df['date']).dayofyear
+df['week_of_year'] = pd.DatetimeIndex(df['date']).weekofyear
+df['quarter'] = pd.DatetimeIndex(df['date']).quarter
+df['season'] = df['month'] % 12 // 3 + 1
+
+#### NOTE
+## The new time features are cyclical. For example,the feature month cycles between 1 and 12 for every year. 
+## While the difference between each month increments by 1 during the year, between two years the month feature jumps from 12 (December) to 1 (January). 
+## This results in a -11 difference, which can confuse a lot of models.
+month_in_year = 12
+df['month_sin'] = np.sin(2*np.pi*df['month']/month_in_year)
+df['month_cos'] = np.cos(2*np.pi*df['month']/month_in_year)
         </code></pre>
         </details>
         <!-- -------------------------------------------------------- -->

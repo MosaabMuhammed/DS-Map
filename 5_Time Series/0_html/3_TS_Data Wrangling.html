@@ -39,8 +39,14 @@
         </details>
         <!-- ---------------------------------------------------------------------------- -->
         <details>
-            <summary>From <b>Non-Stationary</b> to <b>Stationary</b></summary>
-            <pre class="language-python"><code>decomposed_google_volume.trend.diff()</code></pre>
+            <summary>From <b>Non-Stationary</b> to <b>Stationary</b> differencing</summary>
+            <pre class="language-python"><code># First order Differencing - Pandas
+decomposed_google_volume.trend.diff()
+
+# First Order Differencing - numpy
+ts_diff = np.diff(df['depth_to_groundwater'])
+df['depth_to_groundwater_diff_1'] = np.append([0], ts_diff)
+            </code></pre>
         </details>
         <!-- ---------------------------------------------------------------------------- -->
         <details>
