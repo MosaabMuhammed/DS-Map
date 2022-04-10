@@ -948,6 +948,52 @@ df.select(variance("salary"),var_samp("salary"),var_pop("salary")) \
                     </details>
                 </li>
 
+                <li>
+                    <details>
+                        <summary><b>Apply SQL queries on DF</b></summary>
+                        <pre class="language-python"><code>empDF.createOrReplaceTempView("EMP")
+deptDF.createOrReplaceTempView("DEPT")
+
+joinDF = spark.sql("select * from EMP e, DEPT d where e.emp_dept_id == d.dept_id") \
+    .show(truncate=False)
+
+joinDF2 = spark.sql("select * from EMP e INNER JOIN DEPT d ON e.emp_dept_id == d.dept_id") \
+    .show(truncate=False)
+</code></pre>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Join DFs together</b></summary>
+                        <pre class="language-python"><code>df1.join(df2,df1.id1 == df2.id2,"inner") \
+    .join(df3,df1.id1 == df3.id3,"inner")
+
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"outer") \
+    .show(truncate=False)
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"full") \
+    .show(truncate=False)
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"fullouter") \
+    .show(truncate=False)
+    
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"left") \
+    .show(truncate=False)
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"leftouter") \
+    .show(truncate=False)
+
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"right") \
+    .show(truncate=False)
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"rightouter") \
+    .show(truncate=False)
+
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"leftsemi") \
+    .show(truncate=False)
+    
+empDF.join(deptDF,empDF.emp_dept_id ==  deptDF.dept_id,"leftanti") \
+    .show(truncate=False)
+</code></pre>
+                    </details>
+                </li>
             </ul>
         </details>
     </div>
