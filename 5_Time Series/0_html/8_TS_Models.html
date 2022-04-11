@@ -153,65 +153,6 @@ print("The root mean squared error is {}.".format(rmse))
                 </details>
 
                 <details>
-                    <summary>ARMA Model</summary>
-                    <p>Autoregressive–moving-average (ARMA) models provide a parsimonious description of a (weakly) stationary stochastic process in terms of two polynomials, one for the autoregression and the second for the moving average.<br>It's the fusion
-                        of AR and MA models.</p>
-                    <p>ARMA(1,1) model <br> Rt = μ + ϕRt-1 + ϵt + θϵt-1 <br>Basically, Today's return = mean + Yesterday's return + noise + yesterday's noise.</p>
-                    <pre class="language-python"><code>
-from statsmodels.tsa.arima_model import ARMA
-from statsmodels.tsa.arima_process import ArmaProcess
-from statsmodels.tsa.arima_model import ARIMA
-import math
-from sklearn.metrics import mean_squared_error
-
-# Forecasting and predicting microsoft stocks volume
-model = ARMA(microsoft["Volume"].diff().iloc[1:].values, order=(3,3))
-result = model.fit()
-print(result.summary())
-print("μ={}, ϕ={}, θ={}".format(result.params[0],result.params[1],result.params[2]))
-result.plot_predict(start=1000, end=1100)
-plt.show()
-
-ARMA Model Results                              
-==============================================================================
-Dep. Variable:                      y   No. Observations:                 3018
-Model:                     ARMA(3, 3)   Log Likelihood              -55408.974
-Method:                       css-mle   S.D. of innovations       22751607.792
-Date:                Thu, 02 Aug 2018   AIC                         110833.948
-Time:                        14:43:52   BIC                         110882.047
-Sample:                             0   HQIC                        110851.244
-                                                                              
-==============================================================================
-                 coef    std err          z      P>|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const       -2.03e+04   9914.912     -2.047      0.041   -3.97e+04    -864.350
-ar.L1.y        0.2053      0.160      1.287      0.198      -0.107       0.518
-ar.L2.y        0.7297      0.179      4.080      0.000       0.379       1.080
-ar.L3.y       -0.1413      0.057     -2.467      0.014      -0.254      -0.029
-ma.L1.y       -0.8117      0.157     -5.165      0.000      -1.120      -0.504
-ma.L2.y       -0.7692      0.258     -2.978      0.003      -1.275      -0.263
-ma.L3.y        0.5853      0.130      4.494      0.000       0.330       0.841
-                                    Roots                                    
-=============================================================================
-                 Real           Imaginary           Modulus         Frequency
------------------------------------------------------------------------------
-AR.1           -1.1772           +0.0000j            1.1772            0.5000
-AR.2            1.1604           +0.0000j            1.1604            0.0000
-AR.3            5.1820           +0.0000j            5.1820            0.0000
-MA.1           -1.1579           +0.0000j            1.1579            0.5000
-MA.2            1.0075           +0.0000j            1.0075            0.0000
-MA.3            1.4647           +0.0000j            1.4647            0.0000
------------------------------------------------------------------------------
-μ=-20297.220687001212, ϕ=0.2053008905725337, θ=0.7296681716172797
-</code></pre>
-                    <pre class="language-python"><code>rmse = math.sqrt(mean_squared_error(microsoft["Volume"].diff().iloc[1000:1101].values, result.predict(start=1000,end=1100)))
-print("The root mean squared error is {}.".format(rmse))
-The root mean squared error is 38038241.66905847.
-ARMA model shows much better results than AR and MA models.
-</code></pre>
-                </details>
-
-                <details>
                     <summary>ARIMA Model</summary>
                     <p>Autoregressive–moving-average (ARMA) models provide a parsimonious description of a (weakly) stationary stochastic process in terms of two polynomials, one for the autoregression and the second for the moving average.<br>It's the fusion
                         of AR and MA models.</p>
@@ -392,13 +333,137 @@ plotSARIMA(ads, best_model, 50)</code></pre>
 
                 </details>
 
+                <details>
+                    <summary>Auto-ARMA Model</summary>
+                    <p>Autoregressive–moving-average (ARMA) models provide a parsimonious description of a (weakly) stationary stochastic process in terms of two polynomials, one for the autoregression and the second for the moving average.<br>It's the fusion
+                        of AR and MA models.</p>
+                    <p>ARMA(1,1) model <br> Rt = μ + ϕRt-1 + ϵt + θϵt-1 <br>Basically, Today's return = mean + Yesterday's return + noise + yesterday's noise.</p>
+                    <pre class="language-python"><code>!pip install pmdarima
+from statsmodels.tsa.arima_model import ARIMA
+import pmdarima as pm
+
+model = pm.auto_arima(y_train, start_p=1, start_q=1,
+                        test='adf',       # use adftest to find optimal 'd'
+                        max_p=3, max_q=3, # maximum p and q
+                        m=1,              # frequency of series
+                        d=None,           # let model determine 'd'
+                        seasonal=False,   # No Seasonality
+                        start_P=0, 
+                        D=0, 
+                        trace=True,
+                        error_action='ignore',  
+                        suppress_warnings=True, 
+                        stepwise=True)
+
+print(model.summary())
+Performing stepwise search to minimize aic
+#  ARIMA(1,1,1)(0,0,0)[0] intercept   : AIC=-631.136, Time=0.29 sec
+#  ARIMA(0,1,0)(0,0,0)[0] intercept   : AIC=-242.692, Time=0.06 sec
+#  ARIMA(1,1,0)(0,0,0)[0] intercept   : AIC=-574.047, Time=0.09 sec
+#  ARIMA(0,1,1)(0,0,0)[0] intercept   : AIC=-427.347, Time=0.09 sec
+#  ARIMA(0,1,0)(0,0,0)[0]             : AIC=-243.054, Time=0.02 sec
+#  ARIMA(2,1,1)(0,0,0)[0] intercept   : AIC=-629.209, Time=0.48 sec
+#  ARIMA(1,1,2)(0,0,0)[0] intercept   : AIC=-629.237, Time=0.77 sec
+#  ARIMA(0,1,2)(0,0,0)[0] intercept   : AIC=-492.779, Time=0.27 sec
+#  ARIMA(2,1,0)(0,0,0)[0] intercept   : AIC=-611.065, Time=0.19 sec
+#  ARIMA(2,1,2)(0,0,0)[0] intercept   : AIC=-628.351, Time=1.11 sec
+#  ARIMA(1,1,1)(0,0,0)[0]             : AIC=-632.995, Time=0.25 sec
+#  ARIMA(0,1,1)(0,0,0)[0]             : AIC=-428.258, Time=0.04 sec
+#  ARIMA(1,1,0)(0,0,0)[0]             : AIC=-575.735, Time=0.04 sec
+#  ARIMA(2,1,1)(0,0,0)[0]             : AIC=-631.069, Time=0.15 sec
+#  ARIMA(1,1,2)(0,0,0)[0]             : AIC=-631.097, Time=0.25 sec
+#  ARIMA(0,1,2)(0,0,0)[0]             : AIC=-494.001, Time=0.11 sec
+#  ARIMA(2,1,0)(0,0,0)[0]             : AIC=-612.866, Time=0.10 sec
+#  ARIMA(2,1,2)(0,0,0)[0]             : AIC=-630.210, Time=0.47 sec
+
+# Best model:  ARIMA(1,1,1)(0,0,0)[0]          
+# Total fit time: 4.805 seconds
+#                                SARIMAX Results                                
+# ==============================================================================
+# Dep. Variable:                      y   No. Observations:                  510
+# Model:               SARIMAX(1, 1, 1)   Log Likelihood                 319.497
+# Date:                Sat, 06 Mar 2021   AIC                           -632.995
+# Time:                        00:23:18   BIC                           -620.297
+# Sample:                             0   HQIC                          -628.016
+#                                 - 510                                         
+# Covariance Type:                  opg                                         
+# ==============================================================================
+#                  coef    std err          z      P>|z|      [0.025      0.975]
+# ------------------------------------------------------------------------------
+# ar.L1          0.9196      0.021     43.766      0.000       0.878       0.961
+# ma.L1         -0.4885      0.037    -13.357      0.000      -0.560      -0.417
+# sigma2         0.0167      0.001     24.809      0.000       0.015       0.018
+# ===================================================================================
+# Ljung-Box (L1) (Q):                   0.02   Jarque-Bera (JB):               185.01
+# Prob(Q):                              0.90   Prob(JB):                         0.00
+# Heteroskedasticity (H):               1.17   Skew:                             0.22
+# Prob(H) (two-sided):                  0.32   Kurtosis:                         5.92
+# ===================================================================================</code></pre>
+                    <pre class="language-python"><code>model.plot_diagnostics(figsize=(16,8))
+plt.show()
+# So how to interpret the plot diagnostics?
+# Top left: The residual errors seem to fluctuate around a mean of zero and have a uniform variance between (-4, 4).
+# Top Right: The density plot suggest normal distribution with mean zero.
+# Bottom left: The most part of the blue dots are over the red line, so it seems that the distribution in very low skewed (not skewed for me).
+# Bottom Right: The Correlogram, aka, ACF plot shows the residual errors are not autocorrelated.
+</code></pre>
+                    <img src="../0_html/imgs/diag_autoarima.png" alt="">
+                </details>
+
+
             </ul>
         </details>
 
         <!-- --------------------------- ----------------------------- -->
         <details>
             <summary><b>FB Prophet</b></summary>
-            <a href="../0_html/9_models/Facebook_Prophet.html">Intro to Prophet</a>
+            <ul>
+                <li><a href="../0_html/9_models/Facebook_Prophet.html">Prophet - Univariate forcasting</a></li>
+                <li>
+                    <details>
+                        <summary><b>Multivariate Forcasting - Prophet</b></summary>
+
+                        <pre class="language-python"><code>from fbprophet import Prophet
+
+# Train the model
+model = Prophet()
+model.add_regressor('rainfall')
+model.add_regressor('temperature')
+model.add_regressor('drainage_volume')
+model.add_regressor('river_hydrometry')
+
+# Fit the model with train set
+model.fit(train)
+
+# Predict on valid set
+y_pred = model.predict(x_valid)
+
+# Calcuate metrics
+score_mae = mean_absolute_error(y_valid, y_pred['yhat'])
+score_rmse = math.sqrt(mean_squared_error(y_valid, y_pred['yhat']))
+
+print(Fore.GREEN + 'RMSE: {}'.format(score_rmse))
+# RMSE: 0.9940444133552163
+                </code></pre>
+                        <pre class="language-python"><code># Plot the forecast
+f, ax = plt.subplots(1)
+f.set_figheight(6)
+f.set_figwidth(15)
+
+model.plot(y_pred, ax=ax)
+sns.lineplot(x=x_valid['ds'], y=y_valid['y'], ax=ax, color='orange', label='Ground truth') #navajowhite
+
+ax.set_title(f'Prediction \n MAE: {score_mae:.2f}, RMSE: {score_rmse:.2f}', fontsize=14)
+ax.set_xlabel(xlabel='Date', fontsize=14)
+ax.set_ylabel(ylabel='Depth to Groundwater', fontsize=14)
+
+plt.show()
+</code></pre>
+                        <img src="../0_html/imgs/multivariate_prophet.png" alt="">
+                    </details>
+                </li>
+
+            </ul>
         </details>
 
         <details>

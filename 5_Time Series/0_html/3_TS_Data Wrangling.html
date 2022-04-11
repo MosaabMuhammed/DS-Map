@@ -47,6 +47,19 @@ decomposed_google_volume.trend.diff()
 ts_diff = np.diff(df['depth_to_groundwater'])
 df['depth_to_groundwater_diff_1'] = np.append([0], ts_diff)
             </code></pre>
+            <pre class="language-python"><code>from pmdarima.arima.utils import ndiffs
+df = pd.read_csv('https://raw.githubusercontent.com/selva86/datasets/master/wwwusage.csv', names=['value'], header=0)
+y = df.value
+
+## Adf Test
+ndiffs(y, test='adf')  # 2
+
+# KPSS test
+ndiffs(y, test='kpss')  # 0
+
+# PP test:
+ndiffs(y, test='pp')  # 2
+</code></pre>
         </details>
         <!-- ---------------------------------------------------------------------------- -->
         <details>
