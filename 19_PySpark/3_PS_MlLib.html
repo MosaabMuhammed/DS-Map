@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        PySpark DataFrame
+    </title>
+    <link rel="stylesheet" href="../prism.css">
+</head>
+
+<body>
+    <h1 id="3-data-wrangling">
+        PySpark DataFrame
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <!-- ---------------------------------------------------------------------------- -->
+        <details>
+            <summary><b>Basic Statistics</b></summary>
+            <ul>
+
+                <li>
+                    <details>
+                        <summary><b>Correlation</b></summary>
+                        <p>Calculating the correlation between two series of data is a common operation in Statistics. In spark.ml we provide the flexibility to calculate pairwise correlations among many series. The supported correlation methods are currently
+                            Pearson’s and Spearman’s correlation.</p>
+                        <pre class="language-python"><code>from pyspark.ml.linalg import Vectors
+from pyspark.ml.stat import Correlation
+
+data = [(Vectors.sparse(4, [(0, 1.0), (3, -2.0)]),),
+        (Vectors.dense([4.0, 5.0, 0.0, 3.0]),),
+        (Vectors.dense([6.0, 7.0, 0.0, 8.0]),),
+        (Vectors.sparse(4, [(0, 9.0), (3, 1.0)]),)]
+df = spark.createDataFrame(data, ["features"])
+
+r1 = Correlation.corr(df, "features").head()
+print("Pearson correlation matrix:\n" + str(r1[0]))
+# Pearson correlation matrix:
+# DenseMatrix([[1.        , 0.05564149,        nan, 0.40047142],
+#              [0.05564149, 1.        ,        nan, 0.91359586],
+#              [       nan,        nan, 1.        ,        nan],
+#              [0.40047142, 0.91359586,        nan, 1.        ]])
+
+r2 = Correlation.corr(df, "features", "spearman").head()
+print("Spearman correlation matrix:\n" + str(r2[0]))
+# Spearman correlation matrix:
+# DenseMatrix([[1.        , 0.10540926,        nan, 0.4       ],
+#              [0.10540926, 1.        ,        nan, 0.9486833 ],
+#              [       nan,        nan, 1.        ,        nan],
+#              [0.4       , 0.9486833 ,        nan, 1.        ]])
+</code></pre>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Hypothesis Testing</b> ChiSquareTest</summary>
+                        <p>ChiSquareTest conducts Pearson’s independence test for every feature against the label. For each feature, the (feature, label) pairs are converted into a contingency matrix for which the Chi-squared statistic is computed. All label
+                            and feature values must be categorical.</p>
+                        <pre class="language-python"><code>from pyspark.ml.linalg import Vectors
+from pyspark.ml.stat import ChiSquareTest
+
+data = [(0.0, Vectors.dense(0.5, 10.0)),
+        (0.0, Vectors.dense(1.5, 20.0)),
+        (1.0, Vectors.dense(1.5, 30.0)),
+        (0.0, Vectors.dense(3.5, 30.0)),
+        (0.0, Vectors.dense(3.5, 40.0)),
+        (1.0, Vectors.dense(3.5, 40.0))]
+df = spark.createDataFrame(data, ["label", "features"])
+
+r = ChiSquareTest.test(df, "features", "label").head()
+print("pValues: " + str(r.pValues))
+print("degreesOfFreedom: " + str(r.degreesOfFreedom))
+print("statistics: " + str(r.statistics))
+# pValues: [0.6872892787909721,0.6822703303362126]
+# degreesOfFreedom: [2, 3]
+# statistics: [0.75,1.5]
+</code></pre>
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Summarizer</b></summary>
+                        <p>We provide vector column summary statistics for Dataframe through Summarizer. Available metrics are the column-wise max, min, mean, sum, variance, std, and number of nonzeros, as well as the total count.</p>
+                        <pre class="language-python"><code>from pyspark.ml.stat import Summarizer
+from pyspark.sql import Row
+from pyspark.ml.linalg import Vectors
+
+df = spark.sparkContext.parallelize([Row(weight=1.0, features=Vectors.dense(1.0, 1.0, 1.0)),
+                     Row(weight=0.0, features=Vectors.dense(1.0, 2.0, 3.0))]).toDF()
+
+# create summarizer for multiple metrics "mean" and "count"
+summarizer = Summarizer.metrics("mean", "count")
+
+# compute statistics for multiple metrics with weight
+df.select(summarizer.summary(df.features, df.weight)).show(truncate=False)
+# +-----------------------------------+
+# |aggregate_metrics(features, weight)|
+# +-----------------------------------+
+# |{[1.0,1.0,1.0], 1}                 |
+# +-----------------------------------+
+
+# compute statistics for multiple metrics without weight
+df.select(summarizer.summary(df.features)).show(truncate=False)
+# +--------------------------------+
+# |aggregate_metrics(features, 1.0)|
+# +--------------------------------+
+# |{[1.0,1.5,2.0], 2}              |
+# +--------------------------------+
+
+# compute statistics for single metric "mean" with weight
+df.select(Summarizer.mean(df.features, df.weight)).show(truncate=False)
+# +--------------+
+# |mean(features)|
+# +--------------+
+# |[1.0,1.0,1.0] |
+# +--------------+
+
+# compute statistics for single metric "mean" without weight
+df.select(Summarizer.mean(df.features)).show(truncate=False)
+# +--------------+
+# |mean(features)|
+# +--------------+
+# |[1.0,1.5,2.0] |
+# +--------------+
+</code></pre>
+                    </details>
+                </li>
+            </ul>
+        </details>
+    </div>
+    <script src="../prism.js"></script>
+</body>
+
+</html>
