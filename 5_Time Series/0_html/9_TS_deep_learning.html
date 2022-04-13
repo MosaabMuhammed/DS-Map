@@ -1,24 +1,196 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Deep Learning</h1>
-<div style="width:1000px;margin:auto">
+<!doctype HTML>
+<html>
 
-<details><summary><b>Sequence Models</b> [Tensorflow in Practice]</summary>
-<p><a href="./9_models/Preparing dataset in Tensorflow.html" style="color:#333;font-weight:bold">Create & Prepare the dataset</a></p>
+<head>
+    <meta charset="utf-8">
+    <title>TS - Deep Learning</title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
 
-<p><a href="./9_models/DNN For Forecasting & LR Schedular.html" style="color:#333;font-weight:bold"> Univariate Forecasting DNN & LR Schedular</a></p>
+<body>
+    <h1>TS - Deep Learning</h1>
+    <div style="width:1000px;margin:auto">
 
-<p><a href="./9_models/Simple RNN.html" style="color:#333;font-weight:bold"> Univariate Forecasting Simple RNN</a></p>
+        <details>
+            <summary><b>Sequence Models</b> [Tensorflow in Practice]</summary>
+            <p><a href="./9_models/Preparing dataset in Tensorflow.html" style="color:#333;font-weight:bold">Create & Prepare the dataset</a></p>
 
-<p><a href="./9_models/LSTM.html" style="color:#333;font-weight:bold">LSTM</a></p>
+            <p><a href="./9_models/DNN For Forecasting & LR Schedular.html" style="color:#333;font-weight:bold"> Univariate Forecasting DNN & LR Schedular</a></p>
 
-<p><a href="./9_models/Conv + LSTM.html" style="color:#333;font-weight:bold"> CNN & LSTM</a></p>
+            <p><a href="./9_models/Simple RNN.html" style="color:#333;font-weight:bold"> Univariate Forecasting Simple RNN</a></p>
 
-</details>
+            <p><a href="./9_models/LSTM.html" style="color:#333;font-weight:bold">LSTM</a></p>
 
-<details><summary><b>Time Series Forecasting</b> [Tensorflow Tutorials]</summary>
-<p><a href="./9_models/time_series.html#Part-1:-Forecast-a-univariate-time-series" style="color:#333;font-weight:bold">Uni-variate Forecasting LSTM</a></p>
+            <p><a href="./9_models/Conv + LSTM.html" style="color:#333;font-weight:bold"> CNN & LSTM</a></p>
 
-<p><a href="./9_models/time_series.html#Part-2:-Forecast-a-multivariate-time-series" style="color:#333;font-weight:bold">Multi-variate Forecasting LSTM</a></p>
+        </details>
 
-<p><a href="./9_models/time_series.html#Multi-Step-model" style="color:#333;font-weight:bold">Multi-Step Forecasting LSTM</a></p>
-</details>
-</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+        <details>
+            <summary><b>Time Series Forecasting</b> [Tensorflow Tutorials]</summary>
+            <p><a href="./9_models/time_series.html#Part-1:-Forecast-a-univariate-time-series" style="color:#333;font-weight:bold">Uni-variate Forecasting LSTM</a></p>
+
+            <p><a href="./9_models/time_series.html#Part-2:-Forecast-a-multivariate-time-series" style="color:#333;font-weight:bold">Multi-variate Forecasting LSTM</a></p>
+
+            <p><a href="./9_models/time_series.html#Multi-Step-model" style="color:#333;font-weight:bold">Multi-Step Forecasting LSTM</a></p>
+        </details>
+
+        <details>
+            <summary><b>RNN starter for huge time series</b></summary>
+            <h3>Import packages</h3>
+            <pre class="language-python"><code># BASIC IDEA OF THE KERNEL
+
+# The data consists of a one dimensional time series x with 600 Mio data points. 
+# At test time, we will see a time series of length 150'000 to predict the next earthquake.
+# The idea of this kernel is to randomly sample chunks of length 150'000 from x, derive some
+# features and use them to update weights of a recurrent neural net with 150'000 / 1000 = 150
+# time steps. 
+
+import numpy as np 
+import pandas as pd
+import os
+from tqdm import tqdm
+
+# Fix seeds
+from numpy.random import seed
+seed(639)
+from tensorflow import set_random_seed
+set_random_seed(5944)
+
+</code></pre>
+            <h3>Create Features from dataset</h3>
+            <pre class="language-python"><code>
+
+    # Import
+float_data = pd.read_csv("../input/train.csv", dtype={"acoustic_data": np.float32, "time_to_failure": np.float32}).values
+
+# Helper function for the data generator. Extracts mean, standard deviation, and quantiles per time step.
+# Can easily be extended. Expects a two dimensional array.
+def extract_features(z):
+     return np.c_[z.mean(axis=1), 
+                  z.min(axis=1),
+                  z.max(axis=1),
+                  z.std(axis=1)]
+
+# For a given ending position "last_index", we split the last 150'000 values 
+# of "x" into 150 pieces of length 1000 each. So n_steps * step_length should equal 150'000.
+# From each piece, a set features are extracted. This results in a feature matrix 
+# of dimension (150 time steps x features).  
+def create_X(x, last_index=None, n_steps=150, step_length=1000):
+    if last_index == None:
+        last_index=len(x)
+       
+    assert last_index - n_steps * step_length >= 0
+
+    # Reshaping and approximate standardization with mean 5 and std 3.
+    temp = (x[(last_index - n_steps * step_length):last_index].reshape(n_steps, -1) - 5 ) / 3
+    
+    # Extracts features of sequences of full length 1000, of the last 100 values and finally also 
+    # of the last 10 observations. 
+    return np.c_[extract_features(temp),
+                 extract_features(temp[:, -step_length // 10:]),
+                 extract_features(temp[:, -step_length // 100:])]
+
+# Query "create_X" to figure out the number of features
+n_features = create_X(float_data[0:150000]).shape[1]
+print("Our RNN is based on %i features"% n_features)
+
+</code></pre>
+            <h3>Create generator for dataset</h3>
+            <pre class="language-python"><code># The generator endlessly selects "batch_size" ending positions of sub-time series. For each ending position,
+                # the "time_to_failure" serves as target, while the features are created by the function "create_X".
+                def generator(data, min_index=0, max_index=None, batch_size=16, n_steps=150, step_length=1000):
+                    if max_index is None:
+                        max_index = len(data) - 1
+                     
+                    while True:
+                        # Pick indices of ending positions
+                        rows = np.random.randint(min_index + n_steps * step_length, max_index, size=batch_size)
+                         
+                        # Initialize feature matrices and targets
+                        samples = np.zeros((batch_size, n_steps, n_features))
+                        targets = np.zeros(batch_size, )
+                        
+                        for j, row in enumerate(rows):
+                            samples[j] = create_X(data[:, 0], last_index=row, n_steps=n_steps, step_length=step_length)
+                            targets[j] = data[row - 1, 1]
+                        yield samples, targets
+                        
+                batch_size = 32
+                
+                # Position of second (of 16) earthquake. Used to have a clean split
+                # between train and validation
+                second_earthquake = 50085877
+                float_data[second_earthquake, 1]
+                
+                # Initialize generators
+                train_gen = generator(float_data, batch_size=batch_size) # Use this for better score
+                # train_gen = generator(float_data, batch_size=batch_size, min_index=second_earthquake + 1)
+                valid_gen = generator(float_data, batch_size=batch_size, max_index=second_earthquake)
+</code></pre>
+            <h3>Create the model</h3>
+            <pre class="language-python"><code># Define model
+from keras.models import Sequential
+from keras.layers import Dense, CuDNNGRU
+from keras.optimizers import adam
+from keras.callbacks import ModelCheckpoint
+
+cb = [ModelCheckpoint("model.hdf5", save_best_only=True, period=3)]
+
+model = Sequential()
+model.add(CuDNNGRU(48, input_shape=(None, n_features)))
+model.add(Dense(10, activation='relu'))
+model.add(Dense(1))
+
+model.summary()
+
+# Compile and fit model
+model.compile(optimizer=adam(lr=0.0005), loss="mae")
+
+history = model.fit_generator(train_gen,
+                                steps_per_epoch=1000,
+                                epochs=30,
+                                verbose=0,
+                                callbacks=cb,
+                                validation_data=valid_gen,
+                                validation_steps=200)
+</code></pre>
+            <h3>Visualize accuracies</h3>
+            <pre class="language-python"><code># Visualize accuracies
+import matplotlib.pyplot as plt
+
+def perf_plot(history, what = 'loss'):
+    x = history.history[what]
+    val_x = history.history['val_' + what]
+    epochs = np.asarray(history.epoch) + 1
+    
+    plt.plot(epochs, x, 'bo', label = "Training " + what)
+    plt.plot(epochs, val_x, 'b', label = "Validation " + what)
+    plt.title("Training and validation " + what)
+    plt.xlabel("Epochs")
+    plt.legend()
+    plt.show()
+    return None
+
+perf_plot(history)
+
+# Load submission file
+submission = pd.read_csv('../input/sample_submission.csv', index_col='seg_id', dtype={"time_to_failure": np.float32})
+
+# Load each test data, create the feature matrix, get numeric prediction
+for i, seg_id in enumerate(tqdm(submission.index)):
+    #  print(i)
+    seg = pd.read_csv('../input/test/' + seg_id + '.csv')
+    x = seg['acoustic_data'].values
+    submission.time_to_failure[i] = model.predict(np.expand_dims(create_X(x), 0))
+
+submission.head()
+
+# Save
+submission.to_csv('submission.csv')
+</code></pre>
+        </details>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
+</html>

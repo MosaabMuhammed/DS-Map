@@ -17,7 +17,11 @@
         <!-- ---------------------------------------------------------------------------- -->
         <details>
             <summary>Read <b>Date</b> data [pandas]</summary>
-            <pre class="language-python"><code>google = pd.read_csv('sample.csv', index_col='Date', parse_dates=['Date'])</code></pre>
+            <pre class="language-python"><code>google = pd.read_csv('sample.csv', index_col='Date', parse_dates=['Date'])
+
+# infer datetime if you don't parse the date when reading the csv.
+dataset['Month'] = pd.to_datetime(dataset['Month'], infer_datetime_format=True) #convert from string to datetime
+</code></pre>
         </details>
         <details>
             <summary>
@@ -39,15 +43,19 @@
         </details>
         <!-- ---------------------------------------------------------------------------- -->
         <details>
-            <summary>From <b>Non-Stationary</b> to <b>Stationary</b> differencing</summary>
-            <pre class="language-python"><code># First order Differencing - Pandas
+            <summary>From <b>Non-Stationary</b> to <b>Stationary</b></summary>
+            <ul>
+                <li>
+                    <details>
+                        <summary><b>differencing</b></summary>
+                        <pre class="language-python"><code># First order Differencing - Pandas
 decomposed_google_volume.trend.diff()
 
 # First Order Differencing - numpy
 ts_diff = np.diff(df['depth_to_groundwater'])
 df['depth_to_groundwater_diff_1'] = np.append([0], ts_diff)
-            </code></pre>
-            <pre class="language-python"><code>from pmdarima.arima.utils import ndiffs
+                                        </code></pre>
+                        <pre class="language-python"><code>from pmdarima.arima.utils import ndiffs
 df = pd.read_csv('https://raw.githubusercontent.com/selva86/datasets/master/wwwusage.csv', names=['value'], header=0)
 y = df.value
 
@@ -59,7 +67,31 @@ ndiffs(y, test='kpss')  # 0
 
 # PP test:
 ndiffs(y, test='pp')  # 2
-</code></pre>
+                            </code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary>Difference b/w <b>log and moving average</b></summary>
+                        <pre class="language-python"><code>indexedDataset_logScale = np.log(indexedDataset)
+movingAverage = indexedDataset_logScale.rolling(window=12).mean()
+datasetLogScaleMinusMovingAverage = indexedDataset_logScale - movingAverage
+datasetLogScaleMinusMovingAverage.dropna(inplace=True)
+test_stationarity(datasetLogScaleMinusMovingAverage)</code></pre>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary>Difference b/w <b>log and exponential Decay Weight edAverage</b></summary>
+                        <pre class="language-python"><code>indexedDataset_logScale = np.log(indexedDataset)
+movingAverage = indexedDataset_logScale.rolling(window=12).mean()
+exponentialDecayWeightedAverage = indexedDataset_logScale.ewm(halflife=12, min_periods=0, adjust=True).mean()
+datasetLogScaleMinusExponentialMovingAverage = indexedDataset_logScale - exponentialDecayWeightedAverage
+datasetLogScaleMinusExponentialMovingAverage.dropna(inplace=True)
+test_stationarity(datasetLogScaleMinusExponentialMovingAverage)</code></pre>
+                    </details>
+                </li>
+            </ul>
         </details>
         <!-- ---------------------------------------------------------------------------- -->
         <details>
@@ -158,47 +190,30 @@ register_matplotlib_converters()
                         <summary><b>Augmented Dickey-Fuller (ADF) test</b></summary>
                         <p>for detecting stationarity<br>A stationary time series is one where the values are not a function of time.</p>
                         <p>We can convert a non-stationary data to stationary one with taking the first, second, .. difference.</p>
-                        <pre class="language-python"><code>from random import seed
-from random import random
-from statsmodels.tsa.stattools import adfuller
-# generate random walk
-seed(1)
-random_walk = list()
-random_walk.append(-1 if random() < 0.5 else 1)
-for i in range(1, 1000):
-    movement = -1 if random() < 0.5 else 1
-    value = random_walk[i-1] + movement
-    random_walk.append(value)
+                        <pre class="language-python"><code>def test_stationarity(timeseries):
+    #Determine rolling statistics
+    movingAverage = timeseries.rolling(window=12).mean()
+    movingSTD = timeseries.rolling(window=12).std()
 
-# statistical test
-result = adfuller(random_walk)
-print('ADF Statistic: %f' % result[0])
-print('p-value: %f' % result[1])
-print('Critical Values:')
-for key, value in result[4].items():
-    print('\t%s: %.3f' % (key, value))
-    
-# Running the example, we can see that the test statistic value was 0.341605. 
-# This is larger than all of the critical values at the 1%, 5%, and 10% confidence levels. 
-# Therefore, we can say that the time series does appear to be non-stationary with a low likelihood of the result being a statistical fluke.
+    #Plot rolling statistics
+    orig = plt.plot(timeseries, color='blue', label='Original')
+    mean = plt.plot(movingAverage, color='red', label='Rolling Mean')
+    std = plt.plot(movingSTD, color='black', label='Rolling Std')
+    plt.legend(loc='best')
+    plt.title('Rolling Mean & Standard Deviation')
+    plt.show(block=False)
 
-ADF Statistic: 0.341605
-p-value: 0.979175
-Critical Values:
-    5%: -2.864
-    1%: -3.437
-    10%: -2.568
-                </code></pre>
-                        <pre class="language-python"><code># Augmented Dickey-Fuller test on volume of google and microsoft stocks 
-adf = adfuller(microsoft["Volume"])
-print("p-value of microsoft: {}".format(float(adf[1])))
-adf = adfuller(google["Volume"])
-print("p-value of google: {}".format(float(adf[1])))
-# p-value of microsoft: 0.0003201525277652073
-# p-value of google: 6.51071960576848e-07
+    #Perform Dickey–Fuller test:
+    print('Results of Dickey Fuller Test:')
+    dftest = adfuller(timeseries['#Passengers'], autolag='AIC')
+    dfoutput = pd.Series(dftest[0:4], index=['Test Statistic','p-value','#Lags Used','Number of Observations Used'])
+    for key,value in dftest[4].items():
+        dfoutput['Critical Value (%s)'%key] = value
+    print(dfoutput)
 # As microsoft has p-value 0.0003201525 which is less than 0.05, null hypothesis is rejected and this is not a random walk.
 # Now google has p-value 0.0000006510 which is more than 0.05, null hypothesis is rejected and this is not a random walk.
-                </code></pre>
+                        </code></pre>
+                        <img src="../0_html/imgs/dftest.png" alt="">
                     </details>
                 </li>
                 <!-- ---------------------------------------------------------------------------- -->
