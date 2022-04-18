@@ -1,23 +1,26 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Data Wrangling
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
     <h1 id="3datawrangling">3. Data Wrangling</h1>
 
     <div style='width:1000px;margin:auto'>
-    
-    <details><summary><b>Numpy</b> </summary><p>
-    
-    <details><summary><b>Concatenate [c_]</b> in Numpy </summary><p><pre><code># Example 1.
+
+        <details>
+            <summary><b>Numpy</b> </summary>
+            <p>
+
+                <details>
+                    <summary><b>Concatenate [c_]</b> in Numpy </summary>
+                    <p><pre class="language-python"><code># Example 1.
     np.c_[[1, 2, 3], [5, 6, 7]]
     # array([[1, 4],
     #           [2, 5],
@@ -27,8 +30,11 @@
     np.c_[[[1, 2, 3]], 0, 1, [[4, 5, 6]]]
     # array([[1, 2, 3, 0, 1, 4, 5, 6]])
     </code></pre>
-    </p></details>
-    <details><summary>Add <b>new dimension</b> to vector/matrix [np.array] </summary><p><pre><code>#### Trick number #1:
+                    </p>
+                </details>
+                <details>
+                    <summary>Add <b>new dimension</b> to vector/matrix [np.array] </summary>
+                    <p><pre class="language-python"><code>#### Trick number #1:
     # Add a second dimension
     # This is like x[:, np.newaxis] == x[:, None]
     x[np.newaxis].shape, x[None].shape
@@ -46,35 +52,50 @@
     #        AFTER:    x.shape --&gt; (1, 4)
     np.expand_dims(x, 0)
     </code></pre>
-    </p></details>
-    
-    </p></details><hr>
-    
-    <details><summary><b>DataFrame</b></summary><p>
-    
-    <details><summary>return <b>multiple columns</b> from apply()</summary>
-    <pre><code>appiled_df = df.apply(lambda row: fn(row.text), axis='columns', result_type='expand')
+                    </p>
+                </details>
+
+            </p>
+        </details>
+        <hr>
+
+        <details>
+            <summary><b>DataFrame</b></summary>
+            <p>
+                <details>
+                    <summary><b>Select/filter dataframe columns/rows by regex</b></summary>
+                    <pre class="language-python"><code>dlabels = dtrain.filter(regex='resp')
+# Index(['resp_1', 'resp_2', 'resp_3', 'resp_4', 'resp'], dtype='object')
+    </code></pre>
+                </details>
+
+                <details>
+                    <summary>return <b>multiple columns</b> from apply()</summary>
+                    <pre class="language-python"><code>appiled_df = df.apply(lambda row: fn(row.text), axis='columns', result_type='expand')
     df = pd.concat([df, appiled_df], axis='columns')
     </code></pre>
-    </details>
-    
-    
-    <details><summary>Replicate rows in a dataframe</summary>
-    <pre><code>df_try= df[df['A'] == 1]
+                </details>
+
+
+                <details>
+                    <summary>Replicate rows in a dataframe</summary>
+                    <pre class="language-python"><code>df_try= df[df['A'] == 1]
     df.append([df_try]*5,ignore_index=True)
     </code></pre>
-    </details>
-    
-    <details><summary>From <b>value_counts</b> to <b>DataFrame</b></summary>
-    <pre><code>df = train_data.lang.value_counts().rename_axis("Lang").reset_index(name="Count")
+                </details>
+
+                <details>
+                    <summary>From <b>value_counts</b> to <b>DataFrame</b></summary>
+                    <pre class="language-python"><code>df = train_data.lang.value_counts().rename_axis("Lang").reset_index(name="Count")
     
     # Lang is the name of the first column.
     # Count is the name of the second column.
     </code></pre>
-    </details>
-    
-    <details><summary><b>Correlation b/w 2 categorical cols using Chi-Square</b></summary>
-    <pre><code>for i in categorical_variables:
+                </details>
+
+                <details>
+                    <summary><b>Correlation b/w 2 categorical cols using Chi-Square</b></summary>
+                    <pre class="language-python"><code>for i in categorical_variables:
         ct = pd.crosstab(columns=data[i],index=data["target"])
         stat, p, dof, expected = chi2_contingency(ct) 
         print(f"\n{'-'*len(f'Chi-Square test between {i} & Target')}")
@@ -85,30 +106,40 @@
         print("REJECT H0" if p<0.05 else "FAILED TO REJECT H0")
     
     </code></pre>
-    </details>
-    
-    <details><summary>Best-Practices when working with <b>DataFrame</b></summary><p><ul>
-    <li>Column-Selector.</li>
-    <li>Iterating over rows. [apply(), iterrows(), itertuples(), df->row-majior]</li>
-    <li>Ordering Slicing Operations.</li>
-    <li>Editing df [view, copy]</li>
-    <li>Indesing & Slicing.</li>
-    <li>Accessors. [str, cat, sparse, ...]</li>
-    <li>Other.</li></ul>
-    
-    <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/1_Machine%20Learning/0_html/3_data_wrangling/just-pandas-things.html">notebook</a>
-    
-    </p></details>
-    
-    <details><summary><b>Better Visualization for Sparse Matrix/Dataframe</b></summary><p><pre><code># By simpling replacing 0 with ''
+                </details>
+
+                <details>
+                    <summary>Best-Practices when working with <b>DataFrame</b></summary>
+                    <p>
+                        <ul>
+                            <li>Column-Selector.</li>
+                            <li>Iterating over rows. [apply(), iterrows(), itertuples(), df->row-majior]</li>
+                            <li>Ordering Slicing Operations.</li>
+                            <li>Editing df [view, copy]</li>
+                            <li>Indesing & Slicing.</li>
+                            <li>Accessors. [str, cat, sparse, ...]</li>
+                            <li>Other.</li>
+                        </ul>
+
+                        <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/markdown/1_Machine%20Learning/0_html/3_data_wrangling/just-pandas-things.html">notebook</a>
+
+                    </p>
+                </details>
+
+                <details>
+                    <summary><b>Better Visualization for Sparse Matrix/Dataframe</b></summary>
+                    <p><pre class="language-python"><code># By simpling replacing 0 with ''
     df[df==0] = 0
     df
     </code></pre>
-    </p></details>
-    
-    <details><summary>From <b>Normal Dataframe</b> to <b> Similarity Matrix</b></summary><p>
-    
-    <h4>1. Create graph dataframe</h4><pre><code>col_index = "person"
+                    </p>
+                </details>
+
+                <details>
+                    <summary>From <b>Normal Dataframe</b> to <b> Similarity Matrix</b></summary>
+                    <p>
+
+                        <h4>1. Create graph dataframe</h4><pre class="language-python"><code>col_index = "person"
     col_value = "docs"
     
     index1, index2, n_values = [], [], []
@@ -122,20 +153,23 @@
     # Create a dataframe has columns ["index1", "index2", "common_values_b/w_them"]
     index_df = pd.DataFrame({'index1': index1, 'index2': index2, 'n_values': n_values})
     </code></pre>
-    
-    <h4>2. Create the Similarity Matrix</h4><pre><code>index_df = pd.pivot(index_df, index='index1', columns='index2', values='n_values')
+
+                        <h4>2. Create the Similarity Matrix</h4><pre class="language-python"><code>index_df = pd.pivot(index_df, index='index1', columns='index2', values='n_values')
     </code></pre>
-    
-    <h4>3. Visualize it with Heatmap (if possible)</h4><pre><code>plt.figure(figsize=(10, 8))
+
+                        <h4>3. Visualize it with Heatmap (if possible)</h4><pre class="language-python"><code>plt.figure(figsize=(10, 8))
     sns.heatmap(person_df, cmap='viridis')
     plt.title("People Correlation", size=30, y=1.05)
     plt.xticks(size=16)
     plt.yticks(size=16);
     </code></pre>
-    </p></details>
-    
-    <details><summary>From <b>One-Hot Encoding</b> to <b> Unpiovt Table</b></summary><p>
-    <h4>1. Convert array of labels in a raw to One-Hot Encoding</h4><pre><code>df  = df_eng
+                    </p>
+                </details>
+
+                <details>
+                    <summary>From <b>One-Hot Encoding</b> to <b> Unpiovt Table</b></summary>
+                    <p>
+                        <h4>1. Convert array of labels in a raw to One-Hot Encoding</h4><pre class="language-python"><code>df  = df_eng
     col = "MoreSamples"
     
     from sklearn.preprocessing import MultiLabelBinarizer
@@ -143,27 +177,35 @@
     binarizer = MultiLabelBinarizer()
     samples = binarizer.fit_transform(df[col].values)
     </code></pre>
-    
-    <h4>2. Create the One-Hot encoding dataframe</h4><pre><code>samples_df = pd.DataFrame(samples, columns=binarizer.classes_)
+
+                        <h4>2. Create the One-Hot encoding dataframe</h4><pre class="language-python"><code>samples_df = pd.DataFrame(samples, columns=binarizer.classes_)
     df = pd.concat([df.reset_index(), samples_df.reset_index()], axis=1).drop(["index", col], axis=1)
     </code></pre>
-    
-    <h4>3. Unpivot the One-Hot encoding dataframe</h4><pre><code># Change "DisplayName" to your columns to be used as index.
+
+                        <h4>3. Unpivot the One-Hot encoding dataframe</h4><pre class="language-python"><code># Change "DisplayName" to your columns to be used as index.
     df = pd.melt(df, id_vars=["DisplayName"])
     df = df_eng[(df.value == 1)]
     df.drop("value", axis=1, inplace=True)
     </code></pre>
-    </p></details>
-    
-    <details><summary>Show <b>Thousands comma seperator</b> in dataframe </summary><p><pre><code>df = pd.read_csv("file.csv", thousands=",")
+                    </p>
+                </details>
+
+                <details>
+                    <summary>Show <b>Thousands comma seperator</b> in dataframe </summary>
+                    <p><pre class="language-python"><code>df = pd.read_csv("file.csv", thousands=",")
     </code></pre>
-    </p></details>
-    
-    <details><summary> <b>Change value of cell in dataframe</b> </summary><p><pre><code># using .at
+                    </p>
+                </details>
+
+                <details>
+                    <summary> <b>Change value of cell in dataframe</b> </summary>
+                    <p><pre class="language-python"><code># using .at
     news_df.at[idx, 'word'] = operations[operation_idx](random_row.word)
     </code></pre>
-    </p></details>
-    <details><summary> Rename<b> Repeated</b> columns </summary><pre><code class="python language-python">cols = []
+                    </p>
+                </details>
+                <details>
+                    <summary> Rename<b> Repeated</b> columns </summary><pre class="language-python"><code class="python language-python">cols = []
     col_name = "Grill"
     count = 1
     for column in X.columns:
@@ -174,19 +216,27 @@
         cols.append(column)
     X.columns = cols
     </code></pre>
-    </details>
-    <details><summary> <b>Display</b> Multiple dataframes</summary><p><pre><code>import IPython
+                </details>
+                <details>
+                    <summary> <b>Display</b> Multiple dataframes</summary>
+                    <p><pre class="language-python"><code>import IPython
     
     def display(*dfs, head=True):
         for df in dfs:
             IPython.display.display(df.head() if head else df)
     </code></pre>
-    </p></details>
-    <details><summary> <b>Chain</b> of <b>Functions [pipe()]</b></summary><p><pre><code class="python language-python"># using pipe, we can chain functions on dataframe or series.
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Chain</b> of <b>Functions [pipe()]</b></summary>
+                    <p><pre class="language-python"><code class="python language-python"># using pipe, we can chain functions on dataframe or series.
     prices = pd.read_csv(f"{INPUT_DIR}/sell_prices.csv").pipe(reduce_mem_usage)
     </code></pre>
-    </p></details>
-    <details><summary> Create <b>DataFrame for Testing</b> </summary><p><pre><code># Import pandas
+                    </p>
+                </details>
+                <details>
+                    <summary> Create <b>DataFrame for Testing</b> </summary>
+                    <p><pre class="language-python"><code># Import pandas
     import pandas as pd
     
     # Create the testing dataframe.
@@ -196,28 +246,42 @@
     test_df = pd.util.testing.makeTimeDataFrame()
     test_df = pd.util.testing.makePeriodFrame()
     </code></pre>
-    </p></details>
-    <details><summary> <b>Relationship Table</b> b/w <b> 2 categorical features</b></summary><p><pre><code>table = pd.crosstab(df.label, df.flow_id, normalize='columns'); table
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Relationship Table</b> b/w <b> 2 categorical features</b></summary>
+                    <p><pre class="language-python"><code>table = pd.crosstab(df.label, df.flow_id, normalize='columns'); table
     </code></pre>
-    </p></details>
-    <details><summary> Return columns have <b>NaNs or Infinite</b> values</summary><p><pre><code>def return_cols_have_inf(df):
+                    </p>
+                </details>
+                <details>
+                    <summary> Return columns have <b>NaNs or Infinite</b> values</summary>
+                    <p><pre class="language-python"><code>def return_cols_have_inf(df):
         return [col for col in df if np.isfinite(df[col]).sum() != df.shape[0]]
     
     def return_cols_have_nan(df):
         return [col for col in df if np.isnan(df[col]).sum()]
     </code></pre>
-    </p></details>
-    <details><summary><b>A series of arrays</b> to <b>DataFrame</b> </summary><p><pre><code class="python language-python">X_train = X_train.apply(pd.Series)
+                    </p>
+                </details>
+                <details>
+                    <summary><b>A series of arrays</b> to <b>DataFrame</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python">X_train = X_train.apply(pd.Series)
     </code></pre>
-    </p></details>
-    <details><summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary><p><pre><code class="python language-python">from tqdm import tqdm
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Progress Bar</b> for <b>Pandas Operations</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python">from tqdm import tqdm
     tqdm.pandas()
     
     temp = tweet.text.progress_apply(len)
     </code></pre>
-    </p></details>
-    <details><summary> <b>Select All Columns EXCEPT specific columns</b> </summary>
-    <p><pre><code class="python language-python"># Option 1
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Select All Columns EXCEPT specific columns</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python"># Option 1
     df.loc[:, df.columns != 'b']
     
     # Option 2
@@ -232,19 +296,28 @@
     # Option 5
     df[map(lambda x :x not in ['b'], list(df.columns))]
     </code></pre>
-    </p></details>
-    
-    <details><summary> <b>Save & Remove label at the same time</b> </summary><p><pre><code>label = iris.pop('species')
+                    </p>
+                </details>
+
+                <details>
+                    <summary> <b>Save & Remove label at the same time</b> </summary>
+                    <p><pre class="language-python"><code>label = iris.pop('species')
     </code></pre>
-    </p></details>
-    <details><summary> <b>Add Prefix or Suffix to all columns name</b> </summary><p><pre><code class="python language-python"># Add Prefix
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Add Prefix or Suffix to all columns name</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python"># Add Prefix
     df.add_prefix('X_')
     
     # Add Suffix
     df.add_suffix('_Y')
     </code></pre>
-    </p></details>
-    <details><summary> <b>Create Rare Category</b> </summary><p><pre><code class="python language-python"># See the value counts for each category
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Create Rare Category</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python"># See the value counts for each category
     genre.value_counts()
     
     # Select the top n categories
@@ -257,8 +330,11 @@
     # See the changes
     genre_updated.value_counts()
     </code></pre>
-    </p></details>
-    <details><summary> <b>Select Multiple Slices of Columns from a DataFrame</b> </summary><p><pre><code class="python language-python"># DataFrame
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Select Multiple Slices of Columns from a DataFrame</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python"># DataFrame
     df = pd.DataFrame(np.random.rand(3, 11), columns=list('ABCDEFGHIJk'))
     
     # Option 1
@@ -270,27 +346,32 @@
     # Option 3
     df.iloc[:, np.r_[0:3, 5, 9:11]]
     </code></pre>
-    </p></details>
-    <details><summary> <b>Remove Duplicated cat/num features</b> </summary><p><pre><code class="python language-python">train_enc = pd.DataFrame(index=train_reduced.index)
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Remove Duplicated cat/num features</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python">train_enc = pd.DataFrame(index=train_reduced.index)
     
     for col in tqdm_notebook(traintest.columns):
         train_enc[col] = train_reduced[col].factorize()[0]
     </code></pre>
-    <pre><code class="python language-python">dup_cols = {}
+                        <pre class="language-python"><code class="python language-python">dup_cols = {}
     
     for i, c1 in enumerate(tqdm_notebook(train_enc.columns)):
         for c2 in train_enc.columns[i+1:]:
             if c2 not in dup_cols and np.all(train_enc[c1] == train_enc[c2]):
                 dup_cols[c2] = c1
     </code></pre>
-    
-    <h4> Drop them </h4><pre><code class="python language-python">traintest.drop(dup_cols.keys(), axis=1, inplace=True)
+
+                        <h4> Drop them </h4><pre class="language-python"><code class="python language-python">traintest.drop(dup_cols.keys(), axis=1, inplace=True)
     </code></pre>
-    </p></details>
-    <details><summary>See If which features have <b>Differencet Distrubtion</b> in <b>traing</b> and <b>test</b> datasets <b>(KS Test)</b> </summary>
-    <p>
-    
-    <p><a href="https://www.kaggle.com/alexpengxiao/preprocessing-model-averaging-by-xgb-lgb-1-39"><b>Credits</b></a> </p><pre><code class="python language-python">from scipy.stats import ks_2samp
+                    </p>
+                </details>
+                <details>
+                    <summary>See If which features have <b>Differencet Distrubtion</b> in <b>traing</b> and <b>test</b> datasets <b>(KS Test)</b> </summary>
+                    <p>
+
+                        <p><a href="https://www.kaggle.com/alexpengxiao/preprocessing-model-averaging-by-xgb-lgb-1-39"><b>Credits</b></a> </p><pre class="language-python"><code class="python language-python">from scipy.stats import ks_2samp
     THRESHOLD_P_VALUE = 0.01 #need tuned
     THRESHOLD_STATISTIC = 0.3 #need tuned
     diff_cols = []
@@ -304,17 +385,29 @@
             test.drop(col, axis=1, inplace=True)
     train.shape
     </code></pre>
-    </p></details>
-    <details><summary> Read <b>specific</b> # rows <b>(if data is large)</b> </summary><p><pre><code class="python language-python">features_sample = pd.read_csv('../input/home-credit-default-risk-feature-tools/feature_matrix.csv', nrows = 20000)
+                    </p>
+                </details>
+                <details>
+                    <summary> Read <b>specific</b> # rows <b>(if data is large)</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python">features_sample = pd.read_csv('../input/home-credit-default-risk-feature-tools/feature_matrix.csv', nrows = 20000)
     </code></pre>
-    </p></details>
-    <details><summary> Show <b>a specific number of columns in (df.head())</b> </summary><p><pre><code class="python language-python">pd.options.display.max_columns = 1700
+                    </p>
+                </details>
+                <details>
+                    <summary> Show <b>a specific number of columns in (df.head())</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python">pd.options.display.max_columns = 1700
     </code></pre>
-    </p></details>
-    <details><summary> <b>De-Ananomitizing</b> </summary><p>
-    [<b>Example</b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&%20Visualization.html#Importing,-Importing,-Importing:) 
-    </p></details>
-    <details><summary> Show <b># of Unique Values</b> for each <b>Column</b> </summary><p><pre><code class="python language-python"># Number of unique classes in each object column
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>De-Ananomitizing</b> </summary>
+                    <p>
+                        [<b>Example</b>](file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/[FreeCoursesOnline.Me]%20Coursera%20-%20How%20to%20Win%20a%20Data%20Science%20Competition%20%20Learn%20from%20Top%20Kagglers/008.Exploratory%20data%20analysis/Ananomized%20Data%20&%20Visualization.html#Importing,-Importing,-Importing:)
+                    </p>
+                </details>
+                <details>
+                    <summary> Show <b># of Unique Values</b> for each <b>Column</b> </summary>
+                    <p><pre class="language-python"><code class="python language-python"># Number of unique classes in each object column
     app_train.select_dtypes('object').apply(pd.Series.nunique, axis = 0)
     
     #### Result #####
@@ -327,24 +420,31 @@
     NAME_EDUCATION_TYPE            5
     NAME_FAMILY_STATUS             6
     </code></pre>
-    </p></details>
-    <details><summary> Rename <b>Columns Name</b> </summary><p><pre><code>rename = {'Column Name 1':'New Name 1', 
+                    </p>
+                </details>
+                <details>
+                    <summary> Rename <b>Columns Name</b> </summary>
+                    <p><pre class="language-python"><code>rename = {'Column Name 1':'New Name 1', 
         'Column Name 2': 'New Name 2'}
     data.rename(index=str, columns=rename, inplace=True)
     </code></pre>
-    </p></details>
-    <details><summary> Show a <b>Beautiful</b> Statistical Result </summary>
-    <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/1_Titanic%20Survival/EDA%20To%20Prediction(DieTanic).html#Embarked--%3E-Categorical-Value">See the <b>Result</b></a> <br>
-    <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html">See the <b>Doc</b></a> </p>
-    <p><pre><code>data.groupby(['Fare_Range'])['Survived'].mean().to_frame().style.background_gradient(cmap='summer_r')
+                    </p>
+                </details>
+                <details>
+                    <summary> Show a <b>Beautiful</b> Statistical Result </summary>
+                    <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/1_Titanic%20Survival/EDA%20To%20Prediction(DieTanic).html#Embarked--%3E-Categorical-Value">See the <b>Result</b></a> <br>
+                        <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html">See the <b>Doc</b></a> </p>
+                    <p><pre class="language-python"><code>data.groupby(['Fare_Range'])['Survived'].mean().to_frame().style.background_gradient(cmap='summer_r')
     
     data['Age_band'].value_counts().to_frame().style.background_gradient(cmap='summer')#checking the number of passenegers in each band
     
     pd.crosstab(data.Parch,data.Pclass).style.background_gradient(cmap='summer_r')
     </code></pre>
-    </p></details>
-    <details><summary> <b>Word Cloud</b></summary>
-    <p style="margin: 0"><pre><code class="python language-python">from wordcloud import WordCloud, STOPWORDS
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>Word Cloud</b></summary>
+                    <p style="margin: 0"><pre class="language-python"><code class="python language-python">from wordcloud import WordCloud, STOPWORDS
     
     # textn_w is your list of words.
     wc = WordCloud(width=1440, height=1080, background_color='black',
@@ -355,9 +455,9 @@
     plt.imshow(wc, interpolation='bilinear')
     plt.axis('off');
     </code></pre>
-    
-    <h4> 2. Generate from Dictionary (tag, number of occurances)</h4>
-    [<b>Notebook</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/0_Case%20Studies/4_Stackoverflow%20Tag%20Predictor/1_Course%20Code/SO_Tag_Predictor.html) <pre><code class="python language-python"># Lets first convert the 'result' dictionary to 'list of tuples'
+
+                        <h4> 2. Generate from Dictionary (tag, number of occurances)</h4>
+                        [<b>Notebook</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Applied%20ML%20Course/0_Code/0_Case%20Studies/4_Stackoverflow%20Tag%20Predictor/1_Course%20Code/SO_Tag_Predictor.html) <pre class="language-python"><code class="python language-python"># Lets first convert the 'result' dictionary to 'list of tuples'
     tup = dict(result.items())
     #Initializing WordCloud using frequencies of tags.
     wordcloud = WordCloud(    background_color='black',
@@ -373,27 +473,31 @@
     fig.savefig("tag.png")
     plt.show()
     </code></pre>
-    </p>
-    </details>
-    <details><summary>From <b>String</b> to <b>Date</b></summary>
-    <p style="margin: 0">
-    <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/8_First%20Capstone%20Project/911%20Calls%20Data%20Capstone%20Project-Mosaab.html#From-String-to-Datetime">See <b>Code</b> in notebook</a> </p><pre><code class="python language-python">df['timeStamp'] = pd.to_datetime(df['timeStamp'])
+                    </p>
+                </details>
+                <details>
+                    <summary>From <b>String</b> to <b>Date</b></summary>
+                    <p style="margin: 0">
+                        <p><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/8_First%20Capstone%20Project/911%20Calls%20Data%20Capstone%20Project-Mosaab.html#From-String-to-Datetime">See <b>Code</b> in notebook</a> </p>
+                        <pre class="language-python"><code class="python language-python">df['timeStamp'] = pd.to_datetime(df['timeStamp'])
     </code></pre>
-    </p>
-    </details>
-    
-    
-    <details><summary>Convert a Column to Type (<b>Int</b>)</summary>
-    <p style="margin: 0">
-    [See <b>Code</b> in Kaggle](https://www.kaggle.com/jemseow/machine-learning-to-predict-app-ratings) <pre><code class="python language-python"># convert reviews to numeric
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>Convert a Column to Type (<b>Int</b>)</summary>
+                    <p style="margin: 0">
+                        [See <b>Code</b> in Kaggle](https://www.kaggle.com/jemseow/machine-learning-to-predict-app-ratings) <pre class="language-python"><code class="python language-python"># convert reviews to numeric
     df['Reviews'] = df['Reviews'].astype(int)
     </code></pre>
-    </p>
-    </details>
-    
-    <details><summary><b>Align Training & Testing data with same columns</b></summary>
-    <p>
-    [see <b>results</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Aligning-Training-and-Testing-Data) <pre><code class="python language-python">train_labels = app_train['TARGET']
+                    </p>
+                </details>
+
+                <details>
+                    <summary><b>Align Training & Testing data with same columns</b></summary>
+                    <p>
+                        [see <b>results</b>](file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/3_Home%20Credit%20Loans/1_Start%20Here:%20A%20Gentle%20Introduction.html#Aligning-Training-and-Testing-Data) <pre class="language-python"><code class="python language-python">train_labels = app_train['TARGET']
     
     # Align the training and testing data, keep only columns present in both dataframes
     app_train, app_test = app_train.align(app_test, join = 'inner', axis = 1)
@@ -404,12 +508,13 @@
     print('Training Features shape: ', app_train.shape)
     print('Testing Features shape: ', app_test.shape)
     </code></pre>
-    </p>
-    </details>
-    
-    
-    <details><summary>Show <b>Top Correlated Features</b> with <b>TARGET</b></summary>
-    <p><pre><code class="python language-python"># Function to calculate correlations with the target for a dataframe
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>Show <b>Top Correlated Features</b> with <b>TARGET</b></summary>
+                    <p><pre class="language-python"><code class="python language-python"># Function to calculate correlations with the target for a dataframe
     def target_corrs(df, target):
     
         # List of correlations
@@ -431,23 +536,35 @@
     
         return corrs
     </code></pre>
-    </p></details>
-    <details><summary><b>Add a record to a DataFrame</b></summary><p><pre><code>df = train.append(test, ignore_index=True)
+                    </p>
+                </details>
+                <details>
+                    <summary><b>Add a record to a DataFrame</b></summary>
+                    <p><pre class="language-python"><code>df = train.append(test, ignore_index=True)
     </code></pre>
-    </p></details>
-    <details><summary>From <b>groupby()</b> to <b>DataFrame</b></summary><p><pre><code># Aggregate #passengers by month.
+                    </p>
+                </details>
+                <details>
+                    <summary>From <b>groupby()</b> to <b>DataFrame</b></summary>
+                    <p><pre class="language-python"><code># Aggregate #passengers by month.
     # you can pass multiple columns in the 2 brackets.
     # Must be 2 brackets to result in dataframe, if 1 bracket, it will end in series if and only if 1 column is there.
     df_per_month = df.groupby('month')[['#Passengers']].sum().reset_index()
     df_per_month
     </code></pre>
-    </p></details>
-    
-    </p></details><hr>
-    
-    <details><summary><b>Misc</b></summary><p>
-    
-    <details><summary> Upload <b> files</b> into colab </summary><pre><code class="python language-python">from google.colab import files
+                    </p>
+                </details>
+
+            </p>
+        </details>
+        <hr>
+
+        <details>
+            <summary><b>Misc</b></summary>
+            <p>
+
+                <details>
+                    <summary> Upload <b> files</b> into colab </summary><pre class="language-python"><code class="python language-python">from google.colab import files
     
     uploaded = files.upload()
     
@@ -455,12 +572,17 @@
       print('User uploaded file "{name}" with length {length} bytes'.format(
           name=fn, length=len(uploaded[fn])))
     </code></pre>
-    </details>
-    <details><summary> <b>Sparse Matrix</b> </summary><p>
-    <p><a href="./3_data_wrangling/3-logreg-nb-imdb.html#5.-Sparse-Matrix-Representation">FastAI tutorials on Sparse Matrix</a> </p>
-    </p></details>
-    
-    <details><summary><b>Settings for Plotting</b> </summary><p><pre><code>import matplotlib.pyplot as plt
+                </details>
+                <details>
+                    <summary> <b>Sparse Matrix</b> </summary>
+                    <p>
+                        <p><a href="./3_data_wrangling/3-logreg-nb-imdb.html#5.-Sparse-Matrix-Representation">FastAI tutorials on Sparse Matrix</a> </p>
+                    </p>
+                </details>
+
+                <details>
+                    <summary><b>Settings for Plotting</b> </summary>
+                    <p><pre class="language-python"><code>import matplotlib.pyplot as plt
     
     def set_plot_sizes(sml, med, big):
         plt.rc('font', size=sml)          # controls default text sizes
@@ -474,8 +596,11 @@
     # Usage
     set_plot_sizes(12, 14, 16)
     </code></pre>
-    </p></details>
-    <details><summary> <b>[Profiling]</b> See which command takes the most in a function </summary><p><pre><code># Let's run it in RandomForest.
+                    </p>
+                </details>
+                <details>
+                    <summary> <b>[Profiling]</b> See which command takes the most in a function </summary>
+                    <p><pre class="language-python"><code># Let's run it in RandomForest.
     m = RandomForestRegressor(n_jobs=-1)
     %prun m.fit(X, y)
     
@@ -483,9 +608,12 @@
     # So we make once and use it multiple times.
     %time X = np.array(X, dtype=np.float32)
     </code></pre>
-    </p></details>
-    <details><summary>Save List using <b>Pickle</b> and <b>joblib</b></summary><p>
-    <h4>1. Save list</h4><pre><code class="python language-python"># Pickle
+                    </p>
+                </details>
+                <details>
+                    <summary>Save List using <b>Pickle</b> and <b>joblib</b></summary>
+                    <p>
+                        <h4>1. Save list</h4><pre class="language-python"><code class="python language-python"># Pickle
     # Save the onehot columns to later use.
     with open('onehot_cols.pkl', 'wb') as f:
         pickle.dump(onehot_cols, f)
@@ -495,8 +623,8 @@
     
     joblib.dump(my_model, "my_model.pkl")
     </code></pre>
-    
-    <h4>2. Read List</h4><pre><code class="python language-python"># Pickle
+
+                        <h4>2. Read List</h4><pre class="language-python"><code class="python language-python"># Pickle
     with open('onehot_cols.pkl', 'rb') as f:
         myList = pickle.load(f)
     
@@ -505,8 +633,8 @@
     
     my_model_loaded = joblib.load("my_model.pkl")
     </code></pre>
-    
-    <h4>3. Read or Save (Compact Version) (best)</h4><pre><code class="python language-python"># See if frequency encoded colums is there or not.
+
+                        <h4>3. Read or Save (Compact Version) (best)</h4><pre class="language-python"><code class="python language-python"># See if frequency encoded colums is there or not.
     if os.path.isfile('./freq_cols.pkl'):
         with open('freq_cols.pkl', 'rb') as f: 
             freq_cols = pickle.load(f)
@@ -518,8 +646,11 @@
         with open('freq_cols.pkl', 'wb') as f:
             pickle.dump(freq_cols, f)
     </code></pre>
-    </p></details>
-    <details><summary><b>Download & Extract tgz file</b> with Python</summary><p><pre><code>import os, tarfile
+                    </p>
+                </details>
+                <details>
+                    <summary><b>Download & Extract tgz file</b> with Python</summary>
+                    <p><pre class="language-python"><code>import os, tarfile
     from six.moves import urllib
     
     # Constants.
@@ -536,20 +667,14 @@
         housing_tgz.extractall(path=housing_path)
         housing_tgz.close()
     </code></pre>
-    </p></details>
-    
-    
-    </p></details>
-     </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+                    </p>
+                </details>
+
+
+            </p>
+        </details>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
 </html>

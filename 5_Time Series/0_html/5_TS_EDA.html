@@ -481,6 +481,45 @@ iplot(data, filename='simple_candlestick')</code></pre>
                     </details>
                 </li>
                 <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Different Moving Averages with close price</summary>
+                        <pre class="language-python"><code># Moving Averages (10, 50 and 200)
+amzn_df['10_d_avg'] = amzn_df.close.rolling(window=10).mean()
+amzn_df['50_d_avg'] = amzn_df.close.rolling(window=50).mean()
+amzn_df['200_d_avg'] = amzn_df.close.rolling(window=200).mean()
+close_p = amzn_df['close'].values.tolist()
+
+
+# Variables to insert into plotly
+ten_d = amzn_df['10_d_avg'].values.tolist()
+fifty_d = amzn_df['50_d_avg'].values.tolist()
+twoh_d = amzn_df['200_d_avg'].values.tolist()
+date = amzn_df['date'].values.tolist()
+
+# Set date as index
+amzn_df = amzn_df.set_index('date'))</code></pre>
+                        <pre class="language-python"><code>import plotly.tools as tls
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+init_notebook_mode(connected=True)
+
+fig = tls.make_subplots(rows=2, cols=1, shared_xaxes=True)
+colors = ['#ff4500', '#92a1cf', '#6E6E6E']
+avgs = ['10_d_avg', '50_d_avg', '200_d_avg']
+
+for col, c in zip(avgs, colors):
+    fig.append_trace({'x': amzn_df.index, 'y': amzn_df[col], 'type': 'scatter', 'name': col, 'line': {'color': c}}, 1, 1)
+for col in ['close']:
+    fig.append_trace({'x': amzn_df.index, 'y': amzn_df[col], 'type': 'scatter', 'name': 'Closing Price', 'line':{'color': '#01DF3A'}}, 2, 1)
+    
+fig['layout'].update(height=800,title='Relationship between MAs <br> and Closing Price',
+                    paper_bgcolor='#F2DFCE', plot_bgcolor='#F2DFCE')
+    
+iplot(fig, filename='pandas/mixed-type subplots')</code></pre>
+                        <img src="./imgs/moving_avg_with_close.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
             </ul>
         </details>
         <!-- - --------------------------------------- -->

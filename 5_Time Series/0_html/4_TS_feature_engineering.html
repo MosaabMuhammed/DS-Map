@@ -194,6 +194,7 @@ df['year'] = pd.DatetimeIndex(df['date']).year
 df['month'] = pd.DatetimeIndex(df['date']).month
 df['day'] = pd.DatetimeIndex(df['date']).day
 df['day_of_year'] = pd.DatetimeIndex(df['date']).dayofyear
+df['dayofweek'] = df['date'].dt.dayofweek
 df['week_of_year'] = pd.DatetimeIndex(df['date']).weekofyear
 df['quarter'] = pd.DatetimeIndex(df['date']).quarter
 df['season'] = df['month'] % 12 // 3 + 1

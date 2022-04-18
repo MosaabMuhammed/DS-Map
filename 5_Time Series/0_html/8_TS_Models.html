@@ -334,10 +334,7 @@ plotSARIMA(ads, best_model, 50)</code></pre>
                 </details>
 
                 <details>
-                    <summary>Auto-ARMA Model</summary>
-                    <p>Autoregressive–moving-average (ARMA) models provide a parsimonious description of a (weakly) stationary stochastic process in terms of two polynomials, one for the autoregression and the second for the moving average.<br>It's the fusion
-                        of AR and MA models.</p>
-                    <p>ARMA(1,1) model <br> Rt = μ + ϕRt-1 + ϵt + θϵt-1 <br>Basically, Today's return = mean + Yesterday's return + noise + yesterday's noise.</p>
+                    <summary>Auto-ARMA Model 1</summary>
                     <pre class="language-python"><code>!pip install pmdarima
 from statsmodels.tsa.arima_model import ARIMA
 import pmdarima as pm
@@ -356,7 +353,7 @@ model = pm.auto_arima(y_train, start_p=1, start_q=1,
                         stepwise=True)
 
 print(model.summary())
-Performing stepwise search to minimize aic
+# Performing stepwise search to minimize aic
 #  ARIMA(1,1,1)(0,0,0)[0] intercept   : AIC=-631.136, Time=0.29 sec
 #  ARIMA(0,1,0)(0,0,0)[0] intercept   : AIC=-242.692, Time=0.06 sec
 #  ARIMA(1,1,0)(0,0,0)[0] intercept   : AIC=-574.047, Time=0.09 sec
@@ -408,6 +405,68 @@ plt.show()
 # Bottom Right: The Correlogram, aka, ACF plot shows the residual errors are not autocorrelated.
 </code></pre>
                     <img src="../0_html/imgs/diag_autoarima.png" alt="">
+                </details>
+                <details>
+                    <summary>Auto-ARMA Model 2</summary>
+                    <pre class="language-python"><code>df.reset_index(drop=True, inplace=True)
+lag_features = ["High", "Low", "Volume", "Turnover", "Trades"]
+window1 = 3
+window2 = 7
+window3 = 30
+
+df_rolled_3d = df[lag_features].rolling(window=window1, min_periods=0)
+df_rolled_7d = df[lag_features].rolling(window=window2, min_periods=0)
+df_rolled_30d = df[lag_features].rolling(window=window3, min_periods=0)
+
+df_mean_3d = df_rolled_3d.mean().shift(1).reset_index().astype(np.float32)
+df_mean_7d = df_rolled_7d.mean().shift(1).reset_index().astype(np.float32)
+df_mean_30d = df_rolled_30d.mean().shift(1).reset_index().astype(np.float32)
+
+df_std_3d = df_rolled_3d.std().shift(1).reset_index().astype(np.float32)
+df_std_7d = df_rolled_7d.std().shift(1).reset_index().astype(np.float32)
+df_std_30d = df_rolled_30d.std().shift(1).reset_index().astype(np.float32)
+
+for feature in lag_features:
+    df[f"{feature}_mean_lag{window1}"] = df_mean_3d[feature]
+    df[f"{feature}_mean_lag{window2}"] = df_mean_7d[feature]
+    df[f"{feature}_mean_lag{window3}"] = df_mean_30d[feature]
+    
+    df[f"{feature}_std_lag{window1}"] = df_std_3d[feature]
+    df[f"{feature}_std_lag{window2}"] = df_std_7d[feature]
+    df[f"{feature}_std_lag{window3}"] = df_std_30d[feature]
+
+df.fillna(df.mean(), inplace=True)
+
+df.set_index("Date", drop=False, inplace=True)
+df.head()
+</code></pre>
+
+                    <pre class="language-python"><code>df_train = df[df.Date < "2019"]
+df_valid = df[df.Date >= "2019"]
+
+exogenous_features = ["High_mean_lag3", "High_std_lag3", "Low_mean_lag3", "Low_std_lag3",
+                      "Volume_mean_lag3", "Volume_std_lag3", "Turnover_mean_lag3",
+                      "Turnover_std_lag3", "Trades_mean_lag3", "Trades_std_lag3",
+                      "High_mean_lag7", "High_std_lag7", "Low_mean_lag7", "Low_std_lag7",
+                      "Volume_mean_lag7", "Volume_std_lag7", "Turnover_mean_lag7",
+                      "Turnover_std_lag7", "Trades_mean_lag7", "Trades_std_lag7",
+                      "High_mean_lag30", "High_std_lag30", "Low_mean_lag30", "Low_std_lag30",
+                      "Volume_mean_lag30", "Volume_std_lag30", "Turnover_mean_lag30",
+                      "Turnover_std_lag30", "Trades_mean_lag30", "Trades_std_lag30",
+                      "month", "week", "day", "day_of_week"]
+</code></pre>
+                    <pre class="language-python"><code>!pip install pmdarima
+from statsmodels.tsa.arima_model import ARIMA
+import pmdarima as pm
+
+model = auto_arima(df_train.VWAP, exogenous=df_train[exogenous_features], trace=True, error_action="ignore", suppress_warnings=True)
+model.fit(df_train.VWAP, exogenous=df_train[exogenous_features])
+
+forecast = model.predict(n_periods=len(df_valid), exogenous=df_valid[exogenous_features])
+df_valid["Forecast_ARIMAX"] = forecast
+
+df_valid[["VWAP", "Forecast_ARIMAX"]].plot(figsize=(14, 7))
+</code></pre>
                 </details>
 
 
