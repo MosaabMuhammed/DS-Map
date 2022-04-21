@@ -248,6 +248,39 @@ df.toDF(*newColumns).printSchema()
 
                 <li>
                     <details>
+                        <summary>get <b>shape of df</b> (n_rows, n_cols)</summary>
+                        <pre class="language-python"><code>def shape(df):
+    return (df.count(), len(df.columns))
+
+train_data, test_data = scaled_df.randomSplit([.8, .2], seed=seed)
+
+print(shape(train_data), shape(test_data))
+# (16395, 10) (4038, 10)
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary><b>Descriptive Statictics</b> describe()</summary>
+                        <pre class="language-python"><code>(housing_df.describe().select(
+"summary",
+F.round("medage", 4).alias("medage"),
+F.round("totrooms", 4).alias("totrooms"),
+F.round("totbdrms", 4).alias("totbdrms"),
+F.round("pop", 4).alias("pop"),
+F.round("houshlds", 4).alias("houshlds"),
+F.round("medinc", 4).alias("medinc"),
+F.round("medhv", 4).alias("medhv"))
+.show()
+)
+</code></pre>
+
+                    </details>
+                </li>
+                <li>
+                    <details>
                         <summary><b>Change DataType using PySpark withColumn()</b></summary>
                         <pre class="language-python"><code>import pyspark
 from pyspark.sql.functions import col
