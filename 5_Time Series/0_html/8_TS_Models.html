@@ -521,8 +521,48 @@ plt.show()
                         <img src="../0_html/imgs/multivariate_prophet.png" alt="">
                     </details>
                 </li>
+                <li>
+                    <details>
+                        <summary><b>Cross Validation</b></summary>
+                        <a href="https://facebook.github.io/prophet/docs/diagnostics.html#:~:text=Cross%20validation,up%20to%20that%20cutoff%20point.">diagnostics docs</a>
+                        <pre class="language-python"><code>from fbprophet import Prophet
+from fbprophet.diagnostics import cross_validation, performance_metrics
+
+m = Prophet(weekly_seasonality=False, interval_width = 0.95)
+
+m.fit(df)
+future = m.make_future_dataframe(periods= 24, freq = 'H')
+forecast = m.predict(future)
+m.plot_components(forecast, figsize=(CFG.img_dim1, CFG.img_dim2))
+
+df_cv = cross_validation(m,initial = '3700 hours', period = '24 hours', horizon = '24 hours')
+df_cv.head(10)
+
+df_p1 = performance_metrics(df_cv)
+df_p1.head(10)  
+                </code></pre>
+
+                    </details>
+                </li>
 
             </ul>
+        </details>
+
+        <details>
+            <summary><b>Neural Prophet </b></summary>
+            <pre class="language-python"><code>!pip install neuralprophet
+from neuralprophet import NeuralProphet
+
+df = xdat2[['time', 'Tair']].rename(columns={"time": "ds", "Tair": "y"})
+
+model = NeuralProphet(weekly_seasonality = False)
+
+model.fit(df, freq="H")
+# forecast
+df_predict = model.make_future_dataframe(df, periods= 24)
+df_predict = model.predict(df_predict)
+fig = model.plot(df_predict)
+            </code></pre>
         </details>
 
         <details>
