@@ -120,6 +120,7 @@ df = spark.read.format("org.apache.spark.sql.csv")
                   .load("/tmp/resources/zipcodes.csv")
 
 # Read csv file with headers.
+df = spark.read.csv("../input/movielens-20m-dataset/rating.csv", inferSchema=True, header=True)
 df2 = spark.read.option("header",True).csv("/tmp/resources/zipcodes.csv")
 
 # Read multiple csv file.
@@ -894,7 +895,9 @@ df.select(collect_list("salary")).collect()[0][0]
                     <details>
                         <summary><b>Returns the number of distinct elements in a columns</b></summary>
                         <pre class="language-python"><code>from pyspark.sql.functions import collect_set
-df.select(collect_list("salary")).collect()[0][0]
+df.select(collect_set("salary")).collect()[0][0]
+# OR
+df.select('salary').distinct().count() # distinct() will return a dataframe.
 # [4600, 3000, 3900, 4100, 3300, 2000]
 </code></pre>
                     </details>
