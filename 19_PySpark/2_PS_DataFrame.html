@@ -280,6 +280,69 @@ F.round("medhv", 4).alias("medhv"))
 
                     </details>
                 </li>
+
+                <li>
+                    <details>
+                        <summary>get <b>number of nan/null/missing</b> rows for each column</summary>
+                        <p>isnan() is a function of the pysparq.sql.function package, we have to set which column we want to use as an argument of the function.
+                            <br> isNull()" belongs to pyspark.sql.Column package, to check the null status of a column</p>
+                        <pre class="language-python"><code>import pyspark.sql.functions as F
+df.select([F.count(F.when(F.isnan(c) | F.col(c).isNull(), c)).alias(c) for c in df.columns]).show()
+# +-----------+--------+------+----+---+---+-----+-----+------+----+-----+--------+
+# |PassengerId|Survived|Pclass|Name|Sex|Age|SibSp|Parch|Ticket|Fare|Cabin|Embarked|
+# +-----------+--------+------+----+---+---+-----+-----+------+----+-----+--------+
+# |          0|       0|     0|   0|  0|177|    0|    0|     0|   0|  687|       2|
+# +-----------+--------+------+----+---+---+-----+-----+------+----+-----+--------+
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary>Fill<b> nan/null/missing</b> values in a column</summary>
+                        <pre class="language-python"><code>avg_age = df.groupby("Initial").avg("Age")
+# +-------+------------------+
+# |Initial|          avg(Age)|
+# +-------+------------------+
+# |   Miss|             21.86|
+# |  Other|45.888888888888886|
+# | Master| 4.574166666666667|
+# |     Mr| 32.73960880195599|
+# |    Mrs|35.981818181818184|
+# +-------+------------------+
+
+# Fill the missing values of Age with average of the previous initials.
+for row in avg_age.collect():
+    df = df.withColumn("Age", F.when((df["Initial"] == row['Initial']) & (df['Age'].isNull()), row['avg(Age)']).otherwise(df['Age']))
+</code></pre>
+                        <pre class="language-python"><code># As we can see, Majority Passengers boarded from "S". We can assign missing value with "S"
+df = df.na.fill({"Embarked" : 'S'})    </code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
+                        <summary>replace labels in a categorical column</summary>
+                        <pre class="language-python"><code>df = df.replace(
+   ['Mr', 'Sir', 'Mlle', 'Don', 'Miss', 'Capt', 'Mrs', 'Col', 'Rev','Ms', 'Master', 'Major', 'Jonkheer', 'Dr', 'Countess', 'Mme', 'Lady'],
+    ['Mr', 'Mr', 'Miss', 'Mr', 'Miss', 'Mr', 'Mrs', 'Other', 'Other', 'Ms', 'Mr', 'Mr', 'Other', 'Mr', 'Other', 'Miss', 'Miss'])
+</code></pre>
+
+                    </details>
+                </li>
+
+
+                <li>
+                    <details>
+                        <summary>Extract a pattern from a text using regular expression</summary>
+                        <pre class="language-python"><code>df = df.withColumn("Initial", F.regexp_extract(F.col("Name"), "([A-Za-z]+)\.", 1))
+</code></pre>
+
+                    </details>
+                </li>
+
                 <li>
                     <details>
                         <summary><b>Change DataType using PySpark withColumn()</b></summary>
