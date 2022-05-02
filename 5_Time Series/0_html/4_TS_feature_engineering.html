@@ -178,6 +178,19 @@ weekly_moving_average_2stride = df['Mean temparature'].rolling(7).mean()[::2]
 monthly_moving_average_2stride = df['Mean temparature'].rolling(30).mean()[::2]
 </code></pre>
         </details>
+        <!-- -------------------------------------------------------- -->
+
+        <details>
+            <summary>
+                <b>Exponential Moving Average</b>
+            </summary>
+            <pre class="language-python"><code>keys = ['store_nbr']
+val = 'sales'
+lag = 1
+alpha=0.95
+df_temp.groupby(keys)[val].transform(lambda x: x.shift(lag).ewm(alpha=alpha).mean())
+</code></pre>
+        </details>
 
         <!-- -------------------------------------------------------- -->
         <details>
@@ -198,6 +211,8 @@ df['dayofweek'] = df['date'].dt.dayofweek
 df['week_of_year'] = pd.DatetimeIndex(df['date']).weekofyear
 df['quarter'] = pd.DatetimeIndex(df['date']).quarter
 df['season'] = df['month'] % 12 // 3 + 1
+df['is_month_start'] = df_copy[col].dt.is_month_start.astype(int)
+df['is_month_end'] = df_copy[col].dt.is_month_end.astype(int)
 
 #### NOTE
 ## The new time features are cyclical. For example,the feature month cycles between 1 and 12 for every year. 
@@ -226,7 +241,6 @@ data['weekday_average'] = list(map(code_mean(data[:test_index], 'weekday', "y").
 data["hour_average"] = list(map(code_mean(data[:test_index], 'hour', "y").get, data.hour))
 </code></pre>
         </details>
-
         <!-- -------------------------------------------------------- -->
         <details>
             <summary>
