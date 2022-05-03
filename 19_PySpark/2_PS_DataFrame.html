@@ -324,6 +324,20 @@ df = df.na.fill({"Embarked" : 'S'})    </code></pre>
 
                 <li>
                     <details>
+                        <summary>From <b>Dataframe</b> to <b>Dictionary</b></summary>
+                        <pre class="language-python"><code>page_views_timestamp_stats_df.rdd.collectAsMap()
+# {'count': '2034275448',
+#  'max': '1296000000',
+#  'mean': '6.51464604736012E8',
+#  'min': '0',
+#  'stddev': '3.809745454636914E8'}
+</code></pre>
+
+                    </details>
+                </li>
+
+                <li>
+                    <details>
                         <summary>replace labels in a categorical column</summary>
                         <pre class="language-python"><code>df = df.replace(
    ['Mr', 'Sir', 'Mlle', 'Don', 'Miss', 'Capt', 'Mrs', 'Col', 'Rev','Ms', 'Master', 'Major', 'Jonkheer', 'Dr', 'Countess', 'Mme', 'Lady'],
