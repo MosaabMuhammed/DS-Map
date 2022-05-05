@@ -34,6 +34,17 @@ plt.show()</code></pre>
             </details>
 
             <details>
+                <summary>Change the <b>color</b> of background [global]</summary>
+                <pre class="language-python"><code># global
+import matplotlib as mpl
+
+mpl.rcParams['figure.facecolor'] = 'white'
+
+# For other variables, run:
+mpl.rcParams.keys()</code></pre>
+            </details>
+
+            <details>
                 <summary>Change the <b>color</b> of xticks [global/local]</summary>
                 <pre class="language-python"><code># global
 import matplotlib as mpl
@@ -1366,6 +1377,53 @@ iplot(fig)
                         </code></pre>
                     </details>
                 </li>
+                <li>
+                    <details>
+                        <summary><b>Descriptive Text in an Image</b></summary>
+                        <pre class="language-python"><code>import plotly.graph_objs as go
+import plotly.offline as py
+py.init_notebook_mode(connected=True)
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=[0, 1, 2, 3],
+    y=[1.6]*4,
+    mode="text",
+    text=["<span style='font-size:33px'><b>54</b></span>", 
+            "<span style='font-size:33px'><b>33</b></span>",
+            "<span style='font-size:33px'><b>16</b></span>",
+            "<span style='font-size:33px'><b>56</b></span>"],
+    textposition="bottom center"
+))
+fig.add_trace(go.Scatter(
+    x=[0, 1, 2, 3],
+    y=[1.1]*4,
+    mode="text",
+    text=['Stores', 'Products', 'States', 'Months'],
+    textposition="bottom center"
+))
+fig.add_hline(y=2.2, line_width=5, line_color="gray")
+fig.add_hline(y=0.3, line_width=3, line_color="gray")
+fig.update_yaxes(visible=False)
+fig.update_xaxes(visible=False)
+fig.update_layout(showlegend=False,
+                    height=300,
+                    width=700,
+                    title="Store Sales Summary",
+                    title_x=0.5,
+                    title_y=0.9,
+                    xaxis_range=[-0.5, 3.6],
+                    yaxis_range=[-0.2, 2.2],
+                    plot_bgcolor="#fafafa",
+                    paper_bgcolor="#fafafa",
+                    font=dict(size=23, color="#323232"),
+                    title_font=dict(size=35, color="#222"),
+                    margin=dict(t=90, l=70, b=0, r=70))
+</code></pre>
+                        <img src="./imgs/descritive_img.png" alt="">
+                    </details>
+                </li>
+
             </ul>
         </details>
         <details>
