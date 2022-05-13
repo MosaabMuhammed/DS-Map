@@ -1276,6 +1276,15 @@ fig = px.bar(temp, x="count", y="common_words",
             color="common_words")
 fig.show()
 </code></pre>
+
+                        <pre class="language-python"><code>fig = go.Figure(go.Bar(x=sales_per_family.values, 
+            y=sales_per_family.keys(),
+            marker=dict(color='#496595'),
+            name="Family",
+            orientation="h"))
+fig.update_layout(height=700)
+fig.show()
+    </code></pre>
                         <img src="imgs/20210927-160852.png" />
                     </details>
                 </li>

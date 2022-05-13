@@ -368,6 +368,252 @@ plt.show()</code></pre>
 
             </ul>
         </details>
+
+        <details>
+            <summary><b>Target with Time Features</b></summary>
+            <ul>
+                <li>
+                    <details>
+                        <summary>Avg Target with Year-Month</summary>
+                        <details>
+                            <summary>Stacked Bar Plot</summary>
+                            <pre class="language-python"><code>import pandas as pd
+import numpy as np
+import calendar
+
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.figure_factory as ff
+import plotly.offline as offline
+import plotly.graph_objs as go
+offline.init_notebook_mode(connected = True)
+                            
+df_2013 = df_train1[df_train1['year']==2013][['month','sales']]
+df_2013 = df_2013.groupby('month').agg({"sales" : "mean"}).reset_index().rename(columns={'sales':'s13'})
+df_2014 = df_train1[df_train1['year']==2014][['month','sales']]
+df_2014 = df_2014.groupby('month').agg({"sales" : "mean"}).reset_index().rename(columns={'sales':'s14'})
+df_2015 = df_train1[df_train1['year']==2015][['month','sales']]
+df_2015 = df_2015.groupby('month').agg({"sales" : "mean"}).reset_index().rename(columns={'sales':'s15'})
+df_2016 = df_train1[df_train1['year']==2016][['month','sales']]
+df_2016 = df_2016.groupby('month').agg({"sales" : "mean"}).reset_index().rename(columns={'sales':'s16'})
+df_2017 = df_train1[df_train1['year']==2017][['month','sales']]
+df_2017 = df_2017.groupby('month').agg({"sales" : "mean"}).reset_index()
+df_2017_no = pd.DataFrame({'month': [9,10,11,12], 'sales':[0,0,0,0]})
+df_2017 = df_2017.append(df_2017_no).rename(columns={'sales':'s17'})
+df_year = df_2013.merge(df_2014,on='month').merge(df_2015,on='month').merge(df_2016,on='month').merge(df_2017,on='month')
+
+# top levels
+top_labels = ['2013', '2014', '2015', '2016', '2017']
+
+colors = ['rgba(38, 24, 74, 0.8)', 'rgba(71, 58, 131, 0.8)',
+            'rgba(122, 120, 168, 0.8)', 'rgba(164, 163, 204, 0.85)',
+            'rgba(190, 192, 213, 1)']
+
+# X axis value 
+df_year = df_year[['s13','s14','s15','s16','s17']].replace(np.nan,0)
+x_data = df_year.values
+
+# y axis value (Month)
+df_2013['month'] =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+y_data = df_2013['month'].tolist()
+
+fig = go.Figure()
+for i in range(0, len(x_data[0])):
+    for xd, yd in zip(x_data, y_data):
+        fig.add_trace(go.Bar(
+            x=[xd[i]], y=[yd],
+            orientation='h',
+            marker=dict(
+                color=colors[i],
+                line=dict(color='rgb(248, 248, 249)', width=1)
+            )
+        ))
+
+fig.update_layout(title='Avg Sales for each Year',
+    xaxis=dict(showgrid=False, 
+                zeroline=False, domain=[0.15, 1]),
+    yaxis=dict(showgrid=False, showline=False,
+                showticklabels=False, zeroline=False),
+    barmode='stack', 
+    template="plotly_white",
+    margin=dict(l=0, r=50, t=100, b=10),
+    showlegend=False, 
+)
+
+annotations = []
+for yd, xd in zip(y_data, x_data):
+    # labeling the y-axis
+    annotations.append(dict(xref='paper', yref='y',
+                            x=0.14, y=yd,
+                            xanchor='right',
+                            text=str(yd),
+                            font=dict(family='Arial', size=14,
+                                        color='rgb(67, 67, 67)'),
+                            showarrow=False, align='right'))
+    # labeling the first Likert scale (on the top)
+    if yd == y_data[-1]:
+        annotations.append(dict(xref='x', yref='paper',
+                                x=xd[0] / 2, y=1.1,
+                                text=top_labels[0],
+                                font=dict(family='Arial', size=14,
+                                            color='rgb(67, 67, 67)'),
+                            showarrow=False))
+    space = xd[0]
+    for i in range(1, len(xd)):
+            # labeling the Likert scale
+            if yd == y_data[-1]:
+                annotations.append(dict(xref='x', yref='paper',
+                                        x=space + (xd[i]/2), y=1.1,
+                                        text=top_labels[i],
+                                        font=dict(family='Arial', size=14,
+                                                    color='rgb(67, 67, 67)'),
+                                        showarrow=False))
+            space += xd[i]
+fig.update_layout(
+    annotations=annotations)
+fig.show()
+                        </code></pre>
+                            <img src="./imgs/avg_target_per_year_month.png" alt="">
+                        </details>
+                        <details>
+                            <summary>Box Plot</summary>
+                            <pre class="language-python"><code>import plotly.express as px
+a = transactions.copy()
+a["year"] = a.date.dt.year
+a["month"] = a.date.dt.month
+px.box(a, x="year", y="transactions" , color = "month", title = "Transactions")
+                            </code></pre>
+                            <img src="./imgs/avg_target_per_year_month_box_plot.png" alt="">
+                        </details>
+                        <details>
+                            <summary>Line Plot</summary>
+                            <pre class="language-python"><code>import plotly.express as px
+a = transactions.set_index("date").resample("M").transactions.mean().reset_index()
+a["year"] = a.date.dt.year
+px.line(a, x='date', y='transactions', color='year',title = "Monthly Average Transactions" )
+                            </code></pre>
+                            <img src="./imgs/avg_target_per_year_month_line_plot.png" alt="">
+                        </details>
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Avg Target with Quarter/Month/Year wise</summary>
+                        <pre class="language-python"><code>import pandas as pd
+import numpy as np
+import calendar
+
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.figure_factory as ff
+import plotly.offline as offline
+import plotly.graph_objs as go
+offline.init_notebook_mode(connected = True)
+# data
+df_m_sa = df_train1.groupby('month').agg({"sales" : "mean"}).reset_index()
+df_m_sa['sales'] = round(df_m_sa['sales'],2)
+df_m_sa['month_text'] = df_m_sa['month'].apply(lambda x: calendar.month_abbr[x])
+df_m_sa['text'] = df_m_sa['month_text'] + ' - ' + df_m_sa['sales'].astype(str) 
+
+df_w_sa = df_train1.groupby('week').agg({"sales" : "mean"}).reset_index() 
+df_q_sa = df_train1.groupby('quarter').agg({"sales" : "mean"}).reset_index() 
+# chart color
+df_m_sa['color'] = '#496595'
+df_m_sa['color'][:-1] = '#c6ccd8'
+df_w_sa['color'] = '#c6ccd8'
+
+# chart
+fig = make_subplots(rows=2, cols=2, vertical_spacing=0.08,
+                    row_heights=[0.7, 0.3], 
+                    specs=[[{"type": "bar"}, {"type": "pie"}],
+                            [{"colspan": 2}, None]],
+                    column_widths=[0.7, 0.3],
+                    subplot_titles=("Month wise Avg Sales Analysis", "Quarter wise Avg Sales Analysis", 
+                                    "Week wise Avg Sales Analysis"))
+
+fig.add_trace(go.Bar(x=df_m_sa['sales'], y=df_m_sa['month'], marker=dict(color= df_m_sa['color']),
+                        text=df_m_sa['text'],textposition='auto',
+                        name='Month', orientation='h'), 
+                        row=1, col=1)
+fig.add_trace(go.Pie(values=df_q_sa['sales'], labels=df_q_sa['quarter'], name='Quarter',
+                        marker=dict(colors=['#334668','#496595','#6D83AA','#91A2BF','#C8D0DF']), hole=0.7,
+                        hoverinfo='label+percent+value', textinfo='label+percent'), 
+                        row=1, col=2)
+fig.add_trace(go.Scatter(x=df_w_sa['week'], y=df_w_sa['sales'], mode='lines+markers', fill='tozeroy', fillcolor='#c6ccd8',
+                        marker=dict(color= '#496595'), name='Week'), 
+                        row=2, col=1)
+
+# styling
+fig.update_yaxes(visible=False, row=1, col=1)
+fig.update_xaxes(visible=False, row=1, col=1)
+fig.update_xaxes(tickmode = 'array', tickvals=df_w_sa.week, ticktext=[i for i in range(1,53)], 
+                    row=2, col=1)
+fig.update_yaxes(visible=False, row=2, col=1)
+fig.update_layout(height=750, bargap=0.15,
+                    margin=dict(b=0,r=20,l=20), 
+                    title_text="Average Sales Analysis",
+                    template="plotly_white",
+                    title_font=dict(size=25, color='#8a8d93', family="Lato, sans-serif"),
+                    font=dict(color='#8a8d93'),
+                    hoverlabel=dict(bgcolor="#f2f2f2", font_size=13, font_family="Lato, sans-serif"),
+                    showlegend=False)
+fig.show()
+                    </code></pre>
+                        <img src="./imgs/avg_target_month_wise.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Avg Target with Days of Week</summary>
+                        <pre class="language-python"><code>import pandas as pd
+import numpy as np
+import calendar
+
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.figure_factory as ff
+import plotly.offline as offline
+import plotly.graph_objs as go
+offline.init_notebook_mode(connected = True)
+# data
+df_dw_sa = df_train1.groupby('day_of_week').agg({"sales" : "mean"}).reset_index()
+df_dw_sa.sales = round(df_dw_sa.sales, 2)
+
+# chart
+fig = px.bar(df_dw_sa, y='day_of_week', x='sales', title='Avg Sales vs Day of Week',
+                color_discrete_sequence=['#c6ccd8'], text='sales',
+                category_orders=dict(day_of_week=["Monday","Tuesday","Wednesday","Thursday", "Friday","Saturday","Sunday"]))
+fig.update_yaxes(showgrid=False, ticksuffix=' ', showline=False)
+fig.update_xaxes(visible=False)
+fig.update_layout(margin=dict(t=60, b=0, l=0, r=0), height=350,
+                    hovermode="y unified", 
+                    yaxis_title=" ", template='plotly_white',
+                    title_font=dict(size=25, color='#8a8d93', family="Lato, sans-serif"),
+                    font=dict(color='#8a8d93'),
+                    hoverlabel=dict(bgcolor="#c6ccd8", font_size=13, font_family="Lato, sans-serif"))
+                    </code></pre>
+                        <img src="./imgs/avg_target_day_wise.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+                <li>
+                    <details>
+                        <summary>Avg Target with Days_of_Week-Year</summary>
+                        <pre class="language-python"><code>import plotly.express as px
+a = transactions.copy()
+a["year"] = a.date.dt.year
+a["dayofweek"] = a.date.dt.dayofweek+1
+a = a.groupby(["year", "dayofweek"]).transactions.mean().reset_index()
+px.line(a, x="dayofweek", y="transactions" , color = "year", title = "Transactions")
+                    </code></pre>
+                        <img src="./imgs/avg_target_day_year.png" alt="">
+                    </details>
+                </li>
+                <!-- =============================================== -->
+            </ul>
+        </details>
         <!-- - --------------------------------------- -->
         <details>
             <summary><b>Finance</b></summary>
