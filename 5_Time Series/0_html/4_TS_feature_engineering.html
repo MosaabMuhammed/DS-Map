@@ -182,6 +182,18 @@ monthly_moving_average_2stride = df['Mean temparature'].rolling(30).mean()[::2]
 
         <details>
             <summary>
+                <b>Simple Moving Average</b>
+            </summary>
+            <pre class="language-python"><code>a = train.sort_values(["store_nbr", "family", "date"])
+for i in [20, 30, 45, 60, 90, 120, 365, 730]:
+    for j in [16, 30, 60]:
+        a["SMA"+str(i)+"_sales_lag"+str(j)] = a.groupby(["store_nbr", "family"]).rolling(i).sales.mean().shift(j).values
+</code></pre>
+        </details>
+        <!-- -------------------------------------------------------- -->
+
+        <details>
+            <summary>
                 <b>Exponential Moving Average</b>
             </summary>
             <pre class="language-python"><code>keys = ['store_nbr']
