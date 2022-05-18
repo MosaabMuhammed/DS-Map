@@ -197,29 +197,42 @@ df_temp.groupby(keys)[val].transform(lambda x: x.shift(lag).ewm(alpha=alpha).mea
             <summary>
                 <b>Date, Time features</b>
             </summary>
-            <pre class="language-python"><code># datetime features
-train_all.index             = pd.to_datetime(train_all.index)
-train_all["hour"]           = train_all.index.hour
-train_all["weekday"]        = train_all.index.weekday
-train_all['is_weekend']     = train_all.weekday.isin([5,6])*1
-train_all['year']           = train_all.index.year
-train_all['month']          = train_all.index.month
-train_all['day']            = train_all.index.day
-train_all['day_of_year']    = train_all.index.dayofyear
-train_all['dayofweek']      = train_all.index.dayofweek
-train_all['week_of_year']   = train_all.index.weekofyear
-train_all['quarter']        = train_all.index.quarter
-train_all['season']         = train_all['month'] % 12 // 3 + 1
-train_all['is_month_start'] = train_all.index.is_month_start.astype(int)
-train_all['is_month_end']   = train_all.index.is_month_end.astype(int)
+            <pre class="language-python"><code># Time Related Features
+def create_date_features(df):
+    df["hour"] = df.date.dt.hour.astype("int8")
+    df["weekday"] = df.date.dt.weekday.astype("int8")
+    df['day'] = df.date.dt.day.astype("int8")
+    df['month'] = df.date.dt.month.astype("int8")
+    df['day_of_month'] = df.date.dt.day.astype("int8")
+    df['day_of_year'] = df.date.dt.dayofyear.astype("int16")
+    df['week_of_month'] = (df.date.apply(lambda d: (d.day-1) // 7 + 1)).astype("int8")
+    df['week_of_year'] = (df.date.dt.weekofyear).astype("int8")
+    df['day_of_week'] = (df.date.dt.dayofweek + 1).astype("int8")
+    df['year'] = df.date.dt.year.astype("int32")
+    df["is_wknd"] = (df.date.dt.weekday // 4).astype("int8") # df["is_wknd"] = df.date.dt.weekday.isin([5,6])*1
+    df["quarter"] = df.date.dt.quarter.astype("int8")
+    df['is_month_start'] = df.date.dt.is_month_start.astype("int8")
+    df['is_month_end'] = df.date.dt.is_month_end.astype("int8")
+    df['is_quarter_start'] = df.date.dt.is_quarter_start.astype("int8")
+    df['is_quarter_end'] = df.date.dt.is_quarter_end.astype("int8")
+    df['is_year_start'] = df.date.dt.is_year_start.astype("int8")
+    df['is_year_end'] = df.date.dt.is_year_end.astype("int8")
+    # 0: Winter - 1: Spring - 2: Summer - 3: Fall
+    df['season'] = df['month'] % 12 // 3 + 1
 
-#### NOTE
-## The new time features are cyclical. For example,the feature month cycles between 1 and 12 for every year. 
-## While the difference between each month increments by 1 during the year, between two years the month feature jumps from 12 (December) to 1 (January). 
-## This results in a -11 difference, which can confuse a lot of models.
-month_in_year = 12
-train_all['month_sin'] = np.sin(2*np.pi*train_all['month']/month_in_year)
-train_all['month_cos'] = np.cos(2*np.pi*train_all['month']/month_in_year)
+    # df["season"] = np.where(df.month.isin([12,1,2]), 0, 1)
+    # df["season"] = np.where(df.month.isin([6,7,8]), 2, df["season"])
+    # df["season"] = pd.Series(np.where(df.month.isin([9, 10, 11]), 3, df["season"])).astype("int8")
+
+    #### NOTE
+    ## The new time features are cyclical. For example,the feature month cycles between 1 and 12 for every year. 
+    ## While the difference between each month increments by 1 during the year, between two years the month feature jumps from 12 (December) to 1 (January). 
+    ## This results in a -11 difference, which can confuse a lot of models.
+    month_in_year = 12
+    df['month_sin'] = np.sin(2*np.pi*df['month']/month_in_year)
+    df['month_cos'] = np.cos(2*np.pi*df['month']/month_in_year)
+    return df
+d = create_date_features(d)
         </code></pre>
         </details>
         <!-- -------------------------------------------------------- -->
