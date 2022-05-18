@@ -63,6 +63,11 @@
             <summary><b>DataFrame</b></summary>
             <p>
                 <details>
+                    <summary>Create <b>Pivot Table</b></summary>
+                    <pre class="language-python"><code>pd.pivot_table(d[(d.month.isin([6]))], index="year", columns="family", values="sales", aggfunc="mean")
+    </code></pre>
+                </details>
+                <details>
                     <summary><b>Select/filter dataframe columns/rows by regex</b></summary>
                     <pre class="language-python"><code>dlabels = dtrain.filter(regex='resp')
 # Index(['resp_1', 'resp_2', 'resp_3', 'resp_4', 'resp'], dtype='object')
