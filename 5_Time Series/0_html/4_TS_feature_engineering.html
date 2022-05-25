@@ -146,6 +146,21 @@ for lag, lag_col in zip(lags, lag_cols):
 daily = df['Chemical conc.'].resample('D')
 daily_mean = daily.mean()
 </code></pre>
+
+            <pre class="language-python"><code>def grouped(df, key, freq, col):
+    """ GROUP DATA WITH CERTAIN FREQUENCY """
+    df_grouped = df.groupby([pd.Grouper(key=key, freq=freq)]).agg(mean = (col, 'mean'))
+    df_grouped = df_grouped.reset_index()
+    return df_grouped
+
+# check grouped data
+df_grouped_trans_w = grouped(df_trans, 'date', 'W', 'transactions')
+# date	mean
+# 0	2013-01-06	1883.203463
+# 1	2013-01-13	1641.090062
+# 2	2013-01-20	1639.024845
+# 3	2013-01-27	1609.816770
+# 4	2013-02-03	1685.263975</code></pre>
         </details>
         <!-- -------------------------------------------------------- -->
         <details>
