@@ -1,45 +1,44 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1 id="starter">
-   Starter
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <details>
-    <summary>
-     <b>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        DL Starter
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <h1 id="starter">
+        Starter
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <details>
+            <summary>
+                <b>
       Plot Shape of The Model
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>from tensorflow.keras.utils import plot_model
+            </summary>
+            <p>
+            </p>
+            <pre><code>from tensorflow.keras.utils import plot_model
 
 plot_model(model, to_file='model_plot4a.png', show_shapes=True, show_layer_names=True)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Save &amp; Load Model
      </b>
-    </summary>
-    <p>
-    </p>
-    <h4>
-     1. using save()
-    </h4>
-    <pre><code>#NOTE: This is only available for Sequential and Functional API and NOT for Subclass API.
+            </summary>
+            <p>
+            </p>
+            <h4>
+                1. using save()
+            </h4>
+            <pre><code>#NOTE: This is only available for Sequential and Functional API and NOT for Subclass API.
 # But you can use save_weights() and load_weights() to save and restore the model parameters!
 # Save Model.
 model.save("my_keras_model.h5")
@@ -47,10 +46,10 @@ model.save("my_keras_model.h5")
 # Load Model.
 model = tf.keras.models.load_model("my_keras_model.h5")
 </code></pre>
-    <h4>
-     2. using checkpoint
-    </h4>
-    <pre><code># Using Checkpints
+            <h4>
+                2. using checkpoint
+            </h4>
+            <pre><code># Using Checkpints
 checkpoint_cb = keras.callbacks.ModelCheckpoint("my_keras_model.h5",
 save_best_only=True)
 
@@ -60,10 +59,10 @@ history = model.fit(X_train, y_train, epochs=10,
 
 model = keras.models.load_model("my_keras_model.h5") # rollback to best model
 </code></pre>
-    <h4>
-     3. saving model in json
-    </h4>
-    <pre><code>## WRITE model &amp; weights
+            <h4>
+                3. saving model in json
+            </h4>
+            <pre><code>## WRITE model &amp; weights
 model_structure = model.to_json()
 with open("cnn_model.json", "w") as json_file:
     json_file.write(model_structure)
@@ -78,16 +77,16 @@ with open("cnn_model.json", "r") as json_file:
 model = model_from_json(json_string)
 model.load_weights('cnn_weights.h5')
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Plot Training &amp; Validation Losses
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>import matplotlib as mpl
+            </summary>
+            <p>
+            </p>
+            <pre><code>import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 def plot_learning_curves(loss, val_loss):
@@ -105,45 +104,44 @@ plt.figure(figsize=(12, 5))
 plot_learning_curves(history.history["loss"], history.history["val_loss"])
 plt.show()
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Random Seeder
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>SEED = 42
+            </summary>
+            <p>
+            </p>
+            <pre><code>SEED = 42
 tf.keras.backend.clear_session()
 np.random.seed(SEED)
 tf.random.set_seed(SEED)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     Using
-     <b>
+        </details>
+        <details>
+            <summary>
+                Using
+                <b>
       TensorBoard
-     </b>
-     in Colab
-    </summary>
-    <p>
-    </p>
-    <pre><code># Load the TensorBoard notebook extension
+     </b> in Colab
+            </summary>
+            <p>
+            </p>
+            <pre><code># Load the TensorBoard notebook extension
 %load_ext tensorboard
 
 %tensorboard --logdir runs
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     Configure
-     <b>
+        </details>
+        <details>
+            <summary>
+                Configure
+                <b>
       TPU/GPU
      </b>
-    </summary>
-    <pre><code># TPU or GPU detection.
+            </summary>
+            <pre><code># TPU or GPU detection.
 # Detect hardware, return appropriate distribution strategy.
 try:
     AUTO = tf.data.experimental.AUTOTUNE
@@ -165,7 +163,7 @@ print(f"REPLICAS: {strategy.num_replicas_in_sync}")
 EPOCHS = 40
 BATCH_SIZE = 16 * strategy.num_replicas_in_sync
 </code></pre>
-    <pre><code> Apply the changes to the datasets.
+            <pre><code> Apply the changes to the datasets.
 train_dataset = (
 tf.data.Dataset
     .from_tensor_slices((train_paths, train_labels))
@@ -195,7 +193,7 @@ test_dataset = (
     .batch(BATCH_SIZE)
 )
 </code></pre>
-    <pre><code> # Set up the learning rate strategy.
+            <pre><code> # Set up the learning rate strategy.
 LR_START = 0.0001
 LR_MAX = 0.00005 * strategy.num_replicas_in_sync
 LR_MIN = 0.0001
@@ -219,10 +217,10 @@ y = [lrfn(x) for x in rng]
 plt.plot(rng, y)
 print("Learning rate schedule: {:.3g} to {:.3g} to {:.3g}".format(y[0], max(y), y[-1]))
 </code></pre>
-    <p>
-     <img alt="" src="imgs/20210205-170659.png"/>
-    </p>
-    <pre><code>
+            <p>
+                <img alt="" src="imgs/20210205-170659.png" />
+            </p>
+            <pre><code>
 with strategy.scope():
     model = tf.keras.Sequential([
         InceptionResNetV2(
@@ -241,28 +239,20 @@ with strategy.scope():
     )
     model.summary()
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     Deal with
-     <b>
+        </details>
+        <details>
+            <summary>
+                Deal with
+                <b>
       TFRecords
      </b>
-    </summary>
-    <a href="./notebooks/TFRecords.html">
+            </summary>
+            <a href="./notebooks/TFRecords.html">
      kaggle notebooks
     </a>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+        </details>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
 </html>
