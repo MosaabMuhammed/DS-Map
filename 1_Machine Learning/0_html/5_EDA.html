@@ -1528,18 +1528,58 @@ fig.update_layout(showlegend=False,
             </h4>
             <ul>
                 <li>
-                    <a href="./5_eda/data_science_nd/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart">
-                        <b>
-                            Bar
-                        </b> Chart
-                    </a>
+                    <details>
+                        <summary>Bar Chart</summary>
+                        <a href="./5_eda/data_science_nd/1_Univariate%20Visualization/1_Bar%20Chart.html#Bar-Chart"><b>Bar</b> Chart</a>
+
+                        <pre class="language-python"><code>def plot_stats(df, column, ax, color, angle):
+    """ PLOT STATS OF DIFFERENT COLUMNS """
+    count_classes = df[column].value_counts()
+    ax = sns.barplot(x=count_classes.index, y=count_classes, ax=ax, palette=color)
+    ax.set_title(column.upper(), fontsize=18)
+    for tick in ax.get_xticklabels():
+        tick.set_rotation(angle)
+
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15,5))
+fig.autofmt_xdate()
+fig.suptitle("Stats of df_holidays".upper())
+plot_stats(df_holidays, "type", axes[0], "pastel", 45)
+plot_stats(df_holidays, "locale", axes[1], "rocket", 45)
+plt.show()
+                        </code></pre>
+                    </details>
+
                 </li>
                 <li>
-                    <a href="./5_eda/data_science_nd/1_Univariate%20Visualization/2_Pie%20Chart.html#Pie-Chart">
-                        <b>
+                    <details>
+                        <summary>Pie Chart</summary>
+
+                        <a href="./5_eda/data_science_nd/1_Univariate%20Visualization/2_Pie%20Chart.html#Pie-Chart">
+                            <b>
                             Pie
                         </b> Chart
-                    </a>
+                        </a>
+                        <pre class="language-python"><code># Pie chart with percentage.
+fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(20,10))
+count_classes = df_train['family'].value_counts()
+plt.title("Stats of df_train".upper())
+colors = ['#ff9999','#66b3ff','#99ff99',
+            '#ffcc99', '#ffccf9', '#ff99f8', 
+            '#ff99af', '#ffe299', '#a8ff99',
+            '#cc99ff', '#9e99ff', '#99c9ff',
+            '#99f5ff', '#99ffe4', '#99ffaf']
+
+plt.pie(count_classes, 
+        labels = count_classes.index, 
+        autopct='%1.1f%%',
+        shadow=True, 
+        startangle=90, 
+        colors=colors)
+
+plt.show()
+                        </code></pre>
+                    </details>
+
                 </li>
                 <li>
                     <a href="./5_eda/data_science_nd/1_Univariate%20Visualization/3_Histograms.html#Histograms-Using-Matplotlib">

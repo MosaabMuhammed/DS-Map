@@ -119,6 +119,19 @@
             </details>
             <details>
                 <summary>
+                    How to Choose the number of lags
+                </summary>
+                <ul>
+                    <li>By just plotting the partial autocorrelation plot and picking previous time steps that have statistically significant correlation with the present.</li>
+                    <li>Select a large number of lags and estimate a penalized model (e.g. using LASSO, ridge or elastic net regularization). The penalization should diminish the impact of irrelevant lags and this way effectively do the selection. There would
+                        be some inconvenience in that cross validation is normally used for selecting penalty intensity, and cross validation is a bit tricky with time series. But this is still doable, no doubt about it.</li>
+                    <li>Try a number of different lag combinations and either <br> (i) select the best of them according to an information criterion (AIC should do well in terms of forecasting as it is an efficient selector) or out-of-sample performance OR
+                        <br> (ii) combine some or even all of them weighting the models based on their likelihood, information criteria or the like. Refer to model averaging and forecast combination literature for detailed recipes. <br> (ii) would often
+                        do better than (i) in terms of forecasting, especially if you are selecting from a large number of alternatives.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>
                     Code
                 </summary>
                 <pre class="language-python"><code>lags = [7, 28]
@@ -236,6 +249,8 @@ def create_date_features(df):
     df['week_of_year'] = (df.date.dt.weekofyear).astype("int8")
     df['day_of_week'] = (df.date.dt.dayofweek + 1).astype("int8")
     df['year'] = df.date.dt.year.astype("int32")
+    # the current "is_wknd" will treat Sat and Sun as holiday.
+    # If you want it to map Fri and Sat, do df["is_wknd"] = df.date.dt.weekday.isin([4, 5]).astype("int8")
     df["is_wknd"] = (df.date.dt.weekday // 4).astype("int8") # df["is_wknd"] = df.date.dt.weekday.isin([5,6])*1
     df["quarter"] = df.date.dt.quarter.astype("int8")
     df['is_month_start'] = df.date.dt.is_month_start.astype("int8")
