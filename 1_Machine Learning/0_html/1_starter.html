@@ -1,45 +1,44 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1 id="1startercode">
-   1. Starter Code
-  </h1>
-  <div style="width:1000px;margin:auto;">
-   <li>
-    <a href="https://www.browserling.com/tools/line-length-sort">
-     <b>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        DS Starter
+    </title>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h1 id="1startercode">
+        1. Starter Code
+    </h1>
+    <div style="width:1000px;margin:auto;">
+        <li>
+            <a href="https://www.browserling.com/tools/line-length-sort">
+                <b>
       <span style="color:#333">
        Reorder your imports based on length
       </span>
      </b>
-    </a>
-   </li>
-   <li>
-    <a href="./1_starter//21_debugging.html">
-     <b>
+            </a>
+        </li>
+        <li>
+            <a href="./1_starter//21_debugging.html">
+                <b>
       <span style="color:#333">
        Debugger
       </span>
      </b>
-    </a>
-   </li>
-   <details>
-    <summary>
-     <b>
+            </a>
+        </li>
+        <details>
+            <summary>
+                <b>
       Parallize apply() in Pandas
      </b>
-    </summary>
-    <pre><code>$ pip install pandarallel
+            </summary>
+            <pre><code>$ pip install pandarallel
 # Import
 from pandarallel import pandarallel
 
@@ -52,14 +51,30 @@ df.apply(func)
 # Parallel apply
 df.parallel_apply(func)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
+      Seed Everything
+     </b>
+            </summary>
+            <pre><code>def seed_everything(seed=42):
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+</code></pre>
+        </details>
+
+        <details>
+            <summary>
+                <b>
       Read CSV files with csv package
      </b>
-    </summary>
-    <pre><code>import csv
+            </summary>
+            <pre><code>import csv
 
 ##### Load data.
 def load_data(filepath, skip_already_labeled=False):
@@ -97,35 +112,35 @@ def write_data(filepath, data):
         writer.writerows(data)
     csvfile.close()
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Macros
      </b>
-    </summary>
-    <p>
-    </p>
-    <ul>
-     <li>
-      <a href="./1_starter/Macros.html#Macros">
-       <b>
+            </summary>
+            <p>
+            </p>
+            <ul>
+                <li>
+                    <a href="./1_starter/Macros.html#Macros">
+                        <b>
         <span style="color:#333">
          How to build a macro
         </span>
        </b>
-      </a>
-     </li>
-    </ul>
-    <details>
-     <summary>
-      <b>
+                    </a>
+                </li>
+            </ul>
+            <details>
+                <summary>
+                    <b>
        __basic
       </b>
-     </summary>
-     <p>
-     </p>
-     <pre><code class="python language-python"># Version 1.4
+                </summary>
+                <p>
+                </p>
+                <pre><code class="python language-python"># Version 1.4
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -155,16 +170,16 @@ sns.set_style('white')
 
 print('Basic libraries have been loaded!')
 </code></pre>
-    </details>
-    <details>
-     <summary>
-      <b>
+            </details>
+            <details>
+                <summary>
+                    <b>
        __basic_funcs
       </b>
-     </summary>
-     <p>
-     </p>
-     <pre><code class="python language-python">import inspect
+                </summary>
+                <p>
+                </p>
+                <pre><code class="python language-python">import inspect
 
 ############### Show colored text #############
 
@@ -314,68 +329,66 @@ def dd(*args):
 
 print(f'~&gt; The following functions are defined successfully: {bg("bg", "s")}, {bg("shape", "s")}, {bg("var2str", "s")}, {bg("reduce_mem_usage", "s")}, {bg("summary", "s")}, {bg("show_annotation", "s")}, {bg("dd", "s")}')
 </code></pre>
-    </details>
-   </details>
-   <details>
-    <summary>
-     <b>
+            </details>
+        </details>
+        <details>
+            <summary>
+                <b>
       Make the header at the center
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code class="html language-html">&lt;p style="font-size:36px;text-align:center"&gt; &lt;b&gt;Personalized cancer diagnosis&lt;/b&gt; &lt;/p&gt;
+            </summary>
+            <p>
+            </p>
+            <pre><code class="html language-html">&lt;p style="font-size:36px;text-align:center"&gt; &lt;b&gt;Personalized cancer diagnosis&lt;/b&gt; &lt;/p&gt;
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Show Plots
-     </b>
-     in the
-     <b>
+     </b> in the
+                <b>
       Terminal
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code class="python language-python">%pylab
+            </summary>
+            <p>
+            </p>
+            <pre><code class="python language-python">%pylab
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Save the last output value
-     </b>
-     in a
-     <b>
+     </b> in a
+                <b>
       Variable
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code class="python language-python">np.random.choice(students, 21) # performing this will output something to the console
+            </summary>
+            <p>
+            </p>
+            <pre><code class="python language-python">np.random.choice(students, 21) # performing this will output something to the console
 
 # Apply the following to save it to a variable
 sample = _
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Shapes in python Comments
      </b>
-    </summary>
-    <p>
-    </p>
-    <p>
-     <a href="https://textfac.es/">
-      <b>
+            </summary>
+            <p>
+            </p>
+            <p>
+                <a href="https://textfac.es/">
+                    <b>
        More textfaces
       </b>
-     </a>
-    </p>
-    <pre><code class="python language-python"> ¯\_(ツ)_/¯        ( ͡° ͜ʖ ͡°)
+                </a>
+            </p>
+            <pre><code class="python language-python"> ¯\_(ツ)_/¯        ( ͡° ͜ʖ ͡°)
 
   ̿̿ ̿̿ ̿̿ ̿'̿'\̵͇̿̿\з= ( ▀ ͜͞ʖ▀) =ε/̵͇̿̿/’̿’̿ ̿ ̿̿ ̿̿ ̿̿
 
@@ -405,76 +418,74 @@ sample = _
 
    （╯°□°）╯︵( .o.)        ┬──┬ ノ( ゜-゜ノ)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     Show
-     <b>
+        </details>
+        <details>
+            <summary>
+                Show
+                <b>
       Table
-     </b>
-     using
-     <b>
+     </b> using
+                <b>
       Qgrid
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code class="python language-python">import qgrid
+            </summary>
+            <p>
+            </p>
+            <pre><code class="python language-python">import qgrid
 ggrid_widget = qgrid.show_grid(train, show_toolbar=True, grid_options={'forceFitColumns': False,
                                                                        'defaultColumnWidth': 100})
 ggrid_widget
 </code></pre>
-    <pre><code class="python language-python">## from qgrid_widget to dataframe aftering apply filters from qgrid (Awesome tool)
+            <pre><code class="python language-python">## from qgrid_widget to dataframe aftering apply filters from qgrid (Awesome tool)
 ggrid_widget.get_changed_df()
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Pretty Print all cell outputs
      </b>
-    </summary>
-    <p>
-    </p>
-    <h4 style="color:#5462FF">
-     This means that, while normally you’d only get one output printed
-    </h4>
-    <pre><code class="python language-python">from IPython.core.interactiveshell import InteractiveShell
+            </summary>
+            <p>
+            </p>
+            <h4 style="color:#5462FF">
+                This means that, while normally you’d only get one output printed
+            </h4>
+            <pre><code class="python language-python">from IPython.core.interactiveshell import InteractiveShell
 InteractiveShell.ast_node_interactivity = "all"
 </code></pre>
-    <h4 style="color:#5462FF">
-     To go back.
-    </h4>
-    <pre><code class="python language-python">from IPython.core.interactiveshell import InteractiveShell
+            <h4 style="color:#5462FF">
+                To go back.
+            </h4>
+            <pre><code class="python language-python">from IPython.core.interactiveshell import InteractiveShell
 InteractiveShell.ast_node_interactivity = "last_expr"
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Colored
-     </b>
-     Text
-    </summary>
-    <p>
-    </p>
-    <pre><code class="python language-python">from termcolor import colored
+     </b> Text
+            </summary>
+            <p>
+            </p>
+            <pre><code class="python language-python">from termcolor import colored
 
 # --------------SHOW COLORED text---------------
 def bg(value, type='num', color='blue'):
     value = str('{:,}'.format(value)) if type == 'num' else str(value)
     return colored(' '+value+' ', color, attrs=['reverse', 'blink'])
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Print the Name of the variable
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code class="python language-python"># Credits: https://stackoverflow.com/questions/18425225/getting-the-name-of-a-variable-as-a-string
+            </summary>
+            <p>
+            </p>
+            <pre><code class="python language-python"># Credits: https://stackoverflow.com/questions/18425225/getting-the-name-of-a-variable-as-a-string
 import inspect
 
 def var2str(var):
@@ -496,21 +507,21 @@ def shape(*args):
     for df in args:
         print(f'~&gt; [{var2str(df).ljust(max_len)}] has {bg(df.shape[0])} rows, and {bg(df.shape[1])} columns.')
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       List of Libraries
      </b>
-    </summary>
-    <p>
-     <a href="./1_starter/a-data-science-framework-to-achieve-99-accuracy.html#3.1-Import-Libraries">
+            </summary>
+            <p>
+                <a href="./1_starter/a-data-science-framework-to-achieve-99-accuracy.html#3.1-Import-Libraries">
       Import Libraries
      </a>
-    </p>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python">import pandas as pd
+            </p>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python">import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -519,21 +530,21 @@ import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
 </code></pre>
-    <pre><code class="python language-python">import warnings
+            <pre><code class="python language-python">import warnings
 def ignore_warn(*args, **kwargs):
     pass
 warnings.warn = ignore_warn #ignore annoying warning (from sklearn and seaborn)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Checking file exists or not
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python"># Checking if file exists or not.
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python"># Checking if file exists or not.
 if os.path.isfile('/kaggle/input/path_to_file.csv'):
     result = pd.read_csv(''/kaggle/input/path_to_file.csv')
 else:
@@ -541,50 +552,50 @@ else:
     result.to_csv('text_data_combined.csv', index=False)
 result.sample(5)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Ploting Settings
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python">%matplotlib inline
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python">%matplotlib inline
 %precision 2
 # plt.style.use('ggplot')
 sns.set_style('white')
 plt.style.use('fivethirtyeight')
 </code></pre>
-    <pre><code class="python language-python">pd.set_option('display.float_format', lambda x: '{:.3f}'.format(x)) #Limiting floats output to 3 decimal points
+            <pre><code class="python language-python">pd.set_option('display.float_format', lambda x: '{:.3f}'.format(x)) #Limiting floats output to 3 decimal points
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Color Printed Text
      </b>
-    </summary>
-    <p>
-     <a href="https://pypi.org/project/termcolor/">
+            </summary>
+            <p>
+                <a href="https://pypi.org/project/termcolor/">
       More Colors &amp; Features
      </a>
-    </p>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python">from termcolor import colored
+            </p>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python">from termcolor import colored
 print(colored('value', 'color'))
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Organized list of strings
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code>print("Train Variant".ljust(15), train_variants_df.shape)
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code>print("Train Variant".ljust(15), train_variants_df.shape)
 print("Train Text".ljust(15), train_text_df.shape)
 print("Test Variant".ljust(15), test_variants_df.shape)
 print("Test Text".ljust(15), test_text_df.shape)
@@ -595,66 +606,65 @@ print("Test Text".ljust(15), test_text_df.shape)
 # Test Variant    (5668, 3)
 # Test Text       (5668, 2)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       See All Variables details in notebook
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python">%whos
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python">%whos
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Compute the execution time of the cell
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python">%%time
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python">%%time
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Data Pretty Printer
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python">import pprint
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python">import pprint
 stuff = ['banana', 'apple', 'stuff1', 'stuff2']
 pprint.pprint(stuff)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Clean Up Memory
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python"># Clean up memory
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python"># Clean up memory
 gc.enable()
 del model, train_features, valid_features
 gc.collect()
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Timmer
-     </b>
-     Function (Human Readable)
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <pre><code class="python language-python"># Credit: https://www.kaggle.com/tilii7/hyperparameter-grid-search-with-xgboost
+     </b> Function (Human Readable)
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <pre><code class="python language-python"># Credit: https://www.kaggle.com/tilii7/hyperparameter-grid-search-with-xgboost
 ## Importing
 from datetime import datetime
 
@@ -674,22 +684,21 @@ start_time = timer(None) # timing starts from this point for "start_time" variab
 random_search.fit(X, Y)
 timer(start_time) # timing ends here for "start_time" variable
 </code></pre>
-    <h4>
-     Result
-    </h4>
-    <pre><code class="python language-python"> Time taken: 0 hours 42 minutes and 17.04 seconds.
+            <h4>
+                Result
+            </h4>
+            <pre><code class="python language-python"> Time taken: 0 hours 42 minutes and 17.04 seconds.
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Profile Reporting
-     </b>
-     [Dataset Overview]
-    </summary>
-    <p>
-    </p>
-    <pre><code>import pandas_profiling as pp
+     </b> [Dataset Overview]
+            </summary>
+            <p>
+            </p>
+            <pre><code>import pandas_profiling as pp
 
 # Generate a report in HTML
 profile = pp.ProfileReport(train, title='Pandas Profiling Report', style={'full_width':True})
@@ -698,20 +707,19 @@ profile.to_file("output.html")
 # For command line.
 !pandas_profiling train.csv output.html
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       SweetVis
-     </b>
-     [Dataset Overview]
-    </summary>
-    <a href="https://github.com/fbdesignpro/sweetviz">
+     </b> [Dataset Overview]
+            </summary>
+            <a href="https://github.com/fbdesignpro/sweetviz">
      Github
     </a>
-    <p>
-    </p>
-    <pre><code># pip install sweetviz
+            <p>
+            </p>
+            <pre><code># pip install sweetviz
 
 # Check the link above to more info.
 import sweetviz as sv
@@ -719,16 +727,16 @@ my_report = sv.analyze(train)
 #my_report.show_html()
 my_report.show_notebook(w="100%", h="full")
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Table of Content - Bootstrap way
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>&lt;div class="list-group" id="list-tab" role="tablist"&gt;
+            </summary>
+            <p>
+            </p>
+            <pre><code>&lt;div class="list-group" id="list-tab" role="tablist"&gt;
   &lt;h3 class="list-group-item list-group-item-action active" data-toggle="list"  role="tab" aria-controls="home"&gt;Notebook Content!&lt;/h3&gt;
   &lt;a class="list-group-item list-group-item-action" data-toggle="list" href="#libraries" role="tab" aria-controls="profile"&gt;Import Libraries&lt;span class="badge badge-primary badge-pill"&gt;1&lt;/span&gt;&lt;/a&gt;
   &lt;a class="list-group-item list-group-item-action" data-toggle="list" href="#load" role="tab" aria-controls="messages"&gt;Load Data&lt;span class="badge badge-primary badge-pill"&gt;2&lt;/span&gt;&lt;/a&gt;
@@ -740,10 +748,10 @@ my_report.show_notebook(w="100%", h="full")
     &lt;a class="list-group-item list-group-item-action" data-toggle="list" href="#eval" role="tab" aria-controls="settings"&gt;Model Evaluation&lt;span class="badge badge-primary badge-pill"&gt;8&lt;/span&gt;&lt;/a&gt;
 &lt;/div&gt;
 </code></pre>
-    <h4>
-     Then at each cell, do the following
-    </h4>
-    <pre><code># header one
+            <h4>
+                Then at each cell, do the following
+            </h4>
+            <pre><code># header one
 &lt;a id='libraries'&gt;&lt;/a&gt;
 
 # Header two
@@ -751,79 +759,77 @@ my_report.show_notebook(w="100%", h="full")
 
 # and so on.
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       List &amp; Labels - Bootstrap way
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>&lt;ul style="list-style-type:square;"&gt;
+            </summary>
+            <p>
+            </p>
+            <pre><code>&lt;ul style="list-style-type:square;"&gt;
   &lt;li&gt;&lt;span class="label label-default"&gt;id&lt;/span&gt; a unique identifier for each tweet&lt;/li&gt;
   &lt;li&gt;&lt;span class="label label-primary"&gt;text &lt;/span&gt; the text of the tweet&lt;/li&gt;
   &lt;li&gt;&lt;span class="label label-success"&gt;location&lt;/span&gt;  the location the tweet was sent from (may be blank)&lt;/li&gt;
     &lt;li&gt;&lt;span class="label label-danger"&gt;keyword&lt;/span&gt;  a particular keyword from the tweet (may be blank)&lt;/li&gt;
 &lt;/ul&gt;
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Interactive Pandas Plotting
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>pd.options.plotting.backend = 'hvplot'
+            </summary>
+            <p>
+            </p>
+            <pre><code>pd.options.plotting.backend = 'hvplot'
 
 df.plot()
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Import Kaggle dataset into Google Colab
-     </b>
-     and
-     <b>
+     </b> and
+                <b>
       Submit back
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>import os
+            </summary>
+            <p>
+            </p>
+            <pre><code>import os
 os.environ['KAGGLE_USERNAME'] = "mosaabmuhammed" # username from the json file
 os.environ['KAGGLE_KEY'] = "bb6e0cba518df4df2fca479e86c7903a" # key from the json file
 !kaggle competitions download -c FacebookRecruiting # api copied from kaggle
 </code></pre>
-    <pre><code>!kaggle competitions submit planet-understanding-the-amazon-from-space -f {path/'submission.csv'} -m "My submission"
+            <pre><code>!kaggle competitions submit planet-understanding-the-amazon-from-space -f {path/'submission.csv'} -m "My submission"
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Monitor Loop Progress
      </b>
-    </summary>
-    <p>
-    </p>
-    <pre><code>for i in range(0, len(train.columns)):
+            </summary>
+            <p>
+            </p>
+            <pre><code>for i in range(0, len(train.columns)):
     # if i % 10 == 0:
     print(f"\r{i*100/train.shape[1]:0.4f}%", end='')
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Unzip zipped file
-     </b>
-     [command line]
-    </summary>
-    <p>
-    </p>
-    <pre><code># If file ends with .zip
+     </b> [command line]
+            </summary>
+            <p>
+            </p>
+            <pre><code># If file ends with .zip
 !unzip -q -n {path}/train_v2.csv.zip -d {path}
 
 # if file ends with .7z
@@ -836,17 +842,16 @@ tar = tarfile.open(Path('../input') / 'fsd2018extra' / 'fsd2018_extra.tgz')
 tar.extractall()
 tar.close()
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       Data Table
-     </b>
-     in Google Colab
-    </summary>
-    <p>
-    </p>
-    <pre><code># Enable
+     </b> in Google Colab
+            </summary>
+            <p>
+            </p>
+            <pre><code># Enable
 %load_ext google.colab.data_table
 
 # Disable
@@ -856,17 +861,16 @@ tar.close()
 from google.colab import data_table
 data_table.DataTable(data.airports(), include_index=False, num_rows_per_page=10)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
+        </details>
+        <details>
+            <summary>
+                <b>
       VSCODE
-     </b>
-     in Google Colab
-    </summary>
-    <p>
-    </p>
-    <pre><code># Install the library
+     </b> in Google Colab
+            </summary>
+            <p>
+            </p>
+            <pre><code># Install the library
 !pip install colabcode
 
 from colabcode import ColabCode
@@ -874,17 +878,8 @@ from colabcode import ColabCode
 # run colabcode with by deafult options.
 ColabCode()
 </code></pre>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+        </details>
+    </div>
+</body>
+
 </html>

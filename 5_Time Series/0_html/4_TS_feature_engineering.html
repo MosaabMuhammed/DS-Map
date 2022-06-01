@@ -337,6 +337,68 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     return agg
 </code></pre>
         </details>
+        <!-- -------------------------------------------------------- -->
+        <details>
+            <summary>
+                <b>DeterministicProcess with CalendarFourier</b>
+            </summary>
+            <pre class="language-python"><code>from statsmodels.tsa.deterministic import DeterministicProcess, CalendarFourier
+
+y = train.unstack(['store_nbr', 'family']).loc[sdate:edate]
+fourier = CalendarFourier(freq = 'W', order = 4)
+dp = DeterministicProcess(index = y.index, # dates from the training data
+                            order = 1, # The order argument refers to polynomial order: 1 for linear, 2 for quadratic, 3 for cubic, and so on.
+                            seasonal = False,
+                            constant = False,  # dummy feature for the bias (y_intercept)
+                            additional_terms = [fourier],
+                            drop = True) # drop terms if necessary to avoid collinearity
+x = dp.in_sample()
+x = x.join(calendar)
+x
+</code></pre>
+            <pre class="language-python"><code>xtest = dp.out_of_sample(steps = 16) # 16 because we are predicting next 16 days
+xtest = xtest.join(calendar)
+xtest
+    </code></pre>
+            <h3>Using LinearRegression to make a generalized line (It's usually called blending.)</h3>
+            <pre class="language-python"><code>from joblib import Parallel, delayed
+from tqdm.auto import tqdm
+from sklearn.metrics import mean_squared_log_error as msle
+from sklearn.model_selection import TimeSeriesSplit
+from sklearn.svm import SVR
+from sklearn.multioutput import MultiOutputRegressor
+
+lnr = LinearRegression(fit_intercept = True, n_jobs = -1, normalize = True)
+lnr.fit(x, y)
+
+yfit_lnr = pd.DataFrame(lnr.predict(x), index = x.index, columns = y.columns).clip(0.)
+ypred_lnr = pd.DataFrame(lnr.predict(xtest), index = xtest.index, columns = y.columns).clip(0.)
+
+svr = MultiOutputRegressor(SVR(C = 0.2, kernel = 'rbf'), n_jobs = -1)
+svr.fit(x, y)
+
+yfit_svr = pd.DataFrame(svr.predict(x), index = x.index, columns = y.columns).clip(0.)
+ypred_svr = pd.DataFrame(svr.predict(xtest), index = xtest.index, columns = y.columns).clip(0.)
+
+yfit_mean = pd.DataFrame(np.mean([yfit_svr.values, yfit_lnr.values], axis = 0), index = x.index, columns = y.columns).clip(0.)
+ypred_mean = pd.DataFrame(np.mean([ypred_lnr.values, ypred_svr.values], axis = 0), index = xtest.index, columns = y.columns).clip(0.)
+
+y_ = y.stack(['store_nbr', 'family'])
+y_['lnr'] = yfit_lnr.stack(['store_nbr', 'family'])['sales']
+y_['svr'] = yfit_svr.stack(['store_nbr', 'family'])['sales']
+y_['mean'] = yfit_mean.stack(['store_nbr', 'family'])['sales']
+
+print('='*70, 'Linear Regression', '='*70)
+print(y_.groupby('family').apply(lambda r : np.sqrt(msle(r['sales'], r['lnr']))))
+print('LNR RMSLE :', np.sqrt(msle(y, yfit_lnr)))
+print('='*70, 'SVR', '='*70)
+print(y_.groupby('family').apply(lambda r : np.sqrt(msle(r['sales'], r['svr']))))
+print('SVR RMSLE :', np.sqrt(msle(y, yfit_svr)))
+print('='*70, 'Mean', '='*70)
+print(y_.groupby('family').apply(lambda r : np.sqrt(msle(r['sales'], r['mean']))))
+print('Mean RMSLE :', np.sqrt(msle(y, yfit_mean)))
+    </code></pre>
+        </details>
     </div>
 </body>
 <script src="../../prism.js"></script>
