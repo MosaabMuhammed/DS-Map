@@ -248,19 +248,6 @@ from sklearn.metrics import roc_auc_score, roc_curve
 # Get the experiment run context.
 run = Run.get_context()
 </code></pre>
-<pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
-# Import libraries.
-from azureml.core import Run
-import pandas as pd
-import numpy as np
-import joblib, os
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score, roc_curve
-
-# Get the experiment run context.
-run = Run.get_context()
-</code></pre>
 <pre><code class="python language-python"># Load the diabetes dataset.
 print("Loading Data...")
 diabetes = pd.read_csv("diabetes.csv")

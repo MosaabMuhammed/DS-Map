@@ -1,44 +1,42 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1>
-   Hyperparameter Optimization
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <details>
-    <summary>
-     <b style="font-size:20px">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Hypterparameter Optimization
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <h1>
+        Hyperparameter Optimization
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <details>
+            <summary>
+                <b style="font-size:20px">
       GridSearchCV
      </b>
-    </summary>
-    <p style="margin: 0">
-    </p>
-    <p>
-     1)
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Hyper-Parameter-optimization">
+            </summary>
+            <p style="margin: 0">
+            </p>
+            <p>
+                1)
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/1_step-by-step-diabetes-classification-knn-detailed.html#Hyper-Parameter-optimization">
       Explanation of
       <b>
        GridSearch
       </b>
       .
      </a>
-     <br/>
-     2)
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Hyperparameter-Tunning-&amp;-Cross-Validation">
+                <br/> 2)
+                <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/10_%20K-Nearest%20Neighbors/2_KNN%20-%20Full%20Pipeline.html#Hyperparameter-Tunning-&amp;-Cross-Validation">
       Hyperparameter Tunning &amp; Cross validation
      </a>
-    </p>
-    <pre><code>
+            </p>
+            <pre class="language-python"><code>
 # Load the model
 from sklearn.model_selection import GridSearchCV
 
@@ -65,45 +63,43 @@ results.sort_values('rank_test_score')
 # Get the best model.
 knn_cv.best_estimator_
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b style="font-size:20px">
+        </details>
+        <details>
+            <summary>
+                <b style="font-size:20px">
       Randomized Search
      </b>
-    </summary>
-    <p>
-    </p>
-    <h4>
-     NOTE:
-    </h4>
-    <p>
-     <b>
+            </summary>
+            <p>
+            </p>
+            <h4>
+                NOTE:
+            </h4>
+            <p>
+                <b>
       Reciprocal Distribution
-     </b>
-     is useful when you have no idea what the scale of the hyperparameter should be.
-    </p>
-    <p>
-     <b>
+     </b> is useful when you have no idea what the scale of the hyperparameter should be.
+            </p>
+            <p>
+                <b>
       Exponential Distribution
-     </b>
-     is best when you know (more or less) what the scale of the hyperparameter should be.
-    </p>
-    see more distributions from
-    <a href="https://docs.scipy.org/doc/scipy/reference/stats.html">
+     </b> is best when you know (more or less) what the scale of the hyperparameter should be.
+            </p>
+            see more distributions from
+            <a href="https://docs.scipy.org/doc/scipy/reference/stats.html">
      here
     </a>
-    <br/>
-    <ul>
-     <details>
-      <summary>
-       <b>
+            <br/>
+            <ul>
+                <details>
+                    <summary>
+                        <b>
         MultiNomial
        </b>
-      </summary>
-      <p>
-      </p>
-      <pre><code># Import Libraries
+                    </summary>
+                    <p>
+                    </p>
+                    <pre class="language-python"><code># Import Libraries
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import make_pipeline
@@ -134,16 +130,16 @@ rand.best_score_
 # Which combination of parameters produced the best score.
 rand.best_params_
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       <b>
+                </details>
+                <details>
+                    <summary>
+                        <b>
         SVR
        </b>
-      </summary>
-      <p>
-      </p>
-      <pre><code>from sklearn.model_selection import RandomizedSearchCV
+                    </summary>
+                    <p>
+                    </p>
+                    <pre class="language-python"><code>from sklearn.model_selection import RandomizedSearchCV
 from scipy.stats import expon, reciprocal
 
 # see https://docs.scipy.org/doc/scipy/reference/stats.html
@@ -162,73 +158,71 @@ rnd_search = RandomizedSearchCV(svm_reg, param_distributions=param_distribs,
                                 verbose=2, random_state=42)
 rnd_search.fit(housing_prepared, housing_labels)
 </code></pre>
-     </details>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b style="font-size:20px">
+                </details>
+            </ul>
+        </details>
+        <details>
+            <summary>
+                <b style="font-size:20px">
       Bayesian Optimization
      </b>
-    </summary>
-    <p>
-    </p>
-    <ul>
-     <details>
-      <summary>
-       <b>
+            </summary>
+            <p>
+            </p>
+            <ul>
+                <details>
+                    <summary>
+                        <b>
         Which parameters to optimize
        </b>
-      </summary>
-      <p>
-       <img alt="" src="imgs/20200725-170244.png"/>
-      </p>
-     </details>
-     <details>
-      <summary>
-       <b>
+                    </summary>
+                    <p>
+                        <img alt="" src="imgs/20200725-170244.png" />
+                    </p>
+                </details>
+                <details>
+                    <summary>
+                        <b>
         BayesianOptimization
        </b>
-      </summary>
-      <pre><code>!pip install bayesian-optimization
+                    </summary>
+                    <pre class="language-python"><code>!pip install bayesian-optimization
 from bayes_opt import BayesianOptimization
 </code></pre>
-      <details>
-       <summary>
-        <b>
+                    <details>
+                        <summary>
+                            <b>
          LogisticRegression
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># Define LogisticRegression CV
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code># Define LogisticRegression CV
+# Define LogisticRegression CV
 def lg_cv(C, 
-          penalty, 
-          solver, 
-          data, targets):
+            penalty, 
+            solver, 
+            data, targets):
     alg = LogisticRegression(C=C,
-                                         penalty=penalty,
-                                         solver=solver,
-                                         random_state=42)
-    alg.fit(data, targets)
-    y_pred = alg.predict(X_test)
-    score = metrics.accuracy_score(y_test, y_pred)
-    return score
+                            penalty=penalty,
+                            solver=solver,
+                            random_state=SEED)
+    return cross_val_score(alg, data, targets, cv=3, scoring="f1", n_jobs=-1).mean()
 
 # Optimization Strategy
 def optimize_lg(data, targets):
+    penalty_dict = {0: "l1",
+                    1: "l2",
+                    2: "none"}
+    solver_dict  = {0: "newton-cg",
+                    1: "lbfgs",
+                    2: "sag",
+                    3: "saga"}
+
     def lg_crossval(expC, 
                     expPenalty,
                     expSolver
                     ):
-        penalty_dict = {0: "l1",
-                        1: "l2",
-                        2: "none"}
-        solver_dict  = {0: "newton-cg",
-                        1: "lbfgs",
-                        2: "sag",
-                        3: "saga"}
-
         C       = 10 ** expC
         penalty = penalty_dict[int(expPenalty)]
         if penalty in ["l2", "none"]:
@@ -236,81 +230,102 @@ def optimize_lg(data, targets):
         else:
             solver = "liblinear"
         return lg_cv(C=C, 
-                     penalty=penalty,
-                     solver=solver,
-                     data=data, targets=targets)
+                        penalty=penalty,
+                        solver=solver,
+                        data=data, targets=targets)
 
     optimizer = BayesianOptimization(
         f=lg_crossval,
         pbounds={'expC': (-2, .5),
-                 'expPenalty': (0, 2.9),
-                 'expSolver': (0, 3.9)
-                 },
-        random_state=42,
+                    'expPenalty': (0, 2.9),
+                    'expSolver': (0, 3.9)
+                    },
+        random_state=SEED,
         verbose=2
     )
-    optimizer.maximize(n_iter=20, init_points=10)
+    optimizer.maximize(n_iter=10, init_points=10)
 
-    print(f"~&gt; Best parameters: {optimizer.max}")
-    return optimizer.max['params']
+    print(f"~> Best parameters: {optimizer.max}")
+    best_params = optimizer.max['params']
+    if penalty_dict[int(best_params['expPenalty'])] in ["l2", "none"]:
+        solver = solver_dict[int(best_params['expSolver'])]
+    else:
+        solver = "liblinear"
+    alg = LogisticRegression(C=10**best_params['expC'],
+                        penalty=penalty_dict[int(best_params['expPenalty'])],
+                        solver=solver,
+                        random_state=SEED)
+    alg.fit(data, targets)
+    return alg, optimizer.max['target'], best_params
 
 # Run the optimization
 best_params = optimize_lg(X_train, y_train)
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          LinearSVC
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>def svc_cv(C, loss, data, targets):
-    alg = Pipeline([
-        ("scaler", MinMaxScaler()),
-        ("linear_svc", OneVsRestClassifier(LinearSVC(C=C,
-                                                     penalty="l2",
-                                                     loss=loss,
-                                                     random_state=42)))
-    ])
-    alg.fit(data, targets)
-    y_pred = alg.predict(X_test)
-    return metrics.accuracy_score(y_test, y_pred)
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code>def svc_cv(C, loss, dual, data, targets):
+    alg = LinearSVC(C=C,
+                    penalty="l2",
+                    loss=loss,
+                    class_weight="balanced",
+                    dual=dual,
+                    random_state=SEED)
+    return cross_val_score(alg, data, targets, cv=3, scoring="f1", n_jobs=-1).mean()
 
-def optimize_svc(data, targets):
-    def svc_crossval(expC, expLoss):
-        loss_dict = {0: "hinge",
-                     1: "squared_hinge"}
-        C = 10 ** expC
-        loss    = loss_dict[int(expLoss)]
-        return svc_cv(C=C, loss=loss, data=data, targets=targets)
+def optimize_svc(data, target):
+    def _svc_crossval(C, loss):
+        dual = True if (data.shape[1] > data.shape[0]) else False
+        dual = True if (loss_dict[int(loss)] == 'hinge') else dual
+        return svc_cv(C=10**C,
+                        loss=loss_dict[int(loss)],
+                        dual=dual,
+                        data=data,
+                        targets=target)
+
+    loss_dict = {0: "hinge",
+                1: "squared_hinge"}
 
     optimizer = BayesianOptimization(
-        f=svc_crossval,
-        pbounds={'expC': (-6, 5),
-                 'expLoss': (0, 1.9)},
-        random_state=42,
+        f=_svc_crossval,
+        pbounds={'C': (-9, 9),
+                    'loss': (0, 1.999)},
+        random_state=SEED,
         verbose=2,
-
     )
-    optimizer.maximize(n_iter=40, init_points=10)
+    optimizer.maximize(n_iter=10, init_points=10)
 
-    print(f"~&gt; Final Result: {optimizer.max}")
+    best_params = optimizer.max['params']
+    dual = True if (data.shape[1] > data.shape[0]) else False
+    dual = True if (loss_dict[int(best_params['loss'])] == 'hinge') else dual
+    alg = LinearSVC(C=10**best_params['C'],
+                    penalty="l2",
+                    loss=loss_dict[int(best_params['loss'])],
+                    dual=dual,
+                    class_weight="balanced",
+                    random_state=SEED)
+    alg.fit(data, target)
+    return alg, optimizer.max['target'], best_params
 
 # Optimize
 optimize_svc(X_train, y_train)
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          Kernel SVM
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>def svc_cv(C, kernel, data, targets):
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code>def svc_cv(C, kernel, data, targets):
     alg = Pipeline([
         ("scaler", StandardScaler()),
         ("linear_svc", OneVsOneClassifier(SVC(C=C,
@@ -347,20 +362,21 @@ def optimize_svc(data, targets):
 # Optimize
 optimize_svc(X_train, y_train)
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          RidgeClassifier
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># Define Ridge CV
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code># Define Ridge CV
+from sklearn.linear_model import RidgeClassifier
+
 def ridge_cv(alpha, data, targets):
-    alg = RidgeClassifier(alpha=alpha, random_state=33)
-    score = Stratified_kfolds(alg, data, targets)
-    return score
+    alg = RidgeClassifier(alpha=alpha, random_state=SEED)
+    return cross_val_score(alg, data, targets, cv=3, scoring="f1", n_jobs=-1).mean()
 
 # Optimization Strategy
 def optimize_ridge(data, targets):
@@ -371,26 +387,30 @@ def optimize_ridge(data, targets):
     optimizer = BayesianOptimization(
         f=ridge_crossval,
         pbounds={'expAlpha': (-7, 5)},
-        random_state=33,
+        random_state=SEED,
         verbose=2
     )
-    optimizer.maximize(n_iter=20, init_points=5)
+    optimizer.maximize(n_iter=10, init_points=10)
 
-    print(f"~&gt; Best parameters: {optimizer.max}")
+    # print(f"~> Best parameters: {optimizer.max}")
+    best_params = optimizer.max['params']
+    alg = RidgeClassifier(alpha=10 ** best_params['expAlpha'], random_state=SEED)
+    alg.fit(data, targets)
+    return alg, optimizer.max['target'], best_params
 
 # Run the optimization
 optimize_ridge(X, y)
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          LassoClassifier
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>from sklearn.linear_models import Lasso
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code>from sklearn.linear_models import Lasso
 
 # Define Lasso CV
 def lasso_cv(alpha, data, targets):
@@ -417,16 +437,16 @@ def optimize_lasso(data, targets):
 # Run the optimization
 optimize_lasso(X, y)
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          Multi-nomial Naive Bayes
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># CV Strategy
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code># CV Strategy
 def nb_cv(alpha, data, targets):
     alg = MultinomialNB(alpha=alpha)
     return Stratified_kfolds(alg, data, targets)
@@ -450,16 +470,16 @@ optimizer.maximize(
 
 print(f"~&gt; Best Result: {optimizer.max}")
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          Gaussian Naive Bayes
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># CV Strategy
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code># CV Strategy
 def nb2_cv(alpha, data, targets):
     alg = GaussianNB(var_smoothing=alpha)
     return Stratified_kfolds(alg, data, targets)
@@ -482,87 +502,135 @@ optimizer.maximize(
 
 print(f"~&gt; Best Result: {optimizer.max}")
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          Decision Tree
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># CV Strategy
-def dt_cv(criterion,
-          splitter,
-          max_depth,
-          min_samples_split,
-          min_samples_leaf,
-          max_features,
-          data, targets):
-    alg = DecisionTreeClassifier(criterion=criterion,
-                                 splitter=splitter,
-                                 max_depth=max_depth,
-                                 min_samples_split=min_samples_split,
-                                 min_samples_leaf=min_samples_leaf,
-                                 max_features=max_features,
-                                 random_state=42)
-    alg.fit(data, targets)
-    y_pred = alg.predict(X_test)
-    return metrics.accuracy_score(y_test, y_pred)
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code>def dt_cv(criterion,
+    splitter,
+    max_depth,
+    min_samples_split,
+    min_samples_leaf,
+    max_features,
+    data, targets):
+alg = DecisionTreeClassifier(criterion=criterion,
+                            splitter=splitter,
+                            max_depth=max_depth,
+                            min_samples_split=min_samples_split,
+                            min_samples_leaf=min_samples_leaf,
+                            max_features=max_features,
+                            random_state=SEED)
+return cross_val_score(alg, data, targets, cv=3, scoring="f1", n_jobs=-1).mean()
 
 def optimize_dt(data, targets):
-    def dt_crossval(criterion, splitter, max_depth, min_samples_split, min_samples_leaf, max_features):
-        criterion_dict = {0: "gini",
-                          1: "entropy"}
-        splitter_dict  = {0: "best",
-                          1: "random"}
-        maxFeat_dict   = {0: "sqrt",
-                          1: "log2",
-                          2: None}
+criterion_dict = {0: "gini",
+                    1: "entropy"}
+splitter_dict  = {0: "best",
+                    1: "random"}
+maxFeat_dict   = {0: "sqrt",
+                    1: "log2",
+                    2: None}
+def dt_crossval(criterion, splitter, max_depth, min_samples_split, min_samples_leaf, max_features):
+    criterion    = criterion_dict[int(criterion)]
+    splitter     = splitter_dict[int(splitter)]
+    max_depth    = int(max_depth)
+    max_features = maxFeat_dict[int(max_features)]
 
-        criterion    = criterion_dict[int(criterion)]
-        splitter     = splitter_dict[int(splitter)]
-        max_depth    = int(max_depth)
-        max_features = maxFeat_dict[int(max_features)]
+    return dt_cv(criterion=criterion,
+                splitter=splitter,
+                max_depth=max_depth,
+                min_samples_split=min_samples_split,
+                min_samples_leaf=min_samples_leaf,
+                max_features=max_features,
+                data=data, targets=targets)
 
-        return dt_cv(criterion=criterion,
-                    splitter=splitter,
-                    max_depth=max_depth,
-                    min_samples_split=min_samples_split,
-                    min_samples_leaf=min_samples_leaf,
-                    max_features=max_features,
-                    data=data, targets=targets)
+optimizer = BayesianOptimization(
+    f=dt_crossval,
+    pbounds={'criterion': (0, 1.999),
+            'splitter': (0, 1.999),
+            'max_depth': (1, 50),
+            "min_samples_split": (0.05, 1),
+            "min_samples_leaf": (0.05, .5),
+            "max_features": (0, 2.999)},
+    random_state=SEED,
+    verbose=2
+)
+# Optimize
+optimizer.maximize(
+    n_iter=10,
+    init_points=10
+)
+best_params = optimizer.max['params']
+alg = DecisionTreeClassifier(criterion=criterion_dict[int(best_params['criterion'])],
+                            splitter=splitter_dict[int(best_params['splitter'])],
+                            max_depth=int(best_params['max_depth']),
+                            min_samples_split=best_params['min_samples_split'],
+                            min_samples_leaf=best_params['min_samples_leaf'],
+                            max_features=maxFeat_dict[int(best_params['max_features'])],
+                            random_state=SEED)
+alg.fit(data, targets)
+return alg, optimizer.max['target'], best_params
+</code></pre>
+                    </details>
+                    <details>
+                        <summary><b>Random Forest</b></summary>
+                        <pre class="language-python"><code>def rfc_cv(n_estimators, min_samples_split, max_features, data, targets):
+    alg = RandomForestClassifier(
+        n_estimators=n_estimators,
+        min_samples_split=min_samples_split,
+        max_features=max_features,
+        random_state=SEED
+    )
+    return cross_val_score(alg, data, targets, scoring='f1', cv=3, n_jobs=-1).mean()
 
+def optimize_rfc(data, targets):
+    def rfc_crossval(n_estimators, min_samples_split, max_features):
+        return rfc_cv(
+            n_estimators=int(n_estimators),
+            min_samples_split=int(min_samples_split),
+            max_features=max(min(max_features, 0.999), 1e-3),
+            data=data,
+            targets=targets
+        )
+    
     optimizer = BayesianOptimization(
-        f=dt_crossval,
-        pbounds={'criterion': (0, 1.999),
-                 'splitter': (0, 1.999),
-                 'max_depth': (1, 50),
-                 "min_samples_split": (0.05, 1),
-                 "min_samples_leaf": (0.05, .5),
-                 "max_features": (0, 2.999)},
-        random_state=42,
+        f=rfc_crossval,
+        pbounds={
+            'n_estimators': (10, 250),
+            'min_samples_split': (2, 25),
+            'max_features': (0.1, 0.999),
+        },
+        random_state=SEED,
         verbose=2
     )
-    # Optimize
-    optimizer.maximize(
-        n_iter=50,
-        init_points=60
-    )
-    print(f"~&gt; Best Result: {optimizer.max}")
+    
+    optimizer.maximize(n_iter=10, init_points=10)
 
-optimize_dt(X_train, y_train)
+    best_params = optimizer.max['params']
+    alg = RandomForestClassifier(
+        n_estimators=int(best_params['n_estimators']),
+        min_samples_split=int(best_params['min_samples_split']),
+        max_features=max(min(best_params['max_features'], 0.999), 1e-3),
+        random_state=SEED
+    )
+    alg.fit(data, targets)
+    return alg, optimizer.max['target'], best_params
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          XGBoostClassifier
         </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code># Importing
+                        </summary>
+                        <p>
+                        </p>
+                        <pre class="language-python"><code># Importing
 from sklearn.model_selection import cross_val_score
 from bayes_opt import BayesianOptimization
 
@@ -622,16 +690,10 @@ y_pred_valid = alg.predict(X_valid)
 print(f"F1_score on train data: {bg(f1_score(y_train, y_pred_train))}")
 print(f"F1_score on Valid data: {bg(f1_score(y_valid, y_pred_valid))}")
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
-         Stacking
-        </b>
-       </summary>
-       <p>
-       </p>
-       <pre><code>from mlxtend.classifier import StackingClassifier
+                    </details>
+                    <details>
+                        <summary><b>Stacking</b></summary>
+                        <pre class="language-python"><code>from mlxtend.classifier import StackingClassifier
 
 def stacking1_cv(C, data, targets):
     lr    = LogisticRegression(C=C, penalty='l2', n_jobs=-1)
@@ -653,82 +715,82 @@ optimizer.maximize(n_iter=10, init_points=10)
 
 print(f"~&gt; Final Result: {optimizer.max}")
 </code></pre>
-      </details>
-      <details>
-       <summary>
-        <b>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          LightGBM
         </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/2_Bayesian%20Optimization%20for%20LightGBM.html">
+                        </summary>
+                        <p>
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="./13_hyperparameter_opt/2_Bayesian%20Optimization%20for%20LightGBM.html">
           Using
           <b>
            Bayesian Optimization
           </b>
           library
          </a>
-        </li>
-        <li>
-         <a href="./6_data_processing/hyperopt_for_lightgbm_with_f1_score.html">
+                            </li>
+                            <li>
+                                <a href="./6_data_processing/hyperopt_for_lightgbm_with_f1_score.html">
           Using
           <b>
            hyperopt
           </b>
           library
          </a>
-        </li>
-       </ul>
-      </details>
-      <details>
-       <summary>
-        <b>
+                            </li>
+                        </ul>
+                    </details>
+                    <details>
+                        <summary>
+                            <b>
          Catboost
         </b>
-       </summary>
-       <p>
-       </p>
-       <ul>
-        <li>
-         <a href="./6_data_processing/hyperopt_for_catboost.html">
+                        </summary>
+                        <p>
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="./6_data_processing/hyperopt_for_catboost.html">
           Using
           <b>
            hyperopt
           </b>
           library
          </a>
-        </li>
-       </ul>
-      </details>
-      <li>
-       <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Bayesian%20Optimization%20From%20Scratch/0_html/1_Bayesian%20Optimization.html">
+                            </li>
+                        </ul>
+                    </details>
+                    <li>
+                        <a href="./13_hyperparameter_opt/1_Bayesian%20Optimization.html">
         For
         <b>
-         Sklearn Models
+         Sklearn Models [SVM, Random Forest]
         </b>
        </a>
-      </li>
-     </details>
-     <details>
-      <summary>
-       <b>
+                    </li>
+                </details>
+                <details>
+                    <summary>
+                        <b>
         skopt
        </b>
-      </summary>
-      <ul>
-       <li>
-        <details>
-         <summary>
-          <b>
+                    </summary>
+                    <ul>
+                        <li>
+                            <details>
+                                <summary>
+                                    <b>
            Random Forest
           </b>
-         </summary>
-         <p>
-         </p>
-         <pre><code>
+                                </summary>
+                                <p>
+                                </p>
+                                <pre class="language-python"><code>
 from functools import partial
 from sklearn import ensemble, metrics, model_selection
 
@@ -796,31 +858,31 @@ if __name__ == "__main__":
                            result.x))
     print(best_params)
 </code></pre>
-         <pre><code>## Show the plot of iterations.
+                                <pre class="language-python"><code>## Show the plot of iterations.
 from skopt.plots import plot_convergence
 plot_convergence(result)
 </code></pre>
-        </details>
-       </li>
-      </ul>
-     </details>
-     <details>
-      <summary>
-       <b>
+                            </details>
+                        </li>
+                    </ul>
+                </details>
+                <details>
+                    <summary>
+                        <b>
         hyperopt
        </b>
-      </summary>
-      <ul>
-       <li>
-        <details>
-         <summary>
-          <b>
+                    </summary>
+                    <ul>
+                        <li>
+                            <details>
+                                <summary>
+                                    <b>
            Random Forest
           </b>
-         </summary>
-         <p>
-         </p>
-         <pre><code>from functools import partial
+                                </summary>
+                                <p>
+                                </p>
+                                <pre class="language-python"><code>from functools import partial
 from sklearn import ensemble, metrics, model_selection
 from hyperopt import hp, fmin, tpe, Trials
 from hyperopt.pyll.base import scope
@@ -871,27 +933,27 @@ if __name__ == "__main__":
                 trials=trials)
     print(hopt)
 </code></pre>
-        </details>
-       </li>
-      </ul>
-     </details>
-     <details>
-      <summary>
-       <b>
+                            </details>
+                        </li>
+                    </ul>
+                </details>
+                <details>
+                    <summary>
+                        <b>
         Optuna
        </b>
-      </summary>
-      <ul>
-       <li>
-        <details>
-         <summary>
-          <b>
+                    </summary>
+                    <ul>
+                        <li>
+                            <details>
+                                <summary>
+                                    <b>
            Random Forest
           </b>
-         </summary>
-         <p>
-         </p>
-         <pre><code>from functools import partial
+                                </summary>
+                                <p>
+                                </p>
+                                <pre class="language-python"><code>from functools import partial
 from sklearn import ensemble, metrics, model_selection
 import optuna
 
@@ -930,19 +992,19 @@ if __name__ == "__main__":
 
     study.optimize(optimization_function, n_trials=15)
 </code></pre>
-        </details>
-       </li>
-       <li>
-        <details>
-         <summary>
-          <b>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                                <summary>
+                                    <b>
            LightGBM
           </b>
-         </summary>
-         <a href="./13_hyperparameter_opt/Optuna_LGBM.html">
+                                </summary>
+                                <a href="./13_hyperparameter_opt/Optuna_LGBM.html">
           Another Notebook with plot_optimization_history
          </a>
-         <pre><code>from sklearn.model_selection import KFold, StratifiedKFold
+                                <pre class="language-python"><code>from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.metrics import log_loss
 
 import lightgbm as lgb
@@ -1031,22 +1093,14 @@ from optuna.integration import lightgbm as lgb
 lgb.plot_importance(model, max_num_features=10, figsize=(10,10))
 plt.show()
 </code></pre>
+                            </details>
+                        </li>
+                    </ul>
+                </details>
+            </ul>
         </details>
-       </li>
-      </ul>
-     </details>
-    </ul>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
 </html>
