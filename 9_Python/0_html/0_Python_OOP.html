@@ -1153,20 +1153,44 @@ a + b
       File
      </b>
             </summary>
-            <p>
-                <details>
-                    <summary>
-                        <b>
+            <details>
+                <summary>
+                    <b>
         See Files in Current Directory
        </b>
-                    </summary>
-                    <p>
-                    </p>
-                    <pre class="language-python"><code>import os
+                </summary>
+                <pre class="language-python"><code>import os
 print(os.listdir("../input"))
 </code></pre>
-                </details>
-            </p>
+            </details>
+
+            <details>
+                <summary>
+                    <b>
+    Create folder if doesn't exists
+    </b>
+                </summary>
+                <pre class="language-python"><code>import pathlib
+pathlib.Path('/tmp/sub1/sub2').mkdir(parents=True, exist_ok=True)
+    </code></pre>
+            </details>
+
+            <details>
+                <summary>
+                    <b>
+    Check if file exists
+    </b>
+                </summary>
+                <pre class="language-python"><code>from pathlib import Path
+path = Path(path_to_file)
+path.is_file()
+
+from os.path import exists
+file_exists = exists(path_to_file)
+</code></pre>
+            </details>
+            <br></details>
+
         </details>
         <details>
             <summary>

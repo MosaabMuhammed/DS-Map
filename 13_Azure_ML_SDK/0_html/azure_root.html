@@ -1,62 +1,69 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
+       <head>
+              <meta charset="utf-8" />
+              <title>
+                     Made with Remarkable!
+              </title>
+              <link
+                     href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"
+                     rel="stylesheet" />
+              <style type="text/css">
    body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
   </style>
- </head>
- <body>
-  <h1 id="azure-ml-sdk">
-   Azure ML SDK
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <details>
-    <summary>
-     <b>
-      Install
-     </b>
-    </summary>
-    <pre><code class="python language-python">!pip install --upgrade "azureml-sdk[notebooks,azureml-widgets,automl,explain]"
+       </head>
+       <body>
+              <h1 id="azure-ml-sdk">
+                     Azure ML SDK
+              </h1>
+              <div style="width:1000px;margin:auto">
+                     <details>
+                            <summary>
+                                   <b>
+                                          Install
+                                   </b>
+                            </summary>
+                            <pre><code class="python language-python">!pip install --upgrade "azureml-sdk[notebooks,azureml-widgets,automl,explain]"
 
 import azure.core
 print(f"azure version {azure.core.VERSION}")
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Running an Experiment
-     </b>
-    </summary>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Connecting to Your Workspace
-        </b>
-       </summary>
-       This is based on a json file in your configuration, where you save your subscription details.
-       <pre><code class="python language-python">from azureml.core import Workspace
+                     </details>
+                     <details>
+                            <summary>
+                                   <b>
+                                          Running an Experiment
+                                   </b>
+                            </summary>
+                            <ul>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Connecting to
+                                                               Your Workspace
+                                                        </b>
+                                                 </summary>
+                                                 This is based on a json file in
+                                                 your configuration, where you
+                                                 save your subscription details.
+                                                 <pre><code class="python language-python">from azureml.core import Workspace
 
 ws = Workspace.from_config()
 print(ws.name, "Workspace loaded")
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Running an Experiment &amp; Viewing Results
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core import Experiment
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Running an
+                                                               Experiment &amp;
+                                                               Viewing Results
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core import Experiment
 import pandas as pd
 import matplotlib.pyplot as plt
 %matplotlib inline
@@ -71,13 +78,13 @@ print("Starting epxeriment:", experiment.name)
 # Load the data from a local file.
 data = pd.read_csv("data/diabetes.csv")
 </code></pre>
-       <pre><code class="python language-python">##### Example of logging a number.
+                                                 <pre><code class="python language-python">##### Example of logging a number.
 # Count the rows and log the result.
 row_count = (len(data))
 run.log('observations', row_count)
 print(f"Analysing {row_count} rows of data.")
 </code></pre>
-       <pre><code class="python language-python">##### Example of logging an image.
+                                                 <pre><code class="python language-python">##### Example of logging an image.
 # Plot and log the count of diabetic vs non-diabetic patients.
 diabetic_counts = data['Diabetic'].value_counts()
 
@@ -91,18 +98,18 @@ plt.show()
 
 run.log_image(name='label distribution', plot=fig)
 </code></pre>
-       <pre><code class="python language-python">#### Example of logging a list.
+                                                 <pre><code class="python language-python">#### Example of logging a list.
 # Log distinct pregancy counts.
 pregnancies = data.Pregnancies.unique()
 run.log_list("pregnancy categories", pregnancies)
 </code></pre>
-       <pre><code class="python language-python">##### Example of logging a number.
+                                                 <pre><code class="python language-python">##### Example of logging a number.
 # Count the rows and log the result.
 row_count = (len(data))
 run.log('observations', row_count)
 print(f"Analysing {row_count} rows of data.")
 </code></pre>
-       <pre><code class="python language-python">#### Example of logging a summary statistics for numeric columns.
+                                                 <pre><code class="python language-python">#### Example of logging a summary statistics for numeric columns.
 med_columns = ["PlasmaGlucose", "DiastolicBloodPressure"]
 summary_stats = data[med_columns].describe().to_dict()
 for col in summary_stats:
@@ -111,14 +118,14 @@ for col in summary_stats:
     for index in range(len(keys)):
         run.log_row(col, stat=keys[index], value=values[index])
 </code></pre>
-       <pre><code class="python language-python"># save a sample of the data and upload it to the experiment output.
+                                                 <pre><code class="python language-python"># save a sample of the data and upload it to the experiment output.
 data.sample(100).to_csv("sample.csv", index=False, header=True)
 run.upload_file(name="outputs/sample.csv", path_or_stream="./sample.csv")
 
 # Complete the run
 run.complete()
 </code></pre>
-       <pre><code class="python language-python">########## View experiemnt results.
+                                                 <pre><code class="python language-python">########## View experiemnt results.
 import json
 
 # Get run details.
@@ -133,21 +140,22 @@ print(json.dumps(metrics, indent=2))
 files = run.get_file_names()
 print(json.dumps(files, indent=2))
 </code></pre>
-       <pre><code class="python language-python">### Get the details of the run experiment while it's running or when it's finished.
+                                                 <pre><code class="python language-python">### Get the details of the run experiment while it's running or when it's finished.
 from azureml.widgets import RunDetails
 
 RunDetails(run).show()
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Running an Experiment Script
-        </b>
-       </summary>
-       <pre><code class="python language-python"># Here we try to run an experiment from a python script
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Running an
+                                                               Experiment Script
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python"># Here we try to run an experiment from a python script
 
 import os, shutil
 
@@ -159,7 +167,7 @@ os.makedirs(folder_name, exist_ok=True)
 # Copy the data file into the experiment folder.
 shutil.copy("data/diabetes.csv", os.path.join(folder_name, "diabetes.csv"))
 </code></pre>
-       <pre><code class="python language-python">%%writefile $folder_name/diabetes_experiment.py
+                                                 <pre><code class="python language-python">%%writefile $folder_name/diabetes_experiment.py
 from azureml.core import Run
 import pandas as pd
 import os
@@ -175,20 +183,20 @@ row_count = (len(data))
 run.log("Observations", row_count)
 print(f"Analysing {row_count} rows of data.")
 </code></pre>
-       <pre><code class="python language-python"># Count and log label counts.
+                                                 <pre><code class="python language-python"># Count and log label counts.
 diabetic_counts = data['Diabetic'].value_counts()
 print(diabetic_counts)
 for k, v in diabetic_counts.items():
     run.log("label:" + str(k), v)
 </code></pre>
-       <pre><code class="python language-python"># Save a sample of the data in the outputs folder (which gets uploaded automatically).
+                                                 <pre><code class="python language-python"># Save a sample of the data in the outputs folder (which gets uploaded automatically).
 os.makedirs("outputs", exist_ok=True)
 data.sample(100).to_csv("outputs/sample.csv", index=False, header=True)
 
 # Compelete the run.
 run.complete()
 </code></pre>
-       <pre><code class="python language-python">import os, sys
+                                                 <pre><code class="python language-python">import os, sys
 from azureml.core import Experiment, RunConfiguration, ScriptRunConfig
 from azureml.widgets import RunDetails
 
@@ -206,7 +214,7 @@ run        = experiment.submit(config=src)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-       <pre><code class="python language-python"># Get logged metrics.
+                                                 <pre><code class="python language-python"># Get logged metrics.
 metrics = run.get_metrics()
 for key in metrics.keys():
     print(key, metrics.get(key))
@@ -215,16 +223,19 @@ print("\n")
 for file in run.get_file_names():
     print(file)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Viewing Experiment Run History &amp; Cleaning Up
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os, sys
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Viewing
+                                                               Experiment Run
+                                                               History &amp;
+                                                               Cleaning Up
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os, sys
 from azureml.core import Experiment, RunConfiguration, ScriptRunConfig
 from azureml.widgets import RunDetails
 
@@ -242,7 +253,7 @@ run        = experiment.submit(config=src)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-       <pre><code class="python language-python"># Get logged metrics.
+                                                 <pre><code class="python language-python"># Get logged metrics.
 metrics = run.get_metrics()
 for key in metrics.keys():
     print(key, metrics.get(key))
@@ -251,7 +262,7 @@ print("\n")
 for file in run.get_file_names():
     print(file)
 </code></pre>
-       <pre><code class="python language-python">from azureml.core import Experiment, Run
+                                                 <pre><code class="python language-python">from azureml.core import Experiment, Run
 
 diabetes_experiment = ws.experiments['diabetes-experiment']
 for logged_run in diabetes_experiment.get_runs():
@@ -260,41 +271,43 @@ for logged_run in diabetes_experiment.get_runs():
     for key in metrics.keys():
         print(f"- {key} {metrics.get(key)}")
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Running a Training Script
-     </b>
-    </summary>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Connecting to Your Workspace
-        </b>
-       </summary>
-       <pre><code class="python language-python">import azureml.core
+                                          </details>
+                                   </li>
+                            </ul>
+                     </details>
+                     <details>
+                            <summary>
+                                   <b>
+                                          Running a Training Script
+                                   </b>
+                            </summary>
+                            <ul>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Connecting to
+                                                               Your Workspace
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import azureml.core
 from azureml.core import Workspace
 
 # Load the workspace from the saved config file.
 ws = Workspace.from_config()
 print(f"Ready to use Azure ML {azureml.core.VERSION} to work with {ws.name}")
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Creating a Training Script
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os, shutil
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Creating a
+                                                               Training Script
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os, shutil
 
 # Create a folder for the experiment files.
 training_folder = "diabetes-training"
@@ -303,7 +316,7 @@ os.makedirs(training_folder, exist_ok=True)
 # Copy the data file into the experiment folder.
 shutil.copy("data/diabetes.csv", os.path.join(training_folder, "diabetes.csv"))
 </code></pre>
-       <pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
+                                                 <pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
 # Import libraries.
 from azureml.core import Run
 import pandas as pd
@@ -316,20 +329,7 @@ from sklearn.metrics import roc_auc_score, roc_curve
 # Get the experiment run context.
 run = Run.get_context()
 </code></pre>
-       <pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
-# Import libraries.
-from azureml.core import Run
-import pandas as pd
-import numpy as np
-import joblib, os
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score, roc_curve
-
-# Get the experiment run context.
-run = Run.get_context()
-</code></pre>
-       <pre><code class="python language-python"># Load the diabetes dataset.
+                                                 <pre><code class="python language-python"># Load the diabetes dataset.
 print("Loading Data...")
 diabetes = pd.read_csv("diabetes.csv")
 
@@ -339,7 +339,7 @@ X, y = diabetes[["Pregnancies", "PlasmaGlucose", "DiastolicBloodPressure"]].valu
 # Split data into training set and test set.
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
 </code></pre>
-       <pre><code class="python language-python"># Set regularization hyperparameter.
+                                                 <pre><code class="python language-python"># Set regularization hyperparameter.
 reg = 0.01
 
 # Traing a logistic regression model.
@@ -348,7 +348,7 @@ run.log("Regularization Rate ", np.float(reg))
 
 model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -360,23 +360,25 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python"># Save the trained model in the outputs folder.
+                                                 <pre><code class="python language-python"># Save the trained model in the outputs folder.
 os.makedirs("outputs", exist_ok=True)
 joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
 
 
 run.complete()
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Using an Estimate to Run the Script as an Experiment
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.train.estimator import Estimator
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Using an Estimate
+                                                               to Run the Script
+                                                               as an Experiment
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.train.estimator import Estimator
 from azureml.core import Experiment
 
 # Create an estimator.
@@ -393,16 +395,17 @@ experiment      = Experiment(workspace=ws, name=experiment_name)
 run = experiment.submit(config=estimator)
 run.wait_for_completion(show_output=True)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Registering the Trained Model
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core import Model
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Registering the
+                                                               Trained Model
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core import Model
 
 # Register the model.
 run.register_model(model_path="outputs/diabetes_model.pkl",
@@ -423,16 +426,18 @@ for model in Model.list(ws):
         print("\t", prop_name, ":", prop)
     print("\n")
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Creating a Parameterized Training Script
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os, shutil
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Creating a
+                                                               Parameterized
+                                                               Training Script
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os, shutil
 
 # Create a folder for the experimen6t files.
 training_folder = "diabetes-training-params"
@@ -441,7 +446,7 @@ os.makedirs(training_folder, exist_ok=True)
 # Copy the data file into the experiment folder.
 shutil.copy("data/diabetes.csv", os.path.join(training_folder, "diabetes.csv"))
 </code></pre>
-       <pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
+                                                 <pre><code class="python language-python">%%writefile $training_folder/diabetes_training.py
 
 # Import libraries.
 from azureml.core import Run
@@ -452,7 +457,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklear.metrics import roc_auc_score, roc_curve
 </code></pre>
-       <pre><code class="python language-python"># Get the experiment run context.
+                                                 <pre><code class="python language-python"># Get the experiment run context.
 run = Run.get_context()
 
 # Set the regularization hyperparameter.
@@ -466,7 +471,7 @@ print("Loading Data...")
 # Load the diabetes dataset.
 diabetes = pd.read_csv("diabetes.csv")
 </code></pre>
-       <pre><code class="python language-python"># Separate features and labels.
+                                                 <pre><code class="python language-python"># Separate features and labels.
 X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
 
 # Split data into training set and test set.
@@ -477,7 +482,7 @@ print("Training a logistic regression model with regularization rate of ", reg)
 run.log("regularization Rate", np.float(reg))
 model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -489,20 +494,23 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python"># Save the trained model in the outputs folder.
+                                                 <pre><code class="python language-python"># Save the trained model in the outputs folder.
 os.makedirs("outputs", exist_ok=True)
 joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
 
 run.complete()
 </code></pre>
-       <li>
-        <details>
-         <summary>
-          <b>
-           Using a Framework-Specific Estimator
-          </b>
-         </summary>
-         <pre><code class="python language-python">from azureml.train.sklearn import SKLearn
+                                                 <li>
+                                                        <details>
+                                                               <summary>
+                                                                      <b>
+                                                                             Using
+                                                                             a
+                                                                             Framework-Specific
+                                                                             Estimator
+                                                                      </b>
+                                                               </summary>
+                                                               <pre><code class="python language-python">from azureml.train.sklearn import SKLearn
 from azureml.widgets import RunDetails
 
 # Create an estimator.
@@ -511,7 +519,7 @@ estimator = SKLearn(source_directory=training_folder,
                     script_params={"--reg_rate": 0.1},
                     compute_target="local")
 </code></pre>
-         <pre><code class="python language-python"># Create an experiment.
+                                                               <pre><code class="python language-python"># Create an experiment.
 experiment_name = "diabetes-training"
 experiment      = Experiment(workspace=ws, name=experiment_name)
 
@@ -522,7 +530,7 @@ run = experiment.submit(config=estimator)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-         <pre><code class="python language-python"># Get logged metrics.
+                                                               <pre><code class="python language-python"># Get logged metrics.
 metrics = run.get_metrics()
 for key in metrics.keys():
     print(key, metrics.get(key))
@@ -530,18 +538,21 @@ print("\n")
 for file in run.get_file_names():
     print(file)
 </code></pre>
-        </details>
-       </li>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Registering a New Version of the Model &amp; Cleaning Up
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core import Model
+                                                        </details>
+                                                 </li>
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Registering a New
+                                                               Version of the
+                                                               Model &amp;
+                                                               Cleaning Up
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core import Model
 
 # Register the model.
 run.register_model(model_path="outputs/diabetes_model.pkl",
@@ -550,7 +561,7 @@ run.register_model(model_path="outputs/diabetes_model.pkl",
                    properties={"AUC": run.get_metrics()['AUC'],
                                "Accuracy": run.get_metrics()["Accuracy"]})
 </code></pre>
-       <pre><code class="python language-python"># List registered models.
+                                                 <pre><code class="python language-python"># List registered models.
 for model in Model.list(ws):
     print(model.name, 'version:', model.version)
     for tag_name in model.tags:
@@ -561,65 +572,69 @@ for model in Model.list(ws):
         print("\t", prop_name, ":", prop)
     print("\n")
 </code></pre>
-       <pre><code class="python language-python">
+                                                 <pre><code class="python language-python">
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Datastores &amp; Datasets
-     </b>
-    </summary>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Working with and viewing Datastores
-        </b>
-       </summary>
-       <pre><code class="python language-python"># Get the default datastore in your workspace.
+                                          </details>
+                                   </li>
+                            </ul>
+                     </details>
+                     <details>
+                            <summary>
+                                   <b>
+                                          Datastores &amp; Datasets
+                                   </b>
+                            </summary>
+                            <ul>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Working with and
+                                                               viewing
+                                                               Datastores
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python"># Get the default datastore in your workspace.
 default_ds = ws.get_default_datastore()
 
 # Enumerate all datastores, indicating which is the default.
 for ds_name in ws.datastores:
     print(ds_name, "- Default =", ds_name == default_ds.name)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Uploading Data to a Datastore
-        </b>
-       </summary>
-       <pre><code class="python language-python">default_ds.upload_files(files=['./data/diabetes.csv',
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Uploading Data to
+                                                               a Datastore
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">default_ds.upload_files(files=['./data/diabetes.csv',
                                './data/diabetes2.csv'],
                         target_path="diabetes-data",  # Put it in a folder path in the datastore
                         overwrite=True,
                         show_progress=True)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Training a Model from a Datastore
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Training a Model
+                                                               from a Datastore
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os
 
 # Create a folder for the experiment files.
 experiment_folder = "diabetes_training_from_datastore"
 os.makedirs(experiment_folder, exist_ok=True)
 print(experiment_folder, "folder created.")
 </code></pre>
-       <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
+                                                 <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
 # Import Libraries
 import os, argparse
 from azureml.core import Run
@@ -630,14 +645,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, roc_curve
 </code></pre>
-       <pre><code class="python language-python"># Get parameters.
+                                                 <pre><code class="python language-python"># Get parameters.
 parser = argparse.ArgumentParser()
 parser.add_argument("--regularization", type=float, dest="reg_rate", default=0.01, help="regularization rate")
 parser.add_argument("--data-folder", type=str, dest="data_folder", help="data folder reference")
 args = parser.parse_args()
 reg  = args.reg_rate
 </code></pre>
-       <pre><code class="python language-python"># Get the experiment run context.
+                                                 <pre><code class="python language-python"># Get the experiment run context.
 run = Run.get_context()
 
 # Load the diabetes data from the data reference.
@@ -648,7 +663,7 @@ print("loading data from", data_folder)
 all_files = os.listdir(data_folder)
 diabetes = pd.concat((pd.read_csv(os.path.join(data_folder, csv_file)) for csv_file in all_files))
 </code></pre>
-       <pre><code class="python language-python"># Separate features and labels.
+                                                 <pre><code class="python language-python"># Separate features and labels.
 X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
 
 # Split data into training set and test set.
@@ -659,7 +674,7 @@ print("Training a logistic regression model with regularization rate of", reg)
 run.log("regularization rate", np.float(reg))
 model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -671,7 +686,7 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python">from azureml.train.sklearn import SKLearn
+                                                 <pre><code class="python language-python">from azureml.train.sklearn import SKLearn
 from azureml.core import Experiment
 from azureml.widgets import RunDetails
 
@@ -698,14 +713,18 @@ run = experiment.submit(config=estimator)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-       <li>
-        <details>
-         <summary>
-          <b>
-           Working with and Creating Datasets
-          </b>
-         </summary>
-         <pre><code class="python language-python"># Create a Tabular Dataset.
+                                                 <li>
+                                                        <details>
+                                                               <summary>
+                                                                      <b>
+                                                                             Working
+                                                                             with
+                                                                             and
+                                                                             Creating
+                                                                             Datasets
+                                                                      </b>
+                                                               </summary>
+                                                               <pre><code class="python language-python"># Create a Tabular Dataset.
 from azureml.core import Dataset
 
 # Get the default datastore.
@@ -717,25 +736,26 @@ tab_data_set = Dataset.Tabular.from_delimited_files(path=(default_ds, 'diabetes-
 # Display the first 20 rows as a pandas dataframe.
 tab_data_set.take(20).to_pandas_dataframe()
 </code></pre>
-         <pre><code class="python language-python"># Crate a File Dataset.
+                                                               <pre><code class="python language-python"># Crate a File Dataset.
 file_data_set = Dataset.File.from_files(path=(default_ds, 'diabetes-data/*.csv'))
 
 # Get the files in the dataset.
 for file_path in file_data_set.to_path():
     print(file_path)
 </code></pre>
-        </details>
-       </li>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Registering Datasets
-        </b>
-       </summary>
-       <pre><code class="python language-python"># Register Datasets.
+                                                        </details>
+                                                 </li>
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Registering
+                                                               Datasets
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python"># Register Datasets.
 try:
     tab_data_set = tab_data_set.register(workspace=ws,
                                          name="diabetes dataset",
@@ -757,28 +777,30 @@ except Exception as ex:
     print(ex)
 print("Databsets registered")
 </code></pre>
-       <pre><code class="python language-python">print("Datasets:")
+                                                 <pre><code class="python language-python">print("Datasets:")
 for dataset_name in list(ws.datasets.keys()):
     dataset = Dataset.get_by_name(ws, dataset_name)
     print("\t", dataset.name, "version", dataset.version)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Training a Model from a Tabular Dataset
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Training a Model
+                                                               from a Tabular
+                                                               Dataset
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os
 
 # Create a folder for the experiment files.
 experiment_folder = "diabetes_training_from_tab_dataset"
 os.makedirs(experiment_folder, exist_ok=True)
 print(experiment_folder, "folder created.")
 </code></pre>
-       <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
+                                                 <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
 # Import Libraries.
 import os, argparse
 from azureml.core import Run
@@ -789,20 +811,20 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, roc_curve
 </code></pre>
-       <pre><code class="python language-python"># Set regularization hyperparameter (passed as an argument to the script)
+                                                 <pre><code class="python language-python"># Set regularization hyperparameter (passed as an argument to the script)
 parser = argparse.ArgumentParser()
 parser.add_argument("--regularization", type=float, dest="reg_rate", default=0.01, help="regularization rate")
 args = parser.parse_args()
 reg = args.reg_rate
 </code></pre>
-       <pre><code class="python language-python"># Get the experiment run context
+                                                 <pre><code class="python language-python"># Get the experiment run context
 run = Run.get_context()
 
 # Load the diabetes data (passed as an inpute dataset)
 print("Loading data")
 diabetes = run.input_datasets["diabetes"].to_pandas_dataframe()
 </code></pre>
-       <pre><code class="python language-python"># Separate features and labels.
+                                                 <pre><code class="python language-python"># Separate features and labels.
 X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
 
 # Split data into training set and test set.
@@ -813,7 +835,7 @@ print("Training a logistic regression model with regularization rate of", reg)
 run.log("regularization rate", np.float(reg))
 model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -825,13 +847,13 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python">os.makedirs("outputs", exist_ok=True)
+                                                 <pre><code class="python language-python">os.makedirs("outputs", exist_ok=True)
 
 # note file saved in the outputs folder is automatically uploaded into experiment record.
 joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
 run.complete()
 </code></pre>
-       <pre><code class="python language-python">from azureml.train.sklear import SKLearn
+                                                 <pre><code class="python language-python">from azureml.train.sklear import SKLearn
 from azureml.core import Experiment
 from azureml.widgets import RunDetails
 
@@ -862,23 +884,25 @@ run = experiment.submit(config=estimator)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Training a Model from a File Dataset
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Training a Model
+                                                               from a File
+                                                               Dataset
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os
 
 # Create a folder for the experiment files.
 experiment_folder = "diabetes_training_from_file_dataset"
 os.makedirs(experiment_folder, exist_ok=True)
 print(experiment_folder, "folder created")
 </code></pre>
-       <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
+                                                 <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
 #Import libraries
 import os, argparse, glob
 from azureml.core import Workspace, Dataset, Experiment, Run
@@ -889,7 +913,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, roc_curve
 </code></pre>
-       <pre><code class="python language-python"># Set regularization hyperparameter (passed as an argument to the script)
+                                                 <pre><code class="python language-python"># Set regularization hyperparameter (passed as an argument to the script)
 parser = argparse.ArgumentParser()
 parser.add_argument("--regularization", type=float, dest="reg_rate", default=0.01, help="regularization rate")
 args = parser.parse_args()
@@ -904,7 +928,7 @@ data_path = run.input_datasets['diabetes'] # Get the training data from the esti
 all_files = glob.glob(data_path + "/*.csv")
 diabetes = pd.concat((pd.read_csv(f) for f in all_files))
 </code></pre>
-       <pre><code class="python language-python"># Separate features and labels.
+                                                 <pre><code class="python language-python"># Separate features and labels.
 X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
 
 # Split data into training set and test set.
@@ -915,7 +939,7 @@ print("Training a logistic regression model with regularization rate of", reg)
 run.log("regularization rate", np.float(reg))
 model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -927,12 +951,12 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python">os.makedirs('outputs', exist_ok=True)
+                                                 <pre><code class="python language-python">os.makedirs('outputs', exist_ok=True)
 # Note file saved in the ouputs folder is automatically uploaded into experiment record
 joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
 run.complete()
 </code></pre>
-       <pre><code class="python language-python">from azureml.train.sklearn import SKLearn
+                                                 <pre><code class="python language-python">from azureml.train.sklearn import SKLearn
 from azureml.core import Experiment
 from azureml.widgets import RunDetails
 
@@ -944,7 +968,7 @@ script_params = {
 # Get the training dataset.
 diabetes_ds = ws.datasets.get("diabetes file dataset.")
 </code></pre>
-       <pre><code class="python language-python"># Create an estimator
+                                                 <pre><code class="python language-python"># Create an estimator
 estimator = SKLearn(source_directory=experiment_folder,
                     entry_script="diabetes_training.py",
                     script_params=script_params,
@@ -962,25 +986,25 @@ run = experiment.submit(config=estimator)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Compute
-     </b>
-    </summary>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Preparing Data
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core import Dataset
+                                          </details>
+                                   </li>
+                            </ul>
+                     </details>
+                     <details>
+                            <summary>
+                                   <b>
+                                          Compute
+                                   </b>
+                            </summary>
+                            <ul>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Preparing Data
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core import Dataset
 
 default_ds = ws.get_default_datastore()
 
@@ -1006,23 +1030,24 @@ if "diabetes dataset" not in ws.datasets:
 else:
     print("Dataset already registered.")
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Creating a Training Script
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Creating a
+                                                               Training Script
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os
 
 # Create a folder for the experiment files.
 experiment_folder = "diabetes_training_logistic"
 os.makedirs(experiment_folder, exist_ok=True)
 print(experiment_folder, "folder created")
 </code></pre>
-       <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
+                                                 <pre><code class="python language-python">%%writefile $experiment_folder/diabetes_training.py
 # Import Libraries
 import os, argparse
 from azureml.core import Run
@@ -1039,14 +1064,14 @@ parser.add_argument("--regularization", type=float, dest="reg_rate", default=0.0
 args = parser.parse_args()
 reg  = args.reg_rate
 </code></pre>
-       <pre><code class="python language-python"># Get the experiment run context
+                                                 <pre><code class="python language-python"># Get the experiment run context
 run = Run.get_context()
 
 # Load the diabetes data (passed as an input dataset)
 print("Loading Data...")
 diabetes = run.input_datasets['diabetes'].to_pandas_dataframe()
 </code></pre>
-       <pre><code class="python language-python"># Separate features and labels.
+                                                 <pre><code class="python language-python"># Separate features and labels.
 X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
 
 # Split data into training set and test set.
@@ -1057,7 +1082,7 @@ print("Training a logistic regression model with regularization rate of", reg)
 run.log("regularization rate", np.float(reg))
 model = LogisticRegression(C=1/reg, solver="liblinear").fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -1069,21 +1094,22 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python">os.makedirs('outputs', exist_ok=True)
+                                                 <pre><code class="python language-python">os.makedirs('outputs', exist_ok=True)
 # Note file saved in the ouputs folder is automatically uploaded into experiment record
 joblib.dump(value=model, filename="outputs/diabetes_model.pkl")
 run.complete()
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Defining an Environment
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core import Environment
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Defining an
+                                                               Environment
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core import Environment
 from azureml.core.conda_dependencies import CondaDependencies
 
 # Create a Python Environment for the experiment.
@@ -1100,7 +1126,7 @@ diabetes_env.python.conda_dependencies = diabetes_packages
 
 print(diabetes_env.name, "defined.")
 </code></pre>
-       <pre><code class="python language-python">from azureml.train.estimator import Estimator
+                                                 <pre><code class="python language-python">from azureml.train.estimator import Estimator
 from azureml.core import Experiment
 from azureml.widgets import RunDetails
 
@@ -1129,19 +1155,22 @@ run = experiment.submit(config=estimator)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-       <pre><code class="python language-python"># Register the enviroment.
+                                                 <pre><code class="python language-python"># Register the enviroment.
 diabetes_env.register(workspace=ws)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Running an Experiment on a Remote Compute Target
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core.compute import ComputeTarget, AmlCompute
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Running an
+                                                               Experiment on a
+                                                               Remote Compute
+                                                               Target
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core.compute import ComputeTarget, AmlCompute
 from azureml.core.compute_target import ComputeTargetException
 
 cluster_name = "qa-azureml-sdk"
@@ -1157,7 +1186,7 @@ except ComputeTargetException:
 
 training_cluster.wait_for_completion(show_output=True)
 </code></pre>
-       <pre><code class="python language-python">from azureml.train.estimator import Estimator
+                                                 <pre><code class="python language-python">from azureml.train.estimator import Estimator
 from azureml.core import Experiment
 from azureml.widgets import RunDetails
 
@@ -1189,7 +1218,7 @@ run = experiment.submit(config=estimator)
 RunDetails(run).show()
 run.wait_for_completion()
 </code></pre>
-       <pre><code class="python language-python"># Get logged metrics.
+                                                 <pre><code class="python language-python"># Get logged metrics.
 metrics = run.get_metrics()
 for key in metrics.keys():
     print(key, metrics.get(key))
@@ -1197,25 +1226,26 @@ print("\n")
 for file in run.get_file_names():
     print(file)
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Pipelines
-     </b>
-    </summary>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Preparing the Training Data
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core import Dataset
+                                          </details>
+                                   </li>
+                            </ul>
+                     </details>
+                     <details>
+                            <summary>
+                                   <b>
+                                          Pipelines
+                                   </b>
+                            </summary>
+                            <ul>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Preparing the
+                                                               Training Data
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core import Dataset
 
 default_ds = ws.get_default_datastore()
 
@@ -1241,16 +1271,18 @@ if "diabetes dataset" not in ws.datasets:
 else:
     print("Dataset already registered.")
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Creating Scripts for Pipeline steps
-        </b>
-       </summary>
-       <pre><code class="python language-python">import os
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Creating Scripts
+                                                               for Pipeline
+                                                               steps
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">import os
 
 # Create a folder for the pipeline step files.
 experiment_folder = "diabetes_pipeline"
@@ -1258,7 +1290,7 @@ os.makedirs(experiment_folder, exist_ok=True)
 
 print(experiment_folder)
 </code></pre>
-       <pre><code class="python language-python">%%writefile $experiment_folder/train_diabetes.py
+                                                 <pre><code class="python language-python">%%writefile $experiment_folder/train_diabetes.py
 # Import libraries
 import os, argparse, joblib
 from azureml.core import Run
@@ -1274,14 +1306,14 @@ parser.add_argument("--output_folder", type=str, dest="output_folder", default="
 args = parser.parse_args()
 output_folder = args.output_folder
 </code></pre>
-       <pre><code class="python language-python"># Get the experiment run context
+                                                 <pre><code class="python language-python"># Get the experiment run context
 run = Run.get_context()
 
 # Load the diabetes data (passed as an input dataset)
 print("Loading Data...")
 diabetes = run.input_datasets['diabetes'].to_pandas_dataframe()
 </code></pre>
-       <pre><code class="python language-python"># Separate features and labels.
+                                                 <pre><code class="python language-python"># Separate features and labels.
 X, y = diabetes[['Pregnancies', 'PlasmaGlucose']].values, diabetes['Diabetic'].values
 
 # Split data into training set and test set.
@@ -1291,7 +1323,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_
 print("training a decision tree")
 model = DecisionTreeClassifier().fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -1303,12 +1335,12 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python">os.makedirs(output_folder, exist_ok=True)
+                                                 <pre><code class="python language-python">os.makedirs(output_folder, exist_ok=True)
 output_path = output_folder + "/model.pkl"
 joblib.dump(value=model, filename=output_path)
 run.complete()
 </code></pre>
-       <pre><code class="python language-python">%%writefile $experiment_folder/register_diabetes.py
+                                                 <pre><code class="python language-python">%%writefile $experiment_folder/register_diabetes.py
 # Import libraries.
 import argparse, joblib
 from azureml.core import Workspace, Model, Run
@@ -1333,16 +1365,19 @@ Model.register(workspace=run.experiment.workspace,
                tags={"Training context": "Pipeline"})
 run.complete()
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Preparing a Compute Environment for the Pipeline
-        </b>
-       </summary>
-       <pre><code class="python language-python"># Prepare a compute enviroment for the pipeline steps.
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Preparing a
+                                                               Compute
+                                                               Environment for
+                                                               the Pipeline
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python"># Prepare a compute enviroment for the pipeline steps.
 from azureml.core.compute import ComputeTarget, AmlCompute
 from azureml.core.compute_target import ComputeTargetException
 
@@ -1361,7 +1396,7 @@ except ComputeTargetException:
 
 pipeline_cluster.wait_for_completion(show_output=True)
 </code></pre>
-       <pre><code class="python language-python">from azureml.core import Environment
+                                                 <pre><code class="python language-python">from azureml.core import Environment
 from auzreml.core.conda_denpendencies import CondaDependencies
 from azureml.core.runconfig import RunConfiguration
 
@@ -1394,16 +1429,18 @@ pipeline_run_config.environment = registered_env
 print("Run configuration created.")
 
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Creating and Runnging a Pipeline
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.pipeline.core import PipelineData
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Creating and
+                                                               Runnging a
+                                                               Pipeline
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.pipeline.core import PipelineData
 from azureml.pipeline.steps import PythonScriptStep, EstimatorStep
 from azuerml.train.estimator import Estimator
 
@@ -1436,7 +1473,7 @@ register_step = PythonScriptStep(name="Register Model",
                                  compute_target=pipeline_cluster,
                                  runconfig=pipeline_run_config,
                                  allow_reuse=True)</code></pre>
-       <pre><code class="python language-python">from auzreml.core import Experiment
+                                                 <pre><code class="python language-python">from auzreml.core import Experiment
 from azureml.pipeline.core import Pipeline
 from azureml.widgets import RunDetails
 
@@ -1452,7 +1489,7 @@ print("Pipeline submitted for expecution.")
 
 RunDetails(pipeline_run).show()
 pipeline_run.wait_for_completion()</code></pre>
-       <pre><code class="python language-python">from azureml.core import Model
+                                                 <pre><code class="python language-python">from azureml.core import Model
 
 for model in Model.list(ws):
     print(model.name, "version:", model.version)
@@ -1463,22 +1500,23 @@ for model in Model.list(ws):
         prop = model.properties[prop_name]
         print("\t", prop_name, ":", prop)
     print("\n")</code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Publishing the Pipeline
-        </b>
-       </summary>
-       <pre><code class="python language-python">published_pipeline = pipeline.publish(name="Diabetes_Training_Pipeline",
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Publishing the
+                                                               Pipeline
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">published_pipeline = pipeline.publish(name="Diabetes_Training_Pipeline",
                                       description="Trains diabetes model",
                                       version="1.0")
 rest_endpoint = published_pipeline.endpoint
 print(rest_endpoint)
 </code></pre>
-       <pre><code class="python language-python">from azureml.core.authentication import InteractiveLoginAuthentication
+                                                 <pre><code class="python language-python">from azureml.core.authentication import InteractiveLoginAuthentication
 
 interactive_auth = InteractiveLoginAuthentication()
 auth_header = interactive_auth.get_authentication_header()
@@ -1492,31 +1530,35 @@ response = requests.post(rest_endpoint,
 run_id = response.json()["Id"]
 run_id
 </code></pre>
-       <pre><code class="python language-python">from azureml.pipeline.core.run import PipelineRun
+                                                 <pre><code class="python language-python">from azureml.pipeline.core.run import PipelineRun
 from azureml.widgets import RunDetails
 
 published_pipeline_run = PipelineRun(ws.experiments[experiment_name], run_id)
 RunDetails(published_pipeline_run).show()
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Deploying the Model
-     </b>
-    </summary>
-    <ul>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Real-time Inference Service -- Training and Registering a Model
-        </b>
-       </summary>
-       <pre><code class="python language-python">from azureml.core import Experiment
+                                          </details>
+                                   </li>
+                            </ul>
+                     </details>
+                     <details>
+                            <summary>
+                                   <b>
+                                          Deploying the Model
+                                   </b>
+                            </summary>
+                            <ul>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Real-time
+                                                               Inference Service
+                                                               -- Training and
+                                                               Registering a
+                                                               Model
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">from azureml.core import Experiment
 from azureml.core import Model
 import pandas as pd
 import numpy as np
@@ -1530,7 +1572,7 @@ experiment = Experiment(workspace=ws, name="diabetes-training")
 run        = experiment.start_logging()
 print("Starting experiment:", experiment.name)
 </code></pre>
-       <pre><code class="python language-python"># Load the diabetes dataset.
+                                                 <pre><code class="python language-python"># Load the diabetes dataset.
 print("Loading Data...")
 diabetes = pd.read_csv("data/diabetes.csv")
 
@@ -1544,7 +1586,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_
 print("training a decision tree")
 model = DecisionTreeClassifier().fit(X_train, y_train)
 </code></pre>
-       <pre><code class="python language-python"># Calculate accuracy.
+                                                 <pre><code class="python language-python"># Calculate accuracy.
 y_hat = model.predict(X_test)
 acc   = np.average(y_hat == y_test)
 print(f"Accuracy: {acc}")
@@ -1556,7 +1598,7 @@ auc      = roc_auc_score(y_test, y_scores[:, 1])
 print(f"AUC: {auc}")
 run.log("AUC", np.float(auc))
 </code></pre>
-       <pre><code class="python language-python"># Save the trained model.
+                                                 <pre><code class="python language-python"># Save the trained model.
 model_file = "diabetes_model.pkl"
 joblib.dump(value=model, filename=model_file)
 run.upload_file(name="outputs/"+model_file, path_or_stream="./"+model_file)
@@ -1564,7 +1606,7 @@ run.upload_file(name="outputs/"+model_file, path_or_stream="./"+model_file)
 # Complete the run.
 run.complete()
 </code></pre>
-       <pre><code class="python language-python"># Register the model.
+                                                 <pre><code class="python language-python"># Register the model.
 run.register_model(model_path="outputs/diabetes_model.pkl",
                    model_name="diabetes_model",
                    tags={"Training context": "Inline Training"},
@@ -1573,16 +1615,17 @@ run.register_model(model_path="outputs/diabetes_model.pkl",
 
 print("Model trained and registered.")
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Deploying a Model as a Web Service
-        </b>
-       </summary>
-       <pre><code class="python language-python"># See the available model in the workspace.
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Deploying a Model
+                                                               as a Web Service
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python"># See the available model in the workspace.
 from azureml.core import Model
 
 for model in Model.list(ws):
@@ -1595,11 +1638,11 @@ for model in Model.list(ws):
         print("\t", prop_name, ":", prop)
     print("\n")
 </code></pre>
-       <pre><code class="python language-python"># Get the model to be deployed.
+                                                 <pre><code class="python language-python"># Get the model to be deployed.
 model = ws.models["diabetes_model"]
 print(model.name, "version", model.version)
 </code></pre>
-       <pre><code class="python language-python"># Create a folder and configuration files for the web serivce.
+                                                 <pre><code class="python language-python"># Create a folder and configuration files for the web serivce.
 import os
 
 folder_name = "diabetes_service"
@@ -1610,7 +1653,7 @@ os.makedirs(folder_name, exist_ok=True)
 
 print(folder_name, "folder created.")
 </code></pre>
-       <pre><code class="python language-python">%%writefile $folder_name/score_diabetes.py
+                                                 <pre><code class="python language-python">%%writefile $folder_name/score_diabetes.py
 import json
 import joblib
 import numpy as np
@@ -1637,7 +1680,7 @@ def run(raw_data):
     # Return the prediction as JSON
     return json.dumps(predicted_classes)
 </code></pre>
-       <pre><code class="python language-python">from azureml.core.conda_dependencies import CondaDependencies
+                                                 <pre><code class="python language-python">from azureml.core.conda_dependencies import CondaDependencies
 
 # Add the dependencies for our model (AzureML defaults is already included)
 myenv = CondaDependencies()
@@ -1653,7 +1696,7 @@ print("Saved dependency info in ", env_file)
 with open(env_file, "r") as f:
     print(f.read())
 </code></pre>
-       <pre><code class="python language-python">from azureml.core.webservice import AciWebservice
+                                                 <pre><code class="python language-python">from azureml.core.webservice import AciWebservice
 from azureml.core.model import InferenceConfig
 
 # Configure the scoring enviroment.
@@ -1669,46 +1712,50 @@ service           = Model.deploy(ws, service_name, [model], inference_config,
 service.wait_for_deployment(True)
 print(service.state)
 </code></pre>
-       <pre><code class="python language-python">print(service.state)
+                                                 <pre><code class="python language-python">print(service.state)
 print(service.get_logs())
 
 # If you need to make a change and redeploy, you may need to delete unhealty service using the following code:  
 # service.delete()
 </code></pre>
-       <pre><code class="python language-python"># See the active webserivce name
+                                                 <pre><code class="python language-python"># See the active webserivce name
 for webservice_name in ws.webservices:
     print(webservice_name)
 </code></pre>
-      </details>
-     </li>
-     <li>
-      <details>
-       <summary>
-        <b>
-         Using the Web Service
-        </b>
-       </summary>
-       <pre><code class="python language-python">
+                                          </details>
+                                   </li>
+                                   <li>
+                                          <details>
+                                                 <summary>
+                                                        <b>
+                                                               Using the Web
+                                                               Service
+                                                        </b>
+                                                 </summary>
+                                                 <pre><code class="python language-python">
 </code></pre>
-      </details>
-     </li>
-    </ul>
-   </details>
-   <li>
-    <a href="./notebooks/CA-AzureML-Pipelines.html">
-     Complete Pipeline
-    </a>
-   </li>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+                                          </details>
+                                   </li>
+                            </ul>
+                     </details>
+                     <li>
+                            <a href="./notebooks/CA-AzureML-Pipelines.html">
+                                   Complete Pipeline
+                            </a>
+                     </li>
+              </div>
+              <script
+                     src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
   </script>
-  <script>
+              <script>
    hljs.initHighlightingOnLoad();
   </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+              <script
+                     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+                     type="text/javascript">
   </script>
-  <script type="text/javascript">
+              <script type="text/javascript">
    MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
   </script>
- </body>
+       </body>
 </html>
