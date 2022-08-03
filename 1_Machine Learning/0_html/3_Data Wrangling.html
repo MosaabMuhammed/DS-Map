@@ -63,6 +63,20 @@
             <summary><b>DataFrame</b></summary>
             <p>
                 <details>
+                    <summary>Show proper <b>Arabic</b> letters</summary>
+                    <pre class="language-python"><code># reshaping the arabic words to show correctly on matplotlib
+# pip install arabic-reshaper
+# pip install python-bidi
+import arabic_reshaper
+import matplotlib.pyplot as plt
+from bidi.algorithm import get_display
+
+x = [ ]
+
+for item in df.column_name.values:
+    x.append(get_display(arabic_reshaper.reshape(item)))</code></pre>
+                </details>
+                <details>
                     <summary>Create <b>Pivot Table</b></summary>
                     <pre class="language-python"><code>pd.pivot_table(d[(d.month.isin([6]))], index="year", columns="family", values="sales", aggfunc="mean")
     </code></pre>
@@ -545,8 +559,20 @@
                 </details>
                 <details>
                     <summary><b>Add a record to a DataFrame</b></summary>
-                    <p><pre class="language-python"><code>df = train.append(test, ignore_index=True)
-    </code></pre>
+                    <p><pre class="language-python"><code>text_audio_df = pd.concat([text_audio_df, pd.DataFrame.from_records([{
+                        "text_id": row[0],
+                        "text": row[1]['text'],
+                        "wav": wav_name,
+                        "duration": recorded_wav.duration_in_sec,
+                        "speaker": Config.SPEAKER_NAME,
+                        "gender":  Config.SPEAKER_GENDER,
+                        "session_id": self.SESSION_ID,
+                        "samplerate": recorded_wav.samplerate,
+                        "n_channels": recorded_wav.n_channels,
+                        "n_letters": len(row[1]['text']),
+                        "n_words": len(row[1]['text'].split())
+    }])])
+text_audio_df.to_csv(Config.TEXT_AUDIO_FILE_PATH, header=True, index=False)</code></pre>
                     </p>
                 </details>
                 <details>
