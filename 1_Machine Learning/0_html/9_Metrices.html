@@ -181,6 +181,14 @@
 
                 <details>
                     <summary> <b>Precision</b> </summary>
+                    <details>
+                        <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
+                        <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
+                        <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
+                        <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
+                            <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
+                        <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
+                    </details>
                     <p>
                         <p><b>Precision</b> is simply the accuracy of the positive predictions.</p><pre class="language-python"><code>from sklearn.metrics import precision_score
     
@@ -300,6 +308,14 @@
 
                 <details>
                     <summary> <b>Recall</b> aka <b>True Positive Rate (TPR)</b> aka <b>Sensitivity</b></summary>
+                    <details>
+                        <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
+                        <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
+                        <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
+                        <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
+                            <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
+                        <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
+                    </details>
                     <p><pre class="language-python"><code>from sklearn.metrics import recall_score
     
     recall_score(y_train_5, y_train_pred)
@@ -403,7 +419,15 @@
                 </details>
 
                 <details>
-                    <summary> Plot <b>Precision</b> Vs. <b>Recal</b> </summary>
+                    <summary> Plot <b>Precision</b> Vs. <b>Recall</b> </summary>
+                    <details>
+                        <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
+                        <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
+                        <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
+                        <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
+                            <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
+                        <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
+                    </details>
                     <p>
                         <p><b>NOTE:</b> We prefer PR curve whenever the positive class is rare or when you care more about the <b>false positive</b> than the <b>false negative</b>, otherwise use ROC curve.</p>
                         <h4>1. Calculate the decision function for the dataset.</h4><pre class="language-python"><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
@@ -742,6 +766,9 @@ print(completeness_score(digits['target'], Y))
                 <li>
                     <details>
                         <summary><b>Adjusted Rand Index</b></summary>
+                        <ul>
+                            <li><a href="./14_metrics/Understanding Adjusted Rand Index dfff4a52e2d44568ba507591da73e067.html">Math Intuation</a> <br></li>
+                        </ul>
                         <p>This score is useful to compare the original label distribution with the clustering prediction.</p>
                         <img src="../0_html/imgs/rand_index.png" alt="">
                         <pre class="language-python"><code>from sklearn.metrics import adjusted_rand_score
