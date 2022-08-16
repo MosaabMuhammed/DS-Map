@@ -43,6 +43,39 @@
             <p>
 
                 <details>
+                    <summary> <b>Confusion Matrix</b> </summary>
+                    <img src="./imgs/Confusion-Matrix-1.jpeg" alt="">
+                    <p><pre class="language-python"><code>pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True)
+    
+    # Another way with Background
+    pd.crosstab(data.Pclass,data.Survived,margins=True).style.background_gradient(cmap='summer_r')
+    </code></pre><pre class="language-python"><code>from sklearn.metrics import confusion_matrix
+    
+    sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
+    
+    # Another way to plot it.
+    # cm = confusion_matrix()
+    plt.figure(figsize=(10, 10))
+    cmap = sns.cubehelix_palette(50, hue=0.05, rot=0, light=0.9, dark=0,
+    as_cmap=True)
+    sns.set(font_scale=2.5)
+    sns.heatmap(cm, annot=True, cmap=cmap, cbar=False)
+    plt.ylabel('Actual Labels', fontsize=20)
+    plt.xlabel('Predicted Labels', fontsize=20)
+    </code></pre>
+
+                        <h4>See the errors in each class (see the confusion of the model)</h4><pre class="language-python"><code>row_sums     = conf_mx.sum(axis=1, keepdims=True)
+    norm_conf_mx = conf_mx / row_sums
+    
+    np.fill_diagonal(norm_conf_mx, 0)
+    sns.heatmap(norm_conf_mx, cmap="viridis")
+    plt.xlabel("Predicted Labels")
+    plt.ylabel("True Labels");
+    </code></pre>
+                    </p>
+                </details>
+
+                <details>
                     <summary> <b>precision_recall_fscore_support</b></summary><pre class="language-python"><code>from sklearn.metrics import precision_recall_fscore_support
     
     precision, recall, f1, support = precision_recall_fscore_support(labels, preds, average='macro')
@@ -93,37 +126,6 @@
                     </p>
                 </details>
 
-                <details>
-                    <summary> <b>Confusion Matrix</b> </summary>
-                    <p><pre class="language-python"><code>pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True)
-    
-    # Another way with Background
-    pd.crosstab(data.Pclass,data.Survived,margins=True).style.background_gradient(cmap='summer_r')
-    </code></pre><pre class="language-python"><code>from sklearn.metrics import confusion_matrix
-    
-    sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
-    
-    # Another way to plot it.
-    # cm = confusion_matrix()
-    plt.figure(figsize=(10, 10))
-    cmap = sns.cubehelix_palette(50, hue=0.05, rot=0, light=0.9, dark=0,
-    as_cmap=True)
-    sns.set(font_scale=2.5)
-    sns.heatmap(cm, annot=True, cmap=cmap, cbar=False)
-    plt.ylabel('Actual Labels', fontsize=20)
-    plt.xlabel('Predicted Labels', fontsize=20)
-    </code></pre>
-
-                        <h4>See the errors in each class (see the confusion of the model)</h4><pre class="language-python"><code>row_sums     = conf_mx.sum(axis=1, keepdims=True)
-    norm_conf_mx = conf_mx / row_sums
-    
-    np.fill_diagonal(norm_conf_mx, 0)
-    sns.heatmap(norm_conf_mx, cmap="viridis")
-    plt.xlabel("Predicted Labels")
-    plt.ylabel("True Labels");
-    </code></pre>
-                    </p>
-                </details>
 
                 <details>
                     <summary> <b>Classification Report</b> </summary>
