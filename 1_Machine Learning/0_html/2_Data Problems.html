@@ -28,6 +28,14 @@
                             <li>
                                 <p><a href="https://imbalanced-learn.org/en/stable/over_sampling.html"><span style='color:#333333'><b>2. Another way</b> (better)</span></a> </p>
                             </li>
+                            <li>
+                                <details>
+                                    <summary>Set class_weight in models to 'balanced'</summary>
+                                    <p>For this logistic regression model, we will set the class_weight to <b>balanced</b>. This signals to the logistic regression algorithm that we have an imbalanced class problem; the algorithm will need to weigh the positive
+                                        labels more heavily as it trains. In this case, the weights will be inversely proportional to the class frequencies; the algorithm will assign higher weights to the rare positive labels (i.e., fraud) and lower weights
+                                        to the more frequent negative labels (i.e., not fraud).</p>
+                                </details>
+                            </li>
                         </ul>
                     </p>
                 </details>

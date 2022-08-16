@@ -218,8 +218,29 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
             <p>
 
                 <ul>
-                    <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Logistic%20Regression.html"><b>Logistic
-                            Regression/SGDClassifier</b></a> </li>
+                    <li>
+                        <details>
+                            <summary><b>LogisticRegression</b></summary>
+                            <p>For this logistic regression model, we will set the class_weight to <b>balanced</b>. This signals to the logistic regression algorithm that we have an imbalanced class problem; <br> the algorithm will need to weigh the positive
+                                labels more heavily as it trains. In this case, the weights will be inversely proportional to the class frequencies; <br> the algorithm will assign higher weights to the rare positive labels (i.e., fraud) and lower weights
+                                to the more frequent negative labels (i.e., not fraud).</p>
+                            <pre class="language-python"><code>from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+X, y = load_iris(return_X_y=True)
+clf = LogisticRegression(random_state=0).fit(X, y)
+clf.predict(X[:2, :])
+# array([0, 0])
+
+clf.predict_proba(X[:2, :])
+# array([[9.8...e-01, 1.8...e-02, 1.4...e-08],
+#        [9.7...e-01, 2.8...e-02, ...e-08]])
+
+clf.score(X, y)
+# 0.97...
+
+                            </code></pre>
+                        </details>
+                    </li>
 
                     <li><a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Data%20Science/00_Code/Random%20Forest.html"><b>Random
                             Forest</b></a> </li>
