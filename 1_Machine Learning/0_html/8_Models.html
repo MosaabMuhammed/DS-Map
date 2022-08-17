@@ -519,6 +519,128 @@ train_oof_preds = hgbc_model.predict_proba(hgbc_x_valid)[:,-1]
 
                     <li>
                         <details>
+                            <summary><b>XGBoost</b></summary>
+                            <pre class="language-python"><code>params_xGB = {
+    'nthread':16, #number of cores
+    'learning rate': 0.3, #range 0 to 1, default 0.3
+    'gamma': 0, #range 0 to infinity, default 0 
+        # increase to reduce complexity (increase bias, reduce variance)
+    'max_depth': 6, #range 1 to infinity, default 6
+    'min_child_weight': 1, #range 0 to infinity, default 1
+    'max_delta_step': 0, #range 0 to infinity, default 0
+    'subsample': 1.0, #range 0 to 1, default 1
+        # subsample ratio of the training examples
+    'colsample_bytree': 1.0, #range 0 to 1, default 1 
+        # subsample ratio of features
+    'objective':'binary:logistic',
+    'num_class':1,
+    'eval_metric':'logloss',
+    'seed':2018,
+    'silent':1
+}
+</code></pre>
+                            <pre class="language-python"><code>trainingScores = []
+cvScores = []
+predictionsBasedOnKFolds = pd.DataFrame(data=[],
+                                    index=y_train.index,columns=['prediction'])
+
+for train_index, cv_index in k_fold.split(np.zeros(len(X_train)),
+                                            y_train.ravel()):
+    X_train_fold, X_cv_fold = X_train.iloc[train_index,:], \
+        X_train.iloc[cv_index,:]
+    y_train_fold, y_cv_fold = y_train.iloc[train_index], \
+        y_train.iloc[cv_index]
+    
+    dtrain = xgb.DMatrix(data=X_train_fold, label=y_train_fold)
+    dCV = xgb.DMatrix(data=X_cv_fold)
+    
+    bst = xgb.cv(params_xGB, dtrain, num_boost_round=2000, 
+                    nfold=5, early_stopping_rounds=200, verbose_eval=50)
+    
+    best_rounds = np.argmin(bst['test-logloss-mean'])
+    bst = xgb.train(params_xGB, dtrain, best_rounds)
+    
+    loglossTraining = log_loss(y_train_fold, bst.predict(dtrain))
+    trainingScores.append(loglossTraining)
+    
+    predictionsBasedOnKFolds.loc[X_cv_fold.index,'prediction'] = \
+        bst.predict(dCV)
+    loglossCV = log_loss(y_cv_fold, \
+        predictionsBasedOnKFolds.loc[X_cv_fold.index,'prediction'])
+    cvScores.append(loglossCV)
+    
+    print('Training Log Loss: ', loglossTraining)
+    print('CV Log Loss: ', loglossCV)
+    
+loglossXGBoostGradientBoosting = \
+    log_loss(y_train, predictionsBasedOnKFolds.loc[:,'prediction'])
+print('XGBoost Gradient Boosting Log Loss: ', loglossXGBoostGradientBoosting)
+</code></pre>
+
+                        </details>
+                    </li>
+
+                    <li>
+                        <details>
+                            <summary><b>LightGBM</b></summary>
+                            <pre class="language-python"><code>params_lightGB = {
+    'task': 'train',
+    'num_class':1,
+    'boosting': 'gbdt',
+    'objective': 'binary',
+    'metric': 'binary_logloss',
+    'metric_freq':50,
+    'is_training_metric':False,
+    'max_depth':4,
+    'num_leaves': 31,
+    'learning_rate': 0.01,
+    'feature_fraction': 1.0,
+    'bagging_fraction': 1.0,
+    'bagging_freq': 0,
+    'bagging_seed': 2018,
+    'verbose': -1,
+    'num_threads':16
+}
+</code></pre>
+                            <pre class="language-python"><code>trainingScores = []
+cvScores = []
+predictionsBasedOnKFolds = pd.DataFrame(data=[],
+                                index=y_train.index,columns=['prediction'])
+
+for train_index, cv_index in k_fold.split(np.zeros(len(X_train)),
+                                            y_train.ravel()):
+    X_train_fold, X_cv_fold = X_train.iloc[train_index,:], \
+        X_train.iloc[cv_index,:]
+    y_train_fold, y_cv_fold = y_train.iloc[train_index], \
+        y_train.iloc[cv_index]
+    
+    lgb_train = lgb.Dataset(X_train_fold, y_train_fold)
+    lgb_eval = lgb.Dataset(X_cv_fold, y_cv_fold, reference=lgb_train)
+    gbm = lgb.train(params_lightGB, lgb_train, num_boost_round=2000,
+                    valid_sets=lgb_eval, early_stopping_rounds=200)
+    
+    loglossTraining = log_loss(y_train_fold, \
+                gbm.predict(X_train_fold, num_iteration=gbm.best_iteration))
+    trainingScores.append(loglossTraining)
+    
+    predictionsBasedOnKFolds.loc[X_cv_fold.index,'prediction'] = \
+        gbm.predict(X_cv_fold, num_iteration=gbm.best_iteration) 
+    loglossCV = log_loss(y_cv_fold, \
+        predictionsBasedOnKFolds.loc[X_cv_fold.index,'prediction'])
+    cvScores.append(loglossCV)
+    
+    print('Training Log Loss: ', loglossTraining)
+    print('CV Log Loss: ', loglossCV)
+    
+loglossLightGBMGradientBoosting = \
+    log_loss(y_train, predictionsBasedOnKFolds.loc[:,'prediction'])
+print('LightGBM Gradient Boosting Log Loss: ', loglossLightGBMGradientBoosting)
+</code></pre>
+
+                        </details>
+                    </li>
+                    <li>
+                        <details>
                             <summary><b>AdaBoost</b></summary>
                             <p>
                                 <pre class="language-python"><code>from sklearn.ensemble import AdaBoostClassifier
@@ -554,6 +676,15 @@ print(accuracy_score(y_valid, y_pred))
                     <li>
                         <details>
                             <summary><b>Manual Stacking</b></summary>
+                            <p>Generally, if we include similarly strong solutions from different machine learning families (such as one from random forests and one from neural networks), the ensemble of the solutions will lead to a better result than any
+                                of the standalone solutions. This is because each of the standalone solutions has different strengths and weaknesses. By including the standalone solutions together in an ensemble, the strengths of some of the models compensate
+                                for the weaknesses of the others, and vice versa.</p>
+                            <p>There are important caveats, though. If the standalone solutions are similarly strong, the ensemble will have better performance than any of the standalone solutions. But if one of the solutions is much better than the others,
+                                theensemble’s performance will equal the performance of the best standalone solution; the subpar solutions will contribute nothing to the ensemble’s performance.
+                            </p>
+                            <p>Also, the standalone solutions need to be relatively uncorrelated. If they are very correlated, the strengths of one will mirror those of the rest, and the same will be true with the weaknesses. We will see little benefit from
+                                diversifying via an ensemble.
+                            </p>
                             <p>
                                 <a href="./12_ml_models/manual_stacking.html">notebook</a>
                             </p>

@@ -428,32 +428,67 @@
                             <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
                         <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
                     </details>
-                    <p>
-                        <p><b>NOTE:</b> We prefer PR curve whenever the positive class is rare or when you care more about the <b>false positive</b> than the <b>false negative</b>, otherwise use ROC curve.</p>
+                    <p><b>NOTE:</b> We prefer PR curve whenever the positive class is rare or when you care more about the <b>false positive</b> than the <b>false negative</b>, otherwise use ROC curve.</p>
+
+                    <details>
+                        <summary><b>Method 1</b></summary>
                         <h4>1. Calculate the decision function for the dataset.</h4><pre class="language-python"><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
-    </code></pre>
+                            </code></pre>
                         <h4>2. Get the precisions, recalls and thresholds</h4><pre class="language-python"><code>from sklearn.metrics import precision_recall_curve
-    
-    precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
-    </code></pre>
+                            
+                            precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+                            </code></pre>
 
                         <h4>3. Plot the precisions vs. recall</h4><pre class="language-python"><code>plt.figure(figsize=(10, 6))
-    plt.plot(recalls, precisions)
-    plt.grid()
-    plt.xlabel("Recall")
-    plt.ylabel("Precision")
-    plt.title("Precision vs. Recall", size=20, y=1.05)
-    </code></pre>
+                            plt.plot(recalls, precisions)
+                            plt.grid()
+                            plt.xlabel("Recall")
+                            plt.ylabel("Precision")
+                            plt.title("Precision vs. Recall", size=20, y=1.05)
+                            </code></pre>
 
                         <h4>4. Choose the threshold based on your business case.</h4><pre class="language-python"><code>threshold_90_precision = thresholds[np.argmax(precisions &gt;= .9)]
-    y_train_pred_90 = (y_scores &gt;= threshold_90_precision)
-    
-    precision_score(y_train_5, y_train_pred_90),\
-    recall_score(y_train_5, y_train_pred_90)
-    
-    # (0.9000345901072293, 0.4799852425751706)
-    </code></pre>
-                    </p>
+                            y_train_pred_90 = (y_scores &gt;= threshold_90_precision)
+                            
+                            precision_score(y_train_5, y_train_pred_90),\
+                            recall_score(y_train_5, y_train_pred_90)
+                            
+                            # (0.9000345901072293, 0.4799852425751706)
+                            </code></pre>
+                    </details>
+                    <details>
+                        <summary><b>Method 2</b></summary>
+                        <pre class="language-python"><code>preds = pd.concat([y_train,predictionsBasedOnKFolds.loc[:,'prediction']], axis=1)
+preds.columns = ['trueLabel','prediction']
+predictionsBasedOnKFoldsLightGBMGradientBoosting = preds.copy()
+
+precision, recall, thresholds = \
+    precision_recall_curve(preds['trueLabel'],preds['prediction'])
+average_precision = \
+    average_precision_score(preds['trueLabel'],preds['prediction'])
+
+plt.step(recall, precision, color='k', alpha=0.7, where='post')
+plt.fill_between(recall, precision, step='post', alpha=0.3, color='k')
+
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.ylim([0.0, 1.05])
+plt.xlim([0.0, 1.0])
+
+plt.title('Precision-Recall curve: Average Precision = {0:0.2f}'.format(
+            average_precision))
+
+# you can see that we can achieve approximately 80% recall (i.e.,catch 80% of the fraudulent transactions) with approximately 70% precision
+# (i.e., of the transactions the model flags as fraudulent, 70% are truly fraudulent
+# while the remaining 30% were incorrectly flagged as fraudulent).
+
+# We can distill this precision-recall curve into a single number by calculating the
+# average precision, which is 0.73 for this logistic regression model. We cannot yet
+# tell whether this is good or bad average precision yet since we have no other
+# models to compare our logistic regression against.
+                        </code></pre>
+                        <img src="./imgs/precision_recall_plot.png" alt="">
+                    </details><br>
                 </details>
 
                 <details>
