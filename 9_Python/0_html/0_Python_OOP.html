@@ -1156,22 +1156,58 @@ a + b
             <details>
                 <summary>
                     <b>
-        See Files in Current Directory
-       </b>
-                </summary>
-                <pre class="language-python"><code>import os
-print(os.listdir("../input"))
-</code></pre>
-            </details>
-
-            <details>
-                <summary>
-                    <b>
     Create folder if doesn't exists
     </b>
                 </summary>
                 <pre class="language-python"><code>import pathlib
 pathlib.Path('/tmp/sub1/sub2').mkdir(parents=True, exist_ok=True)
+    </code></pre>
+            </details>
+
+            <details>
+                <summary>
+                    <b> Loop over files in a directory</b>
+                </summary>
+                <pre class="language-python"><code># import required module
+from pathlib import Path
+    
+# assign directory
+directory = 'files'
+    
+# iterate over files in
+# that directory
+files = Path(directory).glob('*')
+for file in files:
+    print(file)
+</code></pre>
+                <pre class="language-python"><code># import required module
+import os
+# assign directory
+directory = 'files'
+    
+# iterate over files in
+# that directory
+for filename in os.listdir(directory):
+    f = os.path.join(directory, filename)
+    # checking if it is a file
+    if os.path.isfile(f):
+        print(f)
+    </code></pre>
+            </details>
+
+            <details>
+                <summary>
+                    <b>
+            Get name of file without extention
+       </b>
+                </summary>
+                <pre class="language-python"><code>import os
+print(os.path.splitext("/path/to/some/file.txt.zip.asc")[0])
+# file
+</code></pre>
+                <pre class="language-python"><code>from pathlib import Path
+
+Path('/root/dir/sub/file.ext').stem
     </code></pre>
             </details>
 
@@ -1238,24 +1274,6 @@ print(add_part(3))
         </details>
         <hr/>
     </div>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-    </script>
-    <script>
-        hljs.initHighlightingOnLoad();
-    </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-    </script>
-    <script type="text/javascript">
-        MathJax.Hub.Config({
-            "showProcessingMessages": false,
-            "messageStyle": "none",
-            "tex2jax": {
-                inlineMath: [
-                    ["$", "$"]
-                ]
-            }
-        });
-    </script>
     <script src="../../prism.js"></script>
 </body>
 
