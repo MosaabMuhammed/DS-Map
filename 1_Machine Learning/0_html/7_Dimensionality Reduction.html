@@ -329,10 +329,11 @@ def scatterPlot(xDF, yDF, algoName):
 
                 <details>
                     <summary><b>Incremental PCA</b></summary>
-                    <p>
-                        <h4>1. Using np.array_split()</h4>
-
-                        <pre class="language-python"><code>from sklearn.decomposition import IncrementalPCA
+                    <ul>
+                        <li>
+                            <details>
+                                <summary><b>1. Using np.array_split()</b></summary>
+                                <pre class="language-python"><code>from sklearn.decomposition import IncrementalPCA
 
 n_batches = 100
 inc_pca = IncrementalPCA(n_componenets=154)
@@ -341,12 +342,15 @@ for X_batch in np.array_split(X_train, n_batches):
     inc_pca.partial_fit(X_batch)
 
 X_reduced = inc_pca.transform(X_train)
-</code></pre>
+                                </code></pre>
+                            </details>
+                        </li>
 
 
-                        <h4>2. Using np.memmap()</h4>
-
-                        <pre class="language-python"><code># np.memmap allows you to manipulate a large
+                        <li>
+                            <details>
+                                <summary><b>2. Using np.memmap()</b></summary>
+                                <pre class="language-python"><code># np.memmap allows you to manipulate a large
 # array store in a binary file on disk as if it were entirely in memory;
 # The class loads only the data it needs in memory, when it needs it.
 # 1. Let's create the memmap() structure and copy MNIST data into it. This would typically be done by a first program.
@@ -365,9 +369,37 @@ X_mm = np.memmap(filename, dtype=&quot;float32&quot;, mode=&quot;readonly&quot;,
 batch_size = m // n_batches
 inc_pca = IncrementalPCA(n_components=154, batch_size=batch_size)
 inc_pca.fit(X_mm)
-</code></pre>
+                                    </code></pre>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                                <summary><b>3. Using Normal fit_transform</b></summary>
+                                <pre class="language-python"><code># Incremental PCA
+from sklearn.decomposition import IncrementalPCA
 
-                    </p>
+n_components = 784
+batch_size = None
+
+incrementalPCA = IncrementalPCA(n_components=n_components, \
+                                batch_size=batch_size)
+
+X_train_incrementalPCA = incrementalPCA.fit_transform(X_train)
+X_train_incrementalPCA = \
+    pd.DataFrame(data=X_train_incrementalPCA, index=train_index)
+
+X_validation_incrementalPCA = incrementalPCA.transform(X_validation)
+X_validation_incrementalPCA = \
+    pd.DataFrame(data=X_validation_incrementalPCA, index=validation_index)
+
+scatterPlot(X_train_incrementalPCA, y_train, "Incremental PCA")
+# check PCA section for scatterPlot implementation
+                                    </code></pre>
+                            </details>
+                        </li>
+
+                    </ul>
+
                 </details>
 
                 <details>
