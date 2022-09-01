@@ -401,6 +401,35 @@ scatterPlot(X_train_incrementalPCA, y_train, "Incremental PCA")
                     </ul>
 
                 </details>
+                <details>
+                    <summary><b>Sparse PCA</b></summary>
+                    <p>The normal **PCA** algorithm searches for linear combinations in all the input variables, reducing the original feature space as densely as possible. <br> But for some machine learning problems, some degree of sparsity may be preferred.
+                        A version of **PCA** that retains some degree of sparsity—controlled by a hyperparameter called alpha—is known as **sparse PCA**. The **sparse** **PCA** algorithm searches for linear combinations in just some of the input variables,
+                        reducing the original feature space to some degree but not as compactly as **normal PCA**. this algorithm trains a bit more slowly than normal PCA</p>
+
+                    <pre class="language-python"><code># Sparse PCA
+from sklearn.decomposition import SparsePCA
+
+n_components = 100
+alpha = 0.0001
+random_state = 2018
+n_jobs = -1
+
+sparsePCA = SparsePCA(n_components=n_components, \
+                alpha=alpha, random_state=random_state, n_jobs=n_jobs)
+
+sparsePCA.fit(X_train.loc[:10000,:])
+X_train_sparsePCA = sparsePCA.transform(X_train)
+X_train_sparsePCA = pd.DataFrame(data=X_train_sparsePCA, index=train_index)
+
+X_validation_sparsePCA = sparsePCA.transform(X_validation)
+X_validation_sparsePCA = \
+    pd.DataFrame(data=X_validation_sparsePCA, index=validation_index)
+
+scatterPlot(X_train_sparsePCA, y_train, "Sparse PCA")
+# check PCA section for scatterPlot implementation
+</code></pre>
+                </details>
 
                 <details>
                     <summary><b>Kernel PCA</b></summary>
@@ -429,7 +458,30 @@ print(grid_search.best_params_)
 
                     </p>
                 </details>
+                <details>
+                    <summary><b>Trucated SVD</b></summary>
 
+                    <pre class="language-python"><code># Singular Value Decomposition
+from sklearn.decomposition import TruncatedSVD
+
+n_components = 200
+algorithm = 'randomized'
+n_iter = 5
+random_state = 2018
+
+svd = TruncatedSVD(n_components=n_components, algorithm=algorithm, \
+                    n_iter=n_iter, random_state=random_state)
+
+X_train_svd = svd.fit_transform(X_train)
+X_train_svd = pd.DataFrame(data=X_train_svd, index=train_index)
+
+X_validation_svd = svd.transform(X_validation)
+X_validation_svd = pd.DataFrame(data=X_validation_svd, index=validation_index)
+
+scatterPlot(X_train_svd, y_train, "Singular Value Decomposition")
+# check PCA section for scatterPlot implementation
+</code></pre>
+                </details>
                 <details>
                     <summary><b>Fact ICA</b></summary>
                     <p>
