@@ -632,20 +632,6 @@ scatterPlot(X_train_mds, y_train, "Multidimensional Scaling")
 </code></pre>
                 </details>
 
-                <details>
-                    <summary><b>Fact ICA</b></summary>
-                    <p>
-
-                        <pre class="language-python"><code>from sklearn.decomposition import FastICA
-fastica = FastICA(n_components=64,
-                    max_iter=5000,
-                    random_state=1000)
-fastica.fit(X)
-</code></pre>
-
-                    </p>
-                </details>
-
 
                 <details>
                     <summary><b>LLE</b> [LocallyLinearEmbedding]</summary>
@@ -773,14 +759,32 @@ scatterPlot(X_train_miniBatchDictLearning, y_train, \
                 </details>
 
                 <details>
-                    <summary><b>Dictionary Learning</b></summary>
-                    <p> Uniform Manifold Approximation and Projection: A relatively new technique that also maps data to a low-dimensional manifold but tries to preserve more global structure than TSNE.</p>
+                    <summary><b>Fact ICA</b> [Independent Component Analysis]</summary>
+                    <p>
 
-                    <pre class="language-python"><code>rom umap import UMAP
-n_components = 3
+                        <pre class="language-python"><code>from sklearn.decomposition import FastICA
 
-umap = UMAP(n_components=n_components)
+n_components = 25
+algorithm = 'parallel'
+whiten = True
+max_iter = 100
+random_state = 2018
+
+fastICA = FastICA(n_components=n_components, algorithm=algorithm, \
+                    whiten=whiten, max_iter=max_iter, random_state=random_state)
+
+X_train_fastICA = fastICA.fit_transform(X_train)
+X_train_fastICA = pd.DataFrame(data=X_train_fastICA, index=train_index)
+
+X_validation_fastICA = fastICA.transform(X_validation)
+X_validation_fastICA = pd.DataFrame(data=X_validation_fastICA, \
+                                    index=validation_index)
+
+scatterPlot(X_train_fastICA, y_train, "Independent Component Analysis")
+# check this function from PCA section.
 </code></pre>
+
+                    </p>
                 </details>
 
 
