@@ -649,15 +649,31 @@ fastica.fit(X)
 
                 <details>
                     <summary><b>LLE</b> [LocallyLinearEmbedding]</summary>
-                    <p>
+                    <p>This method preserves distances within local neighborhoods as it projects the data from the original feature space to a reduced space. LLE discovers the nonlinear structure in the original, high-dimensional data by segmenting the data
+                        into smaller components (i.e., into neighborhoods of points) and modeling each component as a linear embedding.</p>
 
-                        <pre class="language-python"><code>from sklearn.manifold import LocallyLinearEmbedding
+                    <pre class="language-python"><code>from sklearn.manifold import LocallyLinearEmbedding
 
-lle = LocallyLinearEmbedding(n_components=2, n_neighbors=10)
-X_reduced = lle.fit_transform(X)
+# For this algorithm, we set the number of components we desire and the number of points to consider in a given neighborhood
+n_neighbors = 10
+n_components = 2
+method = 'modified'
+n_jobs = 4
+random_state = 2018
+
+lle = LocallyLinearEmbedding(n_neighbors=n_neighbors, \
+        n_components=n_components, method=method, \
+        random_state=random_state, n_jobs=n_jobs)
+
+lle.fit(X_train.loc[0:5000,:])
+X_train_lle = lle.transform(X_train)
+X_train_lle = pd.DataFrame(data=X_train_lle, index=train_index)
+
+X_validation_lle = lle.transform(X_validation)
+X_validation_lle = pd.DataFrame(data=X_validation_lle, index=validation_index)
+
+scatterPlot(X_train_lle, y_train, "Locally Linear Embedding")
 </code></pre>
-
-                    </p>
                 </details>
 
                 <details>
