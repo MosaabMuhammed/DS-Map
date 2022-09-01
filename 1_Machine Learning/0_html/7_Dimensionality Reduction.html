@@ -559,38 +559,60 @@ perform_tsne(X_pre_tsne, y_pre_tsne, perplexities=[2, 5, 10, 10, 50])
                 </details>
 
                 <details>
-                    <summary><b>Random Projection</b></summary>
+                    <summary><b>Gaussian Random Projection</b></summary>
+                    <p>
+                        <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection"><b>Gaussian Random Projection</b></a> </p>
+                        <p>For Gaussian random projection, we can either specify the number of components we would like to have in the reduced feature space, or we can set the hyperparameter eps. The eps controls the quality of the embedding according to
+                            the Johnson–Lindenstrauss lemma, where smaller values generate a higher number of dimensions.</p>
+
+                        <pre class="language-python"><code class="python"># Gaussian Random Projection
+from sklearn.random_projection import GaussianRandomProjection
+
+n_components = 'auto'
+eps = 0.5
+random_state = 2018
+
+GRP = GaussianRandomProjection(n_components=n_components, eps=eps, \
+                                random_state=random_state)
+
+X_train_GRP = GRP.fit_transform(X_train)
+X_train_GRP = pd.DataFrame(data=X_train_GRP, index=train_index)
+
+X_validation_GRP = GRP.transform(X_validation)
+X_validation_GRP = pd.DataFrame(data=X_validation_GRP, index=validation_index)
+
+scatterPlot(X_train_GRP, y_train, "Gaussian Random Projection")
+</code></pre>
+
+                    </p>
+                </details>
+
+                <details>
+                    <summary><b>Sparse Random Projection</b></summary>
                     <p>
                         <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.SparseRandomProjection.html#sklearn.random_projection.SparseRandomProjection"><b>SparseRandomProjection</b></a> </p>
 
-                        <p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.random_projection.GaussianRandomProjection.html#sklearn-random-projection-gaussianrandomprojection"><b>Gaussian Random Projection</b></a> </p>
-
-                        <h4> Sparse Random Projection.</h4>
-
-                        <pre class="language-python"><code class="python">import numpy as np
+                        <pre class="language-python"><code class="python"># Sparse Random Projection
 from sklearn.random_projection import SparseRandomProjection
-rng = np.random.RandomState(42)
-X = rng.rand(100, 10000)
-transformer = SparseRandomProjection(random_state=rng)
-X_new = transformer.fit_transform(X)
-X_new.shape
 
-# very few components are non-zero
-np.mean(transformer.components_ != 0) 
+n_components = 'auto'
+density = 'auto'
+eps = 0.5
+dense_output = False
+random_state = 2018
+
+SRP = SparseRandomProjection(n_components=n_components, \
+        density=density, eps=eps, dense_output=dense_output, \
+        random_state=random_state)
+
+X_train_SRP = SRP.fit_transform(X_train)
+X_train_SRP = pd.DataFrame(data=X_train_SRP, index=train_index)
+
+X_validation_SRP = SRP.transform(X_validation)
+X_validation_SRP = pd.DataFrame(data=X_validation_SRP, index=validation_index)
+
+scatterPlot(X_train_SRP, y_train, "Sparse Random Projection")
 </code></pre>
-
-
-                        <h4> Gaussian Random Projection.</h4>
-
-                        <pre class="language-python"><code class="python">import numpy as np
-from sklearn.random_projection import GaussianRandomProjection
-rng = np.random.RandomState(42)
-X = rng.rand(100, 10000)
-transformer = GaussianRandomProjection(random_state=rng)
-X_new = transformer.fit_transform(X)
-X_new.shape
-</code></pre>
-
                     </p>
                 </details>
 
