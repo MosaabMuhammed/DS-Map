@@ -610,6 +610,29 @@ scatterPlot(X_train_isomap, y_train, "Isomap")
                 </details>
 
                 <details>
+                    <summary><b>Multi-Dimensional Scaling (MDS)</b></summary>
+                    <p>Multidimensional scaling (MDS) is a form of nonlinear dimensionality reduction that learns the similarity of points in the original dataset and, using this similarity learning, models this in a lower dimensional space</p>
+                    <pre class="language-python"><code>from sklearn.manifold import MDS
+
+n_components = 2
+n_init = 12
+max_iter = 1200
+metric = True
+n_jobs = 4
+random_state = 2018
+
+mds = MDS(n_components=n_components, n_init=n_init, max_iter=max_iter, \
+            metric=metric, n_jobs=n_jobs, random_state=random_state)
+
+X_train_mds = mds.fit_transform(X_train.loc[0:1000,:])
+X_train_mds = pd.DataFrame(data=X_train_mds, index=train_index[0:1001])
+
+scatterPlot(X_train_mds, y_train, "Multidimensional Scaling")
+# check this function from PCA section.
+</code></pre>
+                </details>
+
+                <details>
                     <summary><b>Fact ICA</b></summary>
                     <p>
 
