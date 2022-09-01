@@ -677,6 +677,17 @@ scatterPlot(X_train_lle, y_train, "Locally Linear Embedding")
                 </details>
 
                 <details>
+                    <summary><b>UMAP</b></summary>
+                    <p> Uniform Manifold Approximation and Projection: A relatively new technique that also maps data to a low-dimensional manifold but tries to preserve more global structure than TSNE.</p>
+
+                    <pre class="language-python"><code>rom umap import UMAP
+n_components = 3
+
+umap = UMAP(n_components=n_components)
+</code></pre>
+                </details>
+
+                <details>
                     <summary><b>t-SNE</b></summary>
                     <p>
                         <h4>1. Faster Wrapper for t-SNE</h4>
@@ -724,10 +735,55 @@ perform_tsne(X_pre_tsne, y_pre_tsne, perplexities=[2, 5, 10, 10, 50])
                     </p>
                 </details>
 
+                <h4>Others</h4>
+                <details>
+                    <summary><b>Dictionary Learning</b></summary>
+                    <p>An approach known as dictionary learning involves learning the sparse representation of the underlying data. These representative elements are simple, binary vectors (zeros and ones), and each instance in the dataset can be reconstructed
+                        as a weighted sum of the representative elements. The matrix (known as the dictionary) that this unsupervised learning generates is mostly populated by zeros with only a few nonzero weights. By creating such a dictionary, this
+                        algorithm is able to efficiently identify the most salient representative elements of the original feature space—these are the ones that have the most nonzero weights. The representative elements that are less important will have
+                        few nonzero weights. As with **PCA**, dictionary learning is excellent for learning the underlying structure of the data, which will be helpful in separating the data and in identifying interesting patterns.</p>
+                    <pre class="language-python"><code>from sklearn.decomposition import MiniBatchDictionaryLearning
+
+n_components = 50
+alpha = 1
+batch_size = 200
+n_iter = 25
+random_state = 2018
+
+miniBatchDictLearning = MiniBatchDictionaryLearning( \
+                        n_components=n_components, alpha=alpha, \
+                        batch_size=batch_size, n_iter=n_iter, \
+                        random_state=random_state)
+
+miniBatchDictLearning.fit(X_train.loc[:,:10000])
+X_train_miniBatchDictLearning = miniBatchDictLearning.fit_transform(X_train)
+X_train_miniBatchDictLearning = pd.DataFrame( \
+    data=X_train_miniBatchDictLearning, index=train_index)
+
+X_validation_miniBatchDictLearning = \
+    miniBatchDictLearning.transform(X_validation)
+X_validation_miniBatchDictLearning = \
+    pd.DataFrame(data=X_validation_miniBatchDictLearning, \
+    index=validation_index)
+
+scatterPlot(X_train_miniBatchDictLearning, y_train, \
+            "Mini-batch Dictionary Learning")
+# check this function from PCA section.
+</code></pre>
+                </details>
+
+                <details>
+                    <summary><b>Dictionary Learning</b></summary>
+                    <p> Uniform Manifold Approximation and Projection: A relatively new technique that also maps data to a low-dimensional manifold but tries to preserve more global structure than TSNE.</p>
+
+                    <pre class="language-python"><code>rom umap import UMAP
+n_components = 3
+
+umap = UMAP(n_components=n_components)
+</code></pre>
+                </details>
 
 
-
-                - ICA - t-SNE - LLE - UMAP - SVD
             </p>
         </details>
 
