@@ -1550,6 +1550,51 @@ pyplot.show()</code></pre>
 
                     <li>
                         <details>
+                            <summary><b>OPTICS</b></summary>
+                            <p>OPTICS Clustering stands for Ordering Points To Identify Cluster Structure. It draws inspiration from the DBSCAN clustering algorithm. It adds two more terms to the concepts of DBSCAN clustering.</p>
+                            <p>They are:- <br> Core Distance: It is the minimum value of radius required to classify a given point as a core point. If the given point is not a Core point, then it’s Core Distance is undefined. <br> Reachability Distance:
+                                It is defined with respect to another data point q(Let). The Reachability distance between a point p and q is the maximum of the Core Distance of p and the Euclidean Distance(or some other distance metric) between p and
+                                q. Note that The Reachability Distance is not defined if q is not a Core point.</p>
+                            <pre class="language-python"><code>from numpy import unique
+from numpy import where
+from matplotlib import pyplot
+from sklearn.datasets import make_classification
+from sklearn.cluster import OPTICS
+
+# initialize the data set we'll work with
+training_data, _ = make_classification(
+    n_samples=1000,
+    n_features=2,
+    n_informative=2,
+    n_redundant=0,
+    n_clusters_per_class=1,
+    random_state=4
+)
+
+# define the model
+optics_model = OPTICS(eps=0.75, min_samples=10)
+
+# assign each data point to a cluster
+optics_result = optics_model.fit_predict(training_data)
+
+# get all of the unique clusters
+optics_clusters = unique(optics_clusters)
+
+# plot OPTICS the clusters
+for optics_cluster in optics_clusters:
+    # get data points that fall in this cluster
+    index = where(optics_result == optics_clusters)
+    # make the plot
+    pyplot.scatter(training_data[index, 0], training_data[index, 1])
+
+# show the OPTICS plot
+pyplot.show()</code></pre>
+                        </details>
+                    </li>
+
+
+                    <li>
+                        <details>
                             <summary><b>Fuzzy C-means</b></summary>
                             <pre class="language-python"><code># pip install -U scikit-fuzzy                                
 from skfuzzy.cluster import cmeans
