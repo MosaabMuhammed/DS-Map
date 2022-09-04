@@ -19,7 +19,7 @@
             <summary><span style='color:#333;font-size:25px;font-weight:bold;text-decoration:underline'>1. Related to Dataset:</span></summary>
             <p>
                 <details>
-                    <summary><b>1. Imbalanced Data set:</b></summary>
+                    <summary><b>Imbalanced Data set:</b></summary>
                     <p>
                         <ul>
                             <li>
@@ -40,7 +40,18 @@
                     </p>
                 </details>
                 <details>
-                    <summary><b>2. Large Dataset:</b></summary>
+                    <summary><b>Fast Reading:</b></summary>
+                    <p>If a the process takes 16.62 seconds for Pandas, Datatable is only at 6.55 seconds. <br> Overall Datatable is 2 times faster than Pandas.</p>
+                    <pre class="language-python"><code>import datatable as dt
+import pandas as pd
+
+def read_quick_csv(filepath):
+    ds_dict = dt.fread(filepath, fill=True, na_strings=[''])
+    ds = pd.DataFrame(ds_dict.to_dict())
+    return ds</code></pre>
+                </details>
+                <details>
+                    <summary><b>Large Dataset:</b></summary>
                     <p>
 
                         <details>
