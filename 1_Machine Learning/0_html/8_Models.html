@@ -1862,6 +1862,11 @@ Y_sc = sc.fit_predict(Xs)</code></pre>
                     <li>
                         <details>
                             <summary><b>DBSCAN</b></summary>
+                            <p>DBSCAN will group together closely packed points, where close together is
+                                defined as a minimum number of points that must exist within a certian distance.
+                                If the point is within a certain distance of multiple clusters, it will be grouped
+                                with the cluster to which it is most densely located. Any instance that is not
+                                within this certain distance of another cluster is labeled an outlier.</p>
                             <pre class="language-python"><code># Create a dataset
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import calinski_harabasz_score 
@@ -1900,6 +1905,92 @@ print("DB = {}".format(davies_bouldin_score(X, Y)))
                                     and the Davies-Bouldin score is at a minimum at the same value. Therefore, also thanks to the considerations about the noisy points, we can accept as the optimal value and perform clustering with nmin = 8 and a leaf
                                     size equal to a reasonable value of </p>
                             </details>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary><b>HDBSCAN</b></summary>
+                            <p>Let’s try another version of DBSCAN and see if the results improve. This one is
+                                known as HDBSCAN, or hierarchical DBSCAN. The takes the DBSCAN
+                                algorithm we introduced and converts it into a hierarchical clustering algorithm.
+                                In other words, it groups based on density and then links the density-based
+                                clusters based on distance iteratively, like in the hierarchical clustering algorithm</p>
+                            <p>The two main parameters for this algorithm are min_cluster_size and
+                                min_samples, which defaults to min_cluster_size when set to None. Let’s usethe out-of-the-box parameter selections</p>
+                                <pre class="language-python"><code># Define analyze cluster function
+def analyzeCluster(clusterDF, labelsDF):
+    countByCluster = pd.DataFrame(data=clusterDF['cluster'].value_counts())
+    countByCluster.reset_index(inplace=True,drop=False)
+    countByCluster.columns = ['cluster','clusterCount']
+        
+    preds = pd.concat([labelsDF,clusterDF], axis=1)
+    preds.columns = ['trueLabel','cluster']
+    
+    countByLabel = pd.DataFrame(data=preds.groupby('trueLabel').count())
+        
+    countMostFreq = pd.DataFrame(data=preds.groupby('cluster').agg(lambda x:x.value_counts().iloc[0]))
+    countMostFreq.reset_index(inplace=True,drop=False)
+    countMostFreq.columns = ['cluster','countMostFrequent']
+    
+    accuracyDF = countMostFreq.merge(countByCluster, left_on="cluster",right_on="cluster")
+    overallAccuracy = accuracyDF.countMostFrequent.sum()/ accuracyDF.clusterCount.sum()
+    
+    accuracyByLabel = accuracyDF.countMostFrequent / accuracyDF.clusterCount
+    
+    return countByCluster, countByLabel, countMostFreq, accuracyDF, overallAccuracy, accuracyByLabel</code></pre>
+                            <pre class="language-python"><code># Perform HDBSCAN
+import hdbscan
+
+min_cluster_size = 30
+min_samples = None
+alpha = 1.0
+cluster_selection_method = 'eom'
+
+hdb = hdbscan.HDBSCAN(min_cluster_size=min_cluster_size, min_samples=min_samples, alpha=alpha, cluster_selection_method=cluster_selection_method)
+
+cutoff = 10
+X_train_PCA_hdbscanClustered = hdb.fit_predict(X_train_PCA.loc[:,0:cutoff])
+
+X_train_PCA_hdbscanClustered = pd.DataFrame(data=X_train_PCA_hdbscanClustered, index=X_train.index, columns=['cluster'])
+
+countByCluster_hdbscan, countByLabel_hdbscan, \
+    countMostFreq_hdbscan, accuracyDF_hdbscan, \
+    overallAccuracy_hdbscan, accuracyByLabel_hdbscan \
+    = analyzeCluster(X_train_PCA_hdbscanClustered, y_train)
+                            </code></pre>
+                            <pre class="language-python"><code># Print overall accuracy
+print("Overall accuracy from HDBSCAN: ",overallAccuracy_hdbscan)
+# Overall accuracy from HDBSCAN:  0.24694
+</code></pre>
+                            <pre class="language-python"><code># Show cluster size
+print("Cluster results for HDBSCAN")
+countByCluster_hdbscan
+# Cluster results for HDBSCAN
+# cluster	clusterCount
+# 0	-1	42569
+# 1	4	5140
+# 2	6	943
+# 3	0	605
+# 4	7	294
+# 5	3	252
+# 6	1	119
+# 7	5	45
+# 8	2	33
+
+# View cluster labels
+X_train_PCA_hdbscanClustered
+# cluster
+# 0	-1
+# 1	0
+# 2	-1
+# 3	4
+# 4	-1
+# ...	...
+# 49995	-1
+# 49996	-1
+# 49997	-1
+# 49998	-1
+# 49999	-1</code></pre>
                         </details>
                     </li>
 
