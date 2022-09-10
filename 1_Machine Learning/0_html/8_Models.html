@@ -1275,6 +1275,10 @@ y_pred = rnd_forest_blender.predict(X_test_predictions)
         <details>
             <summary><b style="font-size:25px">Clustering:</b></summary>
             <p>
+                <p>we would apply
+                    dimensionality reduction first (such as PCA), then we would perform clustering
+                    (such as hierarchical clustering), and finally we would hand-label a few points
+                    per cluster.</p>
                 <ul>
 
                     <li>
@@ -1594,6 +1598,7 @@ pyplot.show()</code></pre>
                     <li>
                         <details>
                             <summary><b>Agglomerative Hierarchy</b></summary>
+                            <details><summary>Using Sklearn</summary>
                             <p>The agglomerative clustering is the most common type of hierarchical clustering used to group objects in clusters based on their similarity. <br> It's also known as AGNES (Agglomerative Nesting). The algorithm starts by treating
                                 each object as a singleton cluster.</p>
                             <pre class="language-python"><code>from numpy import unique
@@ -1631,6 +1636,166 @@ for agglomerative_cluster in agglomerative_clusters:
 # show the Agglomerative Hierarchy plot
 pyplot.show()</code></pre>
                         </details>
+                        <details>
+                            <summary><b>Using fastcluster library</b></summary>
+                            <p>Although Scikit-Learn has a library for this, it performs very slowly.
+                                Instead, we will choose to use another version of hierarchical clustering called
+                                fastcluster. This package is a C++ library with an interface in Python/SciPy</p>
+                            <p>The main function that we will use in this package is
+                                fastcluster.linkage_vector. This requires several arguments, including the
+                                training matrix X, the method, and the metric. The method—which can be set to
+                                single, centroid, median, or ward—specifies which clustering scheme to use
+                                to determine the distance from a new node in the dendrogram to the other nodes.
+                                The metric should be set to euclidean in most cases, and it is required to be
+                                euclidean if the method is centroid, median, or ward. For more on these
+                                arguments, refer to the fastcluster documentation</p>
+                            <pre class="language-python"><code> # Perform hierarchical clustering
+import fastcluster
+from scipy.cluster.hierarchy import dendrogram, cophenet
+from scipy.spatial.distance import pdist
+
+cutoff = 99
+Z = fastcluster.linkage_vector(X_train_PCA.loc[:,0:cutoff], method='ward', metric='euclidean')
+Z_dataFrame = pd.DataFrame(data=Z, columns=['clusterOne','clusterTwo','distance','newClusterSize'])
+    </code></pre>
+    
+                            <h3>Show clusters</h3>
+                            <p>clusterOne and clusterTwo refer to the original observations for numbers 0
+                                through 49,999. For numbers above 49,999, the cluster numbers refer to
+                                previously clustered points. For example, 50,000 refers to the newly formed
+                                cluster in row 0, 50,001 refers to the newly formed cluster in row 1, etc.</p>
+                            <pre class="language-python"><code> # Show leaves
+Z_dataFrame.iloc[:20]
+# clusterOne	clusterTwo	distance	newClusterSize
+# 0	42194.0	43025.0	0.562683	2.0
+# 1	28350.0	37674.0	0.590867	2.0
+# 2	26696.0	44705.0	0.621506	2.0
+# 3	12634.0	32823.0	0.627762	2.0
+# 4	24707.0	43151.0	0.637667	2.0
+# 5	20465.0	24483.0	0.662558	2.0
+# 6	466.0	42098.0	0.664190	2.0
+# 7	46542.0	49961.0	0.665520	2.0
+# 8	2301.0	5732.0	0.671215	2.0
+# 9	37564.0	47668.0	0.675121	2.0
+# 10	3375.0	26243.0	0.685798	2.0
+# 11	15722.0	30368.0	0.686356	2.0
+# 12	21247.0	21575.0	0.694411	2.0
+# 13	14900.0	42486.0	0.696769	2.0
+# 14	30100.0	41908.0	0.699260	2.0
+# 15	12040.0	13254.0	0.701134	2.0
+# 16	10508.0	25434.0	0.708873	2.0
+# 17	30695.0	30757.0	0.710023	2.0
+# 18	31019.0	31033.0	0.712052	2.0
+# 19	36264.0	37285.0	0.713129	2.0
+
+# Show leaves higher on the tree
+Z_dataFrame.iloc[49980:]
+# clusterOne	clusterTwo	distance	newClusterSize
+# 49980	99965.0	99972.0	161.107035	5197.0
+# 49981	99932.0	99980.0	172.070051	6505.0
+# 49982	99945.0	99960.0	182.840883	3245.0
+# 49983	99964.0	99976.0	184.475756	3683.0
+# 49984	99974.0	99979.0	185.027834	7744.0
+# 49985	99940.0	99975.0	185.345241	5596.0
+# 49986	99957.0	99967.0	211.854765	5957.0
+# 49987	99938.0	99983.0	215.494890	4846.0
+# 49988	99978.0	99984.0	216.760381	11072.0
+# 49989	99970.0	99973.0	217.355917	4899.0
+# 49990	99969.0	99986.0	225.468301	8270.0
+# 49991	99981.0	99982.0	238.845146	9750.0
+# 49992	99968.0	99977.0	266.146835	5567.0
+# 49993	99985.0	99989.0	270.929504	10495.0
+# 49994	99990.0	99991.0	346.840981	18020.0
+# 49995	99988.0	99993.0	394.365239	21567.0
+# 49996	99987.0	99995.0	425.142469	26413.0
+# 49997	99992.0	99994.0	440.148373	23587.0
+# 49998	99996.0	99997.0	494.383832	50000.0</code></pre>
+                    <h3>Select the number of clusters:</h3>
+                    <pre class="language-python"><code># Define analyze cluster function
+def analyzeCluster(clusterDF, labelsDF):
+    countByCluster = pd.DataFrame(data=clusterDF['cluster'].value_counts())
+    countByCluster.reset_index(inplace=True,drop=False)
+    countByCluster.columns = ['cluster','clusterCount']
+        
+    preds = pd.concat([labelsDF,clusterDF], axis=1)
+    preds.columns = ['trueLabel','cluster']
+    
+    countByLabel = pd.DataFrame(data=preds.groupby('trueLabel').count())
+        
+    countMostFreq = pd.DataFrame(data=preds.groupby('cluster').agg(lambda x:x.value_counts().iloc[0]))
+    countMostFreq.reset_index(inplace=True,drop=False)
+    countMostFreq.columns = ['cluster','countMostFrequent']
+    
+    accuracyDF = countMostFreq.merge(countByCluster, left_on="cluster",right_on="cluster")
+    overallAccuracy = accuracyDF.countMostFrequent.sum()/ accuracyDF.clusterCount.sum()
+    
+    accuracyByLabel = accuracyDF.countMostFrequent / accuracyDF.clusterCount
+    
+    return countByCluster, countByLabel, countMostFreq, accuracyDF, overallAccuracy, accuracyByLabel</code></pre>
+                    <pre class="language-python"><code> # Create clusters
+from scipy.cluster.hierarchy import fcluster
+
+distance_threshold = 160
+clusters = fcluster(Z, distance_threshold, criterion='distance')
+X_train_hierClustered = pd.DataFrame(data=clusters,index=X_train_PCA.index,columns=['cluster'])
+
+# Print number of clusters
+print("Number of distinct clusters: ", len(X_train_hierClustered['cluster'].unique()))
+# Number of distinct clusters:  20
+
+# Show overall accuracy
+countByCluster_hierClust, countByLabel_hierClust, \
+    countMostFreq_hierClust, accuracyDF_hierClust, \
+    overallAccuracy_hierClust, accuracyByLabel_hierClust \
+    = analyzeCluster(X_train_hierClustered, y_train)
+
+print("Overall accuracy from hierarchical clustering: ", overallAccuracy_hierClust)
+# Overall accuracy from hierarchical clustering:  0.76882</code></pre>
+                    <pre class="language-python"><code># Show accuracy by cluster
+print("Accuracy by cluster for hierarchical clustering")
+accuracyByLabel_hierClust
+# Accuracy by cluster for hierarchical clustering
+# 0     0.987962
+# 1     0.983727
+# 2     0.988998
+# 3     0.597356
+# 4     0.678642
+# 5     0.442478
+# 6     0.950033
+# 7     0.829060
+# 8     0.976062
+# 9     0.986141
+# 10    0.990183
+# 11    0.992183
+# 12    0.971033
+# 13    0.554273
+# 14    0.553617
+# 15    0.720183
+# 16    0.538891
+# 17    0.484590
+# 18    0.957732
+# 19    0.977310
+# dtype: float64
+
+# View cluster labels
+X_train_hierClustered
+# cluster
+# 0	5
+# 1	3
+# 2	15
+# 3	11
+# 4	14
+# ...	...
+# 49995	4
+# 49996	3
+# 49997	6
+# 49998	14
+# 49999	6
+</code></pre>
+                        
+                        </details><br>
+                    </details>
+
                     </li>
 
 
