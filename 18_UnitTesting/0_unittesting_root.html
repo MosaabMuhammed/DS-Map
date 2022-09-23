@@ -120,6 +120,33 @@ def  test_add_with_params(a, b, expected):
             calculator.add("two", 1)
             </code></pre>
         </details>
+        <details>
+            <summary><b>Fixtures</b></summary>
+
+            <details>
+                <summary><b>Custom Fixture</b></summary>
+                <p>Fixtures used to be created to mimic a behaviour, so your tests won't depend on the real behaviour to save time.</p>
+                <p>Create a file called conftest.py to write your fixtures</p>
+                <pre class="language-python"><code># conftest.py
+import pytest
+
+@pytest.fixture
+def my_fixture():
+    return 42
+</code></pre>
+                <pre class="language-python"><code># tests_file.py
+def test_add(my_fixture):
+    assert my_fixture == 42</code></pre>
+            </details>
+            <details>
+                <summary><b>Default Fixtures [capsys]</b></summary>
+                <pre class="language-python"><code>def test_capsys(capsys):
+    print("hello")
+    out, err = capsys.readouterr()
+    assert "hello\n" == out
+                </code></pre>
+            </details>
+        </details>
     </div>
     <script src="../prism.js"></script>
 </body>
