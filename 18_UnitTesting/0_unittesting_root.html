@@ -98,7 +98,7 @@ def test_add_weird_stuff():
             <pre class="language-python"><code>import pytest
 
 @pytest.mark.parametrize(
-    "a", "b", "expected",
+    "a, b, expected",
     [
         (1, 1, 2),
         (2, 1, 3),
@@ -128,7 +128,7 @@ def  test_add_with_params(a, b, expected):
                         <summary><b>Custom Fixture</b></summary>
                         <p>Fixtures used to be created to mimic a behaviour, so your tests won't depend on the real
                             behaviour to save time.</p>
-                        <p>Create a file called conftest.py to write your fixtures</p>
+                        <p>Create a file called conftest.py to write your fixtures, and your fixtures will be available for all tests in the folder.</p>
                         <pre class="language-python"><code># conftest.py
 import pytest
 
@@ -174,7 +174,71 @@ def test_add(my_fixture):
     assert result["hello"] == "world"</code></pre>
                     </details>
                 </li>
+                <li>
+                    <details>
+                        <summary><b>Autouse Fixtures (fixtures you don’t have to request)</b></summary>
+                        <p>Sometimes you may want to have a fixture (or even several) that you know all your tests will depend on. “Autouse” fixtures are a convenient way to make all tests automatically request them. This can cut out a lot of redundant requests, and can even provide more advanced fixture usage (more on that further down).
+                        </p>
+                        <pre class="language-python"><code># contents of test_append.py
+import pytest
+
+
+@pytest.fixture
+def first_entry():
+    return "a"
+
+
+@pytest.fixture
+def order(first_entry):
+    return []
+
+
+@pytest.fixture(autouse=True)
+def append_first(order, first_entry):
+    return order.append(first_entry)
+
+
+def test_string_only(order, first_entry):
+    assert order == [first_entry]
+
+
+def test_string_and_int(order, first_entry):
+    order.append(2)
+    assert order == [first_entry, 2]</code></pre>
+                    </details>
+                </li>
             </ul>
+        </details>
+        <details>
+            <summary><b>Mock</b></summary>
+            <p>used to replicated third-party services and make the test independent of them.</p>
+            <pre class="language-python"><code># forecaster.py
+
+class Forecaster:
+    def __init__(self, weather_service):
+        self.weather_service = weather_service
+    
+    def forecast(self):
+        reading = self.weather_service.barometer()
+        forecasts = dict(
+            rising="Going to rain",
+            falling="Looks clear"
+        )
+        return forecasts[reading]
+            </code></pre>
+            <pre class="language-python"><code># test_forecaster.py
+import pytest
+from mock import Mock
+from forecaster import Forecaster, WeatherService
+
+@pytest.fixture
+def mock_ws():
+    return Mock(spec=WeatherService)
+
+def test_rain_when_barometer_rising(mock_ws):
+    forecaster = Forecaster(mock_ws)
+    mock_ws.barometer.return_value == "rising"
+    assert forecaster.forecast() == "Going to rain"</code></pre>
         </details>
     </div>
     <script src="../prism.js"></script>
