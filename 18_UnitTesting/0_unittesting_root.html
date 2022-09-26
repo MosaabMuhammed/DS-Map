@@ -212,6 +212,28 @@ def test_string_and_int(order, first_entry):
     assert order == [first_entry, 2]</code></pre>
                     </details>
                 </li>
+                <li><details>
+                    <summary><b>Paramatrize a fixture</b></summary>
+                    <pre class="language-python"><code># Class Developer
+
+@pytest.fixture
+def language():
+    return 'python'
+
+@pytest.fixture
+def developer():
+    return Developer(language)
+
+# Old test
+def test_brag(developer):
+    assert developer.brag() == "python is the best!"
+
+# paramtrizing a fixture
+@pytest.mark.parametrize('language', ['ruby'])
+def test_brag_works_for_ruby(developer):
+    assert developer.brag() == "ruby is the best!"
+                    </code></pre>
+                </details></li>
             </ul>
         </details>
         <details>
