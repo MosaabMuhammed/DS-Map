@@ -38,13 +38,25 @@ pytest -k
 # Show locals in tracebacks.
 pytest -l
 
+# Control traceback generation.
+pytest --tb/full-trace
+
 # Invoke the python debugger for each failure
-pytest <test_file> --pdb
+pytest test_file --pdb
 
 # Debug first failure, then stop running tests
-pytest <test_file> -x --pdb
-            </code></pre>
-        </details><br>
+pytest test_file -x --pdb
+</code></pre>
+        </details>
+        <details>
+            <summary><b>Configuration</b></summary>
+            <p>You can create a pytest.ini file:</p>
+            <pre class="language-python"><code># Content of pytest.ini
+
+[pytest]
+adopts = -x -l # will be used in all test runs.
+</code></pre>
+        </details>
         <details>
             <summary><b>Test simple function</b></summary>
             <h3>Main Code</h3>
@@ -119,6 +131,23 @@ def test_add_weird_stuff():
         result = calculator.add("two", 3)</code></pre>
         </details>
         <details>
+            <summary><b>Mark some tests as a group [pytest.mark]</b></summary>
+            <pre class="language-python"><code>import pytest
+@pytest.mark.codec_x
+def test_codec_x():
+    pass
+
+@pytest.mark.codec_y
+def test_codec_y():
+    pass
+
+# You run it like the following:
+pytest -m codec_x
+pytest -m "not codec_x"
+pytest -m "codec_x or codec_y"
+</code></pre>
+        </details>
+        <details>
             <summary><b>Use Multiple Inputs for a single test function [paramatrize]</b></summary>
             <pre class="language-python"><code>import pytest
 
@@ -144,6 +173,38 @@ def  test_add_with_params(a, b, expected):
         with pytest.raises(CalculatorError):
             calculator.add("two", 1)
             </code></pre>
+        </details>
+        <details>
+            <summary><b>Skippping or "xfailing" tests</b></summary>
+            <p><b>Skip a test if:</b>
+                <ul>
+                    <li>it can't run at all on a certain platform.</li>
+                    <li>it can't run because a dependency is missing.</li>
+                </ul>
+                <b>"xfail" a test if:</b>
+                <ul>
+                    <li>The implementation is currently lacking.</li>
+                    <li>It fails on a certain platform but should work.</li>
+                </ul>
+            </p>
+            <pre class="language-python"><code># Imperative Skipping from inside test (or fixture) function:
+pytest.skip("reason")
+pytest.xfail("reason")
+
+# Declarative versions on a test function/class:
+skipif = pytest.mark.skipif
+xfail = pytest.mark.xfail
+
+@skipif(sys.platform == "win32",
+        reason="POSIX only")
+def test_posix_property(...):
+    pass
+
+@xfail(reason="not implemented")
+class TestNewAPI:
+    # test methods.
+    pass
+</code></pre>
         </details>
         <details>
             <summary><b>Fixtures</b></summary>
