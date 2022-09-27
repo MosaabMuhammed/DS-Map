@@ -18,7 +18,27 @@
         </h1>
         <details>
             <summary><b>Commands</b></summary>
-            <pre class="language-python"><code># Invoke the python debugger for each failure
+            <pre class="language-python"><code># run pytest
+pytest
+pytest test_file.py
+pytest test/
+
+# To see which files are collected to perform a test before applying the test.
+pytest --collect-only
+
+# Run the tests but stop on the first failure.
+pytest -x
+
+# Disable capture of stdout/stderr.
+pytest -s
+
+# Run tests whose names contain a keyword.
+pytest -k
+
+# Show locals in tracebacks.
+pytest -l
+
+# Invoke the python debugger for each failure
 pytest <test_file> --pdb
 
 # Debug first failure, then stop running tests
@@ -62,10 +82,10 @@ def test_add():
                 raise CalculatorError("You can't divide by zero.") from ex</code></pre>
             <h3>Test File</h3>
             <pre class="language-python"><code>def test_divide_by_zero():
-calculator = Calculator()
+    calculator = Calculator()
 
-with pytest.raises(CalculatorError):
-    result = calculator.divide(9, 0)</code></pre>
+    with pytest.raises(CalculatorError):
+        calculator.divide(9, 0)</code></pre>
         </details>
 
         <details>
