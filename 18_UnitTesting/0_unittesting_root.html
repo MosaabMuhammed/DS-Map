@@ -38,6 +38,11 @@ pytest -k
 # Show locals in tracebacks.
 pytest -l
 
+# Give me more reporting on failures.
+pytest -rf
+# then you can copy the command to test a specific test,
+# and run it until it passes.
+
 # Control traceback generation.
 pytest --tb/full-trace
 
