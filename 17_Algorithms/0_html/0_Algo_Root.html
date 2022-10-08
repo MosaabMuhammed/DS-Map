@@ -1,39 +1,38 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1 style="color:darkcyan;text-decoration:underline">
-   Algorithms
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <details>
-    <summary>
-     <b>
-      Search
-     </b>
-    </summary>
-    <details>
-     <summary>
-      <b>
-       Binary Search
-      </b>
-     </summary>
-     The list must be sorted before using Binary Search.
-     <br/>
-     <details>
-      <summary>
-       Iterative
-      </summary>
-      <pre><code>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Data Structure & Algorithms
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <h1 style="color:darkcyan;text-decoration:underline">
+        Data Structure & Algorithms
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <details>
+            <summary>
+                <b>
+                    Search
+                </b>
+            </summary>
+            <details>
+                <summary>
+                    <b>
+                        Binary Search
+                    </b>
+                </summary>
+                The list must be sorted before using Binary Search.
+                <br />
+                <details>
+                    <summary>
+                        Iterative
+                    </summary>
+                    <pre class="language-python"><code>
 # It returns location of x in given array arr
 # if present, else returns -1
 def binarySearch(arr, l, r, x):
@@ -67,12 +66,12 @@ if result != -1:
 else:
     print ("Element is not present in array")
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Recursive
-      </summary>
-      <pre><code># Returns index of x in arr if present, else -1
+                </details>
+                <details>
+                    <summary>
+                        Recursive
+                    </summary>
+                    <pre class="language-python"><code># Returns index of x in arr if present, else -1
 def binarySearch (arr, l, r, x):
     # Check base case
     if r &gt;= l:
@@ -106,23 +105,23 @@ if result != -1:
 else:
     print ("Element is not present in array")
 </code></pre>
-     </details>
-    </details>
-    <br/>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Sort
-     </b>
-    </summary>
-    <details>
-     <summary>
-      <b>
-       Bubble Sort
-      </b>
-     </summary>
-     <pre><code>def bubbleSort(arr):
+                </details>
+            </details>
+            <br />
+        </details>
+        <details>
+            <summary>
+                <b>
+                    Sort
+                </b>
+            </summary>
+            <details>
+                <summary>
+                    <b>
+                        Bubble Sort
+                    </b>
+                </summary>
+                <pre class="language-python"><code>def bubbleSort(arr):
 n = len(arr)
     # Traverse through all array elements
     for i in range(n-1):
@@ -143,14 +142,14 @@ print ("Sorted array is:")
 for i in range(len(arr)):
     print ("% d" % arr[i]), 
 </code></pre>
-    </details>
-    <details>
-     <summary>
-      <b>
-       Insertion Sort
-      </b>
-     </summary>
-     <pre><code># Function to do insertion sort
+            </details>
+            <details>
+                <summary>
+                    <b>
+                        Insertion Sort
+                    </b>
+                </summary>
+                <pre class="language-python"><code># Function to do insertion sort
 def insertionSort(arr):
     # Traverse through 1 to len(arr)
     for i in range(1, len(arr)):
@@ -170,14 +169,14 @@ insertionSort(arr)
 print ("Sorted array is:")
 for i in range(len(arr)):
     print ("%d" %arr[i])</code></pre>
-    </details>
-    <details>
-     <summary>
-      <b>
-       Merge Sort
-      </b>
-     </summary>
-     <pre><code>def mergeSort(arr):
+            </details>
+            <details>
+                <summary>
+                    <b>
+                        Merge Sort
+                    </b>
+                </summary>
+                <pre class="language-python"><code>def mergeSort(arr):
     if len(arr) &gt; 1:
          # Finding the mid of the array
         mid = len(arr)//2
@@ -211,7 +210,7 @@ for i in range(len(arr)):
             arr[k] = R[j]
             j += 1
             k += 1</code></pre>
-     <pre><code>from collections import deque
+                <pre class="language-python"><code>from collections import deque
 
 def MergeSort(arr):
     if len(arr) == 1: return deque(arr)
@@ -228,14 +227,14 @@ def MergeSort(arr):
     res += b
     return res
 </code></pre>
-    </details>
-    <details>
-     <summary>
-      <b>
-       Quick Sort
-      </b>
-     </summary>
-     <pre><code># Python program for implementation of Quicksort Sort
+            </details>
+            <details>
+                <summary>
+                    <b>
+                        Quick Sort
+                    </b>
+                </summary>
+                <pre class="language-python"><code># Python program for implementation of Quicksort Sort
 
 # This function takes last element as pivot, places
 # the pivot element at its correct position in sorted
@@ -273,14 +272,14 @@ def quickSort(arr, low, high):
         quickSort(arr, low, pi-1)
         quickSort(arr, pi+1, high)
 </code></pre>
-    </details>
-    <details>
-     <summary>
-      <b>
-       Topological Sorting
-      </b>
-     </summary>
-     <pre><code># Python program to print topological sorting of a DAG
+            </details>
+            <details>
+                <summary>
+                    <b>
+                        Topological Sorting
+                    </b>
+                </summary>
+                <pre class="language-python"><code># Python program to print topological sorting of a DAG
 from collections import defaultdict
 
 # Class to represent a graph
@@ -337,25 +336,25 @@ print ("Following is a Topological Sort of the given graph")
 # Function Call
 g.topologicalSort()
 </code></pre>
-    </details>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Graph
-     </b>
-    </summary>
-    <details>
-     <summary>
-      <b>
-       Depth-First Search
-      </b>
-     </summary>
-     <details>
-      <summary>
-       Recursive
-      </summary>
-      <pre><code>from collections import defaultdict
+            </details>
+        <br></details>
+        <details>
+            <summary>
+                <b>
+                    Graph
+                </b>
+            </summary>
+            <details>
+                <summary>
+                    <b>
+                        Depth-First Search
+                    </b>
+                </summary>
+                <details>
+                    <summary>
+                        Recursive
+                    </summary>
+                    <pre class="language-python"><code>from collections import defaultdict
 
 class Graph:
     def __init__(self):
@@ -387,12 +386,12 @@ g.addEdge(3, 3)
 print("Following is DFS from (Starting from vertex 2)")
 g.DFS(2)
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Iterative [Stack]
-      </summary>
-      <pre><code># This class represents a directed graph using adjacency
+                </details>
+                <details>
+                    <summary>
+                        Iterative [Stack]
+                    </summary>
+                    <pre class="language-python"><code># This class represents a directed graph using adjacency
 # list representation
 class Graph:
     def __init__(self,V): # Constructor
@@ -446,15 +445,15 @@ g.addEdge(1, 4);
 print("Following is Depth First Traversal")
 g.DFS(0)
 </code></pre>
-     </details>
-    </details>
-    <details>
-     <summary>
-      <b>
-       Beadth-First Search
-      </b>
-     </summary>
-     <pre><code>from collections import defaultdict
+                </details>
+            </details>
+            <details>
+                <summary>
+                    <b>
+                        Beadth-First Search
+                    </b>
+                </summary>
+                <pre class="language-python"><code>from collections import defaultdict
 class Graph
     # Constructor
     def __init__(self)
@@ -508,14 +507,14 @@ print ("Following is Breadth First Traversal"
                   " (starting from vertex 2)")
 g.BFS(2)
 </code></pre>
-    </details>
-    <details>
-     <summary>
-      <b>
-       Strongly Connected Components (SCC) - Kosaraju's algorithm
-      </b>
-     </summary>
-     <pre><code># Kosaraju's algorithm to find strongly connected components in Python
+            </details>
+            <details>
+                <summary>
+                    <b>
+                        Strongly Connected Components (SCC) - Kosaraju's algorithm
+                    </b>
+                </summary>
+                <pre class="language-python"><code># Kosaraju's algorithm to find strongly connected components in Python
 
 from collections import defaultdict
 class Graph:
@@ -585,24 +584,24 @@ g.add_edge(6, 7)
 print("Strongly Connected Components:")
 g.print_scc()
 </code></pre>
-    </details>
-   </details>
-   <details>
-    <summary>
-     <b>
-      String
-     </b>
-    </summary>
-    <details>
-     <summary>
-      <b>
-       Largest Common Substring b/w 2 strings
-      </b>
-     </summary>
-     <h3>
-      Dynamic Programming
-     </h3>
-     <pre><code>def lcs(a, b):
+            </details>
+        <br></details>
+        <details>
+            <summary>
+                <b>
+                    String
+                </b>
+            </summary>
+            <details>
+                <summary>
+                    <b>
+                        Largest Common Substring b/w 2 strings
+                    </b>
+                </summary>
+                <h3>
+                    Dynamic Programming
+                </h3>
+                <pre class="language-python"><code>def lcs(a, b):
     lengths = [[0 for j in range(len(b)+1)] for i in range(len(a)+1)]
     # row 0 and column 0 are initialized to 0 already
     for i, x in enumerate(a):
@@ -615,18 +614,10 @@ g.print_scc()
     return lengths[len(a)][len(b)]
 
 </code></pre>
-    </details>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+            </details>
+        </details>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
 </html>
