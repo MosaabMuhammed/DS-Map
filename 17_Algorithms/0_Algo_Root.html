@@ -239,7 +239,9 @@ def MergeSort(arr):
                     </b>
                 </summary>
                 <p>Runtime: O(n log(n)) average, O(n^2 ) worst case. Memory: 0(log(n))</p>
-                <pre class="language-python"><code># Python program for implementation of Quicksort Sort
+                <details>
+                    <summary><b>Code 1</b></summary>
+                    <pre class="language-python"><code># Python program for implementation of Quicksort Sort
 
 # This function takes last element as pivot, places
 # the pivot element at its correct position in sorted
@@ -276,7 +278,43 @@ def quickSort(arr, low, high):
         # partition and after partition
         quickSort(arr, low, pi-1)
         quickSort(arr, pi+1, high)
-</code></pre>
+                        </code></pre>
+                </details>
+  
+<details>
+    <summary><b>Code 2</b></summary>
+    <pre class="language-python"><code>def quicksort(array: list, left: int, right: int):
+    index = partition(array, left, right)
+
+    # sort the left half
+    if (left < index - 1):
+        quicksort(array, left, index-1)
+
+    if (index < right):
+        quicksort(array, index, right)
+
+def partition(array: list, left: int, right: int):
+    pivot = array[(left + right) // 2] # pick pivot point.
+    while (left <= right):
+        # find element on left that should be on right.
+        while (array[left] < pivot):
+            left += 1
+
+        # Find element on right that should be on left.
+        while (array[right] > pivot):
+            right -= 1
+
+        # Swap elements, and move left and right indices.
+        if (left <= right):
+            array[left], array[right] = array[right], array[left]
+            left += 1
+            right -= 1
+    return left
+
+l = [3, 4, 5, 1, 23, 34]
+quicksort(l, 0, len(l)-1)
+print(l)</code></pre>
+</details>
             </details>
             <details>
                 <summary>
