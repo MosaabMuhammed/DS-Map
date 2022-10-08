@@ -6,7 +6,7 @@
     <title>
         Data Structure & Algorithms
     </title>
-    <link rel="stylesheet" href="../../prism.css">
+    <link rel="stylesheet" href="../prism.css">
 </head>
 
 <body>
@@ -14,6 +14,7 @@
         Data Structure & Algorithms
     </h1>
     <div style="width:1000px;margin:auto">
+        <li><a href="./notebooks/Big-O Algorithm Complexity Cheat Sheet (Know Thy C 6d9f687da3714f30a1fbd1c58f77ec4a.html">Big O Notations for DS & Algorithms</a></li>
         <details>
             <summary>
                 <b>
@@ -121,6 +122,7 @@ else:
                         Bubble Sort
                     </b>
                 </summary>
+                <p>Runtime: 0(n^2) average and worst case. Memory: 0(1) .</p>
                 <pre class="language-python"><code>def bubbleSort(arr):
 n = len(arr)
     # Traverse through all array elements
@@ -149,6 +151,7 @@ for i in range(len(arr)):
                         Insertion Sort
                     </b>
                 </summary>
+                <p>Runtime: 0(n^2) average and worst case. Memory: 0(1)</p>
                 <pre class="language-python"><code># Function to do insertion sort
 def insertionSort(arr):
     # Traverse through 1 to len(arr)
@@ -176,6 +179,7 @@ for i in range(len(arr)):
                         Merge Sort
                     </b>
                 </summary>
+                <p>Runtime: 0(n log(n)) average and worst case. Memory: Depends</p>
                 <pre class="language-python"><code>def mergeSort(arr):
     if len(arr) &gt; 1:
          # Finding the mid of the array
@@ -234,6 +238,7 @@ def MergeSort(arr):
                         Quick Sort
                     </b>
                 </summary>
+                <p>Runtime: O(n log(n)) average, O(n^2 ) worst case. Memory: 0(log(n))</p>
                 <pre class="language-python"><code># Python program for implementation of Quicksort Sort
 
 # This function takes last element as pivot, places
@@ -617,7 +622,7 @@ g.print_scc()
             </details>
         </details>
     </div>
-    <script src="../../prism.js"></script>
+    <script src="../prism.js"></script>
 </body>
 
 </html>
