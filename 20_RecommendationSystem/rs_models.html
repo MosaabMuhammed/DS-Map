@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        RS - Modeling
+    </title>
+    <link rel="stylesheet" href="../prism.css">
+</head>
+
+<body>
+    <h1 id="3-data-wrangling">
+        RS - Modeling
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <details>
+            <summary><b>Matrix Factorization</b></summary>
+            <pre class="language-python"><code>'''TensorFlow and Keras'''
+import tensorflow as tf
+from tensorflow import keras
+K = keras.backend
+
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Activation, Dense, Dropout
+from tensorflow.keras.layers import BatchNormalization, Input, Lambda
+from tensorflow.keras.layers import Embedding, Flatten, dot
+from tensorflow.keras import regularizers
+from tensorflow.keras.losses import mse, binary_crossentropy</code></pre>
+            <pre class="language-python"><code>n_latent_factors = 1 # play with this until you overfit then reduce it to balance.
+
+user_input = Input(shape=[1], name='user')
+user_embedding = Embedding(input_dim=n_users + 1, 
+                            output_dim=n_latent_factors, 
+                            name='user_embedding')(user_input)
+user_vec = Flatten(name='flatten_users')(user_embedding)
+
+movie_input = Input(shape=[1], name='movie')
+movie_embedding = Embedding(input_dim=n_movies + 1, 
+                            output_dim=n_latent_factors,
+                            name='movie_embedding')(movie_input)
+movie_vec = Flatten(name='flatten_movies')(movie_embedding)
+
+product = dot([movie_vec, user_vec], axes=1)
+model = Model(inputs=[user_input, movie_input], outputs=product)
+model.compile('adam', 'mean_squared_error')</code></pre>
+        <pre class="language-python"><code>history = model.fit(x=[X_train.newUserId, X_train.newMovieId], 
+y=X_train.rating, epochs=100, 
+validation_data=([X_valid.newUserId, X_valid.newMovieId], X_valid.rating), 
+verbose=1)</code></pre>
+        <pre class="language-python"><code>pd.Series(history.history['val_loss'][10:]).plot(logy=False)
+plt.xlabel("Epoch")
+plt.ylabel("Validation Error")
+print(f"Minimum MSE: {round(min(history.history['val_loss']),3)}")
+# Minimum MSE: 0.794
+        </code></pre>
+        </details>
+        <details>
+            <summary><b>Restricted Boltzman Machines</b></summary>
+            <pre class="language-python"><code></code></pre>
+        </details>
+    </div>
+    <script src="../prism.js"></script>
+</body>
+
+</html>
