@@ -1,48 +1,49 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1 style="color:darkcyan">
-   9. General Pipelines
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <ul>
-    <li>
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/4_catboost_lightgbm_Xgboost/AutoML_H2O.html">
-      <b>
-       H2O Auto ML
-      </b>
-     </a>
-    </li>
-   </ul>
-   <details>
-    <summary>
-     <b>
-      Try a bunch of models in a for loop
-     </b>
-    </summary>
-    <p>
-    </p>
-    <p>
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/1_Mushroom%20Classification/index.html#Data-Modeling">
-      <b>
-       Notebook
-      </b>
-     </a>
-    </p>
-    <h4>
-     Import the models libraries.
-    </h4>
-    <pre><code>from sklearn.svm import LinearSVC
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        ML Models
+    </title>
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <h1 style="color:darkcyan">
+        9. General Pipelines
+    </h1>
+    <div style="width:1000px;margin:auto">
+        <ul>
+            <li>
+                <a
+                    href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/4_catboost_lightgbm_Xgboost/AutoML_H2O.html">
+                    <b>
+                        H2O Auto ML
+                    </b>
+                </a>
+            </li>
+        </ul>
+        <details>
+            <summary>
+                <b>
+                    Try a bunch of models in a for loop
+                </b>
+            </summary>
+            <p>
+            </p>
+            <p>
+                <a
+                    href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/0_My%20work/1_Mushroom%20Classification/index.html#Data-Modeling">
+                    <b>
+                        Notebook
+                    </b>
+                </a>
+            </p>
+            <h4>
+                Import the models libraries.
+            </h4>
+            <pre class="language-python"><code>from sklearn.svm import LinearSVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from sklearn.linear_model import LogisticRegressionCV, RidgeClassifierCV
@@ -50,10 +51,10 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_validate
 </code></pre>
-    <h4>
-     Add Models to an array
-    </h4>
-    <pre><code>MLA = [
+            <h4>
+                Add Models to an array
+            </h4>
+            <pre class="language-python"><code>MLA = [
     LinearSVC(),
     GaussianNB(),
     MLPClassifier(),
@@ -63,10 +64,10 @@ from sklearn.model_selection import cross_validate
     KNeighborsClassifier()
 ]
 </code></pre>
-    <h4>
-     Remove Warnings
-    </h4>
-    <pre><code>import warnings 
+            <h4>
+                Remove Warnings
+            </h4>
+            <pre class="language-python"><code>import warnings 
 from sklearn.exceptions import ConvergenceWarning
 
 # Filter out warnings from models
@@ -74,10 +75,10 @@ warnings.filterwarnings('ignore', category = ConvergenceWarning)
 warnings.filterwarnings('ignore', category = DeprecationWarning)
 warnings.filterwarnings('ignore', category = UserWarning)
 </code></pre>
-    <h4>
-     Train the models
-    </h4>
-    <pre><code>#create table to compare MLA metrics
+            <h4>
+                Train the models
+            </h4>
+            <pre class="language-python"><code>#create table to compare MLA metrics
 MLA_columns = ['MLA_Name', 'MLA_Parameters','MLA_Train_Accuracy_Mean', 
                'MLA_Test_Accuracy_Mean', 'MLA_Test_Accuracy_3*STD' ,'MLA_Time']
 MLA_compare = pd.DataFrame(columns=MLA_columns)
@@ -101,26 +102,26 @@ for i, alg in enumerate(MLA):
     MLA_compare.sort_values(by=['MLA_Test_Accuracy_Mean'], ascending=False, inplace=True)
 MLA_compare
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
-      General Pipeline Model
-     </b>
-    </summary>
-    <p>
-    </p>
-    <p>
-     <a href="https://www.kaggle.com/artgor/exploring-categorical-encodings">
-      <b>
-       Notebook
-      </b>
-     </a>
-    </p>
-    <h4>
-     Imports
-    </h4>
-    <pre><code>import lightgbm as lgb
+        </details>
+        <details>
+            <summary>
+                <b>
+                    General Pipeline Model
+                </b>
+            </summary>
+            <p>
+            </p>
+            <p>
+                <a href="https://www.kaggle.com/artgor/exploring-categorical-encodings">
+                    <b>
+                        Notebook
+                    </b>
+                </a>
+            </p>
+            <h4>
+                Imports
+            </h4>
+            <pre class="language-python"><code>import lightgbm as lgb
 import xgboost as xgb
 from catboost import CatBoostRegressor, CatBoostClassifier
 from sklearn import metrics
@@ -146,20 +147,20 @@ from sklearn import metrics
 from tqdm import tqdm_notebook
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 </code></pre>
-    <h4>
-     1. Import BG Function
-    </h4>
-    <pre><code>from termcolor import colored
+            <h4>
+                1. Import BG Function
+            </h4>
+            <pre class="language-python"><code>from termcolor import colored
 
 # ------------------------ SHOW COLORED text -----------------------
 def bg(value, type='num', color='blue'):
     value = str('{:,}'.format(value)) if type == 'num' else str(value)
     return colored(' '+value+' ', color, attrs=['reverse', 'blink'])
 </code></pre>
-    <h4>
-     Double Validation Class.
-    </h4>
-    <pre><code>class DoubleValidationEncoderNumerical:
+            <h4>
+                Double Validation Class.
+            </h4>
+            <pre class="language-python"><code>class DoubleValidationEncoderNumerical:
     """
     Encoder with validation within
     """
@@ -211,10 +212,10 @@ def bg(value, type='num', color='blue'):
         cols_representation = pd.DataFrame(cols_representation, columns=X.columns)
         return cols_representation
 </code></pre>
-    <h4>
-     3. Model Function
-    </h4>
-    <pre><code>&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;### TRAIN MODEL CLASSIFICATION &lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;#
+            <h4>
+                3. Model Function
+            </h4>
+            <pre class="language-python"><code>&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;### TRAIN MODEL CLASSIFICATION &lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;&lt;h4&gt;#
 def train_model_classification(X, X_test, y, params, folds, model_type='lgb', eval_metric='auc', 
                                columns=None, plot_feature_importance=False, model=None, verbose=10000,
                                early_stopping_rounds=200, n_estimators=50000, splits=None, n_folds=3,
@@ -380,10 +381,10 @@ def train_model_classification(X, X_test, y, params, folds, model_type='lgb', ev
 
     return result_dict
 </code></pre>
-    <h4>
-     5. How to use.
-    </h4>
-    <pre><code>X = train.drop(['id', 'target', 'dataset_type'], axis=1)
+            <h4>
+                5. How to use.
+            </h4>
+            <pre class="language-python"><code>X = train.drop(['id', 'target', 'dataset_type'], axis=1)
 y = train['target']
 X_test = test.drop(['id', 'dataset_type'], axis=1)
 del all_data
@@ -422,19 +423,19 @@ params = {
                                               averaging='usual',
                                                   n_jobs=-1)
 </code></pre>
-   </details>
-   <details>
-    <summary>
-     <b>
-      Optimizer (LGB, XGB, CatBoost)
-     </b>
-    </summary>
-    <p>
-    </p>
-    <h4>
-     Timer Function
-    </h4>
-    <pre><code># Credit: https://www.kaggle.com/tilii7/hyperparameter-grid-search-with-xgboost
+        </details>
+        <details>
+            <summary>
+                <b>
+                    Optimizer (LGB, XGB, CatBoost)
+                </b>
+            </summary>
+            <p>
+            </p>
+            <h4>
+                Timer Function
+            </h4>
+            <pre class="language-python"><code># Credit: https://www.kaggle.com/tilii7/hyperparameter-grid-search-with-xgboost
 ## Define the timer function
 def timer(start_time=None):
     if not start_time:
@@ -451,10 +452,10 @@ def timer(start_time=None):
 # random_search.fit(X, Y)
 # timer(start_time) # timing ends here for "start_time" variable
 </code></pre>
-    <h4>
-     2. Optimizer Class
-    </h4>
-    <pre><code>class ModelOptimizer:
+            <h4>
+                2. Optimizer Class
+            </h4>
+            <pre class="language-python"><code>class ModelOptimizer:
     best_score = None
     opt        = None
 
@@ -555,25 +556,26 @@ class LightGBMOptimizer(ModelOptimizer):
         best_metric = max(test_scores)
         return 1 - best_metric
 </code></pre>
-    <h4>
-     3. How to use
-    </h4>
-    <p>
-     <a href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/4_catboost_lightgbm_Xgboost/catboost_playground.html#XGBoost">
-      <b>
-       Notebook
-      </b>
-     </a>
-    </p>
-   </details>
-   <details>
-    <summary>
-     <b>
-      RAPIDS
-     </b>
-     ML on GPU
-    </summary>
-    <pre><code>## Load the functions
+            <h4>
+                3. How to use
+            </h4>
+            <p>
+                <a
+                    href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/Kaggle's%20Notebooks/4_catboost_lightgbm_Xgboost/catboost_playground.html#XGBoost">
+                    <b>
+                        Notebook
+                    </b>
+                </a>
+            </p>
+        </details>
+        <details>
+            <summary>
+                <b>
+                    RAPIDS
+                </b>
+                ML on GPU
+            </summary>
+            <pre class="language-python"><code>## Load the functions
 import cudf
 import cuml
 from cuml.linear_model import Ridge
@@ -583,7 +585,7 @@ from cuml.metrics import accuracy_score,roc_auc_score as ras
 from cuml.preprocessing.model_selection import train_test_split
 from cuml.preprocessing.TargetEncoder import TargetEncoder
 </code></pre>
-    <pre><code>####Target Encoder
+            <pre class="language-python"><code>####Target Encoder
 %%time
 SMOOTH = 0.001
 SPLIT = 'interleaved'
@@ -591,7 +593,7 @@ FOLDS = 5
 
 encoder = TargetEncoder(n_folds=FOLDS, smooth=SMOOTH, split_method=SPLIT)
 </code></pre>
-    <pre><code>#### Train Test Split
+            <pre class="language-python"><code>#### Train Test Split
 %%time
 
 X = train_df.drop(["target"],axis=1)
@@ -605,7 +607,7 @@ for col in train_df.columns:
         X_test[col] = encoder.transform(X_test[col])
         test_df[col] = encoder.transform(test_df[col])
 </code></pre>
-    <pre><code>#### Model Training
+            <pre class="language-python"><code>#### Model Training
 def training(model, X_train, y_train, X_test, y_test, model_name):
     t1 = time.time()
 
@@ -619,7 +621,7 @@ def training(model, X_train, y_train, X_test, y_test, model_name):
     print("\t\t\t--- Model:", model_name,"---")
     print("ROC: ", roc,"\t\t\t","Training time:",training_time,"\n")
 </code></pre>
-    <pre><code>#### Train Models
+            <pre class="language-python"><code>#### Train Models
 ridge = Ridge(fit_intercept = True, normalize = False,solver = "eig")
 
 svr = SVR(kernel='rbf', gamma='scale', C=1, epsilon=0.3)
@@ -632,17 +634,9 @@ mn = ["Ridge","SVR","K Neighbors Classifier"]
 for i in range(0,len(m)):
     training(model=m[i], X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test, model_name=mn[i])
 </code></pre>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+        </details>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
 </html>
