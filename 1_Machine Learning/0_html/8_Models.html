@@ -1466,12 +1466,14 @@ pyplot.show()</code></pre>
 
                     <li>
                         <details>
-                            <summary><b>Gaussian Mixture Model</b></summary>
+                            <summary><b>Bayesian / Gaussian Mixture Model</b></summary>
                             <p>Gaussian mixture models (GMMs) are often used for data clustering. You can use GMMs to perform either hard clustering or soft clustering on query data. To perform hard clustering, the GMM assigns query data points to the multivariate
                                 normal components that maximize the component posterior probability, given the data.</p>
                             <p>Gaussian Mixture Models (GMMs) assume that there are a certain number of Gaussian distributions, and each of these distributions represent a cluster. Hence, a Gaussian Mixture Model tends to group the data points belonging
                                 to a single distribution together.</p>
-                            <pre class="language-python"><code>from numpy import unique
+                                <details>
+                                    <summary><b>Basic Usage</b></summary>
+                                    <pre class="language-python"><code>from numpy import unique
 from numpy import where
 from matplotlib import pyplot
 from sklearn.datasets import make_classification
@@ -1508,7 +1510,45 @@ for gaussian_cluster in gaussian_clusters:
 
 # show the Gaussian Mixture plot
 pyplot.show()</code></pre>
-                        </details>
+                            </details>
+                            <details>
+                                <summary><b>Find number of components</b></summary>
+                                <pre class="language-python"><code>from sklearn.mixture import GaussianMixture, BayesianGaussianMixture
+                                    
+def components_number_multiple(max_n, n_seeds):
+    bic_scores = []
+    for n in range(2,max_n):
+        bic_scores_n = []
+        for seed in range(n_seeds):
+            gmm = GaussianMixture(n_components=n, covariance_type = 'full', n_init=3, random_state=seed)
+            gmm.fit(X_scaled)
+            bic_scores_n.append(gmm.bic(X_scaled))
+        bic_scores.append(bic_scores_n)
+    return bic_scores</code></pre>
+                                <pre class="language-python"><code>def plot_components_number_multiple(max_n, n_seeds):
+    bic_scores = components_number_multiple(max_n + 1, n_seeds)
+    bic_df = pd.DataFrame(data = bic_scores).T
+    bic_df.columns = range(2,max_n+1)
+    
+    f,ax = plt.subplots(figsize=(20,7))
+    for i in range(n_seeds):
+        sns.lineplot(x=bic_df.columns, y=bic_df.loc[i].values)
+    ax.set_xticks(range(2,max_n+1))
+    
+    return bic_df
+
+# Plot
+a = plot_components_number_multiple(max_n = 15, n_seeds = 10)
+
+# Looks like 6 or 7 is the best choice for the number of clusters. We use 7.
+</code></pre>
+                        <img src="./imgs/n_comp_gaussian_mixture.png" alt="">
+
+                        <pre class="language-python"><code>bgmm = BayesianGaussianMixture(n_components=7, covariance_type = 'full', n_init=3, random_state=2)
+predicted_class = bgmm.fit_predict(X_scaled)
+df["class"] = predicted_class</code></pre>
+                            </details>
+                        <br></details>
                     </li>
 
                     <li>
