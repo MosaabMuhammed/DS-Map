@@ -914,7 +914,32 @@ def whiten(X, correct=True):
                     </p>
                 </details>
 
+                <details>
+                    <summary><b>8. Power Transformation</b></summary>
+                    <p>Apply a power transform featurewise to make data more Gaussian-like. <br>
 
+                         Power transforms are a family of parametric, monotonic transformations that are applied to make data more Gaussian-like. This is useful for modeling issues related to heteroscedasticity (non-constant variance), or other situations where normality is desired. <br>
+                        
+                        Currently, PowerTransformer supports the Box-Cox transform and the Yeo-Johnson transform. The optimal parameter for stabilizing variance and minimizing skewness is estimated through maximum likelihood. <br>
+                        
+                        Box-Cox requires input data to be strictly positive, while Yeo-Johnson supports both positive or negative data. <br>
+                        
+                        By default, zero-mean, unit-variance normalization is applied to the transformed data.</p>
+                    <pre class="language-python"><code>import numpy as np
+from sklearn.preprocessing import PowerTransformer
+pt = PowerTransformer()
+data = [[1, 2], [3, 2], [4, 5]]
+print(pt.fit(data))
+# PowerTransformer()
+
+print(pt.lambdas_)
+# [ 1.386... -3.100...]
+
+print(pt.transform(data))
+# [[-1.316... -0.707...]
+# [ 0.209... -0.707...]
+# [ 1.106...  1.414...]]</code></pre>
+                </details>
             </p>
         </details>
 
