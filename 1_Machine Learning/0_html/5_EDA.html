@@ -112,6 +112,15 @@ if 2, will not display any charts, it will simply save them in your local machin
                 </summary>
                 <br />
                 <details>
+                    <summary><b>Half traiangle of heatmap</b></summary>
+                    <pre class="language-python"><code>mask = np.triu(np.ones_like(df.corr(), dtype=bool))
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+f, ax = plt.subplots(figsize=(20,20))
+sns.heatmap(df.corr(), mask=mask, vmax=.3, center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5},annot=True,fmt='.2f')</code></pre>
+                    <img src="./imgs/half_triangle_heatmap.png" alt="">
+                </details>
+                <details>
                     <summary>
                         <b>
                             Generate a colored table for correlation
