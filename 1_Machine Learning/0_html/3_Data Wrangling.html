@@ -63,8 +63,11 @@
             <summary><b>DataFrame</b></summary>
             <p>
                 <details>
-                    <summary><b>Control the output of pandas.describe()</b></summary>
-                    <pre class="language-python"><code>df.describe().applymap('{:,.2f}'.format).T</code></pre>
+                    <summary><b>Control/beautify the output of pandas.describe()</b></summary>
+                    <pre class="language-python"><code>df.describe().applymap('{:,.2f}'.format).T
+
+df.describe().loc[["mean", "std", "min", "25%", "50%", "75%", "max"]].T.style.background_gradient(cmap='summer_r', axis=1).set_precision(2)
+</code></pre>
                 </details>
                 <details>
                     <summary>Show proper <b>Arabic</b> letters</summary>
