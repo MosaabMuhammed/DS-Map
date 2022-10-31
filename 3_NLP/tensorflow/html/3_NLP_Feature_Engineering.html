@@ -38,6 +38,16 @@ tqdm.pandas()
 df['num_words'] = df.text.str.count('\S+')</code></pre>
         </details>
         <details>
+            <summary><b style="font-size:20px">Digits Length</b></summary>
+            <pre class="language-python"><code>df[f'{col}_n_digits'] = df[col].apply(lambda text: len([char for char in list(text) if char.isdigit()]))</code></pre>
+        </details>
+        <details>
+            <summary><b style="font-size:20px">Punctuations Length</b></summary>
+            <pre class="language-python"><code>import string
+
+df[f'{col}_n_punc']  = df[col].apply(lambda text: len([char for char in list(text) if char in string.punctuation]))</code></pre>
+        </details>
+        <details>
             <summary>
                 <b style="font-size:20px">
       Capitals Length
@@ -60,6 +70,16 @@ from tqdm import tqdm
 tqdm.pandas()
 
 df['num_unique_words'] = df['text'].progress_apply(lambda comment: len(set(w for w in comment.split())))</code></pre>
+        </details>
+        <details>
+            <summary><b style="font-size:20px">Unique Digits Length</b></summary>
+            <pre class="language-python"><code>df[f'{col}_n_unique_digits'] = df[col].apply(lambda text: len([char for char in set(text) if char.isdigit()]))</code></pre>
+        </details>
+        <details>
+            <summary><b style="font-size:20px">Unique Punctuations Length</b></summary>
+            <pre class="language-python"><code>import string
+
+df[f'{col}_n_unique_punc'] = df[col].apply(lambda text: len([char for char in set(text) if char in string.punctuation]))</code></pre>
         </details>
         <details>
             <summary>
