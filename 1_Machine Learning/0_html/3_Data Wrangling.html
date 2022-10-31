@@ -63,6 +63,10 @@
             <summary><b>DataFrame</b></summary>
             <p>
                 <details>
+                    <summary><b>Control the output of pandas.describe()</b></summary>
+                    <pre class="language-python"><code>df.describe().applymap('{:,.2f}'.format).T</code></pre>
+                </details>
+                <details>
                     <summary>Show proper <b>Arabic</b> letters</summary>
                     <pre class="language-python"><code># reshaping the arabic words to show correctly on matplotlib
 # pip install arabic-reshaper
