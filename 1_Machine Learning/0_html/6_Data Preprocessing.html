@@ -235,6 +235,40 @@ for train_index, test_index in loo.split(X):
         <details>
             <summary>
                 <b>
+      Leave-P-out
+     </b>
+            </summary>
+            <p>
+                LeavePOut cross-validation is an exhaustive cross-validation technique, in which p-samples are used as the validation set and remaining n-p samples are used as the training set.
+            </p>
+            <p>Suppose we have 100 samples in the dataset. If we use p=10 then in each iteration 10 values will be used as a validation set and the remaining 90 samples as the training set.</p>
+            <p>This process is repeated till the whole dataset gets divided on the validation set of p-samples and n-p training samples.</p>
+            <br>
+            <p><b>Pros: </b>All the data samples get used as both training and validation samples.</p><br>
+            <b>Cons:</b>
+            <p>High computation time: As the above technique will keep on repeating until all samples get used up as a validation set, it will have higher computational time. <br>
+
+                Not Suitable for Imbalanced dataset: Same as in K-Fold Cross-validation, if in the training set we have samples of only 1 class then our model will not be able to generalize for the validation set.</p>
+            <pre class="language-python"><code>from sklearn.model_selection import LeavePOut,cross_val_score
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+
+iris=load_iris()
+X=iris.data[li]
+Y=iris.target[li]
+
+lpo=LeavePOut(p=2)
+lpo.get_n_splits(X)
+
+tree=RandomForestClassifier(n_estimators=10,max_depth=5,n_jobs=-1)
+
+score=cross_val_score(tree,X,Y,cv=lpo)
+</code></pre>
+        </details>
+
+        <details>
+            <summary>
+                <b>
       Random K-Fold CV
      </b>
             </summary>
@@ -423,6 +457,35 @@ for fold_, (trn_, val_) in enumerate(mskf.split(X=df, y=targets)):
 df.to_csv("train_folds.csv", index=False)
 </code></pre>
         </details>
+        <details>
+            <summary>
+                <b>Monte Carlo Cross-Validation(Shuffle Split)</b>
+            </summary>
+            <p>Monte Carlo cross-validation, also known as Shuffle Split cross-validation, is a very flexible strategy of cross-validation. In this technique, the datasets get randomly partitioned into training and validation sets.</p>
+            <p>We have decided upon the percentage of the dataset we want to be used as a training set and the percentage to be used as a validation set. If the added percentage of training and validation set size is not sum up to 100 then the remaining dataset is not used in either training or validation set.</p>
+            <p>Let’s say we have 100 samples and 60% of samples to be used as training set and 20% of the sample to be used as validation set then the remaining 20%( 100-(60+20)) is not to be used. <br>
+
+                This splitting will be repeated ‘n’ times that we have to specify.</p>
+
+            <b>Pros:</b>
+            <p>We are free to use the size of the training and validation set. <br>
+
+                We can choose the number of repetitions and not depend on the number of folds for repetitions.</p>
+            <b>Cons:</b>
+            <p>Few samples may not be selected for either training or validation set. <br>
+            
+            Not Suitable for Imbalanced datasets: After we define the size of the training set and validation set, all the samples are randomly selected, so it may happen that the training set may don’t have the class of data that is in the test set, and the model won’t be able to generalize for unseen data.</p>
+            <pre class="language-python"><code>from sklearn.model_selection import ShuffleSplit,cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+logreg=LogisticRegression()
+
+shuffle_split=ShuffleSplit(test_size=0.3,train_size=0.5,n_splits=10)
+
+scores=cross_val_score(logreg,iris.data[li],iris.target[li],cv=shuffle_split)
+</code></pre>
+        </details>
+
         <details>
             <summary>
                 <b>
