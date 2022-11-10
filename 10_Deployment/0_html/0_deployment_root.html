@@ -1,88 +1,247 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Made with Remarkable!
-  </title>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <style type="text/css">
-   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
-  </style>
- </head>
- <body>
-  <h1>
-   Deployment
-  </h1>
-  <div style="width:1000px;margin:auto">
-   <details>
-    <summary style="font-size:20px;font-weight:bold">
-     Make it Reproducable
-    </summary>
-    <ul>
-     <li>
-      Always remember to
-      <b>
-       set the SEED
-      </b>
-      for all environments.
-     </li>
-     <li>
-      Make sure
-      <b>
-       Dataset is Consistant
-      </b>
-      through the whole pipeline.
-     </li>
-     <li>
-      Record order of features, applied feature transformations, hyperparamters, ....
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary style="font-size:20px;font-weight:bold">
-     Research Environment
-    </summary>
-    <ul>
-     <li>
-      <a href="./1_research_environment/02.6_ML_Pipeline_Step1-DataAnalysis.html" style="font-weight:bold">
-       Data Analysis
-      </a>
-     </li>
-     <li>
-      <a href="./1_research_environment/02.7_ML_Pipeline_Step2-FeatureEngineering.html" style="font-weight:bold">
-       Feature Engineering
-      </a>
-     </li>
-     <li>
-      <a href="./1_research_environment/02.8_ML_Pipeline_Step3-FeatureSelection.html" style="font-weight:bold">
-       Feature Selection
-      </a>
-     </li>
-     <li>
-      <a href="./1_research_environment/02.9_ML_Pipeline_Step4-MachineLearningModelBuild.html" style="font-weight:bold">
-       ML Building
-      </a>
-     </li>
-     <li>
-      <a href="./1_research_environment/02.10_ML_Pipeline-WrapUp_for_Deployment.html" style="font-weight:bold">
-       Wrap up for Deployment
-      </a>
-     </li>
-    </ul>
-   </details>
-   <details>
-    <summary style="font-size:20px;font-weight:bold">
-     Create Depolyment Environment
-    </summary>
-    <ul>
-     <details>
-      <summary>
-       Create Virtual Environment
-      </summary>
-      inside your project, write the following:
-      <br/>
-      <pre><code># Create env
+
+<head>
+      <meta charset="utf-8" />
+      <title>
+            Made with Remarkable!
+      </title>
+      <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet" />
+      <style type="text/css">
+            body,
+            table tr {
+                  background-color: #fff
+            }
+
+            table tr td,
+            table tr th {
+                  border: 1px solid #ccc;
+                  text-align: left;
+                  padding: 6px 13px;
+                  margin: 0
+            }
+
+            pre code,
+            table,
+            table tr {
+                  padding: 0
+            }
+
+            hr,
+            pre code {
+                  background: 0 0
+            }
+
+            body {
+                  font: 16px Helvetica, Arial, sans-serif;
+                  line-height: 1.4;
+                  color: #333;
+                  word-wrap: break-word;
+                  padding: 10px 15px
+            }
+
+            strong,
+            table tr th {
+                  font-weight: 700
+            }
+
+            h1 {
+                  font-size: 2em;
+                  margin: .67em 0;
+                  text-align: center
+            }
+
+            h2 {
+                  font-size: 1.75em
+            }
+
+            h3 {
+                  font-size: 1.5em
+            }
+
+            h4 {
+                  font-size: 1.25em
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                  font-weight: 700;
+                  position: relative;
+                  margin-top: 15px;
+                  margin-bottom: 15px;
+                  line-height: 1.1
+            }
+
+            h1,
+            h2 {
+                  border-bottom: 1px solid #eee
+            }
+
+            hr {
+                  height: 0;
+                  margin: 15px 0;
+                  overflow: hidden;
+                  border: 0;
+                  border-bottom: 1px solid #ddd
+            }
+
+            a {
+                  color: #4183C4
+            }
+
+            a.absent {
+                  color: #c00
+            }
+
+            ol,
+            ul {
+                  padding-left: 15px;
+                  margin-left: 5px
+            }
+
+            ol {
+                  list-style-type: lower-roman
+            }
+
+            table tr {
+                  border-top: 1px solid #ccc;
+                  margin: 0
+            }
+
+            table tr:nth-child(2n) {
+                  background-color: #aaa
+            }
+
+            table tr td :first-child,
+            table tr th :first-child {
+                  margin-top: 0
+            }
+
+            table tr td:last-child,
+            table tr th :last-child {
+                  margin-bottom: 0
+            }
+
+            img {
+                  max-width: 100%
+            }
+
+            blockquote {
+                  padding: 0 15px;
+                  border-left: 4px solid #ccc
+            }
+
+            code,
+            tt {
+                  margin: 0 2px;
+                  padding: 0 5px;
+                  white-space: nowrap;
+                  border: 1px solid #eaeaea;
+                  background-color: #f8f8f8;
+                  border-radius: 3px
+            }
+
+            pre code {
+                  margin: 0;
+                  white-space: pre;
+                  border: none
+            }
+
+            .highlight pre,
+            pre {
+                  background-color: #f8f8f8;
+                  border: 1px solid #ccc;
+                  font-size: 13px;
+                  line-height: 19px;
+                  overflow: auto;
+                  padding: 6px 10px;
+                  border-radius: 3px
+            }
+      </style>
+</head>
+
+<body>
+      <h1>
+            Deployment
+      </h1>
+      <div style="width:1000px;margin:auto">
+            <details>
+                  <summary style="font-size:20px;font-weight:bold">
+                        Make it Reproducable
+                  </summary>
+                  <ul>
+                        <li>
+                              Always remember to
+                              <b>
+                                    set the SEED
+                              </b>
+                              for all environments.
+                        </li>
+                        <li>
+                              Make sure
+                              <b>
+                                    Dataset is Consistant
+                              </b>
+                              through the whole pipeline.
+                        </li>
+                        <li>
+                              Record order of features, applied feature transformations, hyperparamters, ....
+                        </li>
+                  </ul>
+            </details>
+            <details>
+                  <summary style="font-size:20px;font-weight:bold">
+                        Research Environment
+                  </summary>
+                  <ul>
+                        <li>
+                              <a href="./1_research_environment/02.6_ML_Pipeline_Step1-DataAnalysis.html"
+                                    style="font-weight:bold">
+                                    Data Analysis
+                              </a>
+                        </li>
+                        <li>
+                              <a href="./1_research_environment/02.7_ML_Pipeline_Step2-FeatureEngineering.html"
+                                    style="font-weight:bold">
+                                    Feature Engineering
+                              </a>
+                        </li>
+                        <li>
+                              <a href="./1_research_environment/02.8_ML_Pipeline_Step3-FeatureSelection.html"
+                                    style="font-weight:bold">
+                                    Feature Selection
+                              </a>
+                        </li>
+                        <li>
+                              <a href="./1_research_environment/02.9_ML_Pipeline_Step4-MachineLearningModelBuild.html"
+                                    style="font-weight:bold">
+                                    ML Building
+                              </a>
+                        </li>
+                        <li>
+                              <a href="./1_research_environment/02.10_ML_Pipeline-WrapUp_for_Deployment.html"
+                                    style="font-weight:bold">
+                                    Wrap up for Deployment
+                              </a>
+                        </li>
+                  </ul>
+            </details>
+            <details>
+                  <summary style="font-size:20px;font-weight:bold">
+                        Create Depolyment Environment
+                  </summary>
+                  <ul>
+                        <details>
+                              <summary>
+                                    Create Virtual Environment
+                              </summary>
+                              inside your project, write the following:
+                              <br />
+                              <pre><code># Create env
 python -m venv &lt;name-of-env&gt;
 
 # Activate it.
@@ -94,12 +253,12 @@ pip install ...
 # Deactivate.
 deactivate
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Create Requirment file
-      </summary>
-      <pre><code># Create the file.
+                        </details>
+                        <details>
+                              <summary>
+                                    Create Requirment file
+                              </summary>
+                              <pre><code># Create the file.
 touch requirements.txt
 # Then add packages manually.
 
@@ -109,12 +268,12 @@ pip freeze &gt; requirements.txt
 # Install libraries in requirments file.
 pip install -r requirements.txt 
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Python Convetions
-      </summary>
-      <pre><code># Type Hints.
+                        </details>
+                        <details>
+                              <summary>
+                                    Python Convetions
+                              </summary>
+                              <pre><code># Type Hints.
 import typing as t
 
 def add_two_integers(first: int, second: t.Optional[int]=None) -&gt; int:
@@ -124,39 +283,41 @@ def add_two_integers(first: int, second: t.Optional[int]=None) -&gt; int:
         result = first + second
     return result
 </code></pre>
-      <pre><code># Forcing Key Word Arguments (kwargs).
+                              <pre><code># Forcing Key Word Arguments (kwargs).
 def my_function(*, foo):
     pass
 
 # When calling this funciton, we have to name foo:
 my_function(foo="bar")
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Add your ML pipeline
-      </summary>
-      Make sure to follow the commit from this
-      <a href="https://github.com/MosaabMuhammed/deploying-machine-learning-models/tree/53bc67c6a94e01f3fdaf05cbfa2b49465a0c7a1f">
-       link
-      </a>
-      and make sure to make them 2 folders together with the same name.
-      <pre><code># Add your pipeline package to PYTHONPATH
+                        </details>
+                        <details>
+                              <summary>
+                                    Add your ML pipeline
+                              </summary>
+                              Make sure to follow the commit from this
+                              <a
+                                    href="https://github.com/MosaabMuhammed/deploying-machine-learning-models/tree/53bc67c6a94e01f3fdaf05cbfa2b49465a0c7a1f">
+                                    link
+                              </a>
+                              and make sure to make them 2 folders together with the same name.
+                              <pre><code># Add your pipeline package to PYTHONPATH
 $ export PYTHONPATH="$PYTHONPATH:path/to/your/pipeline/first_package_folder_name/"
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Add Tests
-      </summary>
-      Make sure to follow the commit from this
-      <a href="https://github.com/MosaabMuhammed/deploying-machine-learning-models/tree/53bc67c6a94e01f3fdaf05cbfa2b49465a0c7a1f">
-       link
-      </a>
-      <pre><code>
+                        </details>
+                        <details>
+                              <summary>
+                                    Add Tests
+                              </summary>
+                              Make sure to follow the commit from this
+                              <a
+                                    href="https://github.com/MosaabMuhammed/deploying-machine-learning-models/tree/53bc67c6a94e01f3fdaf05cbfa2b49465a0c7a1f">
+                                    link
+                              </a>
+                              <pre><code>
 $ pytest packages/regression_model/tests -W ignore:DeprecationWarning
 </code></pre>
-      <pre><code># Example of test function
+                              <pre><code># Example of test function
 import math
 
 from regression_model.predict import make_prediction
@@ -175,16 +336,16 @@ def test_make_single_prediction():
     assert isinstance(subject.get("predictions")[0], float)
     assert math.ceil(subject.get("predictions")[0]) == 112476
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Add Emojis to your git commits [side-note]
-      </summary>
-      Check
-      <a href="https://gist.github.com/parmentf/035de27d6ed1dce0b36a">
-       possible emojis
-      </a>
-      <pre><code>https://gist.github.com/parmentf/035de27d6ed1dce0b36a
+                        </details>
+                        <details>
+                              <summary>
+                                    Add Emojis to your git commits [side-note]
+                              </summary>
+                              Check
+                              <a href="https://gist.github.com/parmentf/035de27d6ed1dce0b36a">
+                                    possible emojis
+                              </a>
+                              <pre><code>https://gist.github.com/parmentf/035de27d6ed1dce0b36a
 
 # First install emojify to allow emojis in the terminal.
 $ sudo sh -c "curl https://raw.githubusercontent.com/mrowa44/emojify/master/emojify -o /usr/local/bin/emojify &amp;&amp; chmod +x /usr/local/bin/emojify"
@@ -196,35 +357,117 @@ git commit -am ":tada: Initial Commit :tada:"
 git log --oneline --color | emojify | less -r
 git log | emojify
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Version
-      </summary>
-      <pre><code>3.1.12
+                        </details>
+                        <details>
+                              <summary>
+                                    Version
+                              </summary>
+                              <pre><code>3.1.12
 Major.Minor.Batch
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Package your code
-      </summary>
-      Make sure to create the following files:
-      <ul>
-       <li>
-        MANIFEST.in: contains which files to be included in the package
-       </li>
-       <li>
-        requirements.txt
-       </li>
-       <li>
-        setup.py
-       </li>
-       <li>
-        README.md
-       </li>
-      </ul>
-      <pre><code># Then write the following commands.
+                        </details>
+                        <details>
+                              <summary>
+                                    Package your code
+                              </summary>
+                              Make sure to create the following files:
+                              <ul>
+                                    <li>
+                                          MANIFEST.in: contains which files to be included in the package
+                                    </li>
+                                    <li>
+                                          requirements.txt
+                                    </li>
+                                    <li>
+                                          <details><summary><b>setup.py</b></summary>
+                                          <pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Created based on: https://github.com/kennethreitz/setup.py/blob/master/setup.py
+# Alternative: https://github.com/seanfisk/python-project-template/blob/master/setup.py.tpl
+import io
+import os
+import sys
+from shutil import rmtree
+
+from setuptools import find_packages, setup, Command
+
+# Package meta-data.
+NAME = 'utils'
+MAIN_PACKAGE = 'utils'  # Change if main package != NAME
+DESCRIPTION = 'Utility functionality for training.'
+URL = ''
+EMAIL = 'oliver.atanaszov@gmail.com'
+AUTHOR = 'Oliver Atanaszov'
+REQUIRES_PYTHON = '>=3.6'
+VERSION = None  # Only set version if you like to overwrite the version in __version__.py
+
+# Please define the requirements within the requirements.txt
+
+# The rest you shouldn't have to touch too much :)
+# ------------------------------------------------
+# Except, perhaps the License and Trove Classifiers!
+# If you do change the License, remember to change the Trove Classifier for that!
+
+# Check if version is right
+if sys.version_info[:1] == 2 or (sys.version_info[:1] == 3 and sys.version_info[:2] < (3, 6)):
+      raise Exception('This package needs Python 3.6 or later.')
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+# Import the README and use it as the long-description.
+# Note: this will only work if 'README.md' is present in your MANIFEST.in file!
+
+try:
+      # convert markdown to rst format
+      import pypandoc
+      long_description = pypandoc.convert(here, 'README.md', 'rst')
+      long_description = long_description.replace("\r", "")
+except:
+      with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+            long_description = '\n' + f.read()
+
+# Read the requirements.txt and use it as the setup.py requirements
+with io.open(os.path.join(here, 'requirements.txt'), encoding='utf-8') as f:
+      requirements = [line.rstrip() for line in f.readlines()]
+
+setup(
+      name=NAME,
+      version="0.0.1",
+      description=DESCRIPTION,
+      long_description="%s\n\nRequirements:\n%s" % (long_description, requirements),
+      author=AUTHOR,
+      author_email=EMAIL,
+      python_requires=REQUIRES_PYTHON,
+      url=URL,
+      packages=find_packages(exclude=('tests',)),
+      # If your package is a single module, use this instead of 'packages':
+      # py_modules=['mypackage'],
+      # entry_points={
+      #     'console_scripts': ['mycli=mymodule:cli'],
+      # },
+      install_requires=requirements,
+      include_package_data=True,
+      classifiers=[
+            # TODO: update this list to match your application: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+            'Development Status :: 4 - Beta',
+            'Intended Audience :: Developers',
+            'License :: OSI Approved :: MIT License',
+            'Natural Language :: English',
+            'Operating System :: OS Independent',
+            'Programming Language :: Python :: 3',
+            'Topic :: Software Development :: Libraries :: Python Modules'
+      ],
+)
+</code></pre>
+                                          
+                                          </details>
+                                    </li>
+                                    <li>
+                                          README.md
+                                    </li>
+                              </ul>
+                              <pre><code># Then write the following commands.
 # This command to install the requirements.
 pip install -r packages/regression_model/requirements.txt
 
@@ -234,37 +477,38 @@ python packages/regression_model/setup.py sdist bdist_wheel
 # Then pip install your package locally, to see if working.
 pip install -e packages/regression_model
 </code></pre>
-     </details>
-     <details>
-      <summary>
-       Startup Command on Azure
-      </summary>
-      <pre><code>export INTENT_CLF_PACKAGE="/home/site/repository/packages/intent_clf"
+                        </details>
+                        <details>
+                              <summary>
+                                    Startup Command on Azure
+                              </summary>
+                              <pre><code>export INTENT_CLF_PACKAGE="/home/site/repository/packages/intent_clf"
 export ML_API_PACKAGE="`/home/site/repository/packages/ml_api"
 export PYTHONPATH="$PYTHONPATH:$ML_API_PACKAGE"
 pip install -e $INTENT_CLF_PACKAGE
 gunicorn -w 4 -k uvicorn.workers.UvicornWorker packages.ml_api.run:application --timeout 400
 </code></pre>
-     </details>
-    </ul>
-   </details>
-   <details>
-    <summary style="font-size:20px;font-weight:bold">
-     Run Multiple cmds at the background
-    </summary>
-    <ul>
-     Example, one command that you are using multi-processing workers to handle your backend, and another one to make the frontend server up and running.
-     <br/>
-     We are going to accomplish that with
-     <b>
-      supervisor
-     </b>
-     python package.
-     <h4>
-      Local environment
-     </h4>
-    </ul>
-    <pre><code>
+                        </details>
+                  </ul>
+            </details>
+            <details>
+                  <summary style="font-size:20px;font-weight:bold">
+                        Run Multiple cmds at the background
+                  </summary>
+                  <ul>
+                        Example, one command that you are using multi-processing workers to handle your backend, and
+                        another one to make the frontend server up and running.
+                        <br />
+                        We are going to accomplish that with
+                        <b>
+                              supervisor
+                        </b>
+                        python package.
+                        <h4>
+                              Local environment
+                        </h4>
+                  </ul>
+                  <pre><code>
 # This file is called "supervisord.local.conf"
 # Change the pathes, and remove what is not needed.
 [supervisord]
@@ -314,8 +558,8 @@ stopwaitsecs = 30
 [group:ingest]
 programs=fe,be
 </code></pre>
-    Commands to use:
-    <pre><code>
+                  Commands to use:
+                  <pre><code>
 # Must run first command to refer to the supervisord.local.conf that you have configured.
 supervisord -c supervisord.local.conf
 
@@ -342,17 +586,19 @@ supervisorctl -c supervisord.local.conf shutdown
 # Check the last 30 lines in the log.
 tail -n 30 /tmp/ingestbeerr.log
 </code></pre>
-   </details>
-  </div>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+            </details>
+      </div>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+      </script>
+      <script>
+            hljs.initHighlightingOnLoad();
+      </script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+            type="text/javascript">
+            </script>
+      <script type="text/javascript">
+            MathJax.Hub.Config({ "showProcessingMessages": false, "messageStyle": "none", "tex2jax": { inlineMath: [["$", "$"]] } });
+      </script>
+</body>
+
 </html>
