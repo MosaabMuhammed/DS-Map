@@ -452,7 +452,14 @@ def to_list_rec2(head: Node) -> list:
     if not curr: return prev
     nxt = curr.next
     curr.next = prev
-    return reverse_rec(nxt, curr)</code></pre>
+    return reverse_rec(nxt, curr)
+
+def reverse_rec2(head: Node) -> Node:
+    if not head or not head.next: return head
+    p = reverse_rec2(head.next)
+    head.next.next = head
+    head.next = None
+    return p</code></pre>
                         </details></li>
                     </ul>
                 </details>
