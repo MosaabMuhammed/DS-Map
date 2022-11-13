@@ -97,6 +97,17 @@
                 </details>
 
                 <details>
+                    <summary> <b>Balanced Accuracy Score</b></summary>
+                    <p>The balanced accuracy in binary and multiclass classification problems to deal with imbalanced datasets. It is defined as the average of recall obtained on each class. <br>
+                        The best value is 1 and the worst value is 0 when adjusted=False.</p>
+                    <pre class="language-python"><code>from sklearn.metrics import balanced_accuracy_score
+y_true = [0, 1, 0, 0, 1, 0]
+y_pred = [0, 1, 0, 0, 0, 1]
+balanced_accuracy_score(y_true, y_pred)
+# 0.625</code></pre>
+                </details>
+
+                <details>
                     <summary> <b>TP, TN, FP, FN</b></summary>
                     <p><pre class="language-python"><code># This can be true_positive or true_negative 
     # based on the class_label!
