@@ -80,7 +80,7 @@ def summary(df, sort_col=None):
 
     print('---' * 20)
     return summary.style.applymap(color_True_red, subset=['has_Negative', 'has_Infinite']) \
-                        .format({'% frequent': "{:.2%}"}) \
+                        .format({'% frequent': "{:.2%}", 'Uniques': "{:,}", 'Missing': '{:,}'}) \
                         .background_gradient(cmap='summer_r')
 
 
@@ -236,3 +236,4 @@ def set_seed(seed: int=42, tf_flag: bool=False) -> int:
     random.seed(seed)
     if tf_flag: tf.random.set_seed(seed)
     return seed
+
