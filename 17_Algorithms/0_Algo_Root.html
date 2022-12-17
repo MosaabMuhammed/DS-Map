@@ -590,6 +590,9 @@ else:
                     </b>
                 </summary>
                 <p>Runtime: 0(n^2) average and worst case. Memory: 0(1) .</p>
+                <p>ubble sort is used if <br>
+                    complexity does not matter <br>
+                    short and simple code is preferred</p>
                 <pre class="language-python"><code>def bubbleSort(arr):
 n = len(arr)
     # Traverse through all array elements
@@ -642,6 +645,29 @@ print ("Sorted array is:")
 for i in range(len(arr)):
     print ("% d" % arr[i]), 
     </code></pre>
+            </details>
+
+            <details>
+                <summary><b>Selection Sort</b></summary>
+                <p>Selection sort is a sorting algorithm that selects the smallest element from an unsorted list in each iteration and places that element at the beginning of the unsorted list.</p>
+                <p>Runtime: O(n**2), Space: O(1)</p>
+                <p>
+                    The selection sort is used when
+                    <ul>
+                        <li>a small list is to be sorted</li>
+                        <li>cost of swapping does not matter</li>
+                        <li>checking of all the elements is compulsory</li>
+                        <li>cost of writing to a memory matters like in flash memory (number of writes/swaps is O(n) as compared to O(n2) of bubble sort)</li>
+                    </ul>
+                </p>
+                <pre class="language-python"><code>def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[min_idx], arr[i] = arr[i], arr[min_idx]</code></pre>
             </details>
             <details>
                 <summary>
