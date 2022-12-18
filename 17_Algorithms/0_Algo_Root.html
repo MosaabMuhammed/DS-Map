@@ -483,6 +483,26 @@ def reverse_rec2(head: Node) -> Node:
         <br></details>
 
         <details>
+            <summary><b>Union Find</b></summary>
+            <pre class="language-python"><code>class UF:
+    def __init__(self, n):
+        self.p = [i for i in range(n)]
+        self.n = n
+        self.size = n
+
+    def union(self, i, j):
+        pi, pj = self.find(i), self.find(j)
+        if pi != pj:
+            self.size -= 1
+            self.p[pj] = pi
+
+    def find(self, i):
+        if i != self.p[i]:
+            self.p[i] = self.find(self.p[i])
+        return self.p[i]</code></pre>
+        </details>
+
+        <details>
             <summary>
                 <b>
                     Search
