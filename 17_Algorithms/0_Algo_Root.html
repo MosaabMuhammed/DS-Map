@@ -899,6 +899,38 @@ print(l)</code></pre>
 </details>
             </details>
             <details>
+                <summary><b>Counting Sort</b></summary>
+                <p>Runtime: O(n+k), Space: O(max)</p>
+                <pre class="language-python"><code>def counting_sort(arr):
+    n = len(arr)
+    output = [0]*n
+    max_ = max(arr)
+
+    # Initialize count array
+    count = [0]*(max_+1)
+    for i in range(n):
+        count[arr[i]] += 1
+
+    for i in range(1, max_+1):
+        count[i] += count[i-1]
+
+    i = n-1
+    while i >= 0:
+        output[count[arr[i]] - 1] = arr[i]
+        count[arr[i]] -= 1
+        i -= 1
+
+    for i in range(n):
+        arr[i] = output[i]
+
+
+data = [4, 2, 2, 8, 3, 3, 1, 10, 20, 30, 40, 40, 50, 50, 100]
+counting_sort(data)
+print("Sorted Array in Ascending Order: ")
+print(data)</code></pre>
+            </details>
+
+            <details>
                 <summary><b>Radix sort</b></summary>
                 <p>Radix sort is a sorting algorithm for integers (and some other data types) that takes advantage of the fact that integers have a finite number of bits. In radix sort, we iterate through each digit of the number, grouping numbers by each digit. For example, if we have an array of integers, we might first sort by the first digit, so that the Os are grouped together. Then, we sort each of these groupings by the next digit. We repeat this process sorting by each subsequent digit, until finally the whole array is sorted.</p>
                 <pre class="language-python"><code># Radix sort in Python
