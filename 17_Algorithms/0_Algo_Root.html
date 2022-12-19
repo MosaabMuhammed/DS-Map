@@ -1024,6 +1024,27 @@ for i in range(n):
             </details>
 
             <details>
+                <summary><b>Shell Sort</b></summary>
+                <pre class="language-python"><code>def shell_sort(arr, n):
+    interval = n // 2
+    while interval:
+        for i in range(interval, n):
+            tmp = arr[i]
+            j = i
+            while j >= interval and arr[j - interval] > tmp:
+                arr[j] = arr[j - interval]
+                j -= interval
+            arr[j] = tmp
+        interval //= 2
+
+data = [9, 8, 3, 7, 5, 6, 4, 1]
+size = len(data)
+shell_sort(data, size)
+print('Sorted Array in Ascending Order:')
+print(data)</code></pre>
+            </details>
+
+            <details>
                 <summary>
                     <b>
                         Topological Sorting
