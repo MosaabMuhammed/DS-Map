@@ -480,6 +480,30 @@ def reverse_rec2(head: Node) -> Node:
                         </details></li>
                     </ul>
                 </details>
+
+                <details>
+                    <summary><b>Sort</b></summary>
+                    <pre class="language-python"><code># Using bubble Sort
+# Sort the linked list
+def sortLinkedList(self, head):
+    current = head
+    index = Node(None)
+
+    if head is None:
+        return
+    else:
+        while current is not None:
+            # index points to the node next to current
+            index = current.next
+
+            while index is not None:
+                if current.data > index.data:
+                    current.data, index.data = index.data, current.data
+
+                index = index.next
+            current = current.next
+                    </code></pre>
+                </details>
         <br></details>
 
         <details>
