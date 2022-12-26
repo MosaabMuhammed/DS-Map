@@ -22,6 +22,203 @@
             </summary>
 
             <details>
+                <summary><b>Plot Sports Field</b></summary>
+                <ul>
+                <li><details>
+                    <summary><b>Plot USA Football Field/Pitch</b></summary>
+                    <pre class="language-python"><code>import matplotlib.patches as patches
+    import matplotlib.pylab as plt
+    
+    def create_usa_football_field(
+        linenumbers=True,
+        endzones=True,
+        figsize=(12, 6.33),
+        line_color="black",
+        field_color="white",
+        ez_color=None,
+        ax=None,
+        return_fig=False
+    ):
+        """
+        Function that plots the football field for viewing players.
+        Allows for showing or hiding endzones.
+        """
+        if not ez_color:
+            ez_color = field_color
+            
+        rect = patches.Rectangle(
+            xy=(0, 0),
+            width=120,
+            height=53.3,
+            linewidth=0.1,
+            edgecolor="r",
+            facecolor=field_color,
+            zorder=0
+        )
+        
+        if not ax: # if ax is not None
+            fig, ax = plt.subplots(1, figsize=figsize)
+        ax.add_patch(rect)
+        ax.plot([10, 10, 10, 20, 20, 30, 30, 40, 40, 50, 50, 60, 60, 70, 70, 80,
+                    80, 90, 90, 100, 100, 110, 110, 120, 0, 0, 120, 120],
+                    [0, 0, 53.3, 53.3, 0, 0, 53.3, 53.3, 0, 0, 53.3, 53.3, 0, 0, 53.3,
+                    53.3, 0, 0, 53.3, 53.3, 0, 0, 53.3, 53.3, 53.3, 0, 0, 53.3],
+                    color=line_color)
+        
+        if endzones:
+            ez1 = patches.Rectangle(
+                xy=(0, 0),
+                width=10,
+                height=53.3,
+                linewidth=0.1,
+                edgecolor=line_color,
+                facecolor=ez_color,
+                alpha=0.6,
+                zorder=0
+            )
+            ez2 = patches.Rectangle(
+                xy=(110, 0),
+                width=10,
+                height=53.3,
+                linewidth=0.1,
+                edgecolor=line_color,
+                facecolor=ez_color,
+                alpha=0.6,
+                zorder=0
+            )
+            
+            ax.add_patch(ez1)
+            ax.add_patch(ez2)
+        ax.axis("off")
+        
+        if linenumbers:
+            for x in range(20, 110, 10):
+                num = x
+                if x > 50:
+                    num = 120 - x
+                ax.text(
+                    x=x,
+                    y=5,
+                    s=str(num-10),
+                    horizontalalignment="center",
+                    fontsize=20,
+                    color=line_color
+                )
+                
+                ax.text(
+                    x=x - 0.95,
+                    y=52.3 - 5,
+                    s=str(num - 10),
+                    horizontalalignment="center",
+                    fontsize=20,
+                    color=line_color,
+                    rotation=180
+                )
+        if endzones:
+            hash_range = range(11, 110)
+        else:
+            hash_range = range(1, 120)
+            
+        # Draw the 4 dotted lines
+        for x in hash_range:
+            ax.plot([x, x], [0.4, 0.7], color=line_color)
+            ax.plot([x, x], [53.0, 52.5], color=line_color)
+            ax.plot([x, x], [22.91, 23.57], color=line_color)
+            ax.plot([x, x], [29.73, 30.39], color=line_color)
+            
+        border = patches.Rectangle(
+            xy=(-5, -5),
+            width=120 + 10,
+            height=53.3 + 10,
+            linewidth=0.1,
+            edgecolor="orange",
+            facecolor=ez_color,
+            alpha=0,
+            zorder=0
+        )
+        ax.add_patch(border)
+        ax.set_xlim((-5, 125))
+        ax.set_ylim((-5, 53.3 + 5))
+        
+        return (fig, ax) if return_fig else ax</code></pre>
+                <pre class="language-python"><code># Given x and y positions, plot them on the field.
+    game_play = "58168_003392"
+    example_tracks = train_player_tracking.query("game_play == @game_play and step == 0")
+    ax = create_usa_football_field(endzones=False)
+    
+    for team, d in example_tracks.groupby("team"):
+        ax.scatter(
+            x=d['x_position'],
+            y=d['y_position'],
+            s=65,
+            label=team,
+            lw=1,
+            edgecolors="black",
+            zorder=5
+        )
+    ax.legend().remove()
+    ax.set_title(f"Tracking data for {game_play}: at step 0", fontsize=15)
+    plt.show()</code></pre>
+                <img src="./imgs/usa_soccer_field.png" alt="">
+                </details></li>
+                <li>
+                    <details>
+                        <summary><b>Plot Soccer Field</b></summary>
+                        <pre class="language-python"><code>import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+def draw_soccer_pitch(figsize=(12, 9)):
+    """
+    Function that plots a scaled soccer pitch of length 120*90 metres which 
+    are the maximum dimensions allowed by FIFAs "Laws Of The Game"
+    """
+    rect = patches.Rectangle((-1, -1), 122, 92, linewidth=0.1,
+                                edgecolor='r', facecolor='darkgreen', zorder=0)
+
+    fig, ax = plt.subplots(1, figsize=figsize)
+    ax.add_patch(rect)
+    # Main pitch markings, ie sidelines, penalty area and halfway line
+    plt.plot([0, 0,  0, 120, 120, 0,     0,  16.5,  16.5,     0,     0,   5.5,   5.5, 
+                    0,  0, 60, 60, 120,   120, 103.5, 103.5,   120,   120, 114.5, 114.5,   120], 
+                [0, 0, 90,  90,   0, 0, 25.85, 25.85, 66.15, 66.15, 55.15, 55.15, 36.85, 
+                36.85, 90, 90,  0,   0, 25.85, 25.85, 66.15, 66.15, 55.15, 55.15, 36.85, 36.85], color='white')
+    
+    # Secondary pitch markings, ie penalty spots, centre circle etc
+    plt.plot([11, 11.5],[45, 45], color='white')
+    plt.plot([109, 108.5],[45, 45], color='white')
+    
+    centre_circle = patches.Circle([60, 45], 9.15, edgecolor='white', facecolor='darkgreen')
+    ax.add_patch(centre_circle)
+    
+    left_arc = patches.Arc([16.5, 45], 9.15, 16, theta1=270.0, theta2=90.0, color='white')
+    ax.add_patch(left_arc)
+    right_arc = patches.Arc([103.5, 45], 9.15, 16, theta1=90.0, theta2=270.0, color='white')
+    ax.add_patch(right_arc)
+    
+    bl_corner = patches.Arc([0, 0], 2.5, 2.5, theta1=0.0, theta2=90.0, color='white')
+    tl_corner = patches.Arc([0, 90], 2.5, 2.5, theta1=270.0, color='white')
+    br_corner = patches.Arc([120, 0], 2.5, 2.5, theta1=90.0, theta2=180.0, color='white')
+    tr_corner = patches.Arc([120, 90], 2.5, 2.5, theta1=180.0, theta2=270.0,color='white')
+    ax.add_patch(bl_corner)
+    ax.add_patch(tl_corner)
+    ax.add_patch(br_corner)
+    ax.add_patch(tr_corner)
+    
+    plt.xlim(-1, 121)
+    plt.ylim(-1, 91)
+    plt.axis('off')    
+
+    return fig, ax
+
+draw_soccer_pitch()
+plt.show()</code></pre>
+                    <img src="./imgs/green_soccer.png" alt="">
+                    </details>
+                </li>
+            </ul></details>
+
+
+
+            <details>
                 <summary><b>Plot the rows where it has nan missing values</b></summary>
                 <pre class="language-python"><code>f, ax = plt.subplots(nrows=1, ncols=1, figsize=(16,5))
 sns.heatmap(df.T.isna(), cmap='Blues')
