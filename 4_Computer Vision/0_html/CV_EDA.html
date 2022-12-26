@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Computer Vision - EDA
+    </title>
+
+    <link rel="stylesheet" href="../../prism.css">
+</head>
+
+<body>
+    <div style="width:1000px;margin:auto;">
+
+        <h1 id="1startercode">
+            Computer Vision - EDA
+        </h1>
+        <details>
+            <summary><b>Draw boxes in a video</b></summary>
+            <pre class="language-python"><code>import os
+import cv2
+import subprocess
+from IPython.display import Video, display
+
+def video_with_helmets(
+    video_path: str,
+    baseline_boxes: pd.DataFrame,
+    verbose: bool=True
+) -> str:
+    """
+    Annotates a video with baseline model boxes and labels.
+    """
+    VIDEO_CODEC = "MP4V"
+    HELMET_COLOR = (0, 0, 0) # black
+    video_name = os.path.basename(video_path)
+    if verbose:
+        print(f"Running for {video_name}")
+    baseline_boxes = baseline_boxes.copy()
+    
+    vidcap = cv2.VideoCapture(video_path)
+    fps = vidcap.get(cv2.CAP_PROP_FPS)
+    width = int(vidcap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(vidcap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    output_path = f"label_{video_name}"
+    tmp_output_path = f"tmp_{output_path}"
+    output_video = cv2.VideoWriter(
+        tmp_output_path, cv2.VideoWriter_fourcc(*VIDEO_CODEC), fps, (width, height)
+    )
+    
+    frame = 0
+    while True:
+        worked, img = vidcap.read()
+        if not worked:
+            break
+            
+        # We need to add 1 to the frame count to match the label frame index.
+        frame += 1
+        
+        img_name = video_name.split(".mp")[0]
+        cv2.putText(
+            img=img,
+            text=img_name,
+            org=(10, 30), # stars from top-left
+            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            fontScale=1,
+            color=HELMET_COLOR,
+            thickness=1,
+        )
+        
+        cv2.putText(
+            img=img,
+            text=str(frame),
+            org=(30, 60),
+            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            fontScale=1,
+            color=HELMET_COLOR,
+            thickness=1
+        )
+        
+        boxes = baseline_boxes.query("video == @video_name and frame == @frame")
+        for box in boxes.itertuples(index=False):
+            cv2.rectangle(
+                img=img,
+                pt1=(box.left, box.top),
+                pt2=(box.left + box.width, box.top + box.height),
+                color=HELMET_COLOR,
+                thickness=1
+            )
+            cv2.putText(
+                img=img,
+                text=box.player_label,
+                org=(box.left + 1, max(0, box.top - 20)),
+                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5,
+                color=HELMET_COLOR,
+                thickness=1
+            )
+        output_video.write(img)
+    output_video.release()
+    
+    
+    # NOTE: Not all browsers support the codec, we will re-load the file at tmp_output_path
+    # and convert to a codec that is more broadly readable using ffmpeg.
+    if os.path.exists(output_path):
+        os.remove(output_path)
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-i",
+            tmp_output_path,
+            "-crf",
+            "18",
+            "-preset",
+            "veryfast",
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-vcodec",
+            "libx264",
+            output_path,
+        ]
+    )
+    os.remove(tmp_output_path)
+
+    return output_path</code></pre>
+        <pre class="language-python"><code>example_video = "../input/nfl-player-contact-detection/train/58168_003392_Endzone.mp4"
+output_video = video_with_helmets(example_video, train_helmets)
+
+frac = 0.65 # Scaling factor for display
+display(
+    Video(data=output_video, embed=True, height=int(720 * frac), width=int(1280 * frac))
+)</code></pre>
+            <img src="./imgs/video-boxes.png" alt="">
+        </details>
+    </div>
+    <script src="../../prism.js"></script>
+</body>
+
+</html>
