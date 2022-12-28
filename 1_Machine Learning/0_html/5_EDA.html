@@ -1839,6 +1839,23 @@ plt.xlabel('Sales'); plt.ylabel('ECDF');
                         </details>
                         <img src="../0_html/imgs/ecdf.png" alt="">
                     </details>
+                    <details>
+                        <summary><b>ECDF + Histogram for all num cols</b></summary>
+                        <pre class="language-python"><code>def ECDF(data, ax):
+x = np.sort(data)
+y = np.arange(1, len(data)+1)/len(data)
+sns.scatterplot(x, y, ax=ax)
+ax.set_xlabel('Data Distribution')
+ax.set_ylabel('Cumaltive Probability')
+ax.set_title("ECDF");</code></pre>
+                            <pre class="language-python"><code>num_cols = train_player_tracking.select_dtypes("number").columns
+
+for col in num_cols:
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (14, 6))
+    sns.histplot(data=train_player_tracking[col], ax=ax1)
+    ECDF(train_player_tracking[col], ax2)
+    fig.suptitle(col, fontsize=16)</code></pre>
+                    </details>
                 </li>
             </ul>
             <h4>
