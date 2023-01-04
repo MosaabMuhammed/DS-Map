@@ -19,6 +19,18 @@
             <summary><span style='color:#333;font-size:25px;font-weight:bold;text-decoration:underline'>1. Related to Dataset:</span></summary>
             <p>
                 <details>
+                    <summary><b>Load Dataset on GPU</b></summary>
+                    <pre class="language-python"><code>import cudf, torch
+if torch.cuda.is_available():
+    train_player_tracking = cudf.read_csv(config.PATH+'train_player_tracking.csv', parse_dates=["datetime"])
+    test_player_tracking = cudf.read_csv(config.PATH+'test_player_tracking.csv', parse_dates=["datetime"])
+    train_labels = cudf.read_csv(config.PATH+'train_labels.csv', parse_dates=["datetime"])
+
+if torch.cuda.is_available():
+    train = train.to_pandas() # convert them to pandas on CPU to do your regular analysis.
+                    </code></pre>
+                </details>
+                <details>
                     <summary><b>Imbalanced Data set:</b></summary>
                     <p>
                         <ul>
