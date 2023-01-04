@@ -133,6 +133,46 @@ display(
 )</code></pre>
             <img src="./imgs/video-boxes.png" alt="">
         </details>
+        <details>
+            <summary><b>Create Animation video [matplotlib] on usa football field</b></summary>
+            <pre class="language-python"><code>import pandas as pd
+
+import matplotlib.patches as patches
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+from IPython.display import HTML</code></pre>
+            <pre class="language-python"><code>def scatter_animation(game_play):
+    steps = df_final.query("game_play == @game_play").step
+    frames = sorted(steps[steps >= 0].unique())
+    min_step = min(frames)
+
+    example_tracks = df_final.query("game_play == @game_play and step == @min_step")
+    fig, ax = create_football_field(return_fig=True)
+
+    scat = ax.scatter(
+        example_tracks["x_position"],
+        example_tracks["y_position"],
+        color=example_tracks["team"].replace({'home': 'deepskyblue', 'away': 'limegreen'}),
+        s=65,
+        lw=2,
+        edgecolors=example_tracks["contact"].replace({0: 'black', 1:'red'}),
+        zorder=5,)
+    ax.set_title(f"Tracking data for {game_play}: at step {min_step}", fontsize=15)
+
+    def animate(i):
+        example_tracks = df_final.query("game_play == @game_play and step == @i")
+        scat.set_offsets(example_tracks[["x_position","y_position"]].to_numpy())
+        scat.set_color(example_tracks["team"].replace({'home': 'deepskyblue', 'away': 'limegreen'}))
+        scat.set_edgecolor(example_tracks["contact"].replace({0: 'black', 1:'red'}))
+        scat.set_linewidth(2)
+        ax.set_title(f"Tracking data for {game_play}: at step {i}", fontsize=15)
+
+    return animation.FuncAnimation(fig, animate, frames=frames,interval=75)</code></pre>
+                <pre class="language-python"><code>game_play = "58168_003392"
+anim = scatter_animation(game_play)
+HTML(anim.to_html5_video())</code></pre>
+        </details>
     </div>
     <script src="../../prism.js"></script>
 </body>
