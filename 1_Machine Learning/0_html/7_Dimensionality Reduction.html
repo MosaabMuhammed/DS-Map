@@ -975,6 +975,15 @@ for idx, (col_1, col_2) in enumerate(combinations(train.columns, 2)):
                                     <li><a href="file:///D:/DS-Map/1_Machine%20Learning/0_html/7_dim_reduction/Feature-selection-notebooks/09.5_Feature_selection_with_decision_trees_review.html#Feature-selection-with-decision-trees,-review"><b>Tree Models - Pipeline/b></a>                                        </li>
 
                                     <li><a href="file:///D:/DS-Map/1_Machine%20Learning/0_html/7_dim_reduction/Feature-selection-notebooks/09.3_Random_Forest_recursive_feature_selection.html#Recursive-feature-selection-using-random-forests-importance"><b>Recursive feature selection using random forests importance</b></a>                                        </li>
+                                    <li><details>
+                                        <summary><b>Select From Simple Model</b></summary>
+                                        <pre class="language-python"><code>from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.feature_selection import SelectFromModel
+simple_model = ExtraTreesClassifier()
+simple_model = simple_model.fit(X, y)
+selector = SelectFromModel(simple_model, prefit=True)
+X_reduced = selector.transform(X)</code></pre>
+                                    </details></li>
                                 </ul>
                             </p>
                         </details>
