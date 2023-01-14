@@ -48,6 +48,13 @@ if torch.cuda.is_available():
                                         to the more frequent negative labels (i.e., not fraud).</p>
                                 </details>
                             </li>
+                            <li>
+                                <details>
+                                    <summary><b>Calculate Weights [sklearn]</b></summary>
+                                    <pre class="language-python"><code>from sklearn.utils.class_weight import compute_class_weight
+weights = compute_class_weight('balanced', classes, y)</code></pre>
+                                </details>
+                            </li>
                         </ul>
                     </p>
                 </details>
