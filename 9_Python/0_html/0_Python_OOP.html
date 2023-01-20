@@ -1111,6 +1111,24 @@ re.sub("[0-9]", "-", "R2D2") # --&gt; replace digits with dashes.
 list_elements = sum(terms, [])
 </code></pre>
                 </details>
+                <details>
+                    <summary><b>Transpose Matrix</b></summary>
+                    <pre class="language-python"><code>matrix = [[1, 4], [2, 5], [3, 6]]
+# [[1, 4],
+#  [2, 5],
+#  [3, 6]
+
+(len(matrix), len(matrix[0]))
+# shape: (3, 2)
+
+trans_matrix = list(zip(*matrix)) # The trick
+# [[1, 2, 3],
+#  [4, 5, 6]]
+
+(len(trans_matrix), len(trans_matrix[0]))
+# shape: (2, 3)
+</code></pre>
+                </details>
             </p>
         </details>
         <details>
