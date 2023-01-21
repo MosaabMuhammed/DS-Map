@@ -2,481 +2,489 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>[ML] Metrics</title>
-    <link rel="stylesheet" href="../../prism.css">
+<meta charset="utf-8">
+<title>[ML] Metrics</title>
+<link rel="stylesheet" href="../../prism.css">
 </head>
 
 <body>
-    <h1 id="8metrices">8. Metrices</h1>
+<h1 id="8metrices">8. Metrices</h1>
 
-    <div style="width:1000px;margin:auto">
-        <details>
-            <summary style='font-size:18px;color:red'> <b>1. Important Functions</b></summary>
-            <p><pre class="language-python"><code># This function plots the confusion matrices given y_i, y_i_hat.
-    # NOTE: make sure the predicted labels are NOT probabilities.
-    # predicted_y =np.argmax(test_predicted_y, axis=1)
-    # plot_confusion_matrix(y_test, predicted_y+1)
-    def plot_confusion_matrix(y_test, y_pred):
-      C = confusion_matrix(y_test, y_pred)
-      A = (((C.T)/(C.sum(axis=1))).T)
-      B = (C/C.sum(axis=0))
-    
-      liOfMat    = [C, B, A]
-      liOfTitles = ['Confusion Matrix', 'Precision Matrix (Column Sum = 1)', 'Recall Matrix (Row sum = 1)']
-      labels = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # Change this based on problem.
-    
-      # Representing matrices in heatmap format.  
-      for i, mat in enumerate(liOfMat):
-        plt.figure(figsize=(20, 7))
-        sns.heatmap(mat, annot=True, cmap='viridis', fmt='.3f', xticklabels=labels, yticklabels=labels)
-        plt.xlabel('Predicted Class')
-        plt.ylabel('Original Class')
-        plt.title(liOfTitles[i])
-        plt.show(
-    </code></pre>
-            </p>
-        </details><br>
+<div style="width:1000px;margin:auto">
+    <details>
+        <summary style='font-size:18px;color:red'> <b>1. Important Functions</b></summary>
+        <p><pre class="language-python"><code># This function plots the confusion matrices given y_i, y_i_hat.
+# NOTE: make sure the predicted labels are NOT probabilities.
+# predicted_y =np.argmax(test_predicted_y, axis=1)
+# plot_confusion_matrix(y_test, predicted_y+1)
+def plot_confusion_matrix(y_test, y_pred):
+    C = confusion_matrix(y_test, y_pred)
+    A = (((C.T)/(C.sum(axis=1))).T)
+    B = (C/C.sum(axis=0))
 
-        <details>
-            <summary> <b>Classification</b></summary>
-            <p>
+    liOfMat    = [C, B, A]
+    liOfTitles = ['Confusion Matrix', 'Precision Matrix (Column Sum = 1)', 'Recall Matrix (Row sum = 1)']
+    labels = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # Change this based on problem.
 
-                <details>
-                    <summary> <b>Confusion Matrix</b> </summary>
-                    <img src="./imgs/Confusion-Matrix-1.jpeg" alt="">
-                    <p><pre class="language-python"><code>pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True)
-    
-    # Another way with Background
-    pd.crosstab(data.Pclass,data.Survived,margins=True).style.background_gradient(cmap='summer_r')
-    </code></pre><pre class="language-python"><code>from sklearn.metrics import confusion_matrix
-    
-    sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
-    
-    # Another way to plot it.
-    # cm = confusion_matrix()
-    plt.figure(figsize=(10, 10))
-    cmap = sns.cubehelix_palette(50, hue=0.05, rot=0, light=0.9, dark=0,
-    as_cmap=True)
-    sns.set(font_scale=2.5)
-    sns.heatmap(cm, annot=True, cmap=cmap, cbar=False)
-    plt.ylabel('Actual Labels', fontsize=20)
-    plt.xlabel('Predicted Labels', fontsize=20)
-    </code></pre>
+    # Representing matrices in heatmap format.  
+    for i, mat in enumerate(liOfMat):
+    plt.figure(figsize=(20, 7))
+    sns.heatmap(mat, annot=True, cmap='viridis', fmt='.3f', xticklabels=labels, yticklabels=labels)
+    plt.xlabel('Predicted Class')
+    plt.ylabel('Original Class')
+    plt.title(liOfTitles[i])
+    plt.show(
+</code></pre>
+        </p>
+    </details><br>
 
-                        <h4>See the errors in each class (see the confusion of the model)</h4><pre class="language-python"><code>row_sums     = conf_mx.sum(axis=1, keepdims=True)
-    norm_conf_mx = conf_mx / row_sums
-    
-    np.fill_diagonal(norm_conf_mx, 0)
-    sns.heatmap(norm_conf_mx, cmap="viridis")
-    plt.xlabel("Predicted Labels")
-    plt.ylabel("True Labels");
-    </code></pre>
-                    </p>
-                </details>
+    <details>
+        <summary> <b>Classification</b></summary>
+        <p>
 
-                <details>
-                    <summary> <b>precision_recall_fscore_support</b></summary><pre class="language-python"><code>from sklearn.metrics import precision_recall_fscore_support
-    
-    precision, recall, f1, support = precision_recall_fscore_support(labels, preds, average='macro')
-    </code></pre></details>
+            <details>
+                <summary> <b>Confusion Matrix</b> </summary>
+                <img src="./imgs/Confusion-Matrix-1.jpeg" alt="">
+                <p><pre class="language-python"><code>pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True)
 
-                <details>
-                    <summary> <b>Accuracy Score</b></summary>
-                    <p><pre class="language-python"><code>accuracy = model.score(y_test, y_pred)
-    </code></pre>
-                        <h4>Manual</h4><pre class="language-python"><code>def accuracy(y_true, y_pred):
-        correct_counter = 0
-    
-        for yt, yp in zip(y_true, y_pred):
-            if yt == yp:
-                correct_counter += 1
-        return correct_counter / len(y_true)
-    </code></pre>
-                    </p>
-                </details>
+# Another way with Background
+pd.crosstab(data.Pclass,data.Survived,margins=True).style.background_gradient(cmap='summer_r')
+</code></pre><pre class="language-python"><code>from sklearn.metrics import confusion_matrix
 
-                <details>
-                    <summary> <b>Balanced Accuracy Score</b></summary>
-                    <p>The balanced accuracy in binary and multiclass classification problems to deal with imbalanced datasets. It is defined as the average of recall obtained on each class. <br>
-                        The best value is 1 and the worst value is 0 when adjusted=False.</p>
-                    <pre class="language-python"><code>from sklearn.metrics import balanced_accuracy_score
+sns.heatmap(confusion_matrix(y_test, y_pred), cmap='viridis', annot=True)
+
+# Another way to plot it.
+# cm = confusion_matrix()
+plt.figure(figsize=(10, 10))
+cmap = sns.cubehelix_palette(50, hue=0.05, rot=0, light=0.9, dark=0,
+as_cmap=True)
+sns.set(font_scale=2.5)
+sns.heatmap(cm, annot=True, cmap=cmap, cbar=False)
+plt.ylabel('Actual Labels', fontsize=20)
+plt.xlabel('Predicted Labels', fontsize=20)
+</code></pre>
+
+                    <h4>See the errors in each class (see the confusion of the model)</h4><pre class="language-python"><code>row_sums     = conf_mx.sum(axis=1, keepdims=True)
+norm_conf_mx = conf_mx / row_sums
+
+np.fill_diagonal(norm_conf_mx, 0)
+sns.heatmap(norm_conf_mx, cmap="viridis")
+plt.xlabel("Predicted Labels")
+plt.ylabel("True Labels");
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>precision_recall_fscore_support</b></summary><pre class="language-python"><code>from sklearn.metrics import precision_recall_fscore_support
+
+precision, recall, f1, support = precision_recall_fscore_support(labels, preds, average='macro')
+</code></pre></details>
+
+            <details>
+                <summary> <b>Accuracy Score</b></summary>
+                <p><pre class="language-python"><code>accuracy = model.score(y_test, y_pred)
+</code></pre>
+                    <h4>Manual</h4><pre class="language-python"><code>def accuracy(y_true, y_pred):
+    correct_counter = 0
+
+    for yt, yp in zip(y_true, y_pred):
+        if yt == yp:
+            correct_counter += 1
+    return correct_counter / len(y_true)
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>Balanced Accuracy Score</b></summary>
+                <p>The balanced accuracy in binary and multiclass classification problems to deal with imbalanced datasets. It is defined as the average of recall obtained on each class. <br>
+                    The best value is 1 and the worst value is 0 when adjusted=False.</p>
+                <pre class="language-python"><code>from sklearn.metrics import balanced_accuracy_score
 y_true = [0, 1, 0, 0, 1, 0]
 y_pred = [0, 1, 0, 0, 0, 1]
 balanced_accuracy_score(y_true, y_pred)
 # 0.625</code></pre>
+            </details>
+
+            <details>
+                <summary> <b>TP, TN, FP, FN</b></summary>
+                <p><pre class="language-python"><code># This can be true_positive or true_negative 
+# based on the class_label!
+def true_positive(y_true, y_pred, class_label):
+    tp = 0
+    for yt, yp in zip(y_true, y_pred):
+        if yt == class_label and yp == class_label:
+            tp += 1
+    return tp
+
+# Type-I error
+def false_positive(y_true, y_pred, class_label):
+    fp = 0
+    for yt, yp in zip(y_true, y_pred):
+        if yt != class_label and yp == class_label:
+            fp += 1
+    return fp
+
+#  Type-II error
+def false_negative(y_true, y_pred, class_label):
+    fn = 0
+    for yt, yp in zip(y_true, y_pred):
+        if yt == class_label and yp != class_label:
+            fn += 1
+    return fn
+</code></pre>
+                </p>
+            </details>
+
+
+            <details>
+                <summary> <b>Classification Report</b> </summary>
+                <p><pre class="language-python"><code>from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>Ploting the ROC Curve</b> </summary>
+                <p><pre class="language-python"><code># Extract the prediction probabilities
+y_pred_proba = knn.predict_proba(X_test)[:, 1]
+
+# Calculate the roc_curve
+from sklearn.metrics import roc_curve
+fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)
+
+# Generate the plot
+plt.plot([0, 1], [0, 1], 'k--')
+plt.plot(fpr, tpr, label='knn')
+plt.xlabel('fpr')
+plt.ylabel('tpr')
+plt.title('KNN (n_neighbors = 16) ROC Curve')
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>ROC Area Under Curve (AUC)</b> </summary>
+                <p><pre class="language-python"><code>from sklearn.metrics import roc_auc_score
+
+print('{:.2f}'.format(roc_auc_score(y_test, y_pred_proba)*100))
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>Confidance Interval</b> </summary>
+
+                <h5>Multiple Techniques:</h5>
+                <ul>
+                    <li><a href="./14_metrics/Confidence Interval using Normal Approximation 81ea879311ea4ffbab6f43093f9bb74e.html">Confidence Interval using Normal Approximation</a></li>
+                    <li><a href="./14_metrics/09-eval2-ci__5.html">How to use with cross_val_score</a></li>
+                    <li><a href="./14_metrics/09-eval2-ci__4-confidence-intervals_mnist.html">Example on MNIST</a></li>
+                    <li><a href="./14_metrics/09-eval2-ci__4-confidence-intervals_iris.html">Example on Iris</a></li>
+                </ul>
+                <p><pre class="language-python"><code>from scipy import stats
+
+confidence = 0.95
+
+squared_errors = (final_predictions - y_test) ** 2
+
+np.sqrt(stats.t.interval(confidence, len(squared_errors) - 1, loc=squared_errors.mean(), scale=stats.sem(squared_errors)))
+
+### Returns
+#array([45685.10470776, 49691.25001878])
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>Precision</b> </summary>
+                <details>
+                    <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
+                    <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
+                    <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
+                    <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
+                        <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
+                    <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
                 </details>
+                <p>
+                    <p><b>Precision</b> is simply the accuracy of the positive predictions.</p><pre class="language-python"><code>from sklearn.metrics import precision_score
+
+precision_score(y_train_5, y_train_pred)
+</code></pre>
+
+                    <h4>Manual</h4><pre class="language-python"><code>def precision(y_true, y_pred, class_label=0):
+    tp = true_positive(y_true, y_pred, class_label)
+    fp = false_positive(y_true, y_pred, class_label)
+    precision = tp / (tp + fp)
+    return precision
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary><b>Macro Precision</b> </summary>
+                <p>
+                    <b>Macro Averaged Precision</b>: calculate precision for all classes individually and then average them.
+
+                    <h4>Manual</h4><pre class="language-python"><code>def macro_precision(y_true, y_pred):
+    # find the number of classes by taking
+    # length of unique values in true list
+    num_classes = len(np.unique(y_true))
+
+    # Initialize precision to 0.
+    precision = 0
+
+    # Loop over all classes.
+    for class_ in range(num_classes):
+        # Calculate true positive for current class.
+        tp = true_positive(y_true, y_pred, class_)
+
+        # Calculate false positive for current class.
+        fp = false_positive(y_true, y_pred, class_)
+
+        # Calculate precision for current class.
+        temp_precision = tp / (tp + fp)
+
+        # Keep adding precision for all classes.
+        precision += temp_precision
+
+    # Calculate and return average precision over all classes.
+    precision /= num_classes
+    return precision
+</code></pre>
+
+                    <h4>Sklearn</h4><pre class="language-python"><code>metrics.precision_score(y_true, y_pred, average="macro")
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary><b>Micro Precision</b> </summary>
+                <p>
+                    <b>Micro Averaged Precision</b>: calculate class-wise "True Positive" and "False Positive" and then use that to calculate overall precision.
+
+                    <h4>Manual</h4><pre class="language-python"><code>def micro_precision(y_true, y_pred):
+    # Find the number of classes.
+    num_classes = len(np.unique(y_true))
+
+    # Initialize tp and fp to zero [0].
+    tp, fp = 0, 0
+
+    # Loop over all classes.
+    for class_ in range(num_classes):
+        tp += true_positive(y_true, y_pred, class_)
+        fp += false_positive(y_true, y_pred, class_)
+
+    # Calculate and return overall precision.
+    precision = tp / (tp + fp)
+    return precision
+</code></pre>
+
+                    <h4>Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
+
+metrics.precision_score(y_true, y_pred, average="micro")
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary><b>Weighted Precision</b> </summary>
+                <p>
+                    <b>Weighted Averaged Precision</b>: same as "macro" but in this case, it's weighted average depending on the number of items in each class.
+
+                    <h4>Manual</h4><pre class="language-python"><code>from collections import Counter
+
+def weighted_precision(y_true, y_pred):
+    # Find number of classes.
+    num_classes = len(np.unique(y_true))
+
+    # Store how many each class is showed up.
+    class_counts = Counter(y_true)
+
+    # Initialize precision to 0
+    precision = 0
+
+    # loop over all classes.
+    for class_ in range(num_classes):
+        tp = true_positive(y_true, y_pred, class_)
+        fp = false_positive(y_true, y_pred, class_)
+        temp_precision = tp / (tp + fp)
+        weighted_precision = class_counts[class_] * temp_precision
+        precision += weighted_precision
+
+    overall_precision = precision / len(y_true)
+    return overall_precision
+</code></pre>
+
+                    <h4>Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
+
+metrics.precision_score(y_true, y_pred, average="weighted")
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>Recall</b> aka <b>True Positive Rate (TPR)</b> aka <b>Sensitivity</b></summary>
+                <details>
+                    <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
+                    <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
+                    <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
+                    <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
+                        <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
+                    <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
+                </details>
+                <p><pre class="language-python"><code>from sklearn.metrics import recall_score
+
+recall_score(y_train_5, y_train_pred)
+</code></pre>
+
+                    <h4>Manual</h4><pre class="language-python"><code>def recall(y_true, y_pred, class_label=0):
+    tp = true_positive(y_true, y_pred, class_label)
+    fn = false_negative(y_true, y_pred, class_label)
+    recall = tp / (tp + fn)
+    return recall
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>False Positive Rate (FPR)</b></summary>
+                <p><pre class="language-python"><code>def FPR(y_true, y_pred, class_label=0):
+    fp = false_positive(y_true, y_pred, class_label)
+    tn = true_negative(y_true, y_pred, class_label)
+    return fp / (tn + fp)
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> <b>True Negative Rate (TNR)</b> aka <b>Specifity</b></summary>
+                <p><pre class="language-python"><code>def TNR(y_true, y_pred, class_label=0):
+    return 1 - FPR(y_true, y_pred, class_label)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary> <b>F1 Score</b> </summary>
+                <p><pre class="language-python"><code>from sklearn.metrics import f1_score
+
+f1_score(y_train_5, y_train_pred)
+</code></pre>
+                    <h4>Manual</h4><pre class="language-python"><code>def f1(y_true, y_pred, class_label=0):
+    p = precision(y_true, y_pred, class_label)
+    r = recall(y_true, y_pred, class_label)
+    score = 2 * p * r / (p + r)
+    return score
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary><b>Weighted F1 Score</b> </summary>
+                <p>
+                    <b>Weighted Averaged F1</b>: same as "macro" but in this case, it's weighted average depending on the number of items in each class.
+
+                    <h4>Manual</h4><pre class="language-python"><code>from collections import Counter
+
+def weighted_f1(y_true, y_pred):
+    num_classes = len(np.unique(y_true))
+
+    class_counts = Counter(y_true)
+
+    # initialize f1 to 0
+    f1 = 0
+
+    for class_ in range(num_classes):
+        p = precision(y_true, y_pred, class_)
+        r = recall(y_true, y_pred, class_)
+
+        temp_f1 = 2 * p * r / (p+r+1e-20)
+
+        f1 += class_counts[class_] * temp_f1
+
+    overall_f1 = f1 / len(y_true)
+    return overall_f1
+</code></pre>
+
+                    <h4>Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
+
+metrics.f1_score(y_true, y_pred, average="weighted")
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> Plot <b>Precision and Recall </b> Vs <b>Thresholds</b></summary>
+                <p>
+                    <h4>1. Calculate the decision function for the dataset.</h4><pre class="language-python"><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
+</code></pre>
+                    <h4>2. Get the precisions, recalls and thresholds</h4><pre class="language-python"><code>from sklearn.metrics import precision_recall_curve
+
+precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+</code></pre>
+
+                    <h4>3. Plot it, and take the best threshold</h4><pre class="language-python"><code>def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    plt.figure(figsize=(10, 6))
+    plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
+    plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
+    plt.legend(); plt.grid()
+    plt.xlabel("Thresholds")
+
+plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary> Plot <b>Precision</b> Vs. <b>Recall</b> </summary>
+                <details>
+                    <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
+                    <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
+                    <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
+                    <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
+                        <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
+                    <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
+                </details>
+                <p><b>NOTE:</b> We prefer PR curve whenever the positive class is rare or when you care more about the <b>false positive</b> than the <b>false negative</b>, otherwise use ROC curve.</p>
 
                 <details>
-                    <summary> <b>TP, TN, FP, FN</b></summary>
-                    <p><pre class="language-python"><code># This can be true_positive or true_negative 
-    # based on the class_label!
-    def true_positive(y_true, y_pred, class_label):
-        tp = 0
-        for yt, yp in zip(y_true, y_pred):
-            if yt == class_label and yp == class_label:
-                tp += 1
-        return tp
-    
-    # Type-I error
-    def false_positive(y_true, y_pred, class_label):
-        fp = 0
-        for yt, yp in zip(y_true, y_pred):
-            if yt != class_label and yp == class_label:
-                fp += 1
-        return fp
-    
-    #  Type-II error
-    def false_negative(y_true, y_pred, class_label):
-        fn = 0
-        for yt, yp in zip(y_true, y_pred):
-            if yt == class_label and yp != class_label:
-                fn += 1
-        return fn
-    </code></pre>
-                    </p>
-                </details>
+                    <summary><b>Method 1</b></summary>
+                    <h4>1. Calculate the decision function for the dataset.</h4><pre class="language-python"><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
+                        </code></pre>
+                    <h4>2. Get the precisions, recalls and thresholds</h4><pre class="language-python"><code>from sklearn.metrics import precision_recall_curve
+                        
+                        precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+                        </code></pre>
 
+                    <h4>3. Plot the precisions vs. recall</h4><pre class="language-python"><code>plt.figure(figsize=(10, 6))
+                        plt.plot(recalls, precisions)
+                        plt.grid()
+                        plt.xlabel("Recall")
+                        plt.ylabel("Precision")
+                        plt.title("Precision vs. Recall", size=20, y=1.05)
+                        </code></pre>
 
-                <details>
-                    <summary> <b>Classification Report</b> </summary>
-                    <p><pre class="language-python"><code>from sklearn.metrics import classification_report
-    print(classification_report(y_test, y_pred))
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> <b>Ploting the ROC Curve</b> </summary>
-                    <p><pre class="language-python"><code># Extract the prediction probabilities
-    y_pred_proba = knn.predict_proba(X_test)[:, 1]
-    
-    # Calculate the roc_curve
-    from sklearn.metrics import roc_curve
-    fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)
-    
-    # Generate the plot
-    plt.plot([0, 1], [0, 1], 'k--')
-    plt.plot(fpr, tpr, label='knn')
-    plt.xlabel('fpr')
-    plt.ylabel('tpr')
-    plt.title('KNN (n_neighbors = 16) ROC Curve')
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> <b>ROC Area Under Curve (AUC)</b> </summary>
-                    <p><pre class="language-python"><code>from sklearn.metrics import roc_auc_score
-    
-    print('{:.2f}'.format(roc_auc_score(y_test, y_pred_proba)*100))
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> <b>Confidance Interval</b> </summary>
-                    <p><pre class="language-python"><code>from scipy import stats
-    
-    confidence = 0.95
-    
-    squared_errors = (final_predictions - y_test) ** 2
-    
-    np.sqrt(stats.t.interval(confidence, len(squared_errors) - 1, loc=squared_errors.mean(), scale=stats.sem(squared_errors)))
-    
-    ### Returns
-    #array([45685.10470776, 49691.25001878])
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> <b>Precision</b> </summary>
-                    <details>
-                        <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
-                        <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
-                        <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
-                        <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
-                            <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
-                        <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
-                    </details>
-                    <p>
-                        <p><b>Precision</b> is simply the accuracy of the positive predictions.</p><pre class="language-python"><code>from sklearn.metrics import precision_score
-    
-    precision_score(y_train_5, y_train_pred)
-    </code></pre>
-
-                        <h4>Manual</h4><pre class="language-python"><code>def precision(y_true, y_pred, class_label=0):
-        tp = true_positive(y_true, y_pred, class_label)
-        fp = false_positive(y_true, y_pred, class_label)
-        precision = tp / (tp + fp)
-        return precision
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary><b>Macro Precision</b> </summary>
-                    <p>
-                        <b>Macro Averaged Precision</b>: calculate precision for all classes individually and then average them.
-
-                        <h4>Manual</h4><pre class="language-python"><code>def macro_precision(y_true, y_pred):
-        # find the number of classes by taking
-        # length of unique values in true list
-        num_classes = len(np.unique(y_true))
-    
-        # Initialize precision to 0.
-        precision = 0
-    
-        # Loop over all classes.
-        for class_ in range(num_classes):
-            # Calculate true positive for current class.
-            tp = true_positive(y_true, y_pred, class_)
-    
-            # Calculate false positive for current class.
-            fp = false_positive(y_true, y_pred, class_)
-    
-            # Calculate precision for current class.
-            temp_precision = tp / (tp + fp)
-    
-            # Keep adding precision for all classes.
-            precision += temp_precision
-    
-        # Calculate and return average precision over all classes.
-        precision /= num_classes
-        return precision
-    </code></pre>
-
-                        <h4>Sklearn</h4><pre class="language-python"><code>metrics.precision_score(y_true, y_pred, average="macro")
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary><b>Micro Precision</b> </summary>
-                    <p>
-                        <b>Micro Averaged Precision</b>: calculate class-wise "True Positive" and "False Positive" and then use that to calculate overall precision.
-
-                        <h4>Manual</h4><pre class="language-python"><code>def micro_precision(y_true, y_pred):
-        # Find the number of classes.
-        num_classes = len(np.unique(y_true))
-    
-        # Initialize tp and fp to zero [0].
-        tp, fp = 0, 0
-    
-        # Loop over all classes.
-        for class_ in range(num_classes):
-            tp += true_positive(y_true, y_pred, class_)
-            fp += false_positive(y_true, y_pred, class_)
-    
-        # Calculate and return overall precision.
-        precision = tp / (tp + fp)
-        return precision
-    </code></pre>
-
-                        <h4>Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
-    
-    metrics.precision_score(y_true, y_pred, average="micro")
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary><b>Weighted Precision</b> </summary>
-                    <p>
-                        <b>Weighted Averaged Precision</b>: same as "macro" but in this case, it's weighted average depending on the number of items in each class.
-
-                        <h4>Manual</h4><pre class="language-python"><code>from collections import Counter
-    
-    def weighted_precision(y_true, y_pred):
-        # Find number of classes.
-        num_classes = len(np.unique(y_true))
-    
-        # Store how many each class is showed up.
-        class_counts = Counter(y_true)
-    
-        # Initialize precision to 0
-        precision = 0
-    
-        # loop over all classes.
-        for class_ in range(num_classes):
-            tp = true_positive(y_true, y_pred, class_)
-            fp = false_positive(y_true, y_pred, class_)
-            temp_precision = tp / (tp + fp)
-            weighted_precision = class_counts[class_] * temp_precision
-            precision += weighted_precision
-    
-        overall_precision = precision / len(y_true)
-        return overall_precision
-    </code></pre>
-
-                        <h4>Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
-    
-    metrics.precision_score(y_true, y_pred, average="weighted")
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> <b>Recall</b> aka <b>True Positive Rate (TPR)</b> aka <b>Sensitivity</b></summary>
-                    <details>
-                        <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
-                        <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
-                        <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
-                        <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
-                            <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
-                        <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
-                    </details>
-                    <p><pre class="language-python"><code>from sklearn.metrics import recall_score
-    
-    recall_score(y_train_5, y_train_pred)
-    </code></pre>
-
-                        <h4>Manual</h4><pre class="language-python"><code>def recall(y_true, y_pred, class_label=0):
-        tp = true_positive(y_true, y_pred, class_label)
-        fn = false_negative(y_true, y_pred, class_label)
-        recall = tp / (tp + fn)
-        return recall
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> <b>False Positive Rate (FPR)</b></summary>
-                    <p><pre class="language-python"><code>def FPR(y_true, y_pred, class_label=0):
-        fp = false_positive(y_true, y_pred, class_label)
-        tn = true_negative(y_true, y_pred, class_label)
-        return fp / (tn + fp)
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> <b>True Negative Rate (TNR)</b> aka <b>Specifity</b></summary>
-                    <p><pre class="language-python"><code>def TNR(y_true, y_pred, class_label=0):
-        return 1 - FPR(y_true, y_pred, class_label)
-    </code></pre>
-                    </p>
+                    <h4>4. Choose the threshold based on your business case.</h4><pre class="language-python"><code>threshold_90_precision = thresholds[np.argmax(precisions &gt;= .9)]
+                        y_train_pred_90 = (y_scores &gt;= threshold_90_precision)
+                        
+                        precision_score(y_train_5, y_train_pred_90),\
+                        recall_score(y_train_5, y_train_pred_90)
+                        
+                        # (0.9000345901072293, 0.4799852425751706)
+                        </code></pre>
                 </details>
                 <details>
-                    <summary> <b>F1 Score</b> </summary>
-                    <p><pre class="language-python"><code>from sklearn.metrics import f1_score
-    
-    f1_score(y_train_5, y_train_pred)
-    </code></pre>
-                        <h4>Manual</h4><pre class="language-python"><code>def f1(y_true, y_pred, class_label=0):
-        p = precision(y_true, y_pred, class_label)
-        r = recall(y_true, y_pred, class_label)
-        score = 2 * p * r / (p + r)
-        return score
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary><b>Weighted F1 Score</b> </summary>
-                    <p>
-                        <b>Weighted Averaged F1</b>: same as "macro" but in this case, it's weighted average depending on the number of items in each class.
-
-                        <h4>Manual</h4><pre class="language-python"><code>from collections import Counter
-    
-    def weighted_f1(y_true, y_pred):
-        num_classes = len(np.unique(y_true))
-    
-        class_counts = Counter(y_true)
-    
-        # initialize f1 to 0
-        f1 = 0
-    
-        for class_ in range(num_classes):
-            p = precision(y_true, y_pred, class_)
-            r = recall(y_true, y_pred, class_)
-    
-            temp_f1 = 2 * p * r / (p+r+1e-20)
-    
-            f1 += class_counts[class_] * temp_f1
-    
-        overall_f1 = f1 / len(y_true)
-        return overall_f1
-    </code></pre>
-
-                        <h4>Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
-    
-    metrics.f1_score(y_true, y_pred, average="weighted")
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> Plot <b>Precision and Recall </b> Vs <b>Thresholds</b></summary>
-                    <p>
-                        <h4>1. Calculate the decision function for the dataset.</h4><pre class="language-python"><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
-    </code></pre>
-                        <h4>2. Get the precisions, recalls and thresholds</h4><pre class="language-python"><code>from sklearn.metrics import precision_recall_curve
-    
-    precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
-    </code></pre>
-
-                        <h4>3. Plot it, and take the best threshold</h4><pre class="language-python"><code>def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
-        plt.figure(figsize=(10, 6))
-        plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
-        plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
-        plt.legend(); plt.grid()
-        plt.xlabel("Thresholds")
-    
-    plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary> Plot <b>Precision</b> Vs. <b>Recall</b> </summary>
-                    <details>
-                        <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
-                        <p>if the solution had <b>low</b> precision but <b>high</b> recall it would flag many of the transactions as fraudulent, thus catching a lot of the fraud, but most of the flagged transactions would not be fraudulent.</p>
-                        <p>if our solution had <b>high</b> precision but <b>low</b> recall, there would be a very small number of fraudulent transactions found but most would be truly fraudulent.</p>
-                        <p>Obviously, both solutions have major problems. In the high precision–low recall case, the credit card company would lose a lot of money due to fraud, but it would not antagonize customers by unnecessarily rejecting transactions.
-                            <br> In the low precision-high recall case, the credit card company would catch a lot of the fraud, but it would most certainly anger customers by unnecessarily rejecting alot of normal, non-fraudulent transactions.</p>
-                        <p>An optimal solution needs to have high precision and high recall, rejecting only those transactions that are truly fraudulent (i.e., high precision) and catching most of the fraudulent cases in the dataset (high recall).</p>
-                    </details>
-                    <p><b>NOTE:</b> We prefer PR curve whenever the positive class is rare or when you care more about the <b>false positive</b> than the <b>false negative</b>, otherwise use ROC curve.</p>
-
-                    <details>
-                        <summary><b>Method 1</b></summary>
-                        <h4>1. Calculate the decision function for the dataset.</h4><pre class="language-python"><code>y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3, method="decision_function")
-                            </code></pre>
-                        <h4>2. Get the precisions, recalls and thresholds</h4><pre class="language-python"><code>from sklearn.metrics import precision_recall_curve
-                            
-                            precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
-                            </code></pre>
-
-                        <h4>3. Plot the precisions vs. recall</h4><pre class="language-python"><code>plt.figure(figsize=(10, 6))
-                            plt.plot(recalls, precisions)
-                            plt.grid()
-                            plt.xlabel("Recall")
-                            plt.ylabel("Precision")
-                            plt.title("Precision vs. Recall", size=20, y=1.05)
-                            </code></pre>
-
-                        <h4>4. Choose the threshold based on your business case.</h4><pre class="language-python"><code>threshold_90_precision = thresholds[np.argmax(precisions &gt;= .9)]
-                            y_train_pred_90 = (y_scores &gt;= threshold_90_precision)
-                            
-                            precision_score(y_train_5, y_train_pred_90),\
-                            recall_score(y_train_5, y_train_pred_90)
-                            
-                            # (0.9000345901072293, 0.4799852425751706)
-                            </code></pre>
-                    </details>
-                    <details>
-                        <summary><b>Method 2</b></summary>
-                        <pre class="language-python"><code>preds = pd.concat([y_train,predictionsBasedOnKFolds.loc[:,'prediction']], axis=1)
+                    <summary><b>Method 2</b></summary>
+                    <pre class="language-python"><code>preds = pd.concat([y_train,predictionsBasedOnKFolds.loc[:,'prediction']], axis=1)
 preds.columns = ['trueLabel','prediction']
 predictionsBasedOnKFoldsLightGBMGradientBoosting = preds.copy()
 
 precision, recall, thresholds = \
-    precision_recall_curve(preds['trueLabel'],preds['prediction'])
+precision_recall_curve(preds['trueLabel'],preds['prediction'])
 average_precision = \
-    average_precision_score(preds['trueLabel'],preds['prediction'])
+average_precision_score(preds['trueLabel'],preds['prediction'])
 
 plt.step(recall, precision, color='k', alpha=0.7, where='post')
 plt.fill_between(recall, precision, step='post', alpha=0.3, color='k')
@@ -487,7 +495,7 @@ plt.ylim([0.0, 1.05])
 plt.xlim([0.0, 1.0])
 
 plt.title('Precision-Recall curve: Average Precision = {0:0.2f}'.format(
-            average_precision))
+        average_precision))
 
 # you can see that we can achieve approximately 80% recall (i.e.,catch 80% of the fraudulent transactions) with approximately 70% precision
 # (i.e., of the transactions the model flags as fraudulent, 70% are truly fraudulent
@@ -497,359 +505,359 @@ plt.title('Precision-Recall curve: Average Precision = {0:0.2f}'.format(
 # average precision, which is 0.73 for this logistic regression model. We cannot yet
 # tell whether this is good or bad average precision yet since we have no other
 # models to compare our logistic regression against.
-                        </code></pre>
-                        <img src="./imgs/precision_recall_plot.png" alt="">
-                    </details><br>
-                </details>
-
-                <details>
-                    <summary> <b>Log Loss</b></summary>
-                    <p>
-                        when dealing with log loss, you need to be very careful; any non-confident prediction will have a very high log loss.
-
-                        <h4>Manual</h4><pre class="language-python"><code>def log_loss(y_true, y_proba):
-        # Define an epsilon value.
-        # this can also be an input.
-        # this value is used to clip probabilities.
-        epsilon = 1e-15
-    
-        # Iniitialize empty list to store.
-        # individual losses.
-        loss = []
-    
-        # Loop over all true and predicted probabitlity values
-        for yt, yp in zip(y_true, y_proba):
-            # Adjust probability.
-            # 0 gets converted to 1e-15
-            # 1 gets converted to 1 - 1e15
-            yp = np.clip(yp, epsilon, 1 - epsilon)
-    
-            # Calculate loss for one sample
-            temp_loss = - 1. * (yt * np.log(yp) + (1 - yt) * np.log(1 - yp))
-    
-            # Add to loss list.
-            loss.append(temp_loss)
-        return np.mean(loss)
-    </code></pre>
-
-                        <h4>Using Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
-    metrics.log_loss(y_true, y_proba)
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>Quadratic Weighted Kappa</b> [Cohen's Kappa]</summary>
-                    <p>
-                        <p> QWK measures the “agreement” between two “ratings”. The ratings can be any real numbers in 0 to N. And predictions are also in the same range. An agreement can be defined as how close these ratings are to each other. So, it’s suitable
-                            for a classification problem with N different categories/classes. If the agreement is high, the score is closer towards 1.0. In the case of low agreement, the score is close to 0.</p><pre class="language-python"><code>from sklearn import metrics
-    y_true = [1, 2, 3, 1, 2, 3, 1, 2, 3]
-    y_pred = [2, 1, 3, 1, 2, 3, 3, 1, 2]
-    
-    print(metrics.cohen_kappa_score(y_true, y_pred, weights="quadratic")
-    # 0.333333333
-    </code></pre>
-                    </p>
-                </details>
-
-                <details>
-                    <summary><b>Matthew’s Correlation Coefficient (MCC)</b></summary>
-                    <p>
-                        <p> MCC ranges from -1 to 1. 1 is perfect prediction, -1 is imperfect prediction, and 0 is random prediction. We see that MCC takes into consideration TP, FP, TN and FN and thus can be used for problems where classes are skewed. </p>
-
-                        MCC = (TP * TN - FP * FN) / [ (TP + FP) * (FN + TN) * (FP + TN) * (TP + FN) ] ^ (0.5)
-
-                        <pre class="language-python"><code>def mcc(y_true, y_pred):
-    tp = true_positive(y_true, y_pred)
-    tn = true_negative(y_true, y_pred)
-    fp = false_positive(y_true, y_pred)
-    fn = false_negative(y_true, y_pred)
-
-    numerator = (tp * tn) - (fp * fn)
-    denominator = (
-        (tp + fp) *
-        (fn + tn) *
-        (fp + tn) *
-        (tp + fn)
-    )
-
-    denominator = denominator ** 0.5
-    return numerator / denominator
                     </code></pre>
-                    <pre class="language-python"><code>from sklearn.metrics import matthews_corrcoef
+                    <img src="./imgs/precision_recall_plot.png" alt="">
+                </details><br>
+            </details>
+
+            <details>
+                <summary> <b>Log Loss</b></summary>
+                <p>
+                    when dealing with log loss, you need to be very careful; any non-confident prediction will have a very high log loss.
+
+                    <h4>Manual</h4><pre class="language-python"><code>def log_loss(y_true, y_proba):
+    # Define an epsilon value.
+    # this can also be an input.
+    # this value is used to clip probabilities.
+    epsilon = 1e-15
+
+    # Iniitialize empty list to store.
+    # individual losses.
+    loss = []
+
+    # Loop over all true and predicted probabitlity values
+    for yt, yp in zip(y_true, y_proba):
+        # Adjust probability.
+        # 0 gets converted to 1e-15
+        # 1 gets converted to 1 - 1e15
+        yp = np.clip(yp, epsilon, 1 - epsilon)
+
+        # Calculate loss for one sample
+        temp_loss = - 1. * (yt * np.log(yp) + (1 - yt) * np.log(1 - yp))
+
+        # Add to loss list.
+        loss.append(temp_loss)
+    return np.mean(loss)
+</code></pre>
+
+                    <h4>Using Sklearn</h4><pre class="language-python"><code>from sklearn import metrics
+metrics.log_loss(y_true, y_proba)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>Quadratic Weighted Kappa</b> [Cohen's Kappa]</summary>
+                <p>
+                    <p> QWK measures the “agreement” between two “ratings”. The ratings can be any real numbers in 0 to N. And predictions are also in the same range. An agreement can be defined as how close these ratings are to each other. So, it’s suitable
+                        for a classification problem with N different categories/classes. If the agreement is high, the score is closer towards 1.0. In the case of low agreement, the score is close to 0.</p><pre class="language-python"><code>from sklearn import metrics
+y_true = [1, 2, 3, 1, 2, 3, 1, 2, 3]
+y_pred = [2, 1, 3, 1, 2, 3, 3, 1, 2]
+
+print(metrics.cohen_kappa_score(y_true, y_pred, weights="quadratic")
+# 0.333333333
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary><b>Matthew’s Correlation Coefficient (MCC)</b></summary>
+                <p>
+                    <p> MCC ranges from -1 to 1. 1 is perfect prediction, -1 is imperfect prediction, and 0 is random prediction. We see that MCC takes into consideration TP, FP, TN and FN and thus can be used for problems where classes are skewed. </p>
+
+                    MCC = (TP * TN - FP * FN) / [ (TP + FP) * (FN + TN) * (FP + TN) * (TP + FN) ] ^ (0.5)
+
+                    <pre class="language-python"><code>def mcc(y_true, y_pred):
+tp = true_positive(y_true, y_pred)
+tn = true_negative(y_true, y_pred)
+fp = false_positive(y_true, y_pred)
+fn = false_negative(y_true, y_pred)
+
+numerator = (tp * tn) - (fp * fn)
+denominator = (
+    (tp + fp) *
+    (fn + tn) *
+    (fp + tn) *
+    (tp + fn)
+)
+
+denominator = denominator ** 0.5
+return numerator / denominator
+                </code></pre>
+                <pre class="language-python"><code>from sklearn.metrics import matthews_corrcoef
 
 print("score:", round(matthews_corrcoef(train['contact'], oof_pred>cfg.threshold), 5))
-                    </code></pre>
-                    <pre class="language-python"><code># optimize
+                </code></pre>
+                <pre class="language-python"><code># optimize
 from scipy.optimize import minimize
 
 def func(x_list):
-    score = matthews_corrcoef(train['contact'], oof_pred>x_list[0])
-    return -score
+score = matthews_corrcoef(train['contact'], oof_pred>x_list[0])
+return -score
 
 x0 = [0.5]
 result = minimize(func, x0,  method="nelder-mead")
 cfg.threshold = result.x[0]
 print("score:", round(matthews_corrcoef(train['contact'], oof_pred>cfg.threshold), 5))
 print("threshold", round(cfg.threshold, 5))
-                    </code></pre>
-                    </p>
-                </details>
-            </p>
-        </details>
+                </code></pre>
+                </p>
+            </details>
+        </p>
+    </details>
 
-        <details>
-            <summary><b>Multi-Label Classification</b></summary>
-            <p>
+    <details>
+        <summary><b>Multi-Label Classification</b></summary>
+        <p>
 
-                <details>
-                    <summary><b>Precision @ K</b></summary>
-                    <p><pre class="language-python"><code># Precision at k --&gt; P @ K
-    def pk(y_true, y_pred, k):
-        # if k = 0, return 0. we should never have this.
-        # as k is always &gt;= 1.
-        if k == 0: return 0
-    
-        # We are interested only in top-k predictions.
-        y_pred = y_pred[:k]
-    
-        # Convert predictions to set.
-        pred_set = set(y_pred)
-    
-        # Convert actual values to set.
-        true_set = set(y_true)
-    
-        # Find common values.
-        common_values = pred_set.intersection(true_set)
-    
-        # Return length of common values over k.
-        return len(common_values) / len(y_pred[:k])
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>Average Precision @ K</b></summary>
-                    <p><pre class="language-python"><code>def apk(y_true, y_pred, k):
-        """
-        This function calculates average precision at k
-        for a single sample
-        :param y_true: list of values, actual classes
-        :param y_pred: list of values, predicted classes
-        :return: average precision at a given value k
-        """
-        # initialize p@k list of values
-        pk_values = []
-        # loop over all k. from 1 to k + 1
-        for i in range(1, k + 1):
-            # calculate p@i and append to list
-            pk_values.append(pk(y_true, y_pred, i))
-        # if we have no values in the list, return 0
-        if len(pk_values) == 0:
-            return 0
-        # else, we return the sum of list over length of list
-        return sum(pk_values) / len(pk_values)
-    </code></pre>
-                        <p>The next implementation is another version of AP@k where order matters and we weigh the predictions.<br> This implementation will have slightly different results from the first one.</p><pre class="language-python"><code># taken from:
-    # https://github.com/benhamner/Metrics/blob/
-    # master/Python/ml_metrics/average_precision.py
-    import numpy as np
-    def apk(actual, predicted, k=10):
-        """
-        Computes the average precision at k.
-        This function computes the AP at k between two lists of
-        items.
-        Parameters
-        ----------
-        actual : list
-        A list of elements to be predicted (order doesn't matter)
-        predicted : list
-        A list of predicted elements (order does matter)
-        k : int, optional
-        The maximum number of predicted elements
-        Returns
-        -------
-        score : double
-        The average precision at k over the input lists
-        """
-        if len(predicted)&gt;k:
-            predicted = predicted[:k]
-        score = 0.0
-        num_hits = 0.0
-        for i,p in enumerate(predicted):
-            if p in actual and p not in predicted[:i]:
-                num_hits += 1.0
-                score += num_hits / (i+1.0)
-        if not actual:
-            return 0.0
-        return score / min(len(actual), k)
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>Mean Average Precision @ K</b></summary>
-                    <p><pre class="language-python"><code># Mean Average Precision at k.
-    def mapk(y_true, y_pred, k):
-        # Initialize empty list for apk values.
-        apk_values = []
-    
-        for i in range(len(y_true)):
-            # Store apk values for every sample.
-            apk_values.append(apk(y_true[i], y_pred[i], k=k))
-    
-        # return mean of apk values list.
-        return sum(apk_values) / len(apk_values)
-    </code></pre>
-                    </p>
-                </details>
-            </p>
-        </details>
+            <details>
+                <summary><b>Precision @ K</b></summary>
+                <p><pre class="language-python"><code># Precision at k --&gt; P @ K
+def pk(y_true, y_pred, k):
+    # if k = 0, return 0. we should never have this.
+    # as k is always &gt;= 1.
+    if k == 0: return 0
 
-        <details>
-            <summary><b>Regression</b></summary>
-            <p>
-                <details>
-                    <summary><b>Mean Absolute Error</b></summary>
-                    <p><pre class="language-python"><code># Without Numpy
-    def mean_absolute_error(y_true, y_pred):
-        # Initialize error at 0
-        error = 0
-        for yt, yp in zip(y_true, y_pred):
-            error += np.abs(yt - yp)
-        return error / len(y_true)
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>Mean Squared Error</b></summary>
-                    <p><pre class="language-python"><code>def mean_squared_error(y_true, y_pred):
-        error = 0
-        for yt, yp in zip(y_true, y_pred):
-            error += (yt - yp) ** 2
-        return error / len(y_true)
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>Mean Squared Log Error</b></summary>
-                    <p><pre class="language-python"><code>def mean_squared_log_error(y_true, y_pred):
-        error = 0
-        for yt, yp in zip(y_true, y_pred):
-            error += (np.log(1 + yt) - np.log(1 + yp)) ** 2
-        return error / len(y_true)
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>Mean Percentage Error</b></summary>
-                    <p><pre class="language-python"><code>def mean_percentage_error(y_true, y_pred):
-        error = 0
-        for yt, yp in zip(y_true, y_pred):
-            error += (yt - yp) / yt
-        return error / len(y_true)
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>Mean Absolute Percentage Error</b></summary>
-                    <p><pre class="language-python"><code>def mean_abs_percentage_error(y_true, y_pred):
-        error = 0
-        for yt, yp in zip(y_true, y_pred):
-            error += np.abs(yt - yp) / yt
-        return error / len(y_true)
-    </code></pre>
-                    </p>
-                </details>
-                <details>
-                    <summary><b>R-Squared</b></summary>
-                    <p>The R-squared metric is a measure of how much of the variance can be explained by the model.</p>
-                    <p>
-                        NOTE: R-squared increases with the number of features in the model, even if they don't contain any information about the target value at all!!<br> So it's better to use adjusted R-squared = adj. R^2 = R^2 - (1 - R^2) * p / (n -
-                        p - 1) where p = number of features.<br><br> The following code implement R-squared<pre class="language-python"><code># R-squared says how good your model fits the data.
-    # R-squared closer to 1.0 says that the model fits the data quite well, whereas closer 0 means that model isn’t that good.
-    # R-squared can also be negative when the model just makes absurd predictions.
-    
-    def R2(y_true, y_pred):
-        mean_true_value = np.mean(y_true)
-        numerator       = 0
-        denominator     = 0
-    
-        for yt, yp in zip(y_true, y_pred):
-            numerator += (yt - yp)**2
-            denominator += (yt - mean_true_value)**2
-        ratio = numerator / denominator
-        return 1 - ratio
-    </code></pre>
-                    </p>
-                </details>
+    # We are interested only in top-k predictions.
+    y_pred = y_pred[:k]
 
+    # Convert predictions to set.
+    pred_set = set(y_pred)
+
+    # Convert actual values to set.
+    true_set = set(y_true)
+
+    # Find common values.
+    common_values = pred_set.intersection(true_set)
+
+    # Return length of common values over k.
+    return len(common_values) / len(y_pred[:k])
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>Average Precision @ K</b></summary>
+                <p><pre class="language-python"><code>def apk(y_true, y_pred, k):
+    """
+    This function calculates average precision at k
+    for a single sample
+    :param y_true: list of values, actual classes
+    :param y_pred: list of values, predicted classes
+    :return: average precision at a given value k
+    """
+    # initialize p@k list of values
+    pk_values = []
+    # loop over all k. from 1 to k + 1
+    for i in range(1, k + 1):
+        # calculate p@i and append to list
+        pk_values.append(pk(y_true, y_pred, i))
+    # if we have no values in the list, return 0
+    if len(pk_values) == 0:
+        return 0
+    # else, we return the sum of list over length of list
+    return sum(pk_values) / len(pk_values)
+</code></pre>
+                    <p>The next implementation is another version of AP@k where order matters and we weigh the predictions.<br> This implementation will have slightly different results from the first one.</p><pre class="language-python"><code># taken from:
+# https://github.com/benhamner/Metrics/blob/
+# master/Python/ml_metrics/average_precision.py
+import numpy as np
+def apk(actual, predicted, k=10):
+    """
+    Computes the average precision at k.
+    This function computes the AP at k between two lists of
+    items.
+    Parameters
+    ----------
+    actual : list
+    A list of elements to be predicted (order doesn't matter)
+    predicted : list
+    A list of predicted elements (order does matter)
+    k : int, optional
+    The maximum number of predicted elements
+    Returns
+    -------
+    score : double
+    The average precision at k over the input lists
+    """
+    if len(predicted)&gt;k:
+        predicted = predicted[:k]
+    score = 0.0
+    num_hits = 0.0
+    for i,p in enumerate(predicted):
+        if p in actual and p not in predicted[:i]:
+            num_hits += 1.0
+            score += num_hits / (i+1.0)
+    if not actual:
+        return 0.0
+    return score / min(len(actual), k)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>Mean Average Precision @ K</b></summary>
+                <p><pre class="language-python"><code># Mean Average Precision at k.
+def mapk(y_true, y_pred, k):
+    # Initialize empty list for apk values.
+    apk_values = []
+
+    for i in range(len(y_true)):
+        # Store apk values for every sample.
+        apk_values.append(apk(y_true[i], y_pred[i], k=k))
+
+    # return mean of apk values list.
+    return sum(apk_values) / len(apk_values)
+</code></pre>
+                </p>
+            </details>
+        </p>
+    </details>
+
+    <details>
+        <summary><b>Regression</b></summary>
+        <p>
+            <details>
+                <summary><b>Mean Absolute Error</b></summary>
+                <p><pre class="language-python"><code># Without Numpy
+def mean_absolute_error(y_true, y_pred):
+    # Initialize error at 0
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += np.abs(yt - yp)
+    return error / len(y_true)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>Mean Squared Error</b></summary>
+                <p><pre class="language-python"><code>def mean_squared_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (yt - yp) ** 2
+    return error / len(y_true)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>Mean Squared Log Error</b></summary>
+                <p><pre class="language-python"><code>def mean_squared_log_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (np.log(1 + yt) - np.log(1 + yp)) ** 2
+    return error / len(y_true)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>Mean Percentage Error</b></summary>
+                <p><pre class="language-python"><code>def mean_percentage_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (yt - yp) / yt
+    return error / len(y_true)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>Mean Absolute Percentage Error</b></summary>
+                <p><pre class="language-python"><code>def mean_abs_percentage_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += np.abs(yt - yp) / yt
+    return error / len(y_true)
+</code></pre>
+                </p>
+            </details>
+            <details>
+                <summary><b>R-Squared</b></summary>
+                <p>The R-squared metric is a measure of how much of the variance can be explained by the model.</p>
+                <p>
+                    NOTE: R-squared increases with the number of features in the model, even if they don't contain any information about the target value at all!!<br> So it's better to use adjusted R-squared = adj. R^2 = R^2 - (1 - R^2) * p / (n -
+                    p - 1) where p = number of features.<br><br> The following code implement R-squared<pre class="language-python"><code># R-squared says how good your model fits the data.
+# R-squared closer to 1.0 says that the model fits the data quite well, whereas closer 0 means that model isn’t that good.
+# R-squared can also be negative when the model just makes absurd predictions.
+
+def R2(y_true, y_pred):
+    mean_true_value = np.mean(y_true)
+    numerator       = 0
+    denominator     = 0
+
+    for yt, yp in zip(y_true, y_pred):
+        numerator += (yt - yp)**2
+        denominator += (yt - mean_true_value)**2
+    ratio = numerator / denominator
+    return 1 - ratio
+</code></pre>
+                </p>
+            </details>
+
+            <details>
+                <summary><b>Mean Percentage Error</b></summary>
+                <p><pre class="language-python"><code>def mean_percentage_error(y_true, y_pred):
+    error = 0
+    for yt, yp in zip(y_true, y_pred):
+        error += (yt - yp) / yt
+    return error / len(y_true)
+</code></pre>
+                </p>
+            </details>
+
+        </p>
+    </details>
+
+    <details>
+        <summary><b>Unsupervised Learning</b></summary>
+        <ul>
+            <li>
                 <details>
-                    <summary><b>Mean Percentage Error</b></summary>
-                    <p><pre class="language-python"><code>def mean_percentage_error(y_true, y_pred):
-        error = 0
-        for yt, yp in zip(y_true, y_pred):
-            error += (yt - yp) / yt
-        return error / len(y_true)
-    </code></pre>
-                    </p>
-                </details>
-
-            </p>
-        </details>
-
-        <details>
-            <summary><b>Unsupervised Learning</b></summary>
-            <ul>
-                <li>
-                    <details>
-                        <summary><b>Reconstruction Error</b> [Dimensionality Reduction]</summary>
-                        <p>It require a truth table, it calculates the reconstructed matrix after being inversed.</p>
-                        <pre class="language-python"><code># Calculate reconstruction error
+                    <summary><b>Reconstruction Error</b> [Dimensionality Reduction]</summary>
+                    <p>It require a truth table, it calculates the reconstructed matrix after being inversed.</p>
+                    <pre class="language-python"><code># Calculate reconstruction error
 def anomalyScores(originalDF, reducedDF):
-    loss = np.sum((np.array(originalDF) - np.array(reducedDF))**2, axis=1)
-    loss = pd.Series(data=loss,index=originalDF.index)
-    loss = (loss-np.min(loss)) / (np.max(loss)-np.min(loss))
-    return loss
-                </code></pre>
-                        <pre class="language-python"><code># Plot results
+loss = np.sum((np.array(originalDF) - np.array(reducedDF))**2, axis=1)
+loss = pd.Series(data=loss,index=originalDF.index)
+loss = (loss-np.min(loss)) / (np.max(loss)-np.min(loss))
+return loss
+            </code></pre>
+                    <pre class="language-python"><code># Plot results
 def plotResults(trueLabels, anomalyScores, returnPreds = False):
-    preds = pd.concat([trueLabels, anomalyScores], axis=1)
-    preds.columns = ['trueLabel', 'anomalyScore']
-    precision, recall, thresholds = \
-        precision_recall_curve(preds['trueLabel'],preds['anomalyScore'])
-    average_precision = \
-        average_precision_score(preds['trueLabel'],preds['anomalyScore'])
-    
-    plt.step(recall, precision, color='k', alpha=0.7, where='post')
-    plt.fill_between(recall, precision, step='post', alpha=0.3, color='k')
+preds = pd.concat([trueLabels, anomalyScores], axis=1)
+preds.columns = ['trueLabel', 'anomalyScore']
+precision, recall, thresholds = \
+    precision_recall_curve(preds['trueLabel'],preds['anomalyScore'])
+average_precision = \
+    average_precision_score(preds['trueLabel'],preds['anomalyScore'])
 
-    plt.xlabel('Recall')
-    plt.ylabel('Precision')
-    plt.ylim([0.0, 1.05])
-    plt.xlim([0.0, 1.0])
-    
-    plt.title('Precision-Recall curve: Average Precision = \
-    {0:0.2f}'.format(average_precision))
+plt.step(recall, precision, color='k', alpha=0.7, where='post')
+plt.fill_between(recall, precision, step='post', alpha=0.3, color='k')
 
-    fpr, tpr, thresholds = roc_curve(preds['trueLabel'], \
-                                        preds['anomalyScore'])
-    areaUnderROC = auc(fpr, tpr)
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.ylim([0.0, 1.05])
+plt.xlim([0.0, 1.0])
 
-    plt.figure()
-    plt.plot(fpr, tpr, color='r', lw=2, label='ROC curve')
-    plt.plot([0, 1], [0, 1], color='k', lw=2, linestyle='--')
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('Receiver operating characteristic: \
-    Area under the curve = {0:0.2f}'.format(areaUnderROC))
-    plt.legend(loc="lower right")
-    plt.show()
-    
-    if returnPreds==True:
-        return preds
-                </code></pre>
-                        <h4>How to use:</h4>
-                        <pre class="language-python"><code># 30 principal components
+plt.title('Precision-Recall curve: Average Precision = \
+{0:0.2f}'.format(average_precision))
+
+fpr, tpr, thresholds = roc_curve(preds['trueLabel'], \
+                                    preds['anomalyScore'])
+areaUnderROC = auc(fpr, tpr)
+
+plt.figure()
+plt.plot(fpr, tpr, color='r', lw=2, label='ROC curve')
+plt.plot([0, 1], [0, 1], color='k', lw=2, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic: \
+Area under the curve = {0:0.2f}'.format(areaUnderROC))
+plt.legend(loc="lower right")
+plt.show()
+
+if returnPreds==True:
+    return preds
+            </code></pre>
+                    <h4>How to use:</h4>
+                    <pre class="language-python"><code># 30 principal components
 from sklearn.decomposition import PCA
 
 n_components = 30
@@ -857,94 +865,94 @@ whiten = False
 random_state = 2018
 
 pca = PCA(n_components=n_components, whiten=whiten, \
-            random_state=random_state)
+        random_state=random_state)
 
 X_train_PCA = pca.fit_transform(X_train)
 X_train_PCA = pd.DataFrame(data=X_train_PCA, index=X_train.index)
 
 X_train_PCA_inverse = pca.inverse_transform(X_train_PCA)
 X_train_PCA_inverse = pd.DataFrame(data=X_train_PCA_inverse, \
-                                    index=X_train.index)
+                                index=X_train.index)
 
 # View plot
 anomalyScoresPCA = anomalyScores(X_train, X_train_PCA_inverse)
 preds = plotResults(y_train, anomalyScoresPCA, True)
 </code></pre>
 
-                    </details>
-                </li>
+                </details>
+            </li>
 
-                <li>
-                    <details>
-                        <summary><b>Homogeneity score</b></summary>
-                        <p>This score is useful to check whether the clustering algorithm meets an important requirement: <br>a cluster should contain only samples belonging to a single class. </p>
-                        <img src="./imgs/homo_score.png" alt="">
-                        <pre class="language-python"><code>from sklearn.metrics import homogeneity_score
+            <li>
+                <details>
+                    <summary><b>Homogeneity score</b></summary>
+                    <p>This score is useful to check whether the clustering algorithm meets an important requirement: <br>a cluster should contain only samples belonging to a single class. </p>
+                    <img src="./imgs/homo_score.png" alt="">
+                    <pre class="language-python"><code>from sklearn.metrics import homogeneity_score
 print(homogeneity_score(digits['target'], Y))
 # 0.739148799605
 # he homogeneity score confirms that the clusters are rather homogeneous,
 # but there's still a moderate level of uncertainty because some clusters contain incorrect assignments.
-                </code></pre>
-                    </details>
-                </li>
+            </code></pre>
+                </details>
+            </li>
 
-                <li>
-                    <details>
-                        <summary><b>Completeness score</b></summary>
-                        <p><b>Homogeneity</b> means all of the observations with the same class label are in the same cluster.<br><b>Completeness</b> means all members of the same class are in the same cluster.</p>
-                        <pre class="language-python"><code>from sklearn.metrics import completeness_score
+            <li>
+                <details>
+                    <summary><b>Completeness score</b></summary>
+                    <p><b>Homogeneity</b> means all of the observations with the same class label are in the same cluster.<br><b>Completeness</b> means all members of the same class are in the same cluster.</p>
+                    <pre class="language-python"><code>from sklearn.metrics import completeness_score
 print(completeness_score(digits['target'], Y))
 # 0.747718831945
 # Again, the value confirms our hypothesis. 
 # The residual uncertainty is due to a lack of completeness 
 # because a few samples with the same label have been split into blocks that are assigned to wrong clusters. 
 # It's obvious that a perfect scenario is characterized by having both homogeneity and completeness scores equal to 1.
-                </code></pre>
-                    </details>
-                </li>
+            </code></pre>
+                </details>
+            </li>
 
-                <li>
-                    <details>
-                        <summary><b>Adjusted Rand Index</b></summary>
-                        <ul>
-                            <li><a href="./14_metrics/Understanding Adjusted Rand Index dfff4a52e2d44568ba507591da73e067.html">Math Intuation</a> <br></li>
-                            <li><a href="./14_metrics/Tabular Playground Series - Jul 2022 Kaggle c0b501512cf3434180c20bb3f2bcaa7a.html">Concept Intuation</a> <br></li>
-                        </ul>
-                        <p>This score is useful to compare the original label distribution with the clustering prediction.</p>
-                        <img src="../0_html/imgs/rand_index.png" alt="">
-                        <pre class="language-python"><code>from sklearn.metrics import adjusted_rand_score
+            <li>
+                <details>
+                    <summary><b>Adjusted Rand Index</b></summary>
+                    <ul>
+                        <li><a href="./14_metrics/Understanding Adjusted Rand Index dfff4a52e2d44568ba507591da73e067.html">Math Intuation</a> <br></li>
+                        <li><a href="./14_metrics/Tabular Playground Series - Jul 2022 Kaggle c0b501512cf3434180c20bb3f2bcaa7a.html">Concept Intuation</a> <br></li>
+                    </ul>
+                    <p>This score is useful to compare the original label distribution with the clustering prediction.</p>
+                    <img src="../0_html/imgs/rand_index.png" alt="">
+                    <pre class="language-python"><code>from sklearn.metrics import adjusted_rand_score
 print(adjusted_rand_score(digits['target'], Y))
 # 0.666766395716
 # This value confirms that the algorithm is working well (because it's positive), 
 # but it can be further optimized by trying to reduce the number of incorrect assignments. </code></pre>
 <pre class="language-python"><code># https://www.kaggle.com/code/ambrosm/tpsjul22-gaussian-mixture-cluster-analysis
 def compare_clusterings(y1, y2, title=''):
-    """Show the adjusted rand score and plot the two clusterings in color"""
-    ars = adjusted_rand_score(y1, y2)
-    n1 = y1.max() + 1
-    n2 = y2.max() + 1
-    argsort = np.argsort(y1*100 + y2) if n1 >= n2 else np.argsort(y2*100 + y1)
-    plt.figure(figsize=(16, 0.5))
-    for i in range(6, 11):
-        plt.scatter(np.arange(len(y1)), np.full_like(y1, i), c=y1[argsort], s=1, cmap='tab10')
-    for i in range(5):
-        plt.scatter(np.arange(len(y2)), np.full_like(y2, i), c=y2[argsort], s=1, cmap='tab10')
-    plt.gca().axis('off')
-    plt.title(f'{title}\nAdjusted Rand score: {ars:.5f}')
-    plt.savefig(title + '.png', bbox_inches='tight')
-    plt.show()</code></pre>
-                    </details>
-                </li>
+"""Show the adjusted rand score and plot the two clusterings in color"""
+ars = adjusted_rand_score(y1, y2)
+n1 = y1.max() + 1
+n2 = y2.max() + 1
+argsort = np.argsort(y1*100 + y2) if n1 >= n2 else np.argsort(y2*100 + y1)
+plt.figure(figsize=(16, 0.5))
+for i in range(6, 11):
+    plt.scatter(np.arange(len(y1)), np.full_like(y1, i), c=y1[argsort], s=1, cmap='tab10')
+for i in range(5):
+    plt.scatter(np.arange(len(y2)), np.full_like(y2, i), c=y2[argsort], s=1, cmap='tab10')
+plt.gca().axis('off')
+plt.title(f'{title}\nAdjusted Rand score: {ars:.5f}')
+plt.savefig(title + '.png', bbox_inches='tight')
+plt.show()</code></pre>
+                </details>
+            </li>
 
-                <li>
-                    <details>
-                        <summary><b>Silhouette Score</b></summary>
-                        <p>his measure doesn't need to know the ground truth and can be used to check, at the same time, the intra-cluster cohesion and the inter-cluster separation.</p>
-                        <p>Score Range between -1 (worst) to +1 (Best).</p>
-                        <p>the Silhouette score isn't a cumulative function and must be computed for each sample. A feasible strategy is to analyze the average value, but in this way, it's not possible to determine which clusters have the highest impact
-                            on the result. Another approach (the most common), is based on Silhouette plots, which display the score for each cluster in descending order. In the following snippet, we create plots for four different values of n_clusters
-                            (3, 5, 10, and 12):</p>
-                        <pre class="language-python"><code>import matplotlib.pyplot as plt
+            <li>
+                <details>
+                    <summary><b>Silhouette Score</b></summary>
+                    <p>his measure doesn't need to know the ground truth and can be used to check, at the same time, the intra-cluster cohesion and the inter-cluster separation.</p>
+                    <p>Score Range between -1 (worst) to +1 (Best).</p>
+                    <p>the Silhouette score isn't a cumulative function and must be computed for each sample. A feasible strategy is to analyze the average value, but in this way, it's not possible to determine which clusters have the highest impact
+                        on the result. Another approach (the most common), is based on Silhouette plots, which display the score for each cluster in descending order. In the following snippet, we create plots for four different values of n_clusters
+                        (3, 5, 10, and 12):</p>
+                    <pre class="language-python"><code>import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import seaborn as sns
 import numpy as np
@@ -957,66 +965,66 @@ nb_clusters = [3, 5, 10, 12]
 mapping = [(0, 0), (0, 1), (1, 0), (1, 1)]
 
 for i, n in enumerate(nb_clusters):
-    km = KMeans(n_clusters=n, random_state=1000)
-    Y = km.fit_predict(X_train)
-    silhouette_values = silhouette_samples(X_train, Y)
-    ax[mapping[i]].set_xticks(
-                [-0.15, 0.0, 0.25, 0.5, 0.75, 1.0])
-    ax[mapping[i]].set_yticks([])
-    ax[mapping[i]].set_title("{} clusters".format(n), 
-                                fontsize=16)
-    ax[mapping[i]].set_xlim([-0.15, 1])
-    ax[mapping[i]].grid(True)
-    y_lower = 20
+km = KMeans(n_clusters=n, random_state=1000)
+Y = km.fit_predict(X_train)
+silhouette_values = silhouette_samples(X_train, Y)
+ax[mapping[i]].set_xticks(
+            [-0.15, 0.0, 0.25, 0.5, 0.75, 1.0])
+ax[mapping[i]].set_yticks([])
+ax[mapping[i]].set_title("{} clusters".format(n), 
+                            fontsize=16)
+ax[mapping[i]].set_xlim([-0.15, 1])
+ax[mapping[i]].grid(True)
+y_lower = 20
 
-    for t in range(n):
-        ct_values = silhouette_values[Y == t]
-        ct_values.sort()
-        y_upper = y_lower + ct_values.shape[0]
-        color = cm.Accent(float(t) / n)
-        ax[mapping[i]].fill_betweenx(
-            np.arange(y_lower, y_upper), 0, 
-            ct_values, 
-            facecolor=color, 
-            edgecolor=color)
-        y_lower = y_upper + 20</code></pre>
-                        <img src="../0_html/imgs/silhouette.png" alt="" width="500">
+for t in range(n):
+    ct_values = silhouette_values[Y == t]
+    ct_values.sort()
+    y_upper = y_lower + ct_values.shape[0]
+    color = cm.Accent(float(t) / n)
+    ax[mapping[i]].fill_betweenx(
+        np.arange(y_lower, y_upper), 0, 
+        ct_values, 
+        facecolor=color, 
+        edgecolor=color)
+    y_lower = y_upper + 20</code></pre>
+                    <img src="../0_html/imgs/silhouette.png" alt="" width="500">
 
-                        <details>
-                            <summary>Intepretation of the plot</summary>
-                            <p>
-                                The analysis of a Silhouette plot should follow some common guidelines:
-                                <li>The width of each block must be proportional to the number of samples that are expected to belong to the corresponding cluster. If the label distribution is uniform, all the blocks must have a similar width. If the cluster
-                                    distribution is originally balanced, any asymmetry indicates incorrect assignments. Of course, this is not true if the classes are intrinsically unbalanced. For example, in our case, we know that the right number of
-                                    clusters is 10, but a couple of blocks are thinner than the other ones. This means that a cluster contains fewer samples than expected and the remaining ones have been assigned to incorrect partitions. On the contrary,
-                                    if, for example, 50% of our dataset was zeros, a larger silhouette for this class would be perfectly fine. The correct interpretation of this plot requires background knowledge about the data-generating process. If
-                                    such knowledge is missing (because, for example, the problem has never been studied), looking for symmetric silhouettes is generally good practice (particularly when the other scores confirm the result to be valid).
-                                </li>
-                                <li>The shape of a block shouldn't be sharp and peaked (like a knife) because it means that many samples have a low Silhouette score. The ideal (realistic) scenario is made up of shapes similar to cigars with a minimal difference
-                                    between the highest and lowest values. Unfortunately, this is not always possible to achieve, but it's always preferable to tune up the algorithm if the shapes are like the ones plotted in the first diagram (three clusters).
-                                </li>
-                                <li>The maximum Silhouette score should be close to 1. Lower values (like in our example) indicate the presence of partial overlaps and wrong assignments. Negative values must be absolutely avoided (or limited to a very small
-                                    number of samples) because they show a failure in the clustering process. Moreover, it's possible to prove that convex clusters (such as K-means hyperspheres) lead to higher values. This is due to the properties of
-                                    the common distance functions (such as the Euclidean distance) that can suggest a low internal cohesion whenever the shape of a cluster is concave (think about a circle compared to a half-moon). In this case, the process
-                                    of embedding the shape into a convex geometry leads to a lower density, and this negatively affects the Silhouette score. </li>
-                                <li>In our particular case, we cannot accept having anything other than 10 clusters. However, the corresponding Silhouette plot is not perfect. We know the reasons for such imperfections (the structure of the samples and the
-                                    high similarity of different digits) and it's quite difficult to avoid them using an algorithm such as K-means. The reader can try to improve the performance by increasing the number of iterations, but in these cases,
-                                    if the result doesn't meet the requirements, it's preferable to adopt another method (such as the spectral clustering method described in the next chapter, which can manage asymmetric clusters and more complex geometries).</li>
-                            </p>
-                        </details>
-                    </details>
-                </li>
-
-                <li>
                     <details>
-                        <summary><b>Calinski-Harabasz score</b></summary>
-                        <p>This score doesn't need the ground truth and evaluates the result of a clustering procedure according to the double principle of maximum cohesion and maximum separation.</p>
-                        <p>The first factor is a normalization term, while the second one measures the level of separation and cohesion at the same time. The values of CH have no upper bound (even if there's always a theoretical one, given the structure
-                            of X), hence, a larger CH indicates a better clustering result ( large separation and low internal dispersion).</p>
-                        <p>between-cluster-dispersion (BCD)<br> within-cluster-dispersion (WCD)</p>
-                        <p>The Higher, the Better</p>
-                        <img src="../0_html/imgs/caliski.png" alt="">
-                        <pre class="language-python"><code>from sklearn.cluster import DBSCAN
+                        <summary>Intepretation of the plot</summary>
+                        <p>
+                            The analysis of a Silhouette plot should follow some common guidelines:
+                            <li>The width of each block must be proportional to the number of samples that are expected to belong to the corresponding cluster. If the label distribution is uniform, all the blocks must have a similar width. If the cluster
+                                distribution is originally balanced, any asymmetry indicates incorrect assignments. Of course, this is not true if the classes are intrinsically unbalanced. For example, in our case, we know that the right number of
+                                clusters is 10, but a couple of blocks are thinner than the other ones. This means that a cluster contains fewer samples than expected and the remaining ones have been assigned to incorrect partitions. On the contrary,
+                                if, for example, 50% of our dataset was zeros, a larger silhouette for this class would be perfectly fine. The correct interpretation of this plot requires background knowledge about the data-generating process. If
+                                such knowledge is missing (because, for example, the problem has never been studied), looking for symmetric silhouettes is generally good practice (particularly when the other scores confirm the result to be valid).
+                            </li>
+                            <li>The shape of a block shouldn't be sharp and peaked (like a knife) because it means that many samples have a low Silhouette score. The ideal (realistic) scenario is made up of shapes similar to cigars with a minimal difference
+                                between the highest and lowest values. Unfortunately, this is not always possible to achieve, but it's always preferable to tune up the algorithm if the shapes are like the ones plotted in the first diagram (three clusters).
+                            </li>
+                            <li>The maximum Silhouette score should be close to 1. Lower values (like in our example) indicate the presence of partial overlaps and wrong assignments. Negative values must be absolutely avoided (or limited to a very small
+                                number of samples) because they show a failure in the clustering process. Moreover, it's possible to prove that convex clusters (such as K-means hyperspheres) lead to higher values. This is due to the properties of
+                                the common distance functions (such as the Euclidean distance) that can suggest a low internal cohesion whenever the shape of a cluster is concave (think about a circle compared to a half-moon). In this case, the process
+                                of embedding the shape into a convex geometry leads to a lower density, and this negatively affects the Silhouette score. </li>
+                            <li>In our particular case, we cannot accept having anything other than 10 clusters. However, the corresponding Silhouette plot is not perfect. We know the reasons for such imperfections (the structure of the samples and the
+                                high similarity of different digits) and it's quite difficult to avoid them using an algorithm such as K-means. The reader can try to improve the performance by increasing the number of iterations, but in these cases,
+                                if the result doesn't meet the requirements, it's preferable to adopt another method (such as the spectral clustering method described in the next chapter, which can manage asymmetric clusters and more complex geometries).</li>
+                        </p>
+                    </details>
+                </details>
+            </li>
+
+            <li>
+                <details>
+                    <summary><b>Calinski-Harabasz score</b></summary>
+                    <p>This score doesn't need the ground truth and evaluates the result of a clustering procedure according to the double principle of maximum cohesion and maximum separation.</p>
+                    <p>The first factor is a normalization term, while the second one measures the level of separation and cohesion at the same time. The values of CH have no upper bound (even if there's always a theoretical one, given the structure
+                        of X), hence, a larger CH indicates a better clustering result ( large separation and low internal dispersion).</p>
+                    <p>between-cluster-dispersion (BCD)<br> within-cluster-dispersion (WCD)</p>
+                    <p>The Higher, the Better</p>
+                    <img src="../0_html/imgs/caliski.png" alt="">
+                    <pre class="language-python"><code>from sklearn.cluster import DBSCAN
 from sklearn.metrics import calinski_harabasz_score 
 from sklearn.metrics import davies_bouldin_score
 import numpy as np
@@ -1026,23 +1034,23 @@ db = []
 no = []
 
 for e in np.arange(0.1, 0.5, 0.02):
-    dbscan = DBSCAN(eps=e, min_samples=8, leaf_size=50)
-    Y = dbscan.fit_predict(X)
-    ch.append(calinski_harabasz_score(X, Y))
-    db.append(davies_bouldin_score(X, Y))
-    no.append(np.sum(Y == -1)) </code></pre>
-                        <img src="../0_html/imgs/dbscan.png" alt="">
-                    </details>
-                </li>
+dbscan = DBSCAN(eps=e, min_samples=8, leaf_size=50)
+Y = dbscan.fit_predict(X)
+ch.append(calinski_harabasz_score(X, Y))
+db.append(davies_bouldin_score(X, Y))
+no.append(np.sum(Y == -1)) </code></pre>
+                    <img src="../0_html/imgs/dbscan.png" alt="">
+                </details>
+            </li>
 
-                <li>
-                    <details>
-                        <summary><b>Davies-Bouldin score</b></summary>
-                        <p>More interested to evaluate the separation of the clusters more than their internal cohesion.</p>
-                        <p>The Lower, The Better.</p>
-                        <p>Every value Dij measures the amount of separation existing between Ci and Cj. In fact, a large Dij means that the sum of diameters is larger than the distance of the centroids, therefore the clusters are partially overlapped.</p>
-                        <img src="../0_html/imgs/davies.png" alt="">
-                        <pre class="language-python"><code>from sklearn.cluster import DBSCAN
+            <li>
+                <details>
+                    <summary><b>Davies-Bouldin score</b></summary>
+                    <p>More interested to evaluate the separation of the clusters more than their internal cohesion.</p>
+                    <p>The Lower, The Better.</p>
+                    <p>Every value Dij measures the amount of separation existing between Ci and Cj. In fact, a large Dij means that the sum of diameters is larger than the distance of the centroids, therefore the clusters are partially overlapped.</p>
+                    <img src="../0_html/imgs/davies.png" alt="">
+                    <pre class="language-python"><code>from sklearn.cluster import DBSCAN
 from sklearn.metrics import calinski_harabasz_score 
 from sklearn.metrics import davies_bouldin_score
 import numpy as np
@@ -1052,18 +1060,18 @@ db = []
 no = []
 
 for e in np.arange(0.1, 0.5, 0.02):
-    dbscan = DBSCAN(eps=e, min_samples=8, leaf_size=50)
-    Y = dbscan.fit_predict(X)
-    ch.append(calinski_harabasz_score(X, Y))
-    db.append(davies_bouldin_score(X, Y))
-    no.append(np.sum(Y == -1)) </code></pre>
-                        <img src="../0_html/imgs/dbscan.png" alt="">
-                    </details>
-                </li>
-            </ul>
-        </details>
-    </div>
-    <script src="../../prism.js"></script>
+dbscan = DBSCAN(eps=e, min_samples=8, leaf_size=50)
+Y = dbscan.fit_predict(X)
+ch.append(calinski_harabasz_score(X, Y))
+db.append(davies_bouldin_score(X, Y))
+no.append(np.sum(Y == -1)) </code></pre>
+                    <img src="../0_html/imgs/dbscan.png" alt="">
+                </details>
+            </li>
+        </ul>
+    </details>
+</div>
+<script src="../../prism.js"></script>
 </body>
 
 </html>
