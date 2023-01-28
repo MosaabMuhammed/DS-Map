@@ -39,6 +39,109 @@ def plot_confusion_matrix(y_test, y_pred):
     </details><br>
 
     <details>
+        <summary> <b>Confidance Interval</b> </summary>
+
+        <h5>Multiple Techniques:</h5>
+        <ul>
+            <li><a href="./14_metrics/Confidence Interval using Normal Approximation 81ea879311ea4ffbab6f43093f9bb74e.html">Confidence Interval using Normal Approximation</a></li>
+            <li><a href="./14_metrics/09-eval2-ci__5.html">How to use with cross_val_score</a></li>
+            <li><a href="./14_metrics/09-eval2-ci__4-confidence-intervals_mnist.html">Example on MNIST</a></li>
+            <li><a href="./14_metrics/09-eval2-ci__4-confidence-intervals_iris.html">Example on Iris</a></li>
+        </ul>
+        <details>
+            <summary><b>CI using scipy.stats</b></summary>
+            <pre class="language-python"><code>from scipy import stats
+confidence = 0.95
+
+squared_errors = (final_predictions - y_test) ** 2
+
+np.sqrt(stats.t.interval(confidence, len(squared_errors) - 1, loc=squared_errors.mean(), scale=stats.sem(squared_errors)))
+
+### Returns
+#array([45685.10470776, 49691.25001878])
+</code></pre>
+        </details>
+        <details>
+            <summary><b>Classic out-of-bag Bootstrap</b></summary>
+            <pre class="language-python"><code>from sklearn import datasetsfrom sklearn.tree import DecisionTreeClassifier
+from mlxtend.evaluate import bootstrap_point632_score
+import numpy as np
+
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+tree = DecisionTreeClassifier(random_state=123)
+
+# Model accuracy
+scores = bootstrap_point632_score(tree, X, y, method='oob')
+acc = np.mean(scores)
+print('Accuracy: %.2f%%' % (100*acc))
+
+
+# Confidence interval
+lower = np.percentile(scores, 2.5)
+upper = np.percentile(scores, 97.5)
+print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
+# Accuracy: 94.45%
+# 95% Confidence interval: [87.71, 100.00]</code></pre></details>
+
+
+    <details>
+        <summary><b>.632 Bootstrap</b></summary>
+        <pre class="language-python"><code>from sklearn import datasets
+from sklearn.tree import DecisionTreeClassifier
+from mlxtend.evaluate import bootstrap_point632_score
+import numpy as np
+
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+tree = DecisionTreeClassifier(random_state=123)
+
+# Model accuracy
+scores = bootstrap_point632_score(tree, X, y)
+acc = np.mean(scores)
+print('Accuracy: %.2f%%' % (100*acc))
+
+
+# Confidence interval
+lower = np.percentile(scores, 2.5)
+upper = np.percentile(scores, 97.5)
+print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
+# Accuracy: 96.42%
+# 95% Confidence interval: [92.41, 100.00]</code></pre>
+    </details>
+
+    <details>
+        <summary><b>.632+ Bootstrap</b></summary>
+        <pre class="language-python"><code>from sklearn import datasets
+from sklearn.tree import DecisionTreeClassifier
+from mlxtend.evaluate import bootstrap_point632_score
+import numpy as np
+
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+tree = DecisionTreeClassifier(random_state=123)
+
+# Model accuracy
+scores = bootstrap_point632_score(tree, X, y, method='.632+')
+acc = np.mean(scores)
+print('Accuracy: %.2f%%' % (100*acc))
+
+
+# Confidence interval
+lower = np.percentile(scores, 2.5)
+upper = np.percentile(scores, 97.5)
+print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
+# Accuracy: 96.29%
+# 95% Confidence interval: [91.86, 98.92]</code></pre>
+    </details>
+</details>
+
+    <hr>
+
+    <details>
         <summary> <b>Classification</b></summary>
         <p>
 
@@ -175,30 +278,6 @@ print('{:.2f}'.format(roc_auc_score(y_test, y_pred_proba)*100))
             </details>
 
             <details>
-                <summary> <b>Confidance Interval</b> </summary>
-
-                <h5>Multiple Techniques:</h5>
-                <ul>
-                    <li><a href="./14_metrics/Confidence Interval using Normal Approximation 81ea879311ea4ffbab6f43093f9bb74e.html">Confidence Interval using Normal Approximation</a></li>
-                    <li><a href="./14_metrics/09-eval2-ci__5.html">How to use with cross_val_score</a></li>
-                    <li><a href="./14_metrics/09-eval2-ci__4-confidence-intervals_mnist.html">Example on MNIST</a></li>
-                    <li><a href="./14_metrics/09-eval2-ci__4-confidence-intervals_iris.html">Example on Iris</a></li>
-                </ul>
-                <p><pre class="language-python"><code>from scipy import stats
-
-confidence = 0.95
-
-squared_errors = (final_predictions - y_test) ** 2
-
-np.sqrt(stats.t.interval(confidence, len(squared_errors) - 1, loc=squared_errors.mean(), scale=stats.sem(squared_errors)))
-
-### Returns
-#array([45685.10470776, 49691.25001878])
-</code></pre>
-                </p>
-            </details>
-
-            <details>
                 <summary> <b>Precision</b> </summary>
                 <details>
                     <summary>Precision_Recall relationship in business context "Credit Card Company" (Fraud Detection 'positive')</summary>
@@ -210,16 +289,16 @@ np.sqrt(stats.t.interval(confidence, len(squared_errors) - 1, loc=squared_errors
                 </details>
                 <p>
                     <p><b>Precision</b> is simply the accuracy of the positive predictions.</p><pre class="language-python"><code>from sklearn.metrics import precision_score
-
-precision_score(y_train_5, y_train_pred)
-</code></pre>
-
+        
+        precision_score(y_train_5, y_train_pred)
+        </code></pre>
+        
                     <h4>Manual</h4><pre class="language-python"><code>def precision(y_true, y_pred, class_label=0):
-    tp = true_positive(y_true, y_pred, class_label)
-    fp = false_positive(y_true, y_pred, class_label)
-    precision = tp / (tp + fp)
-    return precision
-</code></pre>
+        tp = true_positive(y_true, y_pred, class_label)
+        fp = false_positive(y_true, y_pred, class_label)
+        precision = tp / (tp + fp)
+        return precision
+        </code></pre>
                 </p>
             </details>
 
