@@ -139,6 +139,64 @@ print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
     </details>
 </details>
 
+
+    <details>
+        <summary><b>Model Comparison</b></summary>
+        <ul>
+            <li>
+                <details>
+                    <summary><b>Z-score Test</b></summary>
+                    <pre class="language-python"><code></code></pre>
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary><b>McNemar's test for classifier comparisons</b></summary>
+                    <a href="./14_metrics/McNemar Test 7420a915080d4072b3884886be9899af.html">Theory</a>
+                    <h4>Contingency Matrix</h4>
+                    <pre class="language-python"><code>import numpy as np
+from mlxtend.evaluate import mcnemar_table
+
+# The correct target (class) labels
+y_target = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
+
+# Class labels predicted by model 1
+y_model1 = np.array([0, 1, 0, 0, 0, 1, 1, 0, 0, 0])
+
+# Class labels predicted by model 2
+y_model2 = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0, 0])
+
+tb = mcnemar_table(y_target=y_target, 
+                    y_model1=y_model1, 
+                    y_model2=y_model2)
+
+print(tb)
+# [[4 1]
+#  [2 3]]
+</code></pre>
+
+                    <h4>McNemar's Test</h4>
+                    <pre class="language-python"><code>import numpy as np
+
+tb_b = np.array([[9945, 25],
+                    [15, 15]])
+                
+from mlxtend.evaluate import mcnemar
+
+chi2, p = mcnemar(ary=tb_b, corrected=True)
+print('chi-squared:', chi2)
+print('p-value:', p)
+# chi-squared: 2.025
+# p-value: 0.154728923485
+
+# Since the p-value is larger than our assumed significance threshold (α=0.05), we cannot reject our null hypothesis and assume that there is no significant difference between the two predictive models.</code></pre>
+                </details>
+            </li>
+            <li></li>
+        </ul>
+
+
+    </details>
     <hr>
 
     <details>
