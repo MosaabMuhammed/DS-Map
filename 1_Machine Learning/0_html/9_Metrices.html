@@ -175,7 +175,7 @@ print(tb)
 #  [2 3]]
 </code></pre>
 
-                    <h4>McNemar's Test</h4>
+                    <h4>Corrected McNemar's Test</h4>
                     <pre class="language-python"><code>import numpy as np
 
 tb_b = np.array([[9945, 25],
@@ -191,6 +191,23 @@ print('p-value:', p)
 
 # Since the p-value is larger than our assumed significance threshold (α=0.05), we cannot reject our null hypothesis and assume that there is no significant difference between the two predictive models.</code></pre>
                 </details>
+
+                <h4>McNemar's Test Exact-p value using binomial test: if B and C are larger than 50 samples</h4>
+                <pre class="language-python"><code>from mlxtend.evaluate import mcnemar
+import numpy as np
+
+tb_a = np.array([[9959, 11],
+                    [1, 29]])
+
+chi2, p = mcnemar(ary=tb_a, exact=True)
+
+print('chi-squared:', chi2)
+print('p-value:', p)
+# chi-squared: None
+# p-value: 0.005859375
+
+# Assuming that we conducted this test also with a significance level of α=0.05 , 
+# we can reject the null-hypothesis that both models perform equally well on this dataset, since the p-value (p≈0.006 ) is smaller than α .</code></pre>
             </li>
             <li>
                 <details>
