@@ -440,6 +440,61 @@ print('McNemar\'s p-value: %.3f' % p_value)
 # McNemar's p-value: 0.021</code></pre>
             </details>
         </li>
+        <li>
+            <details>
+                <summary><b>F-test for comparing multiple models</b></summary>
+                <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/ftest/">docs</a>
+                <pre class="language-python"><code>import numpy as np
+from mlxtend.evaluate import ftest
+
+## Dataset:
+
+# ground truth labels of the test dataset:
+
+y_true = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0])
+
+
+# predictions by 3 classifiers (`y_model_1`, `y_model_2`, and `y_model_3`):
+
+y_model_1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0])
+
+y_model_2 = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0])
+
+y_model_3 = np.array([1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        1, 1])</code></pre>
+                <p>Assuming a significance level α=0.05 , we can conduct Cochran's Q test as follows, to test the null hypothesis there is no difference between the classification accuracies, pi:H0=p1=p2=⋯=pL :</p>
+                <pre class="language-python"><code>
+f, p_value = ftest(y_true, 
+                    y_model_1, 
+                    y_model_2, 
+                    y_model_3)
+
+print('F: %.3f' % f)
+print('p-value: %.3f' % p_value)
+# F: 3.873
+# p-value: 0.022</code></pre>
+<p>Since the p-value is smaller than α , we can reject the null hypothesis and conclude that there is a difference between the classification accuracies. As mentioned in the introduction earlier, we could now perform multiple post hoc pair-wise tests -- for example, McNemar tests with a Bonferroni correction -- to determine which pairs have different population proportions.</p>
+            </details>
+        </li>
         </ul>
 
 
