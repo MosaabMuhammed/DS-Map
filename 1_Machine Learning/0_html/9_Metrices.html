@@ -499,6 +499,7 @@ print('p-value: %.3f' % p_value)
         <li>
             <details>
                 <summary><b>Resampled paired t test for comparing 2 models</b></summary>
+                <p>not recommended in practice</p>
                 <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_resampled/">docs</a>
 <pre class="language-python"><code>from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -551,6 +552,48 @@ print('p value: %.3f' % p)
 # statistic: 39.214
 # p value: 0.000
 # Assuming that we conducted this test also with a significance level of α=0.05, we can reject the null-hypothesis that both models perform equally well on this dataset, since the p-value (p<0.001) is smaller than α.
+</code></pre>
+            </details>
+        </li>
+        <li>
+            <details>
+                <summary><b>K-fold cross-validated paired t test</b></summary>
+                <p>NOTE: Not recommended in practice</p>
+                <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_kfold_cv/">docs</a>
+                <pre class="language-python"><code>from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from mlxtend.data import iris_data
+from sklearn.model_selection import train_test_split
+
+
+X, y = iris_data()
+clf1 = LogisticRegression(random_state=1)
+clf2 = DecisionTreeClassifier(random_state=1)
+
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, test_size=0.25,
+                        random_state=123)
+
+score1 = clf1.fit(X_train, y_train).score(X_test, y_test)
+score2 = clf2.fit(X_train, y_train).score(X_test, y_test)
+
+print('Logistic regression accuracy: %.2f%%' % (score1*100))
+print('Decision tree accuracy: %.2f%%' % (score2*100))
+# Logistic regression accuracy: 97.37%
+# Decision tree accuracy: 94.74%</code></pre>
+<pre class="language-python"><code>from mlxtend.evaluate import paired_ttest_kfold_cv
+
+
+t, p = paired_ttest_kfold_cv(estimator1=clf1,
+                              estimator2=clf2,
+                              X=X, y=y,
+                              random_seed=1)
+
+print('t statistic: %.3f' % t)
+print('p value: %.3f' % p)
+# t statistic: -1.861
+# p value: 0.096
+# Since p>α, we cannot reject the null hypothesis and may conclude that the performance of the two algorithms is not significantly different.
 </code></pre>
             </details>
         </li>
