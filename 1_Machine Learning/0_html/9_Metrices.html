@@ -636,6 +636,47 @@ print('p value: %.3f' % p)
 # Since p>α, we cannot reject the null hypothesis and may conclude that the performance of the two algorithms is not significantly different.</code></pre>
             </details>
         </li>
+
+        <li>
+            <details>
+                <summary><b>5x2cv combined F test for classifier comparisons</b></summary>
+                <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/combined_ftest_5x2cv/">docs</a>
+            <pre class="language-python"><code>from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from mlxtend.data import iris_data
+from sklearn.model_selection import train_test_split
+
+
+X, y = iris_data()
+clf1 = LogisticRegression(random_state=1, solver='liblinear', multi_class='ovr')
+clf2 = DecisionTreeClassifier(random_state=1)
+
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, test_size=0.25,
+                        random_state=123)
+
+score1 = clf1.fit(X_train, y_train).score(X_test, y_test)
+score2 = clf2.fit(X_train, y_train).score(X_test, y_test)
+
+print('Logistic regression accuracy: %.2f%%' % (score1*100))
+print('Decision tree accuracy: %.2f%%' % (score2*100))
+# Logistic regression accuracy: 97.37%
+# Decision tree accuracy: 94.74%</code></pre>
+<pre class="language-python"><code>from mlxtend.evaluate import combined_ftest_5x2cv
+
+
+f, p = combined_ftest_5x2cv(estimator1=clf1,
+                            estimator2=clf2,
+                            X=X, y=y,
+                            random_seed=1)
+
+print('F statistic: %.3f' % f)
+print('p value: %.3f' % p)
+# F statistic: 1.053
+# p value: 0.509
+# Since p>α, we cannot reject the null hypothesis and may conclude that the performance of the two algorithms is not significantly different.</code></pre>
+            </details>
+        </li>
         </ul>
 
 
