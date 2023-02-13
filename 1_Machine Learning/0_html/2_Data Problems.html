@@ -1427,9 +1427,56 @@ poly_features_test = imputer.transform(poly_features_test)
         <hr>
 
         <details>
-            <summary style='font-size:23px;text-decoration:underline'><b>6. Multi-Collinearity</b></summary>
+            <summary style='font-size:23px;text-decoration:underline'><b>6. Multi-Collinearity</b> [Correlation]</summary>
             <p>
+                <details>
+                    <summary><b>Correlation Techniques</b></summary>
+                <pre class="language-python"><code># NOTE: minepy is currently only available for Linux nad MacOS
+!pip install minepy
 
+from scipy import stats
+from sklearn.feature_selection import mutual_info_regression
+from minepy import MINE
+
+# Pearson
+pearson_r, pearson_p = stats.pearsonr(x, y)
+
+
+# Spearman
+spearman_r, spearman_p = stats.spearmanr(x, y)
+
+# Kendall Tau
+kendall_r, kendall_p = stats.kendalltau(x, y)
+
+# Mutual information
+mi = mutual_info_regression(x.reshape(-1, 1), y)[0]
+
+# MIC (default params)
+mine = MINE() 
+mine.compute_score(x,y) 
+mic = mine.mic() 
+
+print(f'Pearson R: {pearson_r:0.4f}\np-val: {pearson_p:0.2f}\n')
+print(f'Spearman R: {spearman_r:0.4f}\np-val: {spearman_p:0.2f}\n')
+print(f'Kendall Tau: {kendall_r:0.4f}\np-val: {kendall_p:0.2f}\n')
+print(f'Mutual information (KSG): {mi:0.4f}\np-val: --\n')
+print(f'MIC: {mic:0.4f}\np-val: --')
+
+# Pearson R: -0.0017
+# p-val: 0.97
+
+# Spearman R: -0.0041
+# p-val: 0.93
+
+# Kendall Tau: -0.0078
+# p-val: 0.81
+
+# Mutual information (KSG): 1.5353
+# p-val: --
+
+# MIC: 0.8519
+# p-val: --</code></pre>
+                </details>
                 <details>
                     <summary><b>1. Using Variance Inflation Fator</b></summary>
                     <p><a href="file:///media/mosaab/Volume/Courses/Computer%20Science/Advanced/Machine%20Learning/Udacity/Udacity%20-%20Data%20Scientist%20Nanodegree%20nd025%20v1.0.0/Part%2012-Module%2001-Lesson%2015_Multiple%20Linear%20Regression/17.%20Screencast%20Multicollinearity%20%20VIFs.html">See the <b>video</b></a>                        </p>
