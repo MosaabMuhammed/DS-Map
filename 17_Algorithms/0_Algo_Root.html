@@ -921,6 +921,20 @@ l = [3, 4, 5, 1, 23, 34]
 quicksort(l, 0, len(l)-1)
 print(l)</code></pre>
 </details>
+<details>
+    <summary><b>code 3</b></summary>
+<pre class="language-python"><code>def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quicksort(left) + middle + quicksort(right)
+
+print(quicksort([3,6,8,10,1,2,1]))
+# Prints "[1, 1, 2, 3, 6, 8, 10]"</code></pre>
+</details>
             </details>
             <details>
                 <summary><b>Counting Sort</b></summary>
