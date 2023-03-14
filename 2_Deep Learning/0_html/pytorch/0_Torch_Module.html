@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        PyTorch Wrangling
+    </title>
+
+    <link rel="stylesheet" href="../../../prism.css">
+</head>
+
+<body>
+    <div style="width:1000px;margin:auto;">
+
+        <h1 id="1startercode">
+            Module Creation
+        </h1>
+
+        <details>
+            <summary>
+                <b>
+                    Types of API
+                </b>
+            </summary>
+            <details style="padding-left:15px">
+                <summary>
+                    <b>
+                        Functional
+                    </b>
+                    API
+                </summary>
+                <p>
+                </p>
+                <pre><code>import torch.nn.functional as F
+
+class Network(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.hidden = nn.Linear(28*28, 256)
+        self.output = nn.Linear(256, 10)
+
+    def forward(self, x):
+        x = F.sigmoid(self.hidden(x))
+        x = F.softmax(self.output(x), dim=1)
+
+        return x
+</code></pre>
+            </details>
+            <details style="padding-left:15px">
+                <summary>
+                    <b>
+                        Sequential
+                    </b>
+                    API
+                </summary>
+                <p>
+                </p>
+                <h4>
+                    1. Upload MNIST data
+                </h4>
+                <pre><code>from torchvision import datasets, transforms
+
+# Define a transform to normalize the data
+transform = transforms.Compose([transforms.ToTensor(),
+                              transforms.Normalize((0.5,), (0.5,)),
+                              ])
+
+# Download and load the training data
+trainset = datasets.MNIST('~/.pytorch/MNIST_data/', download=True, train=True, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
+</code></pre>
+                <h4>
+                    2. Design the model
+                </h4>
+                <pre><code>input_size   = 784
+hidden_sizes = [128, 64]
+output_size  = 10
+
+# Build a feed-forward network
+model = nn.Sequential(nn.Linear(input_size, hidden_sizes[0]),
+                      nn.ReLU(),
+                      nn.Linear(hidden_sizes[0], hidden_sizes[1]),
+                      nn.ReLU(),
+                      nn.Linear(hidden_sizes[1], output_size),
+                      nn.Softmax(dim=1))
+print(model)
+
+# We can also put it into OrderedDict to give a name to each layer.
+from collections import OrderedDict
+model = nn.Sequential(OrderedDict([
+                      ('fc1', nn.Linear(input_size, hidden_sizes[0])),
+                      ('relu1', nn.ReLU()),
+                      ('fc2', nn.Linear(hidden_sizes[0], hidden_sizes[1])),
+                      ('relu2', nn.ReLU()),
+                      ('output', nn.Linear(hidden_sizes[1], output_size)),
+                      ('softmax', nn.Softmax(dim=1))]))
+# Now we can access like than
+print(model.fc1) # Instead of model[0]
+</code></pre>
+                <h4>
+                    3. Utitlity Function
+                </h4>
+                <pre><code>def view_classify(img, ps, version="MNIST"):
+    ''' Function for viewing an image and it's predicted classes.
+    '''
+    ps = ps.data.numpy().squeeze()
+
+    fig, (ax1, ax2) = plt.subplots(figsize=(6, 9), ncols=2)
+    ax1.imshow(img.resize_(1, 28, 28).numpy().squeeze())
+    ax1.axis('off')
+    ax2.barh(np.arange(10), ps)
+    ax2.set_aspect(0.1)
+    ax2.set_yticks(np.arange(10))
+    if version == "MNIST":
+        ax2.set_yticklabels(np.arange(10))
+    elif version == "Fashion":
+        ax2.set_yticklabels(['T-shirt/top',
+                             'Trouser',
+                             'Pullover',
+                             'Dress',
+                             'Coat',
+                             'Sandal',
+                             'Shirt',
+                             'Sneaker',
+                             'Bag',
+                             'Ankle Boot'], size='small')
+    ax2.set_title('Class Probability')
+    ax2.set_xlim(0, 1.1)
+
+    plt.tight_layout()
+</code></pre>
+                <h4>
+                    4. Start Optimizing
+                </h4>
+                <pre><code>criterion = nn.NLLLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.003)
+
+epochs = 5
+for e in range(epochs):
+    running_loss = 0
+    for images, labels in trainloader:
+        # Flatten MNIST images into a 784 long vector
+        images = images.view(images.shape[0], -1)  # We can do this step in the Network class .forward  (instead of doing it here).
+
+        # TODO: Training pass
+        outputs = model(images)
+        loss    = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+    else:
+        print(f"Training loss: {running_loss/len(trainloader)}")
+</code></pre>
+                <h4>
+                    5. Test on a new data
+                </h4>
+                <pre><code>images, labels = next(iter(trainloader))
+
+img = images[0].view(1, 784)
+# Turn off gradients to speed up this part
+with torch.no_grad():
+    logps = model(img)
+
+# Output of the network are log-probabilities, need to take exponential for probabilities
+ps = torch.exp(logps)
+helper.view_classify(img.view(1, 28, 28), ps)
+</code></pre>
+            </details>
+        </details>
+        
+        <details>
+            <summary><b>Show parameters name & shape of a module</b></summary>
+        <pre class="language-python"><code>for name, param in model.named_parameters():
+    print(f"Parameter {name}, shape {param.shape}")
+# Parameter linear1.weight, shape torch.Size([4, 2])
+# Parameter linear1.bias, shape torch.Size([4])
+# Parameter linear2.weight, shape torch.Size([1, 4])
+# Parameter linear2.bias, shape torch.Size([1])</code></pre>
+        </details>
+
+
+
+        <details>
+            <summary>
+                <b>
+                    Types of Architectures
+                </b>
+            </summary>
+            <ul>
+                <li>
+                    <a href="./1_Torch_LinReg.html">
+                        <font color="#333">
+                            <b style="font-size:20px">
+                                Linear Regression
+                            </b>
+                        </font>
+                    </a>
+                </li>
+                <li>
+                    <a href="./2_Torch_LogReg.html">
+                        <font color="#333">
+                            <b style="font-size:20px">
+                                Logistic Regression
+                            </b>
+                        </font>
+                    </a>
+                </li>
+                <li>
+                    <a href="./3_Torch_MLP.html">
+                        <font color="#333">
+                            <b style="font-size:20px">
+                                MLP
+                            </b>
+                        </font>
+                    </a>
+                </li>
+                <li>
+                    <a href="./4_Torch_CNN.html">
+                        <font color="#333">
+                            <b style="font-size:20px">
+                                CNN
+                            </b>
+                        </font>
+                    </a>
+                </li>
+                <li>
+                    <a href="./9_Torch_TransferLearning.html">
+                        <font color="#333">
+                            <b style="font-size:20px">
+                                Transfer Learning
+                            </b>
+                        </font>
+                    </a>
+                </li>
+                <li>
+                    <a href="./5_Torch_RNN.html">
+                        <font color="#333">
+                            <b style="font-size:20px">
+                                RNN
+                            </b>
+                        </font>
+                    </a>
+                </li>
+                <li>
+                    <a href="./6_Torch_LSTM.html">
+                        <font color="#333">
+                            <b style="font-size:20px">
+                                LSTM
+                            </b>
+                        </font>
+                    </a>
+                </li>
+            </ul>
+        </details>
+
+        <details style="padding-left:8px">
+            <summary>
+                Save
+                <b>
+                    Weights
+                </b>
+                [The Right Way]
+            </summary>
+            <p>
+            </p>
+            <li>
+                <a
+                    href="file:///media/mosaab/Volume/Personal/Development/Courses%20Docs/deep-learning-v2-pytorch/convolutional-neural-networks/mnist-mlp/mnist_mlp_solution_with_validation.html#Train-the-Network">
+                    <b style="font-size:18px">
+                        Have-Write Example
+                    </b>
+                </a>
+            </li>
+            <h4>
+                NOTE:
+            </h4>
+            When loading the weights, it has to be assigend to the same architecture.
+            <br />
+            <pre class="language-python"><code>checkpoint = {'input_size': 784,
+    'output_size': 10,
+    'hidden_layers': [each.out_features for each in model.hidden_layers],
+    'state_dict': model.state_dict()}
+
+torch.save(checkpoint, 'checkpoint.pth')</code></pre>
+            <h4>2. Load the weight</h4>
+            <pre class="language-python"><code>def load_checkpoint(filepath):
+    checkpoint = torch.load(filepath)
+
+    model = Network(checkpoint['input_size'],
+                    checkpoint['output_size'],
+                    checkpoint['hidden_layers'])
+
+     return model
+
+model = load_checkpoint('checkpoint.pth')
+print(model)
+
+</code></pre>
+        </details>
+    </div>
+    <script src="../../../prism.js"></script>
+</body>
+
+</html>
