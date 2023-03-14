@@ -18,7 +18,22 @@
         </h1>
         
         <details>
-            <summary><b>PyTorch Datasets</b></summary>
+            <summary><b style="font-size: 27px;">PyTorch Datasets</b></summary>
+            <pre class="language-python"><code>import torch.utils.data as data</code></pre>
+            <p>The data package defines two classes which are the standard interface for handling data in PyTorch: <code>data.Dataset</code>, and <code>data.DataLoader</code>. <br>The dataset class provides an uniform interface to access the training/test data, while the data loader makes sure to efficiently load and stack the data points from the dataset into batches during training.</p>
+
+            <details>
+                <summary><b>DataLoader parameters</b></summary>
+                <p>
+                    <ul>
+                        <li><code>batch_size</code>: Number of samples to stack per batch</li>
+                        <li><code>shuffle</code>: If True, the data is returned in a random order. This is important during training for introducing stochasticity.</li>
+                        <li><code>num_workers</code>: Number of subprocesses to use for data loading. The default, 0, means that the data will be loaded in the main process which can slow down training for datasets where loading a data point takes a considerable amount of time (e.g. large images). More workers are recommended for those, but can cause issues on Windows computers. For tiny datasets as ours, 0 workers are usually faster.</li>
+                        <li><code>pin_memory</code>: If True, the data loader will copy Tensors into CUDA pinned memory before returning them. <br> This can save some time for large data points on GPUs. Usually a good practice to use for a training set, but not necessarily for validation and test to save memory on the GPU.</li>
+                        <li><code>drop_last</code>: If True, the last batch is dropped in case it is smaller than the specified batch size. <br> This occurs when the dataset size is not a multiple of the batch size. Only potentially helpful during training to keep a consistent batch size.</li>
+                    </ul>
+                </p>
+            </details>
         </details>
         
 
@@ -33,7 +48,9 @@
                     <ul>
                         <li><details>
                             <summary><b>XOR Dataset</b></summary>
-                        <pre class="language-python"><code>class XORDataset(data.Dataset):
+                        <pre class="language-python"><code>import torch.utils.data as data
+                            
+class XORDataset(data.Dataset):
 
     def __init__(self, size, std=0.1):
         """
