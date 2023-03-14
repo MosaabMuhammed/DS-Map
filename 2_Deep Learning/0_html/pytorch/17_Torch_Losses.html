@@ -15,12 +15,114 @@
     </h1>
     <div style="width:1000px;margin:auto">
         <details>
+            <summary><b style="font-size:25px">Classification</b></summary>
+            <ul>
+                <li><details>
+                    <summary>
+                        <b>
+              Binary Cross-Entropy
+             </b>
+                    </summary>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <msub>
+                          <mrow data-mjx-texclass="ORD">
+                            <mi data-mjx-variant="-tex-calligraphic" mathvariant="script">L</mi>
+                          </mrow>
+                          <mrow data-mjx-texclass="ORD">
+                            <mi>B</mi>
+                            <mi>C</mi>
+                            <mi>E</mi>
+                          </mrow>
+                        </msub>
+                        <mo>=</mo>
+                        <mo>&#x2212;</mo>
+                        <munder>
+                          <mo data-mjx-texclass="OP">&#x2211;</mo>
+                          <mi>i</mi>
+                        </munder>
+                        <mrow data-mjx-texclass="INNER">
+                          <mo data-mjx-texclass="OPEN">[</mo>
+                          <msub>
+                            <mi>y</mi>
+                            <mi>i</mi>
+                          </msub>
+                          <mi>log</mi>
+                          <mo data-mjx-texclass="NONE">&#x2061;</mo>
+                          <msub>
+                            <mi>x</mi>
+                            <mi>i</mi>
+                          </msub>
+                          <mo>+</mo>
+                          <mo stretchy="false">(</mo>
+                          <mn>1</mn>
+                          <mo>&#x2212;</mo>
+                          <msub>
+                            <mi>y</mi>
+                            <mi>i</mi>
+                          </msub>
+                          <mo stretchy="false">)</mo>
+                          <mi>log</mi>
+                          <mo data-mjx-texclass="NONE">&#x2061;</mo>
+                          <mo stretchy="false">(</mo>
+                          <mn>1</mn>
+                          <mo>&#x2212;</mo>
+                          <msub>
+                            <mi>x</mi>
+                            <mi>i</mi>
+                          </msub>
+                          <mo stretchy="false">)</mo>
+                          <mo data-mjx-texclass="CLOSE">]</mo>
+                        </mrow>
+                      </math>
+                    <pre class="language-python"><code>bce_loss = nn.BCELoss()
+        sigmoid  = nn.Sigmoid()
+        probabilities = sigmoid(torch.randn(4, 1, requires_grad=True))
+        targets = torch.tensor([1, 0, 1, 0], dtype=torch.float32).view(4, 1)
+        loss = bce_loss(probabilities, targets)
+        print(probabilities)
+        print(loss)
+        </code></pre>
+                </details></li>
+                <li><details>
+                    <summary>
+                        <b>BCEWithLogitsLoss</b>
+                    </summary>
+                    <p>nn.BCELoss expects the inputs to be in the range [0, 1] , i.e. the output of a sigmoid, nn.BCEWithLogitsLoss combines a sigmoid layer and the BCE loss in a single class. 
+                        <br> This version is numerically more stable than using a plain Sigmoid followed by a BCE loss because of the logarithms applied in the loss function. <br>
+                         Hence, it is adviced to use loss functions applied on “logits” where possible (remember to not apply a sigmoid on the output of the model in this case!)</p>
+                    <pre class="language-python"><code>target = torch.ones([10, 64], dtype=torch.float32)  # 64 classes, batch size = 10
+output = torch.full([10, 64], 1.5)  # A prediction (logit)
+pos_weight = torch.ones([64])  # All weights are equal to 1
+criterion = torch.nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+criterion(output, target)  # -log(sigmoid(1.5))
+        </code></pre>
+                </details></li>
+                <li><details>
+                    <summary>
+                        <b>
+              Categorical Cross-Entropy
+             </b>
+                    </summary>
+                    <pre class="language-python"><code># Categorical Cross-Entropy.
+        import torch
+        import torch.nn as nn
+        
+        ce_loss = nn.CrossEntropyLoss()
+        outputs = torch.randn(3, 5, requires_grad=True)
+        targets = torch.tensor([1, 0, 3], dtype=torch.int64)
+        loss    = ce_loss(outputs, targets)
+        print(loss)
+        </code></pre>
+                </details></li>
+            </ul>
+        </details>
+        <details>
             <summary>
                 <b>
       Mean Squared Error
      </b>
             </summary>
-            <pre><code>import torch
+            <pre class="language-python"><code>import torch
 import torch.nn as nn
 
 mse_loss = nn.MSELoss()
@@ -30,38 +132,7 @@ loss = mse_loss(outputs, targets)
 print(loss)
 </code></pre>
         </details>
-        <details>
-            <summary>
-                <b>
-      Categorical Cross-Entropy
-     </b>
-            </summary>
-            <pre><code># Categorical Cross-Entropy.
-import torch
-import torch.nn as nn
 
-ce_loss = nn.CrossEntropyLoss()
-outputs = torch.randn(3, 5, requires_grad=True)
-targets = torch.tensor([1, 0, 3], dtype=torch.int64)
-loss    = ce_loss(outputs, targets)
-print(loss)
-</code></pre>
-        </details>
-        <details>
-            <summary>
-                <b>
-      Binary Cross-Entropy
-     </b>
-            </summary>
-            <pre><code>bce_loss = nn.BCELoss()
-sigmoid  = nn.Sigmoid()
-probabilities = sigmoid(torch.randn(4, 1, requires_grad=True))
-targets = torch.tensor([1, 0, 1, 0], dtype=torch.float32).view(4, 1)
-loss = bce_loss(probabilities, targets)
-print(probabilities)
-print(loss)
-</code></pre>
-        </details>
         <details>
             <summary>
                 <b>Custom Losses</b>
