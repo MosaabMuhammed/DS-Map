@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Training
+    </title>
+
+    <link rel="stylesheet" href="../../../prism.css">
+</head>
+
+<body>
+    <div style="width:1000px;margin:auto;">
+
+        <h1 id="1startercode">
+            Training
+        </h1>
+        <details>
+            <summary><b>Basic Training</b></summary>
+        <pre class="language-python"><code>def train_model(model, optimizer, data_loader, loss_module, num_epochs=100):
+    # Set model to train mode
+    model.train()
+
+    # Training loop
+    for epoch in tqdm(range(num_epochs)):
+        for data_inputs, data_labels in data_loader:
+
+            ## Step 1: Move input data to device (only strictly necessary if we use GPU)
+            data_inputs = data_inputs.to(device)
+            data_labels = data_labels.to(device)
+
+            ## Step 2: Run the model on the input data
+            preds = model(data_inputs)
+            preds = preds.squeeze(dim=1) # Output is [Batch size, 1], but we want [Batch size]
+
+            ## Step 3: Calculate the loss
+            loss = loss_module(preds, data_labels.float())
+
+            ## Step 4: Perform backpropagation
+            # Before calculating the gradients, we need to ensure that they are all zero.
+            # The gradients would not be overwritten, but actually added to the existing ones.
+            optimizer.zero_grad()
+            # Perform backpropagation
+            loss.backward()
+
+            ## Step 5: Update the parameters
+            optimizer.step()</code></pre>
+        </details>
+
+        <details>
+            <summary><b>Train with Tensorboard</b></summary>
+            <a href="https://pytorch.org/tutorials/intermediate/tensorboard_tutorial.html">docs</a>
+            <pre class="language-python"><code># Import tensorboard logger from PyTorch
+from torch.utils.tensorboard import SummaryWriter
+
+# Load tensorboard extension for Jupyter Notebook, only need to start TB in the notebook
+%load_ext tensorboard</code></pre>
+        <pre class="language-python"><code>def train_model_with_logger(model, optimizer, data_loader, loss_module, val_dataset, num_epochs=100, logging_dir='runs/our_experiment'):
+    # Create TensorBoard logger
+    writer = SummaryWriter(logging_dir)
+    model_plotted = False
+
+    # Set model to train mode
+    model.train()
+
+    # Training loop
+    for epoch in tqdm(range(num_epochs)):
+        epoch_loss = 0.0
+        for data_inputs, data_labels in data_loader:
+
+            ## Step 1: Move input data to device (only strictly necessary if we use GPU)
+            data_inputs = data_inputs.to(device)
+            data_labels = data_labels.to(device)
+
+            # For the very first batch, we visualize the computation graph in TensorBoard
+            if not model_plotted:
+                writer.add_graph(model, data_inputs)
+                model_plotted = True
+
+            ## Step 2: Run the model on the input data
+            preds = model(data_inputs)
+            preds = preds.squeeze(dim=1) # Output is [Batch size, 1], but we want [Batch size]
+
+            ## Step 3: Calculate the loss
+            loss = loss_module(preds, data_labels.float())
+
+            ## Step 4: Perform backpropagation
+            # Before calculating the gradients, we need to ensure that they are all zero.
+            # The gradients would not be overwritten, but actually added to the existing ones.
+            optimizer.zero_grad()
+            # Perform backpropagation
+            loss.backward()
+
+            ## Step 5: Update the parameters
+            optimizer.step()
+
+            ## Step 6: Take the running average of the loss
+            epoch_loss += loss.item()
+
+        # Add average loss to TensorBoard
+        epoch_loss /= len(data_loader)
+        writer.add_scalar('training_loss',
+                            epoch_loss,
+                            global_step = epoch + 1)
+
+        # Visualize prediction and add figure to TensorBoard
+        # Since matplotlib figures can be slow in rendering, we only do it every 10th epoch
+        if (epoch + 1) % 10 == 0:
+            fig = visualize_classification(model, val_dataset.data, val_dataset.label)
+            writer.add_figure('predictions',
+                                fig,
+                                global_step = epoch + 1)
+
+    writer.close()</code></pre>
+    <pre class="language-python"><code>%tensorboard --logdir runs/our_experiment</code></pre>
+        </details>
+
+        <details>
+            <summary><b>Basic Evaluation</b></summary>
+        <pre class="language-python"><code># drop_last -> Don't drop the last batch although it is smaller than 128
+test_data_loader = data.DataLoader(test_dataset, batch_size=128, shuffle=False, drop_last=False)
+            
+def eval_model(model, data_loader):
+    model.eval() # Set model to eval mode
+    true_preds, num_preds = 0., 0.
+
+    with torch.no_grad(): # Deactivate gradients for the following code
+        for data_inputs, data_labels in data_loader:
+
+            # Determine prediction of model on dev set
+            data_inputs, data_labels = data_inputs.to(device), data_labels.to(device)
+            preds = model(data_inputs)
+            preds = preds.squeeze(dim=1)
+            preds = torch.sigmoid(preds) # Sigmoid to map predictions between 0 and 1
+            pred_labels = (preds >= 0.5).long() # Binarize predictions to 0 and 1
+
+            # Keep records of predictions for the accuracy metric (true_preds=TP+TN, num_preds=TP+TN+FP+FN)
+            true_preds += (pred_labels == data_labels).sum()
+            num_preds += data_labels.shape[0]
+
+    acc = true_preds / num_preds
+    print(f"Accuracy of the model: {100.0*acc:4.2f}%")</code></pre>
+        </details>
+    </div>
+    <script src="../../../prism.js"></script>
+</body>
+
+</html>
