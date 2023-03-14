@@ -1,20 +1,31 @@
-<!doctype HTML><html><head><meta charset="utf-8"><title>Made with Remarkable!</title><link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css"><style type='text/css'>body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}</style></head><body><h1>Linear Regression</h1>
-<div style='width:1000px;margin:auto'>
+<!doctype HTML>
+<html>
 
-<details><summary>Core Model</summary>
-<p>
+<head>
+    <meta charset="utf-8">
+    <title>Made with Remarkable!</title>
+    <link rel="stylesheet" href="../../../prism.css">
+</head>
 
-<h4>1. Import Libraries</h4>
+<body>
+    <h1>Linear Regression</h1>
+    <div style='width:1000px;margin:auto'>
 
-<pre><code class="python">import torch
+        <details>
+            <summary>Core Model</summary>
+            <p>
+
+            <h4>1. Import Libraries</h4>
+
+            <pre><code class="python">import torch
 import torch.nn as nn
 from torch.autograd import Variable
 </code></pre>
 
 
-<h4>2. Build the model</h4>
+            <h4>2. Build the model</h4>
 
-<pre><code class="python">class LinearRegressionModel2(nn.Module):
+            <pre><code class="python">class LinearRegressionModel2(nn.Module):
     def __init__(self, input_size, output_size):
         super(LinearRegressionModel2, self).__init__()
         self.linear = nn.Linear(input_dim, output_dim)
@@ -24,9 +35,9 @@ from torch.autograd import Variable
 </code></pre>
 
 
-<h4>3. Define Optimizer, Loss</h4>
+            <h4>3. Define Optimizer, Loss</h4>
 
-<pre><code class="python">input_dim  = 1
+            <pre><code class="python">input_dim  = 1
 output_dim = 1
 
 model = LinearRegressionModel2(input_dim, output_dim)
@@ -44,9 +55,9 @@ optimizer = torch.optim.SGD(model.parameters(), lr=.01)
 </code></pre>
 
 
-<h4>4. Loop over epochs</h4>
+            <h4>4. Loop over epochs</h4>
 
-<pre><code class="python">epochs = 100
+            <pre><code class="python">epochs = 100
 
 for epoch in range(1, epochs):
 
@@ -75,17 +86,17 @@ else:
 </code></pre>
 
 
-<h4>5. Predict Labels</h4>
+            <h4>5. Predict Labels</h4>
 
-<pre><code class="python"># Purely Inference
+            <pre><code class="python"># Purely Inference
 y_pred = model(Variable(torch.from_numpy(x_values)).float()).data.numpy()
 y_pred
 </code></pre>
 
 
-<h4>6. Plot true labels vs. predictions</h4>
+            <h4>6. Plot true labels vs. predictions</h4>
 
-<pre><code class="python">with plt.xkcd():
+            <pre><code class="python">with plt.xkcd():
     plt.figure(figsize=(8, 6))
     plt.plot(x_values, y_values, 'go', label='True Labels')
     plt.plot(x_values, y_pred, '--', label='Predicted Labels')
@@ -93,23 +104,28 @@ y_pred
     plt.legend()
 </code></pre>
 
-</p>
-</details>
+            </p>
+        </details>
 
-<details><summary><b>Save</b> & <b>Load</b> weights</summary>
-<p>
-<h4>1. Save weights</h4>
+        <details>
+            <summary><b>Save</b> & <b>Load</b> weights</summary>
+            <p>
+            <h4>1. Save weights</h4>
 
-<pre><code class="python">torch.save(model.state_dict(), 'linearReg_model.pkl')
+            <pre><code class="python">torch.save(model.state_dict(), 'linearReg_model.pkl')
 </code></pre>
 
 
-<h4>2. Load Weights</h4>
+            <h4>2. Load Weights</h4>
 
-<pre><code class="python">model.load_state_dict(torch.load('linearReg_model.pkl'))
+            <pre><code class="python">model.load_state_dict(torch.load('linearReg_model.pkl'))
 </code></pre>
 
-</p>
-</details>
+            </p>
+        </details>
 
-</div><script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});</script></body></html>
+    </div>
+    <script src="../../../prism.js"></script>
+</body>
+
+</html>
