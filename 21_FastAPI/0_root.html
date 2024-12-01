@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Machine Learning
+    </title>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet" />
+    <style type="text/css">
+        body,
+        table tr {
+            background-color: #fff
+        }
+        
+        table tr td,
+        table tr th {
+            border: 1px solid #ccc;
+            text-align: left;
+            padding: 6px 13px;
+            margin: 0
+        }
+        
+        pre code,
+        table,
+        table tr {
+            padding: 0
+        }
+        
+        hr,
+        pre code {
+            background: 0 0
+        }
+        
+        body {
+            font: 16px Helvetica, Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            word-wrap: break-word;
+            padding: 10px 15px
+        }
+        
+        strong,
+        table tr th {
+            font-weight: 700
+        }
+        
+        h1 {
+            font-size: 2em;
+            margin: .67em 0;
+            text-align: center
+        }
+        
+        h2 {
+            font-size: 1.75em
+        }
+        
+        h3 {
+            font-size: 1.5em
+        }
+        
+        h4 {
+            font-size: 1.25em
+        }
+        
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+            position: relative;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            line-height: 1.1
+        }
+        
+        h1,
+        h2 {
+            border-bottom: 1px solid #eee
+        }
+        
+        hr {
+            height: 0;
+            margin: 15px 0;
+            overflow: hidden;
+            border: 0;
+            border-bottom: 1px solid #ddd
+        }
+        
+        a {
+            color: #4183C4
+        }
+        
+        a.absent {
+            color: #c00
+        }
+        
+        ol,
+        ul {
+            padding-left: 15px;
+            margin-left: 5px
+        }
+        
+        ol {
+            list-style-type: lower-roman
+        }
+        
+        table tr {
+            border-top: 1px solid #ccc;
+            margin: 0
+        }
+        
+        table tr:nth-child(2n) {
+            background-color: #aaa
+        }
+        
+        table tr td :first-child,
+        table tr th :first-child {
+            margin-top: 0
+        }
+        
+        table tr td:last-child,
+        table tr th :last-child {
+            margin-bottom: 0
+        }
+        
+        img {
+            max-width: 100%
+        }
+        
+        blockquote {
+            padding: 0 15px;
+            border-left: 4px solid #ccc
+        }
+        
+        code,
+        tt {
+            margin: 0 2px;
+            padding: 0 5px;
+            white-space: nowrap;
+            border: 1px solid #eaeaea;
+            background-color: #f8f8f8;
+            border-radius: 3px
+        }
+        
+        pre code {
+            margin: 0;
+            white-space: pre;
+            border: none
+        }
+        
+        .highlight pre,
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            line-height: 19px;
+            overflow: auto;
+            padding: 6px 10px;
+            border-radius: 3px
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="color:darkcyan;text-decoration:underline">
+        FastAPI
+    </h1>
+    <div style="width:1000px;margin:auto">
+
+        <details>
+            <summary style="font-weight: bold;font-size:18px">
+                Handling environment variables .env
+            </summary>
+
+            <li>Create two files .env and .env.example</li>
+            <li>`.env` is used for loading the environment variable related to your local machine and it's hidden when uploading your work through .gitignore</li>
+            <li>`.env.example` is used to give other developers that they need to define these variables.</li>
+            <details>
+                <summary><b>example of .env file</b></summary>
+                <pre class="language-python"><code>APP_NAME="RAGnarock"
+APP_VERSION="0.1"
+OPENAI_API_KEY="sk-"
+FILE_SUPPORTED_TYPES=["text/plain", "application/pdf"]
+FILE_MAX_SIZE_MB=10
+FILE_CHUNK_SIZE_BYTES=512000
+                    </code></pre>
+            </details><br>
+
+            <li>There are two ways for loading the environment variables into our code using [pydantic-settings] or [python-dotenv]</li>
+            <details>
+                <summary>Using <b>pydantic-settings</b></summary>
+                <li>We create a file in <span>config/settings.py</span> and write the following in it.</li>
+                <pre class="language-python"><code>from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    APP_NAME: str
+    APP_VERSION: str
+    OPENAI_API_KEY: str
+    FILE_SUPPORTED_TYPES: list
+    FILE_MAX_SIZE_MB: int
+    FILE_CHUNK_SIZE_BYTES: int
+
+    class Config:
+        env_file = ".env" # write the path to .env file
+
+def get_settings():
+    return Settings()</code></pre>
+
+                <li>We can use like the following examples.</li>
+                <pre class="language-python"><code>from fastapi import APIRouter, Depends
+from config.settings import get_settings, Settings
+
+base_router = APIRouter(prefix="/api/v1",
+                        tags=["base"])
+
+
+@base_router.get("/app_info")
+def get_app_info(app_settings: Settings=Depends(get_settings)):
+    return {
+        "app_name": app_settings.APP_NAME,
+        "app_version": app_settings.APP_VERSION,
+    }</code></pre>
+        <br></details>
+
+
+        <details>
+            <summary>Using <b>python-dotenv</b></summary>
+            <pre class="language-python"><code>APP_NAME="RAGnarock"
+APP_VERSION="0.1"
+OPENAI_API_KEY="sk-"
+FILE_SUPPORTED_TYPES=["text/plain", "application/pdf"]
+FILE_MAX_SIZE_MB=10
+FILE_CHUNK_SIZE_BYTES=512000
+                </code></pre>
+        </details>
+
+        <details>
+            <summary><b>Template</b></summary>
+            <pre class="language-python"><code></code></pre>
+        </details>
+
+
+    </div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+    </script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        MathJax.Hub.Config({
+            "showProcessingMessages": false,
+            "messageStyle": "none",
+            "tex2jax": {
+                inlineMath: [
+                    ["$", "$"]
+                ]
+            }
+        });
+    </script>
+</body>
+
+</html>
